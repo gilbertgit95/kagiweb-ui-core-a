@@ -1,14 +1,13 @@
+import Context, { context } from './context'
+import Pages from './pages'
+
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          test
-        </p>
-      </header>
-    </div>
+    <Context.Provider value={context}>
+      <Pages />
+    </Context.Provider>
   );
 }
 
