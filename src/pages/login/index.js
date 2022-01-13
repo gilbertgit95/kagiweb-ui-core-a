@@ -4,14 +4,14 @@ import Context from '../../context'
 const Login = (props) => {
     const { authContext, accountContext } = useContext(Context)
 
-    const btnClicked = (e) => {
-        authContext.setAuthValue(authContext.authValue? 0: authContext.authValue + 1)
-    }
+    // const btnClicked = (e) => {
+    //     authContext.setAuthValue(authContext.authValue? 0: authContext.authValue + 1)
+    // }
 
     return (
         <div>
             Login Page
-            <button onClick={ btnClicked }>Increment value</button>
+            {/* <button onClick={ btnClicked }>Increment value</button> */}
         </div>
     )
 }
