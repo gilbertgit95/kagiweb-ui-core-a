@@ -14,7 +14,7 @@ const AuthLayout = (props) => {
                 <Link to="/auth/logout">Logout</Link>
                 <Link to="/auth/resetPassword">Reset Password</Link>
             </div>
-            <div>
+            <div style={{padding: 50, textAlign: 'center'}}>
                 <Outlet />
             </div>
         </div>
