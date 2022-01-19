@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 
 const AccountContext = (props) => {
-    const [accountData, setAccountData] = useState(0)
+    const [accountData, setAccountData] = useState({})
 
     return {
-        accountContext: {
-            accountData,
-            setAccountData
-        }
+        accountData,
+        setAccountData
     }
 }
 

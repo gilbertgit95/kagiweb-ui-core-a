@@ -3,12 +3,12 @@ import { Outlet, Link } from "react-router-dom";
 import Context from '../../context'
 
 const AuthLayout = (props) => {
-    const { authContext, accountContext } = useContext(Context)
+    const { authData } = useContext(Context)
 
     return (
         <div>
             <div>Authlayout Page</div>
-            <div>Test Data { authContext && authContext.authData? authContext.authData: '' }</div>
+            <div>Test Data { authData? authData: '' }</div>
             <div>
                 <Link to="/auth/login">Login</Link>
                 <Link to="/auth/logout">Logout</Link>
