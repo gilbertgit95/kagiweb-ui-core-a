@@ -1,14 +1,18 @@
 import { useState, useContext } from 'react'
-import { Outlet, Link } from "react-router-dom";
-import Context from '../../context'
+import { Outlet, Link } from "react-router-dom"
 import TextField from '../inputs/textField'
 import SelectBox from '../inputs/selectBox'
 
+import AccountContext from '../../context/accountContext'
+
 const AuthLayout = (props) => {
-    const { authData } = useContext(Context)
+    const ctx = useContext(AccountContext)
+
+    let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
 
     return (
         <div>
+            <div>{ accountVal }</div>
             <TextField
                 onChange={(e) => {
                     console.log(e.target.value)
@@ -34,7 +38,6 @@ const AuthLayout = (props) => {
                 <option value="No Answer">No Answer</option>
             </SelectBox>
             <div>Authlayout Page</div>
-            <div>Test Data { authData? authData: '' }</div>
             <div>
                 <Link to="/auth/login">Login</Link>
                 <Link to="/auth/logout">Logout</Link>

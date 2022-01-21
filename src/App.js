@@ -1,13 +1,19 @@
-import Context, { context } from './context'
+import AccountContext, { UseAccountContext } from './context/accountContext'
 import Pages from './pages'
 
 import './App.css';
 
 function App() {
+  const [accountContext, setAccountContext] = UseAccountContext()
+
   return (
-    <Context.Provider value={context}>
+    <AccountContext.Provider
+      value={{
+        accountContext,
+        setAccountContext
+      }}>
       <Pages />
-    </Context.Provider>
+    </AccountContext.Provider>
   );
 }
 

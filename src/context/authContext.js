@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState, createContext } from 'react'
 
-const AuthContext = (props) => {
-    const [authData, setAuthData] = useState({})
-
-    return {
-        authData,
-        setAuthData
-    }
-}
-
+const AuthContext = createContext({
+    authContext: {},
+    setAuthContext(data) { return }
+})
 export default AuthContext
+
+export const UseAuthContext = () => {
+    const [authContext, setAuthContext] = useState({})
+
+    return [authContext, setAuthContext]
+}

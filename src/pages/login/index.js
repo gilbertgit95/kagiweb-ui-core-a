@@ -1,17 +1,17 @@
 import { useState, useContext } from 'react'
-import Context from '../../context'
+import AccountContext from '../../context/accountContext'
 
 const Login = (props) => {
-    const { authContext, accountContext } = useContext(Context)
+    const ctx = useContext(AccountContext)
 
-    // const btnClicked = (e) => {
-    //     authContext.setAuthValue(authContext.authValue? 0: authContext.authValue + 1)
-    // }
+    const btnClicked = (e) => {
+        ctx.setAccountContext({testVal: 'login test value from context'})
+    }
 
     return (
         <div>
             Login Page
-            {/* <button onClick={ btnClicked }>Increment value</button> */}
+            <button onClick={ btnClicked }>set value</button>
         </div>
     )
 }
