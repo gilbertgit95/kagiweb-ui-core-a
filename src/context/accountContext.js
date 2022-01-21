@@ -9,5 +9,5 @@ export default AccountContext
 export const UseAccountContext = () => {
     const [accountContext, setAccountContext] = useState({})
 
-    return [accountContext, setAccountContext]
+    return {accountContext, setAccountContext}
 }

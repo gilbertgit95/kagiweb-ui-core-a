@@ -4,13 +4,12 @@ import Pages from './pages'
 import './App.css';
 
 function App() {
-  const [accountContext, setAccountContext] = UseAccountContext()
+  const accountStates = UseAccountContext()
 
   return (
     <AccountContext.Provider
       value={{
-        accountContext,
-        setAccountContext
+        ...accountStates
       }}>
       <Pages />
     </AccountContext.Provider>
