@@ -9,5 +9,5 @@ export default AuthContext
 export const UseAuthContext = () => {
     const [authContext, setAuthContext] = useState({})
 
-    return [authContext, setAuthContext]
+    return {authContext, setAuthContext}
 }
