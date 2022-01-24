@@ -12,7 +12,7 @@ const AuthLayout = (props) => {
 
     return (
         <div>
-            <div>{ accountVal }</div>
+            {/* <div>{ accountVal }</div>
             <TextField
                 onChange={(e) => {
                     console.log(e.target.value)
@@ -45,7 +45,7 @@ const AuthLayout = (props) => {
             </div>
             <div style={{padding: 50, textAlign: 'center'}}>
                 <Outlet />
-            </div>
+            </div> */}
         </div>
     )
 }
