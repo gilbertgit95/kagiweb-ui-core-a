@@ -1,52 +1,52 @@
 import { useState, useContext } from 'react'
 import { Outlet, Link } from "react-router-dom"
-import TextField from '../inputs/textField'
-import SelectBox from '../inputs/selectBox'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+
+import LogoSource from '../../assets/favicon.png'
 
 import AccountContext from '../../context/accountContext'
 
 const AuthLayout = (props) => {
-    const ctx = useContext(AccountContext)
+    // const ctx = useContext(AccountContext)
 
-    let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
+    // let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
 
     return (
-        <div>
-            {/* <div>{ accountVal }</div>
-            <TextField
-                onChange={(e) => {
-                    console.log(e.target.value)
-                }}
-                type='textarea'
-                legend='test legend'
-                value='test val'
-                postfix={<span>post</span>}
-                prefix={<span>pre</span>} />
-
-            <SelectBox
-                onChange={(e) => {
-                    console.log(e.target.value)
-                }}
-                legend='test select'
-                value='Terminated'
-                postfix={<span>post</span>}
-                prefix={<span>pre</span>} >
-                <option aria-label="None" value="" />
-                <option value="Terminated">Terminated</option>
-                <option value="Successful">Qualified Interview</option>
-                <option value="Unsuccessful">No Interview</option>
-                <option value="No Answer">No Answer</option>
-            </SelectBox>
-            <div>Authlayout Page</div>
-            <div>
-                <Link to="/auth/login">Login</Link>
-                <Link to="/auth/logout">Logout</Link>
-                <Link to="/auth/resetPassword">Reset Password</Link>
-            </div>
-            <div style={{padding: 50, textAlign: 'center'}}>
-                <Outlet />
-            </div> */}
-        </div>
+        <Container maxWidth="sm">
+            <Box>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} style={{textAlign: 'center'}}>
+                        <img
+                            style={{width: 150}}
+                            src={LogoSource} />
+                        <Typography variant="h4" gutterBottom component="div">
+                            kagiweb
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} style={{textAlign: 'center'}}>
+                        <Box
+                            style={{
+                                width: 300,
+                                margin: 'auto',
+                                padding: 20,
+                                paddingTop: 40,
+                                paddingBottom: 40,
+                                boxShadow: '2px 2px 3px 2px rgb(0 0 0 / 20%)'
+                            }}>
+                            <Outlet />
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} style={{textAlign: 'center'}}>
+                        <Typography variant="caption" display="block" gutterBottom>
+                            Copyrights 2021
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Box>
+        </Container>
     )
 }
 
