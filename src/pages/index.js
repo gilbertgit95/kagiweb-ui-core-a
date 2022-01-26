@@ -9,6 +9,7 @@ import AuthLayout from '../common/layouts/authLayout'
 import Login from './login'
 import Logout from './logout'
 import ResetPassword from './resetPassword'
+import ForgotPassword from './forgotPassword'
 
 const Pages = (props) => {
     return (
@@ -18,6 +19,7 @@ const Pages = (props) => {
                     <Route path="auth/login" element={<Login />} />
                     <Route path="auth/logout" element={<Logout />} />
                     <Route path="auth/resetPassword" element={<ResetPassword />} />
+                    <Route path="auth/forgotPassword" element={<ForgotPassword />} />
                 </Route>
             </Routes>
         </BrowserRouter>

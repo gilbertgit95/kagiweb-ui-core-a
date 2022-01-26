@@ -54,7 +54,7 @@ const Login = (props) => {
                 <Box style={{marginTop: 15}}>
                     <Link
                         color="inherit"
-                        href="/auth/resetPassword">
+                        href="/auth/forgotPassword">
                         Forgot password
                     </Link>
                 </Box>
