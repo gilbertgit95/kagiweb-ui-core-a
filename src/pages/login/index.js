@@ -27,7 +27,7 @@ const Login = (props) => {
                     variant='outlined'
                     color='primary'
                     type='text'
-                    label='username' />
+                    label='username / email' />
             </Grid>
             
 
