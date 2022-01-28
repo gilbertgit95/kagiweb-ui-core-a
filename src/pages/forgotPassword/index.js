@@ -34,7 +34,7 @@ const forgotPassword = (props) => {
                     variant='contained'
                     color='primary'
                     startIcon={<LoginIcon />}>
-                    Reset Password
+                    Submit
                 </Button>
                 <Box style={{marginTop: 15}}>
                     <Link

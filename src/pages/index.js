@@ -19,6 +19,7 @@ const Pages = (props) => {
                     <Route path="auth/login" element={<Login />} />
                     <Route path="auth/logout" element={<Logout />} />
                     <Route path="auth/resetPassword" element={<ResetPassword />} />
+                    <Route path="auth/resetPassword/:key" element={<ResetPassword />} />
                     <Route path="auth/forgotPassword" element={<ForgotPassword />} />
                 </Route>
             </Routes>
