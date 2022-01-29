@@ -7,6 +7,9 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import LoginIcon from '@mui/icons-material/Login'
 import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import RotateLeftIcon from '@mui/icons-material/RotateLeft'
 
 import {
     useParams
@@ -14,7 +17,16 @@ import {
 
 const ResetPassword = (props) => {
     const { key } = useParams()
+    const [resetKey, setResetKey] = useState(key? key: '')
 
+    const onChangeResetKey = (e) => {
+        setResetKey(e.target.value)
+    }
+
+    const handleResetKeyValue = (e) => {
+        let keyVal = key? key: ''
+        setResetKey(keyVal)
+    }
 
 
     return (
@@ -27,12 +39,26 @@ const ResetPassword = (props) => {
 
             <Grid item xs={12}>
                 <TextField
+                    value={resetKey}
+                    onChange={onChangeResetKey}
                     size='small'
                     fullWidth
                     variant='outlined'
                     color='primary'
                     type='text'
-                    label='Reset Key' />
+                    label='Reset Key'
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="Reset key"
+                                    onClick={handleResetKeyValue}
+                                    edge="end">
+                                    <RotateLeftIcon />
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    }} />
             </Grid>
 
             <Grid item xs={12}>
@@ -68,7 +94,7 @@ const ResetPassword = (props) => {
                     <Link
                         style={{margin: 10}}
                         color="inherit"
-                        href="/auth/login">
+                        href="/auth/forgotPassword">
                         goto forgot password
                     </Link>
                     <Link
