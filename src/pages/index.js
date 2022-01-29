@@ -11,7 +11,11 @@ import Logout from './logout'
 import ResetPassword from './resetPassword'
 import ForgotPassword from './forgotPassword'
 
+import config from '../config'
+
 const Pages = (props) => {
+    // console.log(config)
+
     return (
         <BrowserRouter>
             <Routes>

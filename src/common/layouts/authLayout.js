@@ -5,9 +5,8 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-import LogoSource from '../../assets/favicon.png'
-
 import AccountContext from '../../context/accountContext'
+import config from '../../config'
 
 const AuthLayout = (props) => {
     // const ctx = useContext(AccountContext)
@@ -21,9 +20,9 @@ const AuthLayout = (props) => {
                     <Grid item xs={12} style={{textAlign: 'center'}}>
                         <img
                             style={{width: 150}}
-                            src={LogoSource} />
+                            src='/favicon.png' />
                         <Typography variant="h4" gutterBottom component="div">
-                            kagiweb
+                            { config.appName }
                         </Typography>
                     </Grid>
                     <Grid item xs={12} style={{textAlign: 'center'}}>
