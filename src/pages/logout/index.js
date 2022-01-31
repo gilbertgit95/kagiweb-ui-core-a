@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from '@mui/material/Link'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
@@ -10,6 +10,19 @@ import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress';
 
 const Logout = (props) => {
+
+    const logout = () => {
+
+    }
+
+    const redirect = () => {
+        
+    }
+
+    useEffect(() => {
+
+    }, [])
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
