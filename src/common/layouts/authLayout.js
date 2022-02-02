@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-import AccountContext from '../../context/accountContext'
+import AccountContext from '../context/accountContext'
 import config from '../../config'
 
 const AuthLayout = (props) => {
