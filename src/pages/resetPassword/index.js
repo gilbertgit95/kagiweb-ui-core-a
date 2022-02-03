@@ -95,13 +95,13 @@ const ResetPassword = (props) => {
                         style={{margin: 10}}
                         color="inherit"
                         href="/auth/forgotPassword">
-                        goto forgot password
+                        Forgot password
                     </Link>
                     <Link
                         style={{margin: 10}}
                         color="inherit"
                         href="/auth/login">
-                        goto login
+                        Login
                     </Link>
                 </Box>
             </Grid>
