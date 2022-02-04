@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
+import MainNav from '../navs/mainNav'
 import AccountContext from '../context/accountContext'
 import config from '../../config'
 
@@ -14,27 +15,30 @@ const MainLayout = (props) => {
     // let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
 
     return (
-        <Container maxWidth="lg">
-            <Box>
-                <Grid container spacing={2}>
-                    {/* <Grid item xs={12} style={{textAlign: 'center'}}>
-                        <Typography variant="h4" gutterBottom component="div">
-                            { config.appName }
-                        </Typography>
-                    </Grid> */}
-                    <Grid item xs={12} style={{textAlign: 'center'}}>
-                        <Box>
-                            <Outlet />
-                        </Box>
+        <>
+            <MainNav />
+            <Container maxWidth="lg">
+                <Box>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} style={{textAlign: 'center'}}>
+                            {/* <Typography variant="h4" gutterBottom component="div">
+                                { config.appName }
+                            </Typography> */}
+                        </Grid>
+                        <Grid item xs={12} style={{textAlign: 'center'}}>
+                            <Box>
+                                <Outlet />
+                            </Box>
+                        </Grid>
+                        {/* <Grid item xs={12} style={{textAlign: 'center'}}>
+                            <Typography variant="caption" display="block" gutterBottom>
+                                Copyrights 2021
+                            </Typography>
+                        </Grid> */}
                     </Grid>
-                    {/* <Grid item xs={12} style={{textAlign: 'center'}}>
-                        <Typography variant="caption" display="block" gutterBottom>
-                            Copyrights 2021
-                        </Typography>
-                    </Grid> */}
-                </Grid>
-            </Box>
-        </Container>
+                </Box>
+            </Container>
+        </>
     )
 }
 

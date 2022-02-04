@@ -1,14 +1,12 @@
 
 import { useState, useEffect } from 'react'
-import Link from '@mui/material/Link'
-import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import LoginIcon from '@mui/icons-material/Login'
-import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const MainNav = (props) => {
 
@@ -25,14 +23,24 @@ const MainNav = (props) => {
     }, [])
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                
-            </Grid>
-
-            <Grid item xs={12}>
-            </Grid>
-        </Grid>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        size="small"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2 }}>
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        kagiweb
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+        </Box>
     )
 }
 
