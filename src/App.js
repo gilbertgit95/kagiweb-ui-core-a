@@ -4,7 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import PrimaryTheme from './common/themes/primary'
 import Pages from './pages'
 
-import './App.css';
+import './App.css'
 
 function App() {
   const accountStates = UseAccountContext()

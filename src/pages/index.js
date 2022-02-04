@@ -5,11 +5,22 @@ import {
     Route
 } from 'react-router-dom'
 
+// layouts
+import PublicPageLayout from '../common/layouts/publicPageLayout'
 import AuthLayout from '../common/layouts/authLayout'
+import MainLayout from '../common/layouts/mainLayout'
+
+// auth pages
 import Login from './login'
 import Logout from './logout'
 import ResetPassword from './resetPassword'
 import ForgotPassword from './forgotPassword'
+
+// main pages
+import Home from './home'
+
+// error page
+import NotFound from './notFound'
 
 import config from '../config'
 
@@ -19,13 +30,28 @@ const Pages = (props) => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<AuthLayout />}>
-                    <Route path="auth/login" element={<Login />} />
-                    <Route path="auth/logout" element={<Logout />} />
-                    <Route path="auth/resetPassword" element={<ResetPassword />} />
-                    <Route path="auth/resetPassword/:key" element={<ResetPassword />} />
-                    <Route path="auth/forgotPassword" element={<ForgotPassword />} />
+                {/* auth pages */}
+                <Route path="/auth/" element={<AuthLayout />}>
+                    <Route path="login" element={<Login />} />
+                    <Route path="logout" element={<Logout />} />
+                    <Route path="resetPassword" element={<ResetPassword />} />
+                    <Route path="resetPassword/:key" element={<ResetPassword />} />
+                    <Route path="forgotPassword" element={<ForgotPassword />} />
                 </Route>
+
+                {/* main pages */}
+                <Route path="/" element={<MainLayout />}>
+                    <Route path="home" element={<Home />} />
+                </Route>
+
+                {/* error page */}
+                <Route
+                    path='*'
+                    element={
+                        <PublicPageLayout>
+                            <NotFound />
+                        </PublicPageLayout>
+                    }></Route>
             </Routes>
         </BrowserRouter>
     )
