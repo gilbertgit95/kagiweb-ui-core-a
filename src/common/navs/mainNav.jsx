@@ -21,9 +21,43 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
+import PersonAdd from '@mui/icons-material/PersonAdd'
+import Badge from '@mui/material/Badge'
 
 const pages = ['Products', 'Pricing', 'Blog']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+
+// {
+//   logo: logoComponent
+//   mainMenu: [
+//       {
+//           icon: iconComponent
+//           label: '',
+//           type: 'link|action|divider',
+//           value: ''
+//       }
+//   ],
+//   extensionMenus: [
+//       {
+//           component: reactComponent,
+//           type: 'action|list'
+//           value: ''
+//       },
+//       {
+//           component: reactComponent,
+//           value: '',
+//           type: 'action|list'
+//           list: [
+//               {
+//                   icon: iconComponent
+//                   label: '',
+//                   type: 'link|action|devider',
+//                   value: ''
+//               }
+//           ]
+//       }
+//   ]
+// }
 
 const MainNav = () => {
   const [anchorElNav, setAnchorElNav] = useState(null)
@@ -65,10 +99,9 @@ const MainNav = () => {
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
+      onKeyDown={toggleDrawer(anchor, false)}>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {pages.map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -100,7 +133,7 @@ const MainNav = () => {
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-            LOGO
+            <Avatar alt="Logo" src="/favicon.png" />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -119,45 +152,13 @@ const MainNav = () => {
                 onClose={toggleDrawer('menu', false)}>
                 {list('menu')}
             </Drawer>
-            {/* <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit">
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}>
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu> */}
           </Box>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            LOGO
+            <Avatar alt="Logo" src="/favicon.png" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -170,7 +171,15 @@ const MainNav = () => {
             ))}
           </Box>
 
+          {/* account settings section */}
           <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="notifications" style={{marginRight: 15}}>
+              <IconButton size="large" sx={{ p: 0 }}>
+                <Badge badgeContent={4} color="error">
+                  <MailIcon color="action" size="large" />
+                </Badge>
+              </IconButton>
+            </Tooltip>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -193,6 +202,9 @@ const MainNav = () => {
               onClose={handleCloseUserMenu}>
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <ListItemIcon>
+                    <MailIcon />
+                  </ListItemIcon>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
