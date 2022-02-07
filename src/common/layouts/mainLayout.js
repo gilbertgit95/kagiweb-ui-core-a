@@ -4,6 +4,11 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
+import Avatar from '@mui/material/Avatar'
+import MailIcon from '@mui/icons-material/Mail'
+import Tooltip from '@mui/material/Tooltip'
+import Badge from '@mui/material/Badge'
+import IconButton from '@mui/material/IconButton'
 
 import MainNav from '../navs/mainNav'
 import AccountContext from '../context/accountContext'
@@ -13,10 +18,88 @@ const MainLayout = (props) => {
     // const ctx = useContext(AccountContext)
 
     // let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
+    let navLogo = <Avatar alt="Logo" src="/favicon.png" />
+    let NavMainMenu = [
+        {
+          icon: <MailIcon />,
+          label: 'Emails',
+          type: 'link',
+          value: '/home'
+        },
+        {
+            icon: <MailIcon />,
+            label: 'Auth',
+            type: 'link',
+            value: '/auth'
+        },
+        {
+            icon: null,
+            label: null,
+            type: 'divider',
+            value: null
+        },
+        {
+            icon: <MailIcon />,
+            label: 'Notes',
+            type: 'action',
+            value: 'notes'
+        }
+    ]
+
+    let navExtensionMenus = [
+        {
+            component: (
+                <Tooltip title="notifications" style={{marginRight: 15}}>
+                    <IconButton size="large" sx={{ p: 0 }}>
+                        <Badge badgeContent={4} color="error">
+                            <MailIcon color="action" size="large" />
+                        </Badge>
+                    </IconButton>
+                </Tooltip>
+            ),
+            type: 'action',
+            value: 'notifications'
+        },
+        {
+            component: <Avatar alt="Gebe" src="/static/images/avatar/2.jpg" />,
+            value: '',
+            type: 'list',
+            list: [
+                {
+                    icon: <MailIcon />,
+                    label: 'Emails',
+                    type: 'link',
+                    value: '/home'
+                },
+                {
+                    icon: <MailIcon />,
+                    label: 'Auth',
+                    type: 'link',
+                    value: '/auth'
+                },
+                {
+                    icon: null,
+                    label: null,
+                    type: 'divider',
+                    value: null
+                },
+                {
+                    icon: <MailIcon />,
+                    label: 'Notes',
+                    type: 'action',
+                    value: 'notes'
+                }
+            ]
+        }
+    ]
 
     return (
         <>
-            <MainNav />
+            <MainNav
+                logo={navLogo}
+                mainMenu={NavMainMenu}
+                extensionMenus={navExtensionMenus} />
+
             <Container maxWidth="lg">
                 <Box>
                     <Grid container spacing={2}>
