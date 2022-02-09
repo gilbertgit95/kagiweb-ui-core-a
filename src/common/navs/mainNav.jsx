@@ -59,7 +59,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 //   ]
 // }
 
-const MainNav = () => {
+const MainNav = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const [anchorElUser, setAnchorElUser] = useState(null)
   const [drawer, setDrawer] = useState({
@@ -133,7 +133,7 @@ const MainNav = () => {
             noWrap
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-            <Avatar alt="Logo" src="/favicon.png" />
+            { props.logo? props.logo: null }
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -158,7 +158,7 @@ const MainNav = () => {
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <Avatar alt="Logo" src="/favicon.png" />
+            { props.logo? props.logo: null }
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
