@@ -128,6 +128,8 @@ const MainNav = (props) => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+
+          {/* logo display for big screen size */}
           <Typography
             variant="h6"
             noWrap
@@ -153,6 +155,8 @@ const MainNav = (props) => {
                 {list('menu')}
             </Drawer>
           </Box>
+
+          {/* logo display for small screen size */}
           <Typography
             variant="h6"
             noWrap
@@ -160,6 +164,8 @@ const MainNav = (props) => {
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             { props.logo? props.logo: null }
           </Typography>
+
+          {/* main menu display for bigscreen size */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
