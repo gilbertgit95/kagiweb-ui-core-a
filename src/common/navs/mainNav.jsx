@@ -95,6 +95,12 @@ const MainNav = (props) => {
   }
 
   const list = (anchor) => {
+    let menusSections = []
+
+    if (props.mainMenu) {
+        // compute array of munus, including divisions
+    }
+
     return (
       <Box
         sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
