@@ -9,13 +9,13 @@ import './App.css'
 
 function App() {
   const accountStates = UseAccountContext()
-  // const localStorageStates = UseLocalStorageContext()
+  const localStorageStates = UseLocalStorageContext()
 
   return (
-    // <LocalStorageContext
-    //   value={{
-    //     ...localStorageStates
-    //   }}>
+    <LocalStorageContext.Provider
+      value={{
+        ...localStorageStates
+      }}>
       <ThemeProvider theme={PrimaryTheme}>
         <CssBaseline />
         <AccountContext.Provider
@@ -25,7 +25,7 @@ function App() {
           <Pages />
         </AccountContext.Provider>
       </ThemeProvider>
-    // </LocalStorageContext>
+    </LocalStorageContext.Provider>
   );
 }
 

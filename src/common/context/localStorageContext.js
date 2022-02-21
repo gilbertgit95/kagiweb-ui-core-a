@@ -29,6 +29,7 @@ export const UseLocalStorageContext = () => {
     }
 
     useEffect(() => {
+        // console.log('use effect in localstorage')
         let localStoreVal = localStorage.getItem(storageName)
         let parsedVal = defaultValue
 
