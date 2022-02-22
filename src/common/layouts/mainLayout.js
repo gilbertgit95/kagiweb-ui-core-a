@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton'
 
 import MainNav from '../navs/mainNav'
 import AccountContext from '../context/accountContext'
+import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
 
 const MainLayout = (props) => {
@@ -110,6 +111,7 @@ const MainLayout = (props) => {
                         </Grid>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
                             <Box>
+                                <ThemeToggle />
                                 <Outlet />
                             </Box>
                         </Grid>

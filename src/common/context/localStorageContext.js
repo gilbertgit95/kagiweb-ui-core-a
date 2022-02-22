@@ -35,9 +35,9 @@ export const UseLocalStorageContext = () => {
 
         if (localStoreVal) {
             parsedVal = JSON.parse(localStoreVal)
-        } else {
-            updateLocalStorage(parsedVal)
         }
+
+        updateLocalStorage(parsedVal)
 
     }, [])
 

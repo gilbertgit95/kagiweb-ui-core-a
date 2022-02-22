@@ -1,6 +1,4 @@
-import { createTheme } from '@mui/material/styles'
-
-export default createTheme({
+export default {
     palette: {
         mode: 'dark',
         primary: {
@@ -25,4 +23,4 @@ export default createTheme({
           '"Segoe UI Symbol"',
         ].join(','),
     },
-})
+}

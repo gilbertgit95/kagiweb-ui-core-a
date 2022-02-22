@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
 import AccountContext from '../context/accountContext'
+import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
 
 const AuthLayout = (props) => {
@@ -35,6 +36,7 @@ const AuthLayout = (props) => {
                                 paddingBottom: 40,
                                 boxShadow: '2px 2px 3px 2px rgb(0 0 0 / 20%)'
                             }}>
+                            <ThemeToggle />
                             <Outlet />
                         </Box>
                     </Grid>
