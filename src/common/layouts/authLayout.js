@@ -36,7 +36,6 @@ const AuthLayout = (props) => {
                                 paddingBottom: 40,
                                 boxShadow: '2px 2px 3px 2px rgb(0 0 0 / 20%)'
                             }}>
-                            <ThemeToggle />
                             <Outlet />
                         </Box>
                     </Grid>

@@ -58,6 +58,16 @@ const MainLayout = (props) => {
 
     let middleMenu = [
         {
+            label: 'Toggle Theme',
+            component: (
+                <Box sx={{ display: 'inline-block' }}>
+                    <ThemeToggle />
+                </Box>
+            ),
+            type: 'action',
+            value: 'themeToggle'
+        },
+        {
             label: 'notifications',
             component: (
                 <IconButton size="large" sx={{ p: 0 }}>
@@ -119,7 +129,6 @@ const MainLayout = (props) => {
                         </Grid>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
                             <Box>
-                                <ThemeToggle />
                                 <Outlet />
                             </Box>
                         </Grid>

@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
@@ -19,27 +18,20 @@ import Divider from '@mui/material/Divider'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
-import PersonAdd from '@mui/icons-material/PersonAdd'
-import Badge from '@mui/material/Badge'
-
-const pages = ['Products', 'Pricing', 'Blog']
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 const MainNav = (props) => {
-  const [anchorElUser, setAnchorElUser] = useState(null)
+  const [anchorElRightMenu, setAnchorElRightMenu] = useState(null)
   const [drawer, setDrawer] = useState({
       leftMenu: false,
       rightMenu: false
   })
 
   const handleOpenRightMenu = (event) => {
-    setAnchorElUser(event.currentTarget)
+    setAnchorElRightMenu(event.currentTarget)
   }
 
   const handleCloseRightMenu = () => {
-    setAnchorElUser(null)
+    setAnchorElRightMenu(null)
   }
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -113,14 +105,14 @@ const MainNav = (props) => {
               aria-label={ props.leftLogo? props.leftLogo.label: '' }
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={toggleDrawer('menu', true)}
+              onClick={toggleDrawer('leftMenu', true)}
               color="inherit">
               <MenuIcon />
             </IconButton>
             <Drawer
                 anchor={'left'}
-                open={drawer['menu']}
-                onClose={toggleDrawer('menu', false)}>
+                open={drawer['leftMenu']}
+                onClose={toggleDrawer('leftMenu', false)}>
                 { generateList('leftMenu', props.leftMenu? props.leftMenu: []) }
             </Drawer>
           </Box>
@@ -169,35 +161,67 @@ const MainNav = (props) => {
             }
 
             {/* right menu */}
-            <Tooltip title={ props.rightLogo? props.rightLogo.label: '' }>
-              <IconButton onClick={handleOpenRightMenu} sx={{ p: 0 }}>
-                { props.rightLogo? props.rightLogo.component: null }
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseRightMenu}>
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseRightMenu}>
-                  <ListItemIcon>
-                    <MailIcon />
-                  </ListItemIcon>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            {/* right menu for big screen */}
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'inline-block' } }}>
+              <Tooltip title={ props.rightLogo? props.rightLogo.label: '' }>
+                <IconButton onClick={handleOpenRightMenu} sx={{ p: 0 }}>
+                  { props.rightLogo? props.rightLogo.component: null }
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElRightMenu}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElRightMenu)}
+                onClose={handleCloseRightMenu}>
+                {
+                  props.rightMenu? props.rightMenu.map((items, itemsIndex) => {
+                    return (
+                      <List key={'rightMenuDDgroupItems_' + itemsIndex}>
+                        {
+                          items.map((item, index) => (
+                            <MenuItem
+                              key={'rightMenuDDgroupChildItems_' + itemsIndex + '_' + index}
+                              onClick={handleCloseRightMenu}>
+                              <ListItemIcon>
+                                { item.component? item.component: null }
+                              </ListItemIcon>
+                              <Typography textAlign="center">{item.label}</Typography>
+                            </MenuItem>
+                          ))
+                        }
+                      </List>
+                    )
+                  }): null
+                }
+              </Menu>
+            </Box>
+
+            {/* right settings for small screen */}
+            <Box sx={{ flexGrow: 1, display: { xs: 'inline-block', md: 'none' } }}>
+              <Tooltip title={ props.rightLogo? props.rightLogo.label: '' }>
+                <IconButton
+                  sx={{ p: 0 }}
+                  onClick={toggleDrawer('rightMenu', true)}>
+                  { props.rightLogo? props.rightLogo.component: null }
+                </IconButton>
+              </Tooltip>
+              <Drawer
+                anchor={'top'}
+                open={drawer['rightMenu']}
+                onClose={toggleDrawer('rightMenu', false)}>
+                { generateList('rightMenu', props.rightMenu? props.rightMenu: []) }
+              </Drawer>
+            </Box>
           </Box>
         </Toolbar>
       </Container>

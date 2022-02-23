@@ -9,7 +9,7 @@ const ThemeToggle = (props) => {
     const { localStorageContext, toggleThemeMode}  = useContext(LocalStorageContext)
 
     return (
-        <div>
+        <div style={{ display: 'inline-block' }}>
             <Typography variant="caption" display="inline-block" gutterBottom>
                 Dark Mode
             </Typography>
