@@ -19,87 +19,95 @@ const MainLayout = (props) => {
     // const ctx = useContext(AccountContext)
 
     // let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
-    let navLogo = <Avatar alt="Logo" src="/favicon.png" />
-    let NavMainMenu = [
-        {
-          icon: <MailIcon />,
-          label: 'Emails',
-          type: 'link',
-          value: '/home'
-        },
-        {
-            icon: <MailIcon />,
-            label: 'Auth',
-            type: 'link',
-            value: '/auth'
-        },
-        {
-            icon: null,
-            label: null,
-            type: 'divider',
-            value: null
-        },
-        {
-            icon: <MailIcon />,
-            label: 'Notes',
-            type: 'action',
-            value: 'notes'
-        }
+    let leftLogo = {
+        label: '',
+        component: <Avatar alt="Logo" src="/favicon.png" />
+    }
+    let leftMenu = [
+        [
+            {
+              component: <MailIcon />,
+              label: 'Emails',
+              type: 'link',
+              value: '/home'
+            },
+            {
+                component: <MailIcon />,
+                label: 'Auth',
+                type: 'link',
+                value: '/auth'
+            }
+        ],
+        [
+            {
+                component: <MailIcon />,
+                label: 'Notes',
+                type: 'action',
+                value: 'notes'
+            }
+        ],
+        [
+            {
+                // component: <MailIcon />,
+                label: 'Notes II',
+                type: 'action',
+                value: 'notes'
+            }
+        ]
     ]
 
-    let navExtensionMenus = [
+    let middleMenu = [
         {
+            label: 'notifications',
             component: (
-                <Tooltip title="notifications" style={{marginRight: 15}}>
-                    <IconButton size="large" sx={{ p: 0 }}>
-                        <Badge badgeContent={4} color="error">
-                            <MailIcon color="action" size="large" />
-                        </Badge>
-                    </IconButton>
-                </Tooltip>
+                <IconButton size="large" sx={{ p: 0 }}>
+                    <Badge badgeContent={4} color="error">
+                        <MailIcon color="action" size="large" />
+                    </Badge>
+                </IconButton>
             ),
             type: 'action',
             value: 'notifications'
-        },
-        {
-            component: <Avatar alt="Gebe" src="/static/images/avatar/2.jpg" />,
-            value: '',
-            type: 'list',
-            list: [
-                {
-                    icon: <MailIcon />,
-                    label: 'Emails',
-                    type: 'link',
-                    value: '/home'
-                },
-                {
-                    icon: <MailIcon />,
-                    label: 'Auth',
-                    type: 'link',
-                    value: '/auth'
-                },
-                {
-                    icon: null,
-                    label: null,
-                    type: 'divider',
-                    value: null
-                },
-                {
-                    icon: <MailIcon />,
-                    label: 'Notes',
-                    type: 'action',
-                    value: 'notes'
-                }
-            ]
         }
+    ]
+
+    let rightLogo = {
+        label: 'Open settings',
+        component: <Avatar alt="Gebe" src="/static/images/avatar/2.jpg" />
+    }
+    let rightMenu = [
+        [
+            {
+                component: <MailIcon />,
+                label: 'Emails',
+                type: 'link',
+                value: '/home'
+            },
+            {
+                component: <MailIcon />,
+                label: 'Auth',
+                type: 'link',
+                value: '/auth'
+            }
+        ],
+        [
+            {
+                component: <MailIcon />,
+                label: 'Notes',
+                type: 'action',
+                value: 'notes'
+            }
+        ]
     ]
 
     return (
         <>
             <MainNav
-                logo={navLogo}
-                mainMenu={NavMainMenu}
-                extensionMenus={navExtensionMenus} />
+                leftLogo={leftLogo}
+                leftMenu={leftMenu}
+                middleMenu={middleMenu}
+                rightLogo={rightLogo}
+                rightMenu={rightMenu} />
 
             <Container maxWidth="lg">
                 <Box>
