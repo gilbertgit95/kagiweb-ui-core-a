@@ -1,41 +1,50 @@
 import { useState, useContext } from 'react'
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link, useHistory } from "react-router-dom"
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
+// import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
 import MailIcon from '@mui/icons-material/Mail'
-import Tooltip from '@mui/material/Tooltip'
+// import Tooltip from '@mui/material/Tooltip'
 import Badge from '@mui/material/Badge'
 import IconButton from '@mui/material/IconButton'
 
 import MainNav from '../navs/mainNav'
-import AccountContext from '../context/accountContext'
+// import AccountContext from '../context/accountContext'
 import ThemeToggle from '../themes/themeToggle'
-import config from '../../config'
+// import config from '../../config'
 
 const MainLayout = (props) => {
     // const ctx = useContext(AccountContext)
 
     // let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
+
     let leftLogo = {
-        label: '',
-        component: <Avatar alt="Logo" src="/favicon.png" />
+        label: 'Root',
+        component: <Avatar alt="Logo" src="/favicon.png" />,
+        type: 'link',
+        value: '/'
     }
     let leftMenu = [
         [
             {
               component: <MailIcon />,
-              label: 'Emails',
+              label: 'Home',
               type: 'link',
               value: '/home'
             },
             {
                 component: <MailIcon />,
-                label: 'Auth',
+                label: 'Login',
                 type: 'link',
-                value: '/auth'
+                value: '/auth/login'
+            },
+            {
+                component: <MailIcon />,
+                label: 'Reset Password',
+                type: 'link',
+                value: '/auth/resetPassword'
             }
         ],
         [
@@ -51,21 +60,21 @@ const MainLayout = (props) => {
                 // component: <MailIcon />,
                 label: 'Notes II',
                 type: 'action',
-                value: 'notes'
+                value: 'notes II'
             }
         ]
     ]
 
     let middleMenu = [
         {
-            label: 'Toggle Theme',
+            label: 'Home',
             component: (
-                <Box sx={{ display: 'inline-block' }}>
-                    <ThemeToggle />
-                </Box>
+                <IconButton size="large" sx={{ p: 0 }}>
+                    <MailIcon color="action" size="large" />
+                </IconButton>
             ),
-            type: 'action',
-            value: 'themeToggle'
+            type: 'link',
+            value: '/home'
         },
         {
             label: 'notifications',
@@ -83,32 +92,56 @@ const MainLayout = (props) => {
 
     let rightLogo = {
         label: 'Open settings',
-        component: <Avatar alt="Gebe" src="/static/images/avatar/2.jpg" />
+        component: <Avatar alt="Gebe" src="/static/images/avatar/2.jpg" />,
+        type: 'action',
+        value: 'openSettings'
     }
     let rightMenu = [
         [
             {
                 component: <MailIcon />,
-                label: 'Emails',
+                label: 'Root',
+                type: 'link',
+                value: '/'
+            },
+            {
+                component: <MailIcon />,
+                label: 'Home',
                 type: 'link',
                 value: '/home'
             },
             {
                 component: <MailIcon />,
-                label: 'Auth',
-                type: 'link',
-                value: '/auth'
+                label: 'Test Act',
+                type: 'action',
+                value: 'test_act'
+            }
+        ],
+        [
+            {
+                component: (
+                    <Box sx={{ display: 'inline-block' }}>
+                        <ThemeToggle noLabel={true} />
+                    </Box>
+                ),
+                label: 'Dark Mode',
+                type: 'none',
+                value: 'none'
             }
         ],
         [
             {
                 component: <MailIcon />,
-                label: 'Notes',
-                type: 'action',
-                value: 'notes'
+                label: 'Logout',
+                type: 'link',
+                value: '/auth/logout'
             }
         ]
     ]
+
+    const onNavAction = (e) => {
+        console.log('Action: ', e)
+    }
 
     return (
         <>
@@ -117,7 +150,8 @@ const MainLayout = (props) => {
                 leftMenu={leftMenu}
                 middleMenu={middleMenu}
                 rightLogo={rightLogo}
-                rightMenu={rightMenu} />
+                rightMenu={rightMenu}
+                onAction={onNavAction} />
 
             <Container maxWidth="lg">
                 <Box>

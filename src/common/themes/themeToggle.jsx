@@ -10,11 +10,16 @@ const ThemeToggle = (props) => {
 
     return (
         <div style={{ display: 'inline-block' }}>
-            <Typography variant="caption" display="inline-block" gutterBottom>
-                Dark Mode
-            </Typography>
+            {
+                !Boolean(props.noLabel)? (
+                    <Typography variant="caption" display="inline-block" gutterBottom>
+                        Dark Mode
+                    </Typography>
+                ): null
+            }
             <Switch
-                checked={localStorageContext.themeMode == 'dark'}
+                size='small'
+                checked={localStorageContext.themeMode === 'dark'}
                 onChange={() => {
                     toggleThemeMode()
                 }} />

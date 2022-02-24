@@ -1,4 +1,4 @@
-export default {
+const primary = {
     palette: {
         mode: 'dark',
         primary: {
@@ -24,3 +24,5 @@ export default {
         ].join(','),
     },
 }
+
+export default primary

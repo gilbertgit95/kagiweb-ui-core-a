@@ -20,6 +20,7 @@ const AuthLayout = (props) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={{textAlign: 'center'}}>
                         <img
+                            alt="logo"
                             style={{width: 150}}
                             src='/favicon.png' />
                         <Typography variant="h4" gutterBottom component="div">

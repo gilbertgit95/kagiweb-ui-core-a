@@ -1,6 +1,6 @@
 
-import { useState, useEffect } from 'react'
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom"
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -21,10 +21,20 @@ import ListItemText from '@mui/material/ListItemText'
 
 const MainNav = (props) => {
   const [anchorElRightMenu, setAnchorElRightMenu] = useState(null)
+  const [navRoute, setNavRoute] = useState(null)
   const [drawer, setDrawer] = useState({
       leftMenu: false,
       rightMenu: false
   })
+  const navigate = useNavigate()
+
+  // life cycles
+  useEffect(() => {
+    // use to navigate
+    if (navRoute) {
+      navigate(navRoute)
+    }
+  }, [navRoute, navigate])
 
   const handleOpenRightMenu = (event) => {
     setAnchorElRightMenu(event.currentTarget)
@@ -46,7 +56,27 @@ const MainNav = (props) => {
     setDrawer({ ...drawer, [anchor]: open })
   }
 
-  const generateList = (anchor, itemsGroup) => {
+  const onClickNav = (e) => {
+    // check for event info
+    if (e && e.type) {
+      // navigate to routes if the its a link
+      if (e.type === 'link') {
+        setNavRoute(e.value)
+
+      // callback nav value if its an action
+      } else if (e.type === 'action') {
+        //  check for callback property
+        if (props.onAction && typeof props.onAction == 'function') {
+          props.onAction(e.value)
+        }
+      }
+    }
+
+    // return will imediately end the method in the stack
+    return
+  }
+
+  const generateDrawerItems = (anchor, itemsGroup) => {
 
     if (props.mainMenu) {
         // compute array of munus, including divisions
@@ -55,9 +85,7 @@ const MainNav = (props) => {
     return (
       <Box
         // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-        role="presentation"
-        onClick={toggleDrawer(anchor, false)}
-        onKeyDown={toggleDrawer(anchor, false)}>
+        role="presentation">
         {
           itemsGroup.map((items, itemsIndex) => {
             return (
@@ -65,7 +93,16 @@ const MainNav = (props) => {
                 <List key={anchor + '_groupItems_' + itemsIndex}>
                   {
                     items.map((item, index) => (
-                      <ListItem button key={anchor + '_groupChildItems_' + itemsIndex + '_' + index}>
+                      <ListItem
+                        button
+                        onClick={(e) => {
+                          onClickNav({type: item.type, value: item.value})
+                          if (item.type === 'action' || item.type === 'link') {
+                            console.log('close drawer!')
+                            toggleDrawer(anchor, false)(e)
+                          }
+                        }}
+                        key={anchor + '_groupChildItems_' + itemsIndex + '_' + index}>
                         <ListItemIcon>
                           { item.component? item.component: null }
                         </ListItemIcon>
@@ -95,6 +132,9 @@ const MainNav = (props) => {
             variant="h6"
             noWrap
             component="div"
+            onClick={() => {
+              onClickNav({type: props.leftLogo.type, value: props.leftLogo.value})
+            }}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             { props.leftLogo? props.leftLogo.component: null }
           </Typography>
@@ -113,7 +153,7 @@ const MainNav = (props) => {
                 anchor={'left'}
                 open={drawer['leftMenu']}
                 onClose={toggleDrawer('leftMenu', false)}>
-                { generateList('leftMenu', props.leftMenu? props.leftMenu: []) }
+                { generateDrawerItems('leftMenu', props.leftMenu? props.leftMenu: []) }
             </Drawer>
           </Box>
 
@@ -122,6 +162,9 @@ const MainNav = (props) => {
             variant="h6"
             noWrap
             component="div"
+            onClick={() => {
+              onClickNav({type: props.leftLogo.type, value: props.leftLogo.value})
+            }}
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             { props.leftLogo? props.leftLogo.component: null }
           </Typography>
@@ -133,6 +176,9 @@ const MainNav = (props) => {
                 return (
                   items.map((item, index) => (
                     <Button
+                      onClick={() => {
+                        onClickNav({type: item.type, value: item.value})
+                      }}
                       key={'groupPlainItems_' + itemsIndex + '_' + index}
                       // onClick={handleCloseNavMenu}
                       sx={{ my: 2, color: 'white', display: 'block' }}>
@@ -151,6 +197,9 @@ const MainNav = (props) => {
               props.middleMenu? props.middleMenu.map((item, index) => {
                 return (
                   <Tooltip
+                    onClick={() => {
+                      onClickNav({type: item.type, value: item.value})
+                    }}
                     title={ item.label }
                     style={{marginRight: 15}}
                     key={'middleMenu_' + index}>
@@ -191,7 +240,12 @@ const MainNav = (props) => {
                           items.map((item, index) => (
                             <MenuItem
                               key={'rightMenuDDgroupChildItems_' + itemsIndex + '_' + index}
-                              onClick={handleCloseRightMenu}>
+                              onClick={() => {
+                                onClickNav({type: item.type, value: item.value})
+                                if (item.type === 'action' || item.type === 'link') {
+                                  handleCloseRightMenu()
+                                }
+                              }}>
                               <ListItemIcon>
                                 { item.component? item.component: null }
                               </ListItemIcon>
@@ -199,6 +253,8 @@ const MainNav = (props) => {
                             </MenuItem>
                           ))
                         }
+                        {/* divider */}
+                        { itemsIndex < props.rightMenu.length -1? <Divider key={'rightMenuDDgroupItems_groupDivider_' + itemsIndex} />: null }
                       </List>
                     )
                   }): null
@@ -219,7 +275,7 @@ const MainNav = (props) => {
                 anchor={'top'}
                 open={drawer['rightMenu']}
                 onClose={toggleDrawer('rightMenu', false)}>
-                { generateList('rightMenu', props.rightMenu? props.rightMenu: []) }
+                { generateDrawerItems('rightMenu', props.rightMenu? props.rightMenu: []) }
               </Drawer>
             </Box>
           </Box>

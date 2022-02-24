@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from 'react'
+import { useEffect, useState, createContext } from 'react'
 
 const storageName = 'app_info'
 
@@ -24,7 +24,7 @@ export const UseLocalStorageContext = () => {
 
     const toggleThemeMode = () => {
         let themeMode = localStorageContext.themeMode
-        let newThemeMode = (themeMode && themeMode == 'light')? 'dark': 'light'
+        let newThemeMode = (themeMode && themeMode === 'light')? 'dark': 'light'
         updateLocalStorage({themeMode: newThemeMode})
     }
 
