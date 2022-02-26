@@ -6,6 +6,8 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import MenuIcon from '@mui/icons-material/Menu'
 import MailIcon from '@mui/icons-material/Mail'
+import IconButton from '@mui/material/Button'
+import Button from '@mui/material/IconButton'
 
 import AccountContext from '../context/accountContext'
 import ThemeToggle from '../themes/themeToggle'
@@ -23,6 +25,28 @@ const AuthLayout = (props) => {
         type: 'action',
         value: 'openSettings'
     }
+    let middleMenu = [
+        {
+            label: 'Latest news from our team',
+            component: (
+                <Button size="small" style={{ borderRadius: 5, marginRight: 15 }}>
+                    <Typography>News</Typography>
+                </Button>
+            ),
+            type: 'link',
+            value: '/home'
+        },
+        {
+            label: 'Contact or Learn about our Team',
+            component: (
+                <Button size="small"  style={{ borderRadius: 5, marginRight: 15 }}>
+                    <Typography>About Us</Typography>
+                </Button>
+            ),
+            type: 'link',
+            value: '/home'
+        }
+    ]
     let rightMenu = [
         [
             {
@@ -64,7 +88,7 @@ const AuthLayout = (props) => {
                 isTransparent={true}
                 leftLogo={null}
                 leftMenu={[]}
-                middleMenu={[]}
+                middleMenu={middleMenu}
                 rightLogo={rightLogo}
                 rightMenu={rightMenu}
                 onAction={onNavAction} />
