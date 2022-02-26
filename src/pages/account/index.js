@@ -9,22 +9,22 @@ import TextField from '@mui/material/TextField'
 import LoginIcon from '@mui/icons-material/Login'
 import Button from '@mui/material/Button'
 
-const NotFound = (props) => {
+import AccountContext from '../../common/context/accountContext'
+
+const Account = (props) => {
+    // const ctx = useContext(AccountContext)
+
+    // const btnClicked = (e) => {
+    //     ctx.setAccountContext({testVal: 'Home test value from context'})
+    // }
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <Typography
-                    style={{marginTop: '5%'}}
-                    color='secondary'
-                    variant='h4'
-                    gutterBottom
-                    component='div'>
-                    Error 404 not found Content.
-                </Typography>
+                <Typography>Account Core Content</Typography>
             </Grid>
         </Grid>
     )
 }
 
-export default NotFound
+export default Account

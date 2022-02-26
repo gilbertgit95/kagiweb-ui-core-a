@@ -11,13 +11,16 @@ import AuthLayout from '../common/layouts/authLayout'
 import MainLayout from '../common/layouts/mainLayout'
 
 // auth pages
-import Login from './login'
-import Logout from './logout'
-import ResetPassword from './resetPassword'
-import ForgotPassword from './forgotPassword'
+import Login from './auth/login'
+import Logout from './auth/logout'
+import ResetPassword from './auth/resetPassword'
+import ForgotPassword from './auth/forgotPassword'
 
 // main pages
 import Home from './home'
+import Account from './account'
+import AccountProfile from './account/accountProfile'
+import AccountSettings from './account/accountSettings'
 
 // error page
 import NotFound from './notFound'
@@ -42,6 +45,9 @@ const Pages = (props) => {
                 {/* main pages */}
                 <Route path="/" element={<MainLayout />}>
                     <Route path="home" element={<Home />} />
+                    <Route path="account" element={<Account />} />
+                    <Route path="account/profile" element={<AccountProfile />} />
+                    <Route path="account/settings" element={<AccountSettings />} />
                 </Route>
 
                 {/* error page */}

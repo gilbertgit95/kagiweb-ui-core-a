@@ -6,6 +6,11 @@ import Grid from '@mui/material/Grid'
 // import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
 import MailIcon from '@mui/icons-material/Mail'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
+import SettingsIcon from '@mui/icons-material/Settings'
+import FaceIcon from '@mui/icons-material/Face'
+import LogoutIcon from '@mui/icons-material/Logout'
+
 // import Tooltip from '@mui/material/Tooltip'
 import Badge from '@mui/material/Badge'
 import IconButton from '@mui/material/IconButton'
@@ -111,25 +116,33 @@ const MainLayout = (props) => {
         ],
         [
             {
-                component: <MailIcon />,
-                label: 'Root',
+                component: <AdminPanelSettingsIcon />,
+                label: 'Account',
                 type: 'link',
-                value: '/'
+                value: '/account'
             },
             {
-                component: <MailIcon />,
-                label: 'Home',
+                component: <FaceIcon />,
+                label: 'Profile',
                 type: 'link',
-                value: '/home'
+                value: '/account/profile'
             },
             {
-                component: <MailIcon />,
-                label: 'Test Act',
-                type: 'action',
-                value: 'test_act'
+                component: <SettingsIcon />,
+                label: 'Settings',
+                type: 'link',
+                value: '/account/settings'
             },
+            // {
+            //     component: <MailIcon />,
+            //     label: 'Test Act',
+            //     type: 'action',
+            //     value: 'test_act'
+            // },
+        ],
+        [
             {
-                component: <MailIcon />,
+                component: <LogoutIcon />,
                 label: 'Logout',
                 type: 'link',
                 value: '/auth/logout'
