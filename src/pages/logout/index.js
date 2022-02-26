@@ -1,33 +1,51 @@
 import { useState, useEffect } from 'react'
-import Link from '@mui/material/Link'
-import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import LoginIcon from '@mui/icons-material/Login'
-import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress'
+
+import { useNavigate } from "react-router-dom"
+import utils from '../../utilities'
 
 const Logout = (props) => {
+    const [navRoute, setNavRoute] = useState(null)
+    const navigate = useNavigate()
 
-    const logout = () => {
-
-    }
-
-    const redirect = () => {
-        
-    }
+    // life cycles
+    useEffect(() => {
+        // use to navigate
+        if (navRoute) {
+            navigate(navRoute)
+        }
+    }, [navRoute, navigate])
 
     useEffect(() => {
+        let cancel = false
+        console.log('init cancel false')
+        async function redirect() {
+            // use temporary wait to
+            // recreate logging out request
+            await utils.waitFor(3)
 
+            // then redirect after successful logout
+            if (!navRoute && !cancel) {
+                console.log('inside if condition')
+                setNavRoute('/auth/login')
+            }
+        }
+
+        redirect()
+
+        return () => {
+            console.log('cancel to true')
+            cancel = true
+        }
     }, [])
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography>
-                    Signingout...
+                    Signing out...
                 </Typography>
             </Grid>
 

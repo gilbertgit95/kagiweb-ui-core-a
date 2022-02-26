@@ -1,22 +1,39 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
+
+import { useNavigate } from "react-router-dom"
 
 import Link from '@mui/material/Link'
-import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import LoginIcon from '@mui/icons-material/Login'
 import Button from '@mui/material/Button'
 
 import AccountContext from '../../common/context/accountContext'
+import utils from '../../utilities'
 
 const Login = (props) => {
+
+    const [navRoute, setNavRoute] = useState(null)
+    const navigate = useNavigate()
     // const ctx = useContext(AccountContext)
 
     // const btnClicked = (e) => {
     //     ctx.setAccountContext({testVal: 'login test value from context'})
     // }
+
+    const login = async () => {
+        await utils.waitFor(2)
+        setNavRoute('/')
+    }
+
+    // life cycles
+    useEffect(() => {
+        // use to navigate
+        if (navRoute) {
+            navigate(navRoute)
+        }
+    }, [navRoute, navigate])
 
     return (
         <Grid container spacing={2}>
@@ -48,6 +65,7 @@ const Login = (props) => {
                     fullWidth
                     variant='contained'
                     color='primary'
+                    onClick={login}
                     startIcon={<LoginIcon />}>
                     login
                 </Button>
