@@ -19,24 +19,23 @@ const Logout = (props) => {
     }, [navRoute, navigate])
 
     useEffect(() => {
+        // cancel is use for cleanup
         let cancel = false
-        console.log('init cancel false')
         async function redirect() {
             // use temporary wait to
             // recreate logging out request
-            await utils.waitFor(3)
+            await utils.waitFor(2)
 
             // then redirect after successful logout
             if (!navRoute && !cancel) {
-                console.log('inside if condition')
                 setNavRoute('/auth/login')
             }
         }
 
         redirect()
 
+        // cleanup function on unmount
         return () => {
-            console.log('cancel to true')
             cancel = true
         }
     }, [])

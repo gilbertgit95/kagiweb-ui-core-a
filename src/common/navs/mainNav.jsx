@@ -98,7 +98,6 @@ const MainNav = (props) => {
                         onClick={(e) => {
                           onClickNav({type: item.type, value: item.value})
                           if (item.type === 'action' || item.type === 'link') {
-                            console.log('close drawer!')
                             toggleDrawer(anchor, false)(e)
                           }
                         }}
@@ -123,7 +122,9 @@ const MainNav = (props) => {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      style={props.isTransparent? { background: 'transparent', boxShadow: 'none'}: {}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
@@ -139,23 +140,28 @@ const MainNav = (props) => {
             { props.leftLogo? props.leftLogo.component: null }
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label={ props.leftLogo? props.leftLogo.label: '' }
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={toggleDrawer('leftMenu', true)}
-              color="inherit">
-              <MenuIcon />
-            </IconButton>
-            <Drawer
-                anchor={'left'}
-                open={drawer['leftMenu']}
-                onClose={toggleDrawer('leftMenu', false)}>
-                { generateDrawerItems('leftMenu', props.leftMenu? props.leftMenu: []) }
-            </Drawer>
-          </Box>
+          {/* left drawer for small screen */}
+          {
+            props.leftMenu && props.leftMenu.length? (
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label={ props.leftLogo? props.leftLogo.label: '' }
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={toggleDrawer('leftMenu', true)}
+                  color="inherit">
+                  <MenuIcon />
+                </IconButton>
+                <Drawer
+                    anchor={'left'}
+                    open={drawer['leftMenu']}
+                    onClose={toggleDrawer('leftMenu', false)}>
+                    { generateDrawerItems('leftMenu', props.leftMenu? props.leftMenu: []) }
+                </Drawer>
+              </Box>
+            ): null
+          }
 
           {/* logo display for small screen size */}
           <Typography

@@ -99,6 +99,18 @@ const MainLayout = (props) => {
     let rightMenu = [
         [
             {
+                component: (
+                    <Box sx={{ display: 'inline-block' }}>
+                        <ThemeToggle noLabel={true} />
+                    </Box>
+                ),
+                label: 'Dark Mode',
+                type: 'none',
+                value: 'none'
+            }
+        ],
+        [
+            {
                 component: <MailIcon />,
                 label: 'Root',
                 type: 'link',
@@ -115,21 +127,7 @@ const MainLayout = (props) => {
                 label: 'Test Act',
                 type: 'action',
                 value: 'test_act'
-            }
-        ],
-        [
-            {
-                component: (
-                    <Box sx={{ display: 'inline-block' }}>
-                        <ThemeToggle noLabel={true} />
-                    </Box>
-                ),
-                label: 'Dark Mode',
-                type: 'none',
-                value: 'none'
-            }
-        ],
-        [
+            },
             {
                 component: <MailIcon />,
                 label: 'Logout',
