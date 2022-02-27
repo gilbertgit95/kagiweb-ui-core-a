@@ -11,12 +11,22 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import RotateLeftIcon from '@mui/icons-material/RotateLeft'
 
+import LoadingButton from '../../common/buttons/loadingButton'
+import utils from '../../utilities'
+
 import {
     useParams
-  } from "react-router-dom";
+} from "react-router-dom";
 
 const ResetPassword = (props) => {
     const { key } = useParams()
+    const [internalstates, setInternalStates] = useState({
+        resetProgress: false,
+        newPassword: '',
+        confirmPassword: '',
+        resetKey: '',
+        errors: []
+    })
     const [resetKey, setResetKey] = useState(key? key: '')
 
     const onChangeResetKey = (e) => {
@@ -28,12 +38,18 @@ const ResetPassword = (props) => {
         setResetKey(keyVal)
     }
 
+    const resetPassword = async () => {
+        setInternalStates({...internalstates, ...{resetProgress: true}})
+        await utils.waitFor(2)
+        setInternalStates({...internalstates, ...{resetProgress: false}})
+    }
+
 
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography>
-                    Please enter the correct key and the new password you wanted to set.
+                    Please enter the correct key and the new password you wanted.
                 </Typography>
             </Grid>
 
@@ -82,14 +98,16 @@ const ResetPassword = (props) => {
             </Grid>
 
             <Grid item xs={12}>
-                <Button
+                <LoadingButton
                     size='small'
                     fullWidth
                     variant='contained'
                     color='primary'
+                    onClick={resetPassword}
+                    isLoading={internalstates.resetProgress}
                     startIcon={<LoginIcon />}>
                     Reset
-                </Button>
+                </LoadingButton>
                 <Box style={{marginTop: 15}}>
                     <Link
                         style={{margin: 10}}

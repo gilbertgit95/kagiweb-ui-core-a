@@ -10,10 +10,17 @@ import LoginIcon from '@mui/icons-material/Login'
 import Button from '@mui/material/Button'
 
 import AccountContext from '../../common/context/accountContext'
+import LoadingButton from '../../common/buttons/loadingButton'
 import utils from '../../utilities'
 
 const Login = (props) => {
 
+    const [internalstates, setInternalStates] = useState({
+        loginProgress: false,
+        password: '',
+        username: '',
+        errors: []
+    })
     const [navRoute, setNavRoute] = useState(null)
     const navigate = useNavigate()
     // const ctx = useContext(AccountContext)
@@ -23,7 +30,9 @@ const Login = (props) => {
     // }
 
     const login = async () => {
+        setInternalStates({...internalstates, ...{loginProgress: true}})
         await utils.waitFor(2)
+        setInternalStates({...internalstates, ...{loginProgress: false}})
         setNavRoute('/')
     }
 
@@ -60,15 +69,16 @@ const Login = (props) => {
             
 
             <Grid item xs={12}>
-                <Button
+                <LoadingButton
                     size='small'
                     fullWidth
                     variant='contained'
                     color='primary'
                     onClick={login}
+                    isLoading={internalstates.loginProgress}
                     startIcon={<LoginIcon />}>
                     login
-                </Button>
+                </LoadingButton>
                 <Box style={{marginTop: 15}}>
                     <Link
                         color="inherit"
