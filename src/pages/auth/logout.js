@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import { useNavigate } from "react-router-dom"
-import utils from '../../utilities'
+import utils from '../../common/utilities'
 
 const Logout = (props) => {
     const [navRoute, setNavRoute] = useState(null)

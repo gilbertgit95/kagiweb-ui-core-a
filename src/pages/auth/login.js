@@ -11,7 +11,7 @@ import Button from '@mui/material/Button'
 
 import AccountContext from '../../common/context/accountContext'
 import LoadingButton from '../../common/buttons/loadingButton'
-import utils from '../../utilities'
+import utils from '../../common/utilities'
 
 const Login = (props) => {
 

@@ -14,7 +14,7 @@ import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 import LoadingButton from '../../common/buttons/loadingButton'
-import utils from '../../utilities'
+import utils from '../../common/utilities'
 
 const ForgotPassword = (props) => { 
     const [internalstates, setInternalStates] = useState({
@@ -41,7 +41,7 @@ const ForgotPassword = (props) => {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} style={{marginTop: 0, paddingTop: 0, textAlign: 'left'}}>
+            <Grid item xs={12} style={{marginTop: 0, paddingTop: 0, textAlign: 'right'}}>
                 <ToggleButtonGroup
                     value={internalstates.addressType}
                     exclusive
