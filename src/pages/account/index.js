@@ -10,6 +10,8 @@ import LoginIcon from '@mui/icons-material/Login'
 import Button from '@mui/material/Button'
 
 import AccountContext from '../../common/context/accountContext'
+import AccountView from './components/accountView'
+import AccountEdit from './components/accountEdit'
 
 const Account = (props) => {
     // const ctx = useContext(AccountContext)
@@ -21,7 +23,9 @@ const Account = (props) => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <Typography>Account Core Content</Typography>
+                {/* <Typography>Account Core Content</Typography> */}
+                <AccountView />
+                <AccountEdit />
             </Grid>
         </Grid>
     )
