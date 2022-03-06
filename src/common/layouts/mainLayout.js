@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Outlet, Link, useHistory } from "react-router-dom"
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
@@ -16,14 +16,12 @@ import Badge from '@mui/material/Badge'
 import IconButton from '@mui/material/IconButton'
 
 import MainNav from '../navs/mainNav'
-// import AccountContext from '../context/accountContext'
+import AccountContext from '../context/accountContext'
 import ThemeToggle from '../themes/themeToggle'
 // import config from '../../config'
 
 const MainLayout = (props) => {
-    // const ctx = useContext(AccountContext)
-
-    // let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
+    const accountCtx = useContext(AccountContext)
 
     let leftLogo = {
         label: 'Root',
@@ -153,6 +151,10 @@ const MainLayout = (props) => {
     const onNavAction = (e) => {
         console.log('Action: ', e)
     }
+
+    useEffect(() => {
+        accountCtx.initAccountData()
+    }, [])
 
     return (
         <>
