@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
+import AccountContext from '../../../common/context/accountContext'
+
 const AccountSettingsEdit = (props) => {
+
+    const accountCtx = useContext(AccountContext)
+
+    useEffect(() => {
+        console.log('data in account edit: ', accountCtx.accountContext)
+
+    },[accountCtx.accountContext])
 
     return (
         <Box>
