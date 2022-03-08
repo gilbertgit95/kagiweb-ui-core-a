@@ -8,11 +8,11 @@ const AccountProfileEdit = (props) => {
 
     return (
         <Box>
-            A<Grid container spacing={2}>
-                <Grid item xs={12}>
+            <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
                     Account Profile Edit
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
                     <TextField
                         required
                         id="outlined-required"
