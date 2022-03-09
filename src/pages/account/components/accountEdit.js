@@ -86,10 +86,6 @@ const AccountEdit = (props) => {
                         <Button variant="contained">Primary</Button>
                     </Grid>
                 </Grid>
-
-                {/* <Grid item style={{padding: 10}} xs={12}>
-                    <Button variant="contained">Primary</Button>
-                </Grid> */}
             </Grid>
         </Box>
     )
