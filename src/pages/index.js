@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+    Navigate,
     BrowserRouter,
     Routes,
     Route
@@ -33,8 +34,12 @@ const Pages = (props) => {
     return (
         <BrowserRouter>
             <Routes>
+                {/* initial redirect */}
+                <Route path="/" element={<Navigate replace to="/core/auth/login" />} />
+
                 {/* auth pages */}
-                <Route path="/auth/" element={<AuthLayout />}>
+                <Route path="core/auth/" element={<AuthLayout />}>
+                    <Route path="" element={<Navigate replace to="/core/auth/login" />} />
                     <Route path="login" element={<Login />} />
                     <Route path="logout" element={<Logout />} />
                     <Route path="resetPassword" element={<ResetPassword />} />
@@ -43,7 +48,7 @@ const Pages = (props) => {
                 </Route>
 
                 {/* main pages */}
-                <Route path="/" element={<MainLayout />}>
+                <Route path="core/" element={<MainLayout />}>
                     <Route path="home" element={<Home />} />
                     <Route path="account" element={<Account />} />
                     <Route path="account/profile" element={<AccountProfile />} />

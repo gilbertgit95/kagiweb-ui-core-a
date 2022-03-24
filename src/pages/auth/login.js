@@ -33,7 +33,7 @@ const Login = (props) => {
         setInternalStates({...internalstates, ...{loginProgress: true}})
         await utils.waitFor(2)
         setInternalStates({...internalstates, ...{loginProgress: false}})
-        setNavRoute('/')
+        setNavRoute('/core/home')
     }
 
     // life cycles
@@ -82,7 +82,7 @@ const Login = (props) => {
                 <Box style={{marginTop: 15}}>
                     <Link
                         color="inherit"
-                        href="/auth/forgotPassword">
+                        href="/core/auth/forgotPassword">
                         Forgot password
                     </Link>
                 </Box>

@@ -27,7 +27,7 @@ const MainLayout = (props) => {
         label: 'Root',
         component: <Avatar alt="Logo" src="/favicon.png" />,
         type: 'link',
-        value: '/'
+        value: '/core/'
     }
     let leftMenu = [
         [
@@ -35,19 +35,19 @@ const MainLayout = (props) => {
               component: <MailIcon />,
               label: 'Home',
               type: 'link',
-              value: '/home'
+              value: '/core/home'
             },
             {
                 component: <MailIcon />,
                 label: 'Login',
                 type: 'link',
-                value: '/auth/login'
+                value: '/core/auth/login'
             },
             {
                 component: <MailIcon />,
                 label: 'Reset Password',
                 type: 'link',
-                value: '/auth/resetPassword'
+                value: '/core/auth/resetPassword'
             }
         ],
         [
@@ -77,7 +77,7 @@ const MainLayout = (props) => {
                 </IconButton>
             ),
             type: 'link',
-            value: '/home'
+            value: '/core/home'
         },
         {
             label: 'notifications',
@@ -117,19 +117,19 @@ const MainLayout = (props) => {
                 component: <AdminPanelSettingsIcon />,
                 label: 'Account',
                 type: 'link',
-                value: '/account'
+                value: '/core/account'
             },
             {
                 component: <FaceIcon />,
                 label: 'Profile',
                 type: 'link',
-                value: '/account/profile'
+                value: '/core/account/profile'
             },
             {
                 component: <SettingsIcon />,
                 label: 'Settings',
                 type: 'link',
-                value: '/account/settings'
+                value: '/core/account/settings'
             },
             // {
             //     component: <MailIcon />,
@@ -143,7 +143,7 @@ const MainLayout = (props) => {
                 component: <LogoutIcon />,
                 label: 'Logout',
                 type: 'link',
-                value: '/auth/logout'
+                value: '/core/auth/logout'
             }
         ]
     ]

@@ -34,7 +34,7 @@ const AuthLayout = (props) => {
                 </Button>
             ),
             type: 'link',
-            value: '/home'
+            value: 'core/home'
         },
         {
             label: 'Contact or Learn about our Team',
@@ -44,7 +44,7 @@ const AuthLayout = (props) => {
                 </Button>
             ),
             type: 'link',
-            value: '/home'
+            value: 'core/home'
         }
     ]
     let rightMenu = [

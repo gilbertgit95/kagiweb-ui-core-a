@@ -112,13 +112,13 @@ const ResetPassword = (props) => {
                     <Link
                         style={{margin: 10}}
                         color="inherit"
-                        href="/auth/forgotPassword">
+                        href="/core/auth/forgotPassword">
                         Forgot password
                     </Link>
                     <Link
                         style={{margin: 10}}
                         color="inherit"
-                        href="/auth/login">
+                        href="/core/auth/login">
                         Login
                     </Link>
                 </Box>

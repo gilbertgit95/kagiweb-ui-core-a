@@ -89,7 +89,7 @@ const ForgotPassword = (props) => {
                 <Box style={{marginTop: 15}}>
                     <Link
                         color="inherit"
-                        href="/auth/login">
+                        href="/core/auth/login">
                         Back to login
                     </Link>
                 </Box>

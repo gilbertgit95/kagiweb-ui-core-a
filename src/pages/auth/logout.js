@@ -28,7 +28,7 @@ const Logout = (props) => {
 
             // then redirect after successful logout
             if (!navRoute && !cancel) {
-                setNavRoute('/auth/login')
+                setNavRoute('/core/auth/login')
             }
         }
 
