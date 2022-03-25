@@ -8,6 +8,7 @@ import Avatar from '@mui/material/Avatar'
 import MailIcon from '@mui/icons-material/Mail'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import SettingsIcon from '@mui/icons-material/Settings'
+import NotificationsIcon from '@mui/icons-material/Notifications'
 import FaceIcon from '@mui/icons-material/Face'
 import LogoutIcon from '@mui/icons-material/Logout'
 
@@ -27,7 +28,7 @@ const MainLayout = (props) => {
         label: 'Root',
         component: <Avatar alt="Logo" src="/favicon.png" />,
         type: 'link',
-        value: '/core/'
+        value: '/core/home'
     }
     let leftMenu = [
         [
@@ -36,18 +37,6 @@ const MainLayout = (props) => {
               label: 'Home',
               type: 'link',
               value: '/core/home'
-            },
-            {
-                component: <MailIcon />,
-                label: 'Login',
-                type: 'link',
-                value: '/core/auth/login'
-            },
-            {
-                component: <MailIcon />,
-                label: 'Reset Password',
-                type: 'link',
-                value: '/core/auth/resetPassword'
             }
         ],
         [
@@ -70,21 +59,21 @@ const MainLayout = (props) => {
 
     let middleMenu = [
         {
-            label: 'Home',
+            label: 'Administrator',
             component: (
                 <IconButton size="large" sx={{ p: 0 }}>
-                    <MailIcon color="action" size="large" />
+                    <AdminPanelSettingsIcon color="action" size="large" />
                 </IconButton>
             ),
             type: 'link',
             value: '/core/home'
         },
         {
-            label: 'notifications',
+            label: 'Notifications',
             component: (
                 <IconButton size="large" sx={{ p: 0 }}>
                     <Badge badgeContent={4} color="error">
-                        <MailIcon color="action" size="large" />
+                        <NotificationsIcon color="action" size="large" />
                     </Badge>
                 </IconButton>
             ),
@@ -117,7 +106,7 @@ const MainLayout = (props) => {
                 component: <AdminPanelSettingsIcon />,
                 label: 'Account',
                 type: 'link',
-                value: '/core/account'
+                value: '/core/account/mainCredentials'
             },
             {
                 component: <FaceIcon />,

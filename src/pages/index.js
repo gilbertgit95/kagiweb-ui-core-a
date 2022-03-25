@@ -49,11 +49,25 @@ const Pages = (props) => {
 
                 {/* main pages */}
                 <Route path="core/" element={<MainLayout />}>
+                    <Route path="" element={<Navigate replace to="/core/home" />} />
                     <Route path="home" element={<Home />} />
-                    <Route path="account" element={<Account />} />
-                    <Route path="account/profile" element={<AccountProfile />} />
-                    <Route path="account/settings" element={<AccountSettings />} />
                 </Route>
+
+                <Route path="core/account/" element={<MainLayout />}>
+                    <Route path="" element={<Navigate replace to="/core/account/mainCredentials" />} />
+                    <Route path="mainCredentials" element={<Account />} />
+                    <Route path="profile" element={<AccountProfile />} />
+                    <Route path="settings" element={<AccountSettings />} />
+                </Route>
+
+                {/* <Route path="core/administrator/" element={<MainLayout />}>
+                    <Route path="" element={<Navigate replace to="/core/administrator/appSettings" />} />
+                    <Route path="appSettings" element={<Account />} />
+                    <Route path="appEndpoints" element={<Account />} />
+                    <Route path="appRoles" element={<Account />} />
+                    <Route path="appRoleEndpoints" element={<Account />} />
+                    <Route path="appUsers" element={<Account />} />
+                </Route> */}
 
                 {/* error page */}
                 <Route
