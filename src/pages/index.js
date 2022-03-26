@@ -19,7 +19,7 @@ import ForgotPassword from './auth/forgotPassword'
 
 // main pages
 import Home from './home'
-import Account from './account'
+import AccountCredentials from './account/accountCredentials'
 import AccountProfile from './account/accountProfile'
 import AccountSettings from './account/accountSettings'
 
@@ -54,8 +54,8 @@ const Pages = (props) => {
                 </Route>
 
                 <Route path="core/account/" element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to="/core/account/mainCredentials" />} />
-                    <Route path="mainCredentials" element={<Account />} />
+                    <Route path="" element={<Navigate replace to="/core/account/credentials" />} />
+                    <Route path="credentials" element={<AccountCredentials />} />
                     <Route path="profile" element={<AccountProfile />} />
                     <Route path="settings" element={<AccountSettings />} />
                 </Route>

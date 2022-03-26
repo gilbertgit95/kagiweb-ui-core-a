@@ -10,10 +10,10 @@ import LoginIcon from '@mui/icons-material/Login'
 import Button from '@mui/material/Button'
 
 import AccountContext from '../../common/context/accountContext'
-import AccountView from './components/accountView'
-import AccountEdit from './components/accountEdit'
+import AccountView from './components/accountCredentialsView'
+import AccountEdit from './components/accountCredentialsEdit'
 
-const Account = (props) => {
+const AccountCredentials = (props) => {
     // const ctx = useContext(AccountContext)
 
     // const btnClicked = (e) => {
@@ -31,4 +31,4 @@ const Account = (props) => {
     )
 }
 
-export default Account
+export default AccountCredentials

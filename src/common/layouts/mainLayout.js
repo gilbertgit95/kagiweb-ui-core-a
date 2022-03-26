@@ -106,7 +106,7 @@ const MainLayout = (props) => {
                 component: <AdminPanelSettingsIcon />,
                 label: 'Account',
                 type: 'link',
-                value: '/core/account/mainCredentials'
+                value: '/core/account/credentials'
             },
             {
                 component: <FaceIcon />,
@@ -142,6 +142,7 @@ const MainLayout = (props) => {
     }
 
     useEffect(() => {
+        console.log('init main layout')
         accountCtx.initAccountData()
     }, [])
 
