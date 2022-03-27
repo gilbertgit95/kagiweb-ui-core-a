@@ -10,7 +10,7 @@ const AccountView = (props) => {
 
     return (
         <Box>
-            Account View
+            Account credentials View
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}></Grid>
             </Grid>
