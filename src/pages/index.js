@@ -23,6 +23,12 @@ import AccountCredentials from './account/accountCredentials'
 import AccountProfile from './account/accountProfile'
 import AccountSettings from './account/accountSettings'
 
+import AppSettings from './admin/appSettings'
+import AppEndpoints from './admin/appEndpoints'
+import AppRoles from './admin/appRoles'
+import AppRoleEndpoints from './admin/appRoleEndpoints'
+import AppUsers from './admin/appUsers'
+
 // error page
 import NotFound from './notFound'
 
@@ -60,14 +66,14 @@ const Pages = (props) => {
                     <Route path="settings" element={<AccountSettings />} />
                 </Route>
 
-                {/* <Route path="core/administrator/" element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to="/core/administrator/appSettings" />} />
-                    <Route path="appSettings" element={<Account />} />
-                    <Route path="appEndpoints" element={<Account />} />
-                    <Route path="appRoles" element={<Account />} />
-                    <Route path="appRoleEndpoints" element={<Account />} />
-                    <Route path="appUsers" element={<Account />} />
-                </Route> */}
+                <Route path="core/admin/" element={<MainLayout />}>
+                    <Route path="" element={<Navigate replace to="/core/admin/appSettings" />} />
+                    <Route path="appSettings" element={<AppSettings />} />
+                    <Route path="appEndpoints" element={<AppEndpoints />} />
+                    <Route path="appRoles" element={<AppRoles />} />
+                    <Route path="appRoleEndpoints" element={<AppRoleEndpoints />} />
+                    <Route path="appUsers" element={<AppUsers />} />
+                </Route>
 
                 {/* error page */}
                 <Route

@@ -66,7 +66,7 @@ const MainLayout = (props) => {
                 </IconButton>
             ),
             type: 'link',
-            value: '/core/home'
+            value: '/core/admin/appSettings'
         },
         {
             label: 'Notifications',
