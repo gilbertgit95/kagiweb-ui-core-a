@@ -11,6 +11,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import FaceIcon from '@mui/icons-material/Face'
 import LogoutIcon from '@mui/icons-material/Logout'
+import KeyIcon from '@mui/icons-material/Key'
 
 // import Tooltip from '@mui/material/Tooltip'
 import Badge from '@mui/material/Badge'
@@ -103,8 +104,8 @@ const MainLayout = (props) => {
         ],
         [
             {
-                component: <AdminPanelSettingsIcon />,
-                label: 'Account',
+                component: <KeyIcon />,
+                label: 'Credentials',
                 type: 'link',
                 value: '/core/account/credentials'
             },
