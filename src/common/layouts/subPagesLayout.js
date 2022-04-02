@@ -19,9 +19,15 @@ const SubPagesLayout = (props) => {
                             { config.appName }
                         </Typography>
                     </Grid> */}
-                    <Grid item xs={12} style={{textAlign: 'center'}}>
+                    <Grid item xs={3} style={{textAlign: 'center'}}>
                         <Box>
-                            { props.children? props.children: <Outlet /> }
+                            first column
+                            {/* { props.children? props.children: <Outlet /> } */}
+                        </Box>
+                    </Grid>
+                    <Grid item xs={8} style={{textAlign: 'center'}}>
+                        <Box>
+                            { props.children? props.children: null }
                         </Box>
                     </Grid>
                     {/* <Grid item xs={12} style={{textAlign: 'center'}}>
