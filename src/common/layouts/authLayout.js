@@ -34,7 +34,7 @@ const AuthLayout = (props) => {
                 </Button>
             ),
             type: 'link',
-            value: 'core/home'
+            value: `${ config.rootRoute }/home`
         },
         {
             label: 'Contact or Learn about our Team',
@@ -44,7 +44,7 @@ const AuthLayout = (props) => {
                 </Button>
             ),
             type: 'link',
-            value: 'core/home'
+            value: `${ config.rootRoute }/home`
         }
     ]
     let rightMenu = [

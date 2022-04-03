@@ -15,6 +15,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 import LoadingButton from '../../common/buttons/loadingButton'
 import utils from '../../common/utilities'
+import config from '../../config'
 
 const ForgotPassword = (props) => { 
     const [internalstates, setInternalStates] = useState({
@@ -89,7 +90,7 @@ const ForgotPassword = (props) => {
                 <Box style={{marginTop: 15}}>
                     <Link
                         color="inherit"
-                        href="/core/auth/login">
+                        href={`/${ config.rootRoute }/auth/login`}>
                         Back to login
                     </Link>
                 </Box>

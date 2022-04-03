@@ -13,6 +13,7 @@ import RotateLeftIcon from '@mui/icons-material/RotateLeft'
 
 import LoadingButton from '../../common/buttons/loadingButton'
 import utils from '../../common/utilities'
+import config from '../../config'
 
 import {
     useParams
@@ -112,13 +113,13 @@ const ResetPassword = (props) => {
                     <Link
                         style={{margin: 10}}
                         color="inherit"
-                        href="/core/auth/forgotPassword">
+                        href={`/${ config.rootRoute }/auth/forgotPassword`}>
                         Forgot password
                     </Link>
                     <Link
                         style={{margin: 10}}
                         color="inherit"
-                        href="/core/auth/login">
+                        href={`/${ config.rootRoute }/auth/login`}>
                         Login
                     </Link>
                 </Box>

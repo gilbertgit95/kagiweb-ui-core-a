@@ -20,7 +20,7 @@ import IconButton from '@mui/material/IconButton'
 import MainNav from '../navs/mainNav'
 import AccountContext from '../context/accountContext'
 import ThemeToggle from '../themes/themeToggle'
-// import config from '../../config'
+import config from '../../config'
 
 const MainLayout = (props) => {
     const accountCtx = useContext(AccountContext)
@@ -29,7 +29,7 @@ const MainLayout = (props) => {
         label: 'Root',
         component: <Avatar alt="Logo" src="/favicon.png" />,
         type: 'link',
-        value: '/core/home'
+        value: `/${ config.rootRoute }/home`
     }
     let leftMenu = [
         [
@@ -37,7 +37,7 @@ const MainLayout = (props) => {
               component: <MailIcon />,
               label: 'Home',
               type: 'link',
-              value: '/core/home'
+              value: `/${ config.rootRoute }/home`
             }
         ],
         [
@@ -67,7 +67,7 @@ const MainLayout = (props) => {
                 </IconButton>
             ),
             type: 'link',
-            value: '/core/admin/appSettings'
+            value: `/${ config.rootRoute }/admin/appSettings`
         },
         {
             label: 'Notifications',
@@ -107,19 +107,19 @@ const MainLayout = (props) => {
                 component: <KeyIcon />,
                 label: 'Credentials',
                 type: 'link',
-                value: '/core/account/credentials'
+                value: `/${ config.rootRoute }/account/credentials`
             },
             {
                 component: <FaceIcon />,
                 label: 'Profile',
                 type: 'link',
-                value: '/core/account/profile'
+                value: `/${ config.rootRoute }/account/profile`
             },
             {
                 component: <SettingsIcon />,
                 label: 'Settings',
                 type: 'link',
-                value: '/core/account/settings'
+                value: `/${ config.rootRoute }/account/settings`
             },
             // {
             //     component: <MailIcon />,
@@ -133,7 +133,7 @@ const MainLayout = (props) => {
                 component: <LogoutIcon />,
                 label: 'Logout',
                 type: 'link',
-                value: '/core/auth/logout'
+                value: `/${ config.rootRoute }/auth/logout`
             }
         ]
     ]

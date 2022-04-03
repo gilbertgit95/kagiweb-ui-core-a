@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 import { useNavigate } from "react-router-dom"
 import utils from '../../common/utilities'
+import config from '../../config'
 
 const Logout = (props) => {
     const [navRoute, setNavRoute] = useState(null)
@@ -28,7 +29,7 @@ const Logout = (props) => {
 
             // then redirect after successful logout
             if (!navRoute && !cancel) {
-                setNavRoute('/core/auth/login')
+                setNavRoute(`/${ config.rootRoute }/auth/login`)
             }
         }
 

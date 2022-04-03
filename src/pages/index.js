@@ -41,11 +41,11 @@ const Pages = (props) => {
         <BrowserRouter>
             <Routes>
                 {/* initial redirect */}
-                <Route path="/" element={<Navigate replace to="/core/auth/login" />} />
+                <Route path="/" element={<Navigate replace to={`/${ config.rootRoute }/auth/login`} />} />
 
                 {/* auth pages */}
-                <Route path="core/auth/" element={<AuthLayout />}>
-                    <Route path="" element={<Navigate replace to="/core/auth/login" />} />
+                <Route path={`${ config.rootRoute }/auth/`} element={<AuthLayout />}>
+                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/auth/login`} />} />
                     <Route path="login" element={<Login />} />
                     <Route path="logout" element={<Logout />} />
                     <Route path="resetPassword" element={<ResetPassword />} />
@@ -54,20 +54,20 @@ const Pages = (props) => {
                 </Route>
 
                 {/* main pages */}
-                <Route path="core/" element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to="/core/home" />} />
+                <Route path={`${ config.rootRoute }/`} element={<MainLayout />}>
+                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/home`} />} />
                     <Route path="home" element={<Home />} />
                 </Route>
 
-                <Route path="core/account/" element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to="/core/account/credentials" />} />
+                <Route path={`${ config.rootRoute }/account/`} element={<MainLayout />}>
+                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/account/credentials`} />} />
                     <Route path="credentials" element={<AccountCredentials />} />
                     <Route path="profile" element={<AccountProfile />} />
                     <Route path="settings" element={<AccountSettings />} />
                 </Route>
 
-                <Route path="core/admin/" element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to="/core/admin/appSettings" />} />
+                <Route path={`${ config.rootRoute }/admin/`} element={<MainLayout />}>
+                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/admin/appSettings`} />} />
                     <Route path="appSettings" element={<AppSettings />} />
                     <Route path="appEndpoints" element={<AppEndpoints />} />
                     <Route path="appRoles" element={<AppRoles />} />

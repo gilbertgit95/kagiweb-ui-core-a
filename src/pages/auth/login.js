@@ -12,6 +12,7 @@ import Button from '@mui/material/Button'
 import AccountContext from '../../common/context/accountContext'
 import LoadingButton from '../../common/buttons/loadingButton'
 import utils from '../../common/utilities'
+import config from '../../config'
 
 const Login = (props) => {
 
@@ -33,7 +34,7 @@ const Login = (props) => {
         setInternalStates({...internalstates, ...{loginProgress: true}})
         await utils.waitFor(2)
         setInternalStates({...internalstates, ...{loginProgress: false}})
-        setNavRoute('/core/home')
+        setNavRoute(`/${ config.rootRoute }/home`)
     }
 
     // life cycles
@@ -82,7 +83,7 @@ const Login = (props) => {
                 <Box style={{marginTop: 15}}>
                     <Link
                         color="inherit"
-                        href="/core/auth/forgotPassword">
+                        href={`/${ config.rootRoute }/auth/forgotPassword`}>
                         Forgot password
                     </Link>
                 </Box>
