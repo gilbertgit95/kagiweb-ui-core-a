@@ -78,10 +78,6 @@ const MainNav = (props) => {
 
   const generateDrawerItems = (anchor, itemsGroup) => {
 
-    if (props.mainMenu) {
-        // compute array of munus, including divisions
-    }
-
     return (
       <Box
         // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
