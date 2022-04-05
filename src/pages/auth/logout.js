@@ -39,7 +39,7 @@ const Logout = (props) => {
         return () => {
             cancel = true
         }
-    }, [])
+    }, [navRoute])
 
     return (
         <Grid container spacing={2}>

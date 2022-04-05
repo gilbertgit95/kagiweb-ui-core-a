@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import Switch from '@mui/material/Switch'
 import Typography from '@mui/material/Typography'
 import LocalStorageContext from '../context/localStorageContext.js'

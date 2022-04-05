@@ -1,11 +1,7 @@
-import { useState, useContext } from 'react'
-import { Outlet, Link } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-
-import config from '../../config'
 
 const PublicPagelayout = (props) => {
 

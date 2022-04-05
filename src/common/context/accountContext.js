@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext } from 'react'
+import { useState, createContext } from 'react'
 import utils from '../utilities'
 
 const AccountContext = createContext({

@@ -1,15 +1,12 @@
-import { useState, useContext } from 'react'
-import { Outlet, Link } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import MenuIcon from '@mui/icons-material/Menu'
 import MailIcon from '@mui/icons-material/Mail'
-import IconButton from '@mui/material/Button'
 import Button from '@mui/material/IconButton'
 
-import AccountContext from '../context/accountContext'
 import ThemeToggle from '../themes/themeToggle'
 
 import MainNav from '../navs/mainNav'
