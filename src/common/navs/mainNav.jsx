@@ -123,7 +123,8 @@ const MainNav = (props) => {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       style={props.isTransparent? { background: 'transparent', boxShadow: 'none'}: {}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -157,6 +158,7 @@ const MainNav = (props) => {
                     anchor={'left'}
                     open={drawer['leftMenu']}
                     onClose={toggleDrawer('leftMenu', false)}>
+                    <Toolbar />
                     { generateDrawerItems('leftMenu', props.leftMenu? props.leftMenu: []) }
                 </Drawer>
               </Box>
@@ -281,6 +283,7 @@ const MainNav = (props) => {
                 anchor={'top'}
                 open={drawer['rightMenu']}
                 onClose={toggleDrawer('rightMenu', false)}>
+                <Toolbar />
                 { generateDrawerItems('rightMenu', props.rightMenu? props.rightMenu: []) }
               </Drawer>
             </Box>

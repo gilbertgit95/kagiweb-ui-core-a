@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom"
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import Toolbar from '@mui/material/Toolbar'
 // import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
 import MailIcon from '@mui/icons-material/Mail'
@@ -157,8 +158,9 @@ const MainLayout = (props) => {
                 rightMenu={rightMenu}
                 onAction={onNavAction} />
 
-            <Container maxWidth="lg">
+            <Container maxWidth="false">
                 <Box>
+                <Toolbar />
                     <Grid container spacing={2}>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
                             {/* <Typography variant="h4" gutterBottom component="div">
