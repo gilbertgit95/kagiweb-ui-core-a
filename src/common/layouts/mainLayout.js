@@ -20,10 +20,12 @@ import IconButton from '@mui/material/IconButton'
 
 import MainNav from '../navs/mainNav'
 import AccountContext from '../context/accountContext'
+import RouterContext, { UseRouterContext } from '../context/routerContext'
 import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
 
 const MainLayout = (props) => {
+    const routerStates = UseRouterContext()
     const accountCtx = useContext(AccountContext)
 
     let leftLogo = {
@@ -149,7 +151,10 @@ const MainLayout = (props) => {
     }, [])
 
     return (
-        <>
+        <RouterContext.Provider
+            value={{
+              ...routerStates
+            }}>
             <MainNav
                 leftLogo={leftLogo}
                 leftMenu={leftMenu}
@@ -180,7 +185,7 @@ const MainLayout = (props) => {
                     </Grid>
                 </Box>
             </Container>
-        </>
+        </RouterContext.Provider>
     )
 }
 

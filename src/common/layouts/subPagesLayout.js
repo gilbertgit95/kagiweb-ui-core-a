@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, {useContext} from 'react'
+// import { useNavigate } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
-import MenuList from '@mui/material/MenuList'
-import MenuItem from '@mui/material/MenuItem'
+// import MenuList from '@mui/material/MenuList'
+// import MenuItem from '@mui/material/MenuItem'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import Check from '@mui/icons-material/Check'
+// import Check from '@mui/icons-material/Check'
 import Drawer from '@mui/material/Drawer'
 import Toolbar from '@mui/material/Toolbar'
+
+import RouterContext from '../../common/context/routerContext'
 
 const drawerWidth = 200
 const navAnchors = new Set(['left', 'right'])
@@ -22,16 +24,17 @@ const SubPagesLayout = (props) => {
     // default to left when no anchore is setted
     const navAnchor = props.navAnchor && navAnchors.has(props.navAnchor)? props.navAnchor: 'left'
 
-    const [navRoute, setNavRoute] = useState(null)
-    const navigate = useNavigate()
+    // const [navRoute, setNavRoute] = useState(null)
+    const routerCtx = useContext(RouterContext)
+    // const navigate = useNavigate()
 
     const onClickNav = (e) => {
         // check for event info
         if (e && e.type) {
           // navigate to routes if the its a link
           if (e.type === 'link') {
-            console.log(e)
-            setNavRoute(e.value)
+            // console.log(e)
+            routerCtx.setRouterContext(e.value)
     
           // callback nav value if its an action
           } else if (e.type === 'action') {
@@ -85,13 +88,13 @@ const SubPagesLayout = (props) => {
     }
 
     // life cycles
-    useEffect(() => {
-        // use to navigate
-        if (navRoute) {
-          console.log('change route in subpages triggered: ', navRoute) 
-          navigate(navRoute)
-        }
-    }, [navRoute, navigate])
+    // useEffect(() => {
+    //     // use to navigate
+    //     if (navRoute) {
+    //       console.log('change route in subpages triggered: ', navRoute) 
+    //       navigate(navRoute)
+    //     }
+    // }, [navRoute, navigate])
     
 
     return (

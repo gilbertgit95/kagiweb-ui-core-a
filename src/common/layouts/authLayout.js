@@ -12,7 +12,10 @@ import ThemeToggle from '../themes/themeToggle'
 import MainNav from '../navs/mainNav'
 import config from '../../config'
 
+import RouterContext, { UseRouterContext } from '../context/routerContext'
+
 const AuthLayout = (props) => {
+    const routerStates = UseRouterContext()
     // const ctx = useContext(AccountContext)
 
     // let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
@@ -80,7 +83,10 @@ const AuthLayout = (props) => {
     }
 
     return (
-        <>
+        <RouterContext.Provider
+            value={{
+              ...routerStates
+            }}>
             <MainNav
                 isTransparent={true}
                 leftLogo={null}
@@ -122,7 +128,7 @@ const AuthLayout = (props) => {
                     </Grid>
                 </Box>
             </Container>
-        </>
+        </RouterContext.Provider>
     )
 }
 

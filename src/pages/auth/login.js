@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useContext } from 'react'
 
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 
 import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
@@ -10,6 +10,7 @@ import LoginIcon from '@mui/icons-material/Login'
 // import Button from '@mui/material/Button'
 
 // import AccountContext from '../../common/context/accountContext'
+import RouterContext from '../../common/context/routerContext'
 import LoadingButton from '../../common/buttons/loadingButton'
 import utils from '../../common/utilities'
 import config from '../../config'
@@ -22,8 +23,9 @@ const Login = (props) => {
         username: '',
         errors: []
     })
-    const [navRoute, setNavRoute] = useState(null)
-    const navigate = useNavigate()
+    // const [navRoute, setNavRoute] = useState(null)
+    const routerCtx = useContext(RouterContext)
+    // const navigate = useNavigate()
     // const ctx = useContext(AccountContext)
 
     // const btnClicked = (e) => {
@@ -34,16 +36,16 @@ const Login = (props) => {
         setInternalStates({...internalstates, ...{loginProgress: true}})
         await utils.waitFor(2)
         setInternalStates({...internalstates, ...{loginProgress: false}})
-        setNavRoute(`/${ config.rootRoute }/home`)
+        routerCtx.setRouterContext(`/${ config.rootRoute }/home`)
     }
 
     // life cycles
-    useEffect(() => {
-        // use to navigate
-        if (navRoute) {
-            navigate(navRoute)
-        }
-    }, [navRoute, navigate])
+    // useEffect(() => {
+    //     // use to navigate
+    //     if (navRoute) {
+    //         navigate(navRoute)
+    //     }
+    // }, [navRoute, navigate])
 
     return (
         <Grid container spacing={2}>

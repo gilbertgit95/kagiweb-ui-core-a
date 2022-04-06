@@ -1,23 +1,26 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 
-import { useNavigate } from "react-router-dom"
+import RouterContext from '../../common/context/routerContext'
+
+// import { useNavigate } from "react-router-dom"
 import utils from '../../common/utilities'
 import config from '../../config'
 
 const Logout = (props) => {
-    const [navRoute, setNavRoute] = useState(null)
-    const navigate = useNavigate()
+    // const [navRoute, setNavRoute] = useState(null)
+    const routerCtx = useContext(RouterContext)
+    // const navigate = useNavigate()
 
     // life cycles
-    useEffect(() => {
-        // use to navigate
-        if (navRoute) {
-            navigate(navRoute)
-        }
-    }, [navRoute, navigate])
+    // useEffect(() => {
+    //     // use to navigate
+    //     if (navRoute) {
+    //         navigate(navRoute)
+    //     }
+    // }, [navRoute, navigate])
 
     useEffect(() => {
         // cancel is use for cleanup
@@ -28,8 +31,8 @@ const Logout = (props) => {
             await utils.waitFor(2)
 
             // then redirect after successful logout
-            if (!navRoute && !cancel) {
-                setNavRoute(`/${ config.rootRoute }/auth/login`)
+            if (!routerCtx.routerContext && !cancel) {
+                routerCtx.setRouterContext(`/${ config.rootRoute }/auth/login`)
             }
         }
 
@@ -39,7 +42,7 @@ const Logout = (props) => {
         return () => {
             cancel = true
         }
-    }, [navRoute])
+    }, [])
 
     return (
         <Grid container spacing={2}>

@@ -1,6 +1,7 @@
 // import React, { useStates, useEffect } from 'react'
 import AccountContext, { UseAccountContext } from './common/context/accountContext'
 import LocalStorageContext, { UseLocalStorageContext } from './common/context/localStorageContext'
+// import RouterContext, { UseRouterContext } from './common/context/routerContext'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import PrimaryTheme from './common/themes/primary'
@@ -11,6 +12,7 @@ import './App.css'
 function App() {
   const accountStates = UseAccountContext()
   const localStorageStates = UseLocalStorageContext()
+  // const routerStates = UseRouterContext()
 
   let theme = createTheme({
     ...PrimaryTheme,
@@ -33,7 +35,12 @@ function App() {
           value={{
             ...accountStates
           }}>
+          {/* <RouterContext.Provider
+            value={{
+              ...routerStates
+            }}> */}
           <Pages />
+          {/* </RouterContext.Provider> */}
         </AccountContext.Provider>
       </ThemeProvider>
     </LocalStorageContext.Provider>

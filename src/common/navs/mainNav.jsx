@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom"
+import React, { useState, useContext } from 'react'
+// import { useNavigate } from "react-router-dom"
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -19,23 +19,26 @@ import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 
+import RouterContext from '../../common/context/routerContext'
+
 const MainNav = (props) => {
   const [anchorElRightMenu, setAnchorElRightMenu] = useState(null)
-  const [navRoute, setNavRoute] = useState(null)
+  // const [navRoute, setNavRoute] = useState(null)
   const [drawer, setDrawer] = useState({
       leftMenu: false,
       rightMenu: false
   })
-  const navigate = useNavigate()
+  const routerCtx = useContext(RouterContext)
+  // const navigate = useNavigate()
 
   // life cycles
-  useEffect(() => {
-    // use to navigate
-    if (navRoute) {
-      console.log('change route in mainNav triggered: ', navRoute)
-      navigate(navRoute)
-    }
-  }, [navRoute, navigate])
+  // useEffect(() => {
+  //   // use to navigate
+  //   if (navRoute) {
+  //     console.log('change route in mainNav triggered: ', navRoute)
+  //     navigate(navRoute)
+  //   }
+  // }, [navRoute, navigate])
 
   const handleOpenRightMenu = (event) => {
     setAnchorElRightMenu(event.currentTarget)
@@ -62,7 +65,7 @@ const MainNav = (props) => {
     if (e && e.type) {
       // navigate to routes if the its a link
       if (e.type === 'link') {
-        setNavRoute(e.value)
+        routerCtx.setRouterContext(e.value)
 
       // callback nav value if its an action
       } else if (e.type === 'action') {
