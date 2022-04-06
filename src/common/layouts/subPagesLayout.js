@@ -88,7 +88,8 @@ const SubPagesLayout = (props) => {
     useEffect(() => {
         // use to navigate
         if (navRoute) {
-            navigate(navRoute)
+          console.log('change route in subpages triggered: ', navRoute) 
+          navigate(navRoute)
         }
     }, [navRoute, navigate])
     

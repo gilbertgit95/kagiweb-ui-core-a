@@ -32,6 +32,7 @@ const MainNav = (props) => {
   useEffect(() => {
     // use to navigate
     if (navRoute) {
+      console.log('change route in mainNav triggered: ', navRoute)
       navigate(navRoute)
     }
   }, [navRoute, navigate])
