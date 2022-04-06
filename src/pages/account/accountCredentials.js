@@ -3,9 +3,6 @@ import Grid from '@mui/material/Grid'
 // import AccountContext from '../../common/context/accountContext'
 import AccountView from './components/accountCredentialsView'
 import AccountEdit from './components/accountCredentialsEdit'
-import subpages from './lib/subPages'
-
-import SubPageslayout from '../../common/layouts/subPagesLayout'
 
 const AccountCredentials = (props) => {
     // const ctx = useContext(AccountContext)
@@ -18,12 +15,8 @@ const AccountCredentials = (props) => {
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 {/* <Typography>Account Core Content</Typography> */}
-                <SubPageslayout
-                    navAnchor={'left'}
-                    navMenu={subpages}>
-                    <AccountView />
-                    <AccountEdit />
-                </SubPageslayout>
+                <AccountView />
+                <AccountEdit />
             </Grid>
         </Grid>
     )

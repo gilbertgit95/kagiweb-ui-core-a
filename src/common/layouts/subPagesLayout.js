@@ -1,4 +1,6 @@
 import React, {useContext} from 'react'
+import { matchPath } from 'react-router'
+import { useLocation } from 'react-router-dom'
 // import { useNavigate } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
@@ -26,6 +28,7 @@ const SubPagesLayout = (props) => {
 
     // const [navRoute, setNavRoute] = useState(null)
     const routerCtx = useContext(RouterContext)
+    const location = useLocation()
     // const navigate = useNavigate()
 
     const onClickNav = (e) => {
@@ -61,19 +64,36 @@ const SubPagesLayout = (props) => {
                   <React.Fragment key={anchor + '_groupItemsFragment_' + itemsIndex}>
                     <List key={anchor + '_groupItems_' + itemsIndex}>
                       {
-                        items.map((item, index) => (
-                          <ListItem
-                            button
-                            onClick={(e) => {
-                              onClickNav({type: item.type, value: item.value})
-                            }}
-                            key={anchor + '_groupChildItems_' + itemsIndex + '_' + index}>
-                            <ListItemIcon>
-                              { item.component? item.component: null }
-                            </ListItemIcon>
-                            <ListItemText primary={item.label} />
-                          </ListItem>
-                        ))
+                        items.map((item, index) => {
+                          let match = null
+
+                          // proceed to matching if item is a link
+                          if (item.type === 'link') {
+                            match = matchPath(
+                              {
+                                path: item.value,
+                                exact: true,
+                                strict: true
+                              },
+                              location.pathname
+                            )
+                          }
+
+                          return (
+                            <ListItem
+                              button
+                              selected={ Boolean(match) }
+                              onClick={(e) => {
+                                onClickNav({type: item.type, value: item.value})
+                              }}
+                              key={anchor + '_groupChildItems_' + itemsIndex + '_' + index}>
+                              <ListItemIcon>
+                                { item.component? item.component: null }
+                              </ListItemIcon>
+                              <ListItemText primary={item.label} />
+                            </ListItem>
+                          )
+                        })
                       }
                     </List>
     

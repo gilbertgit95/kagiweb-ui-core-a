@@ -1,4 +1,7 @@
 // import { useState, useContext } from 'react'
+import subpages from './lib/subPages'
+
+import SubPageslayout from '../../common/layouts/subPagesLayout'
 
 // import Link from '@mui/material/Link'
 // import Container from '@mui/material/Container'
@@ -19,11 +22,13 @@ const AppUsers = (props) => {
     // }
 
     return (
-        <Grid container spacing={2}>
+        <SubPageslayout
+            navAnchor={'left'}
+            navMenu={subpages}>
             <Grid item xs={12}>
                 <Typography>App Users</Typography>
             </Grid>
-        </Grid>
+        </SubPageslayout>
     )
 }
 
