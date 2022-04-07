@@ -16,6 +16,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Drawer from '@mui/material/Drawer'
 import Toolbar from '@mui/material/Toolbar'
 
+import PaginatedNav from '../../common/navs/paginatedNav'
 import RouterContext from '../../common/context/routerContext'
 
 const drawerWidth = 200
@@ -26,7 +27,6 @@ const SubPagesLayout = (props) => {
     // default to left when no anchore is setted
     const navAnchor = props.navAnchor && navAnchors.has(props.navAnchor)? props.navAnchor: 'left'
 
-    // const [navRoute, setNavRoute] = useState(null)
     const routerCtx = useContext(RouterContext)
     const location = useLocation()
     // const navigate = useNavigate()
@@ -36,7 +36,6 @@ const SubPagesLayout = (props) => {
         if (e && e.type) {
           // navigate to routes if the its a link
           if (e.type === 'link') {
-            // console.log(e)
             routerCtx.setRouterContext(e.value)
     
           // callback nav value if its an action
@@ -56,7 +55,6 @@ const SubPagesLayout = (props) => {
 
         return (
           <Box
-            // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
             role='presentation'>
             {
               itemsGroup.map((items, itemsIndex) => {
@@ -107,16 +105,6 @@ const SubPagesLayout = (props) => {
         )
     }
 
-    // life cycles
-    // useEffect(() => {
-    //     // use to navigate
-    //     if (navRoute) {
-    //       console.log('change route in subpages triggered: ', navRoute) 
-    //       navigate(navRoute)
-    //     }
-    // }, [navRoute, navigate])
-    
-
     return (
         <Container maxWidth='lg'>
             <Box>
@@ -131,52 +119,24 @@ const SubPagesLayout = (props) => {
                     open>
                     <Toolbar />
                     <Divider />
-                    {/* <MenuList dense>
-                        <MenuItem selected={true}>
-                            <ListItemText inset>Single</ListItemText>
-                        </MenuItem>
-                        <MenuItem>
-                            <ListItemText inset>1.15</ListItemText>
-                        </MenuItem>
-                        <MenuItem>
-                            <ListItemText inset>Double</ListItemText>
-                        </MenuItem>
-                        <MenuItem>
-                            <ListItemIcon>
-                                <Check />
-                            </ListItemIcon>
-                            Custom: 1.2
-                        </MenuItem>
-                        <Divider />
-                        <MenuItem>
-                            <ListItemText>Add space before paragraph</ListItemText>
-                        </MenuItem>
-                        <MenuItem>
-                            <ListItemText>Add space after paragraph</ListItemText>
-                        </MenuItem>
-                        <Divider />
-                        <MenuItem>
-                            <ListItemText>Custom spacing...</ListItemText>
-                        </MenuItem>
-                    </MenuList> */}
                     { generateDrawerItems('subPagesNav', props.navMenu? props.navMenu: []) }
                 </Drawer>
                 <Grid container spacing={2}>
-                    {/* <Grid item xs={12} style={{textAlign: 'center'}}>
-                        <Typography variant='h4' gutterBottom component='div'>
-                            { config.appName }
-                        </Typography>
-                    </Grid> */}
                     <Grid item xs={12} style={{textAlign: 'center'}}>
+                        <Box
+                          sx={{
+                            display: { sm: 'block', md: 'none' },
+                          }}>
+                          <PaginatedNav
+                            navMenu={ props.navMenu }
+                            onChangeNav={(e) => {
+                              onClickNav({type: e.type, value: e.value})
+                            }} />
+                        </Box>
                         <Box>
                             { props.children? props.children: null }
                         </Box>
                     </Grid>
-                    {/* <Grid item xs={12} style={{textAlign: 'center'}}>
-                        <Typography variant='caption' display='block' gutterBottom>
-                            Copyrights 2021
-                        </Typography>
-                    </Grid> */}
                 </Grid>
             </Box>
         </Container>

@@ -3,7 +3,7 @@ import MailIcon from '@mui/icons-material/Mail'
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications'
 import LinkIcon from '@mui/icons-material/Link'
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew'
-import AccessibilityNewRoundedIcon from '@mui/icons-material/AccessibilityNewRounded'
+import SettingsAccessibilityIcon from '@mui/icons-material/SettingsAccessibility';
 import PeopleIcon from '@mui/icons-material/People'
 
 const Pages = [
@@ -27,7 +27,7 @@ const Pages = [
             value: `/${ config.rootRoute }/admin/appRoles`
         },
         {
-            component: <AccessibilityNewRoundedIcon />,
+            component: <SettingsAccessibilityIcon />,
             label: 'Role Endpoints',
             type: 'link',
             value: `/${ config.rootRoute }/admin/appRoleEndpoints`
