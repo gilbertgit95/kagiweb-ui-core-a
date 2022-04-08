@@ -2,10 +2,16 @@ import { useState, useEffect } from 'react'
 import { matchPath } from 'react-router'
 import { useTheme } from '@mui/material/styles'
 import { useLocation } from 'react-router-dom'
+import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
 import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
+import ArrowRightIcon from '@mui/icons-material/ArrowRight'
+import Divider from '@mui/material/Divider'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Link from '@mui/material/Link'
 
 const PaginatedNav = (props) => {
 
@@ -51,11 +57,44 @@ const PaginatedNav = (props) => {
         if (match) activeNav = index
     })
 
+    let currentNav = navs[activeNav]
+    let locationRoutes = currentNav.value.split('/')
+
+    // clean and create breadcrumbs items
+    locationRoutes = locationRoutes.filter((item, index) => {
+        if (!Boolean(item)) return false
+        if (index >= locationRoutes.length - 1) return false
+
+        return true
+    })
+
     let disabledNext = activeNav === (navs.length - 1)
     let disabledBack = activeNav === 0
 
     return (
         <>
+            <Breadcrumbs
+                style={{padding: 10}}
+                separator={<ArrowRightIcon fontSize="small" />}
+                aria-label="breadcrumb">
+                {
+                    locationRoutes.map((item, index) => (
+                        <Link
+                            key={'breadcrumb_' + index}
+                            underline="none"
+                            color="inherit">
+                            { item.toUpperCase() }
+                        </Link>
+                    ))
+                }
+                <Link
+                    underline="none"
+                    color="text.primary"
+                    aria-current="page">
+                    { currentNav.label.toUpperCase() }
+                </Link>
+            </Breadcrumbs>
+            <Divider />
             <MobileStepper
                 steps={ navs.length }
                 variant="dots"
