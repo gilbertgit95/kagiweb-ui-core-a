@@ -30,7 +30,7 @@ const MainLayout = (props) => {
 
     let leftLogo = {
         label: 'Root',
-        component: <Avatar alt="Logo" src="/favicon.png" />,
+        component: <Avatar sx ={{'& :hover': {cursor: 'pointer'}}} alt="Logo" src="/favicon.png" />,
         type: 'link',
         value: `/${ config.rootRoute }/home`
     }
