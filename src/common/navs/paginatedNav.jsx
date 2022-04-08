@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react'
 import { matchPath } from 'react-router'
 import { useTheme } from '@mui/material/styles'
 import { useLocation } from 'react-router-dom'
-import Box from '@mui/material/Box'
 import MobileStepper from '@mui/material/MobileStepper'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
@@ -82,6 +79,7 @@ const PaginatedNav = (props) => {
                         <Link
                             key={'breadcrumb_' + index}
                             underline="none"
+                            fontSize="small"
                             color="inherit">
                             { item.toUpperCase() }
                         </Link>
@@ -90,6 +88,7 @@ const PaginatedNav = (props) => {
                 <Link
                     underline="none"
                     color="text.primary"
+                    fontSize="small"
                     aria-current="page">
                     { currentNav.label.toUpperCase() }
                 </Link>
