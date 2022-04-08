@@ -41,6 +41,12 @@ const MainLayout = (props) => {
               label: 'Home',
               type: 'link',
               value: `/${ config.rootRoute }/home`
+            },
+            {
+                component: <MailIcon />,
+                label: 'Demo',
+                type: 'link',
+                value: `/${ config.rootRoute }/demo`
             }
         ],
         [
@@ -49,14 +55,6 @@ const MainLayout = (props) => {
                 label: 'Notes',
                 type: 'action',
                 value: 'notes'
-            }
-        ],
-        [
-            {
-                // component: <MailIcon />,
-                label: 'Notes II',
-                type: 'action',
-                value: 'notes II'
             }
         ]
     ]
@@ -165,7 +163,7 @@ const MainLayout = (props) => {
 
             <Container maxWidth="false">
                 <Box>
-                <Toolbar />
+                    <Toolbar />
                     <Grid container spacing={2}>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
                             {/* <Typography variant="h4" gutterBottom component="div">

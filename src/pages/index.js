@@ -6,7 +6,7 @@ import {
     Route
 } from 'react-router-dom'
 
-// layouts
+// layouts components
 import PublicPageLayout from '../common/layouts/publicPageLayout'
 import AuthLayout from '../common/layouts/authLayout'
 import MainLayout from '../common/layouts/mainLayout'
@@ -17,17 +17,26 @@ import Logout from './auth/logout'
 import ResetPassword from './auth/resetPassword'
 import ForgotPassword from './auth/forgotPassword'
 
-// main pages
+// root pages
 import Home from './home'
+
+// acount pages
 import AccountCredentials from './account/accountCredentials'
 import AccountProfile from './account/accountProfile'
 import AccountSettings from './account/accountSettings'
 
+// admin pages
 import AppSettings from './admin/appSettings'
 import AppEndpoints from './admin/appEndpoints'
 import AppRoles from './admin/appRoles'
 import AppRoleEndpoints from './admin/appRoleEndpoints'
 import AppUsers from './admin/appUsers'
+
+// demo pages
+import DemoIntroduction from './demo/introduction'
+import DemoButtons from './demo/buttons'
+import DemoInputs from './demo/inputs'
+import DemoNavigations from './demo/navs'
 
 // error page
 import NotFound from './notFound'
@@ -53,12 +62,13 @@ const Pages = (props) => {
                     <Route path="forgotPassword" element={<ForgotPassword />} />
                 </Route>
 
-                {/* main pages */}
+                {/* Root pages */}
                 <Route path={`${ config.rootRoute }/`} element={<MainLayout />}>
                     <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/home`} />} />
                     <Route path="home" element={<Home />} />
                 </Route>
 
+                {/* Account pages */}
                 <Route path={`${ config.rootRoute }/account/`} element={<MainLayout />}>
                     <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/account/credentials`} />} />
                     <Route path="credentials" element={<AccountCredentials />} />
@@ -66,6 +76,7 @@ const Pages = (props) => {
                     <Route path="settings" element={<AccountSettings />} />
                 </Route>
 
+                {/* Admin pages */}
                 <Route path={`${ config.rootRoute }/admin/`} element={<MainLayout />}>
                     <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/admin/appSettings`} />} />
                     <Route path="appSettings" element={<AppSettings />} />
@@ -73,6 +84,15 @@ const Pages = (props) => {
                     <Route path="appRoles" element={<AppRoles />} />
                     <Route path="appRoleEndpoints" element={<AppRoleEndpoints />} />
                     <Route path="appUsers" element={<AppUsers />} />
+                </Route>
+
+                {/* Demo pages */}
+                <Route path={`${ config.rootRoute }/demo/`} element={<MainLayout />}>
+                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/demo/introduction`} />} />
+                    <Route path="introduction" element={<DemoIntroduction />} />
+                    <Route path="buttons" element={<DemoButtons />} />
+                    <Route path="inputs" element={<DemoInputs />} />
+                    <Route path="navigations" element={<DemoNavigations />} />
                 </Route>
 
                 {/* error page */}

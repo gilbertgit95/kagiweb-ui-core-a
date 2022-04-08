@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import MenuIcon from '@mui/icons-material/Menu'
 import MailIcon from '@mui/icons-material/Mail'
 import Button from '@mui/material/IconButton'
-
+import Toolbar from '@mui/material/Toolbar'
 import ThemeToggle from '../themes/themeToggle'
 
 import MainNav from '../navs/mainNav'
@@ -34,7 +34,7 @@ const AuthLayout = (props) => {
                 </Button>
             ),
             type: 'link',
-            value: `${ config.rootRoute }/home`
+            value: `/${ config.rootRoute }/home`
         },
         {
             label: 'Contact or Learn about our Team',
@@ -44,7 +44,7 @@ const AuthLayout = (props) => {
                 </Button>
             ),
             type: 'link',
-            value: `${ config.rootRoute }/home`
+            value: `/${ config.rootRoute }/home`
         }
     ]
     let rightMenu = [
@@ -97,6 +97,7 @@ const AuthLayout = (props) => {
                 onAction={onNavAction} />
             <Container maxWidth="sm">
                 <Box>
+                    <Toolbar />
                     <Grid container spacing={2}>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
                             <img
