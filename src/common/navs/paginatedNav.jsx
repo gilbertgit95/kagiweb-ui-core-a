@@ -68,8 +68,10 @@ const PaginatedNav = (props) => {
     let disabledNext = activeNav === (navs.length - 1)
     let disabledBack = activeNav === 0
 
-    return (
-        <>
+    let routeOnTop = typeof props.routeOnTop === 'boolean'? props.routeOnTop: true
+
+    const generateBreadCrumbs = () => {
+        return (
             <Breadcrumbs
                 style={{padding: 10}}
                 separator={<ArrowRightIcon fontSize="small" />}
@@ -93,7 +95,21 @@ const PaginatedNav = (props) => {
                     { currentNav.label.toUpperCase() }
                 </Link>
             </Breadcrumbs>
-            <Divider />
+        )
+    }
+
+    return (
+        <>
+            {
+                routeOnTop? (
+                    <>
+                        { generateBreadCrumbs() }
+                        <Divider />
+                    </>
+                ): null
+            }
+
+
             <MobileStepper
                 steps={ navs.length }
                 variant="dots"
@@ -112,6 +128,16 @@ const PaginatedNav = (props) => {
                         { disabledBack? 'Back':  navs[activeNav - 1].label }
                     </Button>
                 } />
+            
+            
+            {
+                !routeOnTop? (
+                    <>
+                        <Divider />
+                        { generateBreadCrumbs() }
+                    </>
+                ): null
+            }
         </>
     )
 }

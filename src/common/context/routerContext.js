@@ -15,7 +15,7 @@ export const UseRouterContext = () => {
     useEffect(() => {
         // use to navigate
         if (routerContext) {
-          console.log('change route in router context triggered: ', routerContext) 
+        //   console.log('change route in router context triggered: ', routerContext) 
           navigate(routerContext)
         }
     }, [routerContext])

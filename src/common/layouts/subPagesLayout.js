@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState, useEffect, useRef} from 'react'
 import { matchPath } from 'react-router'
 import { useLocation } from 'react-router-dom'
 // import { useNavigate } from 'react-router-dom'
@@ -29,6 +29,8 @@ const SubPagesLayout = (props) => {
 
     const routerCtx = useContext(RouterContext)
     const location = useLocation()
+    const [veryLong, setVeryLong] = useState(false)
+    const mainSection = useRef()
     // const navigate = useNavigate()
 
     const onClickNav = (e) => {
@@ -105,6 +107,27 @@ const SubPagesLayout = (props) => {
         )
     }
 
+    // if (mainSection && mainSection.current && mainSection.current.clientHeight) {
+    //   console.log(mainSection.current.clientHeight)
+    // }
+    useEffect(() => {
+      const onScroll = () => {
+        let mainSectionHeight = 0
+        let windowHeight = window.innerHeight
+
+        if (mainSection && mainSection.current && mainSection.current.clientHeight) {
+          mainSectionHeight = mainSection.current.clientHeight
+
+          setVeryLong(mainSectionHeight >= windowHeight)
+        }
+      }
+
+      window.addEventListener('scroll', onScroll)
+      return () => {
+        window.removeEventListener('scroll', onScroll)
+      }
+    }, [])
+
     return (
         <Container maxWidth='lg'>
             <Box>
@@ -122,7 +145,16 @@ const SubPagesLayout = (props) => {
                     { generateDrawerItems('subPagesNav', props.navMenu? props.navMenu: []) }
                 </Drawer>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} style={{textAlign: 'center'}}>
+                    {
+                      navAnchor === 'left'? (
+                        <Grid
+                          item md={3} lg={2} xl={1}
+                          sx={{ display: { xs: 'none', sm: 'block' }}}>
+                        </Grid>
+                      ): null
+                    }
+
+                    <Grid item xs={12} sm={12} md={9} lg={10} xl={11} style={{textAlign: 'center'}}>
                         <Box
                           sx={{
                             display: { sm: 'block', md: 'none' },
@@ -133,10 +165,36 @@ const SubPagesLayout = (props) => {
                               onClickNav({type: e.type, value: e.value})
                             }} />
                         </Box>
-                        <Box>
+                        <Box ref={mainSection}>
                             { props.children? props.children: null }
                         </Box>
+                        
+                        {/* show pagination when in mobile view and when the page is long */}
+                        {
+                          veryLong? (
+                            <Box
+                              sx={{
+                                display: { sm: 'block', md: 'none' },
+                              }}>
+                              <PaginatedNav
+                                routeOnTop={false}
+                                navMenu={ props.navMenu }
+                                onChangeNav={(e) => {
+                                  onClickNav({type: e.type, value: e.value})
+                                }} />
+                            </Box>
+                          ): null
+                        }
                     </Grid>
+
+                    {
+                      navAnchor === 'right'? (
+                        <Grid
+                          item md={3} lg={2} xl={1}
+                          sx={{ display: { xs: 'none', sm: 'block' }}}>
+                        </Grid>
+                      ): null
+                    }
                 </Grid>
             </Box>
         </Container>
