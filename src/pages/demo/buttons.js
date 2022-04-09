@@ -1,4 +1,4 @@
-// import { useState, useContext } from 'react'
+import { useEffect, useState } from 'react'
 import subpages from './lib/subPages'
 
 import SubPageslayout from '../../common/layouts/subPagesLayout'
@@ -16,6 +16,12 @@ import CodeBlock from '../../common/blocks/codeBlock'
 
 // import AccountContext from '../../common/context/accountContext'
 
+const testTitle = 'Test Title'
+const testDescription = `
+    The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
+    ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
+    or desires to obtain pain of itself, because it is pain.
+`
 const testCode = `
 import React from 'react'
 import Button from '@mui/material/Button'
@@ -56,11 +62,23 @@ export default LoadingButton
 `
 
 const Buttons = (props) => {
+    const [isLoading, setIsLoading] = useState(true)
     // const ctx = useContext(AccountContext)
 
     // const btnClicked = (e) => {
     //     ctx.setAccountContext({testVal: 'Home test value from context'})
     // }
+
+    useEffect(() => {
+        const fetchData = () => {
+            setIsLoading(true)
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 2000)
+        }
+
+        fetchData()
+    }, [])
     
 
     return (
@@ -68,14 +86,15 @@ const Buttons = (props) => {
             navAnchor={'left'}
             navMenu={subpages}>
             <Grid item xs={12}>
-                <Typography>Buttons</Typography>
-
                 <CodeBlock
                     style={{
                         textAlign: 'left',
                         margin: 'auto'
                     }}
-                    text={testCode}
+                    isLoading={isLoading}
+                    title={testTitle}
+                    description={testDescription}
+                    code={testCode}
                     language={'jsx'}
                     showLineNumbers={true}
                     theme={null} />
