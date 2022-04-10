@@ -23,6 +23,12 @@ const Pages = [
         },
         {
             component: <CommitIcon />,
+            label: 'Lists',
+            type: 'link',
+            value: `/${ config.rootRoute }/demo/lists`
+        },
+        {
+            component: <CommitIcon />,
             label: 'Navigations',
             type: 'link',
             value: `/${ config.rootRoute }/demo/navigations`

@@ -86,19 +86,6 @@ const Blocks = (props) => {
             navAnchor={'left'}
             navMenu={subpages}>
             <Grid item xs={12}>
-                <GenBlock
-                    isLoading={isLoading}
-                    title={'General Block Component'}
-                    description={testCodeBlockDescription}>
-                    <Typography variant='body1'>
-                        The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
-                        ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
-                        or desires to obtain pain of itself, because it is pain. The lorem ipsum gets its name
-                        from the Latin phrase Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.
-                        which translates to “Nor is there anyone who loves or pursues or desires to obtain pain
-                        of itself, because it is pain.
-                    </Typography>
-                </GenBlock>
                 <CodeBlock
                     isLoading={isLoading}
                     title={'Code Block Component'}
@@ -113,6 +100,19 @@ const Blocks = (props) => {
                         or desires to obtain pain of itself, because it is pain.
                     </Typography>
                 </CodeBlock>
+                <GenBlock
+                    isLoading={isLoading}
+                    title={'General Block Component'}
+                    description={testCodeBlockDescription}>
+                    <Typography variant='body1'>
+                        The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
+                        ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
+                        or desires to obtain pain of itself, because it is pain. The lorem ipsum gets its name
+                        from the Latin phrase Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.
+                        which translates to “Nor is there anyone who loves or pursues or desires to obtain pain
+                        of itself, because it is pain.
+                    </Typography>
+                </GenBlock>
             </Grid>
         </SubPageslayout>
     )

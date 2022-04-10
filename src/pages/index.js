@@ -36,6 +36,7 @@ import AppUsers from './admin/appUsers'
 import DemoIntroduction from './demo/introduction'
 import DemoButtons from './demo/buttons'
 import DemoInputs from './demo/inputs'
+import DemoLists from './demo/lists'
 import DemoNavigations from './demo/navs'
 import DemoBlocks from './demo/blocks'
 
@@ -93,6 +94,7 @@ const Pages = (props) => {
                     <Route path="introduction" element={<DemoIntroduction />} />
                     <Route path="buttons" element={<DemoButtons />} />
                     <Route path="inputs" element={<DemoInputs />} />
+                    <Route path="lists" element={<DemoLists />} />
                     <Route path="navigations" element={<DemoNavigations />} />
                     <Route path="blocks" element={<DemoBlocks />} />
                 </Route>
