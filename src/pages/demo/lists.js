@@ -14,6 +14,15 @@ import Typography from '@mui/material/Typography'
 
 // import AccountContext from '../../common/context/accountContext'
 import GenBlock from '../../common/blocks/genBlock'
+import BasicList from '../../common/lists/basicList'
+
+const items = [
+    'Item number 1',
+    'Item number 2',
+    'Item number 3',
+    'Item number 4',
+    'Item number 5'
+]
 
 const Lists = (props) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -53,6 +62,10 @@ const Lists = (props) => {
                         which translates to “Nor is there anyone who loves or pursues or desires to obtain pain
                         of itself, because it is pain.
                     </Typography>
+                    <BasicList
+                        list={items}
+                        colSize={{xs: 12, sm: 6}}
+                        variant="ordered" />
                 </GenBlock>
             </Grid>
         </SubPageslayout>
