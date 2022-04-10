@@ -1,11 +1,12 @@
 import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
+import Radio from '@mui/material/Radio'
 
 // note! allowed col Sizes are numbers that when devided to 12 the result is integer
-const CheckList = (props) => {
-    
+const RadioList = (props) => {
+
+    let selected = props.selected? props.selected: null
     // compute the number of column to be rendered
     let colNum = 1
     let propSize = props.colSize? props.colSize: {}
@@ -38,7 +39,7 @@ const CheckList = (props) => {
         if (props.onChange) {
             props.onChange({
                 key: e.target.value,
-                checked: e.target.checked
+                // checked: e.target.checked
             })
         }
     }
@@ -59,7 +60,12 @@ const CheckList = (props) => {
                                         return (
                                              <FormControlLabel
                                                 disabled={item.disabled}
-                                                control={<Checkbox value={item.key} checked={item.checked} />}
+                                                control={
+                                                    <Radio
+                                                        checked={selected === item.key}
+                                                        value={item.key}
+                                                        name={props.radioListName? props.radioListName: 'radio-list'} />
+                                                }
                                                 onChange={onChange}
                                                 label={ item.label }
                                                 key={ item.label + index } />
@@ -75,4 +81,4 @@ const CheckList = (props) => {
     )
 }
 
-export default CheckList
+export default RadioList

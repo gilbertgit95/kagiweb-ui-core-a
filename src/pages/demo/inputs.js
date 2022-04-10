@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography'
 
 import GenBlock from '../../common/blocks/genBlock'
 import CheckList from '../../common/inputs/checkList'
+import RadioList from '../../common/inputs/radioList'
 // import AccountContext from '../../common/context/accountContext'
 
 const Inputs = (props) => {
@@ -26,6 +27,15 @@ const Inputs = (props) => {
         { checked: false, disabled: false, key: '005', label: 'Item number 5'},
         { checked: true, disabled: false, key: '006', label: 'Item number 6'}
     ])
+    const [selectedRadio, setSelectedRadio] = useState(null)
+    const radioItems = [
+        { disabled: true, key: '001', label: 'Item number 1'},
+        { disabled: false, key: '002', label: 'Item number 2'},
+        { disabled: false, key: '003', label: 'Item number 3'},
+        { disabled: false, key: '004', label: 'Item number 4'},
+        { disabled: false, key: '005', label: 'Item number 5'},
+        { disabled: false, key: '006', label: 'Item number 6'}
+    ]
     // const ctx = useContext(AccountContext)
 
     // const btnClicked = (e) => {
@@ -42,6 +52,12 @@ const Inputs = (props) => {
             setItems(checkItems)
         }
         // console.log(e)
+    }
+
+    const onChangeRadiolist = (e) => {
+        if (e) {
+            setSelectedRadio(e.key)
+        }
     }
 
     useEffect(() => {
@@ -71,6 +87,28 @@ const Inputs = (props) => {
                         colSize={{xs: 12, sm: 6, md: 3}}
                         list={items} />
                     <Typography variant='body1'>
+                        The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
+                        ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
+                        or desires to obtain pain of itself, because it is pain.
+                    </Typography>
+                </GenBlock>
+
+                <GenBlock
+                    isLoading={isLoading}
+                    title={'Radio List Component'}
+                    description={`The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
+                    ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
+                    or desires to obtain pain of itself`}>
+                    <RadioList
+                        radioListName='testRadio'
+                        onChange={onChangeRadiolist}
+                        selected={selectedRadio}
+                        colSize={{xs: 12, sm: 6, md: 3}}
+                        list={radioItems} />
+                    <Typography variant='body1'>
+                        The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
+                        ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
+                        or desires to obtain pain of itself, because it is pain.
                         The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
                         ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
                         or desires to obtain pain of itself, because it is pain.
