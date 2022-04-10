@@ -26,6 +26,12 @@ const Pages = [
             label: 'Navigations',
             type: 'link',
             value: `/${ config.rootRoute }/demo/navigations`
+        },
+        {
+            component: <CommitIcon />,
+            label: 'Blocks',
+            type: 'link',
+            value: `/${ config.rootRoute }/demo/blocks`
         }
     ]
 ]

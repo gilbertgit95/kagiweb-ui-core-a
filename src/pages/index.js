@@ -37,6 +37,7 @@ import DemoIntroduction from './demo/introduction'
 import DemoButtons from './demo/buttons'
 import DemoInputs from './demo/inputs'
 import DemoNavigations from './demo/navs'
+import DemoBlocks from './demo/blocks'
 
 // error page
 import NotFound from './notFound'
@@ -93,6 +94,7 @@ const Pages = (props) => {
                     <Route path="buttons" element={<DemoButtons />} />
                     <Route path="inputs" element={<DemoInputs />} />
                     <Route path="navigations" element={<DemoNavigations />} />
+                    <Route path="blocks" element={<DemoBlocks />} />
                 </Route>
 
                 {/* error page */}

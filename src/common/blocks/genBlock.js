@@ -1,18 +1,9 @@
-import { useContext } from 'react'
 import Box from '@mui/material/Box'
 import WebhookIcon from '@mui/icons-material/Webhook'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
-import LocalStorageContext from '../context/localStorageContext'
-import { CodeBlock, vs2015, atomOneLight } from "react-code-blocks"
-// import CircularProgress from '@mui/material/CircularProgress'
 
-const CodeBlockComponent = (props) => {
-    const {localStorageContext} = useContext(LocalStorageContext)
-
-    let themeMode = localStorageContext.themeMode
-    let defaultTheme = themeMode === 'dark'? vs2015: atomOneLight
-
+const GenBlockComponent = (props) => {
     let isLoading = typeof props.isLoading === 'boolean'? props.isLoading: false
     
     return (
@@ -30,11 +21,6 @@ const CodeBlockComponent = (props) => {
                             </Typography>: null
                         }
                         { props.description?  <Typography variant='body1' style={{marginBottom: 15, textIndent: 50}}>{ props.description }</Typography>: null }
-                        <CodeBlock
-                            text={props.code? props.code: ''}
-                            language={props.language? props.language: 'javascript'}
-                            showLineNumbers={Boolean(props.showLineNumbers)}
-                            theme={props.theme? props.theme: defaultTheme} />
                         {
                             props.children? (
                                 <Box style={{marginTop: 10}}>
@@ -77,4 +63,4 @@ const CodeBlockComponent = (props) => {
     )
 }
 
-export default CodeBlockComponent
+export default GenBlockComponent
