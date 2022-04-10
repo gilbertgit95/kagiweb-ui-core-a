@@ -1,15 +1,16 @@
-import Typography from '@mui/material/Typography'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import TripOriginIcon from '@mui/icons-material/TripOrigin'
+// import Typography from '@mui/material/Typography'
+// import List from '@mui/material/List'
+// import ListItem from '@mui/material/ListItem'
+// import ListItemIcon from '@mui/material/ListItemIcon'
+// import ListItemText from '@mui/material/ListItemText'
+// import TripOriginIcon from '@mui/icons-material/TripOrigin'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
 
-const variants = new Set(['unordered', 'ordered'])
-
 // note! allowed col Sizes are numbers that when devided to 12 the result is integer
-const BasicList = (props) => {
+const CheckList = (props) => {
     
     // compute the number of column to be rendered
     let colNum = 1
@@ -23,7 +24,6 @@ const BasicList = (props) => {
     }
 
     let list = props.list? props.list: []
-    let variant = props.variant && variants.has(props.variant)? props.variant: 'unordered'
 
     // generate list divisions
     let groupList = []
@@ -40,11 +40,17 @@ const BasicList = (props) => {
         }
     }
 
-    // inital count is 0
-    let itemCount = 0
+    const onChange = (e) => {
+        if (props.onChange) {
+            props.onChange({
+                key: e.target.value,
+                checked: e.target.checked
+            })
+        }
+    }
 
     return (
-        <Grid container spacing={2} style={{marginTop: 20, marginBottom: 20}}>
+        <Grid container spacing={2} style={{padding: 20}}>
             {
                 groupList.map((subList, subListIndex) => {
                     return (
@@ -53,27 +59,20 @@ const BasicList = (props) => {
                             key={'listCols' + subListIndex}
                             style={{padding: 0}}
                             item>
-                            <List dense={true} style={{padding: 0, margin: 'auto'}}>
+                            <FormGroup>
                                 {
                                     subList.map((item, index) => {
-                                        itemCount++
-
                                         return (
-                                            <ListItem key={item + index}>
-                                                <ListItemIcon style={{minWidth: 30}}>
-                                                    {
-                                                        variant === 'ordered'? (
-                                                            <Typography variant='subtitle1'>{ itemCount }.</Typography>
-                                                        ): <TripOriginIcon />
-                                                    }
-                                                </ListItemIcon>
-                                                <ListItemText
-                                                    primary={ item } />
-                                            </ListItem>
+                                             <FormControlLabel
+                                                disabled={item.disabled}
+                                                control={<Checkbox value={item.key} checked={item.checked} />}
+                                                onChange={onChange}
+                                                label={ item.label }
+                                                key={ item.label + index } />
                                         )
                                     })
                                 }
-                            </List>
+                            </FormGroup>
                         </Grid>
                     )
                 })
@@ -82,4 +81,4 @@ const BasicList = (props) => {
     )
 }
 
-export default BasicList
+export default CheckList

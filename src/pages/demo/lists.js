@@ -50,7 +50,7 @@ const Lists = (props) => {
             <Grid item xs={12}>
                 <GenBlock
                     isLoading={isLoading}
-                    title={'List Component'}
+                    title={'Basic List Component'}
                     description={`The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
                     ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
                     or desires to obtain pain of itself`}>
@@ -63,9 +63,9 @@ const Lists = (props) => {
                         of itself, because it is pain.
                     </Typography>
                     <BasicList
-                        list={items}
+                        // variant="ordered"
                         colSize={{xs: 12, sm: 6}}
-                        variant="ordered" />
+                        list={items} />
                 </GenBlock>
             </Grid>
         </SubPageslayout>
