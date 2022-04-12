@@ -1,5 +1,7 @@
 
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 // import { useNavigate } from "react-router-dom"
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -23,22 +25,32 @@ import RouterContext from '../../common/context/routerContext'
 
 const MainNav = (props) => {
   const [anchorElRightMenu, setAnchorElRightMenu] = useState(null)
+  const [isBigScreen, setIsBigScreen] = useState(false)
   // const [navRoute, setNavRoute] = useState(null)
   const [drawer, setDrawer] = useState({
       leftMenu: false,
       rightMenu: false
   })
+  const theme = useTheme()
+  const smScreen = useMediaQuery(theme.breakpoints.up('sm'))
+  const mdScreen = useMediaQuery(theme.breakpoints.up('md'))
+
   const routerCtx = useContext(RouterContext)
-  // const navigate = useNavigate()
 
   // life cycles
-  // useEffect(() => {
-  //   // use to navigate
-  //   if (navRoute) {
-  //     console.log('change route in mainNav triggered: ', navRoute)
-  //     navigate(navRoute)
-  //   }
-  // }, [navRoute, navigate])
+  useEffect(() => {
+    // use to navigate
+    if (smScreen && mdScreen) {
+      setIsBigScreen(true)
+    } else {
+      setIsBigScreen(false)
+    }
+    // close drawer when screensize changes
+    setDrawer({
+      leftMenu: false,
+      rightMenu: false
+    })
+  }, [smScreen, mdScreen])
 
   const handleOpenRightMenu = (event) => {
     setAnchorElRightMenu(event.currentTarget)
@@ -124,7 +136,12 @@ const MainNav = (props) => {
   return (
     <AppBar
       position="fixed"
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{ zIndex: (theme) => {
+        let drawerIndex = theme.zIndex.drawer
+
+        drawerIndex += isBigScreen? 1: 0
+        return drawerIndex
+      }}}
       style={props.isTransparent? { background: 'transparent', boxShadow: 'none'}: {}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -158,7 +175,6 @@ const MainNav = (props) => {
                     anchor={'left'}
                     open={drawer['leftMenu']}
                     onClose={toggleDrawer('leftMenu', false)}>
-                    <Toolbar />
                     { generateDrawerItems('leftMenu', props.leftMenu? props.leftMenu: []) }
                 </Drawer>
               </Box>
@@ -283,7 +299,6 @@ const MainNav = (props) => {
                 anchor={'top'}
                 open={drawer['rightMenu']}
                 onClose={toggleDrawer('rightMenu', false)}>
-                <Toolbar />
                 { generateDrawerItems('rightMenu', props.rightMenu? props.rightMenu: []) }
               </Drawer>
             </Box>

@@ -57,7 +57,7 @@ const CodeBlockComponent = (props) => {
                                             fontStyle: 'italic',
                                             display: 'block'
                                         }}
-                                        variant='caption'>Rendered Example:</Typography>
+                                        variant='caption'>Rendered Sample:</Typography>
                                     <Box style={{padding: 20}}>
                                         { props.rendered }
                                     </Box>

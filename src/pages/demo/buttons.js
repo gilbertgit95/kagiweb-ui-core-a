@@ -70,10 +70,6 @@ const Buttons = (props) => {
             navMenu={subpages}>
             <Grid item xs={12}>
                 <CodeBlock
-                    style={{
-                        textAlign: 'left',
-                        margin: 'auto'
-                    }}
                     isLoading={isLoading}
                     title={testTitle}
                     description={testDescription}

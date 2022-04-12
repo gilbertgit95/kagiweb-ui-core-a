@@ -44,7 +44,7 @@ const BasicList = (props) => {
     let itemCount = 0
 
     return (
-        <Grid container spacing={2} style={{marginTop: 20, marginBottom: 20}}>
+        <Grid container spacing={2}>
             {
                 groupList.map((subList, subListIndex) => {
                     return (
