@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import subpages from './lib/subPages'
 
+import LoadingButton from '../../common/buttons/loadingButton'
 import SubPageslayout from '../../common/layouts/subPagesLayout'
 
 // import Link from '@mui/material/Link'
 // import Container from '@mui/material/Container'
 // import Box from '@mui/material/Box'
+import LoginIcon from '@mui/icons-material/Login'
 import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 // import TextField from '@mui/material/TextField'
 // import LoginIcon from '@mui/icons-material/Login'
 // import Button from '@mui/material/Button'
@@ -22,42 +25,23 @@ const testDescription = `
     or desires to obtain pain of itself, because it is pain.
 `
 const testCode = `
-import React from 'react'
-import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
+// in the import section
+import LoadingButton from '/common/buttons/loadingButton'
+import LoginIcon from '@mui/icons-material/Login'
 
-const LoadingButton = (props) => {
-
-    let properties = {}
-
-    // properties not tobe included
-    let xProps = new Set(['isLoading'])
-
-    // assign object properties
-    Object.keys(props).forEach(key => {
-        if (xProps.has(key)) return
-        properties[key] = props[key]
-    })
-
-    // start icon
-    let startIcon = props.startIcon? props.startIcon: null
-
-    // if isLoading is true, set disabled to true
-    if (props.isLoading) {
-        startIcon = <CircularProgress size={12} />
-        properties.disabled = true
-    }
-
-    return (
-        <Button
-            {...properties}
-            startIcon={ startIcon }>
-            { props.children? props.children: '' }
-        </Button>
-    )
-}
-
-export default LoadingButton
+// ... in the component
+// in the render section
+return (
+    <LoadingButton
+        size='small'
+        variant='contained'
+        color='primary'
+        onClick={(e) => {}}
+        isLoading={false}
+        startIcon={<LoginIcon />}>
+        login
+    </LoadingButton>
+)
 `
 
 const Buttons = (props) => {
@@ -96,7 +80,35 @@ const Buttons = (props) => {
                     code={testCode}
                     language={'jsx'}
                     showLineNumbers={true}
-                    theme={null} />
+                    rendered={(
+                        <>
+                            <LoadingButton
+                                size='small'
+                                variant='contained'
+                                color='primary'
+                                onClick={(e) => {}}
+                                isLoading={true}
+                                startIcon={<LoginIcon />}>
+                                login
+                            </LoadingButton>
+                            <LoadingButton
+                                size='small'
+                                variant='contained'
+                                color='primary'
+                                onClick={(e) => {}}
+                                isLoading={false}
+                                startIcon={<LoginIcon />}>
+                                login
+                            </LoadingButton>
+                        </>
+                    )}
+                    theme={null}>
+                    <Typography variant='body1'>
+                        The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem
+                        ipsum quia dolor sit amet. which translates to “Nor is there anyone who loves or pursues
+                        or desires to obtain pain of itself, because it is pain.
+                    </Typography>
+                </CodeBlock>
             </Grid>
         </SubPageslayout>
     )

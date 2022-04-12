@@ -16,9 +16,15 @@ const GenBlockComponent = (props) => {
                 !isLoading? (
                     <>
                         {
-                            props.title?  <Typography id={props.title.replace(/\s/g, '').toLowerCase()} variant='h6' style={{marginBottom: 5}}>
-                                <WebhookIcon size='small' /> <span>{ props.title }</span>
-                            </Typography>: null
+                            props.title?  (
+                                <Typography
+                                    variant='h6'
+                                    color='primary'   
+                                    id={props.title.replace(/\s/g, '').toLowerCase()}
+                                    style={{marginBottom: 5, marginTop: 30}}>
+                                    <WebhookIcon size='small' /> <span>{ props.title }</span>
+                                </Typography>
+                            ): null
                         }
                         { props.description?  <Typography variant='body1' style={{marginBottom: 15, textIndent: 50}}>{ props.description }</Typography>: null }
                         {

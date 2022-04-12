@@ -24,17 +24,59 @@ const CodeBlockComponent = (props) => {
             {
                 !isLoading? (
                     <>
+                        {/* the title section */}
                         {
-                            props.title?  <Typography id={props.title.replace(/\s/g, '').toLowerCase()} variant='h6' style={{marginBottom: 5}}>
-                                <WebhookIcon size='small' /> <span>{ props.title }</span>
-                            </Typography>: null
+                            props.title?  (
+                                <Typography
+                                    variant='h6'
+                                    color='primary'
+                                    id={props.title.replace(/\s/g, '').toLowerCase()}
+                                    style={{marginBottom: 5, marginTop: 30}}>
+                                    <WebhookIcon size='small' /><span>{ props.title }</span>
+                                </Typography>
+                            ): null
                         }
-                        { props.description?  <Typography variant='body1' style={{marginBottom: 15, textIndent: 50}}>{ props.description }</Typography>: null }
-                        <CodeBlock
-                            text={props.code? props.code: ''}
-                            language={props.language? props.language: 'javascript'}
-                            showLineNumbers={Boolean(props.showLineNumbers)}
-                            theme={props.theme? props.theme: defaultTheme} />
+
+                        {/* the description section */}
+                        {
+                            props.description? (
+                                <Typography
+                                    variant='body1'
+                                    style={{marginBottom: 15, textIndent: 50}}>
+                                    { props.description }
+                                </Typography>
+                            ): null
+                        }
+
+                        {/* the rendered section */}
+                        {
+                            props.rendered? (
+                                <>
+                                    <Typography
+                                        style={{
+                                            fontStyle: 'italic',
+                                            display: 'block'
+                                        }}
+                                        variant='caption'>Rendered Example:</Typography>
+                                    <Box style={{padding: 20}}>
+                                        { props.rendered }
+                                    </Box>
+                                </>
+                            ): null
+                        }
+
+                        {/* the code block section */}
+                        {
+                            props.code? (
+                                <CodeBlock
+                                    text={props.code}
+                                    language={props.language? props.language: 'javascript'}
+                                    showLineNumbers={Boolean(props.showLineNumbers)}
+                                    theme={props.theme? props.theme: defaultTheme} />
+                            ): null
+                        }
+
+                        {/* the children content section */}
                         {
                             props.children? (
                                 <Box style={{marginTop: 10}}>
