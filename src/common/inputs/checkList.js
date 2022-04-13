@@ -44,7 +44,7 @@ const CheckList = (props) => {
     }
 
     return (
-        <Grid container spacing={2} style={{padding: 20}}>
+        <Grid container spacing={2}>
             {
                 groupList.map((subList, subListIndex) => {
                     return (
