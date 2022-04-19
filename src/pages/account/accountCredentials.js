@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid'
 
-// import AccountContext from '../../common/context/accountContext'
+// import AccountContext from '../../common/contexts/accountContext'
 import AccountView from './components/accountCredentialsView'
 import AccountEdit from './components/accountCredentialsEdit'
 

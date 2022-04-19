@@ -19,8 +19,8 @@ import Badge from '@mui/material/Badge'
 import IconButton from '@mui/material/IconButton'
 
 import MainNav from '../navs/mainNav'
-import AccountContext from '../context/accountContext'
-import RouterContext, { UseRouterContext } from '../context/routerContext'
+import AccountContext from '../contexts/accountContext'
+import RouterContext, { UseRouterContext } from '../contexts/routerContext'
 import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
 

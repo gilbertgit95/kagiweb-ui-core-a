@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography'
 
 import CodeBlock from '../../common/blocks/codeBlock'
 
-// import AccountContext from '../../common/context/accountContext'
+// import AccountContext from '../../common/contexts/accountContext'
 
 const testTitle = 'Loading Button'
 const testDescription = `

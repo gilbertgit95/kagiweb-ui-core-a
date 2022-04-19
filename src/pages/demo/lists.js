@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography'
 // import LoginIcon from '@mui/icons-material/Login'
 // import Button from '@mui/material/Button'
 
-// import AccountContext from '../../common/context/accountContext'
+// import AccountContext from '../../common/contexts/accountContext'
 // import GenBlock from '../../common/blocks/genBlock'
 import CodeBlock from '../../common/blocks/codeBlock'
 import BasicList from '../../common/lists/basicList'

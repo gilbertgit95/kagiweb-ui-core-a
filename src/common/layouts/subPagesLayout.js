@@ -17,7 +17,7 @@ import Drawer from '@mui/material/Drawer'
 import Toolbar from '@mui/material/Toolbar'
 
 import PaginatedNav from '../../common/navs/paginatedNav'
-import RouterContext from '../../common/context/routerContext'
+import RouterContext from '../../common/contexts/routerContext'
 
 const drawerWidth = 200
 const navAnchors = new Set(['left', 'right'])

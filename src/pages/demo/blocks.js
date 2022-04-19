@@ -15,7 +15,7 @@ import Grid from '@mui/material/Grid'
 import CodeBlock from '../../common/blocks/codeBlock'
 import GenBlock from '../../common/blocks/genBlock'
 
-// import AccountContext from '../../common/context/accountContext'
+// import AccountContext from '../../common/contexts/accountContext'
 
 const testCodeBlockDescription = `
     The lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem

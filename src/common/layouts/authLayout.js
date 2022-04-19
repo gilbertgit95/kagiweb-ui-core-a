@@ -12,7 +12,7 @@ import ThemeToggle from '../themes/themeToggle'
 import MainNav from '../navs/mainNav'
 import config from '../../config'
 
-import RouterContext, { UseRouterContext } from '../context/routerContext'
+import RouterContext, { UseRouterContext } from '../contexts/routerContext'
 
 const AuthLayout = (props) => {
     const routerStates = UseRouterContext()

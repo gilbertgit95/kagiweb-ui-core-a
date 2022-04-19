@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import WebhookIcon from '@mui/icons-material/Webhook'
 import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
-import LocalStorageContext from '../context/localStorageContext'
+import LocalStorageContext from '../contexts/localStorageContext'
 import { CodeBlock, vs2015, atomOneLight } from "react-code-blocks"
 // import CircularProgress from '@mui/material/CircularProgress'
 

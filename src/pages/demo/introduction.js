@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography'
 // import Button from '@mui/material/Button'
 
 import GenBlock from '../../common/blocks/genBlock'
-// import AccountContext from '../../common/context/accountContext'
+// import AccountContext from '../../common/contexts/accountContext'
 
 const Introduction = (props) => {
     const [isLoading, setIsLoading] = useState(true)

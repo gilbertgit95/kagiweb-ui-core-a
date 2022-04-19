@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 // import TextField from '@mui/material/TextField'
 // import Button from '@mui/material/Button'
-// import AccountContext from '../../../common/context/accountContext'
+// import AccountContext from '../../../common/contexts/accountContext'
 
 
 const AccountProfileView = (props) => {

@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography'
 import CodeBlock from '../../common/blocks/codeBlock'
 import CheckList from '../../common/inputs/checkList'
 import RadioList from '../../common/inputs/radioList'
-// import AccountContext from '../../common/context/accountContext'
+// import AccountContext from '../../common/contexts/accountContext'
 
 const SelectListSampleCode = `
 // in import section
