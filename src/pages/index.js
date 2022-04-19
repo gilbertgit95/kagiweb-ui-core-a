@@ -20,6 +20,9 @@ import ForgotPassword from './auth/forgotPassword'
 // root pages
 import Home from './home'
 
+// notifications pages
+import Notifications from './notifications'
+
 // acount pages
 import AccountCredentials from './account/accountCredentials'
 import AccountProfile from './account/accountProfile'
@@ -71,6 +74,12 @@ const Pages = (props) => {
                 </Route>
 
                 {/* Account pages */}
+                <Route path={`${ config.rootRoute }/notifications/`} element={<MainLayout />}>
+                    {/* <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/notifications`} />} /> */}
+                    <Route path="" element={<Notifications />} />
+                </Route>
+
+                {/* Account pages */}
                 <Route path={`${ config.rootRoute }/account/`} element={<MainLayout />}>
                     <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/account/credentials`} />} />
                     <Route path="credentials" element={<AccountCredentials />} />
@@ -106,7 +115,7 @@ const Pages = (props) => {
                         <PublicPageLayout>
                             <NotFound />
                         </PublicPageLayout>
-                    }></Route>
+                    } />
             </Routes>
         </BrowserRouter>
     )

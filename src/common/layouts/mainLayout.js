@@ -79,8 +79,8 @@ const MainLayout = (props) => {
                     </Badge>
                 </IconButton>
             ),
-            type: 'action',
-            value: 'notifications'
+            type: 'link',
+            value: `/${ config.rootRoute }/notifications`
         }
     ]
 
@@ -122,12 +122,6 @@ const MainLayout = (props) => {
                 type: 'link',
                 value: `/${ config.rootRoute }/account/settings`
             },
-            // {
-            //     component: <MailIcon />,
-            //     label: 'Test Act',
-            //     type: 'action',
-            //     value: 'test_act'
-            // },
         ],
         [
             {
