@@ -1,6 +1,5 @@
 import { useEffect, useState, createContext } from 'react'
-
-const storageName = 'app_info'
+import config from '../../config'
 
 let defaultValue = {
     themeMode: 'light',
@@ -9,12 +8,13 @@ let defaultValue = {
 
 const LocalStorageContext = createContext({
     localStorageContext: defaultValue,
-    updateLocalStorage(data) { console.log('not yet loaded: ', data) },
+    updateLocalStorage(data) { return },
     toggleThemeMode() { return }
 })
 export default LocalStorageContext
 
 export const UseLocalStorageContext = () => {
+    const storageName = config.localStorageName
     const [localStorageContext, setLocalStorageContext] = useState(defaultValue)
 
     const updateLocalStorage = (valObj) => {

@@ -21,12 +21,14 @@ import IconButton from '@mui/material/IconButton'
 import MainNav from '../navs/mainNav'
 import AccountContext from '../contexts/accountContext'
 import RouterContext, { UseRouterContext } from '../contexts/routerContext'
+import LocalStorageContext from '../contexts/localStorageContext'
 import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
 
 const MainLayout = (props) => {
     const routerStates = UseRouterContext()
     const accountCtx = useContext(AccountContext)
+    const lsCtx = useContext(LocalStorageContext)
 
     let leftLogo = {
         label: 'Root',
@@ -137,8 +139,11 @@ const MainLayout = (props) => {
         console.log('Action: ', e)
         // `/${ config.rootRoute }/auth/logout`
         if (e === 'logout') {
-            accountCtx.signOut()
-            routerStates.setRouterContext(`/${ config.rootRoute }/auth/logout`)
+            routerStates.setRouterContext(`/${ config.rootRoute }/auth/login`)
+            setTimeout(() => {
+                accountCtx.signOut()
+                lsCtx.updateLocalStorage({authKey: null})
+            }, 100)
         }
     }
 

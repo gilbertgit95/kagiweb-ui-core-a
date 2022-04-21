@@ -11,6 +11,7 @@ import LoginIcon from '@mui/icons-material/Login'
 
 import AccountContext from '../../common/contexts/accountContext'
 import RouterContext from '../../common/contexts/routerContext'
+import LocalStorageContext from '../../common/contexts/localStorageContext'
 import LoadingButton from '../../common/buttons/loadingButton'
 import utils from '../../common/utilities'
 import config from '../../config'
@@ -25,14 +26,16 @@ const Login = (props) => {
     })
     const routerCtx = useContext(RouterContext)
     const AccCtx = useContext(AccountContext)
+    const lsCtx = useContext(LocalStorageContext)
 
     const login = async () => {
         let username = ''
         let password = ''
 
         setInternalStates({...internalstates, ...{loginProgress: true}})
-        await AccCtx.signIn({username, password})
+        let loginResult = await AccCtx.signIn({username, password})
         setInternalStates({...internalstates, ...{loginProgress: false}})
+        lsCtx.updateLocalStorage({authKey: loginResult.authKey})
         routerCtx.setRouterContext(`/${ config.rootRoute }/home`)
     }
 

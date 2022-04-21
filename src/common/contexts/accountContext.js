@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext, createContext } from 'react'
-import LocalStorageContext from './localStorageContext'
+import { useState, useEffect, createContext } from 'react'
+import config from '../../config'
 import utils from '../utilities'
 
 const AccountContext = createContext({
@@ -11,29 +11,49 @@ const AccountContext = createContext({
 export default AccountContext
 
 export const UseAccountContext = () => {
-    const lsCtx = useContext(LocalStorageContext)
-    const [accountContext, setAccountContext] = useState({"__isLoading": false})
+    const storageName = config.localStorageName
+
+    const [accountContext, setAccountContext] = useState({"__isLoading": true})
 
     const signIn = async ({username, password}) => {
-      console.log('account data is being fetched')
+      console.log('account data is being fetched by signing in')
       setAccountContext({
         ...accountContext,
         ...{"__isLoading": true}
       })
       await utils.waitFor(2)
-      lsCtx.updateLocalStorage({authKey: 'berear_test123'})
       setAccountContext(testAccountData)
       console.log('account data has loaded')
+      return { authKey: 'berear_test123' }
     }
 
     const signOut = async () => {
-      lsCtx.updateLocalStorage({authKey: null})
       setAccountContext({"__isLoading": false})
     }
 
-    useEffect(() => {
+    useEffect(async () => {
       // check auth key if it exist
-      console.log('authKey: ', lsCtx.localStorageContext.authKey)
+      // console.log('authKey: ', lsCtx.localStorageContext.authKey)
+      let localStoreVal = localStorage.getItem(storageName)
+      let parsedLsVal = localStoreVal? JSON.parse(localStoreVal): {}
+
+      // if a token exist, then fetch user value using the token
+      if (parsedLsVal.authKey) {
+        console.log('account data is being fetched by using authKey')
+        setAccountContext({
+          ...accountContext,
+          ...{"__isLoading": true}
+        })
+        await utils.waitFor(3)
+        setAccountContext(testAccountData)
+        console.log('account data has loaded')
+      } else {
+        setAccountContext({
+          ...accountContext,
+          ...{"__isLoading": false}
+        })
+      }
+
     }, [])
 
     return {

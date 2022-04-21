@@ -13,7 +13,6 @@ import MainLayout from '../common/layouts/mainLayout'
 
 // auth pages
 import Login from './auth/login'
-import Logout from './auth/logout'
 import ResetPassword from './auth/resetPassword'
 import ForgotPassword from './auth/forgotPassword'
 
@@ -62,7 +61,6 @@ const Pages = (props) => {
                 <Route path={`${ config.rootRoute }/auth/`} element={<AuthLayout />}>
                     <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/auth/login`} />} />
                     <Route path="login" element={<Login />} />
-                    <Route path="logout" element={<Logout />} />
                     <Route path="resetPassword" element={<ResetPassword />} />
                     <Route path="resetPassword/:key" element={<ResetPassword />} />
                     <Route path="forgotPassword" element={<ForgotPassword />} />

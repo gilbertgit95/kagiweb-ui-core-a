@@ -2,6 +2,7 @@ let config = {
     appName: 'kagiweb',
     environment: 'development',
     rootRoute: 'core',
+    localStorageName: 'app_info',
     // environment: 'staging'
     // environment: 'production'
     development: {
