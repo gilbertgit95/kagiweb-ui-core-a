@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField'
 import LoginIcon from '@mui/icons-material/Login'
 // import Button from '@mui/material/Button'
 
-// import AccountContext from '../../common/contexts/accountContext'
+import AccountContext from '../../common/contexts/accountContext'
 import RouterContext from '../../common/contexts/routerContext'
 import LoadingButton from '../../common/buttons/loadingButton'
 import utils from '../../common/utilities'
@@ -23,18 +23,15 @@ const Login = (props) => {
         username: '',
         errors: []
     })
-    // const [navRoute, setNavRoute] = useState(null)
     const routerCtx = useContext(RouterContext)
-    // const navigate = useNavigate()
-    // const ctx = useContext(AccountContext)
-
-    // const btnClicked = (e) => {
-    //     ctx.setAccountContext({testVal: 'login test value from context'})
-    // }
+    const AccCtx = useContext(AccountContext)
 
     const login = async () => {
+        let username = ''
+        let password = ''
+
         setInternalStates({...internalstates, ...{loginProgress: true}})
-        await utils.waitFor(2)
+        await AccCtx.signIn({username, password})
         setInternalStates({...internalstates, ...{loginProgress: false}})
         routerCtx.setRouterContext(`/${ config.rootRoute }/home`)
     }

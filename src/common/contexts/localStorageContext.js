@@ -3,12 +3,13 @@ import { useEffect, useState, createContext } from 'react'
 const storageName = 'app_info'
 
 let defaultValue = {
-    themeMode: 'light'
+    themeMode: 'light',
+    authKey: null
 }
 
 const LocalStorageContext = createContext({
     localStorageContext: defaultValue,
-    updateLocalStorage(data) { return },
+    updateLocalStorage(data) { console.log('not yet loaded: ', data) },
     toggleThemeMode() { return }
 })
 export default LocalStorageContext
@@ -19,6 +20,7 @@ export const UseLocalStorageContext = () => {
     const updateLocalStorage = (valObj) => {
         let newStorageVal = {...localStorageContext, ...valObj}
         setLocalStorageContext(newStorageVal)
+        console.log('update ls: ', newStorageVal)
         localStorage.setItem(storageName, JSON.stringify(newStorageVal))
     }
 
@@ -41,5 +43,9 @@ export const UseLocalStorageContext = () => {
 
     }, [])
 
-    return {localStorageContext, updateLocalStorage, toggleThemeMode}
+    return {
+        localStorageContext,
+        updateLocalStorage,
+        toggleThemeMode
+    }
 }

@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid'
 
 const PublicPagelayout = (props) => {
 
-
     return (
         <Container maxWidth="lg">
             <Box>

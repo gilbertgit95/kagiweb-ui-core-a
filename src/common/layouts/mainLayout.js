@@ -127,20 +127,25 @@ const MainLayout = (props) => {
             {
                 component: <LogoutIcon />,
                 label: 'Logout',
-                type: 'link',
-                value: `/${ config.rootRoute }/auth/logout`
+                type: 'action',
+                value: 'logout'
             }
         ]
     ]
 
     const onNavAction = (e) => {
         console.log('Action: ', e)
+        // `/${ config.rootRoute }/auth/logout`
+        if (e === 'logout') {
+            accountCtx.signOut()
+            routerStates.setRouterContext(`/${ config.rootRoute }/auth/logout`)
+        }
     }
 
-    useEffect(() => {
-        console.log('init main layout')
-        accountCtx.initAccountData()
-    }, [])
+    // useEffect(() => {
+    //     console.log('init main layout')
+    //     accountCtx.initAccountData()
+    // }, [])
 
     return (
         <RouterContext.Provider

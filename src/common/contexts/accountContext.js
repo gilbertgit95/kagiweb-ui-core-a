@@ -1,29 +1,52 @@
-import { useState, createContext } from 'react'
+import { useState, useEffect, useContext, createContext } from 'react'
+import LocalStorageContext from './localStorageContext'
 import utils from '../utilities'
 
 const AccountContext = createContext({
     accountContext: {},
     setAccountContext(data) { return },
-    initAccountData() { return }
+    signIn() { return },
+    signOut() { return }
 })
 export default AccountContext
 
 export const UseAccountContext = () => {
+    const lsCtx = useContext(LocalStorageContext)
     const [accountContext, setAccountContext] = useState({"__isLoading": false})
 
-    const initAccountData = async () => {
-        console.log('account data is being fetched')
-        setAccountContext({...accountContext, ...{"__isLoading": true}})
-        await utils.waitFor(2)
-        setAccountContext(testAccountData)
-        console.log('account data has loaded')
+    const signIn = async ({username, password}) => {
+      console.log('account data is being fetched')
+      setAccountContext({
+        ...accountContext,
+        ...{"__isLoading": true}
+      })
+      await utils.waitFor(2)
+      lsCtx.updateLocalStorage({authKey: 'berear_test123'})
+      setAccountContext(testAccountData)
+      console.log('account data has loaded')
     }
 
-    return {accountContext, setAccountContext, initAccountData}
+    const signOut = async () => {
+      lsCtx.updateLocalStorage({authKey: null})
+      setAccountContext({"__isLoading": false})
+    }
+
+    useEffect(() => {
+      // check auth key if it exist
+      console.log('authKey: ', lsCtx.localStorageContext.authKey)
+    }, [])
+
+    return {
+      accountContext,
+      setAccountContext,
+      signIn,
+      signOut
+    }
 }
 
 const testAccountData = {
     "__isLoading": false,
+    "__isLoggedIn": true,
     "id": "e79c8692-4cc2-4971-a52c-832e87b27e7f",
     "username": "gilbert95",
     "twoFactorAuth": false,

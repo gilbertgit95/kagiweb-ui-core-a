@@ -1,4 +1,4 @@
-// import { useState } from 'react'
+import { useContext } from 'react'
 import {
     Navigate,
     BrowserRouter,
@@ -47,9 +47,10 @@ import DemoBlocks from './demo/blocks'
 import NotFound from './notFound'
 
 import config from '../config'
+import AccountContext from '../common/contexts/accountContext'
 
 const Pages = (props) => {
-    // console.log(config)
+    const AccCtx = useContext(AccountContext)
 
     return (
         <BrowserRouter>
@@ -67,46 +68,53 @@ const Pages = (props) => {
                     <Route path="forgotPassword" element={<ForgotPassword />} />
                 </Route>
 
-                {/* Root pages */}
-                <Route path={`${ config.rootRoute }/`} element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/home`} />} />
-                    <Route path="home" element={<Home />} />
-                </Route>
+                {
+                    // render the main content routes if the user has loggedin
+                    AccCtx.accountContext.__isLoggedIn? (
+                        <>
+                            {/* Root pages */}
+                            <Route path={`${ config.rootRoute }/`} element={<MainLayout />}>
+                                <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/home`} />} />
+                                <Route path="home" element={<Home />} />
+                            </Route>
 
-                {/* Account pages */}
-                <Route path={`${ config.rootRoute }/notifications/`} element={<MainLayout />}>
-                    {/* <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/notifications`} />} /> */}
-                    <Route path="" element={<Notifications />} />
-                </Route>
+                            {/* Notifications pages */}
+                            <Route path={`${ config.rootRoute }/notifications/`} element={<MainLayout />}>
+                                {/* <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/notifications`} />} /> */}
+                                <Route path="" element={<Notifications />} />
+                            </Route>
 
-                {/* Account pages */}
-                <Route path={`${ config.rootRoute }/account/`} element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/account/credentials`} />} />
-                    <Route path="credentials" element={<AccountCredentials />} />
-                    <Route path="profile" element={<AccountProfile />} />
-                    <Route path="settings" element={<AccountSettings />} />
-                </Route>
+                            {/* Account pages */}
+                            <Route path={`${ config.rootRoute }/account/`} element={<MainLayout />}>
+                                <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/account/credentials`} />} />
+                                <Route path="credentials" element={<AccountCredentials />} />
+                                <Route path="profile" element={<AccountProfile />} />
+                                <Route path="settings" element={<AccountSettings />} />
+                            </Route>
 
-                {/* Admin pages */}
-                <Route path={`${ config.rootRoute }/admin/`} element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/admin/appSettings`} />} />
-                    <Route path="appSettings" element={<AppSettings />} />
-                    <Route path="appEndpoints" element={<AppEndpoints />} />
-                    <Route path="appRoles" element={<AppRoles />} />
-                    <Route path="appRoleEndpoints" element={<AppRoleEndpoints />} />
-                    <Route path="appUsers" element={<AppUsers />} />
-                </Route>
+                            {/* Admin pages */}
+                            <Route path={`${ config.rootRoute }/admin/`} element={<MainLayout />}>
+                                <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/admin/appSettings`} />} />
+                                <Route path="appSettings" element={<AppSettings />} />
+                                <Route path="appEndpoints" element={<AppEndpoints />} />
+                                <Route path="appRoles" element={<AppRoles />} />
+                                <Route path="appRoleEndpoints" element={<AppRoleEndpoints />} />
+                                <Route path="appUsers" element={<AppUsers />} />
+                            </Route>
 
-                {/* Demo pages */}
-                <Route path={`${ config.rootRoute }/demo/`} element={<MainLayout />}>
-                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/demo/introduction`} />} />
-                    <Route path="introduction" element={<DemoIntroduction />} />
-                    <Route path="buttons" element={<DemoButtons />} />
-                    <Route path="inputs" element={<DemoInputs />} />
-                    <Route path="lists" element={<DemoLists />} />
-                    <Route path="navigations" element={<DemoNavigations />} />
-                    <Route path="blocks" element={<DemoBlocks />} />
-                </Route>
+                            {/* Demo pages */}
+                            <Route path={`${ config.rootRoute }/demo/`} element={<MainLayout />}>
+                                <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/demo/introduction`} />} />
+                                <Route path="introduction" element={<DemoIntroduction />} />
+                                <Route path="buttons" element={<DemoButtons />} />
+                                <Route path="inputs" element={<DemoInputs />} />
+                                <Route path="lists" element={<DemoLists />} />
+                                <Route path="navigations" element={<DemoNavigations />} />
+                                <Route path="blocks" element={<DemoBlocks />} />
+                            </Route>
+                        </>
+                    ): null
+                }
 
                 {/* error page */}
                 <Route
