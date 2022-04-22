@@ -36,7 +36,7 @@ const Login = (props) => {
         let loginResult = await AccCtx.signIn({username, password})
         setInternalStates({...internalstates, ...{loginProgress: false}})
         lsCtx.updateLocalStorage({authKey: loginResult.authKey})
-        routerCtx.setRouterContext(`/${ config.rootRoute }/home`)
+        // routerCtx.setRouterContext(`/${ config.rootRoute }/home`)
     }
 
     // life cycles

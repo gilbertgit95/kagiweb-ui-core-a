@@ -20,7 +20,7 @@ export const UseLocalStorageContext = () => {
     const updateLocalStorage = (valObj) => {
         let newStorageVal = {...localStorageContext, ...valObj}
         setLocalStorageContext(newStorageVal)
-        console.log('update ls: ', newStorageVal)
+        // console.log('update ls: ', newStorageVal)
         localStorage.setItem(storageName, JSON.stringify(newStorageVal))
     }
 

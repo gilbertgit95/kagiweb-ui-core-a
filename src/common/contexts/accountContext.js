@@ -13,7 +13,7 @@ export default AccountContext
 export const UseAccountContext = () => {
     const storageName = config.localStorageName
 
-    const [accountContext, setAccountContext] = useState({"__isLoading": true})
+    const [accountContext, setAccountContext] = useState({})
 
     const signIn = async ({username, password}) => {
       console.log('account data is being fetched by signing in')
@@ -31,28 +31,32 @@ export const UseAccountContext = () => {
       setAccountContext({"__isLoading": false})
     }
 
-    useEffect(async () => {
+    useEffect(() => {
       // check auth key if it exist
       // console.log('authKey: ', lsCtx.localStorageContext.authKey)
       let localStoreVal = localStorage.getItem(storageName)
       let parsedLsVal = localStoreVal? JSON.parse(localStoreVal): {}
 
       // if a token exist, then fetch user value using the token
-      if (parsedLsVal.authKey) {
-        console.log('account data is being fetched by using authKey')
-        setAccountContext({
-          ...accountContext,
-          ...{"__isLoading": true}
-        })
-        await utils.waitFor(3)
-        setAccountContext(testAccountData)
-        console.log('account data has loaded')
-      } else {
-        setAccountContext({
-          ...accountContext,
-          ...{"__isLoading": false}
-        })
+      let init = async () => {
+        if (parsedLsVal.authKey) {
+          console.log('account data is being fetched by using authKey')
+          setAccountContext({
+            ...accountContext,
+            ...{"__isLoading": true}
+          })
+          await utils.waitFor(3)
+          setAccountContext(testAccountData)
+          console.log('account data has loaded')
+        } else {
+          setAccountContext({
+            ...accountContext,
+            ...{"__isLoading": false}
+          })
+        }
       }
+
+      init()
 
     }, [])
 

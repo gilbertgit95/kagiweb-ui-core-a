@@ -27,7 +27,7 @@ import config from '../../config'
 
 const MainLayout = (props) => {
     const routerStates = UseRouterContext()
-    const accountCtx = useContext(AccountContext)
+    const AccCtx = useContext(AccountContext)
     const lsCtx = useContext(LocalStorageContext)
 
     let leftLogo = {
@@ -139,18 +139,21 @@ const MainLayout = (props) => {
         console.log('Action: ', e)
         // `/${ config.rootRoute }/auth/logout`
         if (e === 'logout') {
-            routerStates.setRouterContext(`/${ config.rootRoute }/auth/login`)
-            setTimeout(() => {
-                accountCtx.signOut()
-                lsCtx.updateLocalStorage({authKey: null})
-            }, 100)
+            
+            AccCtx.setAccountContext({ ...AccCtx.accountContext, ...{__action: 'clearCredentials'} })
+            routerStates.setRouterContext(`/${ config.rootRoute }/auth/`)
+            // window.location.href = `/${ config.rootRoute }/auth/login`
         }
     }
 
     // useEffect(() => {
-    //     console.log('init main layout')
-    //     accountCtx.initAccountData()
-    // }, [])
+    //     console.log('redirect to auth: ', AccCtx)
+    //     if (typeof AccCtx.accountContext.__isLoggedIn !== 'boolean') {
+    //         //  redirect to auth page
+    //         console.log('redirect to auth')
+    //         routerStates.setRouterContext(`/${ config.rootRoute }/auth/login`)
+    //     }
+    // }, [AccCtx.accountContext])
 
     return (
         <RouterContext.Provider

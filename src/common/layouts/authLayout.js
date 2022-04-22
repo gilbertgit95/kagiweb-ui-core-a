@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom"
+import { useContext, useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -9,16 +10,19 @@ import Button from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import ThemeToggle from '../themes/themeToggle'
 
+import InitialLoadinglayout from './initalLoadingLayout'
 import MainNav from '../navs/mainNav'
 import config from '../../config'
 
+import AccountContext from '../contexts/accountContext'
 import RouterContext, { UseRouterContext } from '../contexts/routerContext'
+import LocalStorageContext from '../contexts/localStorageContext'
 
 const AuthLayout = (props) => {
+    const AccCtx = useContext(AccountContext)
     const routerStates = UseRouterContext()
-    // const ctx = useContext(AccountContext)
+    const lsCtx = useContext(LocalStorageContext)
 
-    // let accountVal = ctx.accountContext && ctx.accountContext.testVal? ctx.accountContext.testVal: ''
     let rightLogo = {
         label: 'Open settings',
         component: <MenuIcon />,
@@ -82,36 +86,58 @@ const AuthLayout = (props) => {
         console.log('Action: ', e)
     }
 
+    useEffect(() => {
+
+        //  if user action is to signout, then clear credentials
+        if (   AccCtx.accountContext.__action
+            && AccCtx.accountContext.__action === 'clearCredentials') {
+            //  redirect to home page
+            lsCtx.updateLocalStorage({authKey: null})
+            AccCtx.signOut()
+
+            return
+        }
+
+        // if user is logged in redirect to home page
+        if (   typeof AccCtx.accountContext.__isLoggedIn === 'boolean'
+            && Boolean(AccCtx.accountContext.__isLoggedIn)) {
+            //  redirect to home page
+            routerStates.setRouterContext(`/${ config.rootRoute }/home`)
+        }
+
+    }, [AccCtx.accountContext])
+
     return (
         <RouterContext.Provider
             value={{
               ...routerStates
             }}>
-            <MainNav
-                isTransparent={true}
-                leftLogo={null}
-                leftMenu={[]}
-                middleMenu={middleMenu}
-                rightLogo={rightLogo}
-                rightMenu={rightMenu}
-                onAction={onNavAction} />
-            <Container maxWidth="sm">
-                <Box>
-                    <Toolbar />
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} style={{textAlign: 'center'}}>
-                            <img
-                                alt="logo"
-                                style={{width: 150}}
-                                src='/favicon.png' />
-                            <Typography variant="h4" gutterBottom component="div">
-                                { config.appName }
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} style={{textAlign: 'center'}}>
-                            <Box
-                                style={{
-                                    width: 300,
+            <InitialLoadinglayout>
+                <MainNav
+                    isTransparent={true}
+                    leftLogo={null}
+                    leftMenu={[]}
+                    middleMenu={middleMenu}
+                    rightLogo={rightLogo}
+                    rightMenu={rightMenu}
+                    onAction={onNavAction} />
+                <Container maxWidth="sm">
+                    <Box>
+                        <Toolbar />
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} style={{textAlign: 'center'}}>
+                                <img
+                                    alt="logo"
+                                    style={{width: 150}}
+                                    src='/favicon.png' />
+                                <Typography variant="h4" gutterBottom component="div">
+                                    { config.appName }
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} style={{textAlign: 'center'}}>
+                                <Box
+                                    style={{
+                                        width: 300,
                                     margin: 'auto',
                                     padding: 20,
                                     paddingTop: 40,
@@ -129,6 +155,7 @@ const AuthLayout = (props) => {
                     </Grid>
                 </Box>
             </Container>
+            </InitialLoadinglayout>
         </RouterContext.Provider>
     )
 }
