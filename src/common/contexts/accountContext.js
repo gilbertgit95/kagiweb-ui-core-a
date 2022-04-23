@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
 import config from '../../config'
 import utils from '../utilities'
+import LocalStorage from '../utilities/localStorage'
 
 const AccountContext = createContext({
     accountContext: {},
@@ -34,12 +35,12 @@ export const UseAccountContext = () => {
     useEffect(() => {
       // check auth key if it exist
       // console.log('authKey: ', lsCtx.localStorageContext.authKey)
-      let localStoreVal = localStorage.getItem(storageName)
-      let parsedLsVal = localStoreVal? JSON.parse(localStoreVal): {}
+      let localStoreVal = LocalStorage.getItem(storageName)
+      let lsVal = localStoreVal? localStoreVal: {}
 
       // if a token exist, then fetch user value using the token
       let init = async () => {
-        if (parsedLsVal.authKey) {
+        if (lsVal.authKey) {
           console.log('account data is being fetched by using authKey')
           setAccountContext({
             ...accountContext,

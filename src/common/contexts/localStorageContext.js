@@ -1,4 +1,5 @@
 import { useEffect, useState, createContext } from 'react'
+import LocalStorage from '../utilities/localStorage'
 import config from '../../config'
 
 let defaultValue = {
@@ -15,13 +16,12 @@ export default LocalStorageContext
 
 export const UseLocalStorageContext = () => {
     const storageName = config.localStorageName
-    const [localStorageContext, setLocalStorageContext] = useState(defaultValue)
+    const [localStorageContext, setLocalStorageContext] = useState({})
 
-    const updateLocalStorage = (valObj) => {
-        let newStorageVal = {...localStorageContext, ...valObj}
+    const updateLocalStorage = (obj) => {
+        let newStorageVal = {...localStorageContext, ...obj}
         setLocalStorageContext(newStorageVal)
-        // console.log('update ls: ', newStorageVal)
-        localStorage.setItem(storageName, JSON.stringify(newStorageVal))
+        LocalStorage.setItem(storageName, newStorageVal)
     }
 
     const toggleThemeMode = () => {
@@ -31,15 +31,18 @@ export const UseLocalStorageContext = () => {
     }
 
     useEffect(() => {
-        // console.log('use effect in localstorage')
-        let localStoreVal = localStorage.getItem(storageName)
-        let parsedVal = defaultValue
+        let init = () => {
+            let store = LocalStorage.getItem(storageName)
 
-        if (localStoreVal) {
-            parsedVal = JSON.parse(localStoreVal)
+            if (store) {
+                setLocalStorageContext(store)
+            } else {
+                setLocalStorageContext(defaultValue)
+                LocalStorage.setItem(storageName, defaultValue)
+            }
         }
 
-        updateLocalStorage(parsedVal)
+        init()
 
     }, [])
 
