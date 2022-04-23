@@ -20,13 +20,13 @@ import IconButton from '@mui/material/IconButton'
 
 import MainNav from '../navs/mainNav'
 import AccountContext from '../contexts/accountContext'
-import RouterContext, { UseRouterContext } from '../contexts/routerContext'
+import RouterContext, { useRouterContext } from '../contexts/routerContext'
 import LocalStorageContext from '../contexts/localStorageContext'
 import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
 
 const MainLayout = (props) => {
-    const routerStates = UseRouterContext()
+    const routerStates = useRouterContext()
     const AccCtx = useContext(AccountContext)
     const lsCtx = useContext(LocalStorageContext)
 

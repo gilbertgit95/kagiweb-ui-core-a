@@ -14,7 +14,7 @@ const LocalStorageContext = createContext({
 })
 export default LocalStorageContext
 
-export const UseLocalStorageContext = () => {
+export const useLocalStorageContext = () => {
     const storageName = config.localStorageName
     const [localStorageContext, setLocalStorageContext] = useState({})
 

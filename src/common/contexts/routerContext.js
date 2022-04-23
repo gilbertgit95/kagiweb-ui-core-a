@@ -7,7 +7,7 @@ const RouterContext = createContext({
 })
 export default RouterContext
 
-export const UseRouterContext = () => {
+export const useRouterContext = () => {
     const [routerContext, setRouterContext] = useState(null)
     const navigate = useNavigate()
 

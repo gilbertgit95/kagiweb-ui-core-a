@@ -6,7 +6,7 @@ const AuthContext = createContext({
 })
 export default AuthContext
 
-export const UseAuthContext = () => {
+export const useAuthContext = () => {
     const [authContext, setAuthContext] = useState({})
 
     return {authContext, setAuthContext}

@@ -11,7 +11,7 @@ const AccountContext = createContext({
 })
 export default AccountContext
 
-export const UseAccountContext = () => {
+export const useAccountContext = () => {
     const storageName = config.localStorageName
 
     const [accountContext, setAccountContext] = useState({})

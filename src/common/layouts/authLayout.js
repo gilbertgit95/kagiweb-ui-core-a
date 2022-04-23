@@ -15,12 +15,12 @@ import MainNav from '../navs/mainNav'
 import config from '../../config'
 
 import AccountContext from '../contexts/accountContext'
-import RouterContext, { UseRouterContext } from '../contexts/routerContext'
+import RouterContext, { useRouterContext } from '../contexts/routerContext'
 import LocalStorageContext from '../contexts/localStorageContext'
 
 const AuthLayout = (props) => {
     const AccCtx = useContext(AccountContext)
-    const routerStates = UseRouterContext()
+    const routerStates = useRouterContext()
     const lsCtx = useContext(LocalStorageContext)
 
     let rightLogo = {
