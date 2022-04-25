@@ -14,7 +14,6 @@ import FaceIcon from '@mui/icons-material/Face'
 import LogoutIcon from '@mui/icons-material/Logout'
 import KeyIcon from '@mui/icons-material/Key'
 
-// import Tooltip from '@mui/material/Tooltip'
 import Badge from '@mui/material/Badge'
 import IconButton from '@mui/material/IconButton'
 
@@ -136,24 +135,11 @@ const MainLayout = (props) => {
     ]
 
     const onNavAction = (e) => {
-        console.log('Action: ', e)
-        // `/${ config.rootRoute }/auth/logout`
         if (e === 'logout') {
-            
             AccCtx.setAccountContext({ ...AccCtx.accountContext, ...{__action: 'clearCredentials'} })
             routerStates.setRouterContext(`/${ config.rootRoute }/auth/`)
-            // window.location.href = `/${ config.rootRoute }/auth/login`
         }
     }
-
-    // useEffect(() => {
-    //     console.log('redirect to auth: ', AccCtx)
-    //     if (typeof AccCtx.accountContext.__isLoggedIn !== 'boolean') {
-    //         //  redirect to auth page
-    //         console.log('redirect to auth')
-    //         routerStates.setRouterContext(`/${ config.rootRoute }/auth/login`)
-    //     }
-    // }, [AccCtx.accountContext])
 
     return (
         <RouterContext.Provider
@@ -173,20 +159,12 @@ const MainLayout = (props) => {
                     <Toolbar />
                     <Grid container spacing={2}>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
-                            {/* <Typography variant="h4" gutterBottom component="div">
-                                { config.appName }
-                            </Typography> */}
                         </Grid>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
                             <Box>
                                 <Outlet />
                             </Box>
                         </Grid>
-                        {/* <Grid item xs={12} style={{textAlign: 'center'}}>
-                            <Typography variant="caption" display="block" gutterBottom>
-                                Copyrights 2021
-                            </Typography>
-                        </Grid> */}
                     </Grid>
                 </Box>
             </Container>
