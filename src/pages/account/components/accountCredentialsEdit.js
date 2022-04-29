@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -14,14 +15,14 @@ const AccountEdit = (props) => {
     },[accountCtx.accountContext])
 
     return (
-        <Box>
-            <Grid container spacing={2}>
+        <Container>
+            <Grid container spacing={2} style={styles.container}>
                 {/* <Grid item xs={12}>
                     Account Edit
                 </Grid> */}
-                <Grid item xs={12} md={6} sx={{textAlign: {xs: 'center', md: 'right'}}}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Grid item style={{padding: 10}} xs={12}>
-                        Required Fields
+                        Base Credentials
                     </Grid>
 
                     <Grid item style={{padding: 10}} xs={12}>
@@ -53,9 +54,43 @@ const AccountEdit = (props) => {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} md={6} sx={{textAlign: {xs: 'center', md: 'left'}}}>
+                <Grid item xs={12} sm={6} md={4}>
                     <Grid item style={{padding: 10}} xs={12}>
-                        Required Fields
+                        Email Addresses
+                    </Grid>
+
+                    <Grid item style={{padding: 10}} xs={12}>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Required"
+                            defaultValue="Hello World" />
+                    </Grid>
+                    
+                    <Grid item style={{padding: 10}} xs={12}>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Required"
+                            defaultValue="Hello World" />
+                    </Grid>
+
+                    <Grid item style={{padding: 10}} xs={12}>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Required"
+                            defaultValue="Hello World" />
+                    </Grid>
+
+                    <Grid item style={{padding: 10}} xs={12}>
+                        <Button variant="contained">Primary</Button>
+                    </Grid>
+                </Grid>
+
+                <Grid item xs={12} sm={6} md={4}>
+                    <Grid item style={{padding: 10}} xs={12}>
+                        Phone Numbers
                     </Grid>
 
                     <Grid item style={{padding: 10}} xs={12}>
@@ -87,8 +122,14 @@ const AccountEdit = (props) => {
                     </Grid>
                 </Grid>
             </Grid>
-        </Box>
+        </Container>
     )
+}
+
+const styles = {
+    container: {
+        textAlign: 'left'
+    }
 }
 
 export default AccountEdit
