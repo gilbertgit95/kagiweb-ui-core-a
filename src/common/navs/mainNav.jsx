@@ -25,32 +25,12 @@ import RouterContext from '../../common/contexts/routerContext'
 
 const MainNav = (props) => {
   const [anchorElRightMenu, setAnchorElRightMenu] = useState(null)
-  const [isBigScreen, setIsBigScreen] = useState(false)
-  // const [navRoute, setNavRoute] = useState(null)
   const [drawer, setDrawer] = useState({
       leftMenu: false,
       rightMenu: false
   })
-  const theme = useTheme()
-  const smScreen = useMediaQuery(theme.breakpoints.up('sm'))
-  const mdScreen = useMediaQuery(theme.breakpoints.up('md'))
 
   const routerCtx = useContext(RouterContext)
-
-  // life cycles
-  useEffect(() => {
-    // use to navigate
-    if (smScreen && mdScreen) {
-      setIsBigScreen(true)
-    } else {
-      setIsBigScreen(false)
-    }
-    // close drawer when screensize changes
-    setDrawer({
-      leftMenu: false,
-      rightMenu: false
-    })
-  }, [smScreen, mdScreen])
 
   const handleOpenRightMenu = (event) => {
     setAnchorElRightMenu(event.currentTarget)
@@ -96,7 +76,6 @@ const MainNav = (props) => {
 
     return (
       <Box
-        // sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
         role="presentation">
         {
           itemsGroup.map((items, itemsIndex) => {
@@ -136,14 +115,8 @@ const MainNav = (props) => {
   return (
     <AppBar
       position="fixed"
-      sx={{ zIndex: (theme) => {
-        let drawerIndex = theme.zIndex.drawer
-
-        drawerIndex += isBigScreen? 1: 0
-        return drawerIndex
-      }}}
       style={props.isTransparent? { background: 'transparent', boxShadow: 'none'}: {}}>
-      <Container maxWidth="xl">
+      {/* <Grid container> */}
         <Toolbar disableGutters>
 
           {/* logo display for big screen size */}
@@ -154,6 +127,7 @@ const MainNav = (props) => {
             onClick={() => {
               onClickNav({type: props.leftLogo.type, value: props.leftLogo.value})
             }}
+            style={{ marginLeft: 20 }}
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             { props.leftLogo? props.leftLogo.component: null }
           </Typography>
@@ -215,7 +189,7 @@ const MainNav = (props) => {
           </Box>
 
           {/* right settings section */}
-          <Box sx={{ flexGrow: 0 }}>
+          <Box style={{ marginRight: 20 }} sx={{ flexGrow: 0 }}>
             {/* middle menu */}
             {
               props.middleMenu? props.middleMenu.map((item, index) => {
@@ -304,7 +278,7 @@ const MainNav = (props) => {
             </Box>
           </Box>
         </Toolbar>
-      </Container>
+      {/* </Container> */}
     </AppBar>
   )
 }

@@ -9,7 +9,7 @@ const GenBlockComponent = (props) => {
     return (
         <Box
             style={{
-                ...{marginTop: 20, marginBottom: 20, textAlign: 'left'},
+                ...{marginBottom: 20, textAlign: 'left'},
                 ...(props.style? props.style: {})
             }}>
             {
@@ -21,7 +21,7 @@ const GenBlockComponent = (props) => {
                                     variant='h6'
                                     color='primary'   
                                     id={props.title.replace(/\s/g, '').toLowerCase()}
-                                    style={{marginBottom: 5, marginTop: 30}}>
+                                    style={{marginBottom: 5}}>
                                     <WebhookIcon size='small' /> <span>{ props.title }</span>
                                 </Typography>
                             ): null

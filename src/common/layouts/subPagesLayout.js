@@ -1,25 +1,20 @@
 import React, {useContext, useState, useEffect, useRef} from 'react'
 import { matchPath } from 'react-router'
 import { useLocation } from 'react-router-dom'
-// import { useNavigate } from 'react-router-dom'
+
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
-// import MenuList from '@mui/material/MenuList'
-// import MenuItem from '@mui/material/MenuItem'
+
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-// import Check from '@mui/icons-material/Check'
-import Drawer from '@mui/material/Drawer'
-import Toolbar from '@mui/material/Toolbar'
 
 import PaginatedNav from '../../common/navs/paginatedNav'
 import RouterContext from '../../common/contexts/routerContext'
 
-const drawerWidth = 200
 const navAnchors = new Set(['left', 'right'])
 
 const SubPagesLayout = (props) => {
@@ -107,9 +102,7 @@ const SubPagesLayout = (props) => {
         )
     }
 
-    // if (mainSection && mainSection.current && mainSection.current.clientHeight) {
-    //   console.log(mainSection.current.clientHeight)
-    // }
+
     useEffect(() => {
       const onScroll = () => {
         let mainSectionHeight = 0
@@ -129,75 +122,65 @@ const SubPagesLayout = (props) => {
     }, [])
 
     return (
-        <Container maxWidth='lg'>
-            <Box>
-                <Drawer
-                    variant='permanent'
-                    anchor={navAnchor}
-                    sx={{
-                        display: { xs: 'none', sm: 'none', md: 'block' },
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-                    }}
-                    open>
-                    <Toolbar />
-                    <Divider />
-                    { generateDrawerItems('subPagesNav', props.navMenu? props.navMenu: []) }
-                </Drawer>
-                <Grid container spacing={2}>
-                    {
-                      navAnchor === 'left'? (
-                        <Grid
-                          item md={3} lg={2} xl={1}
-                          sx={{ display: { xs: 'none', sm: 'block' }}}>
-                        </Grid>
-                      ): null
-                    }
-
-                    <Grid item xs={12} sm={12} md={9} lg={10} xl={11} style={{textAlign: 'center'}}>
-                        <Box
-                          sx={{
-                            display: { sm: 'block', md: 'none' },
-                          }}>
-                          <PaginatedNav
-                            navMenu={ props.navMenu }
-                            onChangeNav={(e) => {
-                              onClickNav({type: e.type, value: e.value})
-                            }} />
-                        </Box>
-                        <Box ref={mainSection}>
-                            { props.children? props.children: null }
-                        </Box>
-                        
-                        {/* show pagination when in mobile view and when the page is long */}
-                        {
-                          veryLong? (
-                            <Box
-                              sx={{
-                                display: { sm: 'block', md: 'none' },
-                              }}>
-                              <PaginatedNav
-                                routeOnTop={false}
-                                navMenu={ props.navMenu }
-                                onChangeNav={(e) => {
-                                  onClickNav({type: e.type, value: e.value})
-                                }} />
-                            </Box>
-                          ): null
-                        }
+        <Box>
+            <Grid container spacing={2}>
+                {
+                  navAnchor === 'left'? (
+                    <Grid
+                      item md={3} lg={2}
+                      style={{ padding: 0 }}
+                      sx={{ display: { xs: 'none', sm: 'none', md: 'block' }}}>
+                      { generateDrawerItems('subPagesNav', props.navMenu? props.navMenu: []) }
                     </Grid>
+                  ): null
+                }
 
-                    {
-                      navAnchor === 'right'? (
-                        <Grid
-                          item md={3} lg={2} xl={1}
-                          sx={{ display: { xs: 'none', sm: 'block' }}}>
-                        </Grid>
-                      ): null
-                    }
+                <Grid item xs={12} sm={12} md={9} lg={10} style={{textAlign: 'center'}}>
+                    <Container>
+                      <Box
+                        sx={{
+                          display: { sm: 'block', md: 'none' },
+                        }}>
+                        <PaginatedNav
+                          navMenu={ props.navMenu }
+                          onChangeNav={(e) => {
+                            onClickNav({type: e.type, value: e.value})
+                          }} />
+                      </Box>
+                      <Box ref={mainSection}>
+                          { props.children? props.children: null }
+                      </Box>
+                      
+                      {/* show pagination when in mobile view and when the page is long */}
+                      {
+                        veryLong? (
+                          <Box
+                            sx={{
+                              display: { sm: 'block', md: 'none' },
+                            }}>
+                            <PaginatedNav
+                              routeOnTop={false}
+                              navMenu={ props.navMenu }
+                              onChangeNav={(e) => {
+                                onClickNav({type: e.type, value: e.value})
+                              }} />
+                          </Box>
+                        ): null
+                      }
+                    </Container>
                 </Grid>
-            </Box>
-        </Container>
+
+                {
+                  navAnchor === 'right'? (
+                    <Grid
+                      item md={3} lg={2}
+                      sx={{ display: { xs: 'none', sm: 'none', md: 'block' }}}>
+                      { generateDrawerItems('subPagesNav', props.navMenu? props.navMenu: []) }
+                    </Grid>
+                  ): null
+                }
+            </Grid>
+        </Box>
     )
 }
 

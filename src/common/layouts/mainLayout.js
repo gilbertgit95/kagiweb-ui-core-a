@@ -158,9 +158,7 @@ const MainLayout = (props) => {
                 <Box>
                     <Toolbar />
                     <Grid container spacing={2}>
-                        <Grid item xs={12} style={{textAlign: 'center'}}>
-                        </Grid>
-                        <Grid item xs={12} style={{textAlign: 'center'}}>
+                        <Grid item xs={12} style={{paddingLeft: 0, paddingTop: 30}}>
                             <Box>
                                 <Outlet />
                             </Box>
