@@ -13,7 +13,7 @@
 ## Overview
 This repository contains the ui part of a web application. The main purpose of this repo is tobe a client
 base code application, so we dont need to create a new webapp from scratch everytime we develop a web page. The main
-technology use in this app is React.
+technology use in this app is React, MUI (material ui), graphQL, Jest (for testing).
 
 
 ## Features

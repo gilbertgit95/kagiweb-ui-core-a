@@ -20,7 +20,7 @@ const AccountEdit = (props) => {
                 {/* <Grid item xs={12}>
                     Account Edit
                 </Grid> */}
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12}>
                     <Grid item style={{padding: 10}} xs={12}>
                         Base Credentials
                     </Grid>
@@ -54,7 +54,7 @@ const AccountEdit = (props) => {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12}>
                     <Grid item style={{padding: 10}} xs={12}>
                         Email Addresses
                     </Grid>
@@ -88,7 +88,7 @@ const AccountEdit = (props) => {
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12}>
                     <Grid item style={{padding: 10}} xs={12}>
                         Phone Numbers
                     </Grid>
@@ -128,7 +128,7 @@ const AccountEdit = (props) => {
 
 const styles = {
     container: {
-        textAlign: 'left'
+        textAlign: 'center'
     }
 }
 
