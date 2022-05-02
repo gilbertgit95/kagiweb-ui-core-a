@@ -57,7 +57,9 @@ const SubPagesLayout = (props) => {
               itemsGroup.map((items, itemsIndex) => {
                 return (
                   <React.Fragment key={anchor + '_groupItemsFragment_' + itemsIndex}>
-                    <List key={anchor + '_groupItems_' + itemsIndex}>
+                    <List
+                      style={{ position: 'fixed' }}
+                      key={anchor + '_groupItems_' + itemsIndex}>
                       {
                         items.map((item, index) => {
                           let match = null

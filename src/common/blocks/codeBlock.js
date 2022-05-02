@@ -5,7 +5,6 @@ import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 import LocalStorageContext from '../contexts/localStorageContext'
 import { CodeBlock, vs2015, atomOneLight } from "react-code-blocks"
-// import CircularProgress from '@mui/material/CircularProgress'
 
 const CodeBlockComponent = (props) => {
     const {localStorageContext} = useContext(LocalStorageContext)

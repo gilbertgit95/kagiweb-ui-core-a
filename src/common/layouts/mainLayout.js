@@ -1,10 +1,9 @@
-import { useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import { Outlet } from "react-router-dom"
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Toolbar from '@mui/material/Toolbar'
-// import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
 import MailIcon from '@mui/icons-material/Mail'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
@@ -20,14 +19,12 @@ import IconButton from '@mui/material/IconButton'
 import MainNav from '../navs/mainNav'
 import AccountContext from '../contexts/accountContext'
 import RouterContext, { useRouterContext } from '../contexts/routerContext'
-import LocalStorageContext from '../contexts/localStorageContext'
 import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
 
 const MainLayout = (props) => {
     const routerStates = useRouterContext()
     const AccCtx = useContext(AccountContext)
-    const lsCtx = useContext(LocalStorageContext)
 
     let leftLogo = {
         label: 'Root',
