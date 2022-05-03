@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import AccountContext from '../../../common/contexts/accountContext'
+import VerticalSteps from '../../../common/navs/verticalSteps'
 
 const AccountEdit = (props) => {
     const accountCtx = useContext(AccountContext)
@@ -16,9 +17,10 @@ const AccountEdit = (props) => {
     return (
         <Container>
             <Grid container spacing={2} style={styles.container}>
-                {/* <Grid item xs={12}>
-                    Account Edit
-                </Grid> */}
+                <Grid item xs={12}>
+                    <VerticalSteps />
+                </Grid>
+
                 <Grid item xs={12}>
                     <Grid item style={{padding: 10}} xs={12}>
                         Base Credentials
