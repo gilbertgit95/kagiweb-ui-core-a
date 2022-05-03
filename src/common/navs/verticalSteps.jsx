@@ -30,7 +30,7 @@ const steps = [
 ]
 
 const VerticalLinearStepper = (props) => {
-    const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -44,36 +44,42 @@ const VerticalLinearStepper = (props) => {
     setActiveStep(0);
   };
 
+  let views = props.views? props.views: []
+
   return (
     <Box>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((step, index) => (
-          <Step key={step.label}>
+      <Stepper
+        activeStep={activeStep}
+        orientation="vertical">
+        {views.map((step, index) => (
+          <Step key={step.title}>
             <StepLabel
+              onClick={() => {
+                setActiveStep(index)
+              }}
               optional={
-                index === 2 ? (
+                (index === views.length - 1) ? (
                   <Typography variant="caption">Last step</Typography>
                 ) : null
-              }
-            >
-              {step.label}
+              }>
+              {step.title}
             </StepLabel>
             <StepContent>
-              <Typography>{step.description}</Typography>
+              <Box>
+                { step.component? step.component: null }
+              </Box>
               <Box sx={{ mb: 2 }}>
                 <div>
                   <Button
                     variant="contained"
                     onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
+                    sx={{ mt: 1, mr: 1 }}>
                     {index === steps.length - 1 ? 'Finish' : 'Continue'}
                   </Button>
                   <Button
                     disabled={index === 0}
                     onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
+                    sx={{ mt: 1, mr: 1 }}>
                     Back
                   </Button>
                 </div>
