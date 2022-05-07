@@ -4,6 +4,8 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+
 import AccountContext from '../../../common/contexts/accountContext'
 import VerticalSteps from '../../../common/navs/verticalSteps'
 
@@ -31,7 +33,6 @@ const AccountEdit = (props) => {
                         id="outlined-required"
                         label="Required"
                         defaultValue="Hello World" />
-                    <Button variant="contained">Primary</Button>
                 </>
             ),
         },
@@ -83,6 +84,15 @@ const AccountEdit = (props) => {
         }
     ]
 
+    let finishView = (
+        <>
+            <Typography>
+                All steps completed. Please see the changes detail before
+                saving the changes.
+            </Typography>
+        </>
+    )
+
     useEffect(() => {
         console.log('data in account edit: ', accountCtx.accountContext)
 
@@ -94,6 +104,7 @@ const AccountEdit = (props) => {
                 <Grid item xs={12}>
                     <VerticalSteps
                         type='unordered'
+                        finishView={ finishView }
                         views={ steps } />
                 </Grid>
             </Grid>

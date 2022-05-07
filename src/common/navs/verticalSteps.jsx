@@ -8,27 +8,6 @@ import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 
-const steps = [
-  {
-    label: 'Select campaign settings',
-    description: `For each ad campaign that you create, you can control how much
-              you're willing to spend on clicks and conversions, which networks
-              and geographical locations you want your ads to show on, and more.`,
-  },
-  {
-    label: 'Create an ad group',
-    description:
-      'An ad group contains one or more ads which target a shared set of keywords.',
-  },
-  {
-    label: 'Create an ad',
-    description: `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`,
-  },
-]
-
 const VerticalLinearStepper = (props) => {
   const [activeStep, setActiveStep] = useState(0);
 
@@ -52,35 +31,68 @@ const VerticalLinearStepper = (props) => {
         activeStep={activeStep}
         orientation="vertical">
         {views.map((step, index) => (
-          <Step key={step.title}>
+          <Step
+            style={{
+              ...{},
+              ...(activeStep === index? {
+                // border: '1px solid #fff',
+
+              }: {})
+            }}
+            key={step.title}>
+            {/* step label */}
             <StepLabel
-              onClick={() => {
-                setActiveStep(index)
-              }}
               optional={
                 (index === views.length - 1) ? (
                   <Typography variant="caption">Last step</Typography>
                 ) : null
               }>
-              {step.title}
+              <Typography
+                {...activeStep === index? { color: 'primary' }: {}}
+                onClick={() => {
+                  setActiveStep(index)
+                }}
+                variant="subtitle1"
+                style={{
+                  ...{
+                    width: 'fit-content',
+                    cursor: 'pointer'
+                  },
+                  ...(activeStep === index? { fontWeight: 700 }: { fontWeight: 400 })
+                }}>
+                {step.title}
+              </Typography>
             </StepLabel>
-            <StepContent>
+
+            {/* step content */}
+            <StepContent
+              style={{
+                // ...(activeStep === index? {
+                //   border: 'none'
+                // }: {})
+              }}>
               <Box>
                 { step.component? step.component: null }
               </Box>
               <Box sx={{ mb: 2 }}>
-                <div>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}>
-                    {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                  </Button>
+                <div
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 10,
+                    textAlign: 'end',
+                    // borderBottom: '1px solid'
+                  }}>
                   <Button
                     disabled={index === 0}
                     onClick={handleBack}
                     sx={{ mt: 1, mr: 1 }}>
                     Back
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    sx={{ mt: 1, mr: 1 }}>
+                    {index === views.length - 1 ? 'Finish' : 'Next'}
                   </Button>
                 </div>
               </Box>
@@ -88,15 +100,25 @@ const VerticalLinearStepper = (props) => {
           </Step>
         ))}
       </Stepper>
-      {activeStep === steps.length && (
+
+      {/* when finishing the last step */}
+      {activeStep === views.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={() => {}} sx={{ mt: 1, mr: 1 }}>
-            Save Changes
-          </Button>
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Reset
-          </Button>
+          { props.finishView? props.finishView: <Typography>All steps completed</Typography> }
+          <div
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              textAlign: 'end',
+              // borderBottom: '1px solid'
+            }}>
+            <Button variant='outlined' onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+              Reset
+            </Button>
+            <Button variant='contained' onClick={() => {}} sx={{ mt: 1, mr: 1 }}>
+              Save Changes
+            </Button>
+          </div>
         </Paper>
       )}
     </Box>
