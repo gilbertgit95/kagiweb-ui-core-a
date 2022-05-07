@@ -32,13 +32,6 @@ const VerticalLinearStepper = (props) => {
         orientation="vertical">
         {views.map((step, index) => (
           <Step
-            style={{
-              ...{},
-              ...(activeStep === index? {
-                // border: '1px solid #fff',
-
-              }: {})
-            }}
             key={step.title}>
             {/* step label */}
             <StepLabel
@@ -50,6 +43,7 @@ const VerticalLinearStepper = (props) => {
               <Typography
                 {...activeStep === index? { color: 'primary' }: {}}
                 onClick={() => {
+                  if (props.disableLabelClick) return
                   setActiveStep(index)
                 }}
                 variant="subtitle1"
@@ -65,12 +59,7 @@ const VerticalLinearStepper = (props) => {
             </StepLabel>
 
             {/* step content */}
-            <StepContent
-              style={{
-                // ...(activeStep === index? {
-                //   border: 'none'
-                // }: {})
-              }}>
+            <StepContent>
               <Box>
                 { step.component? step.component: null }
               </Box>
@@ -79,8 +68,7 @@ const VerticalLinearStepper = (props) => {
                   style={{
                     marginTop: 10,
                     marginBottom: 10,
-                    textAlign: 'end',
-                    // borderBottom: '1px solid'
+                    textAlign: 'end'
                   }}>
                   <Button
                     disabled={index === 0}
@@ -109,8 +97,7 @@ const VerticalLinearStepper = (props) => {
             style={{
               marginTop: 10,
               marginBottom: 10,
-              textAlign: 'end',
-              // borderBottom: '1px solid'
+              textAlign: 'end'
             }}>
             <Button variant='outlined' onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
               Reset

@@ -103,7 +103,7 @@ const AccountEdit = (props) => {
             <Grid container spacing={2} style={styles.container}>
                 <Grid item xs={12}>
                     <VerticalSteps
-                        type='unordered'
+                        disableLabelClick={ false }
                         finishView={ finishView }
                         views={ steps } />
                 </Grid>
