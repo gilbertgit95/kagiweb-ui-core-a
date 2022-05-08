@@ -1,13 +1,14 @@
 import React, { useEffect, useContext } from 'react'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
+// import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+// import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 import AccountContext from '../../../common/contexts/accountContext'
 import VerticalSteps from '../../../common/navs/verticalSteps'
+import utils from '../../../common/utilities'
 
 const AccountEdit = (props) => {
     const accountCtx = useContext(AccountContext)
@@ -37,6 +38,7 @@ const AccountEdit = (props) => {
             ),
             action: async () => {
                 console.log('Base Credentials')
+                await utils.waitFor(1)
                 return true
             }
         },
@@ -64,6 +66,7 @@ const AccountEdit = (props) => {
             ),
             action: async () => {
                 console.log('email addresses')
+                await utils.waitFor(1)
                 return true
             }
         },
@@ -91,6 +94,7 @@ const AccountEdit = (props) => {
             ),
             action: async () => {
                 console.log('phone numbers')
+                await utils.waitFor(1)
                 return true
             }
         }
@@ -100,13 +104,14 @@ const AccountEdit = (props) => {
         component: (
             <>
                 <Typography>
-                    All steps completed. Please see the changes detail before
-                    saving the changes.
+                    All steps completed. Please see the changes details before
+                    saving.
                 </Typography>
             </>
         ),
         action: async () => {
             console.log('finish button')
+            await utils.waitFor(2)
             return true
         }
     }
