@@ -35,6 +35,10 @@ const AccountEdit = (props) => {
                         defaultValue="Hello World" />
                 </>
             ),
+            action: async () => {
+                console.log('Base Credentials')
+                return true
+            }
         },
         {
             icon: null,
@@ -58,6 +62,10 @@ const AccountEdit = (props) => {
                         defaultValue="Hello World" />
                 </>
             ),
+            action: async () => {
+                console.log('email addresses')
+                return true
+            }
         },
         {
             icon: null,
@@ -81,6 +89,10 @@ const AccountEdit = (props) => {
                         defaultValue="Hello World" />
                 </>
             ),
+            action: async () => {
+                console.log('phone numbers')
+                return true
+            }
         }
     ]
 
@@ -103,6 +115,8 @@ const AccountEdit = (props) => {
             <Grid container spacing={2} style={styles.container}>
                 <Grid item xs={12}>
                     <VerticalSteps
+                        nextLabel={ 'Save and Next' }
+                        finishlabel={ 'Save and Finish' }
                         disableLabelClick={ false }
                         finishView={ finishView }
                         views={ steps } />

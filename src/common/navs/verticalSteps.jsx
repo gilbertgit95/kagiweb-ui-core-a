@@ -11,8 +11,16 @@ import Typography from '@mui/material/Typography'
 const VerticalLinearStepper = (props) => {
   const [activeStep, setActiveStep] = useState(0);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const handleNext = async () => {
+    let result = true
+
+    if (props.views && typeof props.views[activeStep].action === 'function') {
+      result = await props.views[activeStep].action()
+    }
+
+    if (result) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const handleBack = () => {
@@ -24,9 +32,12 @@ const VerticalLinearStepper = (props) => {
   };
 
   let views = props.views? props.views: []
+  let nextLabel = props.nextLabel? props.nextLabel: 'Next'
+  let finishLabel = props.finishlabel? props.finishlabel: 'Finish'
 
   return (
     <Box>
+      {/* the main stepper */}
       <Stepper
         activeStep={activeStep}
         orientation="vertical">
@@ -80,7 +91,7 @@ const VerticalLinearStepper = (props) => {
                     variant="contained"
                     onClick={handleNext}
                     sx={{ mt: 1, mr: 1 }}>
-                    {index === views.length - 1 ? 'Finish' : 'Next'}
+                    {index === views.length - 1 ? finishLabel : nextLabel}
                   </Button>
                 </div>
               </Box>
