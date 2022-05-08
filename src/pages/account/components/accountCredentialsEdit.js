@@ -10,8 +10,11 @@ import AccountContext from '../../../common/contexts/accountContext'
 import VerticalSteps from '../../../common/navs/verticalSteps'
 import utils from '../../../common/utilities'
 
+import { useSnackbar } from 'notistack'
+
 const AccountEdit = (props) => {
     const accountCtx = useContext(AccountContext)
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
     const steps = [
         {
@@ -111,7 +114,22 @@ const AccountEdit = (props) => {
         ),
         action: async () => {
             console.log('finish button')
-            await utils.waitFor(2)
+            await utils.waitFor(1)
+            enqueueSnackbar('test notification 1', {
+                variant: 'info'
+            });
+            await utils.waitFor(1)
+            enqueueSnackbar('test notification 1', {
+                variant: 'error'
+            });
+            await utils.waitFor(1)
+            enqueueSnackbar('test notification 1', {
+                variant: 'warning'
+            });
+            await utils.waitFor(1)
+            enqueueSnackbar('test notification 1', {
+                variant: 'success'
+            });
             return true
         }
     }

@@ -3,6 +3,7 @@ let config = {
     environment: 'development',
     rootRoute: 'core',
     localStorageName: 'app_info',
+    notifLength: 5,
     // environment: 'staging'
     // environment: 'production'
     development: {
