@@ -27,7 +27,7 @@ const AccountEdit = (props) => {
                             style={styles.caption}
                             variant='body1'>
                             Username is immutable and updating User Role is only allowed to Admin module.
-                            You can only update the password.
+                            You can only change the password.
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
@@ -127,7 +127,7 @@ const AccountEdit = (props) => {
         component: (
             <>
                 <Typography>
-                    All steps completed. Please see the changes details before
+                    All steps completed. Please see the change details before
                     saving.
                 </Typography>
             </>
