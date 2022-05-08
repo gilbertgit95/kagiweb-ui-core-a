@@ -24,22 +24,22 @@ function App() {
   })
 
   return (
-    <SnackbarProvider maxSnack={ config.notifLength }>
-      <LocalStorageContext.Provider
-        value={{
-          ...localStorageStates
-        }}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AccountContext.Provider
-            value={{
-              ...accountStates
-            }}>
-            <Pages />
-          </AccountContext.Provider>
-        </ThemeProvider>
-      </LocalStorageContext.Provider>
-    </SnackbarProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <SnackbarProvider maxSnack={ config.notifLength }>
+        <LocalStorageContext.Provider
+          value={{
+            ...localStorageStates
+          }}>
+            <AccountContext.Provider
+              value={{
+                ...accountStates
+              }}>
+              <Pages />
+            </AccountContext.Provider>
+        </LocalStorageContext.Provider>
+      </SnackbarProvider>
+    </ThemeProvider>
   );
 }
 

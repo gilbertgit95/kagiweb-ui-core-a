@@ -3,7 +3,7 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 // import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-// import Button from '@mui/material/Button'
+import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 import AccountContext from '../../../common/contexts/accountContext'
@@ -114,22 +114,36 @@ const AccountEdit = (props) => {
         ),
         action: async () => {
             console.log('finish button')
+
+            // test for notifications
+            // this will also serve as reference
             await utils.waitFor(1)
             enqueueSnackbar('test notification 1', {
-                variant: 'info'
+                variant: 'info',
             });
             await utils.waitFor(1)
             enqueueSnackbar('test notification 1', {
-                variant: 'error'
+                variant: 'error',
+                persist: true,
+                action: (key) => (
+                    <Button
+                        color='primary'
+                        variant='contained'
+                        onClick={() => { closeSnackbar(key) }}>
+                        Dismiss
+                    </Button>
+                )
             });
             await utils.waitFor(1)
             enqueueSnackbar('test notification 1', {
-                variant: 'warning'
+                variant: 'warning',
+                autoHideDuration: 10000,
             });
             await utils.waitFor(1)
             enqueueSnackbar('test notification 1', {
                 variant: 'success'
             });
+
             return true
         }
     }
