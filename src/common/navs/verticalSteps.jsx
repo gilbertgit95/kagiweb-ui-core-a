@@ -54,12 +54,7 @@ const VerticalLinearStepper = (props) => {
           <Step
             key={step.title}>
             {/* step label */}
-            <StepLabel
-              optional={
-                (index === views.length - 1) ? (
-                  <Typography variant="caption">Last step</Typography>
-                ) : null
-              }>
+            <StepLabel>
               <Typography
                 {...activeStep === index? { color: 'primary' }: {}}
                 onClick={() => {
@@ -99,7 +94,7 @@ const VerticalLinearStepper = (props) => {
                   <Button
                     variant="contained"
                     onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}>
+                    sx={{ mt: 2}}>
                     {index === views.length - 1 ? finishLabel : nextLabel}
                   </Button>
                 </div>

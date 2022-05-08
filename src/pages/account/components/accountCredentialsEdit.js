@@ -21,23 +21,37 @@ const AccountEdit = (props) => {
             icon: null,
             title: 'Base Credentials',
             component: (
-                <>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                </>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography
+                            style={styles.caption}
+                            variant='body1'>
+                            Username is immutable and updating User Role is only allowed to Admin module.
+                            You can only update the password.
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4}>
+                        <TextField
+                            fullWidth
+                            required
+                            type='password'
+                            label="Old Password" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4}>
+                        <TextField
+                            fullWidth
+                            required
+                            type='password'
+                            label="New password" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4}>
+                        <TextField
+                            fullWidth
+                            required
+                            type='password'
+                            label="Retype Password" />
+                    </Grid>
+                </Grid>
             ),
             action: async () => {
                 console.log('Base Credentials')
@@ -49,23 +63,26 @@ const AccountEdit = (props) => {
             icon: null,
             title: 'Email Addresses',
             component: (
-                <>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                </>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography
+                            style={styles.caption}
+                            variant='body1'>
+                            Emails are not required, however it will be usefull in authentication
+                            and some notifications. It is recommended to have atleast the primary email.
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Primary Email" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Secondary Email" />
+                    </Grid>
+                </Grid>
             ),
             action: async () => {
                 console.log('email addresses')
@@ -77,23 +94,26 @@ const AccountEdit = (props) => {
             icon: null,
             title: 'Phone Numbers',
             component: (
-                <>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                </>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography
+                            style={styles.caption}
+                            variant='body1'>
+                            Phone numbers are not required, however it will be usefull in authentication
+                            and some notifications. It is recommended to have atleast the primary phone number.
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Primary Phone Number" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Secondary Phone Number" />
+                    </Grid>
+                </Grid>
             ),
             action: async () => {
                 console.log('phone numbers')
@@ -154,7 +174,7 @@ const AccountEdit = (props) => {
     },[accountCtx.accountContext])
 
     return (
-        <Container>
+        <Container maxWidth="md">
             <Grid container spacing={2} style={styles.container}>
                 <Grid item xs={12}>
                     <VerticalSteps
@@ -173,6 +193,14 @@ const AccountEdit = (props) => {
 const styles = {
     container: {
         textAlign: 'center'
+    },
+    caption: {
+        marginTop: 20,
+        marginBottom: 10
+    },
+    inputs: {
+        // width: '50%',
+        margin: 10
     }
 }
 
