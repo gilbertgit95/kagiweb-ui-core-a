@@ -96,14 +96,20 @@ const AccountEdit = (props) => {
         }
     ]
 
-    let finishView = (
-        <>
-            <Typography>
-                All steps completed. Please see the changes detail before
-                saving the changes.
-            </Typography>
-        </>
-    )
+    let finalView = {
+        component: (
+            <>
+                <Typography>
+                    All steps completed. Please see the changes detail before
+                    saving the changes.
+                </Typography>
+            </>
+        ),
+        action: async () => {
+            console.log('finish button')
+            return true
+        }
+    }
 
     useEffect(() => {
         console.log('data in account edit: ', accountCtx.accountContext)
@@ -115,10 +121,11 @@ const AccountEdit = (props) => {
             <Grid container spacing={2} style={styles.container}>
                 <Grid item xs={12}>
                     <VerticalSteps
-                        nextLabel={ 'Save and Next' }
-                        finishlabel={ 'Save and Finish' }
+                        nextBtnLabel={ 'Save and Next' }
+                        finishBtnlabel={ 'Save and Finish' }
+                        finalBtnLabel={ 'Save Changes' }
                         disableLabelClick={ false }
-                        finishView={ finishView }
+                        finalView={ finalView }
                         views={ steps } />
                 </Grid>
             </Grid>

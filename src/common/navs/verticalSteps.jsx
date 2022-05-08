@@ -31,9 +31,18 @@ const VerticalLinearStepper = (props) => {
     setActiveStep(0);
   };
 
+  const handleFinalAction = async () => {
+    if (   props.finalView
+        && props.finalView.action
+        && typeof props.finalView.action === 'function') {
+        let result = await props.finalView.action()
+    }
+  }
+
   let views = props.views? props.views: []
-  let nextLabel = props.nextLabel? props.nextLabel: 'Next'
-  let finishLabel = props.finishlabel? props.finishlabel: 'Finish'
+  let nextLabel = props.nextBtnLabel? props.nextBtnLabel: 'Next'
+  let finishLabel = props.finishBtnlabel? props.finishBtnlabel: 'Finish'
+  let finalLabel = props.finalBtnLabel? props.finalBtnLabel: 'Save Changes'
 
   return (
     <Box>
@@ -103,7 +112,7 @@ const VerticalLinearStepper = (props) => {
       {/* when finishing the last step */}
       {activeStep === views.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
-          { props.finishView? props.finishView: <Typography>All steps completed</Typography> }
+          { props.finalView? props.finalView.component: <Typography>All steps completed</Typography> }
           <div
             style={{
               marginTop: 10,
@@ -113,8 +122,8 @@ const VerticalLinearStepper = (props) => {
             <Button variant='outlined' onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
               Reset
             </Button>
-            <Button variant='contained' onClick={() => {}} sx={{ mt: 1, mr: 1 }}>
-              Save Changes
+            <Button variant='contained' onClick={handleFinalAction} sx={{ mt: 1, mr: 1 }}>
+              { finalLabel }
             </Button>
           </div>
         </Paper>
