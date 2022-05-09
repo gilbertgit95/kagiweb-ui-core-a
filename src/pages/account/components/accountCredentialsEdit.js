@@ -175,7 +175,7 @@ const AccountEdit = (props) => {
 
     return (
         <Container maxWidth="md">
-            <Grid container spacing={2} style={styles.container}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <VerticalSteps
                         nextBtnLabel={ 'Save and Next' }
@@ -191,16 +191,10 @@ const AccountEdit = (props) => {
 }
 
 const styles = {
-    container: {
-        textAlign: 'center'
-    },
     caption: {
+        textIndent: 50,
         marginTop: 20,
         marginBottom: 10
-    },
-    inputs: {
-        // width: '50%',
-        margin: 10
     }
 }
 
