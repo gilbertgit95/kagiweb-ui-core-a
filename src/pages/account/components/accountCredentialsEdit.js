@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 import AccountContext from '../../../common/contexts/accountContext'
-import VerticalSteps from '../../../common/navs/verticalSteps'
+import VerticalSteps from '../../../common/navs/verticalStepsNav'
 import utils from '../../../common/utilities'
 
 import { useSnackbar } from 'notistack'

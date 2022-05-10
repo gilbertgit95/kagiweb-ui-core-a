@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
@@ -8,15 +8,29 @@ import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 
-const VerticalLinearStepper = (props) => {
-  const [activeStep, setActiveStep] = useState(0);
+import LoadingButton from '../buttons/loadingButton'
+
+const VerticalLinearStepperNav = (props) => {
+  const [activeStep, setActiveStep] = useState(0)
+  const [loadingStates, setLoadingStates] = useState({
+    steps: []
+  })
 
   const handleNext = async () => {
     let result = true
 
+    // set loading to true
+    let stps = loadingStates.steps
+    stps[activeStep] = true
+    setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+
     if (props.views && typeof props.views[activeStep].action === 'function') {
       result = await props.views[activeStep].action()
     }
+
+    // set loading to false
+    stps[activeStep] = false
+    setLoadingStates({ ...loadingStates, ...{ steps: stps }})
 
     if (result) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -35,7 +49,17 @@ const VerticalLinearStepper = (props) => {
     if (   props.finalView
         && props.finalView.action
         && typeof props.finalView.action === 'function') {
+
+        // set loading to true
+        let stps = loadingStates.steps
+        stps[activeStep] = true
+        setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+
         let result = await props.finalView.action()
+
+        // set loading to false
+        stps[activeStep] = false
+        setLoadingStates({ ...loadingStates, ...{ steps: stps }})
     }
   }
 
@@ -43,6 +67,18 @@ const VerticalLinearStepper = (props) => {
   let nextLabel = props.nextBtnLabel? props.nextBtnLabel: 'Next'
   let finishLabel = props.finishBtnlabel? props.finishBtnlabel: 'Finish'
   let finalLabel = props.finalBtnLabel? props.finalBtnLabel: 'Save Changes'
+
+  useEffect(() => {
+    let stps = []
+
+    if (props.views && props.views.length) {
+      stps = props.views.map(() => false)
+      // push a loading state for the final view
+      stps.push(false)
+    }
+  
+    setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+  }, [props.views])
 
   return (
     <Box>
@@ -91,12 +127,13 @@ const VerticalLinearStepper = (props) => {
                     sx={{ mt: 1, mr: 1 }}>
                     Back
                   </Button>
-                  <Button
+                  <LoadingButton
                     variant="contained"
-                    onClick={handleNext}
+                    isLoading={ loadingStates.steps[index] }
+                    onClick={ handleNext }
                     sx={{ mt: 2}}>
-                    {index === views.length - 1 ? finishLabel : nextLabel}
-                  </Button>
+                    { index === views.length - 1 ? finishLabel : nextLabel }
+                  </LoadingButton>
                 </div>
               </Box>
             </StepContent>
@@ -114,12 +151,19 @@ const VerticalLinearStepper = (props) => {
               marginBottom: 10,
               textAlign: 'end'
             }}>
-            <Button variant='outlined' onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+            <Button
+              variant='outlined'
+              onClick={handleReset}
+              sx={{ mt: 1, mr: 1 }}>
               Reset
             </Button>
-            <Button variant='contained' onClick={handleFinalAction} sx={{ mt: 1, mr: 1 }}>
+            <LoadingButton
+              variant='contained'
+              isLoading={ loadingStates.steps[activeStep] }
+              onClick={ handleFinalAction }
+              sx={{ mt: 1, mr: 1 }}>
               { finalLabel }
-            </Button>
+            </LoadingButton>
           </div>
         </Paper>
       )}
@@ -127,4 +171,4 @@ const VerticalLinearStepper = (props) => {
   );
 }
 
-export default VerticalLinearStepper
+export default VerticalLinearStepperNav
