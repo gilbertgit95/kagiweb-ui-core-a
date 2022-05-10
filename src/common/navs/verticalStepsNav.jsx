@@ -94,7 +94,7 @@ const VerticalLinearStepperNav = (props) => {
               <Typography
                 {...activeStep === index? { color: 'primary' }: {}}
                 onClick={() => {
-                  if (props.disableLabelClick) return
+                  if (props.disableLabelClick || loadingStates.steps.some(item => item)) return
                   setActiveStep(index)
                 }}
                 variant="subtitle1"
