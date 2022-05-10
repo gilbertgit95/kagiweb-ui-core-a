@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react'
-import Container from '@mui/material/Container'
+// import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 // import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -174,19 +174,17 @@ const AccountEdit = (props) => {
     },[accountCtx.accountContext])
 
     return (
-        <Container maxWidth="md">
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <VerticalSteps
-                        nextBtnLabel={ 'Save and Next' }
-                        finishBtnlabel={ 'Save and Finish' }
-                        finalBtnLabel={ 'Save Changes' }
-                        disableLabelClick={ false }
-                        finalView={ finalView }
-                        views={ steps } />
-                </Grid>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <VerticalSteps
+                    nextBtnLabel={ 'Save and Next' }
+                    finishBtnlabel={ 'Save and Finish' }
+                    finalBtnLabel={ 'Save Changes' }
+                    disableLabelClick={ false }
+                    finalView={ finalView }
+                    views={ steps } />
             </Grid>
-        </Container>
+        </Grid>
     )
 }
 

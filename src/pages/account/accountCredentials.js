@@ -1,24 +1,38 @@
+import { useState } from 'react'
 import Grid from '@mui/material/Grid'
+import Container from '@mui/material/Container'
 
 // import AccountContext from '../../common/contexts/accountContext'
+import OpenCloseBox from '../../common/blocks/openCloseBox'
 import AccountView from './components/accountCredentialsView'
 import AccountEdit from './components/accountCredentialsEdit'
 
 const AccountCredentials = (props) => {
-    // const ctx = useContext(AccountContext)
-
-    // const btnClicked = (e) => {
-    //     ctx.setAccountContext({testVal: 'Home test value from context'})
-    // }
+    const [states, setStates] = useState({
+        openUpdate: false
+    })
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12}>
-                {/* <Typography>Account Core Content</Typography> */}
-                <AccountView />
-                <AccountEdit />
+        <Container maxWidth="md">
+            <Grid container spacing={2}>
+                <Grid item xs={12} style={{ paddingTop: 30 }}>
+                    {/* <Typography>Account Core Content</Typography> */}
+                    { !states.openUpdate? <AccountView />: null }
+                    <OpenCloseBox
+                        btnIcon={ null }
+                        btnLabel={ 'Update Credentials' }
+                        isOpen={ states.openUpdate }
+                        onOpen={ () => {
+                            setStates({ ...states, ...{ openUpdate: true } })
+                        }}
+                        onClose={ () => {
+                            setStates({ ...states, ...{ openUpdate: false } })
+                        }}>
+                        <AccountEdit />
+                    </OpenCloseBox>
+                </Grid>
             </Grid>
-        </Grid>
+        </Container>
     )
 }
 
