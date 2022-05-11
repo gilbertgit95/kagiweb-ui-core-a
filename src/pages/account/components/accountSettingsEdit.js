@@ -4,16 +4,16 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
-import AccountContext from '../../../common/contexts/accountContext'
+// import AccountContext from '../../../common/contexts/accountContext'
 
 const AccountSettingsEdit = (props) => {
 
-    const accountCtx = useContext(AccountContext)
+    // const accountCtx = useContext(AccountContext)
 
-    useEffect(() => {
-        console.log('data in account edit: ', accountCtx.accountContext)
+    // useEffect(() => {
+    //     console.log('data in account edit: ', accountCtx.accountContext)
 
-    },[accountCtx.accountContext])
+    // },[accountCtx.accountContext])
 
     return (
         <Box>
