@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
+import EditIcon from '@mui/icons-material/Edit'
 
 // import AccountContext from '../../common/contexts/accountContext'
 import OpenCloseBox from '../../common/blocks/openCloseBox'
@@ -19,7 +20,7 @@ const AccountCredentials = (props) => {
                     {/* <Typography>Account Core Content</Typography> */}
                     { !states.openUpdate? <AccountView />: null }
                     <OpenCloseBox
-                        btnIcon={ null }
+                        btnIcon={ <EditIcon /> }
                         btnLabel={ 'Update Credentials' }
                         isOpen={ states.openUpdate }
                         onOpen={ () => {

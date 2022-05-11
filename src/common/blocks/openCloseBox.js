@@ -31,12 +31,12 @@ const OpenCloseBox = (props) => {
             <Button
                 color='primary'
                 variant='contained'
+                startIcon={props.btnIcon? props.btnIcon: null}
                 onClick={() => {
                     if (props.onOpen && typeof props.onOpen === 'function') {
                         props.onOpen()
                     }
                 }}>
-                { props.btnIcon? props.btnIcon: null }
                 { props.btnLabel? props.btnLabel: 'Open' }
             </Button>
         )
