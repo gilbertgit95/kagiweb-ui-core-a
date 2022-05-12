@@ -127,13 +127,17 @@ const AccountProfileEdit = (props) => {
                             label="Company Name" />
                         <TextField
                             style={styles.fields}
-                            rows={2}
+                            rows={5}
                             multiline
                             fullWidth
                             label="Company Description" />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}
                         style={styles.grid}>
+                        <TextField
+                            style={styles.fields}
+                            fullWidth
+                            label="Industry Type" />
                         <TextField
                             style={styles.fields}
                             fullWidth
