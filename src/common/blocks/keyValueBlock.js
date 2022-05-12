@@ -46,7 +46,8 @@ const styles = {
         padding: 10,
         paddingTop: 5,
         paddingBottom: 5,
-        paddingRight: 5
+        paddingRight: 5,
+        verticalAlign: 'top'
     }
 }
 
