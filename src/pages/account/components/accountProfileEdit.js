@@ -1,10 +1,12 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
+import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import FileUploadIcon from '@mui/icons-material/FileUpload'
 
 import AccountContext from '../../../common/contexts/accountContext'
 import VerticalSteps from '../../../common/navs/verticalStepsNav'
@@ -13,6 +15,7 @@ import utils from '../../../common/utilities'
 
 const AccountProfileEdit = (props) => {
     const accountCtx = useContext(AccountContext)
+    const uploadProfilePicRef = useRef()
 
     const steps = [
         {
@@ -21,19 +24,24 @@ const AccountProfileEdit = (props) => {
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={6}
-                        style={styles.grid}>
-                        <TextField
-                            style={styles.fields}
-                            fullWidth
-                            label="First Name" />
-                        <TextField
-                            style={styles.fields}
-                            fullWidth
-                            label="Middle Name" />
-                        <TextField
-                            style={styles.fields}
-                            fullWidth
-                            label="Last Name" />
+                        style={{...styles.grid, ...{ textAlign: '-webkit-center', margin: 'auto'}}}>
+                        <Avatar
+                            alt="Profile Picture"
+                            src="/favicon.png"
+                            sx={{ width: 200, height: 200 }} />
+                        <input ref={uploadProfilePicRef} type="file" hidden />
+                        <Button
+                            color='primary'
+                            variant='outlined'
+                            onClick={() => {
+                                if (uploadProfilePicRef && uploadProfilePicRef.current) {
+                                    uploadProfilePicRef.current.click()
+                                }
+                            }}
+                            style={{ marginTop: 30 }}
+                            startIcon={ <FileUploadIcon /> }>
+                            Upload Image
+                        </Button>
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}
                         style={styles.grid}>
@@ -58,6 +66,18 @@ const AccountProfileEdit = (props) => {
                                     { disabled: false, key: 'female', label: 'Female'}
                                 ]} />
                         </Box>
+                        <TextField
+                            style={styles.fields}
+                            fullWidth
+                            label="First Name" />
+                        <TextField
+                            style={styles.fields}
+                            fullWidth
+                            label="Middle Name" />
+                        <TextField
+                            style={styles.fields}
+                            fullWidth
+                            label="Last Name" />
                     </Grid>
                 </Grid>
             ),
@@ -77,15 +97,15 @@ const AccountProfileEdit = (props) => {
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            label="Nationality" />
+                        <TextField
+                            style={styles.fields}
+                            fullWidth
                             label="Birth Date" />
                         <TextField
                             style={styles.fields}
                             fullWidth
                             label="Birth Place" />
-                        <TextField
-                            style={styles.fields}
-                            fullWidth
-                            label="Nationality" />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}
                         style={styles.grid}>
@@ -95,6 +115,10 @@ const AccountProfileEdit = (props) => {
                             multiline
                             fullWidth
                             label="Home Address" />
+                        <TextField
+                            style={styles.fields}
+                            fullWidth
+                            label="Personal Website" />
                         <TextField
                             style={styles.fields}
                             rows={3}
@@ -146,6 +170,10 @@ const AccountProfileEdit = (props) => {
                             style={styles.fields}
                             fullWidth
                             label="Contact Number" />
+                        <TextField
+                            style={styles.fields}
+                            fullWidth
+                            label="Company Website" />
                         <TextField
                             style={styles.fields}
                             rows={2}

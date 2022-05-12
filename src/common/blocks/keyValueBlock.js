@@ -40,7 +40,7 @@ const styles = {
         // borderRight: '1px solid'
     },
     value: {
-        // textAlign: 'left'
+        lineBreak: 'anywhere',
     },
     td: {
         padding: 10,

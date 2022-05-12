@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import Avatar from '@mui/material/Avatar'
 // import TextField from '@mui/material/TextField'
 // import Button from '@mui/material/Button'
 // import AccountContext from '../../../common/contexts/accountContext'
@@ -32,6 +33,10 @@ const AccountProfileView = (props) => {
                     <GenBlock
                         isLoading={isLoading}
                         title={ 'Basic Profile' }>
+                        <Avatar
+                            alt="Profile Picture"
+                            src="/favicon.png"
+                            sx={{ width: 200, height: 200 }} />
                         <KeyValueBlock
                             data={[
                                 { key: 'First Name', value: 'Gilbert' },
@@ -55,6 +60,7 @@ const AccountProfileView = (props) => {
                                 { key: 'Birth Date', value: 'April 27, 1995' },
                                 { key: 'Birth Place', value: 'Cantilan, Surigao del Sur' },
                                 { key: 'Home Address', value: 'Pagantayan, Cantilan, Surigao del Sur' },
+                                { key: 'Personal Website', value: 'https://gilbertgit95.github.com' },
                                 { key: 'Bio', value: 'lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem' }
                             ]}/>
                     </GenBlock>
@@ -74,6 +80,7 @@ const AccountProfileView = (props) => {
                                 { key: 'Industry Type', value: 'Information Technology' },
                                 { key: 'Contact Email', value: 'kagiweb@gmail.com' },
                                 { key: 'Contact Number', value: '09273854600' },
+                                { key: 'Company Website', value: 'https://gilbertgit95.github.com/kagiweb' },
                                 { key: 'Work Address', value: 'Cantilan, Surigao del Sur' }
                             ]}/>
                     </GenBlock>
