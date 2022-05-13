@@ -29,7 +29,11 @@ const AccountProfileEdit = (props) => {
                             alt="Profile Picture"
                             src="/favicon.png"
                             sx={{ width: 200, height: 200 }} />
-                        <input ref={uploadProfilePicRef} type="file" hidden />
+                        <input
+                            accept=".jpg, .png, .jpeg, .gif, .bmp"
+                            ref={uploadProfilePicRef}
+                            type="file"
+                            hidden />
                         <Button
                             color='primary'
                             variant='outlined'
@@ -45,10 +49,6 @@ const AccountProfileEdit = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}
                         style={styles.grid}>
-                        <TextField
-                            style={styles.fields}
-                            fullWidth
-                            label="Nick Name" />
                         <Typography
                             color='primary'
                             style={{...styles.fields, ...{ marginTop: 15 }}}
@@ -66,6 +66,10 @@ const AccountProfileEdit = (props) => {
                                     { disabled: false, key: 'female', label: 'Female'}
                                 ]} />
                         </Box>
+                        <TextField
+                            style={styles.fields}
+                            fullWidth
+                            label="Nick Name" />
                         <TextField
                             style={styles.fields}
                             fullWidth

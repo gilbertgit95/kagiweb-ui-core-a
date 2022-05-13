@@ -1,53 +1,168 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-
-// import AccountContext from '../../../common/contexts/accountContext'
+import Typography from '@mui/material/Typography'
+import AccountContext from '../../../common/contexts/accountContext'
+import VerticalSteps from '../../../common/navs/verticalStepsNav'
+import utils from '../../../common/utilities'
 
 const AccountSettingsEdit = (props) => {
 
-    // const accountCtx = useContext(AccountContext)
+    const accountCtx = useContext(AccountContext)
 
-    // useEffect(() => {
-    //     console.log('data in account edit: ', accountCtx.accountContext)
+    const steps = [
+        {
+            icon: null,
+            title: 'Base Credentials',
+            component: (
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography
+                            style={styles.caption}
+                            variant='body1'>
+                            Username is immutable and updating User Role is only allowed to Admin module.
+                            You can only change the password.
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4}>
+                        <TextField
+                            fullWidth
+                            required
+                            type='password'
+                            label="Old Password" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4}>
+                        <TextField
+                            fullWidth
+                            required
+                            type='password'
+                            label="New password" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={4}>
+                        <TextField
+                            fullWidth
+                            required
+                            type='password'
+                            label="Retype Password" />
+                    </Grid>
+                </Grid>
+            ),
+            action: async () => {
+                console.log('Base Credentials')
+                await utils.waitFor(1)
+                return true
+            }
+        },
+        {
+            icon: null,
+            title: 'Email Addresses',
+            component: (
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography
+                            style={styles.caption}
+                            variant='body1'>
+                            Emails are not required, however it will be usefull in authentication
+                            and some notifications. It is recommended to have atleast the primary email.
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Primary Email" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Secondary Email" />
+                    </Grid>
+                </Grid>
+            ),
+            action: async () => {
+                console.log('email addresses')
+                await utils.waitFor(1)
+                return true
+            }
+        },
+        {
+            icon: null,
+            title: 'Phone Numbers',
+            component: (
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography
+                            style={styles.caption}
+                            variant='body1'>
+                            Phone numbers are not required, however it will be usefull in authentication
+                            and some notifications. It is recommended to have atleast the primary phone number.
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Primary Phone Number" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Secondary Phone Number" />
+                    </Grid>
+                </Grid>
+            ),
+            action: async () => {
+                console.log('phone numbers')
+                await utils.waitFor(1)
+                return true
+            }
+        }
+    ]
 
-    // },[accountCtx.accountContext])
+    let finalView = {
+        component: (
+            <>
+                <Typography>
+                    All steps completed. Please see the change details before
+                    saving.
+                </Typography>
+            </>
+        ),
+        action: async () => {
+            console.log('finish button')
+
+            await utils.waitFor(1)
+
+            return true
+        }
+    }
+
+    useEffect(() => {
+        console.log('data in account settings edit: ', accountCtx.accountContext)
+
+    },[accountCtx.accountContext])
 
     return (
-        <Box>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    Account Settings Edit
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Required"
-                        defaultValue="Hello World" />
-                </Grid>
-                <Grid item xs={12}>
-                    <Button variant="contained">Primary</Button>
-                </Grid>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <VerticalSteps
+                    nextBtnLabel={ 'Save and Next' }
+                    finishBtnlabel={ 'Save and Finish' }
+                    finalBtnLabel={ 'Save Changes' }
+                    disableLabelClick={ false }
+                    finalView={ finalView }
+                    views={ steps } />
             </Grid>
-        </Box>
+        </Grid>
     )
+}
+
+const styles = {
+    caption: {
+        textIndent: 50,
+        marginTop: 20,
+        marginBottom: 10
+    }
 }
 
 export default AccountSettingsEdit
