@@ -15,104 +15,110 @@ const AccountSettingsEdit = (props) => {
     const steps = [
         {
             icon: null,
-            title: 'Base Credentials',
+            title: 'Settings A',
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography
                             style={styles.caption}
                             variant='body1'>
-                            Username is immutable and updating User Role is only allowed to Admin module.
-                            You can only change the password.
+                            lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem ipsum quia dolor sit amet
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
                         <TextField
                             fullWidth
-                            required
-                            type='password'
-                            label="Old Password" />
+                            label="SettingsA1" />
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
                         <TextField
                             fullWidth
-                            required
-                            type='password'
-                            label="New password" />
+                            label="SettingsA2" />
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
                         <TextField
                             fullWidth
-                            required
-                            type='password'
-                            label="Retype Password" />
+                            label="SettingsA3" />
                     </Grid>
                 </Grid>
             ),
             action: async () => {
-                console.log('Base Credentials')
+                console.log('Settings A')
                 await utils.waitFor(1)
                 return true
             }
         },
         {
             icon: null,
-            title: 'Email Addresses',
+            title: 'Settings B',
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography
                             style={styles.caption}
                             variant='body1'>
-                            Emails are not required, however it will be usefull in authentication
-                            and some notifications. It is recommended to have atleast the primary email.
+                            lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem ipsum quia dolor sit amet
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
-                            label="Primary Email" />
+                            label="SettingsB1" />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
-                            label="Secondary Email" />
+                            label="SettingsB2" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="SettingsB3" />
                     </Grid>
                 </Grid>
             ),
             action: async () => {
-                console.log('email addresses')
+                console.log('Settings B')
                 await utils.waitFor(1)
                 return true
             }
         },
         {
             icon: null,
-            title: 'Phone Numbers',
+            title: 'Settings C',
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Typography
                             style={styles.caption}
                             variant='body1'>
-                            Phone numbers are not required, however it will be usefull in authentication
-                            and some notifications. It is recommended to have atleast the primary phone number.
+                            lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem ipsum quia dolor sit amet
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
-                            label="Primary Phone Number" />
+                            label="SettingsC1" />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
-                            label="Secondary Phone Number" />
+                            label="SettingsC2" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="SettingsC3" />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="SettingsC4" />
                     </Grid>
                 </Grid>
             ),
             action: async () => {
-                console.log('phone numbers')
+                console.log('Settings C')
                 await utils.waitFor(1)
                 return true
             }

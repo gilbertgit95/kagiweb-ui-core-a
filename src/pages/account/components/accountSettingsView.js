@@ -32,11 +32,12 @@ const AccountSettingsView = (props) => {
                     style={{ padding: 5 }}>
                     <GenBlock
                         isLoading={isLoading}
-                        title={ 'Base Credentials' }>
+                        title={ 'Settings A' }>
                         <KeyValueBlock
                             data={[
-                                { key: 'Username', value: 'username101' },
-                                { key: 'Type', value: 'Super Admin' }
+                                { key: 'settingsA1', value: 'value' },
+                                { key: 'settingsA2', value: 'value' },
+                                { key: 'settingsA3', value: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
@@ -46,11 +47,12 @@ const AccountSettingsView = (props) => {
                     style={{ padding: 5 }}>
                     <GenBlock
                         isLoading={isLoading}
-                        title={ 'Emails Adresses' }>
+                        title={ 'Settings B' }>
                         <KeyValueBlock
                             data={[
-                                { key: 'Primary', value: 'test101@gmail.com' },
-                                { key: 'Secondary', value: '--' }
+                                { key: 'settingsB1', value: 'value' },
+                                { key: 'settingsB2', value: 'value' },
+                                { key: 'settingsB3', value: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
@@ -60,11 +62,13 @@ const AccountSettingsView = (props) => {
                     style={{ padding: 5 }}>
                     <GenBlock
                         isLoading={isLoading}
-                        title={ 'Phone Numbers' }>
+                        title={ 'Settings C' }>
                         <KeyValueBlock
                             data={[
-                                { key: 'Primary', value: '+639273854600' },
-                                { key: 'Secondary', value: '--' }
+                                { key: 'settingsC1', value: 'value' },
+                                { key: 'settingsC2', value: 'value' },
+                                { key: 'settingsC3', value: '--' },
+                                { key: 'settingsC4', value: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
