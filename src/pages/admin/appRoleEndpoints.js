@@ -1,4 +1,4 @@
-// import { useState, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import subpages from './lib/subPages'
 
 import SubPageslayout from '../../common/layouts/subPagesLayout'
@@ -15,12 +15,18 @@ import Typography from '@mui/material/Typography'
 // import AccountContext from '../../common/contexts/accountContext'
 
 const AppRoleEndpoints = (props) => {
-    // const ctx = useContext(AccountContext)
+    const [isLoading, setIsLoading] = useState(true)
 
-    // const btnClicked = (e) => {
-    //     ctx.setAccountContext({testVal: 'Home test value from context'})
-    // }
+    useEffect(() => {
+        const fetchData = () => {
+            setIsLoading(true)
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 1000)
+        }
 
+        fetchData()
+    }, [])
     return (
         <SubPageslayout
             navAnchor={'left'}
