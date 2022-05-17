@@ -1,15 +1,18 @@
 import { SnackbarProvider } from 'notistack'
-import AccountContext, { useAccountContext } from './common/contexts/accountContext'
-import LocalStorageContext, { useLocalStorageContext } from './common/contexts/localStorageContext'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import PrimaryTheme from './common/themes/primary'
+
+import LocalStorageContext, { useLocalStorageContext } from './common/contexts/localStorageContext'
+import AccountContext, { useAccountContext } from './common/contexts/accountContext'
+import AdminContext, { useAdminContext } from './common/contexts/adminContext'
 import Pages from './pages'
 
 import './App.css'
 import config from './config'
 
 function App() {
+  const adminStates = useAdminContext()
   const accountStates = useAccountContext()
   const localStorageStates = useLocalStorageContext()
 
@@ -27,15 +30,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <SnackbarProvider maxSnack={ config.notifLength }>
-        <LocalStorageContext.Provider
-          value={{
-            ...localStorageStates
-          }}>
-            <AccountContext.Provider
-              value={{
-                ...accountStates
-              }}>
-              <Pages />
+        {/* provides local storage data globally with respect to the pages */}
+        <LocalStorageContext.Provider value={{ ...localStorageStates }}>
+            {/* provides account data globally with respect to the pages */}
+            <AccountContext.Provider value={{ ...accountStates }}>
+              {/* provides admin data globally with respect to the pages */}
+              <AdminContext.Provider value={{ ...adminStates }}>
+                <Pages />
+              </AdminContext.Provider>
             </AccountContext.Provider>
         </LocalStorageContext.Provider>
       </SnackbarProvider>
