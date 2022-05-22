@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography'
 // import LoginIcon from '@mui/icons-material/Login'
 // import Button from '@mui/material/Button'
 
+import ImportTable from '../../common/inputs/importTable'
 // import AccountContext from '../../common/contexts/accountContext'
 
 const AppEndpoints = (props) => {
@@ -33,7 +34,7 @@ const AppEndpoints = (props) => {
             navAnchor={'left'}
             navMenu={subpages}>
             <Grid item xs={12}>
-                <Typography>App Endpoints</Typography>
+                <ImportTable />
             </Grid>
         </SubPageslayout>
     )
