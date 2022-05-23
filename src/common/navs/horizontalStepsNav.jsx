@@ -7,76 +7,96 @@ import StepLabel from '@mui/material/StepLabel'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
+import LoadingButton from '../buttons/loadingButton'
+
 const HorizontalStepsNav = (props) => {
     const steps = ['Import Data', 'Modify Data', 'Evaluate and Save']
 
     const [activeStep, setActiveStep] = useState(0)
-    const [skipped, setSkipped] = useState(new Set())
+    const [loadingStates, setLoadingStates] = useState({
+        steps: []
+    })
 
-    const isStepOptional = (step) => {
-        return step === 1
-    }
+    const handleNext = async () => {
+        let result = true
+        let stps = loadingStates.steps
+        stps[activeStep] = true
+        setLoadingStates({ ...loadingStates, ...{ steps: stps }})
 
-    const isStepSkipped = (step) => {
-        return skipped.has(step)
-    }
-
-    const handleNext = () => {
-        let newSkipped = skipped
-        if (isStepSkipped(activeStep)) {
-            newSkipped = new Set(newSkipped.values())
-            newSkipped.delete(activeStep)
+        if (props.views && typeof props.views[activeStep].action === 'function') {
+            result = await props.views[activeStep].action()
         }
 
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-        setSkipped(newSkipped)
+        // set loading to false
+        stps[activeStep] = false
+        setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+
+        if (result) {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
     }
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1)
     }
 
-    const handleSkip = () => {
-        if (!isStepOptional(activeStep)) {
-            // You probably want to guard against something like this,
-            // it should never occur unless someone's actively trying to break something.
-            throw new Error("You can't skip a step that isn't optional.")
-        }
-
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
-        setSkipped((prevSkipped) => {
-            const newSkipped = new Set(prevSkipped.values())
-            newSkipped.add(activeStep)
-            return newSkipped
-        })
-    }
-
     const handleReset = () => {
         setActiveStep(0)
     }
 
-    return (
-        <Box sx={{ width: '100%' }}>
-            <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => {
-                const stepProps = {}
-                const labelProps = {}
+    let views = props.views? props.views: []
+    let nextLabel = props.nextBtnLabel? props.nextBtnLabel: 'Next'
+    let finishLabel = props.finishBtnlabel? props.finishBtnlabel: 'Finish'
 
-                if (isStepSkipped(index)) {
-                    stepProps.completed = false
-                }
-                return (
-                    <Step key={label} {...stepProps}>
-                    <StepLabel {...labelProps}>{label}</StepLabel>
-                    </Step>
-                )
+    useEffect(() => {
+        let stps = []
+    
+        if (props.views && props.views.length) {
+          stps = props.views.map(() => false)
+          // push a loading state for the final view
+          stps.push(false)
+        }
+      
+        setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+    }, [props.views])
+
+    return (
+        <Box>
+            <Stepper activeStep={activeStep}>
+                {views.map((step, index) => {
+                    return (
+                        <Step
+                            key={step.title}
+                            onClick={() => {
+                                if (props.disableLabelClick || loadingStates.steps.some(item => item)) return
+                                setActiveStep(index)
+                            }}>
+                            <StepLabel>
+                                <Typography
+                                    {...activeStep === index? { color: 'primary' }: {}}
+                                    variant="subtitle1"
+                                    style={{
+                                        ...{
+                                            width: 'fit-content'
+                                        },
+                                        ...(activeStep === index? { fontWeight: 700 }: { fontWeight: 400 }),
+                                        ...(props.disableLabelClick? {}: { cursor: 'pointer' })
+                                    }}>
+                                    {step.title}
+                                </Typography>
+                            </StepLabel>
+                        </Step>
+                    )
                 })}
             </Stepper>
-            {activeStep === steps.length ? (
+
+            {/* steps contents */}
+            {/*  for final view */}
+            {activeStep === views.length ? (
                 <>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
-                        All steps completed - you&aposre finished
-                    </Typography>
+                    <Box>
+                        { props.finalView? props.finalView.component: <Typography>All steps completed</Typography> }
+                    </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                         <Box sx={{ flex: '1 1 auto' }} />
                         <Button onClick={handleReset}>Reset</Button>
@@ -84,26 +104,25 @@ const HorizontalStepsNav = (props) => {
                 </>
             ) : (
                 <>
-                <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                    <Button
-                        color="inherit"
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        sx={{ mr: 1 }}>
-                        Back
+                    <Box>
+                        { views[activeStep] && views[activeStep].component? views[activeStep].component: null }
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                        <Button
+                            color="inherit"
+                            disabled={activeStep === 0}
+                            onClick={handleBack}
+                            sx={{ mr: 1 }}>
+                            Back
                         </Button>
-                    <Box sx={{ flex: '1 1 auto' }} />
-                    {isStepOptional(activeStep) && (
-                        <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                            Skip
-                        </Button>
-                    )}
+                        <Box sx={{ flex: '1 1 auto' }} />
 
-                    <Button onClick={handleNext}>
-                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
-                </Box>
+                        <LoadingButton
+                            isLoading={ loadingStates.steps[activeStep] }
+                            onClick={handleNext}>
+                            {activeStep === views.length - 1 ? finishLabel : nextLabel }
+                        </LoadingButton>
+                    </Box>
                 </>
             )}
         </Box>

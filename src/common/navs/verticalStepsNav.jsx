@@ -100,10 +100,10 @@ const VerticalLinearStepperNav = (props) => {
                 variant="subtitle1"
                 style={{
                   ...{
-                    width: 'fit-content',
-                    cursor: 'pointer'
+                    width: 'fit-content'
                   },
-                  ...(activeStep === index? { fontWeight: 700 }: { fontWeight: 400 })
+                  ...(activeStep === index? { fontWeight: 700 }: { fontWeight: 400 }),
+                  ...(props.disableLabelClick? {}: { cursor: 'pointer' })
                 }}>
                 {step.title}
               </Typography>
