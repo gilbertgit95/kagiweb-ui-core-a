@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography'
 import LoadingButton from '../buttons/loadingButton'
 
 const HorizontalStepsNav = (props) => {
-    const steps = ['Import Data', 'Modify Data', 'Evaluate and Save']
 
     const [activeStep, setActiveStep] = useState(0)
     const [loadingStates, setLoadingStates] = useState({
