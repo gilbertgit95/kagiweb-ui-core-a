@@ -28,17 +28,23 @@ const OpenCloseBox = (props) => {
                 { props.children }
             </Box>
         ): (
-            <Button
-                color='primary'
-                variant='contained'
-                startIcon={props.btnIcon? props.btnIcon: null}
-                onClick={() => {
-                    if (props.onOpen && typeof props.onOpen === 'function') {
-                        props.onOpen()
-                    }
-                }}>
-                { props.btnLabel? props.btnLabel: 'Open' }
-            </Button>
+            <>
+                {
+                    props.btnHide? null: (
+                        <Button
+                            color='primary'
+                            variant='contained'
+                            startIcon={props.btnIcon? props.btnIcon: null}
+                            onClick={() => {
+                                if (props.onOpen && typeof props.onOpen === 'function') {
+                                    props.onOpen()
+                                }
+                            }}>
+                            { props.btnLabel? props.btnLabel: 'Open' }
+                        </Button>
+                    )
+                }
+            </>
         )
     )
 }

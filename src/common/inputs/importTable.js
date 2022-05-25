@@ -5,8 +5,10 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import UploadFileIcon from '@mui/icons-material/UploadFile'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
+import OpenCloseBox from '../blocks/openCloseBox'
 
 import utils from '../utilities'
 
@@ -23,7 +25,8 @@ import utils from '../utilities'
 // * add/remove row
 
 const ImportTable = (props) => {
-    const tableData = useState({
+    const [states, setStates] = useState({
+        importBox: true,
         header: ['Endpoint', 'Name', 'Type', 'Category', 'Subcategory'],
         data: []
     })
@@ -34,13 +37,26 @@ const ImportTable = (props) => {
             title: 'Import Data',
             component: (
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={ styles.container }>
                         <Typography
                             style={styles.caption}
                             variant='body1'>
                             There are multiple options when importing data, through importing excel file,
                             copy paste cells, drag and drop excel file or manual data creation.
                         </Typography>
+                        <OpenCloseBox
+                            btnIcon={ <UploadFileIcon /> }
+                            btnLabel={ 'Import Data' }
+                            btnHide={ true }
+                            isOpen={ states.importBox }
+                            onOpen={ () => {
+                                setStates({ ...states, ...{ importBox: true } })
+                            }}
+                            onClose={ () => {
+                                setStates({ ...states, ...{ importBox: false } })
+                            }}>
+                            <Typography>test</Typography>
+                        </OpenCloseBox>
                     </Grid>
                 </Grid>
             ),
@@ -55,7 +71,7 @@ const ImportTable = (props) => {
             title: 'Modify Data',
             component: (
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={ styles.container }>
                         <Typography
                             style={styles.caption}
                             variant='body1'>
@@ -75,7 +91,7 @@ const ImportTable = (props) => {
             title: 'Evaluate and Save',
             component: (
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={ styles.container }>
                         <Typography
                             style={styles.caption}
                             variant='body1'>
@@ -126,6 +142,9 @@ const ImportTable = (props) => {
 }
 
 const styles = {
+    container: {
+        textAlign: 'left'
+    },
     caption: {
         textIndent: 50,
         marginTop: 20,
