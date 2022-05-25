@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 
 import Grid from '@mui/material/Grid'
-// import Box from '@mui/material/Box'
+import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
+import AddIcon from '@mui/icons-material/Add'
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
+import DownloadIcon from '@mui/icons-material/Download'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
 import OpenCloseBox from '../blocks/openCloseBox'
@@ -26,6 +29,7 @@ import utils from '../utilities'
 
 const ImportTable = (props) => {
     const [states, setStates] = useState({
+        importMode: 'add', // add || change
         importBox: true,
         header: ['Endpoint', 'Name', 'Type', 'Category', 'Subcategory'],
         data: []
@@ -44,6 +48,52 @@ const ImportTable = (props) => {
                             There are multiple options when importing data, through importing excel file,
                             copy paste cells, drag and drop excel file or manual data creation.
                         </Typography>
+                        {
+                            states.importBox? null: (
+                                <Box>
+                                    <Box>
+                                        <Button
+                                            color='primary'
+                                            variant='contained'
+                                            startIcon={<AddIcon />}
+                                            onClick={() => {
+                                                setStates({...states, ...{
+                                                    importBox: true,
+                                                    importMode: 'add'
+                                                }})
+                                            }}>
+                                            Add Data
+                                        </Button>
+                                        <Button
+                                            style={{ marginLeft: 5 }}
+                                            color='primary'
+                                            variant='contained'
+                                            startIcon={<ChangeCircleIcon />}
+                                            onClick={() => {
+                                                setStates({...states, ...{
+                                                    importBox: true,
+                                                    importMode: 'change'
+                                                }})
+                                            }}>
+                                            Change Data
+                                        </Button>
+                                        <Button
+                                            style={{ marginLeft: 5 }}
+                                            color='primary'
+                                            variant='outlined'
+                                            startIcon={<DownloadIcon />}
+                                            onClick={() => {
+                                                console.log('download excel template')
+                                            }}>
+                                            Excel Template
+                                        </Button>
+                                    </Box>
+                                    <Box>
+
+                                    </Box>
+                                </Box>
+                            )
+                        }
                         <OpenCloseBox
                             btnIcon={ <UploadFileIcon /> }
                             btnLabel={ 'Import Data' }
