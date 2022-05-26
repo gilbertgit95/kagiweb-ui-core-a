@@ -31,9 +31,16 @@ const ImportTable = (props) => {
     const [states, setStates] = useState({
         importMode: 'add', // add || change
         importBox: true,
-        header: ['Endpoint', 'Name', 'Type', 'Category', 'Subcategory'],
-        data: []
+
+        importedData: [],
+
+        rowsProps: [],
+        rows: []
     })
+
+    useEffect(() => {
+        setStates({...states, ...{ rowsProps: props.headers }})
+    }, [])
 
     const steps = [
         {
@@ -83,13 +90,13 @@ const ImportTable = (props) => {
                                             variant='outlined'
                                             startIcon={<DownloadIcon />}
                                             onClick={() => {
-                                                console.log('download excel template')
+                                                console.log('download data template')
                                             }}>
-                                            Excel Template
+                                            Data Template
                                         </Button>
                                     </Box>
                                     <Box>
-
+                                        
                                     </Box>
                                 </Box>
                             )
@@ -105,7 +112,7 @@ const ImportTable = (props) => {
                             onClose={ () => {
                                 setStates({ ...states, ...{ importBox: false } })
                             }}>
-                            <Typography>test</Typography>
+                            <Typography variant='h6'>Import data</Typography>
                         </OpenCloseBox>
                     </Grid>
                 </Grid>
