@@ -5,10 +5,13 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import UploadFileIcon from '@mui/icons-material/UploadFile'
 import AddIcon from '@mui/icons-material/Add'
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
 import DownloadIcon from '@mui/icons-material/Download'
+import UploadFileIcon from '@mui/icons-material/UploadFile'
+import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo'
+import PanToolIcon from '@mui/icons-material/PanTool'
+import CreateIcon from '@mui/icons-material/Create'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
 import OpenCloseBox from '../blocks/openCloseBox'
@@ -30,6 +33,7 @@ import utils from '../utilities'
 const ImportTable = (props) => {
     const [states, setStates] = useState({
         importMode: 'add', // add || change
+        importMethod: 'uploadCSV', // uploadCSV || copyPaste || dragAndDrop || createEmptyCells
         importBox: true,
 
         importedData: [],
@@ -112,7 +116,123 @@ const ImportTable = (props) => {
                             onClose={ () => {
                                 setStates({ ...states, ...{ importBox: false } })
                             }}>
-                            <Typography variant='h6'>Import data</Typography>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Typography color='primary' variant='h6'>Import data</Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6} lg={3}>
+                                    <Button
+                                        style={{ padding: 20 }}
+                                        fullWidth
+                                        color='primary'
+                                        variant={ states.importMethod === 'uploadCSV'? 'contained': 'outlined' }
+                                        startIcon={<UploadFileIcon />}
+                                        onClick={() => {
+                                            console.log('upload csv')
+                                            setStates({ ...states, ...{ importMethod: 'uploadCSV' } })
+                                        }}>
+                                        Upload CSV
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12} sm={6} lg={3}>
+                                    <Button
+                                        style={{ padding: 20 }}
+                                        fullWidth
+                                        color='primary'
+                                        variant={ states.importMethod === 'dragAndDrop'? 'contained': 'outlined' }
+                                        startIcon={<PanToolIcon />}
+                                        onClick={() => {
+                                            console.log('drag and drop excel file')
+                                            setStates({ ...states, ...{ importMethod: 'dragAndDrop' } })
+                                        }}>
+                                        Drag and Drop CSV
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12} sm={6} lg={3}>
+                                    <Button
+                                        style={{ padding: 20 }}
+                                        fullWidth
+                                        color='primary'
+                                        variant={ states.importMethod === 'copyPaste'? 'contained': 'outlined' }
+                                        startIcon={<ContentPasteGoIcon />}
+                                        onClick={() => {
+                                            console.log('paste excel data')
+                                            setStates({ ...states, ...{ importMethod: 'copyPaste' } })
+                                        }}>
+                                        Paste Excel Data
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12} sm={6} lg={3}>
+                                    <Button
+                                        style={{ padding: 20 }}
+                                        fullWidth
+                                        color='primary'
+                                        variant={ states.importMethod === 'createEmptyCells'? 'contained': 'outlined' }
+                                        startIcon={<CreateIcon />}
+                                        onClick={() => {
+                                            console.log('create empty cells')
+                                            setStates({ ...states, ...{ importMethod: 'createEmptyCells' } })
+                                        }}>
+                                        Create Empty cells
+                                    </Button>
+                                </Grid>
+
+                                {/* import method content */}
+                                <Grid item xs={12}>
+                                    {
+                                        states.importMethod === 'uploadCSV'? (
+                                            <Box
+                                                style={styles.methodInputContainer}>
+                                                <Typography variant='body1'>
+                                                    Upload a csv file from your file system.
+                                                </Typography>
+                                                <Button
+                                                    style={{ marginTop: 10 }}
+                                                    variant='contained'
+                                                    color='primary'
+                                                    startIcon={ <UploadFileIcon /> }
+                                                    onClick={() => {
+                                                        console.log('upload csv file.')
+                                                    }}>
+                                                    Upload CSV
+                                                </Button>
+                                            </Box>
+                                        ): null
+                                    }
+                                    {
+                                        states.importMethod === 'dragAndDrop'? (
+                                            <Box
+                                                style={styles.methodInputContainer}>
+                                                <Typography variant='body1'>
+                                                    Drag a csv file then drop it here.
+                                                </Typography>
+                                            </Box>
+                                        ): null
+                                    }
+                                    {
+                                        states.importMethod === 'copyPaste'? (
+                                            <Box
+                                                style={styles.methodInputContainer}>
+                                                <Typography variant='body1'>
+                                                    Copy cells from an excel file including the
+                                                    right headers for this data.
+                                                </Typography>
+                                            </Box>
+                                        ): null
+                                    }
+                                    {
+                                        states.importMethod === 'createEmptyCells'? (
+                                            <Box
+                                                style={styles.methodInputContainer}>
+                                                <Typography variant='body1'>
+                                                    Create empty cells so you can populate this cells
+                                                    on the next step(Modify data).
+                                                </Typography>
+                                            </Box>
+                                        ): null
+                                    }
+                                </Grid>
+                            </Grid>
                         </OpenCloseBox>
                     </Grid>
                 </Grid>
@@ -206,6 +326,13 @@ const styles = {
         textIndent: 50,
         marginTop: 20,
         marginBottom: 10
+    },
+    methodInputContainer: {
+        textAlign: 'center',
+        border: '2px dashed',
+        borderRadius: 10,
+        paddingTop: 100,
+        paddingBottom: 100
     }
 }
 
