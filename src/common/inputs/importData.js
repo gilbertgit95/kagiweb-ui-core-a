@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -12,6 +12,8 @@ import UploadFileIcon from '@mui/icons-material/UploadFile'
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo'
 import PanToolIcon from '@mui/icons-material/PanTool'
 import CreateIcon from '@mui/icons-material/Create'
+import TableRowsIcon from '@mui/icons-material/TableRows'
+import { useTheme } from '@mui/material/styles'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
 import OpenCloseBox from '../blocks/openCloseBox'
@@ -41,6 +43,8 @@ const ImportTable = (props) => {
         rowsProps: [],
         rows: []
     })
+    const uploadFile = useRef()
+    const theme = useTheme()
 
     useEffect(() => {
         setStates({...states, ...{ rowsProps: props.headers }})
@@ -182,17 +186,24 @@ const ImportTable = (props) => {
                                     {
                                         states.importMethod === 'uploadCSV'? (
                                             <Box
-                                                style={styles.methodInputContainer}>
+                                                style={{ ...styles.methodInputContainer, ...{ borderColor: theme.palette.primary.main }}}>
                                                 <Typography variant='body1'>
                                                     Upload a csv file from your file system.
                                                 </Typography>
+                                                <input
+                                                    accept=".csv"
+                                                    ref={uploadFile}
+                                                    type="file"
+                                                    hidden />
                                                 <Button
                                                     style={{ marginTop: 10 }}
                                                     variant='contained'
                                                     color='primary'
                                                     startIcon={ <UploadFileIcon /> }
                                                     onClick={() => {
-                                                        console.log('upload csv file.')
+                                                        if (uploadFile && uploadFile.current) {
+                                                            uploadFile.current.click()
+                                                        }
                                                     }}>
                                                     Upload CSV
                                                 </Button>
@@ -202,7 +213,7 @@ const ImportTable = (props) => {
                                     {
                                         states.importMethod === 'dragAndDrop'? (
                                             <Box
-                                                style={styles.methodInputContainer}>
+                                                style={{ ...styles.methodInputContainer, ...{ borderColor: theme.palette.primary.main }}}>
                                                 <Typography variant='body1'>
                                                     Drag a csv file then drop it here.
                                                 </Typography>
@@ -212,10 +223,9 @@ const ImportTable = (props) => {
                                     {
                                         states.importMethod === 'copyPaste'? (
                                             <Box
-                                                style={styles.methodInputContainer}>
+                                                style={{ ...styles.methodInputContainer, ...{ borderColor: theme.palette.primary.main }}}>
                                                 <Typography variant='body1'>
-                                                    Copy cells from an excel file including the
-                                                    right headers for this data.
+                                                    Copy cells from an excel file including the data headers.
                                                 </Typography>
                                             </Box>
                                         ): null
@@ -223,11 +233,27 @@ const ImportTable = (props) => {
                                     {
                                         states.importMethod === 'createEmptyCells'? (
                                             <Box
-                                                style={styles.methodInputContainer}>
+                                                style={{ ...styles.methodInputContainer, ...{ borderColor: theme.palette.primary.main }}}>
                                                 <Typography variant='body1'>
-                                                    Create empty cells so you can populate this cells
+                                                    Create empty rows so you can populate this row cells
                                                     on the next step(Modify data).
                                                 </Typography>
+                                                <Box style={{ position: 'relative', height: 40, marginTop: 20 }}>
+                                                    <TextField
+                                                        size='small'
+                                                        color='primary'
+                                                        label='Number of rows'
+                                                        type='number'
+                                                        style={{ height: '100%', marginRight: 5 }} />
+                                                    <Button
+                                                        size='small'
+                                                        variant='contained'
+                                                        color='primary'
+                                                        style={{ height: '100%' }}
+                                                        startIcon={<TableRowsIcon />}>
+                                                        Create
+                                                    </Button>
+                                                </Box>
                                             </Box>
                                         ): null
                                     }
