@@ -13,7 +13,7 @@ import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo'
 import PanToolIcon from '@mui/icons-material/PanTool'
 import CreateIcon from '@mui/icons-material/Create'
 import TableRowsIcon from '@mui/icons-material/TableRows'
-import { useTheme } from '@mui/material/styles'
+// import { useTheme } from '@mui/material/styles'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
 import SearchPaginatedTable from '../tables/searchPaginatedTable'
@@ -45,7 +45,7 @@ const ImportTable = (props) => {
         rows: []
     })
     const uploadFile = useRef()
-    const theme = useTheme()
+    // const theme = useTheme()
 
     useEffect(() => {
         setStates({...states, ...{ rowsProps: props.headers }})
@@ -59,45 +59,44 @@ const ImportTable = (props) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={ styles.container }>
                         <Typography
-                            style={styles.caption}
+                            style={{...styles.caption, ...{ marginBottom: 20}}}
                             variant='body1'>
                             There are multiple options when importing data, through importing excel file,
                             copy paste cells, drag and drop excel file or manual data creation.
                         </Typography>
                         {
                             states.importBox? null: (
-                                <Box>
-                                    <Box>
-                                        <Button
-                                            color='primary'
-                                            variant='contained'
-                                            startIcon={<AddIcon />}
-                                            onClick={() => {
-                                                setStates({...states, ...{
-                                                    importBox: true,
-                                                    importMode: 'add'
-                                                }})
-                                            }}>
-                                            Add Data
-                                        </Button>
-                                        <Button
-                                            style={{ marginLeft: 5 }}
-                                            color='primary'
-                                            variant='contained'
-                                            startIcon={<ChangeCircleIcon />}
-                                            onClick={() => {
-                                                setStates({...states, ...{
-                                                    importBox: true,
-                                                    importMode: 'change'
-                                                }})
-                                            }}>
-                                            Change Data
-                                        </Button>
-                                    </Box>
-                                    <Box style={{ marginTop: 20 }}>
-                                        <SearchPaginatedTable />
-                                    </Box>
-                                </Box>
+                                <SearchPaginatedTable
+                                    rightSideComponents={
+                                        <>
+                                            <Button
+                                                style={{ marginLeft: 5 }}
+                                                color='primary'
+                                                variant='contained'
+                                                startIcon={<AddIcon />}
+                                                onClick={() => {
+                                                    setStates({...states, ...{
+                                                        importBox: true,
+                                                        importMode: 'add'
+                                                    }})
+                                                }}>
+                                                Add Data
+                                            </Button>
+                                            <Button
+                                                style={{ marginLeft: 5 }}
+                                                color='primary'
+                                                variant='contained'
+                                                startIcon={<ChangeCircleIcon />}
+                                                onClick={() => {
+                                                    setStates({...states, ...{
+                                                        importBox: true,
+                                                        importMode: 'change'
+                                                    }})
+                                                }}>
+                                                Change Data
+                                            </Button>
+                                        </>
+                                    } />
                             )
                         }
                         <OpenCloseBox
@@ -177,7 +176,7 @@ const ImportTable = (props) => {
                                     {
                                         states.importMethod === 'uploadCSV'? (
                                             <Box
-                                                style={{ ...styles.methodInputContainer, ...{ borderColor: theme.palette.primary.main }}}>
+                                                sx={styles.methodInputContainer}>
                                                 <Typography variant='body1'>
                                                     Upload a csv file from your file system.
                                                 </Typography>
@@ -214,7 +213,7 @@ const ImportTable = (props) => {
                                     {
                                         states.importMethod === 'dragAndDrop'? (
                                             <Box
-                                                style={{ ...styles.methodInputContainer, ...{ borderColor: theme.palette.primary.main }}}>
+                                                sx={styles.methodInputContainer}>
                                                 <Typography variant='body1'>
                                                     Drag a csv file then drop it here.
                                                 </Typography>
@@ -234,7 +233,7 @@ const ImportTable = (props) => {
                                     {
                                         states.importMethod === 'copyPaste'? (
                                             <Box
-                                                style={{ ...styles.methodInputContainer, ...{ borderColor: theme.palette.primary.main }}}>
+                                                sx={styles.methodInputContainer}>
                                                 <Typography variant='body1'>
                                                     Copy cells from an excel file including the data headers.
                                                 </Typography>
@@ -254,7 +253,7 @@ const ImportTable = (props) => {
                                     {
                                         states.importMethod === 'createEmptyCells'? (
                                             <Box
-                                                style={{ ...styles.methodInputContainer, ...{ borderColor: theme.palette.primary.main }}}>
+                                                sx={styles.methodInputContainer}>
                                                 <Typography variant='body1'>
                                                     Create empty rows so you can populate this row cells
                                                     on the next step(Modify data).
@@ -377,9 +376,10 @@ const styles = {
     methodInputContainer: {
         textAlign: 'center',
         border: '2px dashed',
-        borderRadius: 10,
-        paddingTop: 100,
-        paddingBottom: 100
+        borderRadius: '10px',
+        paddingTop: '100px',
+        paddingBottom: '100px',
+        borderColor: 'primary.main'
     }
 }
 
