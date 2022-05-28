@@ -19,16 +19,29 @@ const HorizontalStepsNav = (props) => {
     const handleNext = async () => {
         let result = true
         let stps = loadingStates.steps
-        stps[activeStep] = true
-        setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+        
+        if (   props.views
+            && typeof props.views[activeStep].action === 'function'
+            && props.views[activeStep].action.constructor.name === 'AsyncFunction') {
+            // show loadinbg indicator for async function
+            stps[activeStep] = true
+            setLoadingStates({ ...loadingStates, ...{ steps: stps }})
 
-        if (props.views && typeof props.views[activeStep].action === 'function') {
-            result = await props.views[activeStep].action()
+            if (props.views && typeof props.views[activeStep].action === 'function') {
+                result = await props.views[activeStep].action()
+            }
+
+            // set loading to false
+            stps[activeStep] = false
+            setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+        } else {
+            // directly trigger next
+            if (   props.views
+                && typeof props.views[activeStep].action === 'function'
+                && props.views[activeStep].action.constructor.name === 'Function') {
+                result = props.views[activeStep].action()
+            }
         }
-
-        // set loading to false
-        stps[activeStep] = false
-        setLoadingStates({ ...loadingStates, ...{ steps: stps }})
 
         if (result) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);

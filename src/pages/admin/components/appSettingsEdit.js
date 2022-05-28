@@ -40,9 +40,9 @@ const AppSettingsEdit = (props) => {
                     </Grid>
                 </Grid>
             ),
-            action: async () => {
+            action: () => {
                 console.log('Settings A')
-                await utils.waitFor(1)
+                // await utils.waitFor(1)
                 return true
             }
         },
@@ -75,9 +75,9 @@ const AppSettingsEdit = (props) => {
                     </Grid>
                 </Grid>
             ),
-            action: async () => {
+            action: () => {
                 console.log('Settings B')
-                await utils.waitFor(1)
+                // await utils.waitFor(1)
                 return true
             }
         },
@@ -115,9 +115,9 @@ const AppSettingsEdit = (props) => {
                     </Grid>
                 </Grid>
             ),
-            action: async () => {
+            action: () => {
                 console.log('Settings C')
-                await utils.waitFor(1)
+                // await utils.waitFor(1)
                 return true
             }
         }
@@ -145,8 +145,8 @@ const AppSettingsEdit = (props) => {
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <VerticalSteps
-                    nextBtnLabel={ 'Save and Next' }
-                    finishBtnlabel={ 'Save and Finish' }
+                    nextBtnLabel={ 'Next' }
+                    finishBtnlabel={ 'Finish' }
                     finalBtnLabel={ 'Save Changes' }
                     disableLabelClick={ false }
                     finalView={ finalView }

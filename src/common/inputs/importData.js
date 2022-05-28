@@ -283,9 +283,9 @@ const ImportTable = (props) => {
                     </Grid>
                 </Grid>
             ),
-            action: async () => {
+            action: () => {
                 console.log('Import Data')
-                await utils.waitFor(1)
+                // await utils.waitFor(1)
                 return true
             }
         },
