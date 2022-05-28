@@ -13,6 +13,8 @@ import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo'
 import PanToolIcon from '@mui/icons-material/PanTool'
 import CreateIcon from '@mui/icons-material/Create'
 import TableRowsIcon from '@mui/icons-material/TableRows'
+import InfoIcon from '@mui/icons-material/Info'
+import Tooltip from '@mui/material/Tooltip'
 // import { useTheme } from '@mui/material/styles'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
@@ -58,12 +60,6 @@ const ImportTable = (props) => {
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={ styles.container }>
-                        <Typography
-                            style={{...styles.caption, ...{ marginBottom: 20}}}
-                            variant='body1'>
-                            There are multiple options when importing data, through importing excel file,
-                            copy paste cells, drag and drop excel file or manual data creation.
-                        </Typography>
                         {
                             states.importBox? null: (
                                 <SearchPaginatedTable
@@ -95,6 +91,18 @@ const ImportTable = (props) => {
                                                 }}>
                                                 Change Data
                                             </Button>
+                                            <Tooltip
+                                                style={{ float: 'right' }}
+                                                title={
+                                                    <Typography
+                                                        style={{...styles.caption, ...{ marginBottom: 20}}}
+                                                        variant='body1'>
+                                                        There are multiple options when importing data, through importing excel file,
+                                                        copy paste cells, drag and drop excel file or manual data creation.
+                                                    </Typography>
+                                                }>
+                                                <InfoIcon color='primary' />
+                                            </Tooltip>
                                         </>
                                     } />
                             )
@@ -366,6 +374,7 @@ const ImportTable = (props) => {
 
 const styles = {
     container: {
+        marginTop: 40,
         textAlign: 'left'
     },
     caption: {
