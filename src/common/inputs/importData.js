@@ -16,6 +16,7 @@ import TableRowsIcon from '@mui/icons-material/TableRows'
 import { useTheme } from '@mui/material/styles'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
+import SearchPaginatedTable from '../tables/searchPaginatedTable'
 import OpenCloseBox from '../blocks/openCloseBox'
 
 import utils from '../utilities'
@@ -92,19 +93,9 @@ const ImportTable = (props) => {
                                             }}>
                                             Change Data
                                         </Button>
-                                        <Button
-                                            style={{ marginLeft: 5 }}
-                                            color='primary'
-                                            variant='outlined'
-                                            startIcon={<DownloadIcon />}
-                                            onClick={() => {
-                                                console.log('download data template')
-                                            }}>
-                                            Data Template
-                                        </Button>
                                     </Box>
-                                    <Box>
-                                        
+                                    <Box style={{ marginTop: 20 }}>
+                                        <SearchPaginatedTable />
                                     </Box>
                                 </Box>
                             )
@@ -190,6 +181,16 @@ const ImportTable = (props) => {
                                                 <Typography variant='body1'>
                                                     Upload a csv file from your file system.
                                                 </Typography>
+                                                <Button
+                                                    style={{ marginRight: 5, marginTop: 10 }}
+                                                    color='primary'
+                                                    variant='outlined'
+                                                    startIcon={<DownloadIcon />}
+                                                    onClick={() => {
+                                                        console.log('download data template')
+                                                    }}>
+                                                    Download Template
+                                                </Button>
                                                 <input
                                                     accept=".csv"
                                                     ref={uploadFile}
@@ -217,6 +218,16 @@ const ImportTable = (props) => {
                                                 <Typography variant='body1'>
                                                     Drag a csv file then drop it here.
                                                 </Typography>
+                                                <Button
+                                                    style={{ marginRight: 5, marginTop: 10 }}
+                                                    color='primary'
+                                                    variant='outlined'
+                                                    startIcon={<DownloadIcon />}
+                                                    onClick={() => {
+                                                        console.log('download data template')
+                                                    }}>
+                                                    Download Template
+                                                </Button>
                                             </Box>
                                         ): null
                                     }
@@ -227,6 +238,16 @@ const ImportTable = (props) => {
                                                 <Typography variant='body1'>
                                                     Copy cells from an excel file including the data headers.
                                                 </Typography>
+                                                <Button
+                                                    style={{ marginRight: 5, marginTop: 10 }}
+                                                    color='primary'
+                                                    variant='outlined'
+                                                    startIcon={<DownloadIcon />}
+                                                    onClick={() => {
+                                                        console.log('download data template')
+                                                    }}>
+                                                    Download Template
+                                                </Button>
                                             </Box>
                                         ): null
                                     }
