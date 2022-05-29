@@ -31,10 +31,16 @@ const SearchPaginatedTable = (props) => {
             { name: 'test0005', calories: 'cal0005', fat: 'fat0005', carb: 'carb0005', protein: 'pro0005' },
             { name: 'test0006', calories: 'cal0006', fat: 'fat0006', carb: 'carb0006', protein: 'pro0006' },
         ],
+        filteredRows: [],
+        searchText: '',
         searchField: '__',
         page: 0,
         rowsPerPage: 10
     })
+
+    const onSearchText = (value) => {
+        setStates({...states, ...{ searchText: value }})
+    }
 
     const handleChangePage = (event, newPage) => {
         setStates({...states, ...{ page: newPage }})
@@ -67,9 +73,7 @@ const SearchPaginatedTable = (props) => {
                             </InputAdornment>
                         )
                     }}
-                    onChange={(value) => {
-                        console.log(value)
-                    }} />
+                    onChange={ onSearchText } />
             </Grid>
             <Grid item xs={12} sm={3} md={3}>
                 <FormControl fullWidth>
@@ -102,27 +106,27 @@ const SearchPaginatedTable = (props) => {
                             <TableRow>
                                 {
                                     states.headers.map((item,index) => (
-                                        <TableCell key={ `tableheader${ item }_${ index }` } value={ item }>{ item }</TableCell>
+                                        <TableCell key={ `tableheader${ item }_${ index }` }>{ item }</TableCell>
                                     ))
                                 }
                             </TableRow>
                         </TableHead>
                         <TableBody>
                         {
-                            states.rows.map((row, index) => (
+                            states.rows.map((row, rowIndex) => (
                                 <TableRow
-                                    key={row.name + index}
+                                    key={'tablerow' + rowIndex}
                                     sx={{
                                         '&:nth-of-type(odd)': { backgroundColor: 'rgba(128, 128, 128, 0.2)' },
-                                        'th,td': { border: 0 }
+                                        'td': { border: 0 }
                                     }}>
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell>{row.calories}</TableCell>
-                                    <TableCell>{row.fat}</TableCell>
-                                    <TableCell>{row.carb}</TableCell>
-                                    <TableCell>{row.protein}</TableCell>
+                                    {
+                                        states.headers.map((col, colIndex) => (
+                                            <TableCell key={ `table data${ col }_${ rowIndex }${ colIndex }` }>
+                                                { row[col] }
+                                            </TableCell>
+                                        ))
+                                    }
                                 </TableRow>
                             ))
                         }
