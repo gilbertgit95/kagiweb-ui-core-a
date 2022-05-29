@@ -11,8 +11,10 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import InputAdornment from '@mui/material/InputAdornment'
+import TablePagination from '@mui/material/TablePagination'
 
 import DebouncingTextField from '../inputs/debouncingTextField'
+import { Typography } from '@mui/material'
 
 const SearchPaginatedTable = (props) => {
     const [states, setStates] = useState({
@@ -32,8 +34,21 @@ const SearchPaginatedTable = (props) => {
                 carb: '',
                 protein: ''
             }
-        ]
+        ],
+        page: 0,
+        rowsPerPage: 10
     })
+
+    const handleChangePage = (event, newPage) => {
+        setStates({...states, ...{ page: newPage }})
+    }
+    
+    const handleChangeRowsPerPage = (event) => {
+        setStates({...states, ...{
+            page: 0,
+            rowsPerPage: parseInt(event.target.value, 10)
+        }})
+    }
 
     return (
         <Grid container spacing={2}>
@@ -61,7 +76,7 @@ const SearchPaginatedTable = (props) => {
                 }
             </Grid>
             <Grid item xs={12}>
-                <TableContainer component={Paper}>
+                <TableContainer>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
@@ -76,8 +91,7 @@ const SearchPaginatedTable = (props) => {
                         {
                             states.rows.map((row, index) => (
                                 <TableRow
-                                    key={row.name + index}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                    key={row.name + index}>
                                     <TableCell component="th" scope="row">
                                         {row.name}
                                     </TableCell>
@@ -91,6 +105,26 @@ const SearchPaginatedTable = (props) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                {/* display if table is empty */}
+                {
+                    states.rows && states.rows.length? (
+                        <TablePagination
+                            component='div'
+                            count={100}
+                            page={states.page}
+                            rowsPerPage={states.rowsPerPage}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage} />
+                    ): (
+                        <Box>
+                            <Typography
+                                style={{ textAlign: 'center', padding: 10 }}
+                                variant='body1'>
+                                No Content
+                            </Typography>
+                        </Box>
+                    )
+                }
             </Grid>
         </Grid>
     )
