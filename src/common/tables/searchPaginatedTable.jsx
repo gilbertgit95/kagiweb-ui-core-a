@@ -12,29 +12,26 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import InputAdornment from '@mui/material/InputAdornment'
 import TablePagination from '@mui/material/TablePagination'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
 
 import DebouncingTextField from '../inputs/debouncingTextField'
 import { Typography } from '@mui/material'
 
 const SearchPaginatedTable = (props) => {
     const [states, setStates] = useState({
-        headers: [],
+        headers: ['name', 'calories', 'fat', 'carb', 'protein'],
         rows: [
-            {
-                name: '',
-                calories: '',
-                fat: '',
-                carb: '',
-                protein: ''
-            },
-            {
-                name: '',
-                calories: '',
-                fat: '',
-                carb: '',
-                protein: ''
-            }
+            { name: 'test0001', calories: 'cal0001', fat: 'fat0001', carb: 'carb0001', protein: 'pro0001' },
+            { name: 'test0002', calories: 'cal0002', fat: 'fat0002', carb: 'carb0002', protein: 'pro0002' },
+            { name: 'test0003', calories: 'cal0003', fat: 'fat0003', carb: 'carb0003', protein: 'pro0003' },
+            { name: 'test0004', calories: 'cal0004', fat: 'fat0004', carb: 'carb0004', protein: 'pro0004' },
+            { name: 'test0005', calories: 'cal0005', fat: 'fat0005', carb: 'carb0005', protein: 'pro0005' },
+            { name: 'test0006', calories: 'cal0006', fat: 'fat0006', carb: 'carb0006', protein: 'pro0006' },
         ],
+        searchField: '__',
         page: 0,
         rowsPerPage: 10
     })
@@ -47,6 +44,12 @@ const SearchPaginatedTable = (props) => {
         setStates({...states, ...{
             page: 0,
             rowsPerPage: parseInt(event.target.value, 10)
+        }})
+    }
+
+    const handleSearchFieldChange = (event) => {
+        setStates({...states, ...{
+            searchField: event.target.value
         }})
     }
 
@@ -68,36 +71,57 @@ const SearchPaginatedTable = (props) => {
                         console.log(value)
                     }} />
             </Grid>
+            <Grid item xs={12} sm={3} md={3}>
+                <FormControl fullWidth>
+                    <InputLabel id='search_field_label' size='small'>Search Field</InputLabel>
+                    <Select
+                        labelId='search_field_label'
+                        id='search_field'
+                        label='Search Field'
+                        size='small'
+                        value={ states.searchField }
+                        onChange={ handleSearchFieldChange }>
+                        <MenuItem value={'__'}>all fields</MenuItem>
+                        {
+                            states.headers.map((item,index) => (
+                                <MenuItem key={ `searchfield${ item }_${ index }` } value={ item }>{ item }</MenuItem>
+                            ))
+                        }
+                    </Select>
+                </FormControl>
+            </Grid>
             <Grid
                 sx={{ paddingLeft: { xs: 0 } }}
-                item xs={12} sm={8} md={9}>
-                {
-                    props.rightSideComponents? props.rightSideComponents: null
-                }
+                item xs={12} sm={5} md={6}>
+                { props.rightSideComponents? props.rightSideComponents: null }
             </Grid>
             <Grid item xs={12}>
                 <TableContainer>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Dessert (100g serving)</TableCell>
-                                <TableCell>Calories</TableCell>
-                                <TableCell>Fat&nbsp;(g)</TableCell>
-                                <TableCell>Carbs&nbsp;(g)</TableCell>
-                                <TableCell>Protein&nbsp;(g)</TableCell>
+                                {
+                                    states.headers.map((item,index) => (
+                                        <TableCell key={ `tableheader${ item }_${ index }` } value={ item }>{ item }</TableCell>
+                                    ))
+                                }
                             </TableRow>
                         </TableHead>
                         <TableBody>
                         {
                             states.rows.map((row, index) => (
                                 <TableRow
-                                    key={row.name + index}>
+                                    key={row.name + index}
+                                    sx={{
+                                        '&:nth-of-type(odd)': { backgroundColor: 'rgba(128, 128, 128, 0.2)' },
+                                        'th,td': { border: 0 }
+                                    }}>
                                     <TableCell component="th" scope="row">
                                         {row.name}
                                     </TableCell>
                                     <TableCell>{row.calories}</TableCell>
                                     <TableCell>{row.fat}</TableCell>
-                                    <TableCell>{row.carbs}</TableCell>
+                                    <TableCell>{row.carb}</TableCell>
                                     <TableCell>{row.protein}</TableCell>
                                 </TableRow>
                             ))
