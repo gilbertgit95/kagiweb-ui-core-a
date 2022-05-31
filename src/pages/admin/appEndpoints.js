@@ -35,7 +35,8 @@ const AppEndpoints = (props) => {
             navMenu={subpages}>
             <Grid item xs={12}>
                 <ImportData
-                    headers={['Endpoint', 'Name', 'Type', 'Category', 'Subcategory']} />
+                    // headers={['Endpoint', 'Name', 'Type', 'Category', 'Subcategory']} />
+                    headers={['name', 'calories', 'fat', 'carb', 'protein']} />
             </Grid>
         </SubPageslayout>
     )

@@ -18,7 +18,7 @@ import Tooltip from '@mui/material/Tooltip'
 // import { useTheme } from '@mui/material/styles'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
-import SearchPaginatedTable from '../tables/searchPaginatedTable'
+import BasicTable from '../tables/basicTable'
 import OpenCloseBox from '../blocks/openCloseBox'
 
 import utils from '../utilities'
@@ -41,7 +41,26 @@ const ImportTable = (props) => {
         importMethod: 'uploadCSV', // uploadCSV || copyPaste || dragAndDrop || createEmptyCells
         importBox: true,
 
-        importedData: [],
+        importedData: [
+            { name: 'test0001', calories: 'cal0001', fat: 'fat0001', carb: 'carb0001', protein: 'pro0001' },
+            { name: 'test0002', calories: 'cal0002', fat: 'fat0002', carb: 'carb0002', protein: 'pro0002' },
+            { name: 'test0003', calories: 'cal0003', fat: 'fat0003', carb: 'carb0003', protein: 'pro0003' },
+            { name: 'test0004', calories: 'cal0004', fat: 'fat0004', carb: 'carb0004', protein: 'pro0004' },
+            { name: 'test0005', calories: 'cal0005', fat: 'fat0005', carb: 'carb0005', protein: 'pro0005' },
+            { name: 'test0006', calories: 'cal0006', fat: 'fat0006', carb: 'carb0006', protein: 'pro0006' },
+            { name: 'test0001', calories: 'cal0001', fat: 'fat0001', carb: 'carb0001', protein: 'pro0001' },
+            { name: 'test0002', calories: 'cal0002', fat: 'fat0002', carb: 'carb0002', protein: 'pro0002' },
+            { name: 'test0003', calories: 'cal0003', fat: 'fat0003', carb: 'carb0003', protein: 'pro0003' },
+            { name: 'test0004', calories: 'cal0004', fat: 'fat0004', carb: 'carb0004', protein: 'pro0004' },
+            { name: 'test0005', calories: 'cal0005', fat: 'fat0005', carb: 'carb0005', protein: 'pro0005' },
+            { name: 'test0006', calories: 'cal0006', fat: 'fat0006', carb: 'carb0006', protein: 'pro0006' },
+            { name: 'test0001', calories: 'cal0001', fat: 'fat0001', carb: 'carb0001', protein: 'pro0001' },
+            { name: 'test0002', calories: 'cal0002', fat: 'fat0002', carb: 'carb0002', protein: 'pro0002' },
+            { name: 'test0003', calories: 'cal0003', fat: 'fat0003', carb: 'carb0003', protein: 'pro0003' },
+            { name: 'test0004', calories: 'cal0004', fat: 'fat0004', carb: 'carb0004', protein: 'pro0004' },
+            { name: 'test0005', calories: 'cal0005', fat: 'fat0005', carb: 'carb0005', protein: 'pro0005' },
+            { name: 'test0006', calories: 'cal0006', fat: 'fat0006', carb: 'carb0006', protein: 'pro0006' },
+        ],
 
         rowsProps: [],
         rows: []
@@ -62,7 +81,9 @@ const ImportTable = (props) => {
                     <Grid item xs={12} style={ styles.container }>
                         {
                             states.importBox? null: (
-                                <SearchPaginatedTable
+                                <BasicTable
+                                    headers={ props.headers }
+                                    rows={ states.importedData }
                                     rightSideComponents={
                                         <>
                                             <Button

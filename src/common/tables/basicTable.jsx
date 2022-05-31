@@ -16,30 +16,24 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import { useTheme } from '@mui/material'
 
 import DebouncingTextField from '../inputs/debouncingTextField'
 import { Typography } from '@mui/material'
 
-const SearchPaginatedTable = (props) => {
+const BasicTable = (props) => {
     const [states, setStates] = useState({
-        headers: ['name', 'calories', 'fat', 'carb', 'protein'],
-        rows: [
-            { name: 'test0001', calories: 'cal0001', fat: 'fat0001', carb: 'carb0001', protein: 'pro0001' },
-            { name: 'test0002', calories: 'cal0002', fat: 'fat0002', carb: 'carb0002', protein: 'pro0002' },
-            { name: 'test0003', calories: 'cal0003', fat: 'fat0003', carb: 'carb0003', protein: 'pro0003' },
-            { name: 'test0004', calories: 'cal0004', fat: 'fat0004', carb: 'carb0004', protein: 'pro0004' },
-            { name: 'test0005', calories: 'cal0005', fat: 'fat0005', carb: 'carb0005', protein: 'pro0005' },
-            { name: 'test0006', calories: 'cal0006', fat: 'fat0006', carb: 'carb0006', protein: 'pro0006' },
-        ],
-        filteredRows: [],
+        headers: [],
+        rows: [],
         searchText: '',
         searchField: '__',
         page: 0,
         rowsPerPage: 10
     })
+    const theme = useTheme()
 
     const onSearchText = (value) => {
-        setStates({...states, ...{ searchText: value }})
+        setStates({...states, ...{ searchText: value, page: 0, }})
     }
 
     const handleChangePage = (event, newPage) => {
@@ -58,6 +52,34 @@ const SearchPaginatedTable = (props) => {
             searchField: event.target.value
         }})
     }
+
+    useEffect(() => {
+        setStates({...states, ...{
+            rows: props.rows? props.rows: [],
+            headers: props.headers? props.headers: []
+        }})
+    }, [props.rows, props.headers])
+
+    // filter by search
+    let filteredRows = states.rows.filter((row) => {
+        let field = states.searchField
+        let text = states.searchText.toLowerCase()
+        let fieldValue = ''
+
+        // search for all props
+        if (field === '__') {
+            fieldValue = states.headers.reduce((acc, header) => {
+                acc += row[header]? row[header]: ''
+                return acc
+            }, '')
+        } else {
+        // search only on a specific field
+            fieldValue = row[field]
+        }
+        fieldValue = fieldValue.toLowerCase()
+
+        return fieldValue.indexOf(text) > -1
+    })
 
     return (
         <Grid container spacing={2}>
@@ -113,32 +135,41 @@ const SearchPaginatedTable = (props) => {
                         </TableHead>
                         <TableBody>
                         {
-                            states.rows.map((row, rowIndex) => (
-                                <TableRow
-                                    key={'tablerow' + rowIndex}
-                                    sx={{
-                                        '&:nth-of-type(odd)': { backgroundColor: 'rgba(128, 128, 128, 0.2)' },
-                                        'td': { border: 0 }
-                                    }}>
-                                    {
-                                        states.headers.map((col, colIndex) => (
-                                            <TableCell key={ `table data${ col }_${ rowIndex }${ colIndex }` }>
-                                                { row[col] }
-                                            </TableCell>
-                                        ))
-                                    }
-                                </TableRow>
-                            ))
+                            
+                            filteredRows
+                                // sluice for pagination
+                                .slice(
+                                    states.page * states.rowsPerPage,
+                                    states.page * states.rowsPerPage + states.rowsPerPage
+                                )
+                                // render rows
+                                .map((row, rowIndex) => (
+                                    <TableRow
+                                        key={'tablerow' + rowIndex}
+                                        sx={{
+                                            '&:nth-of-type(even)': { backgroundColor: theme.palette.primary.main + '10' },
+                                            '&:nth-of-type(odd)': { backgroundColor: theme.palette.primary.main + '30' },
+                                            'td': { border: 0 }
+                                        }}>
+                                        {
+                                            states.headers.map((col, colIndex) => (
+                                                <TableCell key={ `table data${ col }_${ rowIndex }${ colIndex }` }>
+                                                    { row[col] }
+                                                </TableCell>
+                                            ))
+                                        }
+                                    </TableRow>
+                                ))
                         }
                         </TableBody>
                     </Table>
                 </TableContainer>
                 {/* display if table is empty */}
                 {
-                    states.rows && states.rows.length? (
+                    filteredRows && filteredRows.length? (
                         <TablePagination
                             component='div'
-                            count={100}
+                            count={filteredRows.length}
                             page={states.page}
                             rowsPerPage={states.rowsPerPage}
                             onPageChange={handleChangePage}
@@ -158,4 +189,4 @@ const SearchPaginatedTable = (props) => {
     )
 }
 
-export default SearchPaginatedTable
+export default BasicTable
