@@ -117,7 +117,7 @@ const BasicTable = (props) => {
                 </FormControl>
             </Grid>
             <Grid
-                sx={{ paddingLeft: { xs: 0 } }}
+                sx={{ paddingLeft: { xs: 0 }, textAlign: 'left' }}
                 item xs={12} sm={5} md={6}>
                 { props.rightSideComponents? props.rightSideComponents: null }
             </Grid>

@@ -22,7 +22,7 @@ const Pages = [
         },
         {
             component: <AccessibilityNewIcon />,
-            label: 'Role',
+            label: 'Roles',
             type: 'link',
             value: `/${ config.rootRoute }/admin/appRoles`
         },

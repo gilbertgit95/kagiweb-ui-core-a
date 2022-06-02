@@ -10,13 +10,16 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 // import TextField from '@mui/material/TextField'
 // import LoginIcon from '@mui/icons-material/Login'
-// import Button from '@mui/material/Button'
+import InfoIcon from '@mui/icons-material/Info'
+import Tooltip from '@mui/material/Tooltip'
+import Button from '@mui/material/Button'
 import ImportExportIcon from '@mui/icons-material/ImportExport'
 import AddIcon from '@mui/icons-material/Add'
+
+import BasicTable from '../../common/tables/basicTable'
 import ImportData from '../../common/inputs/importData'
 import FullScreenDialogBox from '../../common/blocks/fullScreenDialogBox'
 import NormalDialogBox from '../../common/blocks/normalDialogBox'
-import { Button } from '@mui/material'
 // import AccountContext from '../../common/contexts/accountContext'
 
 const AppEndpoints = (props) => {
@@ -25,6 +28,9 @@ const AppEndpoints = (props) => {
         itemDialogMode: 'add', // add || edit
         itemDialog: false,
         bulkImportDialog: false,
+
+        headers: ['Endpoint', 'Name', 'Type', 'Category', 'Subcategory'],
+        rows: []
     })
 
     useEffect(() => {
@@ -43,21 +49,41 @@ const AppEndpoints = (props) => {
             navAnchor={'left'}
             navMenu={subpages}>
             <Grid item xs={12}>
-                <Container maxWidth="md">
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        startIcon={ <AddIcon /> }
-                        onClick={() => {
-                            setStates({...states, ...{ itemDialog: true }})
-                        }}>Add</Button>
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        startIcon={ <ImportExportIcon /> }
-                        onClick={() => {
-                            setStates({...states, ...{ bulkImportDialog: true }})
-                        }}>Import Data</Button>
+                <Container maxWidth="lg" style={{ paddingTop: 20 }}>
+                    <BasicTable
+                        headers={ states.headers }
+                        rows={ states.rows }
+                        rightSideComponents={
+                            <>
+                                <Button
+                                    color='primary'
+                                    variant='contained'
+                                    style={{ marginRight: 5 }}
+                                    startIcon={ <AddIcon /> }
+                                    onClick={() => {
+                                        setStates({...states, ...{ itemDialog: true }})
+                                    }}>Add</Button>
+                                <Button
+                                    color='primary'
+                                    variant='contained'
+                                    startIcon={ <ImportExportIcon /> }
+                                    onClick={() => {
+                                        setStates({...states, ...{ bulkImportDialog: true }})
+                                    }}>Import Data</Button>
+                                <Tooltip
+                                    style={{ float: 'right' }}
+                                    title={
+                                        <Typography
+                                            style={{ marginBottom: 20 }}
+                                            variant='body1'>
+                                            Endpoints will be the bases for user role access rights. The more
+                                            endpoints a role has, the more access it has on the system.
+                                        </Typography>
+                                    }>
+                                    <InfoIcon color='primary' />
+                                </Tooltip>
+                            </>
+                        } />
                     <NormalDialogBox
                         title={ states.itemDialogMode === 'add'? 'Add Endpoint': 'Edit Endpoint' }
                         open={ states.itemDialog }
