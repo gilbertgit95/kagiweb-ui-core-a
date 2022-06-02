@@ -15,6 +15,7 @@ import ImportExportIcon from '@mui/icons-material/ImportExport'
 import AddIcon from '@mui/icons-material/Add'
 import ImportData from '../../common/inputs/importData'
 import FullScreenDialogBox from '../../common/blocks/fullScreenDialogBox'
+import NormalDialogBox from '../../common/blocks/normalDialogBox'
 import { Button } from '@mui/material'
 // import AccountContext from '../../common/contexts/accountContext'
 
@@ -57,16 +58,16 @@ const AppEndpoints = (props) => {
                         onClick={() => {
                             setStates({...states, ...{ bulkImportDialog: true }})
                         }}>Import Data</Button>
-                    <FullScreenDialogBox
+                    <NormalDialogBox
                         title={ states.itemDialogMode === 'add'? 'Add Endpoint': 'Edit Endpoint' }
                         open={ states.itemDialog }
+                        fullWidth={ true }
+                        maxWidth={ 'xs' }
                         onClose={() => {
                             setStates({...states, ...{ itemDialog: false }})
                         }}>
-                        <Container maxWidth="lg">
-                            
-                        </Container>
-                    </FullScreenDialogBox>
+                        <Typography>add/ edit</Typography>
+                    </NormalDialogBox>
                     <FullScreenDialogBox
                         title={ 'Import from Excel' }
                         open={ states.bulkImportDialog }
