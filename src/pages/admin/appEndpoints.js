@@ -5,7 +5,7 @@ import SubPageslayout from '../../common/layouts/subPagesLayout'
 
 // import Link from '@mui/material/Link'
 import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
+// import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 // import TextField from '@mui/material/TextField'
@@ -72,9 +72,10 @@ const AppEndpoints = (props) => {
                                     }}>Import Data</Button>
                                 <Tooltip
                                     style={{ float: 'right' }}
+                                    placement='bottom-end'
                                     title={
                                         <Typography
-                                            style={{ marginBottom: 20 }}
+                                            style={{ padding: 10 }}
                                             variant='body1'>
                                             Endpoints will be the bases for user role access rights. The more
                                             endpoints a role has, the more access it has on the system.

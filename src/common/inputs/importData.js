@@ -104,9 +104,10 @@ const ImportTable = (props) => {
                                             </Button>
                                             <Tooltip
                                                 style={{ float: 'right' }}
+                                                placement='bottom-end'
                                                 title={
                                                     <Typography
-                                                        style={{...styles.caption, ...{ marginBottom: 20}}}
+                                                        style={{ padding: 10 }}
                                                         variant='body1'>
                                                         There are multiple options when importing data, through importing excel file,
                                                         copy paste cells, drag and drop excel file or manual data creation.
