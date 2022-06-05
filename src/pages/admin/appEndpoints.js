@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import subpages from './lib/subPages'
 
 import SubPageslayout from '../../common/layouts/subPagesLayout'
@@ -20,7 +20,9 @@ import BasicTable from '../../common/tables/basicTable'
 import ImportData from '../../common/inputs/importData'
 import FullScreenDialogBox from '../../common/blocks/fullScreenDialogBox'
 import NormalDialogBox from '../../common/blocks/normalDialogBox'
+
 // import AccountContext from '../../common/contexts/accountContext'
+import AdminContext from '../../common/contexts/adminContext'
 
 const AppEndpoints = (props) => {
     const [states, setStates] = useState({
@@ -29,9 +31,11 @@ const AppEndpoints = (props) => {
         itemDialog: false,
         bulkImportDialog: false,
 
-        headers: ['Endpoint', 'Name', 'Type', 'Category', 'Subcategory'],
+        headers: ['endpoint', 'name', 'type', 'category', 'subcategory'],
+        // headers: ['Endpoint', 'Name', 'Type', 'Category', 'Subcategory'],
         rows: []
     })
+    const adminCtx = useContext(AdminContext)
 
     useEffect(() => {
         const fetchData = () => {
@@ -43,6 +47,11 @@ const AppEndpoints = (props) => {
 
         fetchData()
     }, [])
+
+    useEffect(() => {
+        setStates({...states, ...{ rows: adminCtx.adminContext.data }})
+        console.log(adminCtx.adminContext.data)
+    }, [adminCtx.adminContext])
 
     return (
         <SubPageslayout

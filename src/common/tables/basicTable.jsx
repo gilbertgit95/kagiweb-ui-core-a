@@ -23,8 +23,8 @@ import { Typography } from '@mui/material'
 
 const BasicTable = (props) => {
     const [states, setStates] = useState({
-        headers: [],
-        rows: [],
+        headers: props.headers? props.headers: [],
+        rows: props.rows? props.rows: [],
         searchText: '',
         searchField: '__',
         page: 0,
@@ -58,6 +58,7 @@ const BasicTable = (props) => {
             rows: props.rows? props.rows: [],
             headers: props.headers? props.headers: []
         }})
+        console.log(props.rows)
     }, [props.rows, props.headers])
 
     // filter by search
@@ -80,6 +81,8 @@ const BasicTable = (props) => {
 
         return fieldValue.indexOf(text) > -1
     })
+
+    console.log('filtered rows: ', filteredRows)
 
     return (
         <Grid container spacing={2}>

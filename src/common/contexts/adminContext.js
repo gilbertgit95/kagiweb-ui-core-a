@@ -4,13 +4,17 @@ import { useState, useEffect, createContext } from 'react'
 // import LocalStorage from '../utilities/localStorage'
 
 const AdminContext = createContext({
-    adminContext: {},
+    adminContext: {
+      data: []
+    },
     setAdminContext(data) { return }
 })
 export default AdminContext
 
 export const useAdminContext = () => {
-    const [adminContext, setAdminContext] = useState({})
+    const [adminContext, setAdminContext] = useState({
+      data: testAdminEndpointsData
+    })
 
     return {
       adminContext,
