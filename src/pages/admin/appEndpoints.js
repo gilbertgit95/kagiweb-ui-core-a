@@ -37,21 +37,23 @@ const AppEndpoints = (props) => {
     })
     const adminCtx = useContext(AdminContext)
 
-    useEffect(() => {
-        const fetchData = () => {
-            setStates({...states, ...{ ioLoading: true }})
-            setTimeout(() => {
-                setStates({...states, ...{ ioLoading: false }})
-            }, 1000)
-        }
+    // useEffect(() => {
+    //     const fetchData = () => {
+    //         setStates({...states, ...{ ioLoading: true }})
+    //         setTimeout(() => {
+    //             setStates({...states, ...{ ioLoading: false }})
+    //         }, 1000)
+    //     }
 
-        fetchData()
-    }, [])
+    //     fetchData()
+    // }, [])
 
     useEffect(() => {
         setStates({...states, ...{ rows: adminCtx.adminContext.data }})
-        console.log(adminCtx.adminContext.data)
+        console.log('admin data: ', adminCtx.adminContext.data)
     }, [adminCtx.adminContext])
+
+    // console.log('states rows: ', states.rows)
 
     return (
         <SubPageslayout
