@@ -11,12 +11,13 @@ import Typography from '@mui/material/Typography'
 // import TextField from '@mui/material/TextField'
 // import LoginIcon from '@mui/icons-material/Login'
 import InfoIcon from '@mui/icons-material/Info'
+import EditIcon from '@mui/icons-material/Edit'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import ImportExportIcon from '@mui/icons-material/ImportExport'
 import AddIcon from '@mui/icons-material/Add'
 
-import BasicTable from '../../common/tables/basicTable'
+import InteractiveTable from '../../common/tables/interactiveTable'
 import ImportData from '../../common/inputs/importData'
 import FullScreenDialogBox from '../../common/blocks/fullScreenDialogBox'
 import NormalDialogBox from '../../common/blocks/normalDialogBox'
@@ -31,8 +32,51 @@ const AppEndpoints = (props) => {
         itemDialog: false,
         bulkImportDialog: false,
 
-        headers: ['endpoint', 'name', 'type', 'category', 'subcategory'],
-        // headers: ['Endpoint', 'Name', 'Type', 'Category', 'Subcategory'],
+        headers: [
+            {
+                label: 'Endpoint',
+                field: 'endpoint',
+                type: 'string'
+            },
+            {
+                label: 'Name',
+                field: 'name',
+                type: 'string'
+            },
+            {
+                label: 'Type',
+                field: 'type',
+                type: 'string'
+            },
+            {
+                label: 'Category',
+                field: 'category',
+                type: 'string'
+            },
+            {
+                label: 'Subcategory',
+                field: 'subcategory',
+                type: 'string',
+                width: 50
+            },
+            {
+                label: '',
+                field: 'edit',
+                width: 60,
+                render: (renderProps = {}) => {
+                    return (
+                        <Button
+                            {...renderProps}
+                            startIcon={<EditIcon />}
+                            size='small'>
+                            Edit
+                        </Button>
+                    )
+                },
+                type: 'component'
+            }
+        ],
+        // headers: ['endpoint', 'name', 'type', 'category', 'subcategory'],
         rows: []
     })
     const adminCtx = useContext(AdminContext)
@@ -61,9 +105,12 @@ const AppEndpoints = (props) => {
             navMenu={subpages}>
             <Grid item xs={12}>
                 <Container maxWidth="lg" style={{ paddingTop: 20 }}>
-                    <BasicTable
+                    <InteractiveTable
                         headers={ states.headers }
                         rows={ states.rows }
+                        onInteract={(e) => {
+                            console.log('interact: ', e)
+                        }}
                         rightSideComponents={
                             <>
                                 <Button
