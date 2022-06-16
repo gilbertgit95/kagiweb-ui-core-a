@@ -29,6 +29,7 @@ const AppEndpoints = (props) => {
     const [states, setStates] = useState({
         isLoading: true,
         itemDialogMode: 'add', // add || edit
+        itemDialogData: {},
         itemDialog: false,
         bulkImportDialog: false,
 
@@ -109,7 +110,14 @@ const AppEndpoints = (props) => {
                         headers={ states.headers }
                         rows={ states.rows }
                         onInteract={(e) => {
-                            console.log('interact: ', e)
+                            // console.log('interact: ', e)
+                            if (e.col && e.col.field && e.col.field === 'edit') {
+                                setStates({...states, ...{
+                                    itemDialog: true,
+                                    itemDialogMode: 'edit',
+                                    itemDialogData: e.row
+                                }})
+                            }
                         }}
                         rightSideComponents={
                             <>
@@ -119,7 +127,11 @@ const AppEndpoints = (props) => {
                                     style={{ marginRight: 5 }}
                                     startIcon={ <AddIcon /> }
                                     onClick={() => {
-                                        setStates({...states, ...{ itemDialog: true }})
+                                        setStates({...states, ...{
+                                            itemDialog: true,
+                                            itemDialogMode: 'add',
+                                            itemDialogData: {}
+                                        }})
                                     }}>Add</Button>
                                 <Button
                                     color='primary'
@@ -154,7 +166,7 @@ const AppEndpoints = (props) => {
                         <Typography>add/ edit</Typography>
                     </NormalDialogBox>
                     <FullScreenDialogBox
-                        title={ 'Import from Excel' }
+                        title={ 'Import Endpoints from Excel' }
                         open={ states.bulkImportDialog }
                         onClose={() => {
                             setStates({...states, ...{ bulkImportDialog: false }})

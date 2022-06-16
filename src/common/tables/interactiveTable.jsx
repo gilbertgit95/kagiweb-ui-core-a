@@ -129,7 +129,7 @@ const InteractiveTable = (props) => {
             </Grid>
             <Grid item xs={12}>
                 <TableContainer>
-                    <Table aria-label="simple table">
+                    <Table aria-label="interactive table">
                         <TableHead>
                             <TableRow>
                                 {
