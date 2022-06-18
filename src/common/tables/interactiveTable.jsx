@@ -9,6 +9,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import Checkbox from '@mui/material/Checkbox'
 // import Paper from '@mui/material/Paper'
 import InputAdornment from '@mui/material/InputAdornment'
 import TablePagination from '@mui/material/TablePagination'
@@ -28,7 +29,8 @@ const InteractiveTable = (props) => {
         searchText: '',
         searchField: '__',
         page: 0,
-        rowsPerPage: 10
+        rowsPerPage: 10,
+        selectedRows: new Set([])
     })
     const theme = useTheme()
 
@@ -51,6 +53,12 @@ const InteractiveTable = (props) => {
         setStates({...states, ...{
             searchField: event.target.value
         }})
+    }
+
+    const emitSelected = (selected) => {
+        if (props.onSelect) {
+            props.onSelect(selected)
+        }
     }
 
     useEffect(() => {
@@ -132,6 +140,28 @@ const InteractiveTable = (props) => {
                     <Table aria-label="interactive table">
                         <TableHead>
                             <TableRow>
+                                {/* checkbox all */}
+                                {
+                                    props.hasCheckBox? (
+                                        <TableCell width={ 10 }>
+                                            <Checkbox
+                                                onChange={(e) => {
+                                                    let selectAll = e.target.checked
+                                                    let selectedRows = []
+
+                                                    if (selectAll) {
+                                                        selectedRows = new Set(states.rows.map(item => item.id))
+                                                    }
+
+                                                    emitSelected(selectedRows)
+                                                    setStates({...states, ...{selectedRows: new Set(selectedRows)}})
+                                                }}
+                                                checked={Array.from(states.selectedRows).length === states.rows.length} />
+                                        </TableCell>
+                                    ): null
+                                }
+
+                                {/* other headers */}
                                 {
                                     states.headers.map((item, index) => (
                                         <TableCell key={ `tableheader${ item.field }_${ index }` }>{ item.label }</TableCell>
@@ -157,6 +187,30 @@ const InteractiveTable = (props) => {
                                             '&:nth-of-type(odd)': { backgroundColor: theme.palette.primary.main + '30' },
                                             'td': { border: 0 }
                                         }}>
+                                        {/* checkbox row */}
+                                        {
+                                            props.hasCheckBox? (
+                                                <TableCell width={ 10 }>
+                                                    <Checkbox
+                                                        onChange={(e) => {
+                                                            let selectRow = e.target.checked
+                                                            let selectedRows = states.selectedRows
+
+                                                            if (selectRow) {
+                                                                selectedRows.add(row.id)
+                                                            } else {
+                                                                selectedRows.delete(row.id)
+                                                            }
+
+                                                            emitSelected(Array.from(selectedRows))
+                                                            setStates({...states, ...{ selectedRows }})
+                                                        }}
+                                                        checked={ states.selectedRows && states.selectedRows.has(row.id) } />
+                                                </TableCell>
+                                            ): null
+                                        }
+
+                                        {/* man data rows */}
                                         {
                                             states.headers.map((col, colIndex) => (
                                                 <TableCell

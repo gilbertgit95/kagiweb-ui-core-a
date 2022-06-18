@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 // import TextField from '@mui/material/TextField'
 // import LoginIcon from '@mui/icons-material/Login'
+import DeleteIcon from '@mui/icons-material/Delete'
 import InfoIcon from '@mui/icons-material/Info'
 import EditIcon from '@mui/icons-material/Edit'
 import Tooltip from '@mui/material/Tooltip'
@@ -78,7 +79,8 @@ const AppEndpoints = (props) => {
             }
         ],
         // headers: ['endpoint', 'name', 'type', 'category', 'subcategory'],
-        rows: []
+        rows: [],
+        selectedRows: []
     })
     const adminCtx = useContext(AdminContext)
 
@@ -107,8 +109,12 @@ const AppEndpoints = (props) => {
             <Grid item xs={12}>
                 <Container maxWidth="lg" style={{ paddingTop: 20 }}>
                     <InteractiveTable
+                        hasCheckBox={ true }
                         headers={ states.headers }
                         rows={ states.rows }
+                        onSelect={(selected) => {
+                            setStates({...states, ...{ selectedRows: selected}})
+                        }}
                         onInteract={(e) => {
                             // console.log('interact: ', e)
                             if (e.col && e.col.field && e.col.field === 'edit') {
@@ -125,21 +131,30 @@ const AppEndpoints = (props) => {
                                     color='primary'
                                     variant='contained'
                                     style={{ marginRight: 5 }}
-                                    startIcon={ <AddIcon /> }
+                                    // startIcon={ <AddIcon /> }
                                     onClick={() => {
                                         setStates({...states, ...{
                                             itemDialog: true,
                                             itemDialogMode: 'add',
                                             itemDialogData: {}
                                         }})
-                                    }}>Add</Button>
+                                    }}><AddIcon /></Button>
                                 <Button
                                     color='primary'
                                     variant='contained'
-                                    startIcon={ <ImportExportIcon /> }
+                                    style={{ marginRight: 5 }}
+                                    // startIcon={ <ImportExportIcon /> }
                                     onClick={() => {
                                         setStates({...states, ...{ bulkImportDialog: true }})
-                                    }}>Import Data</Button>
+                                    }}><ImportExportIcon /></Button>
+                                <Button
+                                    color='secondary'
+                                    variant='contained'
+                                    style={{ marginRight: 5 }}
+                                    // startIcon={ <DeleteIcon /> }
+                                    onClick={() => {
+                                        console.log('Delete selected: ', states.selectedRows)
+                                    }}><DeleteIcon /></Button>
                                 <Tooltip
                                     style={{ float: 'right' }}
                                     placement='bottom-end'
