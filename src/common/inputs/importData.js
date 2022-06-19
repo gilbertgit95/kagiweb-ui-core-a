@@ -55,12 +55,6 @@ const ImportTable = (props) => {
             { name: 'test0006', calories: 'cal0006', fat: 'fat0006', carb: 'carb0006', protein: 'pro0006' },
         ]
     })
-    // const uploadFile = useRef()
-    // const theme = useTheme()
-
-    // useEffect(() => {
-    //     setStates({...states, ...{ rowsProps: props.headers }})
-    // }, [])
 
     const steps = [
         {
@@ -141,8 +135,6 @@ const ImportTable = (props) => {
                 </Grid>
             ),
             action: () => {
-                console.log('Import Data')
-                // await utils.waitFor(1)
                 return true
             }
         },

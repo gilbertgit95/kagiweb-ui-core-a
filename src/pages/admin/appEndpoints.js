@@ -149,7 +149,7 @@ const AppEndpoints = (props) => {
                                     }}><ImportExportIcon /></Button>
                                 <Button
                                     color='secondary'
-                                    variant='contained'
+                                    variant='outlined'
                                     style={{ marginRight: 5 }}
                                     // startIcon={ <DeleteIcon /> }
                                     onClick={() => {
