@@ -19,7 +19,7 @@ technology use in this app is React, MUI (material ui), graphQL, Jest (for testi
 ## Features
 Why we should use this boilerplate? below are some of its features
 - easy to setup
-- use of the best technologies like, **React**, **JEST** (testing), **JSDoc** (for documentation).
+- use of the best technologies like, **React**, **MUI**, **JEST** (testing), **JSDoc** (for documentation).
 - ready to use utilites and pages. You dont need to implement most of the core features of a webapp because its included
   on this base app.
 
