@@ -17,7 +17,9 @@ const NormalModalBox = (props) => {
             fullWidth={ Boolean(props.fullWidth) }
             maxWidth={ props.maxWidth? props.maxWidth: 'xs' }
             open={ Boolean(props.open) }
-            onClose={ handleClose }>
+            onClose={(e) => {
+                if (!props.strictClose) handleClose()
+            }}>
             <DialogTitle>{ props.title? props.title: '' }</DialogTitle>
             <DialogContent>
                 <Box
@@ -34,6 +36,7 @@ const NormalModalBox = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={ handleClose }>Close</Button>
+                <Button variant='contained' onClick={ handleClose }>Proceed</Button>
             </DialogActions>
       </Dialog>
     )

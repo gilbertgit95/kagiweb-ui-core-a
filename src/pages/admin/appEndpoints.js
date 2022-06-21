@@ -25,6 +25,7 @@ import NormalDialogBox from '../../common/blocks/normalDialogBox'
 
 // import AccountContext from '../../common/contexts/accountContext'
 import AdminContext from '../../common/contexts/adminContext'
+import utils from '../../common/utilities'
 
 const AppEndpoints = (props) => {
     const [states, setStates] = useState({
@@ -149,7 +150,7 @@ const AppEndpoints = (props) => {
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
                                     title={
                                         <Typography style={{ padding: 10 }} variant='body1'>
-                                            This add multiple endpoints at a time through import.
+                                            This will add multiple endpoints in the list through data import.
                                         </Typography>
                                     }>
                                     <Button
@@ -179,7 +180,7 @@ const AppEndpoints = (props) => {
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
                                     title={
                                         <Typography style={{ padding: 10 }} variant='body1'>
-                                            Endpoints will be the bases for user role access rights. The more
+                                            Endpoints will be the bases for user access rights. The more
                                             endpoints a role has, the more access it has on the system.
                                         </Typography>
                                     }>
@@ -192,6 +193,15 @@ const AppEndpoints = (props) => {
                         open={ states.itemDialog }
                         fullWidth={ true }
                         maxWidth={ 'xs' }
+
+                        strictClose={ true }         // will enable/disable close event from the dialog background
+                        proceedConfirmation={ true } // a confirm dialog before proceeding
+                        proceedLabel={ 'Proceed' }   // button proceed label
+                        onProceed={async () => {     // method to run when proceeding
+                            console.log('will proceed!')
+                            await utils.waitFor(2)
+                            return true
+                        }}
                         onClose={() => {
                             setStates({...states, ...{ itemDialog: false }})
                         }}>
