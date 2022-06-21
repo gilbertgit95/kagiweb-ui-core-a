@@ -127,41 +127,58 @@ const AppEndpoints = (props) => {
                         }}
                         rightSideComponents={
                             <>
-                                <Button
-                                    color='primary'
-                                    variant='contained'
-                                    style={{ marginRight: 5 }}
-                                    // startIcon={ <AddIcon /> }
-                                    onClick={() => {
-                                        setStates({...states, ...{
-                                            itemDialog: true,
-                                            itemDialogMode: 'add',
-                                            itemDialogData: {}
-                                        }})
-                                    }}><AddIcon /></Button>
-                                <Button
-                                    color='primary'
-                                    variant='contained'
-                                    style={{ marginRight: 5 }}
-                                    // startIcon={ <ImportExportIcon /> }
-                                    onClick={() => {
-                                        setStates({...states, ...{ bulkImportDialog: true }})
-                                    }}><ImportExportIcon /></Button>
-                                <Button
-                                    color='secondary'
-                                    variant='outlined'
-                                    style={{ marginRight: 5 }}
-                                    // startIcon={ <DeleteIcon /> }
-                                    onClick={() => {
-                                        console.log('Delete selected: ', states.selectedRows)
-                                    }}><DeleteIcon /></Button>
-                                <Tooltip
-                                    style={{ float: 'right' }}
-                                    placement='bottom-end'
+                                <Tooltip style={{ float: 'right' }} placement='bottom-end'
                                     title={
-                                        <Typography
-                                            style={{ padding: 10 }}
-                                            variant='body1'>
+                                        <Typography style={{ padding: 10 }} variant='body1'>
+                                            This will add a new endpoint to the list.
+                                        </Typography>
+                                    }>
+                                    <Button
+                                        color='primary'
+                                        variant='contained'
+                                        style={{ marginRight: 5 }}
+                                        // startIcon={ <AddIcon /> }
+                                        onClick={() => {
+                                            setStates({...states, ...{
+                                                itemDialog: true,
+                                                itemDialogMode: 'add',
+                                                itemDialogData: {}
+                                            }})
+                                        }}><AddIcon /></Button>
+                                </Tooltip>
+                                <Tooltip style={{ float: 'right' }} placement='bottom-end'
+                                    title={
+                                        <Typography style={{ padding: 10 }} variant='body1'>
+                                            This add multiple endpoints at a time through import.
+                                        </Typography>
+                                    }>
+                                    <Button
+                                        color='primary'
+                                        variant='contained'
+                                        style={{ marginRight: 5 }}
+                                        // startIcon={ <ImportExportIcon /> }
+                                        onClick={() => {
+                                            setStates({...states, ...{ bulkImportDialog: true }})
+                                        }}><ImportExportIcon /></Button>
+                                </Tooltip>
+                                <Tooltip style={{ float: 'right' }} placement='bottom-end'
+                                    title={
+                                        <Typography style={{ padding: 10 }} variant='body1'>
+                                            This will delete all selected endpoints from the list.
+                                        </Typography>
+                                    }>
+                                    <Button
+                                        color='primary'
+                                        variant='outlined'
+                                        style={{ marginRight: 5 }}
+                                        // startIcon={ <DeleteIcon /> }
+                                        onClick={() => {
+                                            console.log('Delete selected: ', states.selectedRows)
+                                        }}><DeleteIcon /></Button>
+                                </Tooltip>
+                                <Tooltip style={{ float: 'right' }} placement='bottom-end'
+                                    title={
+                                        <Typography style={{ padding: 10 }} variant='body1'>
                                             Endpoints will be the bases for user role access rights. The more
                                             endpoints a role has, the more access it has on the system.
                                         </Typography>
