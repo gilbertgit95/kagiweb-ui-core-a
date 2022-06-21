@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 
-const NormalModalBox = (props) => {
+const NormalDialogBox = (props) => {
 
     const handleClose = () => {
         if (props.onClose) props.onClose()
@@ -42,4 +42,4 @@ const NormalModalBox = (props) => {
     )
 }
 
-export default NormalModalBox
+export default NormalDialogBox

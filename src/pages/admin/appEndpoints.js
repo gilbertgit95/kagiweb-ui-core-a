@@ -20,8 +20,9 @@ import AddIcon from '@mui/icons-material/Add'
 
 import InteractiveTable from '../../common/tables/interactiveTable'
 import ImportData from '../../common/inputs/importData'
-import FullScreenDialogBox from '../../common/blocks/fullScreenDialogBox'
-import NormalDialogBox from '../../common/blocks/normalDialogBox'
+import FullScreenDialogBox from '../../common/popups/fullScreenDialogBox'
+import NormalDialogBox from '../../common/popups/normalDialogBox'
+import ConfirmDialogBox from '../../common/popups/confirmDialogBox'
 
 // import AccountContext from '../../common/contexts/accountContext'
 import AdminContext from '../../common/contexts/adminContext'
@@ -188,7 +189,7 @@ const AppEndpoints = (props) => {
                                 </Tooltip>
                             </>
                         } />
-                    <NormalDialogBox
+                    <ConfirmDialogBox
                         title={ states.itemDialogMode === 'add'? 'Add Endpoint': 'Edit Endpoint' }
                         open={ states.itemDialog }
                         fullWidth={ true }
@@ -206,7 +207,7 @@ const AppEndpoints = (props) => {
                             setStates({...states, ...{ itemDialog: false }})
                         }}>
                         <Typography>add/ edit</Typography>
-                    </NormalDialogBox>
+                    </ConfirmDialogBox>
                     <FullScreenDialogBox
                         title={ 'Import Endpoints from Excel' }
                         open={ states.bulkImportDialog }
