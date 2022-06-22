@@ -192,8 +192,6 @@ const AppEndpoints = (props) => {
                     <ConfirmDialogBox
                         title={ states.itemDialogMode === 'add'? 'Add Endpoint': 'Edit Endpoint' }
                         open={ states.itemDialog }
-                        fullWidth={ true }
-                        maxWidth={ 'xs' }
 
                         strictClose={ true }         // will enable/disable close event from the dialog background
                         proceedConfirmation={ true } // a confirm dialog before proceeding

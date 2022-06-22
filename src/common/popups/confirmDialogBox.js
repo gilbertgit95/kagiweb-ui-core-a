@@ -8,7 +8,6 @@ const ConfirmDialogBox = (props) => {
             title={ props.title? props.title: '' }
             open={ props.open? props.open: false }
             fullWidth={ true }
-            maxWidth={ 'xs' }
 
             strictClose={ true }         // will enable/disable close event from the dialog background
             proceedConfirmation={ true } // a confirm dialog before proceeding

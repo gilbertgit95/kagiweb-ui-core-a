@@ -36,7 +36,6 @@ const NormalDialogBox = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={ handleClose }>Close</Button>
-                <Button variant='contained' onClick={ handleClose }>Proceed</Button>
             </DialogActions>
       </Dialog>
     )
