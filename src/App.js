@@ -6,6 +6,8 @@ import PrimaryTheme from './common/themes/primary'
 import LocalStorageContext, { useLocalStorageContext } from './common/contexts/localStorageContext'
 import AccountContext, { useAccountContext } from './common/contexts/accountContext'
 import AdminContext, { useAdminContext } from './common/contexts/adminContext'
+import GlobalDialogContext, { useGlobalDialogContext, GlobalDialogComponents } from './common/contexts/globalDialogContext'
+
 import Pages from './pages'
 
 import './App.css'
@@ -15,6 +17,7 @@ function App() {
   const adminStates = useAdminContext()
   const accountStates = useAccountContext()
   const localStorageStates = useLocalStorageContext()
+  const globalDialogStates = useGlobalDialogContext()
 
   let theme = createTheme({
     ...PrimaryTheme,
@@ -36,7 +39,13 @@ function App() {
             <AccountContext.Provider value={{ ...accountStates }}>
               {/* provides admin data globally with respect to the pages */}
               <AdminContext.Provider value={{ ...adminStates }}>
-                <Pages />
+                {/* global dialog popup box */}
+                <GlobalDialogContext.Provider value={{ ...globalDialogStates }}>
+                  <Pages />
+                  <GlobalDialogComponents
+                    onClose={ globalDialogStates.closeDialog }
+                    {...globalDialogStates.globalDialogContext} />
+                </GlobalDialogContext.Provider>
               </AdminContext.Provider>
             </AccountContext.Provider>
         </LocalStorageContext.Provider>

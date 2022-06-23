@@ -26,7 +26,9 @@ import ConfirmDialogBox from '../../common/popups/confirmDialogBox'
 
 // import AccountContext from '../../common/contexts/accountContext'
 import AdminContext from '../../common/contexts/adminContext'
+import GlobalDialogContext from '../../common/contexts/globalDialogContext'
 import utils from '../../common/utilities'
+import { FourGPlusMobiledataOutlined } from '@mui/icons-material'
 
 const AppEndpoints = (props) => {
     const [states, setStates] = useState({
@@ -85,6 +87,7 @@ const AppEndpoints = (props) => {
         selectedRows: []
     })
     const adminCtx = useContext(AdminContext)
+    const globalDialogCtx = useContext(GlobalDialogContext)
 
     // useEffect(() => {
     //     const fetchData = () => {
@@ -176,6 +179,11 @@ const AppEndpoints = (props) => {
                                         // startIcon={ <DeleteIcon /> }
                                         onClick={() => {
                                             console.log('Delete selected: ', states.selectedRows)
+                                            globalDialogCtx.showDialog({
+                                                title: 'Delete',
+                                                type: 'confirm',
+                                                message: 'This will remove all the selected items in the list'
+                                            })
                                         }}><DeleteIcon /></Button>
                                 </Tooltip>
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
@@ -192,6 +200,8 @@ const AppEndpoints = (props) => {
                     <ConfirmDialogBox
                         title={ states.itemDialogMode === 'add'? 'Add Endpoint': 'Edit Endpoint' }
                         open={ states.itemDialog }
+                        fullWidth={ true }
+                        maxWidth={ 'md' }
 
                         strictClose={ true }         // will enable/disable close event from the dialog background
                         proceedConfirmation={ true } // a confirm dialog before proceeding
@@ -205,6 +215,19 @@ const AppEndpoints = (props) => {
                             setStates({...states, ...{ itemDialog: false }})
                         }}>
                         <Typography>add/ edit</Typography>
+                        <Button
+                            color='primary'
+                            variant='outlined'
+                            style={{ marginRight: 5 }}
+                            // startIcon={ <DeleteIcon /> }
+                            onClick={() => {
+                                console.log('Delete selected: ', states.selectedRows)
+                                globalDialogCtx.showDialog({
+                                    title: 'Delete',
+                                    type: 'confirm',
+                                    message: 'This will remove all the selected items in the list'
+                                })
+                            }}><DeleteIcon /></Button>
                     </ConfirmDialogBox>
                     <FullScreenDialogBox
                         title={ 'Import Endpoints from Excel' }
