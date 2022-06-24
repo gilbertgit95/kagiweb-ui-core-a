@@ -153,7 +153,7 @@ const InteractiveTable = (props) => {
                                                         selectedRows = new Set(states.rows.map(item => item.id))
                                                     }
 
-                                                    emitSelected(selectedRows)
+                                                    emitSelected(Array.from(selectedRows))
                                                     setStates({...states, ...{selectedRows: new Set(selectedRows)}})
                                                 }}
                                                 checked={Array.from(states.selectedRows).length === states.rows.length} />

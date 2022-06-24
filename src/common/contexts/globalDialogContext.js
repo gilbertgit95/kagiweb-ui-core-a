@@ -1,5 +1,11 @@
-import { useState, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import NormalDialogBox from '../popups/normalDialogBox'
+
+const LOCAL_STORAGE = {
+    checkerInterval: 1000,
+    checkerIntervalID: null,
+    dialogResult: null
+}
 
 const DEFAULT_DATA = {
     title: '',
@@ -16,7 +22,7 @@ const DEFAULT_DATA = {
 const GlobalDialogContext = createContext({
     globalDialogContext: DEFAULT_DATA,
     setGlobalDialogContext(data) { return },
-    showDialog(data) { return },
+    async showDialog(data) { return },
     closeDialog(data) { return }
 })
 export default GlobalDialogContext
@@ -24,7 +30,7 @@ export default GlobalDialogContext
 export const useGlobalDialogContext = () => {
     const [globalDialogContext, setGlobalDialogContext] = useState(DEFAULT_DATA)
 
-    const showDialog = ({title, message, Container, type}) => {
+    const showDialog =({title, message, Container, type}) => {
         let newData = {open: true}
 
         if (title) newData['title'] = title
@@ -33,11 +39,39 @@ export const useGlobalDialogContext = () => {
         if (type) newData['type'] = type
 
         setGlobalDialogContext({...globalDialogContext, ...newData})
+        if (LOCAL_STORAGE.checkerIntervalID) {
+            clearInterval(LOCAL_STORAGE.checkerIntervalID)
+            LOCAL_STORAGE.checkerIntervalID = null
+        }
+
+        LOCAL_STORAGE.dialogResult = null
+
+        return new Promise((resolve, reject) => {
+            LOCAL_STORAGE.checkerIntervalID =  setInterval(() => {
+                // console.log(LOCAL_STORAGE.dialogResult)
+                if (LOCAL_STORAGE.dialogResult && LOCAL_STORAGE.checkerIntervalID) {
+                    clearInterval(LOCAL_STORAGE.checkerIntervalID)
+                    LOCAL_STORAGE.checkerIntervalID = null
+                    return resolve(LOCAL_STORAGE.dialogResult)
+                }
+            }, LOCAL_STORAGE.checkerInterval)
+        })
     }
 
     const closeDialog = () => {
+        LOCAL_STORAGE.dialogResult = { status: 'closed' }
         setGlobalDialogContext({...globalDialogContext, ...{open: false}})
     }
+
+    useEffect(() => {
+        // clean up time interval before this component unmount
+        return () => {
+            if (LOCAL_STORAGE.checkerIntervalID) {
+                clearInterval(LOCAL_STORAGE.checkerIntervalID)
+                LOCAL_STORAGE.checkerIntervalID = null
+            }
+        }
+    }, [])
 
     return {globalDialogContext, setGlobalDialogContext, showDialog, closeDialog}
 }

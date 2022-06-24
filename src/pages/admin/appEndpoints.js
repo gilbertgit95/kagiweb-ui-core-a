@@ -22,7 +22,7 @@ import InteractiveTable from '../../common/tables/interactiveTable'
 import ImportData from '../../common/inputs/importData'
 import FullScreenDialogBox from '../../common/popups/fullScreenDialogBox'
 import NormalDialogBox from '../../common/popups/normalDialogBox'
-import ConfirmDialogBox from '../../common/popups/confirmDialogBox'
+// import ConfirmDialogBox from '../../common/popups/confirmDialogBox'
 
 // import AccountContext from '../../common/contexts/accountContext'
 import AdminContext from '../../common/contexts/adminContext'
@@ -177,13 +177,19 @@ const AppEndpoints = (props) => {
                                         variant='outlined'
                                         style={{ marginRight: 5 }}
                                         // startIcon={ <DeleteIcon /> }
-                                        onClick={() => {
-                                            console.log('Delete selected: ', states.selectedRows)
-                                            globalDialogCtx.showDialog({
+                                        onClick={async () => {
+                                            // console.log('Delete selected: ', states.selectedRows)
+                                            let msg = states.selectedRows.length?
+                                                `${ states.selectedRows.length } will be deleted from the list`:
+                                                `Please select items to delete.`
+
+                                            let result = await globalDialogCtx.showDialog({
                                                 title: 'Delete',
                                                 type: 'confirm',
-                                                message: 'This will remove all the selected items in the list'
+                                                message: msg
                                             })
+
+                                            console.log('delete result: ', result)
                                         }}><DeleteIcon /></Button>
                                 </Tooltip>
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
@@ -197,7 +203,7 @@ const AppEndpoints = (props) => {
                                 </Tooltip>
                             </>
                         } />
-                    <ConfirmDialogBox
+                    <NormalDialogBox
                         title={ states.itemDialogMode === 'add'? 'Add Endpoint': 'Edit Endpoint' }
                         open={ states.itemDialog }
                         fullWidth={ true }
@@ -220,15 +226,16 @@ const AppEndpoints = (props) => {
                             variant='outlined'
                             style={{ marginRight: 5 }}
                             // startIcon={ <DeleteIcon /> }
-                            onClick={() => {
+                            onClick={async () => {
                                 console.log('Delete selected: ', states.selectedRows)
-                                globalDialogCtx.showDialog({
+                                let result = await globalDialogCtx.showDialog({
                                     title: 'Delete',
                                     type: 'confirm',
                                     message: 'This will remove all the selected items in the list'
                                 })
+                                console.log('globalDialogCtx result: ', result)
                             }}><DeleteIcon /></Button>
-                    </ConfirmDialogBox>
+                    </NormalDialogBox>
                     <FullScreenDialogBox
                         title={ 'Import Endpoints from Excel' }
                         open={ states.bulkImportDialog }
