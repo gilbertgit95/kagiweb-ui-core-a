@@ -1,4 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
+
+import Button from '@mui/material/Button'
+
 import NormalDialogBox from '../popups/normalDialogBox'
 
 const LOCAL_STORAGE = {
@@ -10,6 +13,7 @@ const LOCAL_STORAGE = {
 const DEFAULT_DATA = {
     title: '',
     message: '',
+    color: 'primary',
     Container: (props) => (
         <>
             { props.children }
@@ -23,20 +27,22 @@ const GlobalDialogContext = createContext({
     globalDialogContext: DEFAULT_DATA,
     setGlobalDialogContext(data) { return },
     async showDialog(data) { return },
-    closeDialog(data) { return }
+    action(data) { return }
 })
 export default GlobalDialogContext
 
 export const useGlobalDialogContext = () => {
     const [globalDialogContext, setGlobalDialogContext] = useState(DEFAULT_DATA)
 
-    const showDialog =({title, message, Container, type}) => {
+    const showDialog =({title, message, Container, type, color}) => {
         let newData = {open: true}
 
         if (title) newData['title'] = title
         if (message) newData['message'] = message
         if (Container) newData['Container'] = Container
         if (type) newData['type'] = type
+
+        newData['color'] = color? color: 'primary'
 
         setGlobalDialogContext({...globalDialogContext, ...newData})
         if (LOCAL_STORAGE.checkerIntervalID) {
@@ -58,8 +64,8 @@ export const useGlobalDialogContext = () => {
         })
     }
 
-    const closeDialog = () => {
-        LOCAL_STORAGE.dialogResult = { status: 'closed' }
+    const action = (data) => {
+        LOCAL_STORAGE.dialogResult = data
         setGlobalDialogContext({...globalDialogContext, ...{open: false}})
     }
 
@@ -73,7 +79,7 @@ export const useGlobalDialogContext = () => {
         }
     }, [])
 
-    return {globalDialogContext, setGlobalDialogContext, showDialog, closeDialog}
+    return {globalDialogContext, setGlobalDialogContext, showDialog, action}
 }
 
 export const GlobalDialogComponents = (props) => {
@@ -88,20 +94,34 @@ export const GlobalDialogComponents = (props) => {
         <>
             <NormalDialogBox
                 title={ props.title? props.title: '' }
+                color={ props.color? props.color: 'primary' }
                 open={ props.open && type === 'alert'? props.open: false }
                 fullWidth={ true } strictClose={ true }
-                onClose={props.onClose? props.onClose: () => {}}>
+                onClose={props.onAction? () => {
+                    props.onAction({status: 'close'})
+                }: () => {}}>
                 <Container>
-                    Alert! { msg }
+                    { msg }
                 </Container>
             </NormalDialogBox>
             <NormalDialogBox
                 title={ props.title? props.title: '' }
+                color={ props.color? props.color: 'primary' }
                 open={ props.open && type === 'confirm'? props.open: false }
                 fullWidth={ true } strictClose={ true }
-                onClose={props.onClose? props.onClose: () => {}}>
+                onClose={props.onAction? () => {
+                    props.onAction({status: 'close'})
+                }: () => {}}
+                actions={(
+                    <Button
+                        variant='contained'
+                        color={ props.color? props.color: 'primary' }
+                        onClick={() => {
+                            props.onAction({status: 'proceed'})
+                        }}>Proceed</Button>
+                )}>
                 <Container>
-                    Confirm! { msg }
+                    { msg }
                 </Container>
             </NormalDialogBox>
         </>

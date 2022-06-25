@@ -145,6 +145,8 @@ const InteractiveTable = (props) => {
                                     props.hasCheckBox? (
                                         <TableCell width={ 10 }>
                                             <Checkbox
+                                                size='small'
+                                                style={{ padding: 0 }}
                                                 onChange={(e) => {
                                                     let selectAll = e.target.checked
                                                     let selectedRows = []
@@ -192,6 +194,8 @@ const InteractiveTable = (props) => {
                                             props.hasCheckBox? (
                                                 <TableCell width={ 10 }>
                                                     <Checkbox
+                                                        size='small'
+                                                        style={{ padding: 0 }}
                                                         onChange={(e) => {
                                                             let selectRow = e.target.checked
                                                             let selectedRows = states.selectedRows

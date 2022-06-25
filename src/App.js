@@ -43,7 +43,7 @@ function App() {
                 <GlobalDialogContext.Provider value={{ ...globalDialogStates }}>
                   <Pages />
                   <GlobalDialogComponents
-                    onClose={ globalDialogStates.closeDialog }
+                    onAction={ globalDialogStates.action }
                     {...globalDialogStates.globalDialogContext} />
                 </GlobalDialogContext.Provider>
               </AdminContext.Provider>

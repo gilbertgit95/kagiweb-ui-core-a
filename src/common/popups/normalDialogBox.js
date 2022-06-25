@@ -20,7 +20,7 @@ const NormalDialogBox = (props) => {
             onClose={(e) => {
                 if (!props.strictClose) handleClose()
             }}>
-            <DialogTitle>{ props.title? props.title: '' }</DialogTitle>
+            <DialogTitle color={ props.color? props.color: 'primary' }>{ props.title? props.title: '' }</DialogTitle>
             <DialogContent>
                 <Box
                     noValidate
@@ -36,6 +36,9 @@ const NormalDialogBox = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={ handleClose }>Close</Button>
+                {
+                    props.actions? props.actions: null
+                }
             </DialogActions>
       </Dialog>
     )

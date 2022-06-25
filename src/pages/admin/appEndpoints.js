@@ -179,17 +179,30 @@ const AppEndpoints = (props) => {
                                         // startIcon={ <DeleteIcon /> }
                                         onClick={async () => {
                                             // console.log('Delete selected: ', states.selectedRows)
-                                            let msg = states.selectedRows.length?
-                                                `${ states.selectedRows.length } will be deleted from the list`:
-                                                `Please select items to delete.`
+                                            if (states.selectedRows.length > 0) {
+                                                let msg = states.selectedRows.length > 1? `${ states.selectedRows.length } items `: `1 item `
 
-                                            let result = await globalDialogCtx.showDialog({
-                                                title: 'Delete',
-                                                type: 'confirm',
-                                                message: msg
-                                            })
 
-                                            console.log('delete result: ', result)
+                                                msg += ' will be deleted from the list. Do you want to proceed?'
+                                                let result = await globalDialogCtx.showDialog({
+                                                    title: 'Delete',
+                                                    type: 'confirm',
+                                                    color: 'secondary',
+                                                    message: msg
+                                                })
+
+                                                console.log('confirm status: ', result)
+                                            } else {
+                                                let msg = 'Please select items to delete.'
+
+                                                let result = await globalDialogCtx.showDialog({
+                                                    title: 'Alert',
+                                                    type: 'alert',
+                                                    message: msg
+                                                })
+
+                                                console.log('alert status: ', result)
+                                            }
                                         }}><DeleteIcon /></Button>
                                 </Tooltip>
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
