@@ -13,9 +13,11 @@ import PanToolIcon from '@mui/icons-material/PanTool'
 import CreateIcon from '@mui/icons-material/Create'
 import TableRowsIcon from '@mui/icons-material/TableRows'
 
+import excelHandler from '../utilities/excelHandler'
+
 const ExcelImport = (props) => {
     const [states, setStates] = useState({
-        importMethod: 'uploadCSV', // uploadCSV || copyPaste || dragAndDrop || createEmptyCells
+        importMethod: 'uploadExcel', // uploadExcel || copyPaste || createEmptyCells
         importedData: []
     })
     const uploadFile = useRef()
@@ -33,35 +35,21 @@ const ExcelImport = (props) => {
             <Grid item xs={12}>
                 <Typography color='primary' variant='h6'>Import data</Typography>
             </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
+            <Grid item xs={12} sm={4}>
                 <Button
                     style={{ padding: 20 }}
                     fullWidth
                     color='primary'
-                    variant={ states.importMethod === 'uploadCSV'? 'contained': 'outlined' }
+                    variant={ states.importMethod === 'uploadExcel'? 'contained': 'outlined' }
                     startIcon={<UploadFileIcon />}
                     onClick={() => {
                         console.log('upload csv')
-                        setStates({ ...states, ...{ importMethod: 'uploadCSV' } })
+                        setStates({ ...states, ...{ importMethod: 'uploadExcel' } })
                     }}>
-                    Upload CSV
+                    Upload Excel
                 </Button>
             </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
-                <Button
-                    style={{ padding: 20 }}
-                    fullWidth
-                    color='primary'
-                    variant={ states.importMethod === 'dragAndDrop'? 'contained': 'outlined' }
-                    startIcon={<PanToolIcon />}
-                    onClick={() => {
-                        console.log('drag and drop excel file')
-                        setStates({ ...states, ...{ importMethod: 'dragAndDrop' } })
-                    }}>
-                    Drag and Drop CSV
-                </Button>
-            </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
+            <Grid item xs={12} sm={4}>
                 <Button
                     style={{ padding: 20 }}
                     fullWidth
@@ -75,7 +63,7 @@ const ExcelImport = (props) => {
                     Paste Excel Data
                 </Button>
             </Grid>
-            <Grid item xs={12} sm={6} lg={3}>
+            <Grid item xs={12} sm={4}>
                 <Button
                     style={{ padding: 20 }}
                     fullWidth
@@ -93,11 +81,14 @@ const ExcelImport = (props) => {
             {/* import method content */}
             <Grid item xs={12}>
                 {
-                    states.importMethod === 'uploadCSV'? (
+                    states.importMethod === 'uploadExcel'? (
                         <Box
                             sx={styles.methodInputContainer}>
                             <Typography variant='body1'>
-                                Upload a csv file from your file system.
+                                Upload excel files such as .csv, .xls and .xlsx from your file system.
+                            </Typography>
+                            <Typography variant='body1'>
+                                or drag and drop excel files here.
                             </Typography>
                             <Button
                                 style={{ marginRight: 5, marginTop: 10 }}
@@ -110,7 +101,8 @@ const ExcelImport = (props) => {
                                 Download Template
                             </Button>
                             <input
-                                accept=".csv"
+                                multiple={ true }
+                                accept=".csv, .xls, .xlsx"
                                 ref={uploadFile}
                                 type="file"
                                 hidden />
@@ -124,27 +116,7 @@ const ExcelImport = (props) => {
                                         uploadFile.current.click()
                                     }
                                 }}>
-                                Upload CSV
-                            </Button>
-                        </Box>
-                    ): null
-                }
-                {
-                    states.importMethod === 'dragAndDrop'? (
-                        <Box
-                            sx={styles.methodInputContainer}>
-                            <Typography variant='body1'>
-                                Drag a csv file then drop it here.
-                            </Typography>
-                            <Button
-                                style={{ marginRight: 5, marginTop: 10 }}
-                                color='primary'
-                                variant='outlined'
-                                startIcon={<DownloadIcon />}
-                                onClick={() => {
-                                    console.log('download data template')
-                                }}>
-                                Download Template
+                                Upload Excel
                             </Button>
                         </Box>
                     ): null

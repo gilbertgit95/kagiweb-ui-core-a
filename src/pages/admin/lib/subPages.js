@@ -38,23 +38,23 @@ const Pages = [
             type: 'link',
             value: `/${ config.rootRoute }/admin/appUsers`
         }
-    ],
-    [
-        {
-            component: <MailIcon />,
-            label: 'Notes',
-            type: 'action',
-            value: 'notes'
-        }
-    ],
-    [
-        {
-            // component: <MailIcon />,
-            label: 'Notes II',
-            type: 'action',
-            value: 'notes II'
-        }
     ]
+    // [
+    //     {
+    //         component: <MailIcon />,
+    //         label: 'Notes',
+    //         type: 'action',
+    //         value: 'notes'
+    //     }
+    // ],
+    // [
+    //     {
+    //         // component: <MailIcon />,
+    //         label: 'Notes II',
+    //         type: 'action',
+    //         value: 'notes II'
+    //     }
+    // ]
 ]
 
 export default Pages
