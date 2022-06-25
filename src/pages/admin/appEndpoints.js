@@ -1,14 +1,14 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import subpages from './lib/subPages'
 
 import SubPageslayout from '../../common/layouts/subPagesLayout'
 
 // import Link from '@mui/material/Link'
 import Container from '@mui/material/Container'
-// import Box from '@mui/material/Box'
+import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-// import TextField from '@mui/material/TextField'
+import TextField from '@mui/material/TextField'
 // import LoginIcon from '@mui/icons-material/Login'
 import DeleteIcon from '@mui/icons-material/Delete'
 import InfoIcon from '@mui/icons-material/Info'
@@ -28,9 +28,13 @@ import NormalDialogBox from '../../common/popups/normalDialogBox'
 import AdminContext from '../../common/contexts/adminContext'
 import GlobalDialogContext from '../../common/contexts/globalDialogContext'
 import utils from '../../common/utilities'
-import { FourGPlusMobiledataOutlined } from '@mui/icons-material'
 
 const AppEndpoints = (props) => {
+    const endpointRef = useRef()
+    const nameRef = useRef()
+    const typeRef = useRef()
+    const categoryRef = useRef()
+    const subcategoryRef = useRef()
     const [states, setStates] = useState({
         isLoading: true,
         itemDialogMode: 'add', // add || edit
@@ -217,37 +221,73 @@ const AppEndpoints = (props) => {
                             </>
                         } />
                     <NormalDialogBox
-                        title={ states.itemDialogMode === 'add'? 'Add Endpoint': 'Edit Endpoint' }
+                        title={ states.itemDialogMode === 'add'? 'Create Endpoint': 'Update Endpoint' }
                         open={ states.itemDialog }
                         fullWidth={ true }
-                        maxWidth={ 'md' }
-
-                        strictClose={ true }         // will enable/disable close event from the dialog background
-                        proceedConfirmation={ true } // a confirm dialog before proceeding
-                        proceedLabel={ 'Proceed' }   // button proceed label
-                        onProceed={async () => {     // method to run when proceeding
-                            console.log('will proceed!')
-                            await utils.waitFor(2)
-                            return true
-                        }}
+                        maxWidth={ 'sm' }
+                        strictClose={ true }
                         onClose={() => {
                             setStates({...states, ...{ itemDialog: false }})
-                        }}>
-                        <Typography>add/ edit</Typography>
-                        <Button
-                            color='primary'
-                            variant='outlined'
-                            style={{ marginRight: 5 }}
-                            // startIcon={ <DeleteIcon /> }
-                            onClick={async () => {
-                                console.log('Delete selected: ', states.selectedRows)
-                                let result = await globalDialogCtx.showDialog({
-                                    title: 'Delete',
-                                    type: 'confirm',
-                                    message: 'This will remove all the selected items in the list'
-                                })
-                                console.log('globalDialogCtx result: ', result)
-                            }}><DeleteIcon /></Button>
+                        }}
+                        actions={
+                            <Button
+                                color='primary'
+                                variant='contained'
+                                // style={{ marginRight: 5 }}
+                                onClick={async () => {
+                                    let isAdd = states.itemDialogMode === 'add'
+                                    let msg = isAdd? 'This will create new Endpoint to the list.': 'This will update changes to an Endpoint.'
+                                    msg += ' Do you want to proceed?'
+
+                                    let result = await globalDialogCtx.showDialog({
+                                        title: isAdd? 'Create Endpoint': 'Update Endpoint',
+                                        type: 'confirm',
+                                        message: msg
+                                    })
+
+                                    if (result.status !== 'proceed') return
+                                    
+                                    let dialogInputValues = {
+                                        endpoint:    endpointRef.current.value,
+                                        name:        nameRef.current.value,
+                                        type:        typeRef.current.value,
+                                        category:    categoryRef.current.value,
+                                        subcategory: subcategoryRef.current.value
+                                    }
+
+                                    console.log(dialogInputValues)
+
+                                }}>{ states.itemDialogMode === 'add'? 'Create': 'Update' }</Button>
+                        }>
+                        <Box
+                            style={{
+                                margin: 0,
+                                padding: 0,
+                                paddingRight: 20,
+                                paddingLeft: 20,
+                                width: '100%'
+                            }}>
+                            <TextField
+                                inputRef={ endpointRef }
+                                defaultValue={states.itemDialogData? states.itemDialogData.endpoint: ''}
+                                label='Endpoint' style={{ marginTop: 10 }} fullWidth size='small'/>
+                            <TextField
+                                inputRef={ nameRef }
+                                defaultValue={states.itemDialogData? states.itemDialogData.name: ''}
+                                label='Name' style={{ marginTop: 10 }} fullWidth size='small'/>
+                            <TextField
+                                inputRef={ typeRef }
+                                defaultValue={states.itemDialogData? states.itemDialogData.type: ''}
+                                label='Type' style={{ marginTop: 10 }} fullWidth size='small'/>
+                            <TextField
+                                inputRef={ categoryRef }
+                                defaultValue={states.itemDialogData? states.itemDialogData.category: ''}
+                                label='Category' style={{ marginTop: 10 }} fullWidth size='small'/>
+                            <TextField
+                                inputRef={ subcategoryRef }
+                                defaultValue={states.itemDialogData? states.itemDialogData.subcategory: ''}
+                                label='Subcategory' style={{ marginTop: 10 }} fullWidth size='small'/>
+                        </Box>
                     </NormalDialogBox>
                     <FullScreenDialogBox
                         title={ 'Import Endpoints from Excel' }
