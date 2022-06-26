@@ -9,8 +9,9 @@ import Typography from '@mui/material/Typography'
 import DownloadIcon from '@mui/icons-material/Download'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo'
-import WidgetsIcon from '@mui/icons-material/Widgets';
-import PanToolIcon from '@mui/icons-material/PanTool'
+import SwipeRightAltIcon from '@mui/icons-material/SwipeRightAlt'
+// import WidgetsIcon from '@mui/icons-material/Widgets';
+// import PanToolIcon from '@mui/icons-material/PanTool'
 import CreateIcon from '@mui/icons-material/Create'
 import TableRowsIcon from '@mui/icons-material/TableRows'
 
@@ -19,7 +20,8 @@ import excelHandler from '../utilities/excelHandler'
 const ExcelImport = (props) => {
     const [states, setStates] = useState({
         importMethod: 'importExcel', // importExcel || copyPaste || createEmptyCells
-        importedData: []
+        importedData: [],
+        importFiles: []
     })
     const uploadFile = useRef()
 
@@ -80,71 +82,97 @@ const ExcelImport = (props) => {
             </Grid>
 
             {/* import method content */}
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{ position: 'relative' }}>
                 {
                     states.importMethod === 'importExcel'? (
-                        <Box
-                            sx={styles.methodInputContainer}>
-                            <Box style={{ width: 300, margin: 'auto' }}>
-                                <Grid container spacing={1}>
-                                    <Grid item xs={12}>
-                                        <Typography variant='body1'>
-                                            Import or drag and drop excel files here. <br />
-                                            Acceptable file types are csv, xls and xlsx.
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <Button
-                                            fullWidth
-                                            color='primary'
-                                            variant='outlined'
-                                            startIcon={<DownloadIcon />}
-                                            onClick={() => {
-                                                console.log('download data template')
-                                            }}>
-                                            Template
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <input
-                                            multiple={ true }
-                                            accept=".csv, .xls, .xlsx"
-                                            ref={uploadFile}
-                                            type="file"
-                                            hidden />
-                                        <Button
-                                            fullWidth
-                                            variant='contained'
-                                            color='primary'
-                                            startIcon={ <UploadFileIcon /> }
-                                            onClick={() => {
-                                                if (uploadFile && uploadFile.current) {
-                                                    uploadFile.current.click()
+                        <>
+                            <input
+                                style={{
+                                    opacity: 0,
+                                    position: 'absolute',
+                                    width: '100%',
+                                    height: '100%'
+                                }}
+                                onChange={e => {
+                                    // console.log('file change: ', e.target.files)
+                                    let importFiles = []
+                                    for (let file of e.target.files) {
+                                        importFiles.push(file.name)
+                                    }
+                                    console.log(importFiles)
+                                    setStates({...states, importFiles})
+                                }}
+                                multiple={ true }
+                                accept=".csv, .xls, .xlsx"
+                                ref={uploadFile}
+                                type="file" />
+                            <Box
+                                sx={styles.methodInputContainer}>
+                                <Box style={{ width: 300, margin: 'auto' }}>
+                                    <Grid container spacing={1}>
+                                        <Grid item xs={12}>
+                                            <Typography variant='body1'>
+                                                Import or drag and drop excel files here. <br />
+                                                Acceptable file types are csv, xls and xlsx.
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Button
+                                                fullWidth
+                                                color='primary'
+                                                variant='outlined'
+                                                startIcon={<DownloadIcon />}
+                                                onClick={() => {
+                                                    console.log('download data template')
+                                                }}>
+                                                Template
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Button
+                                                fullWidth
+                                                variant='contained'
+                                                color='primary'
+                                                startIcon={ <UploadFileIcon /> }
+                                                onClick={() => {
+                                                    if (uploadFile && uploadFile.current) {
+                                                        uploadFile.current.click()
+                                                    }
+                                                }}>
+                                                Import Files
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Box style={{textAlign: 'left' }}>
+                                                { states.importFiles.length?
+                                                    states.importFiles.map(item => (
+                                                        <Typography key={item} color='primary' variant='body1'>
+                                                            { '- ' + item }
+                                                        </Typography>
+                                                    )): (
+                                                        <Typography color='primary' variant='body1' style={{ textAlign: 'center' }}>
+                                                            No items were selected!
+                                                        </Typography>
+                                                    )
                                                 }
-                                            }}>
-                                            Select Files
-                                        </Button>
+                                            </Box>
+                                        </Grid>
+                                        {/* <Grid item xs={12}>
+                                            <Button
+                                                fullWidth
+                                                variant='contained'
+                                                color='primary'
+                                                startIcon={ <WidgetsIcon /> }
+                                                onClick={() => {
+                                                    
+                                                }}>
+                                                Extract Data
+                                            </Button>
+                                        </Grid> */}
                                     </Grid>
-                                    <Grid item xs={12}>
-                                        <Typography variant='body1'>
-                                            No items were selected
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Button
-                                            fullWidth
-                                            variant='contained'
-                                            color='primary'
-                                            startIcon={ <WidgetsIcon /> }
-                                            onClick={() => {
-                                                
-                                            }}>
-                                            Extract Data
-                                        </Button>
-                                    </Grid>
-                                </Grid>
+                                </Box>
                             </Box>
-                        </Box>
+                        </>
                     ): null
                 }
                 {
@@ -207,6 +235,9 @@ const styles = {
         paddingTop: '100px',
         paddingBottom: '100px',
         borderColor: 'primary.main'
+    },
+    uploadInput: {
+
     }
 }
 
