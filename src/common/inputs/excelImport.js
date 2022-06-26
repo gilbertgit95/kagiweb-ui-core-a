@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography'
 import DownloadIcon from '@mui/icons-material/Download'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo'
+import WidgetsIcon from '@mui/icons-material/Widgets';
 import PanToolIcon from '@mui/icons-material/PanTool'
 import CreateIcon from '@mui/icons-material/Create'
 import TableRowsIcon from '@mui/icons-material/TableRows'
@@ -17,7 +18,7 @@ import excelHandler from '../utilities/excelHandler'
 
 const ExcelImport = (props) => {
     const [states, setStates] = useState({
-        importMethod: 'uploadExcel', // uploadExcel || copyPaste || createEmptyCells
+        importMethod: 'importExcel', // importExcel || copyPaste || createEmptyCells
         importedData: []
     })
     const uploadFile = useRef()
@@ -40,13 +41,13 @@ const ExcelImport = (props) => {
                     style={{ padding: 20 }}
                     fullWidth
                     color='primary'
-                    variant={ states.importMethod === 'uploadExcel'? 'contained': 'outlined' }
+                    variant={ states.importMethod === 'importExcel'? 'contained': 'outlined' }
                     startIcon={<UploadFileIcon />}
                     onClick={() => {
                         console.log('upload csv')
-                        setStates({ ...states, ...{ importMethod: 'uploadExcel' } })
+                        setStates({ ...states, ...{ importMethod: 'importExcel' } })
                     }}>
-                    Upload Excel
+                    Import Excel
                 </Button>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -81,43 +82,68 @@ const ExcelImport = (props) => {
             {/* import method content */}
             <Grid item xs={12}>
                 {
-                    states.importMethod === 'uploadExcel'? (
+                    states.importMethod === 'importExcel'? (
                         <Box
                             sx={styles.methodInputContainer}>
-                            <Typography variant='body1'>
-                                Upload excel files such as .csv, .xls and .xlsx from your file system.
-                            </Typography>
-                            <Typography variant='body1'>
-                                or drag and drop excel files here.
-                            </Typography>
-                            <Button
-                                style={{ marginRight: 5, marginTop: 10 }}
-                                color='primary'
-                                variant='outlined'
-                                startIcon={<DownloadIcon />}
-                                onClick={() => {
-                                    console.log('download data template')
-                                }}>
-                                Download Template
-                            </Button>
-                            <input
-                                multiple={ true }
-                                accept=".csv, .xls, .xlsx"
-                                ref={uploadFile}
-                                type="file"
-                                hidden />
-                            <Button
-                                style={{ marginTop: 10 }}
-                                variant='contained'
-                                color='primary'
-                                startIcon={ <UploadFileIcon /> }
-                                onClick={() => {
-                                    if (uploadFile && uploadFile.current) {
-                                        uploadFile.current.click()
-                                    }
-                                }}>
-                                Upload Excel
-                            </Button>
+                            <Box style={{ width: 300, margin: 'auto' }}>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12}>
+                                        <Typography variant='body1'>
+                                            Import or drag and drop excel files here. <br />
+                                            Acceptable file types are csv, xls and xlsx.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Button
+                                            fullWidth
+                                            color='primary'
+                                            variant='outlined'
+                                            startIcon={<DownloadIcon />}
+                                            onClick={() => {
+                                                console.log('download data template')
+                                            }}>
+                                            Template
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <input
+                                            multiple={ true }
+                                            accept=".csv, .xls, .xlsx"
+                                            ref={uploadFile}
+                                            type="file"
+                                            hidden />
+                                        <Button
+                                            fullWidth
+                                            variant='contained'
+                                            color='primary'
+                                            startIcon={ <UploadFileIcon /> }
+                                            onClick={() => {
+                                                if (uploadFile && uploadFile.current) {
+                                                    uploadFile.current.click()
+                                                }
+                                            }}>
+                                            Select Files
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography variant='body1'>
+                                            No items were selected
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Button
+                                            fullWidth
+                                            variant='contained'
+                                            color='primary'
+                                            startIcon={ <WidgetsIcon /> }
+                                            onClick={() => {
+                                                
+                                            }}>
+                                            Extract Data
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Box>
                         </Box>
                     ): null
                 }
@@ -136,7 +162,7 @@ const ExcelImport = (props) => {
                                 onClick={() => {
                                     console.log('download data template')
                                 }}>
-                                Download Template
+                                Excel Template
                             </Button>
                         </Box>
                     ): null
