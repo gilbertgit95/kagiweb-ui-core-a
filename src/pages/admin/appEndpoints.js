@@ -299,8 +299,8 @@ const AppEndpoints = (props) => {
                             style={{ marginTop: 20 }}
                             maxWidth="lg">
                             <ImportData
-                                // headers={['Endpoint', 'Name', 'Type', 'Category', 'Subcategory']} />
-                                headers={['name', 'calories', 'fat', 'carb', 'protein']} />
+                                headers={['endpoint', 'name', 'type', 'category', 'subcategory']} />
+                                {/* headers={['name', 'calories', 'fat', 'carb', 'protein']} /> */}
                         </Container>
                     </FullScreenDialogBox>
                 </Container>

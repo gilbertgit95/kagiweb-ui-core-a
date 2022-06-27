@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useContext } from 'react'
 
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -16,18 +16,19 @@ import CreateIcon from '@mui/icons-material/Create'
 import TableRowsIcon from '@mui/icons-material/TableRows'
 
 import excelHandler from '../utilities/excelHandler'
+import GlobalDialogContext from '../contexts/globalDialogContext'
 
 const ExcelImport = (props) => {
+    const globalDialogCtx = useContext(GlobalDialogContext)
+
     const [states, setStates] = useState({
         importMethod: 'importExcel', // importExcel || copyPaste || createEmptyCells
-        importedData: [],
         importFiles: []
     })
     const uploadFile = useRef()
+    const emptyCellsTextField = useRef()
 
-    const onDataImported = () => {
-        let data = []
-
+    const onDataImported = (data = []) => {
         if (props.onDataImported) {
             props.onDataImported(data)
         }
@@ -205,6 +206,7 @@ const ExcelImport = (props) => {
                             </Typography>
                             <Box style={{ position: 'relative', height: 40, marginTop: 20 }}>
                                 <TextField
+                                    inputRef={emptyCellsTextField}
                                     size='small'
                                     color='primary'
                                     label='Number of rows'
@@ -215,7 +217,31 @@ const ExcelImport = (props) => {
                                     variant='contained'
                                     color='primary'
                                     style={{ height: '100%' }}
-                                    startIcon={<TableRowsIcon />}>
+                                    startIcon={<TableRowsIcon />}
+                                    onClick={async () => {
+                                        let numBerOfEmptyCells = parseInt(emptyCellsTextField.current.value)
+                                        numBerOfEmptyCells = numBerOfEmptyCells? numBerOfEmptyCells: 0
+
+                                        if (numBerOfEmptyCells) {
+                                            let data = []
+                                            for (let i = 0; i < numBerOfEmptyCells; i++) {
+                                                data.push(
+                                                    props.headers.reduce((acc, item) => {
+                                                        acc[item] = ''
+                                                        return acc
+                                                    }, {})
+                                                )
+                                            }
+                                            onDataImported(data)
+                                            // console.log('empty cells: ', numBerOfEmptyCells)
+                                        } else {
+                                            let result = await globalDialogCtx.showDialog({
+                                                title: 'Alert',
+                                                type: 'alert',
+                                                message: 'The value you entered is zero or empty. Please Enter value grater than zero.'
+                                            })
+                                        }
+                                    }}>
                                     Create
                                 </Button>
                             </Box>
