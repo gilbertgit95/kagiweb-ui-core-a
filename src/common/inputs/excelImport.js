@@ -227,15 +227,7 @@ const ExcelImport = (props) => {
                                         numBerOfEmptyCells = numBerOfEmptyCells? numBerOfEmptyCells: 0
 
                                         if (numBerOfEmptyCells) {
-                                            let data = []
-                                            for (let i = 0; i < numBerOfEmptyCells; i++) {
-                                                data.push(
-                                                    props.headers.reduce((acc, item) => {
-                                                        acc[item] = ''
-                                                        return acc
-                                                    }, {})
-                                                )
-                                            }
+                                            let data = excelHandler.generateEmptyCells(props.headers, numBerOfEmptyCells)
                                             onDataImported(data)
                                             // console.log('empty cells: ', numBerOfEmptyCells)
                                         } else {

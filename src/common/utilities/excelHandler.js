@@ -12,6 +12,21 @@ const extractXLSX = (data) => {
     return []
 }
 
+const generateEmptyCells = (headers = [], count = 0) => {
+    let data = []
+
+    for (let i = 0; i < count; i++) {
+        data.push(
+            headers.reduce((acc, item) => {
+                acc[item] = ''
+                return acc
+            }, {})
+        )
+    }
+
+    return data
+}
+
 const extractFromPastedData = (e) => {
     let result = []
 
@@ -34,5 +49,6 @@ export default {
     extractCSV,
     extractXLS,
     extractXLSX,
+    generateEmptyCells,
     extractFromPastedData
 }
