@@ -181,7 +181,8 @@ const ExcelImport = (props) => {
                         <Box
                             onPaste={(e) => {
                                 let exlData = excelHandler.extractFromPastedData(e)
-                                console.log(exlData)
+                                // console.log(exlData.tableData)
+                                onDataImported(exlData.tableData)
                             }}
                             sx={styles.methodInputContainer}>
                             <Typography variant='body1'>

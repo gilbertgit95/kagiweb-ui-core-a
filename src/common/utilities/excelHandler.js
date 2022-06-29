@@ -28,7 +28,9 @@ const generateEmptyCells = (headers = [], count = 0) => {
 }
 
 const extractFromPastedData = (e) => {
-    let result = []
+
+    let headers = []
+    let tableData = []
 
     try {
         const htmlData = e.clipboardData.getData("text/html")
@@ -37,12 +39,36 @@ const extractFromPastedData = (e) => {
             .parseFromString(htmlData, "text/html")
             .body.firstElementChild
 
-        console.log(node)
+        let tbody = node.getElementsByTagName('tbody')[0]
+        let trs = tbody.getElementsByTagName('tr')
+
+        let trIndex = 0
+        for (let tr of trs) {
+            let tds = tr.getElementsByTagName('td')
+            let rowData = {}
+            let tdIndex = 0
+            
+            for (let td of tds) {
+                let cellText = td.innerText
+                if (trIndex === 0) {
+                    headers.push(cellText)
+                } else {
+                    rowData[headers[tdIndex]] = cellText
+                }
+                tdIndex++
+            }
+            
+            if (trIndex) tableData.push(rowData)
+            trIndex++
+        }
+
+        // console.log(headers, tableData)
+
     } catch (err) {
         console.log('Error while parsing Excel data', e)
     }
 
-    return result
+    return { headers, tableData }
 }
 
 export default {
