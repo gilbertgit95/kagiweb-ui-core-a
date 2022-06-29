@@ -179,6 +179,10 @@ const ExcelImport = (props) => {
                 {
                     states.importMethod === 'copyPaste'? (
                         <Box
+                            onPaste={(e) => {
+                                let exlData = excelHandler.extractFromPastedData(e)
+                                console.log(exlData)
+                            }}
                             sx={styles.methodInputContainer}>
                             <Typography variant='body1'>
                                 Copy cells from an excel file including the data headers.
