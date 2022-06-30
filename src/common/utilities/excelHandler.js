@@ -27,6 +27,15 @@ const generateEmptyCells = (headers = [], count = 0) => {
     return data
 }
 
+const downloadTemplate = (headers, fileName = 'template') => {
+    let csv = headers.join(',') + '\n';
+    let hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = fileName + '.csv';
+    hiddenElement.click();
+}
+
 const extractFromPastedData = (e) => {
 
     let headers = []
@@ -75,6 +84,7 @@ export default {
     extractCSV,
     extractXLS,
     extractXLSX,
+    downloadTemplate,
     generateEmptyCells,
     extractFromPastedData
 }

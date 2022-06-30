@@ -47,7 +47,7 @@ const ExcelImport = (props) => {
                     variant={ states.importMethod === 'importExcel'? 'contained': 'outlined' }
                     startIcon={<UploadFileIcon />}
                     onClick={() => {
-                        console.log('upload csv')
+                        // console.log('upload csv')
                         setStates({ ...states, ...{ importMethod: 'importExcel' } })
                     }}>
                     Import Excel
@@ -61,7 +61,7 @@ const ExcelImport = (props) => {
                     variant={ states.importMethod === 'copyPaste'? 'contained': 'outlined' }
                     startIcon={<ContentPasteGoIcon />}
                     onClick={() => {
-                        console.log('paste excel data')
+                        // console.log('paste excel data')
                         setStates({ ...states, ...{ importMethod: 'copyPaste' } })
                     }}>
                     Paste Excel Data
@@ -75,7 +75,7 @@ const ExcelImport = (props) => {
                     variant={ states.importMethod === 'createEmptyCells'? 'contained': 'outlined' }
                     startIcon={<CreateIcon />}
                     onClick={() => {
-                        console.log('create empty cells')
+                        // console.log('create empty cells')
                         setStates({ ...states, ...{ importMethod: 'createEmptyCells' } })
                     }}>
                     Create Empty cells
@@ -124,7 +124,7 @@ const ExcelImport = (props) => {
                                                 variant='outlined'
                                                 startIcon={<DownloadIcon />}
                                                 onClick={() => {
-                                                    console.log('download data template')
+                                                    excelHandler.downloadTemplate(props.headers, 'data_template')
                                                 }}>
                                                 Template
                                             </Button>
@@ -194,7 +194,7 @@ const ExcelImport = (props) => {
                                 variant='outlined'
                                 startIcon={<DownloadIcon />}
                                 onClick={() => {
-                                    console.log('download data template')
+                                    excelHandler.downloadTemplate(props.headers, 'data_template')
                                 }}>
                                 Excel Template
                             </Button>
