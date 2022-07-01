@@ -4,6 +4,8 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import AddIcon from '@mui/icons-material/Add'
+import ClearIcon from '@mui/icons-material/Clear'
+// import DeleteIcon from '@mui/icons-material/Delete;
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import InfoIcon from '@mui/icons-material/Info'
@@ -34,7 +36,9 @@ const ImportTable = (props) => {
         importMethod: 'uploadCSV', // uploadCSV || copyPaste || dragAndDrop || createEmptyCells
         importBox: true,
 
-        importedData: []
+        importedData: [],
+        modifyData: [],
+        evaluateData: []
     })
 
     const steps = [
@@ -134,11 +138,54 @@ const ImportTable = (props) => {
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={ styles.container }>
-                        <Typography
-                            style={styles.caption}
-                            variant='body1'>
-                            Update data or add rows and columns using this table editor.
-                        </Typography>
+                        <BasicTable
+                            headers={ props.headers }
+                            rows={ states.modifyData }
+                            rightSideComponents={
+                                <>
+                                    <Button
+                                        style={{ marginLeft: 5 }}
+                                        color='primary'
+                                        variant='contained'
+                                        startIcon={<AddIcon />}
+                                        onClick={() => {
+                                            console.log('add row')
+                                            // setStates({...states, ...{
+                                            //     importBox: true,
+                                            //     importMode: 'add'
+                                            // }})
+                                        }}>
+                                        Add Row
+                                    </Button>
+                                    <Button
+                                        style={{ marginLeft: 5 }}
+                                        color='primary'
+                                        variant='contained'
+                                        startIcon={<ClearIcon />}
+                                        onClick={() => {
+                                            console.log('remove selected row')
+                                            // setStates({...states, ...{
+                                            //     importBox: true,
+                                            //     importMode: 'add'
+                                            // }})
+                                        }}>
+                                        Remove Selected
+                                    </Button>
+                                    <Tooltip
+                                        style={{ float: 'right' }}
+                                        placement='bottom-end'
+                                        title={
+                                            <Typography
+                                                style={{ padding: 10 }}
+                                                variant='body1'>
+                                                There are multiple options when importing data, through importing excel file,
+                                                copy paste cells, drag and drop excel file or manual data creation.
+                                            </Typography>
+                                        }>
+                                        <InfoIcon color='primary' />
+                                    </Tooltip>
+                                </>
+                            } />
                     </Grid>
                 </Grid>
             ),
@@ -195,7 +242,7 @@ const ImportTable = (props) => {
 
     return (
         <HorizontalStepsNav
-            nextBtnLabel={ 'Save and Next' }
+            nextBtnLabel={ 'Next' }
             finishBtnlabel={ 'Save and Finish' }
             disableLabelClick={ true }
             finalView={ finalView }
