@@ -94,14 +94,21 @@ const ExcelImport = (props) => {
                                     width: '100%',
                                     height: '100%'
                                 }}
-                                onChange={e => {
+                                onChange={async (e) => {
                                     // console.log('file change: ', e.target.files)
                                     let importFiles = []
                                     for (let file of e.target.files) {
                                         importFiles.push(file.name)
                                     }
-                                    console.log(importFiles)
+                                    // console.log(importFiles)
                                     setStates({...states, importFiles})
+
+                                    let excelData = await excelHandler.extractExcel(e)
+
+                                    // console.log(excelData)
+                                    if (excelData.data && excelData.data.length) {
+                                        onDataImported(excelData.data)
+                                    }
                                 }}
                                 multiple={ true }
                                 accept=".csv, .xls, .xlsx"
