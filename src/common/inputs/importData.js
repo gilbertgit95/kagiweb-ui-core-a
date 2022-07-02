@@ -190,8 +190,8 @@ const ImportTable = (props) => {
                 </Grid>
             ),
             action: async () => {
-                console.log('Modify Data')
-                await utils.waitFor(1)
+                // console.log('Modify Data')
+                setStates({...states, ...{modifyData: states.importedData}})
                 return true
             }
         },
