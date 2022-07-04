@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import DownloadIcon from '@mui/icons-material/Download'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo'
-import SwipeRightAltIcon from '@mui/icons-material/SwipeRightAlt'
+// import SwipeRightAltIcon from '@mui/icons-material/SwipeRightAlt'
 // import WidgetsIcon from '@mui/icons-material/Widgets';
 // import PanToolIcon from '@mui/icons-material/PanTool'
 import CreateIcon from '@mui/icons-material/Create'

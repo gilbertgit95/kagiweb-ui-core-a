@@ -12,6 +12,7 @@ import InfoIcon from '@mui/icons-material/Info'
 import Tooltip from '@mui/material/Tooltip'
 
 import HorizontalStepsNav from '../navs/horizontalStepsNav'
+import InteractiveTable from '../tables/interactiveTable'
 import BasicTable from '../tables/basicTable'
 import OpenCloseBox from '../blocks/openCloseBox'
 import ExcelImport from './excelImport'
@@ -129,6 +130,8 @@ const ImportTable = (props) => {
                 </Grid>
             ),
             action: () => {
+                // console.log('Modify Data: ', states.importedData)
+                setStates({...states, ...{modifyData: states.importedData}})
                 return true
             }
         },
@@ -190,8 +193,6 @@ const ImportTable = (props) => {
                 </Grid>
             ),
             action: async () => {
-                // console.log('Modify Data')
-                setStates({...states, ...{modifyData: states.importedData}})
                 return true
             }
         },

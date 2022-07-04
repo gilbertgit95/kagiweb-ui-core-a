@@ -58,7 +58,7 @@ const BasicTable = (props) => {
             rows: props.rows? props.rows: [],
             headers: props.headers? props.headers: []
         }})
-        // console.log(props.rows)
+        console.log(props.rows)
     }, [props.rows, props.headers])
 
     // filter by search
