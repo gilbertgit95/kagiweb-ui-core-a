@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
@@ -17,6 +17,7 @@ import BasicTable from '../tables/basicTable'
 import OpenCloseBox from '../blocks/openCloseBox'
 import ExcelImport from './excelImport'
 
+import GlobalDialogContext from '../contexts/globalDialogContext'
 import utils from '../utilities'
 
 // - import excel through copy paste
@@ -32,6 +33,7 @@ import utils from '../utilities'
 // * add/remove row
 
 const ImportTable = (props) => {
+    const globalDialogCtx = useContext(GlobalDialogContext)
     const [states, setStates] = useState({
         importMode: 'add', // add || change
         importMethod: 'uploadCSV', // uploadCSV || copyPaste || dragAndDrop || createEmptyCells
@@ -39,7 +41,9 @@ const ImportTable = (props) => {
 
         importedData: [],
         modifyData: [],
-        evaluateData: []
+        evaluateData: [],
+
+        modifySelected: []
     })
 
     const steps = [
@@ -131,7 +135,12 @@ const ImportTable = (props) => {
             ),
             action: () => {
                 // console.log('Modify Data: ', states.importedData)
-                setStates({...states, ...{modifyData: states.importedData}})
+                setStates({...states, ...{
+                    modifyData: states.importedData.map((item, index) => {
+                        item.id = index
+                        return item
+                    })
+                }})
                 return true
             }
         },
@@ -141,9 +150,19 @@ const ImportTable = (props) => {
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={ styles.container }>
-                        <BasicTable
-                            headers={ props.headers }
+                        <InteractiveTable
+                            hasCheckBox={ true }
+                            headers={
+                                props.headers.map(item => ({
+                                    label: item,
+                                    field: item,
+                                    type: 'string'
+                                }))
+                            }
                             rows={ states.modifyData }
+                            onSelect={(selected) => {
+                                setStates({...states, ...{ modifySelected: selected}})
+                            }}
                             rightSideComponents={
                                 <>
                                     <Button
@@ -152,25 +171,45 @@ const ImportTable = (props) => {
                                         variant='contained'
                                         startIcon={<AddIcon />}
                                         onClick={() => {
-                                            console.log('add row')
-                                            // setStates({...states, ...{
-                                            //     importBox: true,
-                                            //     importMode: 'add'
-                                            // }})
+                                            let data = {}
+                                            let length = states.modifyData.length
+                                            let lastIndex = length? states.modifyData[length - 1].id: 0
+                                            
+                                            props.headers.forEach(item => {
+                                                data[item] = ''
+                                            })
+                                            // condition for the new data id
+                                            if (length > lastIndex + 1) {
+                                                data.id = length
+                                            } else {
+                                                data.id = lastIndex + 1
+                                            }
+
+                                            let newList = states.modifyData
+                                            newList.unshift(data)
+
+                                            setStates({...states, ...{ modifyData: newList}})
                                         }}>
                                         Add Row
                                     </Button>
                                     <Button
                                         style={{ marginLeft: 5 }}
                                         color='primary'
-                                        variant='contained'
+                                        variant='outlined'
                                         startIcon={<ClearIcon />}
-                                        onClick={() => {
-                                            console.log('remove selected row')
-                                            // setStates({...states, ...{
-                                            //     importBox: true,
-                                            //     importMode: 'add'
-                                            // }})
+                                        onClick={async () => {
+                                            if (!states.modifySelected.length) {
+                            
+                                                let msg = 'Please select items to remove.'
+
+                                                let result = await globalDialogCtx.showDialog({
+                                                    title: 'Alert',
+                                                    type: 'alert',
+                                                    message: msg
+                                                })
+
+                                                console.log('alert status: ', result)
+                                            }
                                         }}>
                                         Remove Selected
                                     </Button>
@@ -181,8 +220,7 @@ const ImportTable = (props) => {
                                             <Typography
                                                 style={{ padding: 10 }}
                                                 variant='body1'>
-                                                There are multiple options when importing data, through importing excel file,
-                                                copy paste cells, drag and drop excel file or manual data creation.
+                                                Modify or fix wrong data before going to evaluation and saving.
                                             </Typography>
                                         }>
                                         <InfoIcon color='primary' />
