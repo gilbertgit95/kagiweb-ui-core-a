@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import SearchIcon from '@mui/icons-material/Search'
 import Grid from '@mui/material/Grid'
@@ -32,6 +32,7 @@ const InteractiveTable = (props) => {
         rowsPerPage: 10,
         selectedRows: new Set([])
     })
+    const tableDataPopup = useRef()
     const theme = useTheme()
 
     const onSearchText = (value) => {
@@ -53,6 +54,19 @@ const InteractiveTable = (props) => {
         setStates({...states, ...{
             searchField: event.target.value
         }})
+    }
+
+    const handleClickFromStringData = (e, col) => {
+        console.log('boboy boluk!', e, tableDataPopup.current.style)
+        tableDataPopup.current.style.left = e.pageX + 'px'
+        tableDataPopup.current.style.top = e.pageY + 'px'
+    }
+
+    const handleClickData = (e, col) => {
+        // onclick call from a string data
+        if (col.type === 'string') {
+            handleClickFromStringData(e, col)
+        }
     }
 
     const emitSelected = (selected) => {
@@ -219,7 +233,8 @@ const InteractiveTable = (props) => {
                                             states.headers.map((col, colIndex) => (
                                                 <TableCell
                                                     {...(col.width? {width: col.width}: {})}
-                                                    key={ `table data${ col.field }_${ rowIndex }${ colIndex }` }>
+                                                    key={ `table data${ col.field }_${ rowIndex }${ colIndex }` }
+                                                    onClick={(e) => handleClickData(e, col)}>
                                                     {
                                                         col.type === 'string'?
                                                             row[col.field]:
@@ -238,6 +253,10 @@ const InteractiveTable = (props) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                {/* table edit popups */}
+                <div
+                    style={{position: 'absolute', top: 0}}
+                    ref={tableDataPopup}>popup</div>
                 {/* display if table is empty */}
                 {
                     filteredRows && filteredRows.length? (

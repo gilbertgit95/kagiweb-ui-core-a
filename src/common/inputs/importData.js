@@ -220,7 +220,7 @@ const ImportTable = (props) => {
                                             <Typography
                                                 style={{ padding: 10 }}
                                                 variant='body1'>
-                                                Modify or fix wrong data before going to evaluation and saving.
+                                                Modify or fix wrong data before proceeding to evaluation and saving.
                                             </Typography>
                                         }>
                                         <InfoIcon color='primary' />
