@@ -17,7 +17,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
-import { useTheme } from '@mui/material'
+import { TextField, Paper, useTheme } from '@mui/material'
 
 import DebouncingTextField from '../inputs/debouncingTextField'
 import { Typography } from '@mui/material'
@@ -57,9 +57,15 @@ const InteractiveTable = (props) => {
     }
 
     const handleClickFromStringData = (e, col) => {
-        console.log('boboy boluk!', e, tableDataPopup.current.style)
-        tableDataPopup.current.style.left = e.pageX + 'px'
-        tableDataPopup.current.style.top = e.pageY + 'px'
+        // console.log('boboy boluk!', e.target.getBoundingClientRect(), tableDataPopup.current.style)
+        if (e && e.target && e.target.getBoundingClientRect) {
+            let boundRect = e.target.getBoundingClientRect()
+
+            tableDataPopup.current.style.left = boundRect.left + 'px'
+            tableDataPopup.current.style.top = boundRect.top + 'px'
+            tableDataPopup.current.style.width = boundRect.width + 'px'
+            tableDataPopup.current.style.height = boundRect.height + 'px'
+        }
     }
 
     const handleClickData = (e, col) => {
@@ -254,9 +260,14 @@ const InteractiveTable = (props) => {
                     </Table>
                 </TableContainer>
                 {/* table edit popups */}
-                <div
-                    style={{position: 'absolute', top: 0}}
-                    ref={tableDataPopup}>popup</div>
+                <Paper
+                    sx={{position: 'absolute', top: 0, border: '1px solid red'}}
+                    ref={tableDataPopup}>
+                    <TextField
+                        style={{ verticalAlign: 'middle' }}
+                        size='small'
+                        variant='standard' />
+                </Paper>
                 {/* display if table is empty */}
                 {
                     filteredRows && filteredRows.length? (
