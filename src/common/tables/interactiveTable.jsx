@@ -33,6 +33,7 @@ const InteractiveTable = (props) => {
         selectedRows: new Set([])
     })
     const tableDataPopup = useRef()
+    const textFieldPopup = useRef()
     const theme = useTheme()
 
     const onSearchText = (value) => {
@@ -65,12 +66,18 @@ const InteractiveTable = (props) => {
             tableDataPopup.current.style.top = boundRect.top + 'px'
             tableDataPopup.current.style.width = boundRect.width + 'px'
             tableDataPopup.current.style.height = boundRect.height + 'px'
+
+            // console.log(textFieldPopup)
+            setTimeout(() => {
+                textFieldPopup.current.focus()
+            }, 100)
         }
     }
 
     const handleClickData = (e, col) => {
         // onclick call from a string data
-        if (col.type === 'string') {
+        if (   col.type === 'string'
+            && col.isEditable) {
             handleClickFromStringData(e, col)
         }
     }
@@ -259,15 +266,24 @@ const InteractiveTable = (props) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+    
                 {/* table edit popups */}
                 <Paper
-                    sx={{position: 'absolute', top: 0, border: '1px solid red'}}
+                    sx={{position: 'absolute', top: 0}}
                     ref={tableDataPopup}>
                     <TextField
-                        style={{ verticalAlign: 'middle' }}
+                        fullWidth
+                        inputRef={textFieldPopup}
+                        style={{ margin: 'auto' }}
+                        onKeyPress={(e) => {
+                            if (e.key === "Enter") {
+                                console.log('Enter, then save changes')
+                            }
+                        }}
                         size='small'
                         variant='standard' />
                 </Paper>
+
                 {/* display if table is empty */}
                 {
                     filteredRows && filteredRows.length? (

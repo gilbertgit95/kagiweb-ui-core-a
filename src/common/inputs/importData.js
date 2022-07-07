@@ -154,6 +154,7 @@ const ImportTable = (props) => {
                             hasCheckBox={ true }
                             headers={
                                 props.headers.map(item => ({
+                                    isEditable: true,
                                     label: item,
                                     field: item,
                                     type: 'string'
