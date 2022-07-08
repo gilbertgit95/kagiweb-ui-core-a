@@ -32,6 +32,10 @@ const InteractiveTable = (props) => {
         rowsPerPage: 10,
         selectedRows: new Set([])
     })
+    const [popupStates, setPopupStates] = useState({
+        show: false,
+        dataID: null
+    })
     const tableDataPopup = useRef()
     const textFieldPopup = useRef()
     const theme = useTheme()
@@ -57,28 +61,30 @@ const InteractiveTable = (props) => {
         }})
     }
 
-    const handleClickFromStringData = (e, col) => {
+    const handleClickFromStringData = (e, row, col) => {
         // console.log('boboy boluk!', e.target.getBoundingClientRect(), tableDataPopup.current.style)
         if (e && e.target && e.target.getBoundingClientRect) {
             let boundRect = e.target.getBoundingClientRect()
 
+            setPopupStates({...popupStates, ...{ show: true }})
             tableDataPopup.current.style.left = boundRect.left + 'px'
             tableDataPopup.current.style.top = boundRect.top + 'px'
             tableDataPopup.current.style.width = boundRect.width + 'px'
             tableDataPopup.current.style.height = boundRect.height + 'px'
 
-            // console.log(textFieldPopup)
+            console.log(row, col)
+            textFieldPopup.current.value = row[col.field]
             setTimeout(() => {
                 textFieldPopup.current.focus()
             }, 100)
         }
     }
 
-    const handleClickData = (e, col) => {
+    const handleDoubleClickData = (e, row, col) => {
         // onclick call from a string data
         if (   col.type === 'string'
             && col.isEditable) {
-            handleClickFromStringData(e, col)
+            handleClickFromStringData(e, row, col)
         }
     }
 
@@ -247,7 +253,7 @@ const InteractiveTable = (props) => {
                                                 <TableCell
                                                     {...(col.width? {width: col.width}: {})}
                                                     key={ `table data${ col.field }_${ rowIndex }${ colIndex }` }
-                                                    onClick={(e) => handleClickData(e, col)}>
+                                                    onDoubleClick={(e) => handleDoubleClickData(e, row, col)}>
                                                     {
                                                         col.type === 'string'?
                                                             row[col.field]:
@@ -269,19 +275,25 @@ const InteractiveTable = (props) => {
     
                 {/* table edit popups */}
                 <Paper
-                    sx={{position: 'absolute', top: 0}}
+                    sx={{
+                        position: 'absolute', top: 0,
+                        visibility: popupStates.show? 'visible': 'hidden'
+                    }}
+                    onBlur={() => {
+                        setPopupStates({...popupStates, ...{ show: false }})
+                    }}
                     ref={tableDataPopup}>
                     <TextField
                         fullWidth
                         inputRef={textFieldPopup}
-                        style={{ margin: 'auto' }}
+                        // style={{ minHeight: '100%' }}
                         onKeyPress={(e) => {
                             if (e.key === "Enter") {
                                 console.log('Enter, then save changes')
                             }
                         }}
                         size='small'
-                        variant='standard' />
+                        variant='outlined' />
                 </Paper>
 
                 {/* display if table is empty */}
