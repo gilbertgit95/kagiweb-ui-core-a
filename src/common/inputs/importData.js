@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react'
-
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
@@ -135,8 +134,10 @@ const ImportTable = (props) => {
             ),
             action: () => {
                 // console.log('Modify Data: ', states.importedData)
+                let list = states.importedData
+
                 setStates({...states, ...{
-                    modifyData: states.importedData.map((item, index) => {
+                    modifyData: list.map((item, index) => {
                         item.id = index
                         return item
                     })
@@ -161,6 +162,16 @@ const ImportTable = (props) => {
                                 }))
                             }
                             rows={ states.modifyData }
+                            onChange={(row, col, value) => {
+                                // console.log(row, col, value)
+                                let list = states.modifyData.map(item => {
+                                    if (row.id === item.id) {
+                                        item[col.field] = value
+                                    }
+                                    return item
+                                })
+                                setStates({...states, ...{ modifyData: list}})
+                            }}
                             onSelect={(selected) => {
                                 setStates({...states, ...{ modifySelected: selected}})
                             }}

@@ -34,7 +34,8 @@ const InteractiveTable = (props) => {
     })
     const [popupStates, setPopupStates] = useState({
         show: false,
-        dataID: null
+        row: null,
+        col: null
     })
     const tableDataPopup = useRef()
     const textFieldPopup = useRef()
@@ -66,13 +67,13 @@ const InteractiveTable = (props) => {
         if (e && e.target && e.target.getBoundingClientRect) {
             let boundRect = e.target.getBoundingClientRect()
 
-            setPopupStates({...popupStates, ...{ show: true }})
+            setPopupStates({...popupStates, ...{ show: true, row, col }})
             tableDataPopup.current.style.left = boundRect.left + 'px'
             tableDataPopup.current.style.top = boundRect.top + 'px'
             tableDataPopup.current.style.width = boundRect.width + 'px'
             tableDataPopup.current.style.height = boundRect.height + 'px'
 
-            console.log(row, col)
+            // console.log(row, col)
             textFieldPopup.current.value = row[col.field]
             setTimeout(() => {
                 textFieldPopup.current.focus()
@@ -92,6 +93,18 @@ const InteractiveTable = (props) => {
         if (props.onSelect) {
             props.onSelect(selected)
         }
+    }
+
+    const emitPopupChanges = () => {
+        let row = popupStates.row
+        let col = popupStates.col
+        let value = textFieldPopup.current.value
+
+        if (props.onChange) {
+            props.onChange(row, col, value)
+        }
+
+        setPopupStates({...popupStates, ...{ show: false }})
     }
 
     useEffect(() => {
@@ -276,6 +289,8 @@ const InteractiveTable = (props) => {
                 {/* table edit popups */}
                 <Paper
                     sx={{
+                        padding: '5px',
+                        background: 'transparent',
                         position: 'absolute', top: 0,
                         visibility: popupStates.show? 'visible': 'hidden'
                     }}
@@ -286,12 +301,12 @@ const InteractiveTable = (props) => {
                     <TextField
                         fullWidth
                         inputRef={textFieldPopup}
-                        // style={{ minHeight: '100%' }}
                         onKeyPress={(e) => {
                             if (e.key === "Enter") {
-                                console.log('Enter, then save changes')
+                                emitPopupChanges()
                             }
                         }}
+                        sx={{ backgroundColor: theme.palette.background.default }}
                         size='small'
                         variant='outlined' />
                 </Paper>
