@@ -249,6 +249,13 @@ const ImportTable = (props) => {
                 </Grid>
             ),
             action: async () => {
+                // clone th list
+                let newList = JSON.parse(JSON.stringify(states.modifyData))
+
+                setStates({...states, ...{
+                    evaluateData: newList,
+                    modifySelected: []
+                }})
                 return true
             }
         },
@@ -258,11 +265,31 @@ const ImportTable = (props) => {
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={ styles.container }>
-                        <Typography
-                            style={styles.caption}
-                            variant='body1'>
-                            Bulk evaluate and save data.
-                        </Typography>
+                        <InteractiveTable
+                            headers={
+                                props.headers.map(item => ({
+                                    label: item,
+                                    field: item,
+                                    type: 'string'
+                                }))
+                            }
+                            rows={ states.evaluateData }
+                            rightSideComponents={
+                                <>
+                                    <Tooltip
+                                        style={{ float: 'right' }}
+                                        placement='bottom-end'
+                                        title={
+                                            <Typography
+                                                style={{ padding: 10 }}
+                                                variant='body1'>
+                                                Check data validity 
+                                            </Typography>
+                                        }>
+                                        <InfoIcon color='primary' />
+                                    </Tooltip>
+                                </>
+                            } />
                     </Grid>
                 </Grid>
             ),
@@ -300,7 +327,7 @@ const ImportTable = (props) => {
     return (
         <HorizontalStepsNav
             nextBtnLabel={ 'Next' }
-            finishBtnlabel={ 'Save and Finish' }
+            finishBtnlabel={ 'Evaluate and save' }
             disableLabelClick={ true }
             finalView={ finalView }
             views={ steps } />
