@@ -59,16 +59,6 @@ const MainLayout = (props) => {
 
     let middleMenu = [
         {
-            label: 'Administrator',
-            component: (
-                <IconButton size="large" sx={{ p: 0 }}>
-                    <AdminPanelSettingsIcon color="action" size="large" />
-                </IconButton>
-            ),
-            type: 'link',
-            value: `/${ config.rootRoute }/admin/appSettings`
-        },
-        {
             label: 'Notifications',
             component: (
                 <IconButton size="large" sx={{ p: 0 }}>
@@ -79,6 +69,16 @@ const MainLayout = (props) => {
             ),
             type: 'link',
             value: `/${ config.rootRoute }/notifications`
+        },
+        {
+            label: 'Administrator',
+            component: (
+                <IconButton size="large" sx={{ p: 0 }}>
+                    <AdminPanelSettingsIcon color="action" size="large" />
+                </IconButton>
+            ),
+            type: 'link',
+            value: `/${ config.rootRoute }/admin/appSettings`
         }
     ]
 
