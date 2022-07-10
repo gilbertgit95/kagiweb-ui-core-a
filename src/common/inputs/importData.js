@@ -133,14 +133,15 @@ const ImportTable = (props) => {
                 </Grid>
             ),
             action: () => {
-                // console.log('Modify Data: ', states.importedData)
-                let list = states.importedData
+                // clone th list
+                let newList = JSON.parse(JSON.stringify(states.importedData))
 
                 setStates({...states, ...{
-                    modifyData: list.map((item, index) => {
+                    modifyData: newList.map((item, index) => {
                         item.id = index
                         return item
-                    })
+                    }),
+                    modifySelected: []
                 }})
                 return true
             }
@@ -164,13 +165,13 @@ const ImportTable = (props) => {
                             rows={ states.modifyData }
                             onChange={(row, col, value) => {
                                 // console.log(row, col, value)
-                                let list = states.modifyData.map(item => {
+                                let newList = states.modifyData.map(item => {
                                     if (row.id === item.id) {
                                         item[col.field] = value
                                     }
                                     return item
                                 })
-                                setStates({...states, ...{ modifyData: list}})
+                                setStates({...states, ...{ modifyData: newList}})
                             }}
                             onSelect={(selected) => {
                                 setStates({...states, ...{ modifySelected: selected}})
@@ -220,7 +221,12 @@ const ImportTable = (props) => {
                                                     message: msg
                                                 })
 
-                                                console.log('alert status: ', result)
+                                            } else {
+                                                let tobeDeletedSet = new Set(states.modifySelected)
+                                                let newList = states.modifyData.filter(item => {
+                                                    return !tobeDeletedSet.has(item.id)
+                                                })
+                                                setStates({...states, ...{ modifyData: newList }})
                                             }
                                         }}>
                                         Remove Selected
