@@ -3,6 +3,8 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import AddIcon from '@mui/icons-material/Add'
+import WarningIcon from '@mui/icons-material/Warning'
+import TaskAltIcon from '@mui/icons-material/TaskAlt'
 import ClearIcon from '@mui/icons-material/Clear'
 // import DeleteIcon from '@mui/icons-material/Delete;
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
@@ -267,11 +269,27 @@ const ImportTable = (props) => {
                     <Grid item xs={12} style={ styles.container }>
                         <InteractiveTable
                             headers={
-                                props.headers.map(item => ({
-                                    label: item,
-                                    field: item,
-                                    type: 'string'
-                                }))
+                                [
+                                    ...props.headers.map(item => ({
+                                        label: item,
+                                        field: item,
+                                        type: 'string'
+                                    })),
+                                    ...[
+                                        {
+                                            label: 'Evaluation',
+                                            field: 'eval',
+                                            width: 30,
+                                            render: (renderProps = {}) => {
+                                                return (
+                                                    // <WarningIcon size='small' color='secondary' />
+                                                    <TaskAltIcon size='small' color='primary' />
+                                                )
+                                            },
+                                            type: 'component'
+                                        }
+                                    ]
+                            ]
                             }
                             rows={ states.evaluateData }
                             rightSideComponents={
