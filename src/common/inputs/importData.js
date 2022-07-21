@@ -254,6 +254,14 @@ const ImportTable = (props) => {
                 // clone th list
                 let newList = JSON.parse(JSON.stringify(states.modifyData))
 
+                // evaluation
+                newList = newList.map(item => {
+                    item.eval = {
+                        error: null
+                    }
+                    return item
+                })
+
                 setStates({...states, ...{
                     evaluateData: newList,
                     modifySelected: []
@@ -280,7 +288,8 @@ const ImportTable = (props) => {
                                             label: 'Evaluation',
                                             field: 'eval',
                                             width: 30,
-                                            render: (renderProps = {}) => {
+                                            render: (renderProps = {}, cellData = {}) => {
+                                                console.log(cellData)
                                                 return (
                                                     // <WarningIcon size='small' color='secondary' />
                                                     <TaskAltIcon size='small' color='primary' />

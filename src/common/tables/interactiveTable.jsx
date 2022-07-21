@@ -274,7 +274,7 @@ const InteractiveTable = (props) => {
                                                                 onClick() {
                                                                     if (props.onInteract) props.onInteract({ row, col})
                                                                 }
-                                                            })
+                                                            },{ row, col })
                                                     }
                                                 </TableCell>
                                             ))
