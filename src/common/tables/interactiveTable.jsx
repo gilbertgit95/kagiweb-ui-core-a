@@ -290,6 +290,7 @@ const InteractiveTable = (props) => {
                 <Paper
                     sx={{
                         padding: '5px',
+                        boxShadow: 'none',
                         background: 'transparent',
                         position: 'absolute', top: 0,
                         visibility: popupStates.show? 'visible': 'hidden'

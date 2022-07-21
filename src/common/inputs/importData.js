@@ -9,6 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 // import DeleteIcon from '@mui/icons-material/Delete;
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
+import RuleIcon from '@mui/icons-material/Rule'
 import InfoIcon from '@mui/icons-material/Info'
 import Tooltip from '@mui/material/Tooltip'
 
@@ -42,7 +43,6 @@ const ImportTable = (props) => {
 
         importedData: [],
         modifyData: [],
-        evaluateData: [],
 
         modifySelected: []
     })
@@ -140,6 +140,9 @@ const ImportTable = (props) => {
 
                 setStates({...states, ...{
                     modifyData: newList.map((item, index) => {
+                        item.eval = {
+                            error: null
+                        }
                         item.id = index
                         return item
                     }),
@@ -150,19 +153,42 @@ const ImportTable = (props) => {
         },
         {
             icon: null,
-            title: 'Modify Data',
+            title: 'Modify And Evaluate',
             component: (
                 <Grid container spacing={2}>
                     <Grid item xs={12} style={ styles.container }>
                         <InteractiveTable
                             hasCheckBox={ true }
                             headers={
-                                props.headers.map(item => ({
-                                    isEditable: true,
-                                    label: item,
-                                    field: item,
-                                    type: 'string'
-                                }))
+                                [
+                                    ...props.headers.map(item => ({
+                                        isEditable: true,
+                                        label: item,
+                                        field: item,
+                                        type: 'string'
+                                    })),
+                                    ...[
+                                        {
+                                            label: 'Evaluation',
+                                            field: 'eval',
+                                            width: 30,
+                                            render: (renderProps = {}, cellData = {}) => {
+                                                // console.log(cellData)
+                                                return (
+                                                    // <WarningIcon size='small' color='secondary' />
+                                                    <TaskAltIcon
+                                                        // style={{
+                                                        //     width: 15,
+                                                        //     height: 15
+                                                        // }}
+                                                        size='small'
+                                                        color='primary' />
+                                                )
+                                            },
+                                            type: 'component'
+                                        }
+                                    ]
+                                ]
                             }
                             rows={ states.modifyData }
                             onChange={(row, col, value) => {
@@ -180,6 +206,32 @@ const ImportTable = (props) => {
                             }}
                             rightSideComponents={
                                 <>
+                                    <Button
+                                        style={{ marginLeft: 5 }}
+                                        color='primary'
+                                        variant='outlined'
+                                        startIcon={<ClearIcon />}
+                                        onClick={async () => {
+                                            if (!states.modifySelected.length) {
+                            
+                                                let msg = 'Please select items to remove.'
+
+                                                let result = await globalDialogCtx.showDialog({
+                                                    title: 'Alert',
+                                                    type: 'alert',
+                                                    message: msg
+                                                })
+
+                                            } else {
+                                                let tobeDeletedSet = new Set(states.modifySelected)
+                                                let newList = states.modifyData.filter(item => {
+                                                    return !tobeDeletedSet.has(item.id)
+                                                })
+                                                setStates({...states, ...{ modifyData: newList }})
+                                            }
+                                        }}>
+                                        Remove Selected
+                                    </Button>
                                     <Button
                                         style={{ marginLeft: 5 }}
                                         color='primary'
@@ -210,28 +262,12 @@ const ImportTable = (props) => {
                                     <Button
                                         style={{ marginLeft: 5 }}
                                         color='primary'
-                                        variant='outlined'
-                                        startIcon={<ClearIcon />}
+                                        variant='contained'
+                                        startIcon={<RuleIcon />}
                                         onClick={async () => {
-                                            if (!states.modifySelected.length) {
-                            
-                                                let msg = 'Please select items to remove.'
-
-                                                let result = await globalDialogCtx.showDialog({
-                                                    title: 'Alert',
-                                                    type: 'alert',
-                                                    message: msg
-                                                })
-
-                                            } else {
-                                                let tobeDeletedSet = new Set(states.modifySelected)
-                                                let newList = states.modifyData.filter(item => {
-                                                    return !tobeDeletedSet.has(item.id)
-                                                })
-                                                setStates({...states, ...{ modifyData: newList }})
-                                            }
+                                            console.log('evaluate data')
                                         }}>
-                                        Remove Selected
+                                        Evaluate Data
                                     </Button>
                                     <Tooltip
                                         style={{ float: 'right' }}
@@ -252,77 +288,11 @@ const ImportTable = (props) => {
             ),
             action: async () => {
                 // clone th list
-                let newList = JSON.parse(JSON.stringify(states.modifyData))
+                // let newList = JSON.parse(JSON.stringify(states.modifyData))
 
-                // evaluation
-                newList = newList.map(item => {
-                    item.eval = {
-                        error: null
-                    }
-                    return item
-                })
-
-                setStates({...states, ...{
-                    evaluateData: newList,
-                    modifySelected: []
-                }})
-                return true
-            }
-        },
-        {
-            icon: null,
-            title: 'Evaluate and Save',
-            component: (
-                <Grid container spacing={2}>
-                    <Grid item xs={12} style={ styles.container }>
-                        <InteractiveTable
-                            headers={
-                                [
-                                    ...props.headers.map(item => ({
-                                        label: item,
-                                        field: item,
-                                        type: 'string'
-                                    })),
-                                    ...[
-                                        {
-                                            label: 'Evaluation',
-                                            field: 'eval',
-                                            width: 30,
-                                            render: (renderProps = {}, cellData = {}) => {
-                                                console.log(cellData)
-                                                return (
-                                                    // <WarningIcon size='small' color='secondary' />
-                                                    <TaskAltIcon size='small' color='primary' />
-                                                )
-                                            },
-                                            type: 'component'
-                                        }
-                                    ]
-                            ]
-                            }
-                            rows={ states.evaluateData }
-                            rightSideComponents={
-                                <>
-                                    <Tooltip
-                                        style={{ float: 'right' }}
-                                        placement='bottom-end'
-                                        title={
-                                            <Typography
-                                                style={{ padding: 10 }}
-                                                variant='body1'>
-                                                Check data validity 
-                                            </Typography>
-                                        }>
-                                        <InfoIcon color='primary' />
-                                    </Tooltip>
-                                </>
-                            } />
-                    </Grid>
-                </Grid>
-            ),
-            action: async () => {
-                console.log('Evaluate and Save')
-                await utils.waitFor(1)
+                // setStates({...states, ...{
+                //     modifySelected: []
+                // }})
                 return true
             }
         }
@@ -354,7 +324,7 @@ const ImportTable = (props) => {
     return (
         <HorizontalStepsNav
             nextBtnLabel={ 'Next' }
-            finishBtnlabel={ 'Evaluate and save' }
+            finishBtnlabel={ 'Save' }
             disableLabelClick={ true }
             finalView={ finalView }
             views={ steps } />
