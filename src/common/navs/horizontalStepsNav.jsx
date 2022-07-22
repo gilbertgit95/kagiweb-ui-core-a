@@ -13,7 +13,8 @@ const HorizontalStepsNav = (props) => {
 
     const [activeStep, setActiveStep] = useState(0)
     const [loadingStates, setLoadingStates] = useState({
-        steps: []
+        steps: [],
+        final: false
     })
 
     const handleNext = async () => {
@@ -58,7 +59,8 @@ const HorizontalStepsNav = (props) => {
 
     let views = props.views? props.views: []
     let nextLabel = props.nextBtnLabel? props.nextBtnLabel: 'Next'
-    let finishLabel = props.finishBtnlabel? props.finishBtnlabel: 'Finish'
+    let finishLabel = props.finishBtnLabel? props.finishBtnLabel: 'Finish'
+    let finalLabel = props.finalBtnLabel? props.finalBtnLabel: 'Done'
 
     useEffect(() => {
         let stps = []
@@ -111,7 +113,20 @@ const HorizontalStepsNav = (props) => {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                         <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleReset}>Reset</Button>
+                        <Button onClick={handleReset}>Back to first</Button>
+                        {
+                            props.finalView && props.finalView.action? (
+                                <LoadingButton
+                                    style={{ marginLeft: 5 }}
+                                    variant='contained'
+                                    isLoading={loadingStates.final}
+                                    onClick={async () => {
+                                        setLoadingStates({ ...loadingStates, ...{ final: true }})
+                                        await props.finalView.action()
+                                        setLoadingStates({ ...loadingStates, ...{ final: false }})
+                                    }}>{ finalLabel }</LoadingButton>
+                            ): null
+                        }
                     </Box>
                 </>
             ) : (

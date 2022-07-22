@@ -299,6 +299,9 @@ const AppEndpoints = (props) => {
                             style={{ marginTop: 20 }}
                             maxWidth="lg">
                             <ImportData
+                                onClose={() => {
+                                    setStates({...states, ...{ bulkImportDialog: false }})
+                                }}
                                 headers={['endpoint', 'name', 'type', 'category', 'subcategory']} />
                                 {/* headers={['name', 'calories', 'fat', 'carb', 'protein']} /> */}
                         </Container>

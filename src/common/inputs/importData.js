@@ -134,9 +134,22 @@ const ImportTable = (props) => {
                     </Grid>
                 </Grid>
             ),
-            action: () => {
+            action: async () => {
                 // clone th list
                 let newList = JSON.parse(JSON.stringify(states.importedData))
+
+                // console.log('next from import to modify')
+
+                if (!(newList && newList.length)) {
+                    let result = await globalDialogCtx.showDialog({
+                        title: 'Alert',
+                        type: 'alert',
+                        color: 'secondary',
+                        message: 'No data to modify please add or import data before proceeding.'
+                    })
+
+                    return false
+                }
 
                 setStates({...states, ...{
                     modifyData: newList.map((item, index) => {
@@ -148,6 +161,7 @@ const ImportTable = (props) => {
                     }),
                     modifySelected: []
                 }})
+
                 return true
             }
         },
@@ -290,6 +304,8 @@ const ImportTable = (props) => {
                 // clone th list
                 // let newList = JSON.parse(JSON.stringify(states.modifyData))
 
+                // save data to database
+                await utils.waitFor(2)
                 // setStates({...states, ...{
                 //     modifySelected: []
                 // }})
@@ -311,11 +327,12 @@ const ImportTable = (props) => {
             </Grid>
         ),
         action: async () => {
-            console.log('finish button')
 
             // test for notifications
             // this will also serve as reference
-            await utils.waitFor(1)
+            // await utils.waitFor(2)
+            // console.log('finish button')
+            if (props.onClose) props.onClose()
 
             return true
         }
@@ -324,7 +341,8 @@ const ImportTable = (props) => {
     return (
         <HorizontalStepsNav
             nextBtnLabel={ 'Next' }
-            finishBtnlabel={ 'Save' }
+            finishBtnLabel={ 'Save' }
+            finalBtnLabel={ 'Close' }
             disableLabelClick={ true }
             finalView={ finalView }
             views={ steps } />
