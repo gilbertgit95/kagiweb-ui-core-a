@@ -43,6 +43,7 @@ const ImportTable = (props) => {
 
         importedData: [],
         modifyData: [],
+        savedData: [],
 
         modifySelected: []
     })
@@ -302,13 +303,13 @@ const ImportTable = (props) => {
             ),
             action: async () => {
                 // clone th list
-                // let newList = JSON.parse(JSON.stringify(states.modifyData))
+                let newList = JSON.parse(JSON.stringify(states.modifyData))
 
                 // save data to database
                 await utils.waitFor(2)
-                // setStates({...states, ...{
-                //     modifySelected: []
-                // }})
+                setStates({...states, ...{
+                    savedData: newList
+                }})
                 return true
             }
         }
@@ -317,12 +318,26 @@ const ImportTable = (props) => {
     let finalView = {
         component: (
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Typography
-                        style={styles.caption}>
-                        All steps completed. Please see the change details before
-                        saving.
-                    </Typography>
+                <Grid item xs={12} style={ styles.container }>
+                    <BasicTable
+                        headers={ props.headers }
+                        rows={ states.savedData }
+                        rightSideComponents={
+                            <>
+                                <Tooltip
+                                    style={{ float: 'right' }}
+                                    placement='bottom-end'
+                                    title={
+                                        <Typography
+                                            style={{ padding: 10 }}
+                                            variant='body1'>
+                                            The list below are successfully saved in the database.
+                                        </Typography>
+                                    }>
+                                    <InfoIcon color='primary' />
+                                </Tooltip>
+                            </>
+                        } />
                 </Grid>
             </Grid>
         ),

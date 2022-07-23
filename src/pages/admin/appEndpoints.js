@@ -86,7 +86,6 @@ const AppEndpoints = (props) => {
                 type: 'component'
             }
         ],
-        // headers: ['endpoint', 'name', 'type', 'category', 'subcategory'],
         rows: [],
         selectedRows: []
     })
@@ -105,8 +104,8 @@ const AppEndpoints = (props) => {
     // }, [])
 
     useEffect(() => {
-        setStates({...states, ...{ rows: adminCtx.adminContext.data }})
-        console.log('admin data: ', adminCtx.adminContext.data)
+        setStates({...states, ...{ rows: adminCtx.adminContext.endpoints }})
+        // console.log('admin data: ', adminCtx.adminContext.endpoints)
     }, [adminCtx.adminContext])
 
     // console.log('states rows: ', states.rows)
@@ -303,7 +302,6 @@ const AppEndpoints = (props) => {
                                     setStates({...states, ...{ bulkImportDialog: false }})
                                 }}
                                 headers={['endpoint', 'name', 'type', 'category', 'subcategory']} />
-                                {/* headers={['name', 'calories', 'fat', 'carb', 'protein']} /> */}
                         </Container>
                     </FullScreenDialogBox>
                 </Container>
