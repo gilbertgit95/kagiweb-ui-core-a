@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from 'react'
 
 import testEndpoints from './testData/testEndpoints'
 import testRoles from './testData/testRoles'
+import testUsers from './testData/testUsers'
 
 // import config from '../../config'
 // import utils from '../utilities'
@@ -19,7 +20,8 @@ export default AdminContext
 export const useAdminContext = () => {
     const [adminContext, setAdminContext] = useState({
       endpoints: testEndpoints,
-      roles: testRoles
+      roles: testRoles,
+      users: testUsers
     })
 
     return {
