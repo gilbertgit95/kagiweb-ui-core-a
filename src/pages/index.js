@@ -7,9 +7,13 @@ import {
 } from 'react-router-dom'
 
 // layouts components
+import PersonalPublicLayout from '../common/layouts/personalPublicLayout'
 import PublicPageLayout from '../common/layouts/publicPageLayout'
 import AuthLayout from '../common/layouts/authLayout'
 import MainLayout from '../common/layouts/mainLayout'
+
+// public pages
+import CurriculumVitae from './public/curriculumVitae'
 
 // auth pages
 import Login from './auth/login'
@@ -56,6 +60,12 @@ const Pages = (props) => {
             <Routes>
                 {/* initial redirect */}
                 <Route path="/" element={<Navigate replace to={`/${ config.rootRoute }/auth/login`} />} />
+
+                {/* public page */}
+                <Route path={`${ config.rootRoute }/public/`} element={<PersonalPublicLayout />}>
+                    <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/public/cv`} />} />
+                    <Route path="cv" element={<CurriculumVitae />} />
+                </Route>
 
                 {/* auth pages */}
                 <Route path={`${ config.rootRoute }/auth/`} element={<AuthLayout />}>

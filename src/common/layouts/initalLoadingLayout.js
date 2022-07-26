@@ -56,7 +56,7 @@ const InitialLoadinglayout = (props) => {
                                     style={{
                                         marginTop: 15
                                     }}>
-                                    Loading initial user data
+                                    Loading initial data
                                 </Typography>
                             </Box>
                         </Grid>
