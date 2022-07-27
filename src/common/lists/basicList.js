@@ -63,8 +63,8 @@ const BasicList = (props) => {
                                                 <ListItemIcon style={{minWidth: 30}}>
                                                     {
                                                         variant === 'ordered'? (
-                                                            <Typography variant='subtitle1'>{ itemCount }.</Typography>
-                                                        ): <TripOriginIcon />
+                                                            <Typography color='primary' variant='subtitle1'>{ itemCount }.</Typography>
+                                                        ): <TripOriginIcon color='primary' />
                                                     }
                                                 </ListItemIcon>
                                                 <ListItemText
