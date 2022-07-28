@@ -1,13 +1,11 @@
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
 
 const GenProfile = (props) => {
     return (
-        <Box style={{ marginTop: 10, marginBottom: 20 }}>
+        <Box>
             <Typography
                 style={{ fontWeight: 700, fontSize: 14 }}
-                color='primary'
                 component='div' variant='overline'>
                 { props.title? props.title: '' }
             </Typography>
@@ -22,8 +20,11 @@ const GenProfile = (props) => {
                 { props.description? props.description: '' }
             </Typography>
 
+            {/* child content */}
+            { props.children? props.children: null }
+
             {/* links */}
-            <Box style={{ marginBottom: 20 }}>
+            <Box>
                 {
                     props.links? props.links.map(link => {
                         return (

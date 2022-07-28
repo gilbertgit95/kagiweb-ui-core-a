@@ -51,7 +51,7 @@ const BasicList = (props) => {
                         <Grid
                             { ...propSize }
                             key={'listCols' + subListIndex}
-                            style={{padding: 0}}
+                            style={{...{padding: 0}, ...(props.style? props.style: {})}}
                             item>
                             <List dense={true} style={{padding: 0, margin: 'auto'}}>
                                 {

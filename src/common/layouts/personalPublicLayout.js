@@ -3,7 +3,11 @@ import { Outlet } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import MenuIcon from '@mui/icons-material/Menu'
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf'
 import Toolbar from '@mui/material/Toolbar'
+import AppBar from '@mui/material/AppBar';
+import Typography from '@mui/material/Typography'
+
 import ThemeToggle from '../themes/themeToggle'
 
 import InitialLoadinglayout from './initalLoadingLayout'
@@ -28,7 +32,7 @@ const PersonalPublicLayout = (props) => {
         // {
         //     label: 'Latest news from our team',
         //     component: (
-        //         <Button size="small" style={{ borderRadius: 5, marginRight: 15 }}>
+        //         <Button size='small' style={{ borderRadius: 5, marginRight: 15 }}>
         //             <Typography>News</Typography>
         //         </Button>
         //     ),
@@ -38,7 +42,7 @@ const PersonalPublicLayout = (props) => {
         // {
         //     label: 'Contact or Learn about our Team',
         //     component: (
-        //         <Button size="small"  style={{ borderRadius: 5, marginRight: 15 }}>
+        //         <Button size='small'  style={{ borderRadius: 5, marginRight: 15 }}>
         //             <Typography>About Us</Typography>
         //         </Button>
         //     ),
@@ -59,14 +63,14 @@ const PersonalPublicLayout = (props) => {
                 value: 'none'
             }
         ],
-        // [
-        //     {
-        //         component: <MailIcon />,
-        //         label: 'Notes',
-        //         type: 'action',
-        //         value: 'notes'
-        //     }
-        // ],
+        [
+            {
+                component: <PictureAsPdfIcon />,
+                label: 'Download PDF',
+                type: 'action',
+                value: 'notes'
+            }
+        ],
         // [
         //     {
         //         // component: <MailIcon />,
@@ -99,12 +103,25 @@ const PersonalPublicLayout = (props) => {
                     rightLogo={rightLogo}
                     rightMenu={rightMenu}
                     onAction={onNavAction} />
-                <Container maxWidth="md">
+                <Container maxWidth='md'>
                     <Box>
                         <Toolbar />
                         <Outlet />
                     </Box>
                 </Container>
+                <AppBar
+                    position='static'
+                    style={{ boxShadow: 'none', background: 'none', textAlign: 'right' }}>
+                    <Toolbar>
+                        <Typography
+                            variant='body2'
+                            component='div'
+                            color='primary'
+                            sx={{ flexGrow: 1 }}>
+                            Last update was on July 2022
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
             </InitialLoadinglayout>
         </RouterContext.Provider>
     )
