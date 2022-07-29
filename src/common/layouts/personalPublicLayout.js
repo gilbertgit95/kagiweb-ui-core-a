@@ -68,7 +68,7 @@ const PersonalPublicLayout = (props) => {
                 component: <PictureAsPdfIcon />,
                 label: 'Download PDF',
                 type: 'action',
-                value: 'notes'
+                value: 'download_pdf'
             }
         ],
         // [
@@ -119,6 +119,7 @@ const PersonalPublicLayout = (props) => {
                             color='primary'
                             sx={{ flexGrow: 1 }}>
                             Last update was on July 2022
+                            @Davao City PH
                         </Typography>
                     </Toolbar>
                 </AppBar>
