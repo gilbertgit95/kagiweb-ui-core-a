@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 
-import LoadingButton from '../buttons/loadingButton'
+import LoadingButton from '../atomicComponents/loadingButton'
 
 const VerticalLinearStepperNav = (props) => {
   const [activeStep, setActiveStep] = useState(0)

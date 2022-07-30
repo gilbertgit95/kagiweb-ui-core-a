@@ -7,7 +7,7 @@ import StepLabel from '@mui/material/StepLabel'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
-import LoadingButton from '../buttons/loadingButton'
+import LoadingButton from '../atomicComponents/loadingButton'
 
 const HorizontalStepsNav = (props) => {
 

@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
-import LoadingButton from '../../common/buttons/loadingButton'
+import LoadingButton from '../../common/atomicComponents/loadingButton'
 import utils from '../../common/utilities'
 import config from '../../config'
 

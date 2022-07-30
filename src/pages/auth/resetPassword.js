@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import RotateLeftIcon from '@mui/icons-material/RotateLeft'
 
-import LoadingButton from '../../common/buttons/loadingButton'
+import LoadingButton from '../../common/atomicComponents/loadingButton'
 import utils from '../../common/utilities'
 import config from '../../config'
 

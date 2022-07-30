@@ -9,7 +9,7 @@ import LoginIcon from '@mui/icons-material/Login'
 import AccountContext from '../../common/contexts/accountContext'
 import RouterContext from '../../common/contexts/routerContext'
 import LocalStorageContext from '../../common/contexts/localStorageContext'
-import LoadingButton from '../../common/buttons/loadingButton'
+import LoadingButton from '../../common/atomicComponents/loadingButton'
 import utils from '../../common/utilities'
 import config from '../../config'
 

@@ -1,0 +1,130 @@
+{
+    "header": {
+       "lastUpdate": "July 25, 2022",
+       "profilePic": "https://drive.google.com/uc?export=download&id=16F-YR8QbSHL6a_io95RfX1RyZUh9oyZB",
+       "fullname": "Gilbert Defante Cuerbo",
+       "workDesc": "Full Stack JavaScript Developer",
+       "links": [
+          {
+             "label": "email",
+             "value": "mailto:gilbert.cuerbo@gmail.com"
+          },
+          {
+             "label": "github",
+             "value": "https://github.com/gilbertgit95"
+          }
+       ]
+    },
+    "overview": "As a modern farmer, my goal is to be able to create technologies for different platforms. To make life easier with positive impact to the environment. To enhance communities and Environment by developing technologies that will replace methods that are harmful or destructive to humanity.",
+    "experience": [
+       {
+          "org": "Zilverband",
+          "desc": " Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.",
+          "position": "Software Developer",
+          "year": "Dec 2, 2019 - Present",
+          "links": [
+             {
+                "label": "website",
+                "value": "https://www.zilverband.com/"
+             },
+             {
+                "label": "facebook",
+                "value": "https://www.facebook.com/Zilverband-1527875537425399/"
+             }
+          ]
+       },
+       {
+          "org": "Detail Online Technology",
+          "desc": "Part of my job is to Maintain and Develop features of the main app. Scope of my responsibility range from the frontend development to Server-side, but is more fucos on the Frontend.",
+          "position": "Software Developer",
+          "year": "June 1, 2018 - Nov 29, 2019",
+          "links": [
+             {
+                "label": "website",
+                "value": "https://www.detailonline.com/"
+             },
+             {
+                "label": "facebook",
+                "value": "https://www.facebook.com/detailonline/"
+             }
+          ]
+       },
+       {
+          "org": "Samatosa",
+          "desc": " Scope of my Responsibility is on the Frontend only. Maintain and Develop features on the main application.",
+          "position": "Software Developer",
+          "year": "October 1, 2017 - May 30, 2018",
+          "links": []
+       }
+    ],
+    "personalProjs": [
+       {
+          "title": "Kagiweb Basecode",
+          "desc": "A core or base code when creating a software. Composed of many repositories. This is a really big project to cover many platforms like, web, mobile, desktop and the server. Furthermore, every platforms has flavors, this is dew to different techs used to increase availability for different software engineers.",
+          "status": "Always in Progress",
+          "year": "Started 2021",
+          "mainTechs": [],
+          "links": []
+       },
+       {
+          "title": "Treemap",
+          "desc": "Developed for a specific feature in my job as a Developer, but the architecture is designed for public usage.",
+          "status": "Done",
+          "year": "2017",
+          "mainTechs": [],
+          "links": [
+             {
+                "label": "Repo",
+                "value": "https://github.com/gilbertgit95/treemap"
+             },
+             {
+                "label": "Doc",
+                "value": "https://github.com/gilbertgit95/treemap/wiki"
+             }
+          ]
+       }
+    ],
+    "education": [
+       {
+          "org": "SDSSU - Cantilan Campus",
+          "desc": " Studied BS Computer Engineering. Although we are more on IoT(Internet of Things) stuff's, I explore more on the web technologies like the JavaScript, CSS, HTML language, basics in Server and Database.",
+          "year": "2012 - 2017",
+          "links": []
+       }
+    ],
+    "skills": [
+       {
+          "title": "Proficient",
+          "desc": "Currently I am using the following:",
+          "techs": [
+             "Javascript",
+             "React",
+             "NodeJS",
+             "ExpressJS",
+             "Sequelize",
+             "MongoDB"
+          ]
+       },
+       {
+          "title": "Familiar",
+          "desc": "For personal research and on my previous jobs I was using the following:",
+          "techs": [
+            "VueJS",
+            "Meteor",
+            "SQL Databases",
+            "Azure App Services",
+            "Python",
+            "Golang"
+          ]
+       },
+       {
+          "title": "Interests",
+          "desc": "I was always interested in small gadgets like IOT and Mobile devices, unfortunately I'm still a beginner. For platforms like this, I prefer to use the following:",
+          "techs": [
+             "C and C++",
+             "Go with Tinygo",
+             "React and React-native"
+          ]
+       }
+    ]
+ }

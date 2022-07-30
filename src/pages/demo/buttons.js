@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import subpages from './lib/subPages'
 
-import LoadingButton from '../../common/buttons/loadingButton'
+import LoadingButton from '../../common/atomicComponents/loadingButton'
 import SubPageslayout from '../../common/layouts/subPagesLayout'
 
 // import Link from '@mui/material/Link'
