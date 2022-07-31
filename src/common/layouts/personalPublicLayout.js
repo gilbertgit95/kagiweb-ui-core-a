@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
@@ -13,14 +13,19 @@ import ThemeToggle from '../themes/themeToggle'
 import InitialLoadinglayout from './initalLoadingLayout'
 import MainNav from '../navs/mainNav'
 
-import AccountContext from '../contexts/accountContext'
 import RouterContext, { useRouterContext } from '../contexts/routerContext'
-import LocalStorageContext from '../contexts/localStorageContext'
+import PublicContext from '../contexts/publicContext'
+import GlobalDialogContext from '../contexts/globalDialogContext'
 
 const PersonalPublicLayout = (props) => {
-    const AccCtx = useContext(AccountContext)
     const routerStates = useRouterContext()
-    const lsCtx = useContext(LocalStorageContext)
+    const publicCtx = useContext(PublicContext)
+    const globalDialogCtx = useContext(GlobalDialogContext)
+
+    let [states, setStates] = useState({
+        aboutMe: null,
+        isLoading: true
+    })
 
     let rightLogo = {
         label: 'Open settings',
@@ -70,24 +75,28 @@ const PersonalPublicLayout = (props) => {
                 type: 'action',
                 value: 'download_pdf'
             }
-        ],
-        // [
-        //     {
-        //         // component: <MailIcon />,
-        //         label: 'Notes II',
-        //         type: 'action',
-        //         value: 'notes II'
-        //     }
-        // ]
+        ]
     ]
 
-    const onNavAction = (e) => {
-        console.log('Action: ', e)
+    const onNavAction = async (e) => {
+        // console.log('Action: ', e)
+        if (e === 'download_pdf') {
+            await globalDialogCtx.showDialog({
+                title: 'Alert',
+                type: 'alert',
+                color: 'secondary',
+                message: 'This feature is still on development. Implementation might take a while for this feature.'
+            })
+        }
     }
 
     useEffect(() => {
-
-    }, [])
+        if (!(publicCtx && publicCtx.publicContext && publicCtx.publicContext.aboutMe)) return
+        setStates({...states, ...{
+            aboutMe: publicCtx.publicContext.aboutMe,
+            isLoading: false
+        }})
+    }, [publicCtx.publicContext])
 
     return (
         <RouterContext.Provider
@@ -118,8 +127,7 @@ const PersonalPublicLayout = (props) => {
                             component='div'
                             color='primary'
                             sx={{ flexGrow: 1 }}>
-                            Last update was on July 2022
-                            @Davao City PH
+                            { states.aboutMe? states.aboutMe.footerMessage: '' }
                         </Typography>
                     </Toolbar>
                 </AppBar>

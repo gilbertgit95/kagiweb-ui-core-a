@@ -1,4 +1,4 @@
-import Typography from '@mui/material/Typography'
+import { useState, useEffect, useRef, useContext } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 
@@ -7,25 +7,39 @@ import PriProfileBlock from '../../common/blocks/primaryProfileBlock'
 import BasicList from '../../common/lists/basicList'
 import GenBlockComponent from '../../common/blocks/genBlock'
 
+import PublicContext from '../../common/contexts/publicContext'
+
 const CurriculumVitae = (props) => {
+    const publicCtx = useContext(PublicContext)
+
+    let [states, setStates] = useState({
+        aboutMe: null,
+        isLoading: true
+    })
+
+    useEffect(() => {
+        if (!(publicCtx && publicCtx.publicContext && publicCtx.publicContext.aboutMe)) return
+        // console.log('context: ', publicCtx.publicContext)
+        setStates({...states, ...{
+            aboutMe: publicCtx.publicContext.aboutMe,
+            isLoading: false
+        }})
+    }, [publicCtx.publicContext])
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} style={ styles.sectionStyle }>
                 <PriProfileBlock
-                    profilePic='https://drive.google.com/uc?export=download&id=16F-YR8QbSHL6a_io95RfX1RyZUh9oyZB'
-                    fullName='Gilbert D. Cuerbo'
-                    position='Fullstack Javascript Developer'
-                    contacts={['gilbert.cuerbo@gmail.com', '+639273854605']} />
+                    profilePic={ states.aboutMe? states.aboutMe.header.profilePic: '' }
+                    fullName={ states.aboutMe? states.aboutMe.header.fullname: '' }
+                    position={ states.aboutMe? states.aboutMe.header.workDesc: '' }
+                    contacts={ states.aboutMe? states.aboutMe.header.links.map(item => item.value): [] } />
             </Grid>
 
             <Grid item xs={12} style={ styles.sectionStyle }>
                 <GenBlockComponent
                     title='Overview'
-                    description='As a modern farmer, my goal is to be able to create technologies
-                    for different platforms. To make life easier with positive impact
-                    to the environment. To enhance communities and Environment by
-                    developing technologies that will replace methods that are harmful or
-                    destructive to humanity.'>
+                    description={ states.aboutMe? states.aboutMe.overview: '' }>
                 </GenBlockComponent>
             </Grid>
 
@@ -33,62 +47,22 @@ const CurriculumVitae = (props) => {
                 <GenBlockComponent
                     title='Skills'>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={4}>
-                            <SecProfileBlock
-                                title='Proficient'
-                                description='In my current job and majority of my development today, I am using the following:'>
-                                <Box style={{ marginTop: 20 }}>
-                                    <BasicList
-                                        variant='unordered'
-                                        colSize={{xs: 6, sm: 12}}
-                                        list={[
-                                            'Javascript',
-                                            'React',
-                                            'NodeJS',
-                                            'ExpressJS',
-                                            'Sequelize',
-                                            'MongoDB'
-                                        ]} />
-                                </Box>
-                            </SecProfileBlock>
-                        </Grid>
-
-                        <Grid item xs={12} sm={4}>
-                            <SecProfileBlock
-                                title='Familiar'
-                                description='Some of my personal research and on my previous jobs I was using the following:'>
-                                <Box style={{ marginTop: 20 }}>
-                                    <BasicList
-                                        variant='unordered'
-                                        colSize={{xs: 6, sm: 12}}
-                                        list={[
-                                            'VueJS',
-                                            'Meteor',
-                                            'SQL Databases',
-                                            'Azure App Services',
-                                            'Python',
-                                            'Golang'
-                                        ]} />
-                                </Box>
-                            </SecProfileBlock>
-                        </Grid>
-
-                        <Grid item xs={12} sm={4}>
-                            <SecProfileBlock
-                                title='Interests'
-                                description='Unfotunately I am still a beginner in this fields:'>
-                                <Box style={{ marginTop: 20 }}>
-                                    <BasicList
-                                        variant='unordered'
-                                        colSize={{xs: 6, sm: 12}}
-                                        list={[
-                                            'C and C++',
-                                            'Go with Tinygo',
-                                            'React and React-native'
-                                        ]} />
-                                </Box>
-                            </SecProfileBlock>
-                        </Grid>
+                        { states.aboutMe? states.aboutMe.skills.map((item, index) => {
+                            return (
+                                <Grid item xs={12} sm={4} key={ index }>
+                                    <SecProfileBlock
+                                        title={ item.title }
+                                        description={ item.desc }>
+                                        <Box style={{ marginTop: 20 }}>
+                                            <BasicList
+                                                variant='unordered'
+                                                colSize={{xs: 6, sm: 12}}
+                                                list={ item.techs } />
+                                        </Box>
+                                    </SecProfileBlock>
+                                </Grid>
+                            )
+                        }): null }
                     </Grid>
                 </GenBlockComponent>
             </Grid>
@@ -97,38 +71,17 @@ const CurriculumVitae = (props) => {
                 <GenBlockComponent
                     title='Experience'>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <SecProfileBlock
-                                title='Zilverband'
-                                subtitle='(Dec 2019 - Present) Software Developer'
-                                description='Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.'
-                                links={[
-                                    {
-                                        "label": "website",
-                                        "value": "https://www.zilverband.com/"
-                                    },
-                                    {
-                                        "label": "facebook",
-                                        "value": "https://www.facebook.com/Zilverband-1527875537425399/"
-                                    }
-                                ]} />
-                        </Grid>
-
-                        <Grid item xs={12}>
-                            <SecProfileBlock
-                                title='Detail Online Technology'
-                                subtitle='(Dec 2019 - Present) Software Developer'
-                                description='Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.'
-                                />
-                        </Grid>
-                        
-                        <Grid item xs={12}>
-                            <SecProfileBlock
-                                title='Samatosa'
-                                subtitle='(Dec 2019 - Present) Software Developer'
-                                description='Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.'
-                                />
-                        </Grid>
+                        { states.aboutMe? states.aboutMe.experience.map((item, index) => {
+                            return (
+                                <Grid item xs={12} key={ index }>
+                                    <SecProfileBlock
+                                        title={ item.title }
+                                        subtitle={ `(${ item.year }) ${ item.position }` }
+                                        description={ item.desc }
+                                        links={ item.links } />
+                                </Grid>
+                            )
+                        }): null }
                     </Grid>
 
                 </GenBlockComponent>
@@ -138,57 +91,17 @@ const CurriculumVitae = (props) => {
                 <GenBlockComponent
                     title='Personal Projects'>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} md={6}>
-                            <SecProfileBlock
-                                title='Server Basecode (Type A)'
-                                subtitle='(Sep 2021 - Present) kagiweb-api-core-a'
-                                description='Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.'
-                                links={[
-                                    {
-                                        "label": "github",
-                                        "value": "https://www.zilverband.com/"
-                                    }
-                                ]} />
-                        </Grid>
-
-                        <Grid item xs={12} md={6}>
-                            <SecProfileBlock
-                                title='Web UI Basecode (Type A)'
-                                subtitle='(Sep 2021 - Present) kagiweb-ui-core-a'
-                                description='Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.'
-                                links={[
-                                    {
-                                        "label": "github",
-                                        "value": "https://www.zilverband.com/"
-                                    }
-                                ]} />
-                        </Grid>
-
-                        <Grid item xs={12} md={6}>
-                            <SecProfileBlock
-                                title='Mobile Basecode (Type A)'
-                                subtitle='(April 2022 - Present) kagiweb-mobile-core-a'
-                                description='Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.'
-                                links={[
-                                    {
-                                        "label": "github",
-                                        "value": "https://www.zilverband.com/"
-                                    }
-                                ]} />
-                        </Grid>
-
-                        <Grid item xs={12} md={6}>
-                            <SecProfileBlock
-                                title='Treemap Generator'
-                                subtitle='(April 2018 - June 2018) treemap'
-                                description='Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.'
-                                links={[
-                                    {
-                                        "label": "github",
-                                        "value": "https://www.zilverband.com/"
-                                    }
-                                ]} />
-                        </Grid>
+                        { states.aboutMe? states.aboutMe.personalProjs.map((item, index) => {
+                                return (
+                                    <Grid item xs={12} md={6} key={ index }>
+                                        <SecProfileBlock
+                                            title={ item.title }
+                                            subtitle={ `(${ item.year }) ${ item.subtitle }` }
+                                            description={ item.desc }
+                                            links={ item.links } />
+                                    </Grid>
+                                )
+                        }): null }
                     </Grid>
                 </GenBlockComponent>
             </Grid>
@@ -197,22 +110,17 @@ const CurriculumVitae = (props) => {
                 <GenBlockComponent
                     title='Education'>
                         <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <SecProfileBlock
-                                    title='SDSSU'
-                                    subtitle='(Dec 2012 - 2017) BS Computer Engineering'
-                                    description='Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.'
-                                    links={[
-                                        {
-                                            "label": "website",
-                                            "value": "https://www.zilverband.com/"
-                                        },
-                                        {
-                                            "label": "facebook",
-                                            "value": "https://www.facebook.com/Zilverband-1527875537425399/"
-                                        }
-                                    ]} />
-                            </Grid>
+                            { states.aboutMe? states.aboutMe.education.map((item, index) => {
+                                    return (
+                                        <Grid item xs={12} key={ index }>
+                                            <SecProfileBlock
+                                                title={ item.org }
+                                                subtitle={ `(${ item.year }) ${ item.subtitle }` }
+                                                description={ item.desc }
+                                                links={ item.links } />
+                                        </Grid>
+                                    )
+                            }): null }
                         </Grid>
                 </GenBlockComponent>
             </Grid>

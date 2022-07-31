@@ -20,7 +20,7 @@ export const usePublicContext = () => {
     useEffect(() => {
       let init = async () => {
         let resp = await googleDrive.fetchAboutMe()
-        console.log('public context', resp)
+        // console.log('public context', resp)
 
         setPublicContext({...publicContext, ...{ aboutMe: resp }})
       }

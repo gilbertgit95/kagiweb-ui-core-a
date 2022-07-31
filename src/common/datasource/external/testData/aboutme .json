@@ -1,30 +1,34 @@
 {
     "header": {
-       "lastUpdate": "July 25, 2022",
        "profilePic": "https://drive.google.com/uc?export=download&id=16F-YR8QbSHL6a_io95RfX1RyZUh9oyZB",
        "fullname": "Gilbert Defante Cuerbo",
        "workDesc": "Full Stack JavaScript Developer",
        "links": [
-          {
-             "label": "email",
-             "value": "mailto:gilbert.cuerbo@gmail.com"
-          },
-          {
-             "label": "github",
-             "value": "https://github.com/gilbertgit95"
-          }
+         {
+            "label": "github",
+            "value": "https://github.com/gilbertgit95"
+         },
+         {
+            "label": "email",
+            "value": "gilbert.cuerbo@gmail.com"
+         },
+         {
+            "label": "mobile",
+            "value": "+639273854605"
+         }
        ]
     },
+    "footerMessage": "Last update was on July 2022 @Davao City PH",
     "overview": "As a modern farmer, my goal is to be able to create technologies for different platforms. To make life easier with positive impact to the environment. To enhance communities and Environment by developing technologies that will replace methods that are harmful or destructive to humanity.",
     "experience": [
        {
-          "org": "Zilverband",
+          "title": "Zilverband",
           "desc": " Part of my job is to Maintain and Develop features of the main app and client internal apps. Scope of my responsibility range from the frontend development to Server-side.",
           "position": "Software Developer",
           "year": "Dec 2, 2019 - Present",
           "links": [
              {
-                "label": "website",
+                "label": "Company Website",
                 "value": "https://www.zilverband.com/"
              },
              {
@@ -34,7 +38,7 @@
           ]
        },
        {
-          "org": "Detail Online Technology",
+          "title": "Detail Online Technology",
           "desc": "Part of my job is to Maintain and Develop features of the main app. Scope of my responsibility range from the frontend development to Server-side, but is more fucos on the Frontend.",
           "position": "Software Developer",
           "year": "June 1, 2018 - Nov 29, 2019",
@@ -50,36 +54,59 @@
           ]
        },
        {
-          "org": "Samatosa",
+          "title": "Samatosa (is now Netzon)",
           "desc": " Scope of my Responsibility is on the Frontend only. Maintain and Develop features on the main application.",
-          "position": "Software Developer",
+          "position": "Jr. Software Developer",
           "year": "October 1, 2017 - May 30, 2018",
           "links": []
        }
     ],
     "personalProjs": [
        {
-          "title": "Kagiweb Basecode",
-          "desc": "A core or base code when creating a software. Composed of many repositories. This is a really big project to cover many platforms like, web, mobile, desktop and the server. Furthermore, every platforms has flavors, this is dew to different techs used to increase availability for different software engineers.",
-          "status": "Always in Progress",
-          "year": "Started 2021",
-          "mainTechs": [],
-          "links": []
+          "title": "SERVER BASECODE (TYPE A)",
+          "desc": "This repository contains the backend part of a web application. The main technology use in this app are NodeJS, ExpressJS, GraphQL, Sequelize, SQL DB.",
+          "subtitle": "KAGIWEB-API-CORE-A, [Inprogress]",
+          "year": "SEP 2021 - PRESENT",
+          "links": [
+            {
+               "label": "Github Repo",
+               "value": "https://github.com/gilbertgit95/kagiweb-api-core-a"
+            }
+          ]
        },
        {
-          "title": "Treemap",
-          "desc": "Developed for a specific feature in my job as a Developer, but the architecture is designed for public usage.",
-          "status": "Done",
-          "year": "2017",
-          "mainTechs": [],
+         "title": "WEB UI BASECODE (TYPE A)",
+         "desc": "This repository contains the ui part of a web application. The main technology use in this app is React, MUI (material ui), graphQL, Jest (for testing).",
+         "subtitle": "KAGIWEB-UI-CORE-A, [Inprogress]",
+         "year": "SEP 2021 - PRESENT",
+         "links": [
+            {
+               "label": "Github Repo",
+               "value": "https://github.com/gilbertgit95/kagiweb-ui-core-a"
+            }
+         ]
+       },
+       {
+         "title": "MOBILE BASECODE (TYPE A)",
+         "desc": "This repository contains a mobile application. The main technology use in this app is React and React-native.",
+         "subtitle": "KAGIWEB-MOBILE-CORE-A, [Inprogress]",
+         "year": "APRIL 2022 - PRESENT",
+         "links": [
+            {
+               "label": "Github Repo",
+               "value": "https://github.com/gilbertgit95/kagiweb-mobile-core-a"
+            }
+         ]
+       },
+       {
+          "title": "TREEMAP GENERATOR",
+          "desc": "A treemap generator for web apps.",
+          "subtitle": "TREEMAP, [Done]",
+          "year": "APRIL 2018 - MAY 2018",
           "links": [
              {
-                "label": "Repo",
+                "label": "Github Repo",
                 "value": "https://github.com/gilbertgit95/treemap"
-             },
-             {
-                "label": "Doc",
-                "value": "https://github.com/gilbertgit95/treemap/wiki"
              }
           ]
        }
@@ -88,14 +115,15 @@
        {
           "org": "SDSSU - Cantilan Campus",
           "desc": " Studied BS Computer Engineering. Although we are more on IoT(Internet of Things) stuff's, I explore more on the web technologies like the JavaScript, CSS, HTML language, basics in Server and Database.",
-          "year": "2012 - 2017",
+          "subtitle": "BS COMPUTER ENGINEERING",
+          "year": "DEC 2012 - APR 2017",
           "links": []
        }
     ],
     "skills": [
        {
           "title": "Proficient",
-          "desc": "Currently I am using the following:",
+          "desc": "In my current job and majority of my development today, I am using the following:",
           "techs": [
              "Javascript",
              "React",
@@ -107,7 +135,7 @@
        },
        {
           "title": "Familiar",
-          "desc": "For personal research and on my previous jobs I was using the following:",
+          "desc": "I was using the following technologies on my previous jobs and some of my personal research:",
           "techs": [
             "VueJS",
             "Meteor",
@@ -119,11 +147,11 @@
        },
        {
           "title": "Interests",
-          "desc": "I was always interested in small gadgets like IOT and Mobile devices, unfortunately I'm still a beginner. For platforms like this, I prefer to use the following:",
+          "desc": "Unfotunately I am still a beginner in this fields:",
           "techs": [
-             "C and C++",
-             "Go with Tinygo",
-             "React and React-native"
+            "React and React-native",
+            "Go with Tinygo",
+            "C and C++"
           ]
        }
     ]
