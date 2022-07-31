@@ -85,7 +85,7 @@ const PersonalPublicLayout = (props) => {
                 title: 'Alert',
                 type: 'alert',
                 color: 'secondary',
-                message: 'This feature is still on development. Implementation might take a while for this feature.'
+                message: 'This feature is still on development. Implementation for this feature might take a while.'
             })
         }
     }
