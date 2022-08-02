@@ -42,13 +42,13 @@ const AppUsers = (props) => {
 
         headers: [
             {
-                label: 'Name',
-                field: 'name',
+                label: 'username',
+                field: 'username',
                 type: 'string'
             },
             {
-                label: 'Description',
-                field: 'description',
+                label: 'Type',
+                field: 'type',
                 type: 'string'
             },
             {
