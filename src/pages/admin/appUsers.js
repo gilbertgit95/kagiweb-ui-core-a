@@ -42,18 +42,18 @@ const AppUsers = (props) => {
 
         headers: [
             {
-                label: 'username',
+                label: 'Username',
                 field: 'username',
                 type: 'string'
             },
             {
-                label: 'Type',
-                field: 'type',
+                label: 'Role',
+                field: '__role',
                 type: 'string'
             },
             {
                 label: '',
-                field: 'edit',
+                field: 'edit_credential',
                 width: 60,
                 render: (renderProps = {}) => {
                     return (
@@ -61,7 +61,39 @@ const AppUsers = (props) => {
                             {...renderProps}
                             startIcon={<EditIcon />}
                             size='small'>
-                            Edit
+                            Credential
+                        </Button>
+                    )
+                },
+                type: 'component'
+            },
+            {
+                label: '',
+                field: 'edit_profile',
+                width: 60,
+                render: (renderProps = {}) => {
+                    return (
+                        <Button
+                            {...renderProps}
+                            startIcon={<EditIcon />}
+                            size='small'>
+                            Profile
+                        </Button>
+                    )
+                },
+                type: 'component'
+            },
+            {
+                label: '',
+                field: 'edit_settings',
+                width: 60,
+                render: (renderProps = {}) => {
+                    return (
+                        <Button
+                            {...renderProps}
+                            startIcon={<EditIcon />}
+                            size='small'>
+                            Settings
                         </Button>
                     )
                 },
@@ -86,8 +118,13 @@ const AppUsers = (props) => {
     // }, [])
 
     useEffect(() => {
-        setStates({...states, ...{ rows: adminCtx.adminContext.roles }})
-        // console.log('admin data: ', adminCtx.adminContext.roles)
+        let users = adminCtx.adminContext.users
+        users = users.map(user => {
+            user['__role'] = user.role.name
+            return user
+        })
+        setStates({...states, ...{ rows: users }})
+        // console.log('admin data: ', adminCtx.adminContext.users)
     }, [adminCtx.adminContext])
 
     // console.log('states rows: ', states.rows)
@@ -120,7 +157,7 @@ const AppUsers = (props) => {
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
                                     title={
                                         <Typography style={{ padding: 10 }} variant='body1'>
-                                            This will add a new role to the list.
+                                            This will add a new user to the list.
                                         </Typography>
                                     }>
                                     <Button
@@ -139,7 +176,7 @@ const AppUsers = (props) => {
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
                                     title={
                                         <Typography style={{ padding: 10 }} variant='body1'>
-                                            This will add multiple roles in the list through data import.
+                                            This will add multiple users in the list through data import.
                                         </Typography>
                                     }>
                                     <Button
@@ -154,7 +191,7 @@ const AppUsers = (props) => {
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
                                     title={
                                         <Typography style={{ padding: 10 }} variant='body1'>
-                                            This will delete all selected roles from the list.
+                                            This will delete all selected users from the list.
                                         </Typography>
                                     }>
                                     <Button
@@ -193,7 +230,7 @@ const AppUsers = (props) => {
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
                                     title={
                                         <Typography style={{ padding: 10 }} variant='body1'>
-                                            Role will be the access package for a user.
+                                            This are the accounts that can access the main resources of this application.
                                         </Typography>
                                     }>
                                     <InfoIcon color='primary' />
@@ -201,7 +238,7 @@ const AppUsers = (props) => {
                             </>
                         } />
                     <NormalDialogBox
-                        title={ states.itemDialogMode === 'add'? 'Create Role': 'Update Role' }
+                        title={ states.itemDialogMode === 'add'? 'Create user': 'Update user' }
                         open={ states.itemDialog }
                         fullWidth={ true }
                         maxWidth={ 'sm' }
@@ -216,11 +253,11 @@ const AppUsers = (props) => {
                                 // style={{ marginRight: 5 }}
                                 onClick={async () => {
                                     let isAdd = states.itemDialogMode === 'add'
-                                    let msg = isAdd? 'This will create new Role to the list.': 'This will update changes to a Role.'
+                                    let msg = isAdd? 'This will create new user to the list.': 'This will update changes to a user.'
                                     msg += ' Do you want to proceed?'
 
                                     let result = await globalDialogCtx.showDialog({
-                                        title: isAdd? 'Create Role': 'Update Role',
+                                        title: isAdd? 'Create user': 'Update user',
                                         type: 'confirm',
                                         message: msg
                                     })
@@ -255,7 +292,7 @@ const AppUsers = (props) => {
                         </Box>
                     </NormalDialogBox>
                     <FullScreenDialogBox
-                        title={ 'Import Roles from Excel' }
+                        title={ 'Import users from Excel' }
                         open={ states.bulkImportDialog }
                         onClose={() => {
                             setStates({...states, ...{ bulkImportDialog: false }})
