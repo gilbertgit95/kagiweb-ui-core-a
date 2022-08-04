@@ -12,7 +12,7 @@ import utils from '../../../common/utilities'
 
 import { useSnackbar } from 'notistack'
 
-const AccountEdit = (props) => {
+const AccountCredentialEdit = (props) => {
     const accountCtx = useContext(AccountContext)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
@@ -196,4 +196,4 @@ const styles = {
     }
 }
 
-export default AccountEdit
+export default AccountCredentialEdit

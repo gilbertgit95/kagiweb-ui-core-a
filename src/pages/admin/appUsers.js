@@ -24,6 +24,10 @@ import FullScreenDialogBox from '../../common/popups/fullScreenDialogBox'
 import NormalDialogBox from '../../common/popups/normalDialogBox'
 // import ConfirmDialogBox from '../../common/popups/confirmDialogBox'
 
+import AccountCredentialEdit from '../account/components/accountCredentialsEdit'
+import AccountProfileEdit from '../account/components/accountProfileEdit'
+import AccountSettingsEdit from '../account/components/accountSettingsEdit'
+
 // import AccountContext from '../../common/contexts/accountContext'
 import AdminContext from '../../common/contexts/adminContext'
 import GlobalDialogContext from '../../common/contexts/globalDialogContext'
@@ -37,9 +41,10 @@ const AppUsers = (props) => {
 
     const [states, setStates] = useState({
         isLoading: true,
-        itemDialogMode: 'add', // add || edit
-        itemDialogData: {},
         itemDialog: false,
+        editDialog: false,
+        editDialogMode: null,
+        editDialogData: {},
         bulkImportDialog: false,
 
         headers: [
@@ -149,27 +154,27 @@ const AppUsers = (props) => {
                             // edit credential
                             if (e.col && e.col.field && e.col.field === 'edit_credential') {
                                 setStates({...states, ...{
-                                    itemDialog: true,
-                                    itemDialogMode: 'edit',
-                                    itemDialogData: e.row
+                                    editDialog: true,
+                                    editDialogMode: 'edit_credential',
+                                    editDialogData: e.row
                                 }})
                             }
 
                             // edit profile
                             if (e.col && e.col.field && e.col.field === 'edit_profile') {
                                 setStates({...states, ...{
-                                    itemDialog: true,
-                                    itemDialogMode: 'edit',
-                                    itemDialogData: e.row
+                                    editDialog: true,
+                                    editDialogMode: 'edit_profile',
+                                    editDialogData: e.row
                                 }})
                             }
 
                             // edit settings
                             if (e.col && e.col.field && e.col.field === 'edit_settings') {
                                 setStates({...states, ...{
-                                    itemDialog: true,
-                                    itemDialogMode: 'edit',
-                                    itemDialogData: e.row
+                                    editDialog: true,
+                                    editDialogMode: 'edit_settings',
+                                    editDialogData: e.row
                                 }})
                             }
                         }}
@@ -188,9 +193,7 @@ const AppUsers = (props) => {
                                         // startIcon={ <AddIcon /> }
                                         onClick={() => {
                                             setStates({...states, ...{
-                                                itemDialog: true,
-                                                itemDialogMode: 'add',
-                                                itemDialogData: {}
+                                                itemDialog: true
                                             }})
                                         }}><AddIcon /></Button>
                                 </Tooltip>
@@ -289,7 +292,7 @@ const AppUsers = (props) => {
 
                                     console.log(dialogInputValues)
 
-                                }}>{ states.itemDialogMode === 'add'? 'Create': 'Update' }</Button>
+                                }}>Create</Button>
                         }>
                         <Box
                             style={{
@@ -313,6 +316,29 @@ const AppUsers = (props) => {
                                 label='Confirm Password' style={{ marginTop: 10 }} fullWidth size='small'/>
                         </Box>
                     </NormalDialogBox>
+
+                    {/* edit user dialog */}
+                    <FullScreenDialogBox
+                        title={ 'Update User' }
+                        open={ states.editDialog }
+                        onClose={() => {
+                            setStates({...states, ...{ editDialog: false }})
+                        }}>
+                        <Container
+                            style={{ marginTop: 20 }}
+                            maxWidth="md">
+                            {/* edit credential */}
+                            { states.editDialogMode === 'edit_credential'? <AccountCredentialEdit/>: null }
+
+                            {/* edit profile */}
+                            { states.editDialogMode === 'edit_profile'? <AccountProfileEdit/>: null }
+
+                            {/* edit settings */}
+                            { states.editDialogMode === 'edit_settings'? <AccountSettingsEdit/>: null }
+                        </Container>
+                    </FullScreenDialogBox>
+
+                    {/* bulk import user */}
                     <FullScreenDialogBox
                         title={ 'Import users from Excel' }
                         open={ states.bulkImportDialog }
@@ -326,7 +352,7 @@ const AppUsers = (props) => {
                                 onClose={() => {
                                     setStates({...states, ...{ bulkImportDialog: false }})
                                 }}
-                                headers={['name', 'role']} />
+                                headers={['username', 'role', 'password']} />
                         </Container>
                     </FullScreenDialogBox>
                 </Container>
