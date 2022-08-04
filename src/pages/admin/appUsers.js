@@ -30,8 +30,10 @@ import GlobalDialogContext from '../../common/contexts/globalDialogContext'
 import utils from '../../common/utilities'
 
 const AppUsers = (props) => {
-    const nameRef = useRef()
-    const descRef = useRef()
+    const usernameRef = useRef()
+    const userRoleRef = useRef()
+    const passwordRef = useRef()
+    const confirmPasswordRef = useRef()
 
     const [states, setStates] = useState({
         isLoading: true,
@@ -144,7 +146,26 @@ const AppUsers = (props) => {
                         }}
                         onInteract={(e) => {
                             // console.log('interact: ', e)
-                            if (e.col && e.col.field && e.col.field === 'edit') {
+                            // edit credential
+                            if (e.col && e.col.field && e.col.field === 'edit_credential') {
+                                setStates({...states, ...{
+                                    itemDialog: true,
+                                    itemDialogMode: 'edit',
+                                    itemDialogData: e.row
+                                }})
+                            }
+
+                            // edit profile
+                            if (e.col && e.col.field && e.col.field === 'edit_profile') {
+                                setStates({...states, ...{
+                                    itemDialog: true,
+                                    itemDialogMode: 'edit',
+                                    itemDialogData: e.row
+                                }})
+                            }
+
+                            // edit settings
+                            if (e.col && e.col.field && e.col.field === 'edit_settings') {
                                 setStates({...states, ...{
                                     itemDialog: true,
                                     itemDialogMode: 'edit',
@@ -204,7 +225,6 @@ const AppUsers = (props) => {
                                             if (states.selectedRows.length > 0) {
                                                 let msg = states.selectedRows.length > 1? `${ states.selectedRows.length } items `: `1 item `
 
-
                                                 msg += ' will be deleted from the list. Do you want to proceed?'
                                                 let result = await globalDialogCtx.showDialog({
                                                     title: 'Delete',
@@ -238,7 +258,7 @@ const AppUsers = (props) => {
                             </>
                         } />
                     <NormalDialogBox
-                        title={ states.itemDialogMode === 'add'? 'Create user': 'Update user' }
+                        title={'Create user'}
                         open={ states.itemDialog }
                         fullWidth={ true }
                         maxWidth={ 'sm' }
@@ -252,12 +272,10 @@ const AppUsers = (props) => {
                                 variant='contained'
                                 // style={{ marginRight: 5 }}
                                 onClick={async () => {
-                                    let isAdd = states.itemDialogMode === 'add'
-                                    let msg = isAdd? 'This will create new user to the list.': 'This will update changes to a user.'
-                                    msg += ' Do you want to proceed?'
+                                    let msg = 'This will create new user to the list. Do you want to proceed?'
 
                                     let result = await globalDialogCtx.showDialog({
-                                        title: isAdd? 'Create user': 'Update user',
+                                        title: 'Create user',
                                         type: 'confirm',
                                         message: msg
                                     })
@@ -265,8 +283,8 @@ const AppUsers = (props) => {
                                     if (result.status !== 'proceed') return
                                     
                                     let dialogInputValues = {
-                                        name:        nameRef.current.value,
-                                        description: descRef.current.value
+                                        username:        usernameRef.current.value,
+                                        role: userRoleRef.current.value
                                     }
 
                                     console.log(dialogInputValues)
@@ -282,13 +300,17 @@ const AppUsers = (props) => {
                                 width: '100%'
                             }}>
                             <TextField
-                                inputRef={ nameRef }
-                                defaultValue={states.itemDialogData? states.itemDialogData.name: ''}
-                                label='Name' style={{ marginTop: 10 }} fullWidth size='small'/>
+                                inputRef={ usernameRef }
+                                label='Username' style={{ marginTop: 10 }} fullWidth size='small'/>
                             <TextField
-                                inputRef={ descRef }
-                                defaultValue={states.itemDialogData? states.itemDialogData.description: ''}
-                                multiline rows={4} label='description' style={{ marginTop: 10 }} fullWidth size='small'/>
+                                inputRef={ userRoleRef }
+                                label='Role' style={{ marginTop: 10 }} fullWidth size='small'/>
+                            <TextField
+                                inputRef={ passwordRef }
+                                label='Password' style={{ marginTop: 10 }} fullWidth size='small'/>
+                            <TextField
+                                inputRef={ confirmPasswordRef }
+                                label='Confirm Password' style={{ marginTop: 10 }} fullWidth size='small'/>
                         </Box>
                     </NormalDialogBox>
                     <FullScreenDialogBox
@@ -304,7 +326,7 @@ const AppUsers = (props) => {
                                 onClose={() => {
                                     setStates({...states, ...{ bulkImportDialog: false }})
                                 }}
-                                headers={['name', 'description']} />
+                                headers={['name', 'role']} />
                         </Container>
                     </FullScreenDialogBox>
                 </Container>
