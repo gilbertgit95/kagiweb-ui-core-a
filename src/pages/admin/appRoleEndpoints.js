@@ -21,7 +21,7 @@ import AddIcon from '@mui/icons-material/Add'
 import InteractiveTable from '../../common/tables/interactiveTable'
 import ImportData from '../../common/inputs/importData'
 import FullScreenDialogBox from '../../common/popups/fullScreenDialogBox'
-import NormalDialogBox from '../../common/popups/normalDialogBox'
+import TransferSelection from '../../common/inputs/transferSelection'
 // import ConfirmDialogBox from '../../common/popups/confirmDialogBox'
 
 // import AccountContext from '../../common/contexts/accountContext'
@@ -30,9 +30,6 @@ import GlobalDialogContext from '../../common/contexts/globalDialogContext'
 import utils from '../../common/utilities'
 
 const AppRoleEndpoints = (props) => {
-    const nameRef = useRef()
-    const descRef = useRef()
-
     const [states, setStates] = useState({
         isLoading: true,
         itemDialogMode: 'add', // add || edit
@@ -49,6 +46,11 @@ const AppRoleEndpoints = (props) => {
             {
                 label: 'Description',
                 field: 'description',
+                type: 'string'
+            },
+            {
+                label: 'Endpoints',
+                field: '__endpoints',
                 type: 'string'
             },
             {
@@ -69,7 +71,7 @@ const AppRoleEndpoints = (props) => {
             }
         ],
         rows: [],
-        selectedRows: []
+        endpoints: []
     })
     const adminCtx = useContext(AdminContext)
     const globalDialogCtx = useContext(GlobalDialogContext)
@@ -86,7 +88,11 @@ const AppRoleEndpoints = (props) => {
     // }, [])
 
     useEffect(() => {
-        setStates({...states, ...{ rows: adminCtx.adminContext.roles }})
+        let roles = adminCtx.adminContext.roleEndpoints.map(role => {
+            role['__endpoints'] = role.endpoints? role.endpoints.length: 0
+            return role
+        })
+        setStates({...states, ...{ rows: roles, endpoints: adminCtx.adminContext.endpoints }})
         // console.log('admin data: ', adminCtx.adminContext.roles)
     }, [adminCtx.adminContext])
 
@@ -101,9 +107,6 @@ const AppRoleEndpoints = (props) => {
                     <InteractiveTable
                         headers={ states.headers }
                         rows={ states.rows }
-                        onSelect={(selected) => {
-                            setStates({...states, ...{ selectedRows: selected}})
-                        }}
                         onInteract={(e) => {
                             // console.log('interact: ', e)
                             if (e.col && e.col.field && e.col.field === 'edit') {
@@ -141,7 +144,7 @@ const AppRoleEndpoints = (props) => {
                                 </Tooltip>
                             </>
                         } />
-                    <NormalDialogBox
+                    {/* <NormalDialogBox
                         title={ 'Update Role Endpoints' }
                         open={ states.itemDialog }
                         fullWidth={ true }
@@ -165,13 +168,6 @@ const AppRoleEndpoints = (props) => {
                                     })
 
                                     if (result.status !== 'proceed') return
-                                    
-                                    let dialogInputValues = {
-                                        name:        nameRef.current.value,
-                                        description: descRef.current.value
-                                    }
-
-                                    console.log(dialogInputValues)
 
                                 }}>Update</Button>
                         }>
@@ -183,16 +179,21 @@ const AppRoleEndpoints = (props) => {
                                 paddingLeft: 20,
                                 width: '100%'
                             }}>
-                            <TextField
-                                inputRef={ nameRef }
-                                defaultValue={states.itemDialogData? states.itemDialogData.name: ''}
-                                label='Name' style={{ marginTop: 10 }} fullWidth size='small'/>
-                            <TextField
-                                inputRef={ descRef }
-                                defaultValue={states.itemDialogData? states.itemDialogData.description: ''}
-                                multiline rows={4} label='description' style={{ marginTop: 10 }} fullWidth size='small'/>
+                            
                         </Box>
-                    </NormalDialogBox>
+                    </NormalDialogBox> */}
+                    <FullScreenDialogBox
+                        title={ 'Update Role Endpoints' }
+                        open={ states.itemDialog }
+                        onClose={() => {
+                            setStates({...states, ...{ itemDialog: false }})
+                        }}>
+                        <Container
+                            style={{ marginTop: 20 }}
+                            maxWidth="lg">
+                            <TransferSelection />
+                        </Container>
+                    </FullScreenDialogBox>
                     <FullScreenDialogBox
                         title={ 'Import Roles Endpoints Association from Excel' }
                         open={ states.bulkImportDialog }
