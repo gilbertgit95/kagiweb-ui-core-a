@@ -30,6 +30,13 @@ const AccountCredentialEdit = (props) => {
                             You can only change the password.
                         </Typography>
                     </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            required
+                            type='role'
+                            label="Role" />
+                    </Grid>
                     <Grid item xs={12} sm={12} md={4}>
                         <TextField
                             fullWidth
