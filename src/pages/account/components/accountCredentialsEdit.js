@@ -6,6 +6,8 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
+import SelectBox from '../../../common/inputs/selectBox'
+
 import AccountContext from '../../../common/contexts/accountContext'
 import VerticalSteps from '../../../common/navs/verticalStepsNav'
 import utils from '../../../common/utilities'
@@ -31,11 +33,7 @@ const AccountCredentialEdit = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            required
-                            type='role'
-                            label="Role" />
+                        <SelectBox />
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
                         <TextField
