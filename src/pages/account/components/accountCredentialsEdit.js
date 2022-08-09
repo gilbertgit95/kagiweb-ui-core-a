@@ -33,7 +33,17 @@ const AccountCredentialEdit = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <SelectBox />
+                        <SelectBox
+                            style={{ width: '100%' }}
+                            label='Role'
+                            value='super_admin'
+                            onChange={e => {
+                                console.log('selected', e)
+                            }}
+                            options={[
+                                {label: 'Super Admin', value: 'super_admin'},
+                                {label: 'Admin', value: 'admin'}
+                            ]} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={4}>
                         <TextField

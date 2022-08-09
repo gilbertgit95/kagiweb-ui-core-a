@@ -5,23 +5,22 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
 const SelectBox = (props) => {
-  const [age, setAge] = React.useState('')
-
   const handleChange = (event) => {
-    setAge(event.target.value)
+    if (props.onChange) props.onChange(event.target.value)
   }
 
   return (
-    <FormControl sx={{ width: '100%' }}>
-      <InputLabel id='demo-select-small'>Role</InputLabel>
+    <FormControl style={props.style? props.style: {}}>
+      <InputLabel>{props.label? props.label: 'Select'}</InputLabel>
       <Select
-        labelId='demo-select-small'
-        id='demo-select-small'
-        value={age}
-        label='Role'
+        value={props.value? props.value: ''}
+        label={props.label? props.label: 'Select'}
         onChange={handleChange}>
-        <MenuItem value={10}>Super Admin</MenuItem>
-        <MenuItem value={20}>Admin</MenuItem>
+        {
+          props.options? props.options.map((item, key) => {
+            return <MenuItem key={ key } value={ item.value }>{ item.label }</MenuItem>
+          }): null
+        }
       </Select>
     </FormControl>
   )
