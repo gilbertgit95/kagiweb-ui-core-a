@@ -35,7 +35,6 @@ const AppRoleEndpoints = (props) => {
         itemDialogMode: 'add', // add || edit
         itemDialogData: {},
         itemDialog: false,
-        bulkImportDialog: false,
 
         headers: [
             {
@@ -122,21 +121,6 @@ const AppRoleEndpoints = (props) => {
                                 <Tooltip style={{ float: 'right' }} placement='bottom-end'
                                     title={
                                         <Typography style={{ padding: 10 }} variant='body1'>
-                                            This will associate role and endpoints through data import.
-                                        </Typography>
-                                    }>
-                                    <Button
-                                        color='primary'
-                                        variant='contained'
-                                        style={{ marginRight: 5 }}
-                                        // startIcon={ <ImportExportIcon /> }
-                                        onClick={() => {
-                                            setStates({...states, ...{ bulkImportDialog: true }})
-                                        }}><ImportExportIcon /></Button>
-                                </Tooltip>
-                                <Tooltip style={{ float: 'right' }} placement='bottom-end'
-                                    title={
-                                        <Typography style={{ padding: 10 }} variant='body1'>
                                             Associated Endpoints to a role
                                         </Typography>
                                     }>
@@ -144,44 +128,6 @@ const AppRoleEndpoints = (props) => {
                                 </Tooltip>
                             </>
                         } />
-                    {/* <NormalDialogBox
-                        title={ 'Update Role Endpoints' }
-                        open={ states.itemDialog }
-                        fullWidth={ true }
-                        maxWidth={ 'sm' }
-                        strictClose={ true }
-                        onClose={() => {
-                            setStates({...states, ...{ itemDialog: false }})
-                        }}
-                        actions={
-                            <Button
-                                color='primary'
-                                variant='contained'
-                                // style={{ marginRight: 5 }}
-                                onClick={async () => {
-                                    let msg = 'This will update Role Endpoints. Do you want to proceed?'
-
-                                    let result = await globalDialogCtx.showDialog({
-                                        title: 'Update Role Endpoints',
-                                        type: 'confirm',
-                                        message: msg
-                                    })
-
-                                    if (result.status !== 'proceed') return
-
-                                }}>Update</Button>
-                        }>
-                        <Box
-                            style={{
-                                margin: 0,
-                                padding: 0,
-                                paddingRight: 20,
-                                paddingLeft: 20,
-                                width: '100%'
-                            }}>
-                            
-                        </Box>
-                    </NormalDialogBox> */}
                     <FullScreenDialogBox
                         title={ 'Update Role Endpoints' }
                         open={ states.itemDialog }
@@ -190,24 +136,14 @@ const AppRoleEndpoints = (props) => {
                         }}>
                         <Container
                             style={{ marginTop: 20 }}
-                            maxWidth="lg">
-                            <TransferSelection />
-                        </Container>
-                    </FullScreenDialogBox>
-                    <FullScreenDialogBox
-                        title={ 'Import Roles Endpoints Association from Excel' }
-                        open={ states.bulkImportDialog }
-                        onClose={() => {
-                            setStates({...states, ...{ bulkImportDialog: false }})
-                        }}>
-                        <Container
-                            style={{ marginTop: 20 }}
-                            maxWidth="lg">
-                            <ImportData
-                                onClose={() => {
-                                    setStates({...states, ...{ bulkImportDialog: false }})
+                            maxWidth="md">
+                            <Typography variant='h6' color='primary' style={{marginBottom: 20}}>Super Admin</Typography>
+                            <TransferSelection
+                                onChange={(e) => {
+                                    console.log('on transfer change: ', e)
                                 }}
-                                headers={['role', 'endpoint']} />
+                                assignedItems={[]}
+                                availableItems={[]} />
                         </Container>
                     </FullScreenDialogBox>
                 </Container>

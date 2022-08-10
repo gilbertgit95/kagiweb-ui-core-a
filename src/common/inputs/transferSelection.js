@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import List from '@mui/material/List'
 import Card from '@mui/material/Card'
@@ -9,6 +9,9 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
+
+import AddIcon from '@mui/icons-material/Add'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1)
@@ -23,9 +26,9 @@ function union(a, b) {
 }
 
 const TransferSelection = (props) => {
-  const [checked, setChecked] = React.useState([])
-  const [left, setLeft] = React.useState([0, 1, 2, 3])
-  const [right, setRight] = React.useState([4, 5, 6, 7])
+  const [checked, setChecked] = useState([])
+  const [left, setLeft] = useState([0, 1, 2, 3])
+  const [right, setRight] = useState([4, 5, 6, 7])
 
   const leftChecked = intersection(checked, left)
   const rightChecked = intersection(checked, right)
@@ -68,7 +71,7 @@ const TransferSelection = (props) => {
   const customList = (title, items) => (
     <Card>
       <CardHeader
-        sx={{ px: 2, py: 1 }}
+        sx={{ px: 2, py: 1}}
         avatar={
           <Checkbox
             onClick={handleToggleAll(items)}
@@ -79,80 +82,77 @@ const TransferSelection = (props) => {
             disabled={items.length === 0}
             inputProps={{
               'aria-label': 'all items selected',
-            }}
-          />
+            }} />
         }
         title={title}
-        subheader={`${numberOfChecked(items)}/${items.length} selected`}
-      />
+        subheader={`${numberOfChecked(items)}/${items.length} selected`} />
       <Divider />
       <List
         sx={{
-          width: 200,
-          height: 230,
+          minWidth: 200,
+          minHeight: 230,
           bgcolor: 'background.paper',
           overflow: 'auto',
         }}
         dense
         component='div'
-        role='list'
-      >
-        {items.map((value) => {
-          const labelId = `transfer-list-all-item-${value}-label`
+        role='list'>
+        {
+          items.map((value) => {
+            const labelId = `transfer-list-all-item-${value}-label`
 
-          return (
-            <ListItem
-              key={value}
-              role='listitem'
-              button
-              onClick={handleToggle(value)}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  checked={checked.indexOf(value) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{
-                    'aria-labelledby': labelId,
-                  }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
-            </ListItem>
-          )
-        })}
+            return (
+              <ListItem
+                key={value}
+                role='listitem'
+                button
+                onClick={handleToggle(value)}>
+                <ListItemIcon>
+                  <Checkbox
+                    checked={checked.indexOf(value) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{
+                      'aria-labelledby': labelId,
+                    }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+              </ListItem>
+            )
+          })
+        }
         <ListItem />
       </List>
     </Card>
   )
 
   return (
-    <Grid container spacing={2} justifyContent='center' alignItems='center'>
-      <Grid item>{customList('Choices', left)}</Grid>
-      <Grid item>
+    <Grid container spacing={2} justifyContent='center'>
+      <Grid item xs={12} sm={5}>{customList('Assigned', left)}</Grid>
+      <Grid item xs={12} sm={2}>
         <Grid container direction='column' alignItems='center'>
           <Button
+            fullWidth
             sx={{ my: 0.5 }}
-            variant='outlined'
-            size='small'
-            onClick={handleCheckedRight}
-            disabled={leftChecked.length === 0}
-            aria-label='move selected right'
-          >
-            &gt;
-          </Button>
-          <Button
-            sx={{ my: 0.5 }}
-            variant='outlined'
+            variant='contained'
             size='small'
             onClick={handleCheckedLeft}
             disabled={rightChecked.length === 0}
-            aria-label='move selected left'>
-            &lt;
-          </Button>
+            startIcon={<AddIcon />}
+            aria-label='move selected left'>Add</Button>
+          <Button
+            fullWidth
+            sx={{ my: 0.5 }}
+            variant='contained'
+            size='small'
+            onClick={handleCheckedRight}
+            disabled={leftChecked.length === 0}
+            startIcon={<DeleteIcon />}
+            aria-label='move selected right'>Remove</Button>
         </Grid>
       </Grid>
-      <Grid item>{customList('Chosen', right)}</Grid>
+      <Grid item xs={12} sm={5}>{customList('Available', right)}</Grid>
     </Grid>
   )
 }
