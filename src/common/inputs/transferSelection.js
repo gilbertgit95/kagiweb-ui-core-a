@@ -26,9 +26,21 @@ function union(a, b) {
 }
 
 const TransferSelection = (props) => {
+  let refsMapValues = props.referenceItems.reduce((acc, item) => {
+    acc[item.value] = item
+    return acc
+  }, {})
+  let leftValues = props.assignedItems.map(item => item.value)
+  let rightValues = props.referenceItems
+    .filter(item => {
+      return leftValues.indexOf(item.value) === -1
+    })
+    .map(item => item.value)
+
   const [checked, setChecked] = useState([])
-  const [left, setLeft] = useState([0, 1, 2, 3])
-  const [right, setRight] = useState([4, 5, 6, 7])
+  const [refsmap, setRefsMap] = useState(refsMapValues)
+  const [left, setLeft] = useState(leftValues)
+  const [right, setRight] = useState(rightValues)
 
   const leftChecked = intersection(checked, left)
   const rightChecked = intersection(checked, right)
@@ -56,16 +68,27 @@ const TransferSelection = (props) => {
     }
   }
 
+
   const handleCheckedRight = () => {
-    setRight(right.concat(leftChecked))
-    setLeft(not(left, leftChecked))
+    let rightVals = right.concat(leftChecked)
+    let leftVals = not(left, leftChecked)
+
+    setRight(rightVals)
+    setLeft(leftVals)
+
     setChecked(not(checked, leftChecked))
+    if (props.onChange) props.onChange(leftVals)
   }
 
   const handleCheckedLeft = () => {
-    setLeft(left.concat(rightChecked))
-    setRight(not(right, rightChecked))
+    let rightVals = not(right, rightChecked)
+    let leftVals = left.concat(rightChecked)
+
+    setRight(rightVals)
+    setLeft(leftVals)
+    
     setChecked(not(checked, rightChecked))
+    if (props.onChange) props.onChange(leftVals)
   }
 
   const customList = (title, items) => (
@@ -117,7 +140,10 @@ const TransferSelection = (props) => {
                     }}
                   />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+                <ListItemText
+                  id={ labelId }
+                  primary={ refsmap[value]? refsmap[value].label: value }
+                  secondary={refsmap[value] && refsmap[value].secondaryLabel? refsmap[value].secondaryLabel: ''} />
               </ListItem>
             )
           })
@@ -128,7 +154,7 @@ const TransferSelection = (props) => {
   )
 
   return (
-    <Grid container spacing={2} justifyContent='center'>
+    <Grid container spacing={2} justifyContent='center' style={props.style? props.style: {}}>
       <Grid item xs={12} sm={5}>{customList('Assigned', left)}</Grid>
       <Grid item xs={12} sm={2}>
         <Grid container direction='column' alignItems='center'>
