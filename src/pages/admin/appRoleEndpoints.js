@@ -28,10 +28,12 @@ import TransferSelection from '../../common/inputs/transferSelection'
 import AdminContext from '../../common/contexts/adminContext'
 import GlobalDialogContext from '../../common/contexts/globalDialogContext'
 import utils from '../../common/utilities'
+import LoadingButton from '../../common/atomicComponents/loadingButton'
 
 const AppRoleEndpoints = (props) => {
     const [states, setStates] = useState({
         isLoading: true,
+        isSaving: false,
         itemDialogData: {},
         itemDialog: false,
 
@@ -90,7 +92,7 @@ const AppRoleEndpoints = (props) => {
             navAnchor={'left'}
             navMenu={subpages}>
             <Grid item xs={12}>
-                <Container maxWidth="lg" style={{ paddingTop: 20 }}>
+                <Container maxWidth='lg' style={{ paddingTop: 20 }}>
                     <InteractiveTable
                         headers={ states.headers }
                         rows={ states.rows }
@@ -123,14 +125,37 @@ const AppRoleEndpoints = (props) => {
                         }}>
                         <Container
                             style={{ marginTop: 20 }}
-                            maxWidth="md">
-                            <Typography variant='h6' color='primary' style={{marginBottom: 20}}>Super Admin</Typography>
+                            maxWidth='md'>
+                            <Typography variant='h6' color='primary' style={{marginBottom: 20}}>
+                                { states.itemDialogData? states.itemDialogData.name: '' }
+                            </Typography>
                             <TransferSelection
                                 onChange={(e) => {
                                     console.log('on transfer change: ', e)
                                 }}
-                                assignedItems={[]}
-                                availableItems={[]} />
+                                assignedItems={states.itemDialogData && states.itemDialogData.enpoints? states.itemDialogData.enpoints.map(item => ({label: item.name, value: item.id})): []}
+                                referenceItems={[states.endpoints? states.endpoints.map(item => ({label: item.name, value: item.id})): []]} />
+                            <Box
+                                style={{ textAlign: 'right', marginTop:10 }}>
+                                <Button
+                                    style={{ marginRight: 5 }}
+                                    onClick={() => {
+                                        setStates({...states, ...{ itemDialog: false }})
+                                    }}
+                                    variant='outlined'>
+                                    Cancel
+                                </Button>
+                                <LoadingButton
+                                    variant='contained'
+                                    isLoading={ states.isSaving }
+                                    onClick={async () => {
+                                        setStates({...states, ...{ isSaving: true }})
+                                        await utils.waitFor(2)
+                                        setStates({...states, ...{ itemDialog: false, isSaving: false }})
+                                    }}>
+                                    Save
+                                </LoadingButton>
+                            </Box>
                         </Container>
                     </FullScreenDialogBox>
                 </Container>
