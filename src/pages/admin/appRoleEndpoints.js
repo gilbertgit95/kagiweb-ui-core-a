@@ -32,7 +32,6 @@ import utils from '../../common/utilities'
 const AppRoleEndpoints = (props) => {
     const [states, setStates] = useState({
         isLoading: true,
-        itemDialogMode: 'add', // add || edit
         itemDialogData: {},
         itemDialog: false,
 
@@ -75,17 +74,6 @@ const AppRoleEndpoints = (props) => {
     const adminCtx = useContext(AdminContext)
     const globalDialogCtx = useContext(GlobalDialogContext)
 
-    // useEffect(() => {
-    //     const fetchData = () => {
-    //         setStates({...states, ...{ ioLoading: true }})
-    //         setTimeout(() => {
-    //             setStates({...states, ...{ ioLoading: false }})
-    //         }, 1000)
-    //     }
-
-    //     fetchData()
-    // }, [])
-
     useEffect(() => {
         let roles = adminCtx.adminContext.roleEndpoints.map(role => {
             role['__endpoints'] = role.endpoints? role.endpoints.length: 0
@@ -111,7 +99,6 @@ const AppRoleEndpoints = (props) => {
                             if (e.col && e.col.field && e.col.field === 'edit') {
                                 setStates({...states, ...{
                                     itemDialog: true,
-                                    // itemDialogMode: 'edit',
                                     itemDialogData: e.row
                                 }})
                             }
