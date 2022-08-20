@@ -47,6 +47,11 @@ const Login = (props) => {
             <Grid item xs={12}>
                 <TextField
                     inputRef={ usernameRef }
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            passwordRef.current.focus()
+                        }
+                    }}
                     size='small'
                     fullWidth
                     variant='outlined'
@@ -59,6 +64,11 @@ const Login = (props) => {
             <Grid item xs={12}>
                 <TextField
                     inputRef={ passwordRef }
+                    onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                            login()
+                        }
+                    }}
                     size='small'
                     fullWidth
                     variant='outlined'

@@ -92,8 +92,8 @@ const AuthLayout = (props) => {
         if (   AccCtx.accountContext.__action
             && AccCtx.accountContext.__action === 'clearCredentials') {
             //  redirect to home page
-            lsCtx.updateLocalStorage({authKey: null})
             AccCtx.signOut()
+            lsCtx.updateLocalStorage({authKey: null})
 
             return
         }
@@ -149,7 +149,7 @@ const AuthLayout = (props) => {
                         </Grid>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
                             <Typography variant="caption" display="block" gutterBottom>
-                                Copyrights 2021
+                                2021@Davao City 8000 PH
                             </Typography>
                         </Grid>
                     </Grid>

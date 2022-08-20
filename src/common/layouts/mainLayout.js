@@ -22,6 +22,8 @@ import RouterContext, { useRouterContext } from '../contexts/routerContext'
 import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
 
+import Rest from '../datasource/rest'
+
 const MainLayout = (props) => {
     const routerStates = useRouterContext()
     const AccCtx = useContext(AccountContext)
@@ -131,8 +133,17 @@ const MainLayout = (props) => {
         ]
     ]
 
-    const onNavAction = (e) => {
+    const onNavAction = async (e) => {
         if (e === 'logout') {
+            try {
+                // logout out endpoint for now is only used for logging
+                await Rest({
+                method: 'POST',
+                url: '/api/v1/auth/logout'
+                })
+            } catch (err) {
+                // just do nothing
+            }
             AccCtx.setAccountContext({ ...AccCtx.accountContext, ...{__action: 'clearCredentials'} })
             routerStates.setRouterContext(`/${ config.rootRoute }/auth/`)
         }
