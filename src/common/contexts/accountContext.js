@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from 'react'
 import config from '../../config'
 import utils from '../utilities'
 import LocalStorage from '../utilities/localStorage'
+import Rest from '../datasource/rest'
 
 const AccountContext = createContext({
     accountContext: {},
@@ -22,6 +23,14 @@ export const useAccountContext = () => {
         ...accountContext,
         ...{"__isLoading": true}
       })
+      let authData = null
+
+      try {
+        authData = await Rest({method: 'POST', url: '/api/v1/auth/login'})
+      } catch (err) {
+        console.log('Error: ', err)
+      }
+
       await utils.waitFor(2)
       setAccountContext(testAccountData)
       console.log('account data has loaded')
