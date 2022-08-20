@@ -21,24 +21,40 @@ export const useAccountContext = () => {
       console.log('account data is being fetched by signing in')
       setAccountContext({
         ...accountContext,
-        ...{"__isLoading": true}
+        ...{'__isLoading': true}
       })
       let authData = null
+      let error = null
+      let formData = new FormData()
+      formData.append('username', username)
+      formData.append('password', password)
 
       try {
-        authData = await Rest({method: 'POST', url: '/api/v1/auth/login'})
+        authData = await Rest({
+          method: 'POST',
+          url: '/api/v1/auth/login',
+          data: formData,
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
       } catch (err) {
-        console.log('Error: ', err)
+        error = err.response.data.message
       }
 
-      await utils.waitFor(2)
-      setAccountContext(testAccountData)
+      // check if if there are no response token
+      if (!authData) {
+        return { error }
+      }
+
+      setAccountContext({...authData.data.user, ...{
+        '__isLoading': false,
+        '__isLoggedIn': true,
+      }})
       console.log('account data has loaded')
-      return { authKey: 'berear_test123' }
+      return { authKey: authData.data.accessToken }
     }
 
     const signOut = async () => {
-      setAccountContext({"__isLoading": false})
+      setAccountContext({'__isLoading': false})
     }
 
     useEffect(() => {
@@ -53,15 +69,41 @@ export const useAccountContext = () => {
           console.log('account data is being fetched by using authKey')
           setAccountContext({
             ...accountContext,
-            ...{"__isLoading": true}
+            ...{'__isLoading': true}
           })
-          await utils.waitFor(3)
-          setAccountContext(testAccountData)
+          let userData = null
+          let error = null
+          // await utils.waitFor(5)
+          try {
+            userData = await Rest({
+              method: 'GET',
+              url: '/api/v1/loggedAccount'
+            })
+          } catch (err) {
+            error = err.response.data.message
+          }
+
+          // check if if there are no response token
+          if (!userData) {
+            setAccountContext({
+              ...accountContext,
+              ...{
+                '__isLoading': false,
+                '__isLoggedIn': false
+              }
+            })
+            return
+          }
+
+          setAccountContext({...userData.data, ...{
+            '__isLoading': false,
+            '__isLoggedIn': true,
+          }})
           console.log('account data has loaded')
         } else {
           setAccountContext({
             ...accountContext,
-            ...{"__isLoading": false}
+            ...{'__isLoading': false}
           })
         }
       }
@@ -76,81 +118,4 @@ export const useAccountContext = () => {
       signIn,
       signOut
     }
-}
-
-const testAccountData = {
-    "__isLoading": false,
-    "__isLoggedIn": true,
-    "id": "e79c8692-4cc2-4971-a52c-832e87b27e7f",
-    "username": "gilbert95",
-    "twoFactorAuth": false,
-    "disableAccount": false,
-    "primaryEmail": null,
-    "secondayEmail": null,
-    "primaryEmailVerified": false,
-    "secondaryEmailVerified": false,
-    "primaryNumber": null,
-    "secondayNumber": null,
-    "primaryNumberVerified": false,
-    "secondaryNumberVerified": false,
-    "createdAt": "2021-11-20T15:27:31.513Z",
-    "updatedAt": "2021-11-20T15:27:31.513Z",
-    "roleId": "6b1b7d6a-c325-4908-912c-f485078a53fc",
-    "role": {
-        "id": "e79c8692-4cc2-4971-a52c-832e87b46e8f",
-        "name": "Super admin",
-        "description": "Has access to all endpoints",
-        "createdAt": "2021-11-20T15:27:31.513Z",
-        "updatedAt": "2021-11-20T15:27:31.513Z"
-    },
-    "claims": [
-        {
-            "id": "e79c8692-4cc2-4971-a52c-832e87b11e8f",
-            "accountId": "e79c8692-4cc2-4971-a52c-832e87b28e8f",
-            "key": "fullName",
-            "value": "Master Account",
-            "createdAt": "2021-11-20T15:27:31.513Z",
-            "updatedAt": "2021-11-20T15:27:31.513Z"
-          },
-          {
-            "id": "e79c8692-4cc2-4971-a52c-832e87b12e8f",
-            "accountId": "e79c8692-4cc2-4971-a52c-832e87b28e8f",
-            "key": "gender",
-            "value": "Male",
-            "createdAt": "2021-11-20T15:27:31.513Z",
-            "updatedAt": "2021-11-20T15:27:31.513Z"
-          },
-          {
-            "id": "e79c8692-4cc2-4971-a52c-832e87b13e8f",
-            "accountId": "e79c8692-4cc2-4971-a52c-832e87b28e8f",
-            "key": "language",
-            "value": "Bisaya",
-            "createdAt": "2021-11-20T15:27:31.513Z",
-            "updatedAt": "2021-11-20T15:27:31.513Z"
-          },
-          {
-            "id": "e79c8692-4cc2-4971-a52c-832e87b11e7f",
-            "accountId": "e79c8692-4cc2-4971-a52c-832e87b27e7f",
-            "key": "fullName",
-            "value": "Berto Admin",
-            "createdAt": "2021-11-20T15:27:31.513Z",
-            "updatedAt": "2021-11-20T15:27:31.513Z"
-          },
-          {
-            "id": "e79c8692-4cc2-4971-a52c-832e87b12e7f",
-            "accountId": "e79c8692-4cc2-4971-a52c-832e87b27e7f",
-            "key": "gender",
-            "value": "Male",
-            "createdAt": "2021-11-20T15:27:31.513Z",
-            "updatedAt": "2021-11-20T15:27:31.513Z"
-          },
-          {
-            "id": "e79c8692-4cc2-4971-a52c-832e87b13e7f",
-            "accountId": "e79c8692-4cc2-4971-a52c-832e87b27e7f",
-            "key": "language",
-            "value": "Bisaya",
-            "createdAt": "2021-11-20T15:27:31.513Z",
-            "updatedAt": "2021-11-20T15:27:31.513Z"
-          }
-    ]
 }

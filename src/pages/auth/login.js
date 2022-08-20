@@ -1,10 +1,12 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef } from 'react'
 
 import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
+import ReportProblemIcon from '@mui/icons-material/ReportProblem'
 import LoginIcon from '@mui/icons-material/Login'
+import Typography from '@mui/material/Typography'
 
 import AccountContext from '../../common/contexts/accountContext'
 import RouterContext from '../../common/contexts/routerContext'
@@ -19,38 +21,44 @@ const Login = (props) => {
         loginProgress: false,
         password: '',
         username: '',
-        errors: []
+        error: null
     })
     const routerCtx = useContext(RouterContext)
     const AccCtx = useContext(AccountContext)
     const lsCtx = useContext(LocalStorageContext)
 
+    let passwordRef = useRef()
+    let usernameRef = useRef()
+
     const login = async () => {
-        let username = ''
-        let password = ''
+        let username = usernameRef.current.value
+        let password = passwordRef.current.value
 
         setInternalStates({...internalstates, ...{loginProgress: true}})
         let loginResult = await AccCtx.signIn({username, password})
-        setInternalStates({...internalstates, ...{loginProgress: false}})
+        setInternalStates({...internalstates, ...{loginProgress: false, error: loginResult.error}})
         lsCtx.updateLocalStorage({authKey: loginResult.authKey})
     }
 
 
     return (
         <Grid container spacing={2}>
+
             <Grid item xs={12}>
                 <TextField
+                    inputRef={ usernameRef }
                     size='small'
                     fullWidth
                     variant='outlined'
                     color='primary'
                     type='text'
-                    label='username / email' />
+                    label='username' />
             </Grid>
             
 
             <Grid item xs={12}>
                 <TextField
+                    inputRef={ passwordRef }
                     size='small'
                     fullWidth
                     variant='outlined'
@@ -58,7 +66,18 @@ const Login = (props) => {
                     type='password'
                     label='password' />
             </Grid>
-            
+
+            {/* error message */}
+            {
+                internalstates.error? (
+                    <Grid item xs={12}>
+                        <ReportProblemIcon color='secondary' style={{ fontSize: 15, marginRight: 5 }} />
+                        <Typography variant='body1' component='span' color='secondary'>
+                            Error while trying to login. { internalstates.error }
+                        </Typography>
+                    </Grid>
+                ): null
+            }
 
             <Grid item xs={12}>
                 <LoadingButton

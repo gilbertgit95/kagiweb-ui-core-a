@@ -6,7 +6,7 @@ const RestConnector = (data = {}) => {
 
     let headers = {
         headers: {
-            ...{ authorization: lsData && lsData.authKey? lsData.authKey: '' },
+            ...{ 'Authorization': lsData && lsData.authKey? lsData.authKey: '' },
             ...( data && data.headers? data.headers: {} )
         }
     }
