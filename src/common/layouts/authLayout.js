@@ -33,7 +33,7 @@ const AuthLayout = (props) => {
         {
             label: 'Latest news from our team',
             component: (
-                <Button size="small" style={{ borderRadius: 5, marginRight: 15 }}>
+                <Button size='small' style={{ borderRadius: 5, marginRight: 15 }}>
                     <Typography>News</Typography>
                 </Button>
             ),
@@ -43,7 +43,7 @@ const AuthLayout = (props) => {
         {
             label: 'Contact or Learn about our Team',
             component: (
-                <Button size="small"  style={{ borderRadius: 5, marginRight: 15 }}>
+                <Button size='small'  style={{ borderRadius: 5, marginRight: 15 }}>
                     <Typography>About Us</Typography>
                 </Button>
             ),
@@ -121,16 +121,16 @@ const AuthLayout = (props) => {
                     rightLogo={rightLogo}
                     rightMenu={rightMenu}
                     onAction={onNavAction} />
-                <Container maxWidth="sm">
+                <Container maxWidth='sm'>
                     <Box>
                         <Toolbar />
                         <Grid container spacing={2}>
                             <Grid item xs={12} style={{textAlign: 'center'}}>
                                 <img
-                                    alt="logo"
+                                    alt='logo'
                                     style={{width: 150}}
                                     src='/favicon.png' />
-                                <Typography variant="h4" gutterBottom component="div">
+                                <Typography variant='h4' gutterBottom component='div'>
                                     { config.appName }
                                 </Typography>
                             </Grid>
@@ -138,17 +138,17 @@ const AuthLayout = (props) => {
                                 <Box
                                     style={{
                                         width: 300,
-                                    margin: 'auto',
-                                    padding: 20,
-                                    paddingTop: 40,
-                                    paddingBottom: 40,
-                                    boxShadow: '2px 2px 3px 2px rgb(0 0 0 / 20%)'
-                                }}>
+                                        margin: 'auto',
+                                        padding: 20,
+                                        paddingTop: 40,
+                                        paddingBottom: 40,
+                                        boxShadow: '2px 2px 3px 2px rgb(0 0 0 / 20%)'
+                                    }}>
                                 <Outlet />
                             </Box>
                         </Grid>
                         <Grid item xs={12} style={{textAlign: 'center'}}>
-                            <Typography variant="caption" display="block" gutterBottom>
+                            <Typography variant='caption' display='block' gutterBottom>
                                 2021@Davao City 8000 PH
                             </Typography>
                         </Grid>
