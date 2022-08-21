@@ -23,7 +23,7 @@ import {
 } from "react-router-dom";
 
 const ResetPassword = (props) => {
-    const { key } = useParams()
+    const { key, username } = useParams()
     const [internalstates, setInternalStates] = useState({
         resetProgress: false,
         newPassword: '',
@@ -32,20 +32,21 @@ const ResetPassword = (props) => {
         error: null
     })
     const routerCtx = useContext(RouterContext)
-    const [resetKey, setResetKey] = useState(key? key: '')
+    // const [resetKey, setResetKey] = useState(key? key: '')
+    // const [user, setUser] = useState(username? username: '')
     const usernameRef = useRef()
     const resetKeyRef = useRef()
     const newPasswordRef = useRef()
     const confirmPasswordRef = useRef()
 
-    const onChangeResetKey = (e) => {
-        setResetKey(e.target.value)
-    }
+    // const onChangeResetKey = (e) => {
+    //     setResetKey(e.target.value)
+    // }
 
-    const handleResetKeyValue = (e) => {
-        let keyVal = key? key: ''
-        setResetKey(keyVal)
-    }
+    // const handleResetKeyValue = (e) => {
+    //     let keyVal = key? key: ''
+    //     setResetKey(keyVal)
+    // }
 
     const resetPassword = async () => {
         let resetReq = null
@@ -107,6 +108,7 @@ const ResetPassword = (props) => {
                     fullWidth
                     variant='outlined'
                     color='primary'
+                    defaultValue={username}
                     inputRef={usernameRef}
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
@@ -118,8 +120,9 @@ const ResetPassword = (props) => {
 
             <Grid item xs={12}>
                 <TextField
-                    value={resetKey}
-                    onChange={onChangeResetKey}
+                    // value={resetKey}
+                    // onChange={onChangeResetKey}
+                    defaultValue={key}
                     inputRef={resetKeyRef}
                     size='small'
                     fullWidth
@@ -131,18 +134,6 @@ const ResetPassword = (props) => {
                         if (e.key === 'Enter') {
                             newPasswordRef.current.focus()
                         }
-                    }}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="Reset key"
-                                    onClick={handleResetKeyValue}
-                                    edge="end">
-                                    <RotateLeftIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
                     }} />
             </Grid>
 

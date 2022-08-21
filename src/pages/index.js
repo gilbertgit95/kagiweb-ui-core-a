@@ -72,7 +72,7 @@ const Pages = (props) => {
                     <Route path="" element={<Navigate replace to={`/${ config.rootRoute }/auth/login`} />} />
                     <Route path="login" element={<Login />} />
                     <Route path="resetPassword" element={<ResetPassword />} />
-                    <Route path="resetPassword/:key" element={<ResetPassword />} />
+                    <Route path="resetPassword/:username/:key" element={<ResetPassword />} />
                     <Route path="forgotPassword" element={<ForgotPassword />} />
                 </Route>
 
