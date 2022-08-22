@@ -27,8 +27,8 @@ const AccountView = ({ accountInfo }) => {
                         title={ 'Base Credentials' }>
                         <KeyValueBlock
                             data={[
-                                { key: 'Username', value: 'username101' },
-                                { key: 'Type', value: 'Super Admin' }
+                                { key: 'Username', value: accountInfo.username? accountInfo.username: '--' },
+                                { key: 'Type', value: accountInfo.role && accountInfo.role.name? accountInfo.role.name: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
@@ -41,8 +41,8 @@ const AccountView = ({ accountInfo }) => {
                         title={ 'Emails Adresses' }>
                         <KeyValueBlock
                             data={[
-                                { key: 'Primary', value: 'test101@gmail.com' },
-                                { key: 'Secondary', value: '--' }
+                                { key: 'Primary', value: accountInfo.primaryEmail? accountInfo.primaryEmail: '--' },
+                                { key: 'Secondary', value: accountInfo.secondaryEmail? accountInfo.secondaryEmail: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
@@ -55,8 +55,8 @@ const AccountView = ({ accountInfo }) => {
                         title={ 'Phone Numbers' }>
                         <KeyValueBlock
                             data={[
-                                { key: 'Primary', value: '+639273854600' },
-                                { key: 'Secondary', value: '--' }
+                                { key: 'Primary', value: accountInfo.primaryNumber? accountInfo.primaryNumber: '--' },
+                                { key: 'Secondary', value: accountInfo.primaryNumber? accountInfo.primaryNumber: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
