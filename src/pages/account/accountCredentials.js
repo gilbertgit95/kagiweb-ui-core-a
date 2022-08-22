@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import EditIcon from '@mui/icons-material/Edit'
@@ -15,6 +15,10 @@ const AccountCredentials = (props) => {
         openUpdate: false
     })
     const accCtx = useContext(AccountContext)
+
+    // useEffect(() => {
+    //     accCtx.fetchAccountData()
+    // }, [])
 
     return (
         <Container maxWidth="md">

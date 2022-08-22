@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 
 // import Link from '@mui/material/Link'
 import Container from '@mui/material/Container'
@@ -22,6 +22,10 @@ const AccountProfile = (props) => {
         openUpdate: false
     })
     const accCtx = useContext(AccountContext)
+
+    // useEffect(() => {
+    //     accCtx.fetchAccountData()
+    // }, [])
 
     return (
         <Container maxWidth="md">

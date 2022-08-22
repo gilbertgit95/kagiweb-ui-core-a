@@ -8,19 +8,7 @@ import KeyValueBlock from '../../../common/blocks/keyValueBlock'
 import GenBlock from '../../../common/blocks/genBlock'
 
 
-const AccountSettingsView = (props) => {
-    const [isLoading, setIsLoading] = useState(true)
-
-    useEffect(() => {
-        const fetchData = () => {
-            setIsLoading(true)
-            setTimeout(() => {
-                setIsLoading(false)
-            }, 1000)
-        }
-
-        fetchData()
-    }, [])
+const AccountSettingsView = ({ accountInfo }) => {
 
     return (
         <>
@@ -31,7 +19,7 @@ const AccountSettingsView = (props) => {
                     item xs={12} sm={12} md={4}
                     style={{ padding: 5 }}>
                     <GenBlock
-                        isLoading={isLoading}
+                        isLoading={accountInfo.__isLoading}
                         title={ 'Settings A' }>
                         <KeyValueBlock
                             data={[
@@ -46,7 +34,7 @@ const AccountSettingsView = (props) => {
                     item xs={12} sm={12} md={4}
                     style={{ padding: 5 }}>
                     <GenBlock
-                        isLoading={isLoading}
+                        isLoading={accountInfo.__isLoading}
                         title={ 'Settings B' }>
                         <KeyValueBlock
                             data={[
@@ -61,7 +49,7 @@ const AccountSettingsView = (props) => {
                     item xs={12} sm={12} md={4}
                     style={{ padding: 5 }}>
                     <GenBlock
-                        isLoading={isLoading}
+                        isLoading={accountInfo.__isLoading}
                         title={ 'Settings C' }>
                         <KeyValueBlock
                             data={[

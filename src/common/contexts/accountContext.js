@@ -7,6 +7,7 @@ import Rest from '../datasource/rest'
 const AccountContext = createContext({
     accountContext: {},
     setAccountContext(data) { return },
+    fetchAccountData() { return},
     signIn() { return },
     signOut() { return }
 })
@@ -57,64 +58,61 @@ export const useAccountContext = () => {
       setAccountContext({'__isLoading': false})
     }
 
-    useEffect(() => {
-      // check auth key if it exist
-      // console.log('authKey: ', lsCtx.localStorageContext.authKey)
+    const fetchAccountData = async () => {
       let localStoreVal = LocalStorage.getItem(storageName)
       let lsVal = localStoreVal? localStoreVal: {}
 
-      // if a token exist, then fetch user value using the token
-      let init = async () => {
-        if (lsVal.authKey) {
-          console.log('account data is being fetched by using authKey')
-          setAccountContext({
-            ...accountContext,
-            ...{'__isLoading': true}
+      if (lsVal.authKey) {
+        console.log('account data is being fetched by using authKey')
+        setAccountContext({
+          ...accountContext,
+          ...{'__isLoading': true}
+        })
+        let userData = null
+        let error = null
+        // await utils.waitFor(5)
+        try {
+          userData = await Rest({
+            method: 'GET',
+            url: '/api/v1/loggedAccount'
           })
-          let userData = null
-          let error = null
-          // await utils.waitFor(5)
-          try {
-            userData = await Rest({
-              method: 'GET',
-              url: '/api/v1/loggedAccount'
-            })
-          } catch (err) {
-            error = err.response.data.message
-          }
-
-          // check if if there are no response token
-          if (!userData) {
-            setAccountContext({
-              ...accountContext,
-              ...{
-                '__isLoading': false,
-                '__isLoggedIn': false
-              }
-            })
-            return
-          }
-
-          setAccountContext({...userData.data, ...{
-            '__isLoading': false,
-            '__isLoggedIn': true,
-          }})
-          console.log('account data has loaded')
-        } else {
-          setAccountContext({
-            ...accountContext,
-            ...{'__isLoading': false}
-          })
+        } catch (err) {
+          error = err.response.data.message
         }
+
+        // check if if there are no response token
+        if (!userData) {
+          setAccountContext({
+            ...accountContext,
+            ...{
+              '__isLoading': false,
+              '__isLoggedIn': false
+            }
+          })
+          return
+        }
+
+        setAccountContext({...userData.data, ...{
+          '__isLoading': false,
+          '__isLoggedIn': true,
+        }})
+        console.log('account data has loaded')
+      } else {
+        setAccountContext({
+          ...accountContext,
+          ...{'__isLoading': false}
+        })
       }
+    }
 
-      init()
-
+    useEffect(() => {
+      fetchAccountData()
     }, [])
 
     return {
       accountContext,
       setAccountContext,
+      fetchAccountData,
       signIn,
       signOut
     }
