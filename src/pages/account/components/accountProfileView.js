@@ -9,6 +9,14 @@ import KeyValueBlock from '../../../common/blocks/keyValueBlock'
 import GenBlock from '../../../common/blocks/genBlock'
 
 const AccountProfileView = ({ accountInfo }) => {
+    let claims = {}
+
+    if (accountInfo.accountClaims) {
+        claims = accountInfo.accountClaims.reduce((acc, claim) => {
+            acc[claim.key] = claim.value
+            return acc
+        }, {})
+    }
 
     return (
         <>
@@ -27,11 +35,11 @@ const AccountProfileView = ({ accountInfo }) => {
                             sx={{ width: 200, height: 200 }} />
                         <KeyValueBlock
                             data={[
-                                { key: 'First Name', value: 'Gilbert' },
-                                { key: 'Middle Name', value: 'Defante' },
-                                { key: 'Last Name', value: 'Cuerbo' },
-                                { key: 'Nick Name', value: 'Berto' },
-                                { key: 'Gender', value: 'Male' }
+                                { key: 'First Name', value: claims.firstname? claims.firstname: '--' },
+                                { key: 'Middle Name', value: claims.middlename? claims.middlename: '--' },
+                                { key: 'Last Name', value: claims.lastname? claims.lastname: '--'},
+                                { key: 'Nick Name', value: claims.nickname? claims.nickname: '--' },
+                                { key: 'Gender', value: claims.gender? claims.gender: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
@@ -44,12 +52,12 @@ const AccountProfileView = ({ accountInfo }) => {
                         title={ 'Advance Profile' }>
                         <KeyValueBlock
                             data={[
-                                { key: 'Nationality', value: 'Filipino' },
-                                { key: 'Birth Date', value: 'April 27, 1995' },
-                                { key: 'Birth Place', value: 'Cantilan, Surigao del Sur' },
-                                { key: 'Home Address', value: 'Pagantayan, Cantilan, Surigao del Sur' },
-                                { key: 'Personal Website', value: 'https://gilbertgit95.github.com' },
-                                { key: 'Bio', value: 'lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem' }
+                                { key: 'Nationality', value: claims.nationality? claims.nationality: '--' },
+                                { key: 'Birth Date', value: claims.birthdate? claims.birthdate: '--' },
+                                { key: 'Birth Place', value: claims.birthplace? claims.birthplace: '--' },
+                                { key: 'Home Address', value: claims.homeaddress? claims.homeaddress: '--' },
+                                { key: 'Personal Website', value: claims.personalwebsite? claims.personalwebsite: '--' },
+                                { key: 'Bio', value: claims.bio? claims.bio: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
@@ -62,14 +70,14 @@ const AccountProfileView = ({ accountInfo }) => {
                         title={ 'Work Related Profile' }>
                         <KeyValueBlock
                             data={[
-                                { key: 'Job Title', value: 'Sorfware Developer' },
-                                { key: 'Company Name', value: 'Kagiweb' },
-                                { key: 'Company Description', value: 'lorem ipsum gets its name from the Latin phrase Neque porro quisquam est qui dolorem' },
-                                { key: 'Industry Type', value: 'Information Technology' },
-                                { key: 'Contact Email', value: 'kagiweb@gmail.com' },
-                                { key: 'Contact Number', value: '09273854600' },
-                                { key: 'Company Website', value: 'https://gilbertgit95.github.com/kagiweb' },
-                                { key: 'Work Address', value: 'Cantilan, Surigao del Sur' }
+                                { key: 'Job Title', value: claims.companyrole? claims.companyrole: '--' },
+                                { key: 'Company Name', value: claims.companyname? claims.companyname: '--' },
+                                { key: 'Company Description', value: claims.companydesc? claims.companydesc: '--' },
+                                { key: 'Industry Type', value: claims.companyindustry? claims.companyindustry: '--' },
+                                { key: 'Contact Email', value: claims.companyemail? claims.companyemail: '--' },
+                                { key: 'Contact Number', value: claims.companyphone? claims.companyphone: '--' },
+                                { key: 'Company Website', value: claims.companywebsite? claims.companywebsite: '--' },
+                                { key: 'Work Address', value: claims.companyaddress? claims.companyaddress: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>
