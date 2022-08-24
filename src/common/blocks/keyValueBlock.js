@@ -1,54 +1,55 @@
+import React from 'react'
 import { NoEncryption } from '@mui/icons-material'
 import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
 
 const KeyValueBlock = (props) => {
     let data = props.data? props.data: []
     let style = props.style? props.style: {}
 
     return (
-        <table border='0' cellSpacing='0' style={style}>
-            <tbody>
-                {
-                    data.map((row, rowIndex) => {
-                        return (
-                            <tr key={ 'row_' + rowIndex }>
-                                <td style={{...styles.td, ...styles.key}}>
+        <Grid
+            style={{...{ marginBottom: 20 }, ...style}}
+            container>
+            {
+                data.map((row, rowIndex) => {
+                    return (
+                        <React.Fragment key={ 'row_' + rowIndex }>
+                            <Grid
+                                item xs={6}
+                                style={{ padding: 5 }}>
+                                <Box>
                                     <Typography
                                         color='primary'
                                         variant='body1'>
                                         { row.key }
                                     </Typography>
-                                </td>
-                                <td style={{...styles.td, ...styles.value}}>
+                                </Box>
+                            </Grid>
+                            <Grid
+                                item xs={6}
+                                style={{ padding: 5 }}>
+                                <Box 
+                                    style={{
+                                        maxWidth: '100%',
+                                        overflow: 'auto',
+                                        padding: 5
+                                    }}>
                                     <Typography
+                                        component='div'
                                         variant='body1'>
                                         { row.value }
                                     </Typography>
-                                </td>
-                            </tr>
-                        )
-                    })
-                }
-            </tbody>
-        </table>
+                                </Box>
+                            </Grid>
+                        </React.Fragment>
+                    )
+                })
+            }
+            
+        </Grid>
     )
-}
-
-const styles = {
-    key: {
-        // textAlign: 'right',
-        // borderRight: '1px solid'
-    },
-    value: {
-        lineBreak: 'anywhere',
-    },
-    td: {
-        padding: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
-        paddingRight: 5,
-        verticalAlign: 'top'
-    }
 }
 
 export default KeyValueBlock

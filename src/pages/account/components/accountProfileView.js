@@ -5,6 +5,7 @@ import Avatar from '@mui/material/Avatar'
 // import TextField from '@mui/material/TextField'
 // import Button from '@mui/material/Button'
 // import AccountContext from '../../../common/contexts/accountContext'
+import PrimaryProfileBlock from '../../../common/blocks/primaryProfileBlock'
 import KeyValueBlock from '../../../common/blocks/keyValueBlock'
 import GenBlock from '../../../common/blocks/genBlock'
 
@@ -18,34 +19,36 @@ const AccountProfileView = ({ accountInfo }) => {
         }, {})
     }
 
+    let fullname = ''
+    fullname += claims.firstname? claims.firstname: ''
+    fullname += claims.middlename? ' ' + claims.middlename: ''
+    fullname += claims.lastname? ' ' + claims.lastname: ''
+
     return (
         <>
             <Grid
                 style={{ marginBottom: 20 }}
                 container>
                 <Grid
-                    item xs={12} sm={12} md={4}
+                    item xs={12}
                     style={{ padding: 5 }}>
                     <GenBlock
                         isLoading={accountInfo.__isLoading}
                         title={ 'Basic Profile' }>
-                        <Avatar
+                        {/* <Avatar
                             alt="Profile Picture"
                             src="/favicon.png"
-                            sx={{ width: 200, height: 200 }} />
-                        <KeyValueBlock
-                            data={[
-                                { key: 'First Name', value: claims.firstname? claims.firstname: '--' },
-                                { key: 'Middle Name', value: claims.middlename? claims.middlename: '--' },
-                                { key: 'Last Name', value: claims.lastname? claims.lastname: '--'},
-                                { key: 'Nick Name', value: claims.nickname? claims.nickname: '--' },
-                                { key: 'Gender', value: claims.gender? claims.gender: '--' }
-                            ]}/>
+                            sx={{ width: 200, height: 200 }} /> */}
+                        <PrimaryProfileBlock
+                            image={'/favicon.png'}
+                            header={fullname? fullname: '--'}
+                            subHeader={'Nickname: ' + (claims.nickname? claims.nickname: '--')}
+                            subSubHeaders={['Gender: ' + (claims.gender? claims.gender: '--')]} />
                     </GenBlock>
                 </Grid>
 
                 <Grid
-                    item xs={12} sm={12} md={4}
+                    item xs={12} sm={6}
                     style={{ padding: 5 }}>
                     <GenBlock
                         isLoading={accountInfo.__isLoading}
@@ -63,7 +66,7 @@ const AccountProfileView = ({ accountInfo }) => {
                 </Grid>
 
                 <Grid
-                    item xs={12} sm={12} md={4}
+                    item xs={12} sm={6}
                     style={{ padding: 5 }}>
                     <GenBlock
                         isLoading={accountInfo.__isLoading}

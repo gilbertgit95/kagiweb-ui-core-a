@@ -30,10 +30,10 @@ const CurriculumVitae = (props) => {
         <Grid container spacing={2}>
             <Grid item xs={12} style={ styles.sectionStyle }>
                 <PriProfileBlock
-                    profilePic={ states.aboutMe? states.aboutMe.header.profilePic: '' }
-                    fullName={ states.aboutMe? states.aboutMe.header.fullname: '' }
-                    position={ states.aboutMe? states.aboutMe.header.workDesc: '' }
-                    contacts={ states.aboutMe? states.aboutMe.header.links.map(item => item.value): [] } />
+                    image={ states.aboutMe? states.aboutMe.header.profilePic: '' }
+                    header={ states.aboutMe? states.aboutMe.header.fullname: '' }
+                    subHeader={ states.aboutMe? states.aboutMe.header.workDesc: '' }
+                    subSubHeaders={ states.aboutMe? states.aboutMe.header.links.map(item => item.value): [] } />
             </Grid>
 
             <Grid item xs={12} style={ styles.sectionStyle }>
