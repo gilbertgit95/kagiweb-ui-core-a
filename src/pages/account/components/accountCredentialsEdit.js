@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography'
 
 import SelectBox from '../../../common/inputs/selectBox'
 
+import GlobalDialogContext from '../../../common/contexts/globalDialogContext'
 import AccountContext from '../../../common/contexts/accountContext'
 import VerticalSteps from '../../../common/navs/verticalStepsNav'
 import utils from '../../../common/utilities'
@@ -16,6 +17,7 @@ import { useSnackbar } from 'notistack'
 
 const AccountCredentialEdit = (props) => {
     const accountCtx = useContext(AccountContext)
+    const dialogCtx = useContext(GlobalDialogContext)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
     const steps = [
@@ -45,21 +47,21 @@ const AccountCredentialEdit = (props) => {
                                 {label: 'Admin', value: 'admin'}
                             ]} />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={4}>
+                    {/* <Grid item xs={12} sm={12} md={4}>
                         <TextField
                             fullWidth
                             required
                             type='password'
                             label="Old Password" />
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={4}>
+                    </Grid> */}
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             fullWidth
                             required
                             type='password'
                             label="New password" />
                     </Grid>
-                    <Grid item xs={12} sm={12} md={4}>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             fullWidth
                             required
@@ -70,6 +72,16 @@ const AccountCredentialEdit = (props) => {
             ),
             action: async () => {
                 console.log('Base Credentials')
+
+                let inputData = await dialogCtx.showDialog({
+                    type: 'confirm',
+                    title: 'Confirm',
+                    message: 'This action requires you password.',
+                    color: 'secondary'
+                })
+                if (inputData.status !== 'inputPrompt') return false
+                console.log('dialog data: ', inputData)
+
                 await utils.waitFor(1)
                 return true
             }
@@ -101,6 +113,16 @@ const AccountCredentialEdit = (props) => {
             ),
             action: async () => {
                 console.log('email addresses')
+
+                let inputData = await dialogCtx.showDialog({
+                    type: 'confirm',
+                    title: 'Confirm',
+                    message: 'This action requires you password.',
+                    color: 'secondary'
+                })
+                if (inputData.status !== 'inputPrompt') return false
+                console.log('dialog data: ', inputData)
+
                 await utils.waitFor(1)
                 return true
             }
@@ -132,6 +154,16 @@ const AccountCredentialEdit = (props) => {
             ),
             action: async () => {
                 console.log('phone numbers')
+
+                let inputData = await dialogCtx.showDialog({
+                    type: 'confirm',
+                    title: 'Confirm',
+                    message: 'This action requires you password.',
+                    color: 'secondary'
+                })
+                if (inputData.status !== 'inputPrompt') return false
+                console.log('dialog data: ', inputData)
+
                 await utils.waitFor(1)
                 return true
             }
