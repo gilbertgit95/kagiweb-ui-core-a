@@ -13,7 +13,7 @@ import LoadingButton from '../atomicComponents/loadingButton'
 const VerticalLinearStepperNav = (props) => {
   const [activeStep, setActiveStep] = useState(0)
   const [loadingStates, setLoadingStates] = useState({
-    steps: []
+    steps: [...props.views.map(() => false), false]
   })
 
   const handleNext = async () => {
@@ -45,17 +45,11 @@ const VerticalLinearStepperNav = (props) => {
         }
     }
 
-    // stps[activeStep] = true
-    // setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+    // do not proceed if in the final step
+    // and there are no final view
+    if ((activeStep === props.views.length -1) && !props.finalView) return
 
-    // if (props.views && typeof props.views[activeStep].action === 'function') {
-    //   result = await props.views[activeStep].action()
-    // }
-
-    // // set loading to false
-    // stps[activeStep] = false
-    // setLoadingStates({ ...loadingStates, ...{ steps: stps }})
-
+    // increment to next step
     if (result) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
@@ -92,17 +86,19 @@ const VerticalLinearStepperNav = (props) => {
   let finishLabel = props.finishBtnlabel? props.finishBtnlabel: 'Finish'
   let finalLabel = props.finalBtnLabel? props.finalBtnLabel: 'Save Changes'
 
-  useEffect(() => {
-    let stps = []
+  // useEffect(() => {
+  //   let stps = []
 
-    if (props.views && props.views.length) {
-      stps = props.views.map(() => false)
-      // push a loading state for the final view
-      stps.push(false)
-    }
+  //   if (props.views && props.views.length) {
+  //     stps = props.views.map(() => false)
+  //     // push a loading state for the final view
+  //     stps.push(false)
+  //   }
   
-    setLoadingStates({ ...loadingStates, ...{ steps: stps }})
-  }, [props.views])
+  //   setLoadingStates({ ...loadingStates, ...{ steps: stps }})
+  // }, [props.views])
+
+  console.log('steps: ', loadingStates)
 
   return (
     <Box>

@@ -231,7 +231,7 @@ const AccountCredentialEdit = (props) => {
                     finishBtnlabel={ 'Save and Finish' }
                     finalBtnLabel={ 'Save Changes' }
                     disableLabelClick={ false }
-                    finalView={ finalView }
+                    // finalView={ finalView }
                     views={ steps } />
             </Grid>
         </Grid>
