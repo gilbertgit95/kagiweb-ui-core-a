@@ -86,20 +86,6 @@ const VerticalLinearStepperNav = (props) => {
   let finishLabel = props.finishBtnlabel? props.finishBtnlabel: 'Finish'
   let finalLabel = props.finalBtnLabel? props.finalBtnLabel: 'Save Changes'
 
-  // useEffect(() => {
-  //   let stps = []
-
-  //   if (props.views && props.views.length) {
-  //     stps = props.views.map(() => false)
-  //     // push a loading state for the final view
-  //     stps.push(false)
-  //   }
-  
-  //   setLoadingStates({ ...loadingStates, ...{ steps: stps }})
-  // }, [props.views])
-
-  console.log('steps: ', loadingStates)
-
   return (
     <Box>
       {/* the main stepper */}
