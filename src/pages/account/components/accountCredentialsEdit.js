@@ -173,51 +173,6 @@ const AccountCredentialEdit = (props) => {
         }
     ]
 
-    let finalView = {
-        component: (
-            <>
-                <Typography>
-                    All steps completed. Please see the change details before
-                    saving.
-                </Typography>
-            </>
-        ),
-        action: async () => {
-            console.log('finish button')
-
-            // test for notifications
-            // this will also serve as reference
-            await utils.waitFor(1)
-            enqueueSnackbar('test notification 1', {
-                variant: 'info',
-            });
-            await utils.waitFor(1)
-            enqueueSnackbar('test notification 1', {
-                variant: 'error',
-                persist: true,
-                action: (key) => (
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        onClick={() => { closeSnackbar(key) }}>
-                        Dismiss
-                    </Button>
-                )
-            });
-            await utils.waitFor(1)
-            enqueueSnackbar('test notification 1', {
-                variant: 'warning',
-                autoHideDuration: 10000,
-            });
-            await utils.waitFor(1)
-            enqueueSnackbar('test notification 1', {
-                variant: 'success'
-            });
-
-            return true
-        }
-    }
-
     useEffect(() => {
         console.log('data in account edit: ', accountCtx.accountContext)
 
@@ -231,7 +186,6 @@ const AccountCredentialEdit = (props) => {
                     finishBtnlabel={ 'Save and Finish' }
                     finalBtnLabel={ 'Save Changes' }
                     disableLabelClick={ false }
-                    // finalView={ finalView }
                     views={ steps } />
             </Grid>
         </Grid>

@@ -195,24 +195,6 @@ const AccountProfileEdit = (props) => {
         }
     ]
 
-    let finalView = {
-        component: (
-            <>
-                <Typography>
-                    All steps completed. Please see the change details before
-                    saving.
-                </Typography>
-            </>
-        ),
-        action: async () => {
-            console.log('finish button')
-
-            await utils.waitFor(1)
-
-            return true
-        }
-    }
-
     useEffect(() => {
         console.log('data in account edit: ', accountCtx.accountContext)
 
@@ -226,7 +208,6 @@ const AccountProfileEdit = (props) => {
                     finishBtnlabel={ 'Save and Finish' }
                     finalBtnLabel={ 'Save Changes' }
                     disableLabelClick={ false }
-                    finalView={ finalView }
                     views={ steps } />
             </Grid>
         </Grid>
