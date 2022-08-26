@@ -74,13 +74,14 @@ const AccountCredentialEdit = (props) => {
                 console.log('Base Credentials')
 
                 let inputData = await dialogCtx.showDialog({
-                    type: 'confirm',
-                    title: 'Confirm',
+                    type: 'input',
+                    inputType: 'password',
+                    title: 'Password',
                     message: 'This action requires you password.',
                     color: 'secondary'
                 })
-                if (inputData.status !== 'inputPrompt') return false
                 console.log('dialog data: ', inputData)
+                if (inputData.status !== 'proceed') return false
 
                 await utils.waitFor(1)
                 return true
@@ -115,13 +116,14 @@ const AccountCredentialEdit = (props) => {
                 console.log('email addresses')
 
                 let inputData = await dialogCtx.showDialog({
-                    type: 'confirm',
-                    title: 'Confirm',
+                    type: 'input',
+                    inputType: 'password',
+                    title: 'Password',
                     message: 'This action requires you password.',
                     color: 'secondary'
                 })
-                if (inputData.status !== 'inputPrompt') return false
                 console.log('dialog data: ', inputData)
+                if (inputData.status !== 'proceed') return false
 
                 await utils.waitFor(1)
                 return true
@@ -156,13 +158,14 @@ const AccountCredentialEdit = (props) => {
                 console.log('phone numbers')
 
                 let inputData = await dialogCtx.showDialog({
-                    type: 'confirm',
-                    title: 'Confirm',
+                    type: 'input',
+                    inputType: 'password',
+                    title: 'Password',
                     message: 'This action requires you password.',
                     color: 'secondary'
                 })
-                if (inputData.status !== 'inputPrompt') return false
                 console.log('dialog data: ', inputData)
+                if (inputData.status !== 'proceed') return false
 
                 await utils.waitFor(1)
                 return true

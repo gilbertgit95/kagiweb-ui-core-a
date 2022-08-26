@@ -1,8 +1,11 @@
 import { useState, useEffect, createContext } from 'react'
 
+import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 
 import NormalDialogBox from '../popups/normalDialogBox'
+import SelectBox from '../inputs/selectBox'
 
 const LOCAL_STORAGE = {
     checkerInterval: 1000,
@@ -20,7 +23,9 @@ const DEFAULT_DATA = {
         </>
     ),
     open: false,
-    type: 'alert', // alert || confirm
+    type: 'alert', // alert || confirm || input,
+    inputType: 'text', // text || password
+    options: null
 }
 
 const GlobalDialogContext = createContext({
@@ -34,7 +39,13 @@ export default GlobalDialogContext
 export const useGlobalDialogContext = () => {
     const [globalDialogContext, setGlobalDialogContext] = useState(DEFAULT_DATA)
 
-    const showDialog =({title, message, Container, type, color}) => {
+    const showDialog = ({
+                            title, message, Container, type,
+                            color = 'primary',
+                            inputType = 'text',
+                            options = null
+                        }) => {
+
         let newData = {open: true}
 
         if (title) newData['title'] = title
@@ -42,7 +53,9 @@ export const useGlobalDialogContext = () => {
         if (Container) newData['Container'] = Container
         if (type) newData['type'] = type
 
-        newData['color'] = color? color: 'primary'
+        newData['inputType'] = inputType
+        newData['options'] = options
+        newData['color'] = color
 
         setGlobalDialogContext({...globalDialogContext, ...newData})
         if (LOCAL_STORAGE.checkerIntervalID) {
@@ -83,6 +96,7 @@ export const useGlobalDialogContext = () => {
 }
 
 export const GlobalDialogComponents = (props) => {
+    const [value, setValue] = useState(null)
 
     let msg = props.message? props.message: ''
     let type = props.type? props.type: 'alert'
@@ -92,6 +106,7 @@ export const GlobalDialogComponents = (props) => {
 
     return (
         <>
+            {/* alert dialogbox */}
             <NormalDialogBox
                 title={ props.title? props.title: '' }
                 color={ props.color? props.color: 'primary' }
@@ -104,6 +119,8 @@ export const GlobalDialogComponents = (props) => {
                     { msg }
                 </Container>
             </NormalDialogBox>
+
+            {/* confirm dialog box */}
             <NormalDialogBox
                 title={ props.title? props.title: '' }
                 color={ props.color? props.color: 'primary' }
@@ -122,6 +139,54 @@ export const GlobalDialogComponents = (props) => {
                 )}>
                 <Container>
                     { msg }
+                </Container>
+            </NormalDialogBox>
+
+            {/* input dialogbox */}
+            <NormalDialogBox
+                title={ props.title? props.title: '' }
+                color={ props.color? props.color: 'primary' }
+                open={ props.open && type === 'input'? props.open: false }
+                fullWidth={ true } strictClose={ true }
+                onClose={props.onAction? () => {
+                    props.onAction({status: 'close'})
+                }: () => {}}
+                actions={(
+                    <Button
+                        variant='contained'
+                        color={ props.color? props.color: 'primary' }
+                        onClick={() => {
+                            props.onAction({status: 'proceed', value})
+                        }}>Proceed</Button>
+                )}>
+                <Container>
+                    <Box>{ msg }</Box>
+                    <Box style={{marginTop: 10}}>
+                        {/* text input */}
+                        {
+                            props.inputType === 'text'?
+                                <TextField
+                                    fullWidth
+                                    size='small'
+                                    onChange={(e) => {
+                                        setValue(e.target.value)
+                                    }}
+                                    defaultValue={props.options? props.options: ''} />: null
+                        }
+
+                        {/* password input */}
+                        {
+                            props.inputType === 'password'?
+                                <TextField
+                                    fullWidth
+                                    size='small'
+                                    type='password'
+                                    onChange={(e) => {
+                                        setValue(e.target.value)
+                                    }}
+                                    defaultValue={props.options? props.options: ''} />: null
+                        }
+                    </Box>
                 </Container>
             </NormalDialogBox>
         </>
