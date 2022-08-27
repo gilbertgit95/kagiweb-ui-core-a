@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from 'react'
+import { useState, useRef, useEffect, createContext } from 'react'
 
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -97,6 +97,7 @@ export const useGlobalDialogContext = () => {
 
 export const GlobalDialogComponents = (props) => {
     const [value, setValue] = useState(null)
+    const proceedRef = useRef()
 
     let msg = props.message? props.message: ''
     let type = props.type? props.type: 'alert'
@@ -153,6 +154,7 @@ export const GlobalDialogComponents = (props) => {
                 }: () => {}}
                 actions={(
                     <Button
+                        ref={proceedRef}
                         variant='contained'
                         color={ props.color? props.color: 'primary' }
                         onClick={() => {
@@ -171,6 +173,11 @@ export const GlobalDialogComponents = (props) => {
                                     onChange={(e) => {
                                         setValue(e.target.value)
                                     }}
+                                    onKeyPress={(e) => {
+                                        if (e.key === "Enter") {
+                                            proceedRef.current.click()
+                                        }
+                                    }}
                                     defaultValue={props.options? props.options: ''} />: null
                         }
 
@@ -183,6 +190,11 @@ export const GlobalDialogComponents = (props) => {
                                     type='password'
                                     onChange={(e) => {
                                         setValue(e.target.value)
+                                    }}
+                                    onKeyPress={(e) => {
+                                        if (e.key === "Enter") {
+                                            proceedRef.current.click()
+                                        }
                                     }}
                                     defaultValue={props.options? props.options: ''} />: null
                         }

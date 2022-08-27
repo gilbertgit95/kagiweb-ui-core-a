@@ -135,7 +135,7 @@ const AccountSettingsEdit = (props) => {
             <Grid item xs={12}>
                 <VerticalSteps
                     nextBtnLabel={ 'Save and Next' }
-                    finishBtnlabel={ 'Save and Finish' }
+                    finishBtnlabel={ 'Save' }
                     finalBtnLabel={ 'Save Changes' }
                     disableLabelClick={ false }
                     views={ steps } />

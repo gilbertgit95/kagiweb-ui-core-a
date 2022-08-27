@@ -24,7 +24,7 @@ const NormalDialogBox = (props) => {
             <DialogContent>
                 <Box
                     noValidate
-                    component="form"
+                    component="div"
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
