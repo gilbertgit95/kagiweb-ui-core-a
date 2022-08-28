@@ -20,6 +20,8 @@ const AccountCredentialEdit = (props) => {
     const dialogCtx = useContext(GlobalDialogContext)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
+    let updateType = props.updateType? props.updateType: 'loggedinAccount' // 'loggedinAccount' || 'administarator'
+
     const steps = [
         {
             icon: null,
@@ -34,19 +36,24 @@ const AccountCredentialEdit = (props) => {
                             You can only change the password.
                         </Typography>
                     </Grid>
-                    <Grid item xs={12}>
-                        <SelectBox
-                            style={{ width: '100%' }}
-                            label='Role'
-                            value='super_admin'
-                            onChange={e => {
-                                console.log('selected', e)
-                            }}
-                            options={[
-                                {label: 'Super Admin', value: 'super_admin'},
-                                {label: 'Admin', value: 'admin'}
-                            ]} />
-                    </Grid>
+                    {/* available only for administrator */}
+                    {
+                        updateType === 'administrator'? (
+                            <Grid item xs={12}>
+                                <SelectBox
+                                    style={{ width: '100%' }}
+                                    label='Role'
+                                    value='super_admin'
+                                    onChange={e => {
+                                        console.log('selected', e)
+                                    }}
+                                    options={[
+                                        {label: 'Super Admin', value: 'super_admin'},
+                                        {label: 'Admin', value: 'admin'}
+                                    ]} />
+                            </Grid>
+                        ): null
+                    }
                     {/* <Grid item xs={12} sm={12} md={4}>
                         <TextField
                             fullWidth
