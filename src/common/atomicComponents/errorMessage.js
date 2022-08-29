@@ -9,9 +9,9 @@ const ErrorMessage = (props) => {
 
     return (
         <Box
+            style={{...props.style? props.style: {}}}
             sx={{
                 padding: '10px',
-                marginTop: '10px',
                 textAlign: 'center',
                 background: theme.palette.secondary.main + '0a'
             }}>

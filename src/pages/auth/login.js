@@ -4,10 +4,10 @@ import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
-import ReportProblemIcon from '@mui/icons-material/ReportProblem'
 import LoginIcon from '@mui/icons-material/Login'
 import Typography from '@mui/material/Typography'
 
+import ErrorMessage from '../../common/atomicComponents/errorMessage'
 import AccountContext from '../../common/contexts/accountContext'
 import RouterContext from '../../common/contexts/routerContext'
 import LocalStorageContext from '../../common/contexts/localStorageContext'
@@ -81,10 +81,9 @@ const Login = (props) => {
             {
                 internalstates.error? (
                     <Grid item xs={12}>
-                        <ReportProblemIcon color='secondary' style={{ fontSize: 15, marginRight: 5 }} />
-                        <Typography variant='body1' component='span' color='secondary'>
+                        <ErrorMessage>
                             Error while trying to login. { internalstates.error }
-                        </Typography>
+                        </ErrorMessage>
                     </Grid>
                 ): null
             }

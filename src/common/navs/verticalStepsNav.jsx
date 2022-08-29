@@ -140,7 +140,7 @@ const VerticalLinearStepperNav = (props) => {
               </Box>
               {
                 error? (
-                  <ErrorMessage>{ error }</ErrorMessage>
+                  <ErrorMessage style={{marginTop: 10}}>{ error }</ErrorMessage>
                 ): null
               }
               <Box sx={{ mb: 2 }}>

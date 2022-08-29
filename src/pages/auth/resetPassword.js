@@ -5,13 +5,13 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
-import ReportProblemIcon from '@mui/icons-material/ReportProblem'
 import LoginIcon from '@mui/icons-material/Login'
 // import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import RotateLeftIcon from '@mui/icons-material/RotateLeft'
 
+import ErrorMessage from '../../common/atomicComponents/errorMessage'
 import RouterContext, { useRouterContext } from '../../common/contexts/routerContext'
 import LoadingButton from '../../common/atomicComponents/loadingButton'
 import Rest from '../../common/datasource/rest'
@@ -173,10 +173,10 @@ const ResetPassword = (props) => {
             {
                 internalstates.error? (
                     <Grid item xs={12}>
-                        <ReportProblemIcon color='secondary' style={{ fontSize: 15, marginRight: 5 }} />
-                        <Typography variant='body1' component='span' color='secondary'>
-                            Error while trying to request a password reset code. { internalstates.error }
-                        </Typography>
+                        <ErrorMessage>
+                            Error while trying to request a password reset code.
+                            { internalstates.error }
+                        </ErrorMessage>
                     </Grid>
                 ): null
             }
