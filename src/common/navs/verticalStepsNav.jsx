@@ -7,10 +7,12 @@ import StepContent from '@mui/material/StepContent'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import ErrorMessage from '../atomicComponents/errorMessage'
 
 import LoadingButton from '../atomicComponents/loadingButton'
 
 const VerticalLinearStepperNav = (props) => {
+  const [error, setError] = useState('Test Error message, wrong password')
   const [activeStep, setActiveStep] = useState(0)
   const [loadingStates, setLoadingStates] = useState({
     steps: [...props.views.map(() => false), false]
@@ -30,7 +32,11 @@ const VerticalLinearStepperNav = (props) => {
       setLoadingStates({ ...loadingStates, ...{ steps: stps }})
 
       if (props.views && typeof props.views[activeStep].action === 'function') {
-          result = await props.views[activeStep].action()
+          try {
+            result = await props.views[activeStep].action()
+          } catch (err) {
+            setError(err)
+          }
       }
 
       // set loading to false
@@ -41,7 +47,12 @@ const VerticalLinearStepperNav = (props) => {
         if (   props.views
             && typeof props.views[activeStep].action === 'function'
             && props.views[activeStep].action.constructor.name === 'Function') {
-            result = props.views[activeStep].action()
+            try {
+              result = props.views[activeStep].action()
+            } catch (err) {
+              setError(err)
+            }
+            
         }
     }
 
@@ -51,15 +62,18 @@ const VerticalLinearStepperNav = (props) => {
 
     // increment to next step
     if (result) {
+      setError(null)
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
 
   const handleBack = () => {
+    setError(null)
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   const handleReset = () => {
+    setError(null)
     setActiveStep(0);
   };
 
@@ -73,8 +87,12 @@ const VerticalLinearStepperNav = (props) => {
         stps[activeStep] = true
         setLoadingStates({ ...loadingStates, ...{ steps: stps }})
 
-        let result = await props.finalView.action()
-
+        let result = null
+        try {
+          result = await props.finalView.action()
+        } catch (err) {
+          setError(err)
+        }
         // set loading to false
         stps[activeStep] = false
         setLoadingStates({ ...loadingStates, ...{ steps: stps }})
@@ -120,6 +138,11 @@ const VerticalLinearStepperNav = (props) => {
               <Box>
                 { step.component? step.component: null }
               </Box>
+              {
+                error? (
+                  <ErrorMessage>{ error }</ErrorMessage>
+                ): null
+              }
               <Box sx={{ mb: 2 }}>
                 <div
                   style={{
