@@ -52,12 +52,7 @@ const ForgotPassword = (props) => {
 
         setInternalStates({...internalstates, ...{forgotProgress: true}})
         try {
-            resetReq = await Rest({
-                method: 'POST',
-                url: '/api/v1/auth/passwordResetCode',
-                data: formData,
-                headers: { 'Content-Type': 'multipart/form-data' }
-            })
+            resetReq = await Rest.auth.forgotRequest({ formData })
         } catch (err) {
             error = err.response.data.message
         }

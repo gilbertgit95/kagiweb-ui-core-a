@@ -32,8 +32,13 @@ const AccountCredentialEdit = (props) => {
                         <Typography
                             style={styles.caption}
                             variant='body1'>
-                            Username is immutable and updating User Role is only allowed to Admin module.
-                            You can only change the password.
+                            {
+                                updateType === 'administrator'?
+                                'Please double check if you need to change the user role. ': null
+                            }
+                            We encourage you to create strong password for better security.
+                            Atleast 1 capital and small letter, atleast 1 number,
+                            atleast 1 special character, length is 8-12 characters.'
                         </Typography>
                     </Grid>
                     {/* available only for administrator */}

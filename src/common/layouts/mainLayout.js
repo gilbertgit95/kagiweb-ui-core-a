@@ -137,10 +137,7 @@ const MainLayout = (props) => {
         if (e === 'logout') {
             try {
                 // logout out endpoint for now is only used for logging
-                await Rest({
-                method: 'POST',
-                url: '/api/v1/auth/logout'
-                })
+                await Rest.auth.signOut()
             } catch (err) {
                 // just do nothing
             }

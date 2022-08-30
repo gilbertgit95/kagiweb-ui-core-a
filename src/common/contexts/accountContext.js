@@ -31,12 +31,7 @@ export const useAccountContext = () => {
       formData.append('password', password)
 
       try {
-        authData = await Rest({
-          method: 'POST',
-          url: '/api/v1/auth/login',
-          data: formData,
-          headers: { 'Content-Type': 'multipart/form-data' }
-        })
+        authData = await Rest.auth.signIn({ formData })
       } catch (err) {
         error = err.response.data.message
       }
@@ -72,10 +67,7 @@ export const useAccountContext = () => {
         let error = null
         // await utils.waitFor(5)
         try {
-          userData = await Rest({
-            method: 'GET',
-            url: '/api/v1/loggedAccount'
-          })
+          userData = await Rest.loggedAccount.getAccountInfo()
         } catch (err) {
           error = err.response.data.message
         }

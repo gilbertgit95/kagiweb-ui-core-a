@@ -10,6 +10,8 @@ import AccountEdit from './components/accountCredentialsEdit'
 
 import AccountContext from '../../common/contexts/accountContext'
 
+import Rest from '../../common/datasource/rest'
+
 const AccountCredentials = (props) => {
     const [states, setStates] = useState({
         openUpdate: false
@@ -36,7 +38,9 @@ const AccountCredentials = (props) => {
                         onClose={ () => {
                             setStates({ ...states, ...{ openUpdate: false } })
                         }}>
-                        <AccountEdit accountInfo={accCtx.accountContext} />
+                        <AccountEdit
+                            accountInfo={accCtx.accountContext}
+                            onSaveData={Rest.loggedAccount.saveCredential} />
                     </OpenCloseBox>
                 </Grid>
             </Grid>

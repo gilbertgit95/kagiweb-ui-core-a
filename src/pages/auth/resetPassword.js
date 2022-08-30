@@ -76,12 +76,7 @@ const ResetPassword = (props) => {
 
         setInternalStates({...internalstates, ...{resetProgress: true}})
         try {
-            resetReq = await Rest({
-                method: 'POST',
-                url: '/api/v1/auth/passwordReset',
-                data: formData,
-                headers: { 'Content-Type': 'multipart/form-data' }
-            })
+            resetReq = await Rest.auth.resetPassword({ formData })
         } catch (err) {
             error = err.response.data.message
         }

@@ -12,7 +12,7 @@ import ErrorMessage from '../atomicComponents/errorMessage'
 import LoadingButton from '../atomicComponents/loadingButton'
 
 const VerticalLinearStepperNav = (props) => {
-  const [error, setError] = useState('Test Error message, wrong password')
+  const [error, setError] = useState(null)
   const [activeStep, setActiveStep] = useState(0)
   const [loadingStates, setLoadingStates] = useState({
     steps: [...props.views.map(() => false), false]
