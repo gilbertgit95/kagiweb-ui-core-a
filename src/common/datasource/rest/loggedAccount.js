@@ -8,7 +8,11 @@ const getAccountInfo = async () => {
 }
 
 const updateCredential = async (data) => {
-
+    return await Rest({
+        method: 'POST',
+        url: '/api/v1/loggedAccount/credential',
+        data: data
+    })
 }
 
 

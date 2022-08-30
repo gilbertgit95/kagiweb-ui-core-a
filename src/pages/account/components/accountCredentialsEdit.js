@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 // import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 // import Box from '@mui/material/Box'
@@ -13,12 +13,20 @@ import AccountContext from '../../../common/contexts/accountContext'
 import VerticalSteps from '../../../common/navs/verticalStepsNav'
 import utils from '../../../common/utilities'
 
-import { useSnackbar } from 'notistack'
-
 const AccountCredentialEdit = (props) => {
     const accountCtx = useContext(AccountContext)
     const dialogCtx = useContext(GlobalDialogContext)
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+
+    const roleRef = useRef()
+    const newPasswordRef = useRef()
+    const retypePasswordRef = useRef()
+
+    const primaryEmailRef = useRef()
+    const secondaryEmailRef = useRef()
+
+    const primaryPhoneRef = useRef()
+    const secondaryPhoneRef = useRef()
+
 
     let updateType = props.updateType? props.updateType: 'loggedinAccount' // 'loggedinAccount' || 'administarator'
 
@@ -71,6 +79,7 @@ const AccountCredentialEdit = (props) => {
                             fullWidth
                             required
                             type='password'
+                            inputRef={newPasswordRef}
                             label="New password" />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -78,6 +87,7 @@ const AccountCredentialEdit = (props) => {
                             fullWidth
                             required
                             type='password'
+                            inputRef={retypePasswordRef}
                             label="Retype Password" />
                     </Grid>
                 </Grid>
@@ -95,7 +105,21 @@ const AccountCredentialEdit = (props) => {
                 console.log('dialog data: ', inputData)
                 if (inputData.status !== 'proceed') return false
 
-                await utils.waitFor(1)
+                let actionType = 'changePassword'
+                let currentPassword = inputData.value
+                let newPassword = newPasswordRef.current.value
+                let retypePassword = newPasswordRef.current.value
+
+                // check if password and retype password match
+                if (!(newPassword === retypePassword)) {
+                    throw('Password not match. Please re type new password.')
+                }
+
+                await props.onSaveData({
+                    actionType,
+                    newPassword,
+                    currentPassword
+                })
                 return true
             }
         },
@@ -115,11 +139,13 @@ const AccountCredentialEdit = (props) => {
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
+                            inputRef={primaryEmailRef}
                             label="Primary Email" />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
+                            inputRef={secondaryEmailRef}
                             label="Secondary Email" />
                     </Grid>
                 </Grid>
@@ -137,6 +163,7 @@ const AccountCredentialEdit = (props) => {
                 console.log('dialog data: ', inputData)
                 if (inputData.status !== 'proceed') return false
 
+                await props.onSaveData()
                 await utils.waitFor(1)
                 return true
             }
@@ -157,11 +184,13 @@ const AccountCredentialEdit = (props) => {
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
+                            inputRef={primaryPhoneRef}
                             label="Primary Phone Number" />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
+                            inputRef={secondaryPhoneRef}
                             label="Secondary Phone Number" />
                     </Grid>
                 </Grid>
@@ -179,6 +208,7 @@ const AccountCredentialEdit = (props) => {
                 console.log('dialog data: ', inputData)
                 if (inputData.status !== 'proceed') return false
 
+                await props.onSaveData()
                 await utils.waitFor(1)
                 return true
             }

@@ -19,7 +19,7 @@ const VerticalLinearStepperNav = (props) => {
   })
 
   const handleNext = async () => {
-    let result = true
+    let result = null
 
     // set loading to true
     let stps = loadingStates.steps
@@ -119,6 +119,7 @@ const VerticalLinearStepperNav = (props) => {
                 {...activeStep === index? { color: 'primary' }: {}}
                 onClick={() => {
                   if (props.disableLabelClick || loadingStates.steps.some(item => item)) return
+                  setError(null)
                   setActiveStep(index)
                 }}
                 variant="subtitle1"

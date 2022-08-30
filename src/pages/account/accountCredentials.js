@@ -3,6 +3,8 @@ import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import EditIcon from '@mui/icons-material/Edit'
 
+import { useSnackbar } from 'notistack'
+
 // import AccountContext from '../../common/contexts/accountContext'
 import OpenCloseBox from '../../common/blocks/openCloseBox'
 import AccountView from './components/accountCredentialsView'
@@ -17,10 +19,39 @@ const AccountCredentials = (props) => {
         openUpdate: false
     })
     const accCtx = useContext(AccountContext)
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
-    // useEffect(() => {
-    //     accCtx.fetchAccountData()
-    // }, [])
+    const saveCredential = async (data = {}) => {
+            // enqueueSnackbar('test notification 1', {
+            //     variant: 'info',
+            // });
+            // enqueueSnackbar('test notification 1', {
+            //     variant: 'error',
+            //     persist: true,
+            //     action: (key) => (
+            //         <Button
+            //             color='primary'
+            //             variant='contained'
+            //             onClick={() => { closeSnackbar(key) }}>
+            //             Dismiss
+            //         </Button>
+            //     )
+            // });
+            // enqueueSnackbar('test notification 1', {
+            //     variant: 'warning',
+            //     autoHideDuration: 10000,
+            // });
+            // enqueueSnackbar('test notification 1', {
+            //     variant: 'success'
+            // });
+        let result = null
+        try {
+            result = await Rest.loggedAccount.updateCredential(data)
+            enqueueSnackbar(result.data.message, { variant: 'info' });
+        } catch (err) {
+            throw(err.response.data.message)
+        }
+    }
 
     return (
         <Container maxWidth="md">
@@ -39,8 +70,9 @@ const AccountCredentials = (props) => {
                             setStates({ ...states, ...{ openUpdate: false } })
                         }}>
                         <AccountEdit
+                            updateType='loggedinAccount'
                             accountInfo={accCtx.accountContext}
-                            onSaveData={Rest.loggedAccount.saveCredential} />
+                            onSaveData={saveCredential} />
                     </OpenCloseBox>
                 </Grid>
             </Grid>
