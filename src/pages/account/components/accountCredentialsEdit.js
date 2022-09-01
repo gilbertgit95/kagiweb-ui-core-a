@@ -102,13 +102,12 @@ const AccountCredentialEdit = (props) => {
                     message: 'This action requires you password.',
                     color: 'secondary'
                 })
-                console.log('dialog data: ', inputData)
                 if (inputData.status !== 'proceed') return false
 
                 let actionType = 'changePassword'
                 let currentPassword = inputData.value
-                let newPassword = newPasswordRef.current.value
-                let retypePassword = newPasswordRef.current.value
+                let newPassword = newPasswordRef.current.value? newPasswordRef.current.value: ''
+                let retypePassword = retypePasswordRef.current.value? retypePasswordRef.current.value: ''
 
                 // check if password and retype password match
                 if (!(newPassword === retypePassword)) {
@@ -160,11 +159,24 @@ const AccountCredentialEdit = (props) => {
                     message: 'This action requires you password.',
                     color: 'secondary'
                 })
-                console.log('dialog data: ', inputData)
                 if (inputData.status !== 'proceed') return false
 
-                await props.onSaveData()
-                await utils.waitFor(1)
+                let actionType = 'changeEmails'
+                let currentPassword = inputData.value
+                let primaryEmail = primaryEmailRef.current.value? primaryEmailRef.current.value: ''
+                let secondaryEmail = secondaryEmailRef.current.value? secondaryEmailRef.current.value: ''
+
+                // check if password and retype password match
+                if (!(primaryEmail || secondaryEmail)) {
+                    throw('Plase enter email in one of the fields.')
+                }
+
+                await props.onSaveData({
+                    actionType,
+                    primaryEmail,
+                    secondaryEmail,
+                    currentPassword
+                })
                 return true
             }
         },
