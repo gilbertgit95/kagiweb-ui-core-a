@@ -34,6 +34,7 @@ const VerticalLinearStepperNav = (props) => {
       if (props.views && typeof props.views[activeStep].action === 'function') {
           try {
             result = await props.views[activeStep].action()
+            setError(null)
           } catch (err) {
             setError(err)
           }
@@ -49,6 +50,7 @@ const VerticalLinearStepperNav = (props) => {
             && props.views[activeStep].action.constructor.name === 'Function') {
             try {
               result = props.views[activeStep].action()
+              setError(null)
             } catch (err) {
               setError(err)
             }
@@ -62,7 +64,6 @@ const VerticalLinearStepperNav = (props) => {
 
     // increment to next step
     if (result) {
-      setError(null)
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
@@ -90,6 +91,7 @@ const VerticalLinearStepperNav = (props) => {
         let result = null
         try {
           result = await props.finalView.action()
+          setError(null)
         } catch (err) {
           setError(err)
         }

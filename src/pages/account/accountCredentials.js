@@ -47,6 +47,9 @@ const AccountCredentials = (props) => {
         let result = null
         try {
             result = await Rest.loggedAccount.updateCredential(data)
+            // refetch account info
+            await accCtx.fetchAccountData()
+            // show success notification
             enqueueSnackbar(result.data.message, { variant: 'info' });
         } catch (err) {
             throw(err.response.data.message)

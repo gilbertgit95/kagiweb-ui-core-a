@@ -56,7 +56,7 @@ const AccountView = ({ accountInfo }) => {
                         <KeyValueBlock
                             data={[
                                 { key: 'Primary', value: accountInfo.primaryNumber? accountInfo.primaryNumber: '--' },
-                                { key: 'Secondary', value: accountInfo.primaryNumber? accountInfo.primaryNumber: '--' }
+                                { key: 'Secondary', value: accountInfo.secondaryNumber? accountInfo.secondaryNumber: '--' }
                             ]}/>
                     </GenBlock>
                 </Grid>

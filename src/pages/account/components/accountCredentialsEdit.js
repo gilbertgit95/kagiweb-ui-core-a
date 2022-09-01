@@ -9,12 +9,11 @@ import Typography from '@mui/material/Typography'
 import SelectBox from '../../../common/inputs/selectBox'
 
 import GlobalDialogContext from '../../../common/contexts/globalDialogContext'
-import AccountContext from '../../../common/contexts/accountContext'
 import VerticalSteps from '../../../common/navs/verticalStepsNav'
 import utils from '../../../common/utilities'
 
-const AccountCredentialEdit = (props) => {
-    const accountCtx = useContext(AccountContext)
+// updateType -> 'loggedinAccount' || 'administarator'
+const AccountCredentialEdit = ({ accountInfo, onSaveData, updateType = 'loggedinAccount' }) => {
     const dialogCtx = useContext(GlobalDialogContext)
 
     const roleRef = useRef()
@@ -24,11 +23,8 @@ const AccountCredentialEdit = (props) => {
     const primaryEmailRef = useRef()
     const secondaryEmailRef = useRef()
 
-    const primaryPhoneRef = useRef()
-    const secondaryPhoneRef = useRef()
-
-
-    let updateType = props.updateType? props.updateType: 'loggedinAccount' // 'loggedinAccount' || 'administarator'
+    const primaryNumberRef = useRef()
+    const secondaryNumberRef = useRef()
 
     const steps = [
         {
@@ -72,7 +68,7 @@ const AccountCredentialEdit = (props) => {
                             fullWidth
                             required
                             type='password'
-                            label="Old Password" />
+                            label='Old Password' />
                     </Grid> */}
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -80,7 +76,7 @@ const AccountCredentialEdit = (props) => {
                             required
                             type='password'
                             inputRef={newPasswordRef}
-                            label="New password" />
+                            label='New password' />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -88,7 +84,7 @@ const AccountCredentialEdit = (props) => {
                             required
                             type='password'
                             inputRef={retypePasswordRef}
-                            label="Retype Password" />
+                            label='Retype Password' />
                     </Grid>
                 </Grid>
             ),
@@ -114,7 +110,7 @@ const AccountCredentialEdit = (props) => {
                     throw('Password not match. Please re type new password.')
                 }
 
-                await props.onSaveData({
+                await onSaveData({
                     actionType,
                     newPassword,
                     currentPassword
@@ -138,14 +134,16 @@ const AccountCredentialEdit = (props) => {
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
+                            defaultValue={accountInfo && accountInfo.primaryEmail? accountInfo.primaryEmail: ''}
                             inputRef={primaryEmailRef}
-                            label="Primary Email" />
+                            label='Primary Email' />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
+                            defaultValue={accountInfo && accountInfo.secondaryEmail? accountInfo.secondaryEmail: ''}
                             inputRef={secondaryEmailRef}
-                            label="Secondary Email" />
+                            label='Secondary Email' />
                     </Grid>
                 </Grid>
             ),
@@ -166,12 +164,11 @@ const AccountCredentialEdit = (props) => {
                 let primaryEmail = primaryEmailRef.current.value? primaryEmailRef.current.value: ''
                 let secondaryEmail = secondaryEmailRef.current.value? secondaryEmailRef.current.value: ''
 
-                // check if password and retype password match
                 if (!(primaryEmail || secondaryEmail)) {
                     throw('Plase enter email in one of the fields.')
                 }
 
-                await props.onSaveData({
+                await onSaveData({
                     actionType,
                     primaryEmail,
                     secondaryEmail,
@@ -196,14 +193,16 @@ const AccountCredentialEdit = (props) => {
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
-                            inputRef={primaryPhoneRef}
-                            label="Primary Phone Number" />
+                            defaultValue={accountInfo && accountInfo.primaryNumber? accountInfo.primaryNumber: ''}
+                            inputRef={primaryNumberRef}
+                            label='Primary Phone Number' />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6}>
                         <TextField
                             fullWidth
-                            inputRef={secondaryPhoneRef}
-                            label="Secondary Phone Number" />
+                            defaultValue={accountInfo && accountInfo.secondaryNumber? accountInfo.secondaryNumber: ''}
+                            inputRef={secondaryNumberRef}
+                            label='Secondary Phone Number' />
                     </Grid>
                 </Grid>
             ),
@@ -217,20 +216,27 @@ const AccountCredentialEdit = (props) => {
                     message: 'This action requires you password.',
                     color: 'secondary'
                 })
-                console.log('dialog data: ', inputData)
                 if (inputData.status !== 'proceed') return false
 
-                await props.onSaveData()
-                await utils.waitFor(1)
+                let actionType = 'changePhones'
+                let currentPassword = inputData.value
+                let primaryNumber = primaryNumberRef.current.value? primaryNumberRef.current.value: ''
+                let secondaryNumber = secondaryNumberRef.current.value? secondaryNumberRef.current.value: ''
+
+                if (!(primaryNumber || secondaryNumber)) {
+                    throw('Plase enter phone in one of the fields.')
+                }
+
+                await onSaveData({
+                    actionType,
+                    primaryNumber,
+                    secondaryNumber,
+                    currentPassword
+                })
                 return true
             }
         }
     ]
-
-    useEffect(() => {
-        console.log('data in account edit: ', accountCtx.accountContext)
-
-    },[accountCtx.accountContext])
 
     return (
         <Grid container spacing={2}>
