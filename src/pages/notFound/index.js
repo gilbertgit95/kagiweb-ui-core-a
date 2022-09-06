@@ -1,34 +1,34 @@
-import {useState, useEffect} from 'react'
+// import {useState, useEffect} from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-import CircularProgress from '@mui/material/CircularProgress'
+// import CircularProgress from '@mui/material/CircularProgress'
 
 import InitialLoadinglayout from '../../common/layouts/initalLoadingLayout'
 import config from '../../config'
-import utils from '../../common/utilities'
+// import utils from '../../common/utilities'
 
 const NotFound = (props) => {
     let initialCount = 5
-    let [countdown, setCountdown] = useState(initialCount)
+    // let [countdown, setCountdown] = useState(initialCount)
 
-    useEffect(() => {
+    // useEffect(() => {
         
-        const init = async () => {
-            for (let i = 0; i <= initialCount; i++) {
-                setCountdown(countdown - i)
-                await utils.waitFor(1)
+    //     const init = async () => {
+    //         for (let i = 0; i <= initialCount; i++) {
+    //             setCountdown(countdown - i)
+    //             await utils.waitFor(1)
 
-                if ((countdown - i) <= 0) {
-                    window.location.replace(`/${ config.rootRoute }/auth/`);
-                    break
-                }
-            }
-        }
+    //             if ((countdown - i) <= 0) {
+    //                 window.location.replace(`/${ config.rootRoute }/auth/`)
+    //                 break
+    //             }
+    //         }
+    //     }
 
-        init()
+    //     init()
 
-    }, [initialCount])
+    // }, [initialCount])
 
     return (
         <InitialLoadinglayout>
@@ -49,7 +49,7 @@ const NotFound = (props) => {
                         Try signing in to access the page.
                     </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <CircularProgress style={{width: 15, height: 15}} component='span' />
                     <Typography
                         style={{marginLeft: 10}}
@@ -58,7 +58,7 @@ const NotFound = (props) => {
                         variant='subtitle1'>
                         Redirecting to signin page in { countdown }...
                     </Typography>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                     <Link
                         color="primary"
