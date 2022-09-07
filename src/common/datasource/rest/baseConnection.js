@@ -7,15 +7,37 @@ import config from '../../../config'
 //     'Bad request, Invalid authorization.',
 //     'Bad request, no authorization supplied in the request.'
 // ])
+// const pathNotToCheck = [
+//     `/${ config.rootRoute }/auth`,
+//     `/${ config.rootRoute }/public`
+// ]
 
-// axios.interceptors.response.use( response => response, error => {
-
-//     // redirect to signin page when token is invalid
+// const errorMessagesIsInvalid = (error) => {
 //     if (   error.response.data 
 //         && error.response.data.message
 //         && errorMessages.has(error.response.data.message)
 //         && error.response.status === 400) {
-//         console.log('redirect to login auth')
+//         return true
+//     }
+
+//     return false
+// }
+
+// const isPathOnTheNotTocheckList = (path) => {
+//     return pathNotToCheck.some(item => {
+//         return path.indexOf(item) === 0
+//     })
+// }
+
+// axios.interceptors.response.use( response => response, error => {
+//     let currPath = window.location.pathname
+
+//     console.log()
+
+//     // redirect to signin page when token is invalid
+//     if (   errorMessagesIsInvalid(error)
+//         && !isPathOnTheNotTocheckList(currPath)) {
+//         console.log('redirect to login auth!!')
 //         // window.location.replace(`/${ config.rootRoute }/auth/`)
 //     }
 // })

@@ -30,6 +30,8 @@ const NotFound = (props) => {
 
     // }, [initialCount])
 
+    // console.log('not funt rendered!')
+
     return (
         <InitialLoadinglayout>
             <Grid container spacing={2}>
