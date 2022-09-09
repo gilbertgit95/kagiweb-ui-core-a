@@ -40,7 +40,7 @@ axios.interceptors.response.use(
         if (   errorMessagesIsInvalid(error)
             && !isPathOnTheNotTocheckList(currPath)) {
             console.log('redirect to login auth!!')
-            // window.location.replace(`/${ config.rootRoute }/auth/`)
+            window.location.replace(`/${ config.rootRoute }/auth/`)
         }
         
         return Promise.reject(error);
