@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import PrimaryTheme from './common/themes/primary'
 
 import PublicContext, { usePublicContext } from './common/contexts/publicContext'
+import StaticOptionsContext, { useStaticOptionsContext } from './common/contexts/staticOptionsContext'
 import LocalStorageContext, { useLocalStorageContext } from './common/contexts/localStorageContext'
 import AccountContext, { useAccountContext } from './common/contexts/accountContext'
 import AdminContext, { useAdminContext } from './common/contexts/adminContext'
