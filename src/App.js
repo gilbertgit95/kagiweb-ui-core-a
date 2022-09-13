@@ -14,8 +14,10 @@ import Pages from './pages'
 
 import './App.css'
 import config from './config'
+import staticOptions from './common/datasource/rest/staticOptions'
 
 function App() {
+  const staticOptionsStates = useStaticOptionsContext()
   const publicStates = usePublicContext()
   const adminStates = useAdminContext()
   const accountStates = useAccountContext()
@@ -37,24 +39,26 @@ function App() {
       <CssBaseline />
       <SnackbarProvider maxSnack={ config.notifLength }>
         {/* provides data sources for public */}
-        <PublicContext.Provider value={{ ...publicStates }}>
-          {/* provides local storage data globally with respect to the pages */}
-          <LocalStorageContext.Provider value={{ ...localStorageStates }}>
-              {/* provides account data globally with respect to the pages */}
-              <AccountContext.Provider value={{ ...accountStates }}>
-                {/* provides admin data globally with respect to the pages */}
-                <AdminContext.Provider value={{ ...adminStates }}>
-                  {/* global dialog popup box */}
-                  <GlobalDialogContext.Provider value={{ ...globalDialogStates }}>
-                    <Pages />
-                    <GlobalDialogComponents
-                      onAction={ globalDialogStates.action }
-                      {...globalDialogStates.globalDialogContext} />
-                  </GlobalDialogContext.Provider>
-                </AdminContext.Provider>
-              </AccountContext.Provider>
-          </LocalStorageContext.Provider>
-        </PublicContext.Provider>
+        <StaticOptionsContext.provider value={{ ...staticOptions }}>
+          <PublicContext.Provider value={{ ...publicStates }}>
+            {/* provides local storage data globally with respect to the pages */}
+            <LocalStorageContext.Provider value={{ ...localStorageStates }}>
+                {/* provides account data globally with respect to the pages */}
+                <AccountContext.Provider value={{ ...accountStates }}>
+                  {/* provides admin data globally with respect to the pages */}
+                  <AdminContext.Provider value={{ ...adminStates }}>
+                    {/* global dialog popup box */}
+                    <GlobalDialogContext.Provider value={{ ...globalDialogStates }}>
+                      <Pages />
+                      <GlobalDialogComponents
+                        onAction={ globalDialogStates.action }
+                        {...globalDialogStates.globalDialogContext} />
+                    </GlobalDialogContext.Provider>
+                  </AdminContext.Provider>
+                </AccountContext.Provider>
+            </LocalStorageContext.Provider>
+          </PublicContext.Provider>
+        </StaticOptionsContext.provider>
       </SnackbarProvider>
     </ThemeProvider>
   );
