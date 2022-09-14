@@ -19,7 +19,8 @@ export const useStaticOptionsContext = () => {
           let countries = []
 
           try {
-            countries = await Rest.staticOpons.getCountries()
+            countries = await Rest.staticOptions.getCountries()
+            setStaticOptionsContext({ countries })
           } catch(err) {
 
           }
