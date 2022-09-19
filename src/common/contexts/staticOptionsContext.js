@@ -1,11 +1,12 @@
-import { useState, useEffect, createContext } from 'react'
+import { useState, createContext } from 'react'
 import Rest from '../datasource/rest/'
 
 const StaticOptionsContext = createContext({
     staticOptionsContext: {
         countries: {isLoading: false, list: []}
     },
-    setStaticOptionsContext(data) { return }
+    setStaticOptionsContext(data) { return },
+    fetchAllCountries() { return }
 })
 export default StaticOptionsContext
 
@@ -14,20 +15,22 @@ export const useStaticOptionsContext = () => {
         countries: {isLoading: false, list: []}
     })
 
-    useEffect(() => {
-        const init = async () => {
-          let countries = []
+    const fetchAllCountries = async () => {
+        let countries = []
 
-          try {
-            countries = await Rest.staticOptions.getCountries()
-            setStaticOptionsContext({ countries })
-          } catch(err) {
+        // check if all countries are already loaded,
+        // if its true, then cancel the process
+        if (!staticOptionsContext.countries.isLoading && !staticOptionsContext.countries.list.length) {
+            setStaticOptionsContext({...staticOptionsContext, ...{ countries: {isLoading: true, list: []}}})
 
-          }
+            try {
+                countries = await Rest.staticOptions.getCountries()
+            } catch(err) {
+                // for the main taime, do nothing
+            }
+            setStaticOptionsContext({...staticOptionsContext, ...{ countries: {isLoading: false, list: countries}}})
         }
-        // fetch
-        init()
-    }, [])
+    }
 
-    return {staticOptionsContext, setStaticOptionsContext}
+    return {staticOptionsContext, setStaticOptionsContext, fetchAllCountries}
 }

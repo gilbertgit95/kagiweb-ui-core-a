@@ -39,7 +39,7 @@ function App() {
       <CssBaseline />
       <SnackbarProvider maxSnack={ config.notifLength }>
         {/* provides data sources for public */}
-        <StaticOptionsContext.Provider value={{ ...staticOptions }}>
+        <StaticOptionsContext.Provider value={{ ...staticOptionsStates }}>
           <PublicContext.Provider value={{ ...publicStates }}>
             {/* provides local storage data globally with respect to the pages */}
             <LocalStorageContext.Provider value={{ ...localStorageStates }}>

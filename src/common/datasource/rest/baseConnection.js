@@ -34,12 +34,12 @@ axios.interceptors.response.use(
     error => {
         let currPath = window.location.pathname
 
-        console.log('interceptor')
+        // console.log('interceptor')
 
         // redirect to signin page when token is invalid
         if (   errorMessagesIsInvalid(error)
             && !isPathOnTheNotTocheckList(currPath)) {
-            console.log('redirect to login auth!!')
+            // console.log('redirect to login auth!!')
             window.location.replace(`/${ config.rootRoute }/auth/`)
         }
         

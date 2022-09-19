@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Outlet } from "react-router-dom"
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
@@ -18,6 +18,7 @@ import IconButton from '@mui/material/IconButton'
 
 import MainNav from '../navs/mainNav'
 import AccountContext from '../contexts/accountContext'
+import StaticOptionsContext from '../contexts/staticOptionsContext'
 import RouterContext, { useRouterContext } from '../contexts/routerContext'
 import ThemeToggle from '../themes/themeToggle'
 import config from '../../config'
@@ -27,6 +28,7 @@ import Rest from '../datasource/rest'
 const MainLayout = (props) => {
     const routerStates = useRouterContext()
     const AccCtx = useContext(AccountContext)
+    const StaticOptCtx = useContext(StaticOptionsContext)
 
     let leftLogo = {
         label: 'Root',
@@ -145,6 +147,10 @@ const MainLayout = (props) => {
             routerStates.setRouterContext(`/${ config.rootRoute }/auth/`)
         }
     }
+
+    useEffect(() => {
+        StaticOptCtx.fetchAllCountries()
+    }, [])
 
     return (
         <RouterContext.Provider
