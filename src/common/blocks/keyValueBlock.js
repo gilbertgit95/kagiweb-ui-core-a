@@ -17,7 +17,7 @@ const KeyValueBlock = (props) => {
                     return (
                         <React.Fragment key={ 'row_' + rowIndex }>
                             <Grid
-                                item xs={6}
+                                item xs={4}
                                 style={{ padding: 5 }}>
                                 <Box>
                                     <Typography
@@ -28,7 +28,7 @@ const KeyValueBlock = (props) => {
                                 </Box>
                             </Grid>
                             <Grid
-                                item xs={6}
+                                item xs={8}
                                 style={{ padding: 5 }}>
                                 <Box 
                                     style={{
