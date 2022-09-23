@@ -15,8 +15,17 @@ const updateCredential = async (data) => {
     })
 }
 
+const updateProfile = async (data) => {
+    return await Rest({
+        method: 'POST',
+        url: '/api/v1/loggedAccount/profile',
+        data: data
+    })
+}
+
 
 export default {
     getAccountInfo,
-    updateCredential
+    updateCredential,
+    updateProfile
 }

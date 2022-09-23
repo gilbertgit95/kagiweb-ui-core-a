@@ -5,10 +5,8 @@ import Container from '@mui/material/Container'
 // import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import EditIcon from '@mui/icons-material/Edit'
-import Typography from '@mui/material/Typography'
-// import TextField from '@mui/material/TextField'
-// import LoginIcon from '@mui/icons-material/Login'
-// import Button from '@mui/material/Button'
+
+import { useSnackbar } from 'notistack'
 
 // import AccountContext from '../../common/contexts/accountContext'
 import AccountProfileView from './components/accountProfileView'
@@ -17,11 +15,28 @@ import OpenCloseBox from '../../common/blocks/openCloseBox'
 
 import AccountContext from '../../common/contexts/accountContext'
 
+import Rest from '../../common/datasource/rest'
+
 const AccountProfile = (props) => {
     const [states, setStates] = useState({
         openUpdate: false
     })
     const accCtx = useContext(AccountContext)
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+
+    const saveProfile = async (data = {}) => {
+
+        let result = null
+        try {
+            result = await Rest.loggedAccount.updateProfile(data)
+            // refetch account info
+            await accCtx.fetchAccountData()
+            // show success notification
+            enqueueSnackbar(result.data.message, { variant: 'info' });
+        } catch (err) {
+            throw(err.response.data.message)
+        }
+    }
 
     // useEffect(() => {
     //     accCtx.fetchAccountData()
@@ -43,7 +58,9 @@ const AccountProfile = (props) => {
                         onClose={ () => {
                             setStates({ ...states, ...{ openUpdate: false } })
                         }}>
-                        <AccountProfileEdit accountInfo={accCtx.accountContext} />
+                        <AccountProfileEdit
+                            accountInfo={accCtx.accountContext}
+                            onSaveData={saveProfile} />
                     </OpenCloseBox>
                 </Grid>
             </Grid>

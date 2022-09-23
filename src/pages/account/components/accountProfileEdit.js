@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography'
 import FileUploadIcon from '@mui/icons-material/FileUpload'
 
 import AccountContext from '../../../common/contexts/accountContext'
+import GlobalDialogContext from '../../../common/contexts/globalDialogContext'
 import VerticalSteps from '../../../common/navs/verticalStepsNav'
 import RadioList from '../../../common/inputs/radioList'
 import utils from '../../../common/utilities'
@@ -19,7 +20,32 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
         return acc
     }, {}): {}
 
-    const uploadProfilePicRef = useRef()
+    const dialogCtx = useContext(GlobalDialogContext)
+
+    const profilepictureRef = useRef()
+    const genderRef = useRef()
+    const nicknameRef = useRef()
+    const firstnameRef = useRef()
+    const middlenameRef = useRef()
+    const lastnameRef = useRef()
+
+    const countryRef = useRef()
+    const nationalityRef = useRef()
+    const birthdateRef = useRef()
+    const birthplaceRef = useRef()
+    const homeaddressRef = useRef()
+    const personalwebsiteRef = useRef()
+    const bioRef = useRef()
+
+    const companyroleRef = useRef()
+    const companynameRef = useRef()
+    const companydescRef = useRef()
+    const companycountryRef = useRef()
+    const companyindustryRef = useRef()
+    const companyemailRef = useRef()
+    const companyphoneRef = useRef()
+    const companywebsiteRef = useRef()
+    const companyaddressRef = useRef()
 
     const steps = [
         {
@@ -35,15 +61,15 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                             sx={{ width: 200, height: 200 }} />
                         <input
                             accept=".jpg, .png, .jpeg, .gif, .bmp"
-                            ref={uploadProfilePicRef}
+                            ref={profilepictureRef}
                             type="file"
                             hidden />
                         <Button
                             color='primary'
                             variant='outlined'
                             onClick={() => {
-                                if (uploadProfilePicRef && uploadProfilePicRef.current) {
-                                    uploadProfilePicRef.current.click()
+                                if (profilepictureRef && profilepictureRef.current) {
+                                    profilepictureRef.current.click()
                                 }
                             }}
                             style={{ marginTop: 30 }}
@@ -73,21 +99,25 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={nicknameRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.nickname? accountClaimsMap.nickname.value: ''}
                             label="Nick Name" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={firstnameRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.firstname? accountClaimsMap.firstname.value: ''}
                             label="First Name" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={middlenameRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.middlename? accountClaimsMap.middlename.value: ''}
                             label="Middle Name" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={lastnameRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.lastname? accountClaimsMap.lastname.value: ''}
                             label="Last Name" />
                     </Grid>
@@ -95,7 +125,33 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
             ),
             action: async () => {
                 console.log('Basic Profile')
-                await utils.waitFor(1)
+
+                let inputData = await dialogCtx.showDialog({
+                    type: 'confirm',
+                    title: 'Confirmation',
+                    message: 'This will update your profile data. Do you want to proceed?',
+                    color: 'secondary'
+                })
+                if (inputData.status !== 'proceed') return false
+
+                let actionType = 'changeBasicInfo'
+
+                // let profilepicture = profilepictureRef.current.value? profilepictureRef.current.value: ''
+                // let gender = genderRef.current.value? genderRef.current.value: ''
+                let nickname = nicknameRef.current.value? nicknameRef.current.value: ''
+                let firstname = firstnameRef.current.value? firstnameRef.current.value: ''
+                let middlename = middlenameRef.current.value? middlenameRef.current.value: ''
+                let lastname = lastnameRef.current.value? lastnameRef.current.value: ''
+
+                await onSaveData({
+                    actionType,
+                    // profilepicture,
+                    // gender,
+                    nickname,
+                    firstname,
+                    middlename,
+                    lastname
+                })
                 return true
             }
         },
@@ -109,16 +165,19 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={nationalityRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.nationality? accountClaimsMap.nationality.value: ''}
                             label="Nationality" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={birthdateRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.birthdate? accountClaimsMap.birthdate.value: ''}
                             label="Birth Date" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={birthplaceRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.birthplace? accountClaimsMap.birthplace.value: ''}
                             label="Birth Place" />
                     </Grid>
@@ -129,11 +188,13 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                             rows={2}
                             multiline
                             fullWidth
+                            inputRef={homeaddressRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.homeaddress? accountClaimsMap.homeaddress.value: ''}
                             label="Home Address" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={personalwebsiteRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.personalwebsite? accountClaimsMap.personalwebsite.value: ''}
                             label="Personal Website" />
                         <TextField
@@ -141,6 +202,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                             rows={3}
                             multiline
                             fullWidth
+                            inputRef={bioRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.bio? accountClaimsMap.bio.value: ''}
                             label="Bio" />
                     </Grid>
@@ -148,7 +210,34 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
             ),
             action: async () => {
                 console.log('Advance Profile')
-                await utils.waitFor(1)
+                let inputData = await dialogCtx.showDialog({
+                    type: 'confirm',
+                    title: 'Confirmation',
+                    message: 'This will update your profile data. Do you want to proceed?',
+                    color: 'secondary'
+                })
+                if (inputData.status !== 'proceed') return false
+
+                let actionType = 'changeAdvanceInfo'
+
+                // let country = countryRef.current.value? countryRef.current.value: ''
+                let nationality = nationalityRef.current.value? nationalityRef.current.value: ''
+                let birthdate = birthdateRef.current.value? birthdateRef.current.value: ''
+                let birthplace = birthplaceRef.current.value? birthplaceRef.current.value: ''
+                let homeaddress = homeaddressRef.current.value? homeaddressRef.current.value: ''
+                let personalwebsite = personalwebsiteRef.current.value? personalwebsiteRef.current.value: ''
+                let bio = bioRef.current.value? bioRef.current.value: ''
+
+                await onSaveData({
+                    actionType,
+                    // country,
+                    nationality,
+                    birthdate,
+                    birthplace,
+                    homeaddress,
+                    personalwebsite,
+                    bio
+                })
                 return true
             }
         },
@@ -162,11 +251,13 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={companyroleRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companyrole? accountClaimsMap.companyrole.value: ''}
                             label="Job Title" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={companynameRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companyname? accountClaimsMap.companyname.value: ''}
                             label="Company Name" />
                         <TextField
@@ -174,6 +265,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                             rows={5}
                             multiline
                             fullWidth
+                            inputRef={companydescRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companydesc? accountClaimsMap.companydesc.value: ''}
                             label="Company Description" />
                     </Grid>
@@ -182,21 +274,25 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={companyindustryRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companyindustry? accountClaimsMap.companyindustry.value: ''}
                             label="Industry Type" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={companyemailRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companyemail? accountClaimsMap.companyemail.value: ''}
                             label="Contact Email" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={companyphoneRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companyphone? accountClaimsMap.companyphone.value: ''}
                             label="Contact Number" />
                         <TextField
                             style={styles.fields}
                             fullWidth
+                            inputRef={companywebsiteRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companywebsite? accountClaimsMap.companywebsite.value: ''}
                             label="Company Website" />
                         <TextField
@@ -204,6 +300,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                             rows={2}
                             multiline
                             fullWidth
+                            inputRef={companyaddressRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companyaddress? accountClaimsMap.companyaddress.value: ''}
                             label="Work Address" />
                     </Grid>
@@ -211,7 +308,39 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
             ),
             action: async () => {
                 console.log('Work Related Profile')
-                await utils.waitFor(1)
+
+                let inputData = await dialogCtx.showDialog({
+                    type: 'confirm',
+                    title: 'Confirmation',
+                    message: 'This will update your profile data. Do you want to proceed?',
+                    color: 'secondary'
+                })
+                if (inputData.status !== 'proceed') return false
+
+                let actionType = 'changeWorkInfo'
+
+                let companyrole = companyroleRef.current.value? companyroleRef.current.value: ''
+                let companyname = companynameRef.current.value? companynameRef.current.value: ''
+                let companydesc = companydescRef.current.value? companydescRef.current.value: ''
+                // let companycountry = companycountryRef.current.value? companycountryRef.current.value: ''
+                let companyindustry = companyindustryRef.current.value? companyindustryRef.current.value: ''
+                let companyemail = companyemailRef.current.value? companyemailRef.current.value: ''
+                let companyphone = companyphoneRef.current.value? companyphoneRef.current.value: ''
+                let companywebsite = companywebsiteRef.current.value? companywebsiteRef.current.value: ''
+                let companyaddress = companyaddressRef.current.value? companyaddressRef.current.value: ''
+
+                await onSaveData({
+                    actionType,
+                    companyrole,
+                    companyname,
+                    companydesc,
+                    // companycountry,
+                    companyindustry,
+                    companyemail,
+                    companyphone,
+                    companywebsite,
+                    companyaddress
+                })
                 return true
             }
         }

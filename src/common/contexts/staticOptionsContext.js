@@ -18,6 +18,8 @@ export const useStaticOptionsContext = () => {
     const fetchAllCountries = async () => {
         let countries = []
 
+        console.log('fetch countries')
+
         // check if all countries are already loaded,
         // if its true, then cancel the process
         if (!staticOptionsContext.countries.isLoading && !staticOptionsContext.countries.list.length) {
