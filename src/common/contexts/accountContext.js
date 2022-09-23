@@ -4,6 +4,8 @@ import utils from '../utilities'
 import LocalStorage from '../utilities/localStorage'
 import Rest from '../datasource/rest'
 
+import LocalStorageContext from './localStorageContext'
+
 const AccountContext = createContext({
     accountContext: {},
     setAccountContext(data) { return },
@@ -13,7 +15,7 @@ const AccountContext = createContext({
 })
 export default AccountContext
 
-export const useAccountContext = () => {
+export const useAccountContext = (props) => {
     const storageName = config.localStorageName
 
     const [accountContext, setAccountContext] = useState({})
