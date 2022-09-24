@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -20,6 +20,9 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
         return acc
     }, {}): {}
 
+    const [ states, setStates ] = useState({
+        gender: accountClaimsMap && accountClaimsMap.gender? accountClaimsMap.gender.value: 'male'
+    })
     const dialogCtx = useContext(GlobalDialogContext)
 
     const profilepictureRef = useRef()
@@ -88,8 +91,11 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                         <Box style={{ padding: 30, paddingTop: 15 }}>
                             <RadioList
                                 radioListName='Gender'
-                                onChange={(e) => {}}
-                                selected={accountClaimsMap && accountClaimsMap.gender? accountClaimsMap.gender.value: 'male'}
+                                onChange={(e) => {
+                                    // console.log('selectedt: ', e)
+                                    setStates({...states, ...{ gender: e.key }})
+                                }}
+                                selected={states.gender}
                                 colSize={{xs: 6}}
                                 list={[
                                     { disabled: false, key: 'male', label: 'Male'},
@@ -146,7 +152,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                 await onSaveData({
                     actionType,
                     // profilepicture,
-                    // gender,
+                    gender: states.gender,
                     nickname,
                     firstname,
                     middlename,
