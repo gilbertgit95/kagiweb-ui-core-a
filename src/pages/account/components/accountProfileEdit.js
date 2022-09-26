@@ -12,6 +12,7 @@ import AccountContext from '../../../common/contexts/accountContext'
 import GlobalDialogContext from '../../../common/contexts/globalDialogContext'
 import VerticalSteps from '../../../common/navs/verticalStepsNav'
 import RadioList from '../../../common/inputs/radioList'
+import DebouncingSeachSelect from '../../../common/inputs/debouncingSeachSelect'
 import utils from '../../../common/utilities'
 
 const AccountProfileEdit = ({accountInfo, onSaveData}) => {
@@ -168,7 +169,9 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={6}
                         style={styles.grid}>
-                            
+                        <DebouncingSeachSelect
+                            fullWidth
+                            style={styles.fields} />
                         <TextField
                             style={styles.fields}
                             fullWidth
