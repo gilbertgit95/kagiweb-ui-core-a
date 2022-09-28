@@ -43,11 +43,11 @@ const DebouncingSeachSelect = (props) => {
             <TextField {...props} onChange={onChange} onClick={handleClick} />
             <Popper open={open} anchorEl={anchorEl} placement='bottom-start' transition>
                 {({ TransitionProps }) => (
-                <Fade {...TransitionProps} timeout={350}>
-                    <Paper>
-                    <Typography sx={{ p: 2 }}>The content of the Popper.</Typography>
-                    </Paper>
-                </Fade>
+                    <Fade {...TransitionProps} timeout={350}>
+                        <Paper style={{zIndex: 100}}>
+                            <Typography sx={{ p: 2 }}>The content of the Popper.</Typography>
+                        </Paper>
+                    </Fade>
                 )}
             </Popper>
         </Box>

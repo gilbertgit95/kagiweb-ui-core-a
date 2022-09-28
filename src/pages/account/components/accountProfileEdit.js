@@ -171,6 +171,11 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                         style={styles.grid}>
                         <DebouncingSeachSelect
                             fullWidth
+                            items={[
+                                {label: 'test', value: 'test'},
+                                {label: 'test1', value: 'test1'}
+                            ]}
+                            selected={'test1'}
                             style={styles.fields} />
                         <TextField
                             style={styles.fields}
