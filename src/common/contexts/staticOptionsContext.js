@@ -16,7 +16,7 @@ export const useStaticOptionsContext = () => {
     })
 
     const fetchAllCountries = async () => {
-        let countries = []
+        let countries = {}
 
         console.log('fetch countries')
 
@@ -30,7 +30,7 @@ export const useStaticOptionsContext = () => {
             } catch(err) {
                 // for the main taime, do nothing
             }
-            setStaticOptionsContext({...staticOptionsContext, ...{ countries: {isLoading: false, list: countries}}})
+            setStaticOptionsContext({...staticOptionsContext, ...{ countries: {isLoading: false, list: countries.data? countries.data: []}}})
         }
     }
 

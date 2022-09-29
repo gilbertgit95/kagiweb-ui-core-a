@@ -8,6 +8,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import FileUploadIcon from '@mui/icons-material/FileUpload'
 
+import StaticOptions from '../../../common/contexts/staticOptionsContext'
 import AccountContext from '../../../common/contexts/accountContext'
 import GlobalDialogContext from '../../../common/contexts/globalDialogContext'
 import VerticalSteps from '../../../common/navs/verticalStepsNav'
@@ -25,6 +26,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
         gender: accountClaimsMap && accountClaimsMap.gender? accountClaimsMap.gender.value: 'male'
     })
     const dialogCtx = useContext(GlobalDialogContext)
+    const staticOptionsCtx = useContext(StaticOptions)
 
     const profilepictureRef = useRef()
     const genderRef = useRef()
@@ -171,10 +173,14 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                         style={styles.grid}>
                         <DebouncingSeachSelect
                             fullWidth
-                            items={[
-                                {label: 'test', value: 'test'},
-                                {label: 'test1', value: 'test1'}
-                            ]}
+                            items={
+                                staticOptionsCtx.staticOptionsContext.countries.list.map(item => {
+                                    return {
+                                        label: item.name,
+                                        value: item.alpha2
+                                    }
+                                })
+                            }
                             selected={'test1'}
                             style={styles.fields} />
                         <TextField
