@@ -173,7 +173,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                         style={styles.grid}>
                         <DebouncingSeachSelect
                             fullWidth
-                            items={
+                            list={
                                 staticOptionsCtx.staticOptionsContext.countries.list.map(item => {
                                     return {
                                         label: item.name,
