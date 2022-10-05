@@ -35,7 +35,7 @@ const DebouncingSeachSelect = (props) => {
 
     const searchBoxClick = (event) => {
         setAnchorEl(event.currentTarget)
-        setOpen((prev) => !prev)
+        setOpen(true)
     };
 
 
@@ -45,7 +45,7 @@ const DebouncingSeachSelect = (props) => {
         let timer = states.timer
 
         setAnchorEl(e.currentTarget)
-        setOpen((prev) => !prev)
+        setOpen(true)
 
         // clear timeout if it exist
         if (timer) clearTimeout(timer)
@@ -67,6 +67,25 @@ const DebouncingSeachSelect = (props) => {
         console.log('lifecycle')
     }, [props.list])
 
+    useEffect(() => {
+        let selected = null
+
+        for (let item of props.list) {
+            if (item.value === props.value) {
+                selected = item
+                console.log(item)
+                break
+            }
+        }
+
+        if (!selected) return
+
+        setStates({...states, ...{
+            selected: selected.value,
+            searchKey: selected.label
+        }})
+    }, [])
+
     return (
         <Box style={{position: 'relative', top: 0}} onBlur={(e) => { setOpen(false) }}>
             <TextField {...props} value={states.searchKey} onChange={onChange} onClick={searchBoxClick} />
@@ -84,7 +103,9 @@ const DebouncingSeachSelect = (props) => {
                                                     searchKey: item.label,
                                                     selected: item.value
                                                 }})
-                                                console.log('selected: ', item)
+
+                                                // emit to parent
+                                                if (props.onChange) props.onChange(item)
                                             }}>
                                             {/* <ListItemIcon>
                                                 <ContentCut fontSize="small" />

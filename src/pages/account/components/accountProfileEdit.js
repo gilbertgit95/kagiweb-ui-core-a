@@ -23,6 +23,8 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
     }, {}): {}
 
     const [ states, setStates ] = useState({
+        country: accountClaimsMap && accountClaimsMap.country? accountClaimsMap.country.value: '',
+        companyCountry: accountClaimsMap && accountClaimsMap.companycountry? accountClaimsMap.companycountry.value: '',
         gender: accountClaimsMap && accountClaimsMap.gender? accountClaimsMap.gender.value: 'male'
     })
     const dialogCtx = useContext(GlobalDialogContext)
@@ -35,7 +37,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
     const middlenameRef = useRef()
     const lastnameRef = useRef()
 
-    const countryRef = useRef()
+    // const countryRef = useRef()
     const nationalityRef = useRef()
     const birthdateRef = useRef()
     const birthplaceRef = useRef()
@@ -46,7 +48,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
     const companyroleRef = useRef()
     const companynameRef = useRef()
     const companydescRef = useRef()
-    const companycountryRef = useRef()
+    // const companycountryRef = useRef()
     const companyindustryRef = useRef()
     const companyemailRef = useRef()
     const companyphoneRef = useRef()
@@ -181,8 +183,12 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                                     }
                                 })
                             }
-                            selected={'test1'}
-                            style={styles.fields} />
+                            value={accountClaimsMap && accountClaimsMap.country? accountClaimsMap.country.value: ''}
+                            onChange={(e) => {
+                                setStates({...states, ...{country: e.value}})
+                            }}
+                            style={styles.fields}
+                            label='Country' />
                         <TextField
                             style={styles.fields}
                             fullWidth
@@ -241,7 +247,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
 
                 let actionType = 'changeAdvanceInfo'
 
-                // let country = countryRef.current.value? countryRef.current.value: ''
+                let country = states.country? states.country: ''
                 let nationality = nationalityRef.current.value? nationalityRef.current.value: ''
                 let birthdate = birthdateRef.current.value? birthdateRef.current.value: ''
                 let birthplace = birthplaceRef.current.value? birthplaceRef.current.value: ''
@@ -251,7 +257,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
 
                 await onSaveData({
                     actionType,
-                    // country,
+                    country,
                     nationality,
                     birthdate,
                     birthplace,
@@ -281,6 +287,22 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                             inputRef={companynameRef}
                             defaultValue={accountClaimsMap && accountClaimsMap.companyname? accountClaimsMap.companyname.value: ''}
                             label="Company Name" />
+                        <DebouncingSeachSelect
+                            fullWidth
+                            list={
+                                staticOptionsCtx.staticOptionsContext.countries.list.map(item => {
+                                    return {
+                                        label: item.name,
+                                        value: item.alpha2
+                                    }
+                                })
+                            }
+                            value={accountClaimsMap && accountClaimsMap.companycountry? accountClaimsMap.companycountry.value: ''}
+                            onChange={(e) => {
+                                setStates({...states, ...{companycountry: e.value}})
+                            }}
+                            style={styles.fields}
+                            label='Company Country' />
                         <TextField
                             style={styles.fields}
                             rows={5}
@@ -343,7 +365,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                 let companyrole = companyroleRef.current.value? companyroleRef.current.value: ''
                 let companyname = companynameRef.current.value? companynameRef.current.value: ''
                 let companydesc = companydescRef.current.value? companydescRef.current.value: ''
-                // let companycountry = companycountryRef.current.value? companycountryRef.current.value: ''
+                let companycountry = states.companycountry? states.companycountry: ''
                 let companyindustry = companyindustryRef.current.value? companyindustryRef.current.value: ''
                 let companyemail = companyemailRef.current.value? companyemailRef.current.value: ''
                 let companyphone = companyphoneRef.current.value? companyphoneRef.current.value: ''
@@ -355,7 +377,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
                     companyrole,
                     companyname,
                     companydesc,
-                    // companycountry,
+                    companycountry,
                     companyindustry,
                     companyemail,
                     companyphone,
