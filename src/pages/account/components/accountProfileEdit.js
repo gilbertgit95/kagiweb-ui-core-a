@@ -31,7 +31,7 @@ const AccountProfileEdit = ({accountInfo, onSaveData}) => {
     const staticOptionsCtx = useContext(StaticOptions)
 
     const profilepictureRef = useRef()
-    const genderRef = useRef()
+    // const genderRef = useRef()
     const nicknameRef = useRef()
     const firstnameRef = useRef()
     const middlenameRef = useRef()

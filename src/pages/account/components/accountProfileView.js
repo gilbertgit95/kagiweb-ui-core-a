@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Avatar from '@mui/material/Avatar'
@@ -9,7 +9,10 @@ import PrimaryProfileBlock from '../../../common/blocks/primaryProfileBlock'
 import KeyValueBlock from '../../../common/blocks/keyValueBlock'
 import GenBlock from '../../../common/blocks/genBlock'
 
+import StaticOptions from '../../../common/contexts/staticOptionsContext'
+
 const AccountProfileView = ({ accountInfo }) => {
+    const staticOptionsCtx = useContext(StaticOptions)
     let claims = {}
 
     if (accountInfo.accountClaims) {
@@ -18,6 +21,13 @@ const AccountProfileView = ({ accountInfo }) => {
             return acc
         }, {})
     }
+
+    let countriesMap = staticOptionsCtx.staticOptionsContext.countries.list.reduce((acc, item) => {
+
+        acc[item.alpha2] = item.name
+
+        return acc
+    }, {})
 
     let fullname = ''
     fullname += claims.firstname? claims.firstname: ''
@@ -55,6 +65,7 @@ const AccountProfileView = ({ accountInfo }) => {
                         title={ 'Advance Profile' }>
                         <KeyValueBlock
                             data={[
+                                { key: 'Country', value: claims.country? countriesMap[claims.country]: '--' },
                                 { key: 'Nationality', value: claims.nationality? claims.nationality: '--' },
                                 { key: 'Birth Date', value: claims.birthdate? claims.birthdate: '--' },
                                 { key: 'Birth Place', value: claims.birthplace? claims.birthplace: '--' },
@@ -75,6 +86,7 @@ const AccountProfileView = ({ accountInfo }) => {
                             data={[
                                 { key: 'Job Title', value: claims.companyrole? claims.companyrole: '--' },
                                 { key: 'Company Name', value: claims.companyname? claims.companyname: '--' },
+                                { key: 'Company Country', value: claims.companycountry? countriesMap[claims.companycountry]: '--' },
                                 { key: 'Company Description', value: claims.companydesc? claims.companydesc: '--' },
                                 { key: 'Industry Type', value: claims.companyindustry? claims.companyindustry: '--' },
                                 { key: 'Contact Email', value: claims.companyemail? claims.companyemail: '--' },
