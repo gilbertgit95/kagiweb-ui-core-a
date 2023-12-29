@@ -4,7 +4,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
+        {/* <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
@@ -14,7 +14,11 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
-        </a>
+        </a> */}
+
+        {/* check if the user is signedin */}
+        {/* if signedin, then load the private router */}
+        {/* else if signedout then load the public router */}
       </header>
     </div>
   );
