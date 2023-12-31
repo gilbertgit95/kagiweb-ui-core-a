@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
+import api from './dataEndpoints/apiCoreA/api';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
-import { setData, clearData } from './stores/signedInUserSlice'
+import { setData, clearData } from './stores/signedInUserSlice';
 // import Config from './utils/config'
 
 function App() {

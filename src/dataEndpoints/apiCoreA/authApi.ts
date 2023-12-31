@@ -3,7 +3,10 @@ import Config from "../../utils/config";
 
 class AuthApi {
     public static signin(username:string, password:string) {
-
+        return api.publicReq({
+            method: 'POST',
+            url: Config.Origin + Config.RootApiEndpoint + 'signin',
+        })
     }
 
     public static signinOtp(username:string, otp:string) {
