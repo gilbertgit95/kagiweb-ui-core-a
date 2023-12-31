@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
-import { useAppDispatch, useAppSelector} from './stores/appStoreHooks';
-import { setToken, setUserData, clearData } from './stores/signedInUserSlice'
+import { useAppDispatch, useAppSelector} from './stores/appStore';
+import { setData, clearData } from './stores/signedInUserSlice'
+// import Config from './utils/config'
 
 function App() {
   const token = useAppSelector(state => state.signedInUser.token)
@@ -8,20 +9,18 @@ function App() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const getToken = async () => {
-      console.log(' - get jwt token from memory')
-      return
-    }
-    const fetchUserData = async () => {
-      console.log(' - fetch signedIn user data')
+    const initData = async () => {
+      // get token from browser storage
+      // const token = localStorage.getItem(Config.TokenKey)
+      // then fetch userdata using token
+      // const userData = {}
+
+      // set token and userdata to the app storage
       return
     }
     
     (async () => {
-      console.log('initial data loading...')
-      await getToken()
-      await fetchUserData()
-      console.log(' - initial data loading has ended')
+      await initData()
     })()
   }, [])
 
@@ -31,11 +30,11 @@ function App() {
       <p>{ token }</p>
       <p>{ userData }</p>
 
-      <button onClick={() => {dispatch(setToken('testing_token'))}}>
+    <button onClick={() => {dispatch(setData({token: 'testing_token'}))}}>
         set token btn
       </button>
 
-      <button onClick={() => {dispatch(setUserData('userData101'))}}>
+      <button onClick={() => {dispatch(setData({userData: 'userData101'}))}}>
         set user btn
       </button>
 
