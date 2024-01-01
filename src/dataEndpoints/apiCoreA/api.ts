@@ -10,7 +10,7 @@ export class Api {
 
     public privateReq(config:AxiosRequestConfig) {
         if (!config.headers) config['headers'] = {}
-        config.headers['Authorization'] = `Bearer ${ this.authToken }`
+        config.headers['Authorization'] = this.authToken
 
         return axios(config)
     }

@@ -1,46 +1,65 @@
 import React, {useEffect} from 'react';
+import OwnerApi from './dataEndpoints/apiCoreA/ownerApi';
 import api from './dataEndpoints/apiCoreA/api';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setData, clearData } from './stores/signedInUserSlice';
-// import Config from './utils/config'
+import Config from './utils/config'
 
 function App() {
   const token = useAppSelector(state => state.signedInUser.token)
-  const userData = useAppSelector(state => state.signedInUser.userData)
+  // const userData = useAppSelector(state => state.signedInUser.userData)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const initData = async () => {
       // get token from browser storage
-      // const token = localStorage.getItem(Config.TokenKey)
-      // then fetch userdata using token
-      // const userData = {}
+      const token = localStorage.getItem(Config.TokenKey) || undefined
+      api.setToken(token)
 
-      // set token and userdata to the app storage
-      return
+      // then fetch userdata
+      let owner = undefined
+      try {
+        owner = await OwnerApi.getOwner()
+      } catch (err) {
+        console.log('Error while loading init data, stay singnedout')
+      }
+
+      // set app stores data
+      console.log('token: ', token)
+      console.log('owner: ', owner)
+
+      // set token and owner to the app storage
+      if (token && owner) {
+        dispatch(setData({
+          token,
+          userData: owner,
+          isSignedIn: true
+        }))
+      }
     }
     
     (async () => {
+      console.log('init app')
       await initData()
     })()
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="App">
       <p>App Root component!</p>
       <p>{ token }</p>
-      <p>{ userData }</p>
+      {/* <p>{ userData && userData.username? userData.username: '' }</p> */}
 
-    <button onClick={() => {dispatch(setData({token: 'testing_token'}))}}>
+      {/* <button onClick={() => {dispatch(setData({token: 'testing_token'}))}}>
         set token btn
       </button>
 
       <button onClick={() => {dispatch(setData({userData: 'userData101'}))}}>
         set user btn
-      </button>
+      </button> */}
 
       <button onClick={() => {dispatch(clearData())}}>
-        clear btn
+        Signout
       </button>
       {/* <p>
         Edit <code>src/App.tsx</code> and save to reload.
