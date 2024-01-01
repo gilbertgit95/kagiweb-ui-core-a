@@ -1,9 +1,9 @@
-import api from "./api";
+import apiHelper from "./apiHelper";
 import Config from "../../utils/config";
 
 class AuthApi {
     public static signin(username:string, password:string) {
-        return api.publicReq({
+        return apiHelper.publicReq({
             method: 'POST',
             url: Config.Origin + Config.RootApiEndpoint + 'signin',
         })

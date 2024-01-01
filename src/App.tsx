@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import OwnerApi from './dataEndpoints/apiCoreA/ownerApi';
-import api from './dataEndpoints/apiCoreA/api';
+import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setData, clearData } from './stores/signedInUserSlice';
 import Config from './utils/config'
@@ -14,7 +14,7 @@ function App() {
     const initData = async () => {
       // get token from browser storage
       const token = localStorage.getItem(Config.TokenKey) || undefined
-      api.setToken(token)
+      apiHelper.setToken(token)
 
       // then fetch userdata
       let owner = undefined
@@ -26,13 +26,13 @@ function App() {
 
       // set app stores data
       console.log('token: ', token)
-      console.log('owner: ', owner)
+      console.log('owner: ', owner?.data)
 
       // set token and owner to the app storage
       if (token && owner) {
         dispatch(setData({
           token,
-          userData: owner,
+          userData: owner.data,
           isSignedIn: true
         }))
       }
