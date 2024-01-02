@@ -1,24 +1,47 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IFeature } from "../types/feature";
+import { IRole } from "../types/role";
+import { IUser } from "../types/user";
+import { IWorkspace } from "../types/workspace";
+
+const initialState:{
+    token: string|undefined,
+    userData: IUser|undefined,
+    isSignedIn: boolean|false,
+    role: IRole|undefined,
+    features: IFeature|undefined,
+    activeWorkspace: IWorkspace|undefined
+} = {
+    token: undefined,
+    userData: undefined,
+    isSignedIn: false,
+    role: undefined,
+    features: undefined,
+    activeWorkspace: undefined
+}
 
 export const SignedInUser = createSlice({
     name: 'signedInUser',
-    initialState: {
-        token: undefined,
-        userData: undefined,
-        isSignedIn: false,
-        role: undefined,
-        features: undefined,
-        activeWorkspace: undefined
-    },
+    initialState,
 
     reducers: {
-        setData: (state, {payload}) => {
-            if (payload.token) state.token = payload.token
-            if (payload.userData) state.userData = payload.userData
-            if (payload.isSignedIn) state.isSignedIn = payload.isSignedIn
-            if (payload.role) state.role = payload.role
-            if (payload.features) state.features = payload.features
-            if (payload.activeWorkspace) state.activeWorkspace = payload.activeWorkspace
+        setData: (
+            state,
+            action: PayloadAction<{
+                token?: string|undefined,
+                userData?: IUser|undefined,
+                isSignedIn?: boolean|false,
+                role?: IRole|undefined,
+                features?: IFeature|undefined,
+                activeWorkspace?: IWorkspace|undefined
+            }>
+        ) => {
+            if (action.payload.token) state.token = action.payload.token
+            if (action.payload.userData) state.userData = action.payload.userData
+            if (action.payload.isSignedIn) state.isSignedIn = action.payload.isSignedIn
+            if (action.payload.role) state.role = action.payload.role
+            if (action.payload.features) state.features = action.payload.features
+            if (action.payload.activeWorkspace) state.activeWorkspace = action.payload.activeWorkspace
         },
         clearData: (state) => {
             state.token = undefined

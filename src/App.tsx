@@ -7,7 +7,7 @@ import Config from './utils/config'
 
 function App() {
   const token = useAppSelector(state => state.signedInUser.token)
-  // const userData = useAppSelector(state => state.signedInUser.userData)
+  const userData = useAppSelector(state => state.signedInUser.userData)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function App() {
     <div className="App">
       <p>App Root component!</p>
       <p>{ token }</p>
-      {/* <p>{ userData && userData.username? userData.username: '' }</p> */}
+      <p>{ userData && userData.username? userData.username: '' }</p>
 
       {/* <button onClick={() => {dispatch(setData({token: 'testing_token'}))}}>
         set token btn
