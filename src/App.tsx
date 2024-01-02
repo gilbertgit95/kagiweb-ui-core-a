@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import OwnerApi from './dataEndpoints/apiCoreA/ownerApi';
 import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
+import AuthService from './pages/auth/authService';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
-import { setData, clearData } from './stores/signedInUserSlice';
+import { setData, clearData, ISignedInUser } from './stores/signedInUserSlice';
 import Config from './utils/config'
 
 function App() {
@@ -16,23 +17,13 @@ function App() {
       const token = localStorage.getItem(Config.TokenKey) || undefined
       apiHelper.setToken(token)
 
-      // then fetch userdata
-      let owner = undefined
-      try {
-        owner = await OwnerApi.getOwner()
-      } catch (err) {
-        console.log('Error while loading init data, stay singnedout')
-      }
-
-      // set app stores data
-      console.log('token: ', token)
-      console.log('owner: ', owner?.data)
+      let appInitData:ISignedInUser = await AuthService.reqAppInitData()
 
       // set token and owner to the app storage
-      if (token && owner) {
+      if (token && appInitData.userData) {
         dispatch(setData({
           token,
-          userData: owner.data,
+          userData: appInitData.userData,
           isSignedIn: true
         }))
       }

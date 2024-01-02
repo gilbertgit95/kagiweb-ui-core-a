@@ -4,14 +4,25 @@ import { IRole } from "../types/role";
 import { IUser } from "../types/user";
 import { IWorkspace } from "../types/workspace";
 
-const initialState:{
+export interface ISignedInUser {
     token: string|undefined,
     userData: IUser|undefined,
     isSignedIn: boolean|false,
     role: IRole|undefined,
     features: IFeature|undefined,
     activeWorkspace: IWorkspace|undefined
-} = {
+}
+
+export interface IOptSignedInUser {
+    token?: string|undefined,
+    userData?: IUser|undefined,
+    isSignedIn?: boolean|false,
+    role?: IRole|undefined,
+    features?: IFeature|undefined,
+    activeWorkspace?: IWorkspace|undefined
+}
+
+const initialState:ISignedInUser = {
     token: undefined,
     userData: undefined,
     isSignedIn: false,
@@ -27,14 +38,7 @@ export const SignedInUser = createSlice({
     reducers: {
         setData: (
             state,
-            action: PayloadAction<{
-                token?: string|undefined,
-                userData?: IUser|undefined,
-                isSignedIn?: boolean|false,
-                role?: IRole|undefined,
-                features?: IFeature|undefined,
-                activeWorkspace?: IWorkspace|undefined
-            }>
+            action: PayloadAction<IOptSignedInUser>
         ) => {
             if (action.payload.token) state.token = action.payload.token
             if (action.payload.userData) state.userData = action.payload.userData
