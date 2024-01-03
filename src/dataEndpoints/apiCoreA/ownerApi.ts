@@ -8,6 +8,13 @@ class OwnerApi {
             url: Config.Origin + Config.RootApiEndpoint + 'owner'
         })
     }
+
+    public static getOwnerCompleteInfo() {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: Config.Origin + Config.RootApiEndpoint + 'owner/completeInfo'
+        })
+    }
 }
 
 export default OwnerApi

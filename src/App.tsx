@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
-import AuthService from './pages/auth/authService';
+import OwnerService from './pages/owner/ownerService';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setUserData, clearUserData, ISignedInUser } from './stores/signedInUserSlice';
 import Config from './utils/config'
@@ -16,15 +16,11 @@ function App() {
       const token = localStorage.getItem(Config.TokenKey) || undefined
       apiHelper.setToken(token)
 
-      let appInitData:ISignedInUser = await AuthService.reqAppInitData()
+      let ownerCompleteInfo:ISignedInUser = await OwnerService.reqOwnerCompleteInfo()
 
       // set token and owner to the app storage
-      if (token && appInitData.userData) {
-        dispatch(setUserData({
-          token,
-          userData: appInitData.userData,
-          isSignedIn: true
-        }))
+      if (token && ownerCompleteInfo.userData) {
+        dispatch(setUserData({...ownerCompleteInfo, token}))
       }
     }
     
