@@ -9,8 +9,10 @@ export interface ISignedInUser {
     userData: IUser|undefined,
     isSignedIn: boolean|false,
     role: IRole|undefined,
-    features: IFeature|undefined,
-    activeWorkspace: IWorkspace|undefined
+    roles: IRole[]|undefined,
+    features: IFeature[]|undefined,
+    workspace: IWorkspace|undefined,
+    workspaces: IWorkspace[]|undefined
 }
 
 export interface IOptSignedInUser {
@@ -18,8 +20,10 @@ export interface IOptSignedInUser {
     userData?: IUser|undefined,
     isSignedIn?: boolean|false,
     role?: IRole|undefined,
-    features?: IFeature|undefined,
-    activeWorkspace?: IWorkspace|undefined
+    roles?: IRole[]|undefined,
+    features?: IFeature[]|undefined,
+    workspace?: IWorkspace|undefined,
+    workspaces?: IWorkspace[]|undefined
 }
 
 const initialState:ISignedInUser = {
@@ -27,8 +31,10 @@ const initialState:ISignedInUser = {
     userData: undefined,
     isSignedIn: false,
     role: undefined,
+    roles: undefined,
     features: undefined,
-    activeWorkspace: undefined
+    workspace: undefined,
+    workspaces: undefined
 }
 
 export const SignedInUser = createSlice({
@@ -36,7 +42,7 @@ export const SignedInUser = createSlice({
     initialState,
 
     reducers: {
-        setData: (
+        setUserData: (
             state,
             action: PayloadAction<IOptSignedInUser>
         ) => {
@@ -44,19 +50,23 @@ export const SignedInUser = createSlice({
             if (action.payload.userData) state.userData = action.payload.userData
             if (action.payload.isSignedIn) state.isSignedIn = action.payload.isSignedIn
             if (action.payload.role) state.role = action.payload.role
+            if (action.payload.roles) state.roles = action.payload.roles
             if (action.payload.features) state.features = action.payload.features
-            if (action.payload.activeWorkspace) state.activeWorkspace = action.payload.activeWorkspace
+            if (action.payload.workspace) state.workspace = action.payload.workspace
+            if (action.payload.workspaces) state.workspaces = action.payload.workspaces
         },
-        clearData: (state) => {
+        clearUserData: (state) => {
             state.token = undefined
             state.userData = undefined
             state.isSignedIn = false
             state.role = undefined
+            state.roles = undefined
             state.features = undefined
-            state.activeWorkspace = undefined
+            state.workspace = undefined
+            state.workspaces = undefined
         }
     }
 })
 
-export const { setData, clearData } = SignedInUser.actions
+export const { setUserData, clearUserData } = SignedInUser.actions
 export default SignedInUser.reducer

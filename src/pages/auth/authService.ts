@@ -3,6 +3,17 @@ import { ISignedInUser } from "../../stores/signedInUserSlice"
 
 class AuthService {
     public static async reqAppInitData():Promise<ISignedInUser> {
+        let resp = {
+            token: undefined,
+            userData: undefined,
+            isSignedIn: false,
+            role: undefined,
+            roles: undefined,
+            features: undefined,
+            workspace: undefined,
+            workspaces: undefined
+        }
+
         let ownerReqResp = undefined
         try {
             ownerReqResp = await OwnerApi.getOwner()
@@ -23,14 +34,10 @@ class AuthService {
         // set app stores data
         // console.log('token: ', token)
         // console.log('owner: ', ownerReqResp?.data)
-        return {
-            token: undefined,
-            userData: ownerReqResp?.data,
-            isSignedIn: false,
-            role: undefined,
-            features: undefined,
-            activeWorkspace: undefined
-        }
+        resp.userData = ownerReqResp?.data
+        resp.isSignedIn = true
+
+        return resp
     }
 }
 
