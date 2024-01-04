@@ -3,25 +3,29 @@ import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
 import OwnerService from './pages/owner/ownerService';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setUserData, clearUserData, ISignedInUser } from './stores/signedInUserSlice';
-import Config from './utils/config'
+import Config from './utils/config';
+
+import PublicRoutes from './pages/publicRoutes';
+import PrivateRoutes from './pages/privateRoutes';
 
 function App() {
-  const token = useAppSelector(state => state.signedInUser.token)
+  // const token = useAppSelector(state => state.signedInUser.token)
   const userData = useAppSelector(state => state.signedInUser.userData)
+  const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const initData = async () => {
-      // get token from browser storage
-      const token = localStorage.getItem(Config.TokenKey) || undefined
-      apiHelper.setToken(token)
+      const authToken = localStorage.getItem(Config.TokenKey) || undefined
 
-      let ownerCompleteInfo:ISignedInUser = await OwnerService.reqOwnerCompleteInfo()
+      // use the auth token from local storage on every private api request
+      apiHelper.useToken(authToken)
+
+      // fetch initial data
+      const ownerInfo:ISignedInUser = await OwnerService.reqOwnerCompleteInfo()
 
       // set token and owner to the app storage
-      if (token && ownerCompleteInfo.userData) {
-        dispatch(setUserData({...ownerCompleteInfo, token}))
-      }
+      if (ownerInfo.isSignedIn) dispatch(setUserData({...ownerInfo, ...{token: authToken}}))
     }
     
     (async () => {
@@ -33,7 +37,6 @@ function App() {
   return (
     <div className="App">
       <p>App Root component!</p>
-      <p>{ token }</p>
       <p>{ userData && userData.username? userData.username: '' }</p>
 
       {/* <button onClick={() => {dispatch(setUserData({token: 'testing_token'}))}}>
@@ -47,15 +50,10 @@ function App() {
       <button onClick={() => {dispatch(clearUserData())}}>
         Signout
       </button>
-      {/* <p>
-        Edit <code>src/App.tsx</code> and save to reload.
-      </p>*/}
 
-      {/* load initial data */}
-      {/* if still loading then show loading display */}
-      {/* check if the user is signedin */}
-      {/* if signedin, then load the private router */}
-      {/* else if signedout then load the public router */}
+      {/* render router */}
+      { isSignedIn? <PrivateRoutes />: <PublicRoutes /> }
+
     </div>
   );
 }

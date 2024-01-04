@@ -4,8 +4,8 @@ import axios, { AxiosRequestConfig } from "axios"
 export class Api {
     private authToken:string|undefined
     
-    public setToken(token:string|undefined = undefined):void {
-        this.authToken = token
+    public useToken(token:string|undefined|null):void {
+        this.authToken = typeof token === 'string'? token: undefined
     }
 
     public privateReq(config:AxiosRequestConfig) {
