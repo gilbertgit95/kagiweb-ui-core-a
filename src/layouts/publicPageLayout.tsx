@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 // type Props = {
 //     children?: React.ReactNode
 // }
-const PageLayout =() => {
+const PublicPageLayout =() => {
     return (
         <div>
-            <h2>Page Layout</h2>
+            <h2>Public Page Layout</h2>
             <div>
                 <Outlet />
             </div>
@@ -15,4 +15,4 @@ const PageLayout =() => {
     )
 }
 
-export default PageLayout
+export default PublicPageLayout

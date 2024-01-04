@@ -14,6 +14,9 @@ const Signin = () => {
             <button onClick={() => {dispatch(setUserData({token: 'testing_token'}))}}>
                 set token btn
             </button>
+            <button onClick={() => {dispatch(setUserData({isSignedIn: true}))}}>
+                signin
+            </button>
             <button onClick={() => {dispatch(clearUserData())}}>
                 clear store
             </button>

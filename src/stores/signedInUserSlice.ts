@@ -7,7 +7,7 @@ import { IWorkspace } from "../types/workspace";
 export interface ISignedInUser {
     token: string|undefined,
     userData: IUser|undefined,
-    isSignedIn: boolean|false,
+    isSignedIn: boolean|undefined,
     role: IRole|undefined,
     roles: IRole[]|undefined,
     features: IFeature[]|undefined,
@@ -18,7 +18,7 @@ export interface ISignedInUser {
 export interface IOptSignedInUser {
     token?: string|undefined,
     userData?: IUser|undefined,
-    isSignedIn?: boolean|false,
+    isSignedIn?: boolean|undefined,
     role?: IRole|undefined,
     roles?: IRole[]|undefined,
     features?: IFeature[]|undefined,
@@ -29,7 +29,7 @@ export interface IOptSignedInUser {
 const initialState:ISignedInUser = {
     token: undefined,
     userData: undefined,
-    isSignedIn: false,
+    isSignedIn: undefined,
     role: undefined,
     roles: undefined,
     features: undefined,
@@ -46,14 +46,14 @@ export const SignedInUser = createSlice({
             state,
             action: PayloadAction<IOptSignedInUser>
         ) => {
-            if (action.payload.token) state.token = action.payload.token
-            if (action.payload.userData) state.userData = action.payload.userData
-            if (action.payload.isSignedIn) state.isSignedIn = action.payload.isSignedIn
-            if (action.payload.role) state.role = action.payload.role
-            if (action.payload.roles) state.roles = action.payload.roles
-            if (action.payload.features) state.features = action.payload.features
-            if (action.payload.workspace) state.workspace = action.payload.workspace
-            if (action.payload.workspaces) state.workspaces = action.payload.workspaces
+            if (action.payload.hasOwnProperty('token')) state.token = action.payload.token
+            if (action.payload.hasOwnProperty('userData')) state.userData = action.payload.userData
+            if (action.payload.hasOwnProperty('isSignedIn')) state.isSignedIn = action.payload.isSignedIn
+            if (action.payload.hasOwnProperty('role')) state.role = action.payload.role
+            if (action.payload.hasOwnProperty('roles')) state.roles = action.payload.roles
+            if (action.payload.hasOwnProperty('features')) state.features = action.payload.features
+            if (action.payload.hasOwnProperty('workspace')) state.workspace = action.payload.workspace
+            if (action.payload.hasOwnProperty('workspaces')) state.workspaces = action.payload.workspaces
         },
         clearUserData: (state) => {
             state.token = undefined

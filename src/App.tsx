@@ -2,15 +2,15 @@ import React, {useEffect} from 'react';
 import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
 import OwnerService from './pages/owner/ownerService';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
-import { setUserData, clearUserData, ISignedInUser } from './stores/signedInUserSlice';
+import { setUserData, ISignedInUser } from './stores/signedInUserSlice';
 import Config from './utils/config';
 
-import PublicRoutes from './pages/publicRoutes';
-import PrivateRoutes from './pages/privateRoutes';
+import PublicRoutes from './routes/publicRoutes';
+import PrivateRoutes from './routes/privateRoutes';
 
 function App() {
   // const token = useAppSelector(state => state.signedInUser.token)
-  const userData = useAppSelector(state => state.signedInUser.userData)
+  // const userData = useAppSelector(state => state.signedInUser.userData)
   const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
   const dispatch = useAppDispatch()
 
@@ -25,7 +25,7 @@ function App() {
       const ownerInfo:ISignedInUser = await OwnerService.reqOwnerCompleteInfo()
 
       // set token and owner to the app storage
-      if (ownerInfo.isSignedIn) dispatch(setUserData({...ownerInfo, ...{token: authToken}}))
+      dispatch(setUserData({...ownerInfo, ...{token: authToken}}))
     }
     
     (async () => {
@@ -34,28 +34,9 @@ function App() {
     })()
   }, [dispatch])
 
-  return (
-    <div className="App">
-      <p>App Root component!</p>
-      <p>{ userData && userData.username? userData.username: '' }</p>
+  console.log('isSignedIn: ', typeof isSignedIn)
 
-      {/* <button onClick={() => {dispatch(setUserData({token: 'testing_token'}))}}>
-        set token btn
-      </button>
-
-      <button onClick={() => {dispatch(setUserData({userData: 'userData101'}))}}>
-        set user btn
-      </button> */}
-
-      <button onClick={() => {dispatch(clearUserData())}}>
-        Signout
-      </button>
-
-      {/* render router */}
-      { isSignedIn? <PrivateRoutes />: <PublicRoutes /> }
-
-    </div>
-  );
+  return isSignedIn === undefined? <div>initial loading</div>:isSignedIn? <PrivateRoutes />: <PublicRoutes />
 }
 
 export default App;
