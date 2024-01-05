@@ -4,7 +4,12 @@ import { Provider } from 'react-redux';
 
 import reportWebVitals from './reportWebVitals';
 
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import './styles/global.css';
+
 import appStore from './stores/appStore';
 import App from './App';
 

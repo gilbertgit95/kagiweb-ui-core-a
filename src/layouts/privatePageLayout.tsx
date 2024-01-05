@@ -1,6 +1,9 @@
 // import React from "react";
 import { Outlet } from "react-router-dom";
 
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button } from "@mui/material";
+
 import { useAppDispatch, useAppSelector} from '../stores/appStore';
 import { clearUserData } from '../stores/signedInUserSlice';
 
@@ -16,9 +19,11 @@ const PrivatePageLayout =() => {
             <h2>Private Page Layout</h2>
             <div>
                 <b>{ userData? userData.username: '' }</b>
-                <button onClick={() => {dispatch(clearUserData())}}>
+                <Button onClick={() => {dispatch(clearUserData())}}>
                     signout
-                </button>
+                </Button>
+
+                <DeleteIcon color='primary' />
             </div>
             <div>
                 <Outlet />
