@@ -7,10 +7,8 @@ import { Outlet } from "react-router-dom";
 const PublicPageLayout =() => {
     return (
         <div>
-            <h2>Public Page Layout</h2>
-            <div>
-                <Outlet />
-            </div>
+            {/* <h2>Public Page Layout</h2> */}
+            <Outlet />
         </div>
     )
 }
