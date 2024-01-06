@@ -5,7 +5,7 @@ import Signin from "../pages/auth/signin";
 import SigninOTP from "../pages/auth/signinOtp";
 import ForgotPassword from "../pages/auth/forgotPassword";
 import ResetPassword from "../pages/auth/resetPassword";
-import PublicPageNotFound from "../pages/error/publicPageNotFound";
+import PublicPageNotFound from "../pages/infoOrWarnings/publicPageNotFound";
 
 const PublicRoutes = () => {
     return (

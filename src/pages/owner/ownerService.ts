@@ -18,7 +18,7 @@ class OwnerService {
         try {
             ownerReqResp = await OwnerApi.getOwnerCompleteInfo()
 
-            // set app stores data  
+            // set app stores data
             // console.log('token: ', token)
             resp.userData = ownerReqResp?.data?.userData
             resp.role = ownerReqResp?.data?.role

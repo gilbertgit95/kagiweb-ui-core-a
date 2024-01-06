@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setUserData, ISignedInUser } from './stores/signedInUserSlice';
 import Config from './utils/config';
 
+import InitialDisplay from './pages/infoOrWarnings/initialDisplay';
 import PublicRoutes from './routes/publicRoutes';
 import PrivateRoutes from './routes/privateRoutes';
 
@@ -34,9 +35,9 @@ function App() {
     })()
   }, [dispatch])
 
-  console.log('isSignedIn: ', typeof isSignedIn)
+  // console.log('isSignedIn: ', typeof isSignedIn)
 
-  return isSignedIn === undefined? <div>initial loading</div>:isSignedIn? <PrivateRoutes />: <PublicRoutes />
+  return isSignedIn === undefined? <InitialDisplay />:isSignedIn? <PrivateRoutes />: <PublicRoutes />
 }
 
 export default App;
