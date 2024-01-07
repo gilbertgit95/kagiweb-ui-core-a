@@ -2,6 +2,7 @@
 // import { ISignedInUser } from "../../stores/signedInUserSlice"
 
 class AuthService {
+    
 }
 
 export default AuthService

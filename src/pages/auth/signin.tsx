@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -24,9 +22,15 @@ const Signin = () => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
         console.log({
-          email: data.get('email'),
+          username: data.get('username'),
           password: data.get('password'),
         })
+
+        // signin request
+        // then save the token response to storage
+        // and initiate data and redirect to home
+
+        // else if 2fa is enabled then redirect to signinopt page
     }
 
     return (
@@ -48,10 +52,10 @@ const Signin = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoComplete="username"
                         autoFocus />
                     <TextField
                         margin="normal"
@@ -71,20 +75,19 @@ const Signin = () => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">Forgot password?</Link>
+                            <Link href="/forgotPassword" variant="body2">
+                                Forgot password?
+                            </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">{"Don't have an account? Sign Up"}</Link>
+                            <Link href="/signup" variant="body2">
+                                {"Don't have an account? Sign Up"}
+                            </Link>
                         </Grid>
                     </Grid>
                 </Box>
             </Box>
-            {/* <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 8, mb: 4 }}>
-                {'Copyright © '}
-                <Link color="inherit" href="https://mui.com/">Your Website</Link>{' '}
-                {new Date().getFullYear()}
-                {'.'}
-            </Typography> */}
+
       </Container>
     )
 }
