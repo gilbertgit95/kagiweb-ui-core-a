@@ -84,7 +84,7 @@ const ForgotPassword = () => {
                 </Box>
             </Box>
 
-      </Container>
+        </Container>
     )
 }
 

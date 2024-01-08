@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,6 +18,7 @@ const ResetPassword = () => {
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
+    const [errors, setErrors] = useState<string[]>([])
     const [searchParams] = useSearchParams();
     const usernameUrlQuery = searchParams.get('username') || '';
     const resetKeyUrlQuery = searchParams.get('resetKey') || '';
@@ -110,7 +111,7 @@ const ResetPassword = () => {
                 </Box>
             </Box>
 
-      </Container>
+        </Container>
     )
 }
 
