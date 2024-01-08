@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import KeyOffOutlinedIcon from '@mui/icons-material/KeyOffOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useSearchParams } from 'react-router-dom';
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
@@ -17,6 +18,10 @@ const ForgotPassword = () => {
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
+    const [searchParams] = useSearchParams();
+    const usernameUrlQuery = searchParams.get('username') || '';
+
+    // console.log('username: ', username)
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -54,6 +59,7 @@ const ForgotPassword = () => {
                         id="username"
                         label="Username"
                         name="username"
+                        defaultValue={usernameUrlQuery}
                         autoComplete="username"
                         autoFocus />
                     <Button

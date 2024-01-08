@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import KeyIcon from '@mui/icons-material/Key';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useSearchParams } from 'react-router-dom';
 
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
@@ -18,6 +19,9 @@ const SigninOTP = () => {
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
+    const [searchParams] = useSearchParams();
+    const usernameUrlQuery = searchParams.get('username') || '';
+    const otpUrlQuery = searchParams.get('otp') || '';
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -57,6 +61,7 @@ const SigninOTP = () => {
                         label="Username"
                         name="username"
                         autoComplete="username"
+                        defaultValue={usernameUrlQuery}
                         autoFocus />
                     <TextField
                         margin="normal"
@@ -64,7 +69,8 @@ const SigninOTP = () => {
                         fullWidth
                         name="otp"
                         label="One Time Password"
-                        id="otp" />
+                        id="otp"
+                        defaultValue={otpUrlQuery} />
                     <Button
                         type="submit"
                         fullWidth

@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
+import { useSearchParams } from 'react-router-dom';
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
@@ -18,6 +18,9 @@ const ResetPassword = () => {
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
+    const [searchParams] = useSearchParams();
+    const usernameUrlQuery = searchParams.get('username') || '';
+    const resetKeyUrlQuery = searchParams.get('resetKey') || '';
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -59,6 +62,7 @@ const ResetPassword = () => {
                         label="Username"
                         name="username"
                         autoComplete="username"
+                        defaultValue={usernameUrlQuery}
                         autoFocus />
                     <TextField
                         margin="normal"
@@ -66,7 +70,8 @@ const ResetPassword = () => {
                         fullWidth
                         name="resetKey"
                         label="Reset Key"
-                        id="resetKey" />
+                        id="resetKey"
+                        defaultValue={resetKeyUrlQuery} />
                     <TextField
                         margin="normal"
                         required
