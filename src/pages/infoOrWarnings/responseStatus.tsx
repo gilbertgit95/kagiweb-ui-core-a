@@ -1,26 +1,19 @@
-import { CircularProgress, Typography, Grid } from "@mui/material"
+import { Alert } from "@mui/material"
 
-type Props = {
-    type: 'info'|'error'|'warning',
-    messages: string[]
+export type TResponseStatus = {
+    errorMessages?: string[],
+    infoMessages?: string[]
 }
 
-const ResponseStatus = (props:Props) => {
+const ResponseStatus = (props:TResponseStatus) => {
+    const err = props.errorMessages && props.errorMessages.length? props.errorMessages[0]: undefined
+    const info = props.infoMessages && props.infoMessages.length? props.infoMessages[0]: undefined
+
     return (
-        <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            sx={{ minHeight: '100vh' }}>
-            <Grid item xs={12}>
-                <CircularProgress />
-            </Grid>
-            <Grid item xs={12}>
-                <Typography color='primary' variant='subtitle1'>Errors</Typography>
-            </Grid>
-        </Grid>
+        <>
+            { err? <Alert severity="error">{ err }</Alert>: null }
+            { !err && info? <Alert severity="info">{ info }</Alert>: null }
+        </>
     )
 }
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,11 +9,16 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import ResponseStatus, { TResponseStatus } from '../infoOrWarnings/responseStatus';
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const Signin = () => {
+    const [infoWarning, setInfoWarning] = useState<TResponseStatus>({
+        errorMessages: ['Internal server error'],
+        infoMessages: []
+    })
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
@@ -66,6 +71,7 @@ const Signin = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password" />
+                    <ResponseStatus {...infoWarning} />
                     <Button
                         type="submit"
                         fullWidth

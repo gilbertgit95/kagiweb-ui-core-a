@@ -99,7 +99,7 @@ const ResetPassword = () => {
                     <Grid container>
                         <Grid item xs>
                             <Link href="/signin" variant="body2">
-                                Forgot password?
+                                Signin?
                             </Link>
                         </Grid>
                         <Grid item>
