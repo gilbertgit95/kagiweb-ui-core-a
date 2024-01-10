@@ -3,16 +3,29 @@ import Config from "../../utils/config";
 
 class AuthApi {
     public static signin(username:string, password:string) {
+        const data = {
+            'username': username,
+            'password': password
+        }
+
         return apiHelper.publicReq({
             method: 'POST',
             url: Config.Origin + Config.RootApiEndpoint + 'signin',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
         })
     }
 
-    public static signinOtp(username:string, otp:string) {
+    public static signinOTP(username:string, otp:string) {
+        const data = {
+            'username': username,
+            'key': otp
+        }
         return apiHelper.publicReq({
             method: 'POST',
             url: Config.Origin + Config.RootApiEndpoint + 'signinOTP',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
         })
     }
 
@@ -38,7 +51,7 @@ class AuthApi {
     }
 
     public static signout() {
-        return apiHelper.publicReq({
+        return apiHelper.privateReq({
             method: 'DELETE',
             url: Config.Origin + Config.RootApiEndpoint + 'signout',
         })

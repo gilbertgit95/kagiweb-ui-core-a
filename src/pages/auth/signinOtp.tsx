@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,11 +11,18 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useSearchParams } from 'react-router-dom';
 
+import ResponseStatus, { TResponseStatus } from '../infoOrWarnings/responseStatus';
+import Config from '../../utils/config';
+import AuthService from './authService';
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const SigninOTP = () => {
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
@@ -23,19 +30,35 @@ const SigninOTP = () => {
     const usernameUrlQuery = searchParams.get('username') || '';
     const otpUrlQuery = searchParams.get('otp') || '';
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
-        console.log({
-          username: data.get('username'),
-          otp: data.get('otp'),
-        })
+        // console.log({
+        //   username: data.get('username'),
+        //   otp: data.get('otp'),
+        // })
 
-        // signin request
-        // then save the token response to storage
-        // and initiate data and redirect to home
+        try {
+            const signinOTPResp = await AuthService.signinOTP(
+                data.get('username')?.toString(),
+                data.get('otp')?.toString()
+            )
 
-        // else if 2fa is enabled then redirect to signinopt page
+            console.log('signinOTPResp: ', signinOTPResp)
+
+            // if direct signin or if token was on the response then save the token to loca storage
+            // then redirect to home
+            if (signinOTPResp.token) {
+                localStorage.setItem(Config.TokenKey, 'Bearer ' + signinOTPResp.token)
+                window.location.replace('/')
+            }
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...infoAndErrors,
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
     }
 
     return (
@@ -71,6 +94,7 @@ const SigninOTP = () => {
                         label="One Time Password"
                         id="otp"
                         defaultValue={otpUrlQuery} />
+                    <ResponseStatus {...infoAndErrors} />
                     <Button
                         type="submit"
                         fullWidth

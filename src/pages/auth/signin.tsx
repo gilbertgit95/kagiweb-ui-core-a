@@ -11,31 +11,59 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import ResponseStatus, { TResponseStatus } from '../infoOrWarnings/responseStatus';
 
+import Config from '../../utils/config';
+import TimeUtils from '../../utils/timeUtils';
+import AuthService from './authService';
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const Signin = () => {
-    const [infoWarning, setInfoWarning] = useState<TResponseStatus>({
-        errorMessages: ['Internal server error'],
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
         infoMessages: []
     })
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
-        console.log({
-          username: data.get('username'),
-          password: data.get('password'),
-        })
+        // console.log({
+        //   username: data.get('username'),
+        //   password: data.get('password'),
+        // })
+        try {
+            const signinResp = await AuthService.signin(
+                data.get('username')?.toString(),
+                data.get('password')?.toString()
+            )
 
-        // signin request
-        // then save the token response to storage
-        // and initiate data and redirect to home
+            console.log('signinResp: ', signinResp)
 
-        // else if 2fa is enabled then redirect to signinopt page
+            // if direct signin or if token was on the response then save the token to loca storage
+            // then redirect to home
+            if (signinResp.token) {
+                localStorage.setItem(Config.TokenKey, 'Bearer ' + signinResp.token)
+                window.location.replace('/')
+
+            // if otp signin is enabled then show resp status info for a while
+            // then redirect to otp signin
+            } else {
+                setInfoAndErrors({
+                    infoMessages: [(signinResp?.message || '') + '. This page Will be redirected to OTP signin page in a few.'],
+                    errorMessages: []
+                })
+                await TimeUtils.doNothingFor(5)
+                window.location.replace(`/signinOTP?username=${ signinResp.username }`)
+            }
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...infoAndErrors,
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
     }
 
     return (
@@ -71,7 +99,7 @@ const Signin = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password" />
-                    <ResponseStatus {...infoWarning} />
+                    <ResponseStatus {...infoAndErrors} />
                     <Button
                         type="submit"
                         fullWidth
