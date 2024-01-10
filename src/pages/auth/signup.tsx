@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,17 +9,26 @@ import Box from '@mui/material/Box';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import ResponseStatus, { TResponseStatus } from '../infoOrWarnings/responseStatus';
+
+// import Config from '../../utils/config';
+// import TimeUtils from '../../utils/timeUtils';
+import AuthService from './authService';
 
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const Signup = () => {
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
         console.log({
@@ -30,11 +39,26 @@ const Signup = () => {
           confirmPassword: data.get('confirmPassword')
         })
 
-        // signin request
-        // then save the token response to storage
-        // and initiate data and redirect to home
+        try {
+            const signupResp = await AuthService.signup(
+                data.get('username')?.toString(),
+                data.get('password')?.toString(),
+                data.get('email')?.toString(),
+                data.get('phone')?.toString()
+            )
 
-        // else if 2fa is enabled then redirect to signinopt page
+            console.log('signupResp: ', signupResp)
+            setInfoAndErrors({
+                infoMessages: [signupResp?.message || ''],
+                errorMessages: []
+            })
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...infoAndErrors,
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
     }
 
     return (
@@ -89,6 +113,7 @@ const Signup = () => {
                         name="confirmPassword"
                         label="Confirm Password"
                         id="confirmPassword" />
+                    <ResponseStatus {...infoAndErrors} />
                     <Button
                         type="submit"
                         fullWidth

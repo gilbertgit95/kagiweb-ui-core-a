@@ -10,20 +10,28 @@ import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useSearchParams } from 'react-router-dom';
+import ResponseStatus, { TResponseStatus } from '../infoOrWarnings/responseStatus';
+
+// import Config from '../../utils/config';
+import TimeUtils from '../../utils/timeUtils';
+import AuthService from './authService';
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const ResetPassword = () => {
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
-    const [errors, setErrors] = useState<string[]>([])
     const [searchParams] = useSearchParams();
     const usernameUrlQuery = searchParams.get('username') || '';
     const resetKeyUrlQuery = searchParams.get('resetKey') || '';
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
         console.log({
@@ -33,11 +41,29 @@ const ResetPassword = () => {
           confirmPassword: data.get('confirmPassword')
         })
 
-        // signin request
-        // then save the token response to storage
-        // and initiate data and redirect to home
+        try {
+            const resetPassResp = await AuthService.resetPassword(
+                data.get('username')?.toString(),
+                data.get('resetKey')?.toString(),
+                data.get('newPassword')?.toString()
+            )
 
-        // else if 2fa is enabled then redirect to signinopt page
+            console.log('resetPassResp: ', resetPassResp)
+
+            setInfoAndErrors({
+                infoMessages: [(resetPassResp?.message || '') + '. This page Will be redirected to signin page in a few.'],
+                errorMessages: []
+            })
+
+            await TimeUtils.doNothingFor(5)
+            window.location.replace('/signin')
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...infoAndErrors,
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
     }
 
     return (
@@ -89,6 +115,7 @@ const ResetPassword = () => {
                         name="confirmPassword"
                         label="Confirm Password"
                         id="confirmPassword" />
+                    <ResponseStatus {...infoAndErrors} />
                     <Button
                         type="submit"
                         fullWidth

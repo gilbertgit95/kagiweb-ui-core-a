@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,11 +10,20 @@ import KeyOffOutlinedIcon from '@mui/icons-material/KeyOffOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useSearchParams } from 'react-router-dom';
+import ResponseStatus, { TResponseStatus } from '../infoOrWarnings/responseStatus';
+
+// import Config from '../../utils/config';
+import TimeUtils from '../../utils/timeUtils';
+import AuthService from './authService';
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const ForgotPassword = () => {
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInUser.token)
     // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
@@ -23,18 +32,36 @@ const ForgotPassword = () => {
 
     // console.log('username: ', username)
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
         console.log({
           username: data.get('username'),
         })
 
-        // signin request
-        // then save the token response to storage
-        // and initiate data and redirect to home
+        try {
+            const signinOTPResp = await AuthService.forgotPassword(
+                data.get('username')?.toString()
+            )
 
-        // else if 2fa is enabled then redirect to signinopt page
+            console.log('signinOTPResp: ', signinOTPResp)
+
+            // if direct signin or if token was on the response then save the token to loca storage
+            // then redirect to home
+            setInfoAndErrors({
+                infoMessages: [(signinOTPResp?.message || '') + '. This page Will be redirected to signin page in a few.'],
+                errorMessages: []
+            })
+
+            await TimeUtils.doNothingFor(5)
+            window.location.replace('/resetPassword?username=' + data.get('username')?.toString())
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...infoAndErrors,
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
     }
 
     return (
@@ -62,6 +89,7 @@ const ForgotPassword = () => {
                         defaultValue={usernameUrlQuery}
                         autoComplete="username"
                         autoFocus />
+                    <ResponseStatus {...infoAndErrors} />
                     <Button
                         type="submit"
                         fullWidth

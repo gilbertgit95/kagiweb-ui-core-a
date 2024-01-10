@@ -30,23 +30,43 @@ class AuthApi {
     }
 
     public static signup(username:string, password:string, email:string, phone:string) {
+        const data = {
+            'username': username,
+            'password': password,
+            'email': email,
+            'phone': phone
+        }
         return apiHelper.publicReq({
             method: 'POST',
             url: Config.Origin + Config.RootApiEndpoint + 'signup',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
         })
     }
 
-    public static forgotPassword(email:string) {
+    public static forgotPassword(username:string) {
+        const data = {
+            'username': username
+        }
         return apiHelper.publicReq({
             method: 'POST',
             url: Config.Origin + Config.RootApiEndpoint + 'forgotPassword',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
         })
     }
 
-    public static resetPassword(email:string, resetKey:string) {
+    public static resetPassword(username:string, resetKey:string, newPassword:string) {
+        const data = {
+            'username': username,
+            'key': resetKey,
+            'newPassword': newPassword
+        }
         return apiHelper.publicReq({
             method: 'PUT',
             url: Config.Origin + Config.RootApiEndpoint + 'resetPassword',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
         })
     }
 
