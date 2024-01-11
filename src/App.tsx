@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setUserData, ISignedInUser } from './stores/signedInUserSlice';
 import Config from './utils/config';
 
-import InitialDisplay from './pages/infoOrWarnings/initialDisplay';
+import InitialDisplay from './components/infoOrWarnings/initialDisplay';
 import PublicRoutes from './routes/publicRoutes';
 import PrivateRoutes from './routes/privateRoutes';
 

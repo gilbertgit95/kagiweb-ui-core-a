@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivatePageLayout from "../layouts/privatePageLayout";
 import PrivateHome from "../pages/home/privateHome";
-import PrivatePageNotFound from "../pages/infoOrWarnings/privatePageNotFound";
+import PrivatePageNotFound from "../components/infoOrWarnings/privatePageNotFound";
 
 const PrivateRoutes = () => {
     return (
