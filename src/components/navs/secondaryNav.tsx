@@ -1,9 +1,9 @@
 // import React from "react";
-import * as React from 'react';
+import React, {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+// import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
@@ -18,8 +18,8 @@ type Props = {
     links?: IMenu[]
 }
 
-const PrimaryNav = (props:Props) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+const SecondaryNav = (props:Props) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -72,4 +72,4 @@ const PrimaryNav = (props:Props) => {
     )
 }
 
-export default PrimaryNav
+export default SecondaryNav
