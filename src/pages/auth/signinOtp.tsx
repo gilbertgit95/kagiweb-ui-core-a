@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+// import PublishIcon from '@mui/icons-material/Publish';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -18,6 +20,9 @@ import AuthService from './authService';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const SigninOTP = () => {
+    const [pageState, setPageState] = useState<{isLoading:boolean}>({
+        isLoading: false
+    })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -31,6 +36,7 @@ const SigninOTP = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
         // console.log({
         //   username: data.get('username'),
@@ -58,6 +64,7 @@ const SigninOTP = () => {
                 ...{errorMessages: [err?.response?.data?.message || '']}
             })
         }
+        setPageState({isLoading: false})
     }
 
     return (
@@ -93,13 +100,16 @@ const SigninOTP = () => {
                         id="otp"
                         defaultValue={otpUrlQuery} />
                     <ResponseStatus {...infoAndErrors} />
-                    <Button
+                    <LoadingButton
                         type="submit"
                         fullWidth
                         variant="contained"
+                        loadingPosition="start"
+                        startIcon={<KeyIcon />}
+                        loading={pageState.isLoading}
                         sx={{ mt: 3, mb: 2 }} >
                         Sign In
-                    </Button>
+                    </LoadingButton>
                     <Grid container>
                         <Grid item xs>
                             <Link href="/forgotPassword" variant="body2">

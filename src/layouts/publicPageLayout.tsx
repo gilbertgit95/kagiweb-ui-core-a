@@ -8,6 +8,7 @@ import { Outlet } from "react-router-dom";
 // }
 const PublicPageLayout =() => {
     const links:{url:string,label:string}[] = [
+        { label: 'Home', url: '/' },
         { label: 'Signin', url: '/signin' },
         { label: 'Signin OTP', url: '/signinOTP' },
         { label: 'Signup', url: '/signup' },

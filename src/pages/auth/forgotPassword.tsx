@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+// import PublishIcon from '@mui/icons-material/Publish';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -19,6 +21,9 @@ import AuthService from './authService';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const ForgotPassword = () => {
+    const [pageState, setPageState] = useState<{isLoading:boolean}>({
+        isLoading: false
+    })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -33,6 +38,7 @@ const ForgotPassword = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
         console.log({
           username: data.get('username'),
@@ -61,6 +67,7 @@ const ForgotPassword = () => {
                 ...{errorMessages: [err?.response?.data?.message || '']}
             })
         }
+        setPageState({isLoading: false})
     }
 
     return (
@@ -88,13 +95,16 @@ const ForgotPassword = () => {
                         autoComplete="username"
                         autoFocus />
                     <ResponseStatus {...infoAndErrors} />
-                    <Button
+                    <LoadingButton
                         type="submit"
                         fullWidth
                         variant="contained"
+                        loadingPosition="start"
+                        startIcon={<KeyOffOutlinedIcon />}
+                        loading={pageState.isLoading}
                         sx={{ mt: 3, mb: 2 }} >
                         Request Reset Token
-                    </Button>
+                    </LoadingButton>
                     <Grid container>
                         <Grid item xs>
                             <Link href="/signin" variant="body2">
