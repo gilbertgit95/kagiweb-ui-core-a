@@ -2,16 +2,19 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+// import Button from '@mui/material/Button';
+// import MenuIcon from '@mui/icons-material/Menu';
+import PagesIcon from '@mui/icons-material/Pages';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
+import { Route, Link, Routes, useLocation } from 'react-router-dom';
+
 interface IMenu {
     label:string,
-    link:string
+    url:string
 }
 
 type Props = {
@@ -19,14 +22,20 @@ type Props = {
 }
 
 const PrimaryNav = (props:Props) => {
+    const location = useLocation();
+    const { pathname } = location
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     }
     const handleClose = () => {
         setAnchorEl(null);
     }
+    const handleItemClick = (item:IMenu) => {
+        window.location.replace(item.url)
+    }
+    const links = props.links? props.links.filter(item => item.url !== pathname): []
 
     return (
         <AppBar position="static">
@@ -41,31 +50,27 @@ const PrimaryNav = (props:Props) => {
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}>
-                    <MenuIcon />
+                    onClick={handleMenuClick}>
+                    <PagesIcon />
                 </IconButton>
                 {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    News
-                </Typography> */}
-                {/* <Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}>
-                    Dashboard
-                </Button> */}
+                        News
+                    </Typography> */}
                 <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
-                    open={open}
+                    open={open} 
                     onClose={handleClose}
                     MenuListProps={{
                     'aria-labelledby': 'basic-button',
                     }}>
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    {
+                        links.map((item, index) => {
+                            return <MenuItem key={index} onClick={() => {handleItemClick(item)}}>
+                                { item.label }
+                            </MenuItem>
+                        })
+                    }
                 </Menu>
             </Toolbar>
         </AppBar>
