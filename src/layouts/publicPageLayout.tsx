@@ -1,24 +1,28 @@
 // import React from "react";
-import * as React from 'react';
-import PrimaryNav from '../components/navs/primaryNav';
+import React, {FC} from 'react';
+import PrimaryNav, { TLink } from '../components/navs/primaryNav';
 import { Outlet } from "react-router-dom";
+import PagesIcon from '@mui/icons-material/Pages';
+import HomeIcon from '@mui/icons-material/Home';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import KeyIcon from '@mui/icons-material/Key';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import KeyOffOutlinedIcon from '@mui/icons-material/KeyOffOutlined';
+import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 
-// type Props = {
-//     children?: React.ReactNode
-// }
-const PublicPageLayout =() => {
-    const links:{url:string,label:string}[] = [
-        { label: 'Home', url: '/' },
-        { label: 'Signin', url: '/signin' },
-        { label: 'Signin OTP', url: '/signinOTP' },
-        { label: 'Signup', url: '/signup' },
-        { label: 'Forgot Password', url: '/forgotPassword' },
-        { label: 'Reset Password', url: '/resetPassword' }
+const PublicPageLayout = () => {
+    const links:TLink[] = [
+        { label: 'Home', url: '/', Icon: HomeIcon },
+        { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
+        { label: 'Signin OTP', url: '/signinOTP', Icon: KeyIcon },
+        { label: 'Signup', url: '/signup', Icon: AccountBoxOutlinedIcon },
+        { label: 'Forgot Password', url: '/forgotPassword', Icon: KeyOffOutlinedIcon },
+        { label: 'Reset Password', url: '/resetPassword', Icon: LockResetOutlinedIcon }
     ]
 
     return (
         <>
-            <PrimaryNav links={links} />
+            <PrimaryNav MenuIcon={PagesIcon} links={links} />
             <Outlet />
         </>
     )

@@ -1,5 +1,5 @@
 // import React from "react";
-import React, {useState} from 'react';
+import React, {useState, FC} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 // import Typography from '@mui/material/Typography';
@@ -9,13 +9,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-interface IMenu {
-    label:string,
-    link:string
+export type TLink = {
+    url?: string,
+    label: string,
+    icon?: FC,
+    action?: Function
 }
 
 type Props = {
-    links?: IMenu[]
+    links?: TLink[]
 }
 
 const SecondaryNav = (props:Props) => {
