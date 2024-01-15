@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import CssBaseline from '@mui/material/CssBaseline';
 import { Provider } from 'react-redux';
 
 import reportWebVitals from './reportWebVitals';
@@ -21,7 +20,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={appStore}>
-    <CssBaseline />
     <App />
   </Provider>
 );

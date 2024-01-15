@@ -14,6 +14,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { useAppDispatch, useAppSelector} from '../stores/appStore';
 import { clearUserData } from '../stores/signedInUserSlice';
+import { toggleTheme } from '../stores/appRefsSlice';
 
 import Config from "../utils/config";
 import AuthService from "../pages/auth/authService";
@@ -24,7 +25,8 @@ import PrimaryNav, { TLink } from '../components/navs/primaryNav';
 // }
 const NavCustomEl = () => {
     const dispatch = useAppDispatch()
-    const userData = useAppSelector(state => state.signedInUser.userData)
+    // const userData = useAppSelector(state => state.signedInUser.userData)
+    const appTheme = useAppSelector(state => state.appRefs.appTheme)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,8 +41,10 @@ const NavCustomEl = () => {
 
     }
 
-    const handleThemeToggle = () => {
-
+    const handleThemeToggle = (theme:string) => {
+        const updatedTheme = theme === 'light'? 'dark': 'light'
+        dispatch(toggleTheme())
+        localStorage.setItem(Config.AppThemeKey, updatedTheme)
     }
 
     const handleSignout = async () => {
@@ -90,7 +94,7 @@ const NavCustomEl = () => {
                         <ListItemText>My Account</ListItemText>
                     </MenuItem>
                     <Divider />
-                    <MenuItem onClick={handleThemeToggle}>
+                    <MenuItem onClick={() => handleThemeToggle(appTheme)}>
                         <ListItemIcon>
                             <DarkModeIcon />
                         </ListItemIcon>
