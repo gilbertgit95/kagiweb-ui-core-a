@@ -2,7 +2,7 @@
 import React, { FC } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 // import Button from '@mui/material/Button';
 // import MenuIcon from '@mui/icons-material/Menu';
 // import PagesIcon from '@mui/icons-material/Pages';
@@ -23,10 +23,11 @@ export type TLink = {
     Icon?: FC,
     action?: Function
 }
-
+       
 type Props = {
     MenuIcon?: FC,
     links?: TLink[]
+    CustomEl?: FC
 }
 
 const PrimaryNav = (props:Props) => {
@@ -88,9 +89,9 @@ const PrimaryNav = (props:Props) => {
                         })
                     }
                 </Menu>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    News
-                </Typography>
+                {
+                    props.CustomEl? <props.CustomEl />: null
+                }
             </Toolbar>
         </AppBar>
     )
