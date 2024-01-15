@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Typography, Divider } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,8 +24,9 @@ import PrimaryNav, { TLink } from '../components/navs/primaryNav';
 //     children?: React.ReactNode
 // }
 const NavCustomEl = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch()
-    // const userData = useAppSelector(state => state.signedInUser.userData)
+    const userData = useAppSelector(state => state.signedInUser.userData)
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -37,8 +38,9 @@ const NavCustomEl = () => {
         setAnchorEl(null)
     }
 
-    const handleLinkClick = () => {
-
+    const handleLinkClick = (link:string) => {
+        navigate(link)
+        setAnchorEl(null)
     }
 
     const handleThemeToggle = (theme:string) => {
@@ -64,6 +66,13 @@ const NavCustomEl = () => {
                 { Config.AppName }
             </Typography>
             <div>
+                <Typography
+                    variant="subtitle1"
+                    sx={{ flexGrow: 1 }}>
+                    { userData && userData.username? userData.username: '' }
+                </Typography>
+            </div>
+            <div>
                 <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -87,11 +96,13 @@ const NavCustomEl = () => {
                     // }}
                     open={Boolean(anchorEl)}
                     onClose={handleClose}>
-                    <MenuItem onClick={handleLinkClick}>
+                    <MenuItem onClick={() => handleLinkClick('/account')}>
                         <ListItemIcon>
                             <SettingsIcon />
                         </ListItemIcon>
-                        <ListItemText>My Account</ListItemText>
+                        <ListItemText>
+                            My Account
+                        </ListItemText>
                     </MenuItem>
                     <Divider />
                     <MenuItem onClick={() => handleThemeToggle(appTheme)}>
@@ -117,6 +128,7 @@ const PrivatePageLayout =() => {
     const links:TLink[] = [
         { label: 'Home', url: '/', Icon: HomeIcon },
         { label: 'Workspaces', url: '/workspaces', Icon: HomeIcon },
+        { label: 'Notes', url: '/notes', Icon: HomeIcon },
     ]
 
     return (
