@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -14,6 +15,23 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+
+// table:
+//     columnDefs: column definations
+//     onClick: method that callsback the rows ang column that has been clicked
+
+//     enableSelection: show selectbox
+//     enableMultipleSelection: if true then use selectbox else use radio button
+//     onSelect: callsback when doing selection
+
+//     data: arrays of data rows
+//     paggination: recieves paggination data like max, limit, page number and so on
+//     onNextPage: callback when triggering next page button
+//     onPreviousPage: callback when triggering previous button
+//     onFirstPage: callback when triggering firstpage button
+//     onLastPage: callback when triggering lastpage button
+
+//     isLoading: show loading indicator and disable the table interactions
 
 interface TablePaginationActionsProps {
   count: number;
@@ -122,6 +140,13 @@ const PrimaryTable = () => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="right">Calories</TableCell>
+            <TableCell align="right">Fat</TableCell>
+          </TableRow>
+        </TableHead>
         <TableBody>
           {(rowsPerPage > 0
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
