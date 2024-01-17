@@ -8,6 +8,10 @@ import IconButton from '@mui/material/IconButton';
 import LockIcon from '@mui/icons-material/Lock';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import SettingsIcon from '@mui/icons-material/Settings';
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import PeopleIcon from '@mui/icons-material/People';
+import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -127,8 +131,11 @@ const NavCustomEl = () => {
 const PrivatePageLayout =() => {
     const links:TLink[] = [
         { label: 'Home', url: '/', Icon: HomeIcon },
-        { label: 'Workspaces', url: '/workspaces', Icon: HomeIcon },
-        { label: 'Notes', url: '/notes', Icon: HomeIcon },
+        { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
+        { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
+        { label: 'Users', url: '/users', Icon: PeopleIcon },
+        { label: 'Workspaces', url: '/workspaces', Icon: WorkspacesIcon },
+
     ]
 
     return (
