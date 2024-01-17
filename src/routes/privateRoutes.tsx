@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivatePageLayout from "../layouts/privatePageLayout";
-import PrivateHome from "../pages/home/privateHome";
 import PrivatePageNotFound from "../components/infoOrWarnings/privatePageNotFound";
+
+import PrivateHome from "../pages/home/privateHome";
+import Users from "../pages/users/users";
 
 const PrivateRoutes = () => {
     return (
@@ -9,7 +11,10 @@ const PrivateRoutes = () => {
             <Routes>
                 <Route path="/" element={<PrivatePageLayout />}>
                     <Route index element={<PrivateHome />} />
-                    {/* <Route path="signin" element={<Signin />} /> */}
+
+                    {/* user pages */}
+                    <Route path="users" element={<Users />} />
+
                     <Route path="*" element={<PrivatePageNotFound />} />
                 </Route>
             </Routes>
