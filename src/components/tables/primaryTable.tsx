@@ -41,7 +41,7 @@ export interface IColDef {
 interface IPagination {
   pageSizeList: number[],
   pageSize: number,
-  page: string,
+  page: number,
   totalItems: number
 }
 
@@ -55,10 +55,14 @@ interface IPrimaryTableProps {
   onSelect?: Function,
 
   pagination?: IPagination,
-  onNextPage?: Function,
-  onPreviousPage?: Function,
-  onFirstPage?: Function,
-  onLastPage?: Function,
+  onPageChange?: (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => void,
+  onRowsPerPageChange?:(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    rowsPerPage: number,
+  ) => void
 }
 
 interface ITablePaginationActionsProps {
@@ -124,21 +128,22 @@ function TablePaginationActions(props: ITablePaginationActionsProps) {
 }
 
 function PrimaryTable(props:IPrimaryTableProps) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(25);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
   ) => {
-    setPage(newPage);
+    if (props.onPageChange) {
+      props.onPageChange(event, newPage)
+    }
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    if (props.onRowsPerPageChange) {
+      props.onRowsPerPageChange(event, parseInt(event.target.value, 10))
+    }
   };
 
   const isEmpty = !(props.data && props.data.length)
@@ -172,32 +177,29 @@ function PrimaryTable(props:IPrimaryTableProps) {
           {
             isEmpty? (
               <TableRow>
-                <TableCell colSpan={6} />
+                <TableCell colSpan={props.columnDefs.length} />
               </TableRow>
             ):null
           }
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              // component={'div'}
-              rowsPerPageOptions={[5, 10, 25]}
-              colSpan={3}
-              count={100}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              // SelectProps={{
-              //   inputProps: {
-              //     'aria-label': 'rows per page',
-              //   },
-              //   native: true,
-              // }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
+        {
+          props.pagination? (
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    colSpan={props.columnDefs.length}
+                    rowsPerPageOptions={props.pagination.pageSizeList}
+                    count={props.pagination.totalItems}
+                    rowsPerPage={props.pagination.pageSize}
+                    page={props.pagination.page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
+          ): null
+        }
       </Table>
     </TableContainer>
   );

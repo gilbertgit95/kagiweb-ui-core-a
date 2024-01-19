@@ -58,7 +58,7 @@ const data:IUserRow[] = [
 //     onSelect: callsback when doing selection
 
 //     data: arrays of data rows
-//     paggination: recieves paggination data like max, limit, page number and so on
+//     pagination: recieves paggination data like max, limit, page number and so on
 //     onNextPage: callback when triggering next page button
 //     onPreviousPage: callback when triggering previous button
 //     onFirstPage: callback when triggering firstpage button
@@ -107,8 +107,20 @@ const Users = () => {
         <>
             <Container style={{paddingTop: 30}}>
                 <PrimaryTable
+                    pagination={{
+                        page: 0,
+                        pageSize: 5,
+                        totalItems: 200,
+                        pageSizeList: [5, 10, 25, 100]
+                    }}
                     columnDefs={colDef}
-                    data={data} />
+                    data={data}
+                    onPageChange={(e, newPage) => {
+                        console.log('newPage: ', newPage)
+                    }}
+                    onRowsPerPageChange={(e, newRowPerPage) => {
+                        console.log('roePerPage: ', newRowPerPage)
+                    }} />
             </Container>
             <EditView />
             <ReadOnlyView />
