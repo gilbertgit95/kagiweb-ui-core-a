@@ -3,6 +3,8 @@ import { Container } from "@mui/material";
 
 import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 
+import UserService from "./userService";
+
 interface IUserRow {
     _id: string,
     username: string,
@@ -99,7 +101,12 @@ const Users = () => {
     // }
 
     useEffect(() => {
+        const init = async () => {
+            const resp = await UserService.getUsers()
+            console.log(resp.data)
+        }
         console.log('initiate users page')
+        init()
     }, [])
 
 
