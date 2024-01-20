@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -15,6 +15,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import { Typography } from '@mui/material';
 
 // table:
 //     columnDefs: column definations
@@ -35,7 +36,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 export interface IColDef {
   header: string,
   field: string,
-  component: FC | undefined
+  Component: React.ElementType | undefined
 }
 
 interface IPagination {
@@ -155,7 +156,11 @@ function PrimaryTable(props:IPrimaryTableProps) {
         <TableHead>
           <TableRow>
             {
-              props.columnDefs.map((item, index) => <TableCell key={index}>{ item.header }</TableCell>)
+              props.columnDefs.map((item, index) => (
+                <TableCell key={index}>
+                  <Typography variant="body1" color="primary">{ item.header }</Typography>
+                </TableCell>
+              ))
             }
           </TableRow>
         </TableHead>
@@ -165,9 +170,15 @@ function PrimaryTable(props:IPrimaryTableProps) {
               <TableRow key={rowIndex}>
                   {
                     props.columnDefs.map((cell, cellIndex) => (
-                      <TableCell key={cellIndex}>
-                        { row && row.hasOwnProperty(cell.field)? row[cell.field]: null }
-                      </TableCell>
+                      cell.Component? (
+                        <TableCell key={cellIndex}>
+                          <cell.Component {...row} />
+                        </TableCell>
+                      ): (
+                        <TableCell key={cellIndex}>
+                          { row && row.hasOwnProperty(cell.field)? row[cell.field]: null }
+                        </TableCell>
+                      )
                     ))
                   }
               </TableRow>
