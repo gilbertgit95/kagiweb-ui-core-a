@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button } from "@mui/material";
+import Grid from '@mui/material/Grid';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 import { useSearchParams } from 'react-router-dom';
@@ -63,6 +65,7 @@ const defaultPageSize = 10
 const defaultPage = 1
 
 const Users = () => {
+    const navigate = useNavigate()
     const [searchParams] = useSearchParams();
     const pageQuery = parseInt(searchParams.get('page') || '') || defaultPage;
     const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || defaultPageSize;
@@ -157,12 +160,24 @@ const Users = () => {
 
     return (
         <Container style={{paddingTop: 20}}>
-            <PrimaryTable
-                pagination={pagination}
-                columnDefs={colDef}
-                data={data}
-                onPageChange={onPageChange}
-                onRowsPerPageChange={onPageSizeChange} />
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Button
+                        variant="text"
+                        startIcon={<PersonAddIcon />}
+                        onClick={() => navigate('/users/create')}>
+                        Create User
+                    </Button>
+                </Grid>
+                <Grid item xs={12}>
+                    <PrimaryTable
+                        pagination={pagination}
+                        columnDefs={colDef}
+                        data={data}
+                        onPageChange={onPageChange}
+                        onRowsPerPageChange={onPageSizeChange} />
+                </Grid>
+            </Grid>
         </Container>
     )
 }
