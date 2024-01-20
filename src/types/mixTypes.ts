@@ -6,3 +6,8 @@ export interface IPagination<T> {
     totalItems: number,
     totalPages: number
 }
+
+export interface IPageQuery {
+    page?: number,
+    pageSize?: number,
+}

@@ -1,11 +1,11 @@
 import usersApi from "../../dataEndpoints/apiCoreA/userApi"
 // import { ISignedInUser } from "../../stores/signedInUserSlice"
 import { IUser, IUserInfo, IContactInfo,TContactInfoType } from "../../types/user"
-import { IPagination } from "../../types/mixTypes"
+import { IPagination, IPageQuery } from "../../types/mixTypes"
 
 class UserService {
-    public static getUsers():Promise<{data: IPagination<IUser>}> {
-        return usersApi.getUsers()
+    public static getUsers(query:IPageQuery):Promise<{data: IPagination<IUser>}> {
+        return usersApi.getUsers(query)
     }
 
     public static getUserInfo(user:IUser, key:string):IUserInfo|undefined {

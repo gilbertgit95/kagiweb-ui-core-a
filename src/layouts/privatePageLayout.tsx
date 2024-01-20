@@ -28,7 +28,7 @@ import PrimaryNav, { TLink } from '../components/navs/primaryNav';
 //     children?: React.ReactNode
 // }
 const NavCustomEl = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const userData = useAppSelector(state => state.signedInUser.userData)
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
