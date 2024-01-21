@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Button } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 import { useSearchParams } from 'react-router-dom';
@@ -53,6 +54,7 @@ const colDef:IColDef[] = [
 
             return (
                 <Button
+                    startIcon={<VisibilityIcon />}
                     onClick={() => navigate(`/users/${ props._id }`)}
                     variant="text">View User</Button>
             )

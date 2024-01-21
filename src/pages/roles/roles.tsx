@@ -4,6 +4,7 @@ import { Container, Button } from "@mui/material";
 import Grid from '@mui/material/Grid';
 // import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 import { useSearchParams } from 'react-router-dom';
@@ -54,6 +55,7 @@ const colDef:IColDef[] = [
 
             return (
                 <Button
+                    startIcon={<VisibilityIcon />}
                     onClick={() => navigate(`/roles/${ props._id }`)}
                     variant="text">View Role</Button>
             )
