@@ -3,6 +3,8 @@ import PrivatePageLayout from "../layouts/privatePageLayout";
 import PrivatePageNotFound from "../components/infoOrWarnings/privatePageNotFound";
 
 import PrivateHome from "../pages/home/privateHome";
+import Features from "../pages/features/features";
+import Roles from "../pages/roles/roles";
 import Users from "../pages/users/users";
 
 const PrivateRoutes = () => {
@@ -11,6 +13,12 @@ const PrivateRoutes = () => {
             <Routes>
                 <Route path="/" element={<PrivatePageLayout />}>
                     <Route index element={<PrivateHome />} />
+
+                    {/* feature pages */}
+                    <Route path="features" element={<Features />} />
+
+                    {/* role pages */}
+                    <Route path="roles" element={<Roles />} />
 
                     {/* user pages */}
                     <Route path="users" element={<Users />} />

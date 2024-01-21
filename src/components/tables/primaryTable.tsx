@@ -147,8 +147,8 @@ function PrimaryTable(props:IPrimaryTableProps) {
     }
   };
 
-  const isEmpty = !(props.data && props.data.length)
   const data = props.data? props.data: []
+  const noEmptyCells = props.pagination?.pageSize? props.pagination?.pageSize - data.length: 0
 
   return (
     <TableContainer component={Paper}>
@@ -186,11 +186,11 @@ function PrimaryTable(props:IPrimaryTableProps) {
           }
 
           {
-            isEmpty? (
-              <TableRow>
-                <TableCell colSpan={props.columnDefs.length} />
+            noEmptyCells? (
+              <TableRow style={{ height: 69 * noEmptyCells }}>
+                <TableCell colSpan={props.columnDefs.length}></TableCell>
               </TableRow>
-            ):null
+            ): null
           }
         </TableBody>
         {

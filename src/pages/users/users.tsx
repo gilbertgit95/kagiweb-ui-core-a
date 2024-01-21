@@ -40,11 +40,11 @@ const colDef:IColDef[] = [
         field: 'phone',
         Component: undefined // react Component or undefined
     },
-    {
-        header: 'ID',
-        field: '_id',
-        Component: undefined // react Component or undefined
-    },
+    // {
+    //     header: 'ID',
+    //     field: '_id',
+    //     Component: undefined // react Component or undefined
+    // },
     {
         header: '',
         field: 'phone',
