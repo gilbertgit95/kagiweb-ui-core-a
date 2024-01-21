@@ -6,6 +6,7 @@ import PrivateHome from "../pages/home/privateHome";
 import Features from "../pages/features/features";
 import Roles from "../pages/roles/roles";
 import Users from "../pages/users/users";
+import Workspaces from "../pages/workspaces/workspaces";
 
 const PrivateRoutes = () => {
     return (
@@ -22,6 +23,9 @@ const PrivateRoutes = () => {
 
                     {/* user pages */}
                     <Route path="users" element={<Users />} />
+
+                    {/* workspace pages */}
+                    <Route path="workspaces" element={<Workspaces />} />
 
                     <Route path="*" element={<PrivatePageNotFound />} />
                 </Route>
