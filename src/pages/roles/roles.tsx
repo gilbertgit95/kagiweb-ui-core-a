@@ -63,8 +63,8 @@ const colDef:IColDef[] = [
     }
 ]
 
-const defaultPageSizeList = [1, 5, 10, 25, 100]
-const defaultPageSize = 10
+const defaultPageSizeList = [5, 10, 25, 100]
+const defaultPageSize = 5
 const defaultPage = 1
 
 const Roles = () => {

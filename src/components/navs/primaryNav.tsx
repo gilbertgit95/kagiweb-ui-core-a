@@ -45,7 +45,6 @@ const PrimaryNav = (props:Props) => {
         if (item.action) await item.action()
         if (item.url) window.location.replace(item.url)
     }
-    const links = props.links? props.links.filter(item => item.url !== pathname): []
 
     return (
         <AppBar position="static">
@@ -72,9 +71,12 @@ const PrimaryNav = (props:Props) => {
                     'aria-labelledby': 'basic-button',
                     }}>
                     {
-                        links.map((item, index) => {
+                        props.links?.map((item, index) => {
                             return (
-                                <MenuItem key={index} onClick={() => {handleItemClick(item)}}>
+                                <MenuItem
+                                    key={index}
+                                    disabled={item.url === pathname}
+                                    onClick={() => {handleItemClick(item)}}>
                                     {
                                         item.Icon? (
                                             <ListItemIcon>
@@ -83,7 +85,6 @@ const PrimaryNav = (props:Props) => {
                                         ): null
                                     }
                                     <ListItemText>{ item.label }</ListItemText>
-                                    {/* <Typography variant="body2" color="text.secondary"></Typography> */}
                                 </MenuItem>
                             )
                         })

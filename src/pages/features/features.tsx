@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button } from "@mui/material";
 import Grid from '@mui/material/Grid';
-// import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -10,8 +9,6 @@ import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 import { useSearchParams } from 'react-router-dom';
 
 import FeatureService from "./featureService";
-// import { IUser } from "../../types/user";
-// import { IPagination } from "../../types/mixTypes";
 
 interface IFeatureRow {
     _id: string,
@@ -63,8 +60,8 @@ const colDef:IColDef[] = [
     }
 ]
 
-const defaultPageSizeList = [1, 5, 10, 25, 100]
-const defaultPageSize = 10
+const defaultPageSizeList = [5, 10, 25, 100]
+const defaultPageSize = 5
 const defaultPage = 1
 
 const Features = () => {

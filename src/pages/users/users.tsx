@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button } from "@mui/material";
 import Grid from '@mui/material/Grid';
+import Checkbox from '@mui/material/Checkbox';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -17,7 +18,9 @@ interface IUserRow {
     username: string,
     name: string,
     email: string,
-    phone: string
+    phone: string,
+    verified: boolean,
+    disabled: boolean
 }
 
 const colDef:IColDef[] = [
@@ -41,6 +44,20 @@ const colDef:IColDef[] = [
         field: 'phone',
         Component: undefined // react Component or undefined
     },
+    {
+        header: 'Verified',
+        field: 'verified',
+        Component: (props:IUserRow) => {
+            return <Checkbox checked={props.verified} />
+        }
+    },
+    {
+        header: 'Disabled',
+        field: 'disabled',
+        Component: (props:IUserRow) => {
+            return <Checkbox checked={props.disabled} />
+        }
+    },
     // {
     //     header: 'ID',
     //     field: '_id',
@@ -62,8 +79,8 @@ const colDef:IColDef[] = [
     }
 ]
 
-const defaultPageSizeList = [1, 5, 10, 25, 100]
-const defaultPageSize = 10
+const defaultPageSizeList = [5, 10, 25, 100]
+const defaultPageSize = 5
 const defaultPage = 1
 
 const Users = () => {
@@ -95,7 +112,9 @@ const Users = () => {
                         username: item.username,
                         name: UserService.getUserInfo(item, 'fullname')?.key || '--',
                         email: UserService.getContactInfo(item, 'email-address')?.value || '--',
-                        phone: UserService.getContactInfo(item, 'mobile-number')?.value || '--'
+                        phone: UserService.getContactInfo(item, 'mobile-number')?.value || '--',
+                        verified: Boolean(item.verified),
+                        disabled: Boolean(item.disabled)
                     }
                 })
                 setPagination({
@@ -140,7 +159,9 @@ const Users = () => {
                             username: item.username,
                             name: UserService.getUserInfo(item, 'fullname')?.key || '--',
                             email: UserService.getContactInfo(item, 'email-address')?.value || '--',
-                            phone: UserService.getContactInfo(item, 'mobile-number')?.value || '--'
+                            phone: UserService.getContactInfo(item, 'mobile-number')?.value || '--',
+                            verified: Boolean(item.verified),
+                            disabled: Boolean(item.disabled)
                         }
                     })
                     setPagination({
