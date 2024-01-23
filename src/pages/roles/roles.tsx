@@ -10,6 +10,7 @@ import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 import { useSearchParams } from 'react-router-dom';
 
 import RoleService from "./roleService";
+import Config from "../../utils/config";
 // import { IUser } from "../../types/user";
 // import { IPagination } from "../../types/mixTypes";
 
@@ -63,21 +64,17 @@ const colDef:IColDef[] = [
     }
 ]
 
-const defaultPageSizeList = [5, 10, 25, 100]
-const defaultPageSize = 5
-const defaultPage = 1
-
 const Roles = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
-    const pageQuery = parseInt(searchParams.get('page') || '') || defaultPage;
-    const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || defaultPageSize;
+    const pageQuery = parseInt(searchParams.get('page') || '') || Config.defaultPage;
+    const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || Config.defaultPageSize;
 
     const [pagination, setPagination] = useState({
         page: 0,
         pageSize: pageSizeQuery,
         totalItems: 0,
-        pageSizeList: defaultPageSizeList
+        pageSizeList: Config.defaultPageSizeList
     })
     const [data, setData] = useState<IRoleRow[]>([])
 
@@ -103,7 +100,7 @@ const Roles = () => {
                     page: resp.data.page - 1,
                     pageSize: resp.data.pageSize,
                     totalItems: resp.data.totalItems,
-                    pageSizeList: defaultPageSizeList
+                    pageSizeList: Config.defaultPageSizeList
                 })
                 setData(tarnsformedData)
             }
@@ -148,7 +145,7 @@ const Roles = () => {
                         page: resp.data.page - 1,
                         pageSize: resp.data.pageSize,
                         totalItems: resp.data.totalItems,
-                        pageSizeList: defaultPageSizeList
+                        pageSizeList: Config.defaultPageSizeList
                     })
                     setData(tarnsformedData)
                 }

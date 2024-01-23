@@ -5,6 +5,10 @@ class Config {
     public static RootApiEndpoint:string = '/api/v1/'
     public static TokenKey:string = '_auth_token'
     public static AppThemeKey:string = '_app_theme'
+
+    public static defaultPageSizeList:number[] = [5, 10, 25, 100]
+    public static defaultPageSize:number = 5
+    public static defaultPage:number = 1
 }
 
 export default Config
