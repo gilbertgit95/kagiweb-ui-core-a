@@ -4,6 +4,8 @@ import PrivatePageNotFound from "../components/infoOrWarnings/privatePageNotFoun
 
 import PrivateHome from "../pages/home/privateHome";
 import Features from "../pages/features/features";
+import ViewFeature, { EditFeature, CreateFeature } from "../pages/features/feature"
+
 import Roles from "../pages/roles/roles";
 import Users from "../pages/users/users";
 import Workspaces from "../pages/workspaces/workspaces";
@@ -17,6 +19,9 @@ const PrivateRoutes = () => {
 
                     {/* feature pages */}
                     <Route path="features" element={<Features />} />
+                    <Route path="features/create" element={<CreateFeature />} />
+                    <Route path="features/view/:featureId" element={<ViewFeature />} />
+                    <Route path="features/edit/:featureId" element={<EditFeature />} />
 
                     {/* role pages */}
                     <Route path="roles" element={<Roles />} />
