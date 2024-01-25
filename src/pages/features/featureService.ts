@@ -9,13 +9,9 @@ class RoleService {
         return featureApi.getFeatures(query)
     }
 
-    // public static getUserInfo(user:IUser, key:string):IUserInfo|undefined {
-    //     for (const info of user?.userInfos || []) {
-    //         if (info.key === key) return info
-    //     }
-
-    //     return undefined
-    // }
+    public static getFeature(id:string):Promise<{data: IFeature}> {
+        return featureApi.getFeature(id)
+    }
 
     // public static getContactInfo(user:IUser, type:TContactInfoType):IContactInfo|undefined {
     //     for (const info of user?.contactInfos || []) {

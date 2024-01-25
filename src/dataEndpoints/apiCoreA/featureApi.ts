@@ -15,6 +15,13 @@ class FeatureApi {
             url: Config.Origin + Config.RootApiEndpoint + `features${ queries.length? '?' + strQueries: '' }`
         })
     }
+
+    public static getFeature(id:string) {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: Config.Origin + Config.RootApiEndpoint + `features/${ id }`
+        })
+    }
 }
 
 export default FeatureApi
