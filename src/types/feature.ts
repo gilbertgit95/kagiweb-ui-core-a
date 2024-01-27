@@ -1,6 +1,6 @@
 
 export type TFeatureType = 'api-route' | 'ui-route' | 'ui-module'
-const featureTypes = ['api-route', 'ui-route', 'ui-module']
+export const featureTypes:TFeatureType[] = ['api-route', 'ui-route', 'ui-module']
 
 // create interfaces
 export interface IFeature {
