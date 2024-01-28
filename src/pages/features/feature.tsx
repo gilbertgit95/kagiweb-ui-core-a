@@ -2,23 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button, Box, Typography, TextField } from "@mui/material";
 import Grid from '@mui/material/Grid';
-// import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
-// import ListIcon from '@mui/icons-material/List';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 
+import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 import FeatureService from './featureService'
 import { IFeature, TFeatureType, featureTypes } from "../../types/feature";
 import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link,
   useParams
 } from "react-router-dom";
 
@@ -36,13 +31,182 @@ const colDef:IColDef[] = [
 ]
 
 export const CreateFeature = () => {
+    const navigate = useNavigate()
+    const [pageState, setPageState] = useState({
+        disableSaveButton: false
+    })
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
+    const [feature, setFeature] = useState<IFeature & {stringTags: String}>({
+        name: '',
+        value: '',
+        description: '',
+        type: featureTypes[0],
+        tags: [],
+        stringTags: '',
+    })
 
-    return <div>create feature</div>
+    const handleTypeSelectionChange = (event: SelectChangeEvent) => {
+        const type = event.target.value as TFeatureType
+        setFeature({...feature, ...{type}})
+    }
+
+    const handleTextFieldChange = (field:string, value:string) => {
+        setFeature({...feature, ...{[field]: value}})
+    }
+
+    const onCreate = async () => {
+        const newFeature:IFeature = {
+            ...feature,
+            ...{
+                name: feature.name,
+                description: feature.description,
+                value: feature.value,
+                type: feature.type,
+                tags: feature.stringTags.split(', ')
+            }
+        }
+        console.log('create update: ', newFeature)
+        setPageState({disableSaveButton: true})
+
+        // send update data to the api
+        try {
+            const featureResp = await FeatureService.createFeature(newFeature)
+            setFeature({
+                ...featureResp.data,
+                ...{ stringTags: featureResp.data.tags? featureResp.data.tags.join(', '): '' }
+            })
+            setInfoAndErrors({
+                ...{infoMessages: ['Successfull Creation']},
+                ...{errorMessages: []}
+            })
+        } catch (err:any) {
+            // error while updating
+            // log to the UI
+            setInfoAndErrors({
+                ...infoAndErrors,
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+            setPageState({disableSaveButton: false})
+        }
+    }
+
+    const itemSx = {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        paddingRight: '20px',
+        paddingLeft: '20px'
+    }
+
+    return (
+        <Container style={{paddingTop: 20}}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Button
+                        variant="text"
+                        startIcon={<ArrowBackIosNewIcon />}
+                        onClick={() => navigate(-1)}>
+                        Back
+                    </Button>
+                </Grid>
+                <Grid container item xs={12}>
+                    <Grid item xs={4} md={3} sx={itemSx}>
+                        <Typography variant="subtitle1">Name</Typography>
+                    </Grid>
+                    <Grid item xs={8} md={9}>
+                        <TextField
+                            fullWidth
+                            defaultValue={feature.name}
+                            onChange={(e) => handleTextFieldChange('name', e.target.value)} />
+                    </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                    <Grid item xs={4} md={3} sx={itemSx}>
+                        <Typography variant="subtitle1">Description</Typography>
+                    </Grid>
+                    <Grid item xs={8} md={9}>
+                        <TextField
+                            fullWidth
+                            multiline
+                            maxRows={4}
+                            defaultValue={feature.description}
+                            onChange={(e) => handleTextFieldChange('description', e.target.value)}/>
+                    </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                    <Grid item xs={4} md={3} sx={itemSx}>
+                        <Typography variant="subtitle1">Type</Typography>
+                    </Grid>
+                    <Grid item xs={8} md={9}>
+                        <Select
+                            fullWidth
+                            value={feature.type}
+                            onChange={handleTypeSelectionChange}>
+                            {
+                                featureTypes.map((item, index) => (
+                                    <MenuItem key={index} value={item}>{ item }</MenuItem>
+                                ))
+                            }
+                        </Select>
+                    </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                    <Grid item xs={4} md={3} sx={itemSx}>
+                        <Typography variant="subtitle1">Value</Typography>
+                    </Grid>
+                    <Grid item xs={8} md={9}>
+                        <TextField
+                            fullWidth
+                            defaultValue={feature.value}
+                            onChange={(e) => handleTextFieldChange('value', e.target.value)} />
+                    </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                    <Grid item xs={4} md={3} sx={itemSx}>
+                        <Typography variant="subtitle1">Tags</Typography>
+                    </Grid>
+                    <Grid item xs={8} md={9}>
+                        <TextField
+                            fullWidth
+                            multiline
+                            maxRows={4}
+                            defaultValue={feature.stringTags}
+                            onChange={(e) => handleTextFieldChange('stringTags', e.target.value)} />
+                    </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                    <Grid item xs={4} md={3} sx={itemSx}>
+                        {/* <Typography variant="subtitle1">Tags</Typography> */}
+                    </Grid>
+                    <Grid item xs={8} md={9}>
+                        <ResponseStatus {...infoAndErrors} />
+                    </Grid>
+                </Grid>
+                <Grid container item xs={12} sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end'
+                    }}>
+                    <Button
+                        startIcon={<FeaturedPlayListIcon />}
+                        onClick={onCreate}
+                        disabled={pageState.disableSaveButton}>
+                        Create
+                    </Button>
+                </Grid>
+            </Grid>
+        </Container>
+    )
 }
 
 export  const EditFeature = () => {
     let { featureId } = useParams()
     const navigate = useNavigate()
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
     const [feature, setFeature] = useState<IFeature | undefined>()
     const [updatedFeature, setUpdatedFeature] = useState<IFeature & {stringTags: String}>({
         name: '',
@@ -74,6 +238,27 @@ export  const EditFeature = () => {
             }
         }
         console.log('save update: ', updateData)
+
+        // send update data to the api
+        try {
+            const featureResp = await FeatureService.updateFeature(updateData)
+            setFeature(featureResp.data)
+            setUpdatedFeature({
+                ...featureResp.data,
+                ...{ stringTags: featureResp.data.tags? featureResp.data.tags.join(', '): '' }
+            })
+            setInfoAndErrors({
+                ...{infoMessages: ['Successfull Update']},
+                ...{errorMessages: []}
+            })
+        } catch (err:any) {
+            // error while updating
+            // log to the UI
+            setInfoAndErrors({
+                ...infoAndErrors,
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
     }
     
     useEffect(() => {
@@ -88,8 +273,13 @@ export  const EditFeature = () => {
                         ...featureResp.data,
                         ...{ stringTags: featureResp.data.tags? featureResp.data.tags.join(', '): '' }
                     })
-                } catch (err) {
-                    //  do nothing for now
+                } catch (err:any) {
+                    // error fetching feature
+                    // log to the UI
+                    setInfoAndErrors({
+                        ...{infoAndErrors: []},
+                        ...{errorMessages: [err?.response?.data?.message || '']}
+                    })
                 }
             }
         }
@@ -195,20 +385,28 @@ export  const EditFeature = () => {
                                         onChange={(e) => handleTextFieldChange('stringTags', e.target.value)} />
                                 </Grid>
                             </Grid>
-                            <Grid container item xs={12} sx={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-end'
-                                }}>
-                                <Button
-                                    startIcon={<EditIcon />}
-                                    onClick={onUpdate}
-                                    disabled={hasChanges}>
-                                    Update
-                                </Button>
-                            </Grid>
                         </>
                     ):null
                 }
+                <Grid container item xs={12}>
+                    <Grid item xs={4} md={3} sx={itemSx}>
+                        {/* <Typography variant="subtitle1">Tags</Typography> */}
+                    </Grid>
+                    <Grid item xs={8} md={9}>
+                        <ResponseStatus {...infoAndErrors} />
+                    </Grid>
+                </Grid>
+                <Grid container item xs={12} sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end'
+                    }}>
+                    <Button
+                        startIcon={<EditIcon />}
+                        onClick={onUpdate}
+                        disabled={hasChanges || !feature}>
+                        Update
+                    </Button>
+                </Grid>
             </Grid>
         </Container>
     )
@@ -217,7 +415,23 @@ export  const EditFeature = () => {
 const ViewFeature = () => {
     const { featureId } = useParams()
     const navigate = useNavigate()
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
+    const [pageState, setPageState] = useState({
+        disableEditButton: false,
+        disableDeleteButton: false
+    })
     const [feature, setFeature] = useState<IFeature | undefined>()
+
+    const onOpenDeletePrompt = () => {
+
+    }
+
+    const onDelete = async () => {
+        console.log('Delete: ', feature?._id)
+    }
     
     useEffect(() => {
         const init = async () => {
@@ -227,8 +441,17 @@ const ViewFeature = () => {
                 try {
                     const featureResp = await FeatureService.getFeature(featureId)
                     setFeature(featureResp.data)
-                } catch (err) {
+                } catch (err:any) {
                     //  do nothing for now
+                    setPageState({
+                        disableEditButton: true,
+                        disableDeleteButton: true
+                    })
+
+                    setInfoAndErrors({
+                        ...{infoAndErrors: []},
+                        ...{errorMessages: [err?.response?.data?.message || '']}
+                    })
                 }
             }
         }
@@ -264,6 +487,7 @@ const ViewFeature = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
+                            disabled={ pageState.disableEditButton }
                             onClick={() => navigate(`/features/edit/${ feature?._id }`)}>
                             Edit
                         </Button>
@@ -271,15 +495,25 @@ const ViewFeature = () => {
                             variant="text"
                             startIcon={<DeleteIcon />}
                             color="secondary"
-                            onClick={() => console.log('delete: ', feature?._id)}>
+                            disabled={ pageState.disableDeleteButton }
+                            onClick={onOpenDeletePrompt}>
                             Delete
                         </Button>
                     </Box>
                 </Grid>
+
+                {
+                    feature? (
+                        <Grid item xs={12}>
+                            <PrimaryTable
+                                columnDefs={colDef}
+                                data={data} />
+                        </Grid>
+                    ): null
+                }
+
                 <Grid item xs={12}>
-                    <PrimaryTable
-                        columnDefs={colDef}
-                        data={data} />
+                    <ResponseStatus {...infoAndErrors} />
                 </Grid>
             </Grid>
         </Container>

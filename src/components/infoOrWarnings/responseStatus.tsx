@@ -11,8 +11,8 @@ const ResponseStatus = (props:TResponseStatus) => {
 
     return (
         <>
-            { err? <Alert severity="error">{ err }</Alert>: null }
-            { !err && info? <Alert severity="info">{ info }</Alert>: null }
+            { err? <Alert variant="outlined" severity="error">{ err }</Alert>: null }
+            { !err && info? <Alert variant="outlined" severity="info">{ info }</Alert>: null }
         </>
     )
 }

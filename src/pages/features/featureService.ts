@@ -13,13 +13,17 @@ class RoleService {
         return featureApi.getFeature(id)
     }
 
-    // public static getContactInfo(user:IUser, type:TContactInfoType):IContactInfo|undefined {
-    //     for (const info of user?.contactInfos || []) {
-    //         if (info.type === type) return info
-    //     }
+    public static updateFeature(feature:IFeature):Promise<{data: IFeature}> {
+        return featureApi.updateFeature(feature)
+    }
 
-    //     return undefined
-    // }
+    public static createFeature(feature:IFeature):Promise<{data: IFeature}> {
+        return featureApi.createFeature(feature)
+    }
+
+    public static deleteFeature(id:string):Promise<{data: IFeature}> {
+        return featureApi.deleteFeature(id)
+    }
 }
 
 export default RoleService
