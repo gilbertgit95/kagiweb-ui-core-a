@@ -434,6 +434,7 @@ const ViewFeature = () => {
 
     const onDelete = async () => {
         if (featureId) {
+            // console.log('Delete this: ', feature?._id)
             try {
                 const featureResp = await FeatureService.deleteFeature(featureId)
                 setFeature(featureResp.data)
@@ -461,7 +462,7 @@ const ViewFeature = () => {
 
             if (featureId) {
                 try {
-                    const featureResp = await FeatureService.deleteFeature(featureId)
+                    const featureResp = await FeatureService.getFeature(featureId)
                     setFeature(featureResp.data)
 
                 } catch (err:any) {
