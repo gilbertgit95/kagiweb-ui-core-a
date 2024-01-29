@@ -1,7 +1,7 @@
-import apiHelper from "./apiHelper";
-import Config from "../../utils/config";
-import { IPageQuery } from "../../types/mixTypes";
-import { IFeature } from "../../types/feature";
+import apiHelper from './apiHelper';
+import Config from '../../utils/config';
+import { IPageQuery } from '../../types/mixTypes';
+import { IFeature } from '../../types/feature';
 
 class FeatureApi {
     public static getFeatures(query:IPageQuery = {}) {

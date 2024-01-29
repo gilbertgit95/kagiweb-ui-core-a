@@ -1,28 +1,28 @@
-import roleApi from "../../dataEndpoints/apiCoreA/roleApi"
-// import { ISignedInUser } from "../../stores/signedInUserSlice"
-import { IRole } from "../../types/role"
-import { IPagination, IPageQuery } from "../../types/mixTypes"
+import roleApi from '../../dataEndpoints/apiCoreA/roleApi'
+// import { ISignedInUser } from '../../stores/signedInUserSlice'
+import { IRole } from '../../types/role'
+import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class RoleService {
     public static getRoles(query:IPageQuery):Promise<{data: IPagination<IRole>}> {
         return roleApi.getRoles(query)
     }
 
-    // public static getUserInfo(user:IUser, key:string):IUserInfo|undefined {
-    //     for (const info of user?.userInfos || []) {
-    //         if (info.key === key) return info
-    //     }
+    public static getRole(id:string):Promise<{data: IRole}> {
+        return roleApi.getRole(id)
+    }
 
-    //     return undefined
-    // }
+    public static updateRole(role:IRole):Promise<{data: IRole}> {
+        return roleApi.updateRole(role)
+    }
 
-    // public static getContactInfo(user:IUser, type:TContactInfoType):IContactInfo|undefined {
-    //     for (const info of user?.contactInfos || []) {
-    //         if (info.type === type) return info
-    //     }
+    public static createRole(role:IRole):Promise<{data: IRole}> {
+        return roleApi.createRole(role)
+    }
 
-    //     return undefined
-    // }
+    public static deleteRole(id:string):Promise<{data: IRole}> {
+        return roleApi.deleteRole(id)
+    }
 }
 
 export default RoleService
