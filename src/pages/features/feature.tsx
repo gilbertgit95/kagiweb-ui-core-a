@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button, Box, Typography, TextField } from "@mui/material";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -277,7 +283,7 @@ export  const EditFeature = () => {
                     // error fetching feature
                     // log to the UI
                     setInfoAndErrors({
-                        ...{infoAndErrors: []},
+                        ...{infoMessages: []},
                         ...{errorMessages: [err?.response?.data?.message || '']}
                     })
                 }
@@ -421,16 +427,32 @@ const ViewFeature = () => {
     })
     const [pageState, setPageState] = useState({
         disableEditButton: false,
-        disableDeleteButton: false
+        disableDeleteButton: false,
+        deleteDialogOpen: false
     })
     const [feature, setFeature] = useState<IFeature | undefined>()
 
-    const onOpenDeletePrompt = () => {
-
-    }
-
     const onDelete = async () => {
-        console.log('Delete: ', feature?._id)
+        if (featureId) {
+            try {
+                const featureResp = await FeatureService.deleteFeature(featureId)
+                setFeature(featureResp.data)
+                setPageState({
+                    disableEditButton: true,
+                    disableDeleteButton: true,
+                    deleteDialogOpen: false
+                })
+                setInfoAndErrors({
+                    ...{infoMessages: ['Sucessfully deleted this feature']},
+                    ...{errorMessages: []}
+                })
+            } catch (err:any) {
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
     }
     
     useEffect(() => {
@@ -439,17 +461,18 @@ const ViewFeature = () => {
 
             if (featureId) {
                 try {
-                    const featureResp = await FeatureService.getFeature(featureId)
+                    const featureResp = await FeatureService.deleteFeature(featureId)
                     setFeature(featureResp.data)
+
                 } catch (err:any) {
-                    //  do nothing for now
                     setPageState({
                         disableEditButton: true,
-                        disableDeleteButton: true
+                        disableDeleteButton: true,
+                        deleteDialogOpen: false
                     })
 
                     setInfoAndErrors({
-                        ...{infoAndErrors: []},
+                        ...{infoMessages: []},
                         ...{errorMessages: [err?.response?.data?.message || '']}
                     })
                 }
@@ -496,9 +519,29 @@ const ViewFeature = () => {
                             startIcon={<DeleteIcon />}
                             color="secondary"
                             disabled={ pageState.disableDeleteButton }
-                            onClick={onOpenDeletePrompt}>
+                            onClick={ () => setPageState({...pageState, ...{deleteDialogOpen: true}}) }>
                             Delete
                         </Button>
+                        <Dialog
+                            open={pageState.deleteDialogOpen}
+                            onClose={() => setPageState({...pageState, ...{deleteDialogOpen: false}})}>
+                            <DialogTitle>
+                                Warning
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to delete this feature?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setPageState({...pageState, ...{deleteDialogOpen: false}})}>
+                                    no
+                                </Button>
+                                <Button onClick={onDelete} autoFocus>
+                                    yes
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </Box>
                 </Grid>
 
