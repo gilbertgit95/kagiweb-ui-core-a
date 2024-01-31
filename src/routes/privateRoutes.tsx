@@ -1,14 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PrivatePageLayout from "../layouts/privatePageLayout";
-import PrivatePageNotFound from "../components/infoOrWarnings/privatePageNotFound";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PrivatePageLayout from '../layouts/privatePageLayout';
+import PrivatePageNotFound from '../components/infoOrWarnings/privatePageNotFound';
 
-import PrivateHome from "../pages/home/privateHome";
-import Features from "../pages/features/features";
-import ViewFeature, { EditFeature, CreateFeature } from "../pages/features/feature"
+import PrivateHome from '../pages/home/privateHome';
+import Features from '../pages/features/features';
+import ViewFeature, { EditFeature, CreateFeature } from '../pages/features/feature'
 
-import Roles from "../pages/roles/roles";
-import Users from "../pages/users/users";
-import Workspaces from "../pages/workspaces/workspaces";
+import Roles from '../pages/roles/roles';
+import ViewRole, { EditRole, CreateRole } from '../pages/roles/role';
+import Users from '../pages/users/users';
+import Workspaces from '../pages/workspaces/workspaces';
 
 const PrivateRoutes = () => {
     return (
@@ -25,6 +26,9 @@ const PrivateRoutes = () => {
 
                     {/* role pages */}
                     <Route path="roles" element={<Roles />} />
+                    <Route path="roles/create" element={<CreateRole />} />
+                    <Route path="roles/view/:roleId" element={<ViewRole />} />
+                    <Route path="roles/edit/:roleId" element={<EditRole />} />
 
                     {/* user pages */}
                     <Route path="users" element={<Users />} />
