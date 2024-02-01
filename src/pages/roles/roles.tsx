@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Button } from "@mui/material";
+import { Container, Button, Box } from "@mui/material";
 import Grid from '@mui/material/Grid';
 // import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
@@ -162,12 +162,18 @@ const Roles = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Button
-                        variant="text"
-                        startIcon={<AdminPanelSettingsIcon />}
-                        onClick={() => navigate('/roles/create')}>
-                        Create Role
-                    </Button>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                        }}>
+                        <Button
+                            variant="text"
+                            startIcon={<AdminPanelSettingsIcon />}
+                            onClick={() => navigate('/roles/create')}>
+                            Create Role
+                        </Button>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <PrimaryTable

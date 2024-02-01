@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Button } from "@mui/material";
+import { Container, Button, Box } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -159,12 +159,18 @@ const Features = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Button
-                        variant="text"
-                        startIcon={<FeaturedPlayListIcon />}
-                        onClick={() => navigate('/features/create')}>
-                        Create Feature
-                    </Button>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                        }}>
+                        <Button
+                            variant="text"
+                            startIcon={<FeaturedPlayListIcon />}
+                            onClick={() => navigate('/features/create')}>
+                            Create Feature
+                        </Button>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <PrimaryTable
