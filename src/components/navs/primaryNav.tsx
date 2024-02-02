@@ -47,7 +47,7 @@ const PrimaryNav = (props:Props) => {
     }
 
     return (
-        <AppBar position="static">
+        <AppBar position="sticky">
             <Toolbar>
                 <IconButton
                     size="large"

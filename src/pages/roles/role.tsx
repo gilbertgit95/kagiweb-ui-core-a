@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Button, Box, Typography, TextField } from '@mui/material';
+import { Container, Button, Box, Typography, TextField, Divider } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,6 +12,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
@@ -96,6 +97,12 @@ export const CreateRole = () => {
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant='h5' style={{padding:'10px'}}>
+                        <VisibilityIcon /> Role Creation View
+                    </Typography>
+                    <Divider />
+                </Grid>
                 <Grid item xs={12}>
                     <Button
                         variant="text"
@@ -269,6 +276,12 @@ export  const EditRole = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
+                    <Typography variant='h5' style={{padding:'10px'}}>
+                        <VisibilityIcon /> Role Update View
+                    </Typography>
+                    <Divider />
+                </Grid>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}
@@ -426,6 +439,12 @@ const ViewRole = () => {
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant='h5' style={{padding:'10px'}}>
+                        <VisibilityIcon /> Role Readonly View
+                    </Typography>
+                    <Divider />
+                </Grid>
                 <Grid item xs={6}>
                     <Button
                         variant="text"

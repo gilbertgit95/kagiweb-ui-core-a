@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Button } from "@mui/material";
+import { Container, Button, Box, Typography, Divider } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -182,12 +182,24 @@ const Users = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Button
-                        variant="text"
-                        startIcon={<PersonAddIcon />}
-                        onClick={() => navigate('/users/create')}>
-                        Create User
-                    </Button>
+                    <Typography variant='h5' style={{padding:'10px'}}>
+                        <VisibilityIcon /> User List View
+                    </Typography>
+                    <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                        }}>
+                        <Button
+                            variant="text"
+                            startIcon={<PersonAddIcon />}
+                            onClick={() => navigate('/users/create')}>
+                            Create User
+                        </Button>
+                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <PrimaryTable

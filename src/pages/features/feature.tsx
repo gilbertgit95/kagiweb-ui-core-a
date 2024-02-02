@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Button, Box, Typography, TextField } from '@mui/material';
+import { Container, Button, Box, Typography, TextField, Divider } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -14,6 +14,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
@@ -109,6 +110,12 @@ export const CreateFeature = () => {
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant='h5' style={{padding:'10px'}}>
+                        <VisibilityIcon /> Feature Creation View
+                    </Typography>
+                    <Divider />
+                </Grid>
                 <Grid item xs={12}>
                     <Button
                         variant="text"
@@ -314,6 +321,12 @@ export  const EditFeature = () => {
 
     return (
         <Container style={{paddingTop: 20}}>
+            <Grid item xs={12}>
+                <Typography variant='h5' style={{padding:'10px'}}>
+                    <VisibilityIcon /> Feature Update View
+                </Typography>
+                <Divider />
+            </Grid>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Button
@@ -494,6 +507,12 @@ const ViewFeature = () => {
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant='h5' style={{padding:'10px'}}>
+                        <VisibilityIcon /> Feature Readonly View
+                    </Typography>
+                    <Divider />
+                </Grid>
                 <Grid item xs={6}>
                     <Button
                         variant="text"
