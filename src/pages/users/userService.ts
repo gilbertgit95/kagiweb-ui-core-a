@@ -23,6 +23,22 @@ class UserService {
 
         return undefined
     }
+
+    public static getUser(id:string):Promise<{data: IUser}> {
+        return usersApi.getUser(id)
+    }
+
+    public static updateUser(feature:IUser):Promise<{data: IUser}> {
+        return usersApi.updateUser(feature)
+    }
+
+    public static createUser(feature:IUser):Promise<{data: IUser}> {
+        return usersApi.createUser(feature)
+    }
+
+    public static deleteUser(id:string):Promise<{data: IUser}> {
+        return usersApi.deleteUser(id)
+    }
 }
 
 export default UserService
