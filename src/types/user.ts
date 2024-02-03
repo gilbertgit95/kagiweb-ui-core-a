@@ -94,3 +94,10 @@ export interface IUser {
     disabled?: boolean,
     verified?: boolean
 }
+
+export interface IUserUpdate {
+    _id?: string,
+    username?: string,
+    disabled?: boolean,
+    verified?: boolean
+}

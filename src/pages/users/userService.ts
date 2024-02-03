@@ -1,6 +1,6 @@
 import usersApi from "../../dataEndpoints/apiCoreA/userApi"
 // import { ISignedInUser } from "../../stores/signedInUserSlice"
-import { IUser, IUserInfo, IContactInfo,TContactInfoType } from "../../types/user"
+import { IUser, IUserInfo, IContactInfo,TContactInfoType, IUserUpdate } from "../../types/user"
 import { IPagination, IPageQuery } from "../../types/mixTypes"
 
 class UserService {
@@ -28,12 +28,12 @@ class UserService {
         return usersApi.getUser(id)
     }
 
-    public static updateUser(feature:IUser):Promise<{data: IUser}> {
-        return usersApi.updateUser(feature)
+    public static updateUser(user:IUserUpdate):Promise<{data: IUser}> {
+        return usersApi.updateUser(user)
     }
 
-    public static createUser(feature:IUser):Promise<{data: IUser}> {
-        return usersApi.createUser(feature)
+    public static createUser(user:IUser):Promise<{data: IUser}> {
+        return usersApi.createUser(user)
     }
 
     public static deleteUser(id:string):Promise<{data: IUser}> {

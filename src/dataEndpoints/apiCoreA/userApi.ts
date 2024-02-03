@@ -1,7 +1,7 @@
 import apiHelper from "./apiHelper";
 import Config from "../../utils/config";
 import { IPageQuery } from "../../types/mixTypes";
-import { IUser } from "../../types/user";
+import { IUser, IUserUpdate } from "../../types/user";
 
 class UserApi {
     public static getUsers(query:IPageQuery = {}) {
@@ -20,18 +20,18 @@ class UserApi {
     public static getUser(id:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + `features/${ id }`
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ id }`
         })
     }
 
-    public static updateUser(user:IUser) {
-        const data = {
-            // 'name': user.name,
-            // 'description': user.description,
-            // 'value': user.value,
-            // 'type': user.type,
-            // 'tags': user.tags?.join(',')
+    public static updateUser(user:IUserUpdate) {
+        const data:IUserUpdate = {
+            _id: user._id
         }
+
+        if (user.username !== undefined) data['username'] = user.username
+        if (user.disabled !== undefined) data['disabled'] = user.disabled
+        if (user.verified !== undefined) data['verified'] = user.verified
 
         return apiHelper.privateReq({
             method: 'PUT',
@@ -43,11 +43,9 @@ class UserApi {
 
     public static createUser(user:IUser) {
         const data = {
-            // 'name': user.name,
-            // 'description': user.description,
-            // 'value': user.value,
-            // 'type': user.type,
-            // 'tags': user.tags?.join(',')
+            'username': user.username,
+            'disabled': user.disabled,
+            'verified': user.verified
         }
 
         return apiHelper.privateReq({

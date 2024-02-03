@@ -73,7 +73,7 @@ const colDef:IColDef[] = [
             return (
                 <Button
                     startIcon={<VisibilityIcon />}
-                    onClick={() => navigate(`/users/${ props._id }`)}
+                    onClick={() => navigate(`/users/view/${ props._id }`)}
                     variant="text">View User</Button>
             )
         }
