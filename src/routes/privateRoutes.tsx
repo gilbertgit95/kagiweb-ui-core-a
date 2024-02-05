@@ -9,10 +9,10 @@ import ViewFeature, { EditFeature, CreateFeature } from '../pages/features/featu
 import Roles from '../pages/roles/roles';
 import ViewRole, { EditRole, CreateRole } from '../pages/roles/role';
 
-import Users from '../pages/users/users';
-import ViewUser, { EditUser, CreateUser } from '../pages/users/user';
+import Users from '../pages/user/users';
+import ViewUser, { EditUser, CreateUser } from '../pages/user/user';
 
-import Workspaces from '../pages/workspaces/workspaces';
+import Workspaces from '../pages/userWorkspace/workspaces';
 
 const PrivateRoutes = () => {
     return (
