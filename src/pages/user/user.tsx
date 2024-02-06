@@ -24,19 +24,6 @@ import {
   useParams
 } from 'react-router-dom';
 
-const colDef:IColDef[] = [
-    {
-        header: 'Field',
-        field: 'field',
-        Component: undefined // react Component or undefined
-    },
-    {
-        header: 'Value',
-        field: 'value',
-        Component: undefined // react Component or undefined
-    }
-]
-
 export const CreateUser = () => {
     const navigate = useNavigate()
     const [pageState, setPageState] = useState({
@@ -410,11 +397,89 @@ const ViewUser = () => {
         init()
     }, [userId])
 
+    const colDef:IColDef[] = [
+        {
+            header: 'Field',
+            field: 'field',
+            Component: undefined
+        },
+        {
+            header: 'Value',
+            field: 'value',
+            Component: undefined
+        }
+    ]
+
+    const settingsColDef:IColDef[] = [
+        {
+            header: 'Field',
+            field: 'field',
+            Component: undefined
+        },
+        {
+            header: 'Contents',
+            field: 'contents',
+            Component: undefined
+        },
+        {
+            header: 'View',
+            field: 'moduleRoute',
+            Component: (props) => {
+                const navigate = useNavigate()
+                return (
+                    <Button
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => navigate(`/users/view/${ userId }/${ props.fieldRoute }`)}
+                        variant="text">View { props.field }</Button>
+                )
+            }
+        }
+    ]
+
+    const moduleColDef:IColDef[] = [
+        {
+            header: 'Module',
+            field: 'module',
+            Component: undefined
+        },
+        {
+            header: 'Contents',
+            field: 'contents',
+            Component: undefined
+        },
+        {
+            header: 'View',
+            field: 'moduleRoute',
+            Component: (props) => {
+                const navigate = useNavigate()
+                return (
+                    <Button
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => navigate(`/users/view/${ userId }/${ props.moduleRoute }`)}
+                        variant="text">View { props.module }</Button>
+                )
+            }
+        }
+    ]
+
     const data:{field: string, value: string|undefined}[] = [
         { field: 'username', value: user?.username },
         { field: 'disabled', value: user?.disabled? 'True': 'False' },
         { field: 'verified', value: user?.verified? 'True': 'False' }
     ]
+
+    const settingsData:{field: string, fieldRoute: string, contents: number}[] = [
+        { field: 'User Information', fieldRoute: 'userInfo', contents: user?.userInfos?.length || 0 },
+        { field: 'Contact Information', fieldRoute: 'contactInfo', contents: user?.contactInfos?.length || 0 },
+        { field: 'Roles', fieldRoute: 'roles', contents: user?.rolesRefs?.length || 0 },
+        { field: 'Limitedtransactions', fieldRoute: 'limitedTransactions', contents: user?.limitedTransactions?.length || 0 },
+        { field: 'Client Devices', fieldRoute: 'clientDevices', contents: user?.clientDevices?.length || 0 },
+        { field: 'Passwords', fieldRoute: 'passwords', contents: user?.passwords?.length || 0 },
+    ]
+
+    const modulesData:{module: string, moduleRoute: string, contents: number}[] = [
+        { module: 'Workspaces', moduleRoute: 'workspaces', contents: 0 }
+    ] 
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -493,8 +558,8 @@ const ViewUser = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <PrimaryTable
-                                    columnDefs={colDef}
-                                    data={data} />
+                                    columnDefs={settingsColDef}
+                                    data={settingsData} />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography color='primary' variant='h6' style={{padding:'10px'}}>
@@ -504,8 +569,8 @@ const ViewUser = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <PrimaryTable
-                                    columnDefs={colDef}
-                                    data={data} />
+                                    columnDefs={moduleColDef}
+                                    data={modulesData} />
                             </Grid>
                         </>
                     ): null
