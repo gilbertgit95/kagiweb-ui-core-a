@@ -13,6 +13,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
@@ -477,11 +479,35 @@ const ViewUser = () => {
 
                 {
                     user? (
-                        <Grid item xs={12}>
-                            <PrimaryTable
-                                columnDefs={colDef}
-                                data={data} />
-                        </Grid>
+                        <>
+                            <Grid item xs={12}>
+                                <PrimaryTable
+                                    columnDefs={colDef}
+                                    data={data} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography color='primary' variant='h6' style={{padding:'10px'}}>
+                                    <SettingsIcon /> User Advance Settings
+                                </Typography>
+                                {/* <Divider /> */}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <PrimaryTable
+                                    columnDefs={colDef}
+                                    data={data} />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography color='primary' variant='h6' style={{padding:'10px'}}>
+                                    <SnippetFolderIcon /> User Sub Modules
+                                </Typography>
+                                {/* <Divider /> */}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <PrimaryTable
+                                    columnDefs={colDef}
+                                    data={data} />
+                            </Grid>
+                        </>
                     ): null
                 }
 

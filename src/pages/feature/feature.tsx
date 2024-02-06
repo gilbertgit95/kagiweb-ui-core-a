@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Typography, TextField, Divider } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -20,9 +20,6 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import FeatureService from './featureService';
 import { IFeature, TFeatureType, featureTypes } from '../../types/feature';
-import {
-  useParams
-} from 'react-router-dom';
 
 const colDef:IColDef[] = [
     {

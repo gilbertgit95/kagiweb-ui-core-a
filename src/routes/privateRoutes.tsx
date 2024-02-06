@@ -3,8 +3,8 @@ import PrivatePageLayout from '../layouts/privatePageLayout';
 import PrivatePageNotFound from '../components/infoOrWarnings/privatePageNotFound';
 
 import PrivateHome from '../pages/home/privateHome';
-import Features from '../pages/features/features';
-import ViewFeature, { EditFeature, CreateFeature } from '../pages/features/feature';
+import Features from '../pages/feature/features';
+import ViewFeature, { EditFeature, CreateFeature } from '../pages/feature/feature';
 
 import Roles from '../pages/roles/roles';
 import ViewRole, { EditRole, CreateRole } from '../pages/roles/role';
@@ -12,7 +12,7 @@ import ViewRole, { EditRole, CreateRole } from '../pages/roles/role';
 import Users from '../pages/user/users';
 import ViewUser, { EditUser, CreateUser } from '../pages/user/user';
 
-import Workspaces from '../pages/userWorkspace/workspaces';
+import Workspaces from '../pages/userWorkspace/userWorkspaces';
 
 const PrivateRoutes = () => {
     return (
@@ -38,9 +38,8 @@ const PrivateRoutes = () => {
                     <Route path="users/create" element={<CreateUser />} />
                     <Route path="users/view/:userId" element={<ViewUser />} />
                     <Route path="users/edit/:userId" element={<EditUser />} />
-
-                    {/* workspace pages */}
-                    <Route path="workspaces" element={<Workspaces />} />
+                    {/* user workspace pages */}
+                    <Route path="users/view/:userId/workspaces" element={<Workspaces />} />
 
                     <Route path="*" element={<PrivatePageNotFound />} />
                 </Route>
