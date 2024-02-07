@@ -13,6 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
@@ -21,19 +22,6 @@ import { IRole } from '../../types/role';
 import {
   useParams
 } from 'react-router-dom';
-
-const colDef:IColDef[] = [
-    {
-        header: 'Field',
-        field: 'field',
-        Component: undefined // react Component or undefined
-    },
-    {
-        header: 'Value',
-        field: 'value',
-        Component: undefined // react Component or undefined
-    }
-]
 
 export const CreateRole = () => {
     const navigate = useNavigate()
@@ -429,12 +417,55 @@ const ViewRole = () => {
         init()
     }, [roleId])
 
+    const colDef:IColDef[] = [
+        {
+            header: 'Field',
+            field: 'field',
+            Component: undefined // react Component or undefined
+        },
+        {
+            header: 'Value',
+            field: 'value',
+            Component: undefined // react Component or undefined
+        }
+    ]
+
+    const moduleColDef:IColDef[] = [
+        {
+            header: 'Module',
+            field: 'module',
+            Component: undefined
+        },
+        {
+            header: 'Contents',
+            field: 'contents',
+            Component: undefined
+        },
+        {
+            header: 'View',
+            field: 'moduleRoute',
+            Component: (props) => {
+                const navigate = useNavigate()
+                return (
+                    <Button
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => navigate(`/roles/view/${ roleId }/${ props.moduleRoute }`)}
+                        variant="text">View { props.module }</Button>
+                )
+            }
+        }
+    ]
+
     const data:{field: string, value: string|undefined}[] = [
         { field: 'name', value: role?.name },
         { field: 'description', value: role?.description },
         { field: 'level', value: String(role?.level) },
         { field: 'reqLimitPerSec', value: String(role?.reqLimitPerSec) }
     ]
+
+    const modulesData:{module: string, moduleRoute: string, contents: number}[] = [
+        { module: 'Features', moduleRoute: 'features', contents: 0 }
+    ] 
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -499,11 +530,24 @@ const ViewRole = () => {
 
                 {
                     role? (
-                        <Grid item xs={12}>
-                            <PrimaryTable
-                                columnDefs={colDef}
-                                data={data} />
-                        </Grid>
+                        <>
+                            <Grid item xs={12}>
+                                <PrimaryTable
+                                    columnDefs={colDef}
+                                    data={data} />
+                            </Grid>
+                             <Grid item xs={12}>
+                                <Typography color='primary' variant='h6' style={{padding:'10px'}}>
+                                    <SnippetFolderIcon /> Role Sub Modules
+                                </Typography>
+                                {/* <Divider /> */}
+                            </Grid>
+                            <Grid item xs={12}>
+                                <PrimaryTable
+                                    columnDefs={moduleColDef}
+                                    data={modulesData} />
+                            </Grid>
+                        </>
                     ): null
                 }
 
