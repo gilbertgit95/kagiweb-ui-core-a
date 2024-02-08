@@ -7,11 +7,12 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import UserEditForm from './userEditForm';
+import UserService from './userService';
 import {
   useParams
 } from 'react-router-dom';
 
-export  const UserEditPage = () => {
+export const UserEditPage = () => {
     let { userId } = useParams()
     const navigate = useNavigate()
 
@@ -32,7 +33,10 @@ export  const UserEditPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <UserEditForm userId={ userId } />
+                <UserEditForm
+                    getFunc={UserService.getUser}
+                    updateFunc={UserService.updateUser}
+                    userId={ userId } />
             </Grid>
         </Container>
     )

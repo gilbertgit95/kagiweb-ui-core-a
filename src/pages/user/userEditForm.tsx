@@ -5,12 +5,15 @@ import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from './userService';
 import { IUser, IUserUpdate } from '../../types/user';
 
-interface props { userId: string | undefined }
+interface Props {
+    userId: string | undefined,
+    getFunc: (userId:string) => Promise<{data:IUser}>,
+    updateFunc: (updateData:IUserUpdate) => Promise<{data:IUser}>
+}
 
-export  const UserEditForm = ({userId}:props) => {
+export  const UserEditForm = ({ userId, getFunc, updateFunc }:Props) => {
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -50,7 +53,7 @@ export  const UserEditForm = ({userId}:props) => {
 
         // send update data to the api
         try {
-            const userResp = await UserService.updateUser(updateData)
+            const userResp = await updateFunc(updateData)
             setUser(userResp.data)
             setUpdatedUser(userResp.data)
             setInfoAndErrors({
@@ -73,7 +76,7 @@ export  const UserEditForm = ({userId}:props) => {
 
             if (userId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await getFunc(userId)
                     setUser(userResp.data)
                     setUpdatedUser(userResp.data)
                 } catch (err:any) {
@@ -108,64 +111,64 @@ export  const UserEditForm = ({userId}:props) => {
     })()
 
     return (
-            <>
-                {
-                    user? (
-                        <>
-                            <Grid container item xs={12}>
-                                <Grid item xs={4} md={3} sx={itemSx}>
-                                    <Typography variant="subtitle1">Username</Typography>
-                                </Grid>
-                                <Grid item xs={8} md={9}>
-                                    <TextField
-                                        fullWidth
-                                        defaultValue={updatedUser.username}
-                                        onChange={(e) => handleTextFieldChange('username', e.target.value)} />
-                                </Grid>
+        <>
+            {
+                user? (
+                    <>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Username</Typography>
                             </Grid>
-                            <Grid container item xs={12}>
-                                <Grid item xs={4} md={3} sx={itemSx}>
-                                    <Typography variant="subtitle1">Disabled</Typography>
-                                </Grid>
-                                <Grid item xs={8} md={9}>
-                                    <Switch
-                                        onChange={e => handleSwitchChange('disabled', e)}
-                                        checked={updatedUser.disabled} />
-                                </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    defaultValue={updatedUser.username}
+                                    onChange={(e) => handleTextFieldChange('username', e.target.value)} />
                             </Grid>
-                            <Grid container item xs={12}>
-                                <Grid item xs={4} md={3} sx={itemSx}>
-                                    <Typography variant="subtitle1">Verified</Typography>
-                                </Grid>
-                                <Grid item xs={8} md={9}>
-                                    <Switch
-                                        onChange={e => handleSwitchChange('verified', e)}
-                                        checked={updatedUser.verified} />
-                                </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Disabled</Typography>
                             </Grid>
-                        </>
-                    ):null
-                }
-                <Grid container item xs={12}>
-                    <Grid item xs={4} md={3} sx={itemSx}>
-                        {/* <Typography variant="subtitle1">Tags</Typography> */}
-                    </Grid>
-                    <Grid item xs={8} md={9}>
-                        <ResponseStatus {...infoAndErrors} />
-                    </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Switch
+                                    onChange={e => handleSwitchChange('disabled', e)}
+                                    checked={updatedUser.disabled} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Verified</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Switch
+                                    onChange={e => handleSwitchChange('verified', e)}
+                                    checked={updatedUser.verified} />
+                            </Grid>
+                        </Grid>
+                    </>
+                ):null
+            }
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    {/* <Typography variant="subtitle1">Tags</Typography> */}
                 </Grid>
-                <Grid container item xs={12} sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end'
-                    }}>
-                    <Button
-                        startIcon={<EditIcon />}
-                        onClick={onUpdate}
-                        disabled={hasChanges || !user}>
-                        Update
-                    </Button>
+                <Grid item xs={8} md={9}>
+                    <ResponseStatus {...infoAndErrors} />
                 </Grid>
-            </>
+            </Grid>
+            <Grid container item xs={12} sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end'
+                }}>
+                <Button
+                    startIcon={<EditIcon />}
+                    onClick={onUpdate}
+                    disabled={hasChanges || !user}>
+                    Update
+                </Button>
+            </Grid>
+        </>
     )
 }
 
