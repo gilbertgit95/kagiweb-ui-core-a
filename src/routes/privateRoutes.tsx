@@ -9,8 +9,10 @@ import ViewFeature, { EditFeature, CreateFeature } from '../pages/feature/featur
 import Roles from '../pages/roles/roles';
 import ViewRole, { EditRole, CreateRole } from '../pages/roles/role';
 
-import Users from '../pages/user/users';
-import ViewUser, { EditUser, CreateUser } from '../pages/user/user';
+import UsersPage from '../pages/user/usersPage';
+import UserCreatePage from '../pages/user/userCreatePage';
+import UserPage from '../pages/user/userPage';
+import UserEditPage from '../pages/user/userEditPage';
 
 import Workspaces from '../pages/userWorkspace/userWorkspaces';
 
@@ -34,10 +36,10 @@ const PrivateRoutes = () => {
                     <Route path="roles/edit/:roleId" element={<EditRole />} />
 
                     {/* user pages */}
-                    <Route path="users" element={<Users />} />
-                    <Route path="users/create" element={<CreateUser />} />
-                    <Route path="users/view/:userId" element={<ViewUser />} />
-                    <Route path="users/edit/:userId" element={<EditUser />} />
+                    <Route path="users" element={<UsersPage />} />
+                    <Route path="users/create" element={<UserCreatePage />} />
+                    <Route path="users/view/:userId" element={<UserPage />} />
+                    <Route path="users/edit/:userId" element={<UserEditPage />} />
                     {/* user workspace pages */}
                     <Route path="users/view/:userId/workspaces" element={<Workspaces />} />
 

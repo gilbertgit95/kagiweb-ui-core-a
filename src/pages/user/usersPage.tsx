@@ -175,7 +175,7 @@ const Users = () => {
         }
         console.log('initiate users page')
         init()
-    }, [])
+    }, [pageQuery, pageSizeQuery])
 
 
     return (
