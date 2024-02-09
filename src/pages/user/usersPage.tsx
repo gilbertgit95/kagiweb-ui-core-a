@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Button, Box, Typography, Divider } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container, Button, Box, Typography, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Checkbox from '@mui/material/Checkbox';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
+import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
-import UserService from "./userService";
-import Config from "../../utils/config";
+import UserService from './userService';
+import Config from '../../utils/config';
 // import { IUser } from "../../types/user";
 // import { IPagination } from "../../types/mixTypes";
 

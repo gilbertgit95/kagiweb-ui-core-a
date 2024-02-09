@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PrivatePageLayout from '../layouts/privatePageLayout';
 import PrivatePageNotFound from '../components/infoOrWarnings/privatePageNotFound';
 
+import OwnerPage from '../pages/owner/ownerPage';
+
 import PrivateHome from '../pages/home/privateHome';
 import Features from '../pages/feature/features';
 import ViewFeature, { EditFeature, CreateFeature } from '../pages/feature/feature';
@@ -22,6 +24,9 @@ const PrivateRoutes = () => {
             <Routes>
                 <Route path="/" element={<PrivatePageLayout />}>
                     <Route index element={<PrivateHome />} />
+
+                    {/* owner pages */}
+                    <Route path="owner" element={<OwnerPage />} />
 
                     {/* feature pages */}
                     <Route path="features" element={<Features />} />

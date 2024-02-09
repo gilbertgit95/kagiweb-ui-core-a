@@ -1,19 +1,20 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
+export interface ITabItem {
+  label: string,
+  Icon?: string | React.ReactElement<any, string | React.JSXElementConstructor<any>>,
+  route: string
+}
+
 interface Props {
-    tabs: string[]
+    tabs: ITabItem[]
 }
 
-interface LinkTabProps {
-    label?: string;
-    href?: string;
-    selected?: boolean;
-}
-
-function samePageLinkNavigation(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+const samePageLinkNavigation = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     if (
       event.defaultPrevented ||
       event.button !== 0 || // ignore everything but left-click
@@ -26,27 +27,18 @@ function samePageLinkNavigation(event: React.MouseEvent<HTMLAnchorElement, Mouse
     }
     return true;
 }
-  
-function LinkTab(props: LinkTabProps) {
-    return (
-      <Tab
-        component="a"
-        onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-          // Routing libraries handle this, you can remove the onClick handle when using them.
-          if (samePageLinkNavigation(event)) {
-            event.preventDefault();
-          }
-        }}
-        aria-current={props.selected && 'page'}
-        {...props}
-      />
-    )
-}
-  
+
 const TabsLayout = (props:Props) => {
-    const [value, setValue] = React.useState(0);
+    const location = useLocation()
+    const navigate = useNavigate()
+    const path = location?.pathname || ''
+
+    let routeIndex = 0
+    props.tabs.forEach((item, index) => {
+      if (path.indexOf(item.route) === 0) routeIndex = index
+    })
   
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = (event: React.SyntheticEvent, tabIndex: number) => {
       // event.type can be equal to focus with selectionFollowsFocus.
       if (
         event.type !== 'click' ||
@@ -55,20 +47,24 @@ const TabsLayout = (props:Props) => {
             event as React.MouseEvent<HTMLAnchorElement, MouseEvent>,
           ))
       ) {
-        setValue(newValue);
+        const tab = props.tabs[tabIndex]
+        navigate(tab.route)
       }
     }
   
     return (
       <Box sx={{ width: '100%' }}>
         <Tabs
-          value={value}
+          value={routeIndex}
           onChange={handleChange}
-          aria-label="nav tabs example"
-          role="navigation">
-          <LinkTab label="Page One" href="/drafts" />
-          <LinkTab label="Page Two" href="/trash" />
-          <LinkTab label="Page Three" href="/spam" />
+          variant='scrollable'
+          scrollButtons='auto'
+          role='navigation'>
+          {
+            props.tabs.map((item, index) => {
+              return <Tab key={index} label={ item.label } icon={item.Icon} iconPosition='start' />
+            })
+          }
         </Tabs>
       </Box>
     )
