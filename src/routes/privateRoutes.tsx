@@ -3,6 +3,7 @@ import PrivatePageLayout from '../layouts/privatePageLayout';
 import PrivatePageNotFound from '../components/infoOrWarnings/privatePageNotFound';
 
 import OwnerPage from '../pages/owner/ownerPage';
+import OwnerEditPage from '../pages/owner/ownerEditPage';
 
 import PrivateHome from '../pages/home/privateHome';
 import Features from '../pages/feature/features';
@@ -27,6 +28,7 @@ const PrivateRoutes = () => {
 
                     {/* owner pages */}
                     <Route path="owner" element={<OwnerPage />} />
+                    <Route path="owner/edit" element={<OwnerEditPage />} />
 
                     {/* feature pages */}
                     <Route path="features" element={<Features />} />
