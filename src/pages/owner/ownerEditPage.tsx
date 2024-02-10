@@ -1,15 +1,24 @@
 import { Container, Grid, Typography, Divider, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { useAppSelector} from '../../stores/appStore';
+import { useAppDispatch, useAppSelector} from '../../stores/appStore';
+import { setUserData } from '../../stores/signedInUserSlice';
 import { useNavigate } from 'react-router-dom';
 
 import UserEditForm from '../user/userEditForm';
 import OwnerService from './ownerService';
+import { IUser } from '../../types/user';
 
 const OwnerEditPage = () => {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const userData = useAppSelector(state => state.signedInUser.userData)
+
+    const onUpdated = async (user:IUser|undefined) => {
+        if (user) {
+            dispatch(setUserData({userData: user}))
+        }
+    }
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -31,7 +40,8 @@ const OwnerEditPage = () => {
                 <UserEditForm
                     userId={userData?._id}
                     getFunc={OwnerService.getOwner}
-                    updateFunc={OwnerService.updateOwner} />
+                    updateFunc={OwnerService.updateOwner}
+                    updated={onUpdated} />
             </Grid>
         </Container>
     )

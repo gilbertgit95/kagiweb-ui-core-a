@@ -10,10 +10,11 @@ import { IUser, IUserUpdate } from '../../types/user';
 interface Props {
     userId: string | undefined,
     getFunc: (userId:string) => Promise<{data:IUser}>,
-    updateFunc: (updateData:IUserUpdate) => Promise<{data:IUser}>
+    updateFunc: (updateData:IUserUpdate) => Promise<{data:IUser}>,
+    updated?: (user:IUser|undefined) => void
 }
 
-export  const UserEditForm = ({ userId, getFunc, updateFunc }:Props) => {
+export  const UserEditForm = ({ userId, getFunc, updateFunc, updated }:Props) => {
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -60,6 +61,7 @@ export  const UserEditForm = ({ userId, getFunc, updateFunc }:Props) => {
                 ...{infoMessages: ['Successfull Update']},
                 ...{errorMessages: []}
             })
+            if (updated) updated(userResp?.data)
         } catch (err:any) {
             // error while updating
             // log to the UI
@@ -91,7 +93,7 @@ export  const UserEditForm = ({ userId, getFunc, updateFunc }:Props) => {
         }
 
         init()
-    }, [userId])
+    }, [userId, getFunc])
 
     const itemSx = {
         display: 'flex',
