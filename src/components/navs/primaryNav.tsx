@@ -2,18 +2,17 @@
 import React, { FC } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
-// import Button from '@mui/material/Button';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import PagesIcon from '@mui/icons-material/Pages';
+import Divider from '@mui/material/Divider';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
-// import ContentCut from '@mui/icons-material/ContentCut';
-// import Typography from '@mui/material/Typography';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 
 import { useLocation } from 'react-router-dom';
 
@@ -62,7 +61,34 @@ const PrimaryNav = (props:Props) => {
                     onClick={handleMenuClick}>
                     { props.MenuIcon? <props.MenuIcon />: <MenuIcon /> }
                 </IconButton>
-                <Menu
+                <Drawer
+                    anchor={'left'}
+                    open={open}
+                    onClose={handleClose}>
+                    <List>
+                        {
+                            props.links?.map((item, index) => (
+                                <ListItem
+                                    key={item.label}
+                                    onClick={() => {handleItemClick(item)}}>
+                                    <ListItemButton
+                                        disabled={item.url === pathname}>
+                                        {
+                                            item.Icon? (
+                                                <ListItemIcon>
+                                                    <item.Icon />
+                                                </ListItemIcon>
+                                            ): null
+                                        }
+                                        <ListItemText primary={item.label} />
+                                    </ListItemButton>
+                                </ListItem>
+                            ))
+                        }
+                    </List>
+                    <Divider />
+                </Drawer>
+                {/* <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
                     open={open} 
@@ -89,7 +115,7 @@ const PrimaryNav = (props:Props) => {
                             )
                         })
                     }
-                </Menu>
+                </Menu> */}
                 {
                     props.CustomEl? <props.CustomEl />: null
                 }
