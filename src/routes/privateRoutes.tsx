@@ -9,7 +9,8 @@ import PrivateHome from '../pages/home/privateHome';
 
 import FeaturesPage from '../pages/feature/featuresPage';
 import FeaturePage from '../pages/feature/featurePage';
-import { EditFeature, CreateFeature } from '../pages/feature/feature';
+import FeatureCreatePage from '../pages/feature/featureCreatePage';
+import { EditFeature } from '../pages/feature/feature';
 
 import Roles from '../pages/roles/roles';
 import ViewRole, { EditRole, CreateRole } from '../pages/roles/role';
@@ -34,7 +35,7 @@ const PrivateRoutes = () => {
 
                     {/* feature pages */}
                     <Route path="features" element={<FeaturesPage />} />
-                    <Route path="features/create" element={<CreateFeature />} />
+                    <Route path="features/create" element={<FeatureCreatePage />} />
                     <Route path="features/view/:featureId" element={<FeaturePage />} />
                     <Route path="features/edit/:featureId" element={<EditFeature />} />
 
