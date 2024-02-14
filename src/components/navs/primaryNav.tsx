@@ -26,7 +26,8 @@ export type TLink = {
 type Props = {
     MenuIcon?: FC,
     links?: TLink[]
-    CustomEl?: FC
+    CustomEl?: FC,
+    manuIsDrawer?: boolean
 }
 
 const PrimaryNav = (props:Props) => {
@@ -61,61 +62,69 @@ const PrimaryNav = (props:Props) => {
                     onClick={handleMenuClick}>
                     { props.MenuIcon? <props.MenuIcon />: <MenuIcon /> }
                 </IconButton>
-                <Drawer
-                    anchor={'left'}
-                    open={open}
-                    onClose={handleClose}>
-                    <List>
-                        {
-                            props.links?.map((item, index) => (
-                                <ListItem
-                                    key={item.label}
-                                    onClick={() => {handleItemClick(item)}}>
-                                    <ListItemButton
-                                        disabled={item.url === pathname}>
-                                        {
-                                            item.Icon? (
-                                                <ListItemIcon>
-                                                    <item.Icon />
-                                                </ListItemIcon>
-                                            ): null
-                                        }
-                                        <ListItemText primary={item.label} />
-                                    </ListItemButton>
-                                </ListItem>
-                            ))
-                        }
-                    </List>
-                    <Divider />
-                </Drawer>
-                {/* <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open} 
-                    onClose={handleClose}
-                    MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                    }}>
-                    {
-                        props.links?.map((item, index) => {
-                            return (
-                                <MenuItem
-                                    key={index}
-                                    disabled={item.url === pathname}
-                                    onClick={() => {handleItemClick(item)}}>
-                                    {
-                                        item.Icon? (
-                                            <ListItemIcon>
-                                                <item.Icon />
-                                            </ListItemIcon>
-                                        ): null
-                                    }
-                                    <ListItemText>{ item.label }</ListItemText>
-                                </MenuItem>
-                            )
-                        })
-                    }
-                </Menu> */}
+                {
+                    props.manuIsDrawer? (
+                        <Drawer
+                            anchor={'left'}
+                            open={open}
+                            onClose={handleClose}>
+                            {/* <List><ListItem></ListItem></List> */}
+                            <List>
+                                {
+                                    props.links?.map((item, index) => (
+                                        <ListItem
+                                            disablePadding
+                                            key={item.label}
+                                            onClick={() => {handleItemClick(item)}}>
+                                            <ListItemButton
+                                                disabled={item.url === pathname}>
+                                                {
+                                                    item.Icon? (
+                                                        <ListItemIcon>
+                                                            <item.Icon />
+                                                        </ListItemIcon>
+                                                    ): null
+                                                }
+                                                <ListItemText primary={item.label} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    ))
+                                }
+                            </List>
+                            <Divider />
+                        </Drawer>
+                    ): (
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open} 
+                            onClose={handleClose}
+                            MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                            }}>
+                            {
+                                props.links?.map((item, index) => {
+                                    return (
+                                        <MenuItem
+                                            key={index}
+                                            disabled={item.url === pathname}
+                                            onClick={() => {handleItemClick(item)}}>
+                                            {
+                                                item.Icon? (
+                                                    <ListItemIcon>
+                                                        <item.Icon />
+                                                    </ListItemIcon>
+                                                ): null
+                                            }
+                                            <ListItemText>{ item.label }</ListItemText>
+                                        </MenuItem>
+                                    )
+                                })
+                            }
+                        </Menu>
+                    )
+                }
+
                 {
                     props.CustomEl? <props.CustomEl />: null
                 }

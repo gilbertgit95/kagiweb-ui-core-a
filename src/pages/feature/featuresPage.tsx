@@ -61,7 +61,7 @@ const colDef:IColDef[] = [
     }
 ]
 
-const Features = () => {
+const FeaturesPage = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
     const pageQuery = parseInt(searchParams.get('page') || '') || Config.defaultPage;
@@ -152,7 +152,7 @@ const Features = () => {
         }
         console.log('initiate features page')
         init()
-    }, [])
+    }, [pageQuery, pageSizeQuery])
 
 
     return (
@@ -191,4 +191,4 @@ const Features = () => {
     )
 }
 
-export default Features
+export default FeaturesPage

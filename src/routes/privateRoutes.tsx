@@ -6,8 +6,10 @@ import OwnerPage from '../pages/owner/ownerPage';
 import OwnerEditPage from '../pages/owner/ownerEditPage';
 
 import PrivateHome from '../pages/home/privateHome';
-import Features from '../pages/feature/features';
-import ViewFeature, { EditFeature, CreateFeature } from '../pages/feature/feature';
+
+import FeaturesPage from '../pages/feature/featuresPage';
+import FeaturePage from '../pages/feature/featurePage';
+import { EditFeature, CreateFeature } from '../pages/feature/feature';
 
 import Roles from '../pages/roles/roles';
 import ViewRole, { EditRole, CreateRole } from '../pages/roles/role';
@@ -31,9 +33,9 @@ const PrivateRoutes = () => {
                     <Route path="owner/edit" element={<OwnerEditPage />} />
 
                     {/* feature pages */}
-                    <Route path="features" element={<Features />} />
+                    <Route path="features" element={<FeaturesPage />} />
                     <Route path="features/create" element={<CreateFeature />} />
-                    <Route path="features/view/:featureId" element={<ViewFeature />} />
+                    <Route path="features/view/:featureId" element={<FeaturePage />} />
                     <Route path="features/edit/:featureId" element={<EditFeature />} />
 
                     {/* role pages */}

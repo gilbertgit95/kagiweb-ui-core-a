@@ -30,7 +30,7 @@ import PrimaryNav, { TLink } from '../components/navs/primaryNav';
 const NavCustomEl = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const userData = useAppSelector(state => state.signedInUser.userData)
+    const userData = useAppSelector(state => state.signedInUser?.userData)
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -140,8 +140,9 @@ const PrivatePageLayout =() => {
     return (
         <>
             <PrimaryNav
+                manuIsDrawer
                 links={links}
-                CustomEl={NavCustomEl}/>
+                CustomEl={NavCustomEl} />
             <Outlet />
         </>
     )
