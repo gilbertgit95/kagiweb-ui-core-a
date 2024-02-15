@@ -25,7 +25,7 @@ interface IWorkspaceRow {
     disabled: boolean
 }
 
-const UserWorkspaces = () => {
+const UserWorkspacesPage = () => {
     const { userId } = useParams()
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
@@ -163,7 +163,7 @@ const UserWorkspaces = () => {
         }
         console.log('initiate users page')
         init()
-    }, [])
+    }, [pageQuery, pageSizeQuery])
 
 
     return (
@@ -210,4 +210,4 @@ const UserWorkspaces = () => {
     )
 }
 
-export default UserWorkspaces
+export default UserWorkspacesPage
