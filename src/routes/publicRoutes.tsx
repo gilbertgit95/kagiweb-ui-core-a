@@ -1,25 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PublicPageLayout from "../layouts/publicPageLayout";
-import PublicHome from "../pages/home/publicHome";
-import Signin from "../pages/auth/signin";
-import Signup from "../pages/auth/signup";
-import SigninOTP from "../pages/auth/signinOtp";
-import ForgotPassword from "../pages/auth/forgotPassword";
-import ResetPassword from "../pages/auth/resetPassword";
-import PublicPageNotFound from "../components/infoOrWarnings/publicPageNotFound";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PublicPageLayout from '../layouts/publicPageLayout';
+import PublicHomePage from '../pages/home/publicHomePage';
+import SigninPage from '../pages/auth/signinPage';
+import SignupPage from '../pages/auth/signupPage';
+import SigninOTPPage from '../pages/auth/signinOtpPage';
+import ForgotPasswordPage from '../pages/auth/forgotPasswordPage';
+import ResetPasswordPage from '../pages/auth/resetPasswordPage';
+import PublicPageNotFoundPage from '../components/infoOrWarnings/publicPageNotFound';
 
 const PublicRoutes = () => {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<PublicPageLayout />}>
-                    <Route index element={<PublicHome />} />
-                    <Route path="signin" element={<Signin />} />
-                    <Route path="signup" element={<Signup />} />
-                    <Route path="signinOTP" element={<SigninOTP />} />
-                    <Route path="forgotPassword" element={<ForgotPassword />} />
-                    <Route path="resetPassword" element={<ResetPassword />} />
-                    <Route path="*" element={<PublicPageNotFound />} />
+                    <Route index element={<PublicHomePage />} />
+                    <Route path="signin" element={<SigninPage />} />
+                    <Route path="signup" element={<SignupPage />} />
+                    <Route path="signinOTP" element={<SigninOTPPage />} />
+                    <Route path="forgotPassword" element={<ForgotPasswordPage />} />
+                    <Route path="resetPassword" element={<ResetPasswordPage />} />
+                    <Route path="*" element={<PublicPageNotFoundPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

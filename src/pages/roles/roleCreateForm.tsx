@@ -1,0 +1,140 @@
+import React, { useState } from 'react';
+import { Button, Typography, TextField } from '@mui/material';
+
+import Grid from '@mui/material/Grid';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+
+import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import RoleService from './roleService';
+import { IRole } from '../../types/role';
+
+export const RoleCreateForm = () => {
+    const [pageState, setPageState] = useState({
+        disableSaveButton: false
+    })
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
+    const [role, setRole] = useState<IRole>({
+        name: '',
+        description: '',
+        level: 0,
+        reqLimitPerSec: 120
+    })
+
+    const handleTextFieldChange = (field:string, value:string) => {
+        setRole({...role, ...{[field]: value}})
+    }
+
+    const onCreate = async () => {
+        const newRole:IRole = {
+            ...role,
+            ...{
+                name: role.name,
+                description: role.description,
+                level: role.level,
+                reqLimitPerSec: role.reqLimitPerSec
+            }
+        }
+        console.log('create update: ', newRole)
+        setPageState({disableSaveButton: true})
+
+        // send update data to the api
+        try {
+            const roleResp = await RoleService.createRole(newRole)
+            setRole(roleResp.data)
+            setInfoAndErrors({
+                ...{infoMessages: ['Successfull Creation']},
+                ...{errorMessages: []}
+            })
+        } catch (err:any) {
+            // error while updating
+            // log to the UI
+            setInfoAndErrors({
+                ...infoAndErrors,
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+            setPageState({disableSaveButton: false})
+        }
+    }
+
+    const itemSx = {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        paddingRight: '20px',
+        paddingLeft: '20px'
+    }
+
+    return (
+        <>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Name</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <TextField
+                        fullWidth
+                        defaultValue={role.name}
+                        onChange={(e) => handleTextFieldChange('name', e.target.value)} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Description</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <TextField
+                        fullWidth
+                        multiline
+                        maxRows={4}
+                        defaultValue={role.description}
+                        onChange={(e) => handleTextFieldChange('description', e.target.value)}/>
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Level</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <TextField
+                        fullWidth
+                        defaultValue={role.level}
+                        onChange={(e) => handleTextFieldChange('level', e.target.value)} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Request Rate Limit</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <TextField
+                        fullWidth
+                        defaultValue={role.reqLimitPerSec}
+                        onChange={(e) => handleTextFieldChange('reqLimitPerSec', e.target.value)} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    {/* <Typography variant="subtitle1">Tags</Typography> */}
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <ResponseStatus {...infoAndErrors} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12} sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end'
+                }}>
+                <Button
+                    startIcon={<AdminPanelSettingsIcon />}
+                    onClick={onCreate}
+                    disabled={pageState.disableSaveButton}>
+                    Create
+                </Button>
+            </Grid>
+        </>
+    )
+}
+
+export default RoleCreateForm

@@ -64,7 +64,7 @@ const colDef:IColDef[] = [
     }
 ]
 
-const Roles = () => {
+const RolesPage = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
     const pageQuery = parseInt(searchParams.get('page') || '') || Config.defaultPage;
@@ -155,7 +155,7 @@ const Roles = () => {
         }
         console.log('initiate users page')
         init()
-    }, [])
+    }, [pageQuery, pageSizeQuery])
 
 
     return (
@@ -194,4 +194,4 @@ const Roles = () => {
     )
 }
 
-export default Roles
+export default RolesPage
