@@ -1,10 +1,15 @@
-import { Typography, Grid } from "@mui/material"
+import React from 'react'
+import { Typography, Grid } from '@mui/material'
 
-const PrivatePageNotFound = () => {
+interface Props {
+    children?: React.ReactNode
+}
+
+const PageNotFound = (props:Props) => {
     return (
         <Grid
             container
-            spacing={0}
+            spacing={2}
             direction="column"
             alignItems="center"
             justifyContent="center"
@@ -12,8 +17,9 @@ const PrivatePageNotFound = () => {
             <Grid item xs={12}>
                 <Typography color='primary' variant='h5'>This page does not exist!</Typography>
             </Grid>
+            { props.children }
         </Grid>
     )
 }
 
-export default PrivatePageNotFound
+export default PageNotFound

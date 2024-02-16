@@ -1,6 +1,8 @@
+import { Grid, Button } from '@mui/material'
+import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PrivatePageLayout from '../layouts/privatePageLayout';
-import PrivatePageNotFound from '../components/infoOrWarnings/privatePageNotFound';
+import PageNotFoundPage from '../components/infoOrWarnings/pageNotFound';
 
 import PrivateHomePage from '../pages/home/privateHomePage';
 
@@ -55,7 +57,19 @@ const PrivateRoutes = () => {
                     <Route path="owner" element={<OwnerPage />} />
                     <Route path="owner/edit" element={<OwnerEditPage />} />
 
-                    <Route path="*" element={<PrivatePageNotFound />} />
+                    {/* for none existing page */}
+                    <Route
+                        path="*"
+                        element={
+                            <PageNotFoundPage>
+                                <Grid item xs={12}>
+                                    <Button
+                                        variant='outlined'
+                                        onClick={() => window.location.replace('/')}
+                                        endIcon={<TrendingFlatIcon />}>go to home page</Button>
+                                </Grid>
+                            </PageNotFoundPage>
+                        } />
                 </Route>
             </Routes>
         </BrowserRouter>
