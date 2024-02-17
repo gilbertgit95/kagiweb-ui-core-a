@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Button, Box, Typography, Divider } from '@mui/material';
+import { Container, Button, Box, Divider } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,9 +11,9 @@ import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserReadOnlyView from './userReadOnlyView';
 import UserService from './userService';
 import { IUser } from '../../types/user';
@@ -89,9 +89,7 @@ const UserPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' style={{padding:'10px'}}>
-                        <VisibilityIcon /> User Readonly View
-                    </Typography>
+                    <PrimaryHeader title={'User Readonly View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

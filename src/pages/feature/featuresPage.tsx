@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Button, Box, Typography, Divider } from "@mui/material";
+import { Container, Button, Box, Divider } from "@mui/material";
 import Grid from '@mui/material/Grid';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
+import PrimaryHeader from "../../components/headers/primaryHeader";
 import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 import { useSearchParams } from 'react-router-dom';
 
@@ -159,9 +160,7 @@ const FeaturesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' style={{padding:'10px'}}>
-                        <VisibilityIcon /> Feature List View
-                    </Typography>
+                    <PrimaryHeader title={'Feature List View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Button, Box, Typography, Divider } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 // import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
+import PrimaryHeader from '../../components/headers/primaryHeader';
+import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
-import RoleService from "./roleService";
-import Config from "../../config";
-// import { IUser } from "../../types/user";
-// import { IPagination } from "../../types/mixTypes";
+import RoleService from './roleService';
+import Config from '../../config';
+// import { IUser } from '../../types/user';
+// import { IPagination } from '../../types/mixTypes';
 
 interface IRoleRow {
     _id: string,
@@ -162,9 +163,7 @@ const RolesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' style={{padding:'10px'}}>
-                        <VisibilityIcon /> Role List View
-                    </Typography>
+                    <PrimaryHeader title={'Role List View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

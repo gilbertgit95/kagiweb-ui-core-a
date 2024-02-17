@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Typography, Box, Divider } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
+import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 // import PersonAddIcon from '@mui/icons-material/PersonAdd';
 // import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import Check from '../../components/indicators/check';
+import PrimaryHeader from '../../components/headers/primaryHeader';
 
+import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
+import UserService from '../user/userService';
 import WorkspaceService from './workspaceService';
 import Config from '../../config';
-// import { IUser } from '../../types/user';
+import { IUser } from '../../types/user';
 // import { IPagination } from '../../types/mixTypes';
 
 interface IWorkspaceRow {
@@ -38,6 +41,11 @@ const UserWorkspacesPage = () => {
         totalItems: 0,
         pageSizeList: Config.defaultPageSizeList
     })
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
+    const [user, setUser] = useState<IUser | undefined>()
     const [data, setData] = useState<IWorkspaceRow[]>([])
 
     const search = async (page:number, pageSize:number) => {
@@ -100,14 +108,14 @@ const UserWorkspacesPage = () => {
             header: 'Active',
             field: 'isActive',
             Component: (props:IWorkspaceRow) => {
-                return <Checkbox checked={props.isActive} />
+                return <Check value={props.isActive} />
             }
         },
         {
             header: 'Disabled',
             field: 'disabled',
             Component: (props:IWorkspaceRow) => {
-                return <Checkbox checked={props.disabled} />
+                return <Check value={props.disabled} />
             }
         },
         // {
@@ -134,6 +142,20 @@ const UserWorkspacesPage = () => {
     useEffect(() => {
         const init = async () => {
             window.history.replaceState(null, '', `?page=${ pageQuery }&pageSize=${ pageSizeQuery }`)
+            // fetch user data
+            if (userId) {
+                try {
+                    const userResp = await UserService.getUser(userId)
+                    setUser(userResp.data)
+
+                } catch (err:any) {
+                    setInfoAndErrors({
+                        ...{infoMessages: []},
+                        ...{errorMessages: [err?.response?.data?.message || '']}
+                    })
+                }
+            }
+            // fetch user workspaces
             try {
                 const resp = await WorkspaceService.getWorkspaces({
                     page: pageQuery,
@@ -158,21 +180,23 @@ const UserWorkspacesPage = () => {
                     setData(tarnsformedData)
                 }
                 // console.log(resp.data)
-            } catch (err) {
+            } catch (err:any) {
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
             }
         }
         console.log('initiate users page')
         init()
-    }, [pageQuery, pageSizeQuery])
+    }, [userId, pageQuery, pageSizeQuery])
 
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' style={{padding:'10px'}}>
-                        <VisibilityIcon /> User Workspace List View
-                    </Typography>
+                    <PrimaryHeader title={ user?.username } subtitle={ 'Workspace List View' } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -204,6 +228,9 @@ const UserWorkspacesPage = () => {
                         data={data}
                         onPageChange={onPageChange}
                         onRowsPerPageChange={onPageSizeChange} />
+                </Grid>
+                <Grid item xs={12}>
+                    <ResponseStatus {...infoAndErrors} />
                 </Grid>
             </Grid>
         </Container>

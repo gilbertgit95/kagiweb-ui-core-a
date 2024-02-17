@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 
+import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { IRole } from '../../types/role';
 
@@ -72,10 +73,7 @@ const RoleReadOnlyView = ({role}:Props) => {
                     data={data} />
             </Grid>
                 <Grid item xs={12}>
-                <Typography color='primary' variant='h6' style={{padding:'10px'}}>
-                    <SnippetFolderIcon /> Role Sub Modules
-                </Typography>
-                {/* <Divider /> */}
+                <SecondaryHeader Icon={SnippetFolderIcon} title={'Role Sub Modules'} />
             </Grid>
             <Grid item xs={12}>
                 <PrimaryTable

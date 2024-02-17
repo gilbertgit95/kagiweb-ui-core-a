@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Typography, Divider } from '@mui/material';
+import { Container, Button, Divider } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import FeatureService from './featureService';
 
+import PrimaryHeader from '../../components/headers/primaryHeader';
 import FeatureEditForm from './featureEditForm';
 
 export  const FeatureEditPage = () => {
@@ -16,9 +16,7 @@ export  const FeatureEditPage = () => {
     return (
         <Container style={{paddingTop: 20}}>
             <Grid item xs={12}>
-                <Typography variant='h5' style={{padding:'10px'}}>
-                    <VisibilityIcon /> Feature Update View
-                </Typography>
+                <PrimaryHeader title={'Feature Update View'} />
                 <Divider />
             </Grid>
             <Grid container spacing={2}>

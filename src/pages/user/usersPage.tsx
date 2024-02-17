@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Button, Box, Typography, Divider } from '@mui/material';
+import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import Checkbox from '@mui/material/Checkbox';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
+import Check from '../../components/indicators/check';
+import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
@@ -49,14 +50,14 @@ const colDef:IColDef[] = [
         header: 'Verified',
         field: 'verified',
         Component: (props:IUserRow) => {
-            return <Checkbox checked={props.verified} />
+            return <Check value={props.verified} />
         }
     },
     {
         header: 'Disabled',
         field: 'disabled',
         Component: (props:IUserRow) => {
-            return <Checkbox checked={props.disabled} />
+            return <Check value={props.disabled} />
         }
     },
     // {
@@ -182,9 +183,7 @@ const Users = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' style={{padding:'10px'}}>
-                        <VisibilityIcon /> User List View
-                    </Typography>
+                    <PrimaryHeader title={'User List View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

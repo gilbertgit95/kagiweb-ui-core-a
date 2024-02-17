@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button,Typography } from '@mui/material';
+import { Button} from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
-
+import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { IUser } from '../../types/user';
 
@@ -135,9 +135,7 @@ const UserReadOnlyView = ({user}:props) => {
                     data={data} />
             </Grid>
             <Grid item xs={12}>
-                <Typography color='primary' variant='h6' style={{padding:'10px'}}>
-                    <SettingsIcon /> Advance Settings
-                </Typography>
+                <SecondaryHeader Icon={SettingsIcon} title={'Advance Settings'} />
                 {/* <Divider /> */}
             </Grid>
             <Grid item xs={12}>
@@ -146,9 +144,7 @@ const UserReadOnlyView = ({user}:props) => {
                     data={settingsData} />
             </Grid>
             <Grid item xs={12}>
-                <Typography color='primary' variant='h6' style={{padding:'10px'}}>
-                    <SnippetFolderIcon /> Sub Modules
-                </Typography>
+                <SecondaryHeader Icon={SnippetFolderIcon} title={'Sub Modules'} />
                 {/* <Divider /> */}
             </Grid>
             <Grid item xs={12}>

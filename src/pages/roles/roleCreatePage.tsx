@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Button, Typography, Divider } from '@mui/material';
+import { Container, Button, Divider } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import PrimaryHeader from '../../components/headers/primaryHeader';
 import RoleCreateForm from './roleCreateForm';
 
 export const RoleCreatePage = () => {
@@ -14,9 +14,7 @@ export const RoleCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' style={{padding:'10px'}}>
-                        <VisibilityIcon /> Role Creation View
-                    </Typography>
+                    <PrimaryHeader title={'Role Creation View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
