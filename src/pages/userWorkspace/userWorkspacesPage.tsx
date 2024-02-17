@@ -13,7 +13,7 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
 import WorkspaceService from './workspaceService';
-import Config from '../../utils/config';
+import Config from '../../config';
 // import { IUser } from '../../types/user';
 // import { IPagination } from '../../types/mixTypes';
 

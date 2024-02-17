@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 
-// import Config from '../../utils/config';
+// import Config from '../../config';
 // import TimeUtils from '../../utils/timeUtils';
 import AuthService from './authService';
 

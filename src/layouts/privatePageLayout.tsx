@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector} from '../stores/appStore';
 import { clearUserData } from '../stores/signedInUserSlice';
 import { toggleTheme } from '../stores/appRefsSlice';
 
-import Config from "../utils/config";
+import Config from "../config";
 import AuthService from "../pages/auth/authService";
 import PrimaryNav, { TLink } from '../components/navs/primaryNav';
 

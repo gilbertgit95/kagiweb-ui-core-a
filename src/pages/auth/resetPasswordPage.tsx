@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import { useSearchParams } from 'react-router-dom';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 
-// import Config from '../../utils/config';
+// import Config from '../../config';
 import TimeUtils from '../../utils/timeUtils';
 import AuthService from './authService';
 

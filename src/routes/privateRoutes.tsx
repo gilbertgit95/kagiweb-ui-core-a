@@ -2,7 +2,7 @@ import { Grid, Button } from '@mui/material'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PrivatePageLayout from '../layouts/privatePageLayout';
-import PageNotFoundPage from '../components/infoOrWarnings/pageNotFound';
+import NotFoundPage from '../components/infoOrWarnings/pageNotFound';
 
 import PrivateHomePage from '../pages/home/privateHomePage';
 
@@ -61,14 +61,14 @@ const PrivateRoutes = () => {
                     <Route
                         path="*"
                         element={
-                            <PageNotFoundPage>
+                            <NotFoundPage>
                                 <Grid item xs={12}>
                                     <Button
                                         variant='outlined'
                                         onClick={() => window.location.replace('/')}
                                         endIcon={<TrendingFlatIcon />}>go to home page</Button>
                                 </Grid>
-                            </PageNotFoundPage>
+                            </NotFoundPage>
                         } />
                 </Route>
             </Routes>

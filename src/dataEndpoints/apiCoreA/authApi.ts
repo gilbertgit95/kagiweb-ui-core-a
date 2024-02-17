@@ -1,5 +1,5 @@
 import apiHelper from './apiHelper';
-import Config from '../../utils/config';
+import Config from '../../config';
 
 class AuthApi {
     public static signin(username:string, password:string) {

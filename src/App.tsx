@@ -6,7 +6,7 @@ import OwnerService from './pages/owner/ownerService';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setUserData, ISignedInUser } from './stores/signedInUserSlice';
 // import { setAppRefs } from './stores/appRefsSlice';
-import Config from './utils/config';
+import Config from './config';
 
 import InitialDisplay from './components/infoOrWarnings/initialDisplay';
 import PublicRoutes from './routes/publicRoutes';

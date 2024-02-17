@@ -136,7 +136,7 @@ const UserReadOnlyView = ({user}:props) => {
             </Grid>
             <Grid item xs={12}>
                 <Typography color='primary' variant='h6' style={{padding:'10px'}}>
-                    <SettingsIcon /> User Advance Settings
+                    <SettingsIcon /> Advance Settings
                 </Typography>
                 {/* <Divider /> */}
             </Grid>
@@ -147,7 +147,7 @@ const UserReadOnlyView = ({user}:props) => {
             </Grid>
             <Grid item xs={12}>
                 <Typography color='primary' variant='h6' style={{padding:'10px'}}>
-                    <SnippetFolderIcon /> User Sub Modules
+                    <SnippetFolderIcon /> Sub Modules
                 </Typography>
                 {/* <Divider /> */}
             </Grid>

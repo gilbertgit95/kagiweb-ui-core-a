@@ -9,7 +9,7 @@ import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
 import { useSearchParams } from 'react-router-dom';
 
 import FeatureService from "./featureService";
-import Config from "../../utils/config";
+import Config from "../../config";
 
 interface IFeatureRow {
     _id: string,

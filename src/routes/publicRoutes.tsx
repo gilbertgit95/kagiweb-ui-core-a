@@ -2,7 +2,7 @@ import { Grid, Button } from '@mui/material'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PublicPageLayout from '../layouts/publicPageLayout';
-import PageNotFoundPage from '../components/infoOrWarnings/pageNotFound';
+import NotFoundPage from '../components/infoOrWarnings/pageNotFound';
 
 import PublicHomePage from '../pages/home/publicHomePage';
 import SigninPage from '../pages/auth/signinPage';
@@ -25,14 +25,14 @@ const PublicRoutes = () => {
                     <Route
                         path="*"
                         element={
-                            <PageNotFoundPage>
+                            <NotFoundPage>
                                 <Grid item xs={12}>
                                     <Button
                                         variant='outlined'
                                         onClick={() => window.location.replace('/signin')}
                                         endIcon={<TrendingFlatIcon />}>go to signin page</Button>
                                 </Grid>
-                            </PageNotFoundPage>
+                            </NotFoundPage>
                         } />
                 </Route>
             </Routes>

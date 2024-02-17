@@ -1,5 +1,5 @@
 import apiHelper from "./apiHelper";
-import Config from "../../utils/config";
+import Config from "../../config";
 import { IPageQuery } from "../../types/mixTypes";
 import { IUser, IUserUpdate } from "../../types/user";
 

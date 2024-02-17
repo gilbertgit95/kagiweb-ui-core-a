@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFeature } from "../types/feature";
 import { IRole } from "../types/role";
 
-import Config from "../utils/config";
+import Config from "../config";
 // import { IUser } from "../types/user";
 // import { IWorkspace } from "../types/workspace";
 
