@@ -1,10 +1,9 @@
-import { Container, Grid, Typography, Divider, Button } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Container, Grid, Divider, Button } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 import { setUserData } from '../../stores/signedInUserSlice';
 import { useNavigate } from 'react-router-dom';
-
+import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserEditForm from '../user/userEditForm';
 import OwnerService from './ownerService';
 import { IUser } from '../../types/user';
@@ -24,9 +23,7 @@ const OwnerEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' style={{padding:'10px'}}>
-                        <VisibilityIcon /> Edit My Account
-                    </Typography>
+                    <PrimaryHeader title={'Edit My Account'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

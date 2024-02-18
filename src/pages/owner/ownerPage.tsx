@@ -1,7 +1,7 @@
-import { Container, Grid, Typography, Divider, Box, Button } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Container, Grid, Divider, Box, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppSelector} from '../../stores/appStore';
+import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserReadOnlyView from '../user/userReadOnlyView';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,9 +13,7 @@ const OwnerPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant='h5' style={{padding:'10px'}}>
-                        <VisibilityIcon /> My Account
-                    </Typography>
+                    <PrimaryHeader title={ 'My Account' } subtitle={ userData?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12} style={{alignContent: 'right'}}>

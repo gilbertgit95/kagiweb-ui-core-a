@@ -74,9 +74,9 @@ const PrimaryNav = (props:Props) => {
                                     props.links?.map((item, index) => (
                                         <ListItem
                                             disablePadding
-                                            key={item.label}
-                                            onClick={() => {handleItemClick(item)}}>
+                                            key={item.label}>
                                             <ListItemButton
+                                                onClick={() => {handleItemClick(item)}}
                                                 disabled={item.url === pathname}>
                                                 {
                                                     item.Icon? (
