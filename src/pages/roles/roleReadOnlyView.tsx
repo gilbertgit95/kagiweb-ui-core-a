@@ -62,7 +62,7 @@ const RoleReadOnlyView = ({role}:Props) => {
     ]
 
     const modulesData:{module: string, moduleRoute: string, contents: number}[] = [
-        { module: 'Features', moduleRoute: 'features', contents: 0 }
+        { module: 'Features', moduleRoute: 'features', contents: role?.featuresRefs?.length || 0 }
     ] 
 
     return role? (
