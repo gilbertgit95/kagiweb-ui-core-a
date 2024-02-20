@@ -66,6 +66,15 @@ class FeatureApi {
             url: Config.Origin + Config.RootApiEndpoint + `features/${ id }`
         })
     }
+
+    // role features
+    public static getRoleFeatures(roleId:string = '') {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features`
+        })
+    }
+
 }
 
 export default FeatureApi

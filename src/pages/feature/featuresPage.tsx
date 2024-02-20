@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Button, Box, Divider } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import PrimaryHeader from "../../components/headers/primaryHeader";
-import PrimaryTable, { IColDef } from "../../components/tables/primaryTable";
+import PrimaryHeader from '../../components/headers/primaryHeader';
+import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
-import FeatureService from "./featureService";
-import Config from "../../config";
+import FeatureService from './featureService';
+import Config from '../../config';
 
 interface IFeatureRow {
     _id: string,
