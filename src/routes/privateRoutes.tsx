@@ -17,6 +17,7 @@ import RoleCreatePage from '../pages/roles/roleCreatePage';
 import RoleEditPage from '../pages/roles/roleEditPage';
 
 import RoleFeaturesPage from '../pages/roleFeature/roleFeaturesPage';
+import RoleFeaturesEditPage from '../pages/roleFeature/roleFeaturesEditPage';
 
 import UsersPage from '../pages/user/usersPage';
 import UserCreatePage from '../pages/user/userCreatePage';
@@ -48,6 +49,7 @@ const PrivateRoutes = () => {
                     <Route path="roles/edit/:roleId" element={<RoleEditPage />} />
                     {/* role feature pages */}
                     <Route path="roles/view/:roleId/features" element={<RoleFeaturesPage />} />
+                    <Route path="roles/edit/:roleId/features" element={<RoleFeaturesEditPage />} />
 
                     {/* user pages */}
                     <Route path="users" element={<UsersPage />} />

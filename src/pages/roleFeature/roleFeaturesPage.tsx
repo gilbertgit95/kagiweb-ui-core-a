@@ -121,7 +121,7 @@ const RoleFeaturesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Role Features'} subtitle={ role?.name } />
+                    <PrimaryHeader title={'Role Features View'} subtitle={ role?.name } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
