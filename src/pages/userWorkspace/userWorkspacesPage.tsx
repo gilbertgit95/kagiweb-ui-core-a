@@ -45,6 +45,7 @@ const UserWorkspacesPage = () => {
         errorMessages: [],
         infoMessages: []
     })
+
     const [user, setUser] = useState<IUser | undefined>()
     const [data, setData] = useState<IWorkspaceRow[]>([])
 

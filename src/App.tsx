@@ -2,11 +2,16 @@ import React, {useEffect} from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
-import OwnerService from './pages/owner/ownerService';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setUserData, ISignedInUser } from './stores/signedInUserSlice';
+import { setAppRefs } from './stores/appRefsSlice';
+import { IRole } from './types/role'
+import { IFeature } from './types/feature'
 // import { setAppRefs } from './stores/appRefsSlice';
 import Config from './config';
+import OwnerService from './pages/owner/ownerService';
+import RoleService from './pages/roles/roleService';
+import FeatureService from './pages/feature/featureService';
 
 import InitialDisplay from './components/infoOrWarnings/initialDisplay';
 import PublicRoutes from './routes/publicRoutes';
@@ -40,8 +45,22 @@ function App() {
       // fetch initial data
       const ownerInfo:ISignedInUser = await OwnerService.reqOwnerCompleteInfo()
 
+      // fetch app references, roles and features
+      const rolesResp = await RoleService.getAllRoles()
+      const featuresResp = await FeatureService.getAllFeatures()
+
       // set token and owner to the app storage
       dispatch(setUserData({...ownerInfo, ...{token: authToken}}))
+
+      // set roles and features to app storage
+      dispatch(setAppRefs({
+        roles: rolesResp?.data?.items || [],
+        features: featuresResp?.data?.items || []
+      }))
+      // console.log({
+      //   roles: rolesResp?.data?.items || [],
+      //   features: featuresResp?.data?.items || []
+      // })
     }
 
     (async () => {

@@ -9,8 +9,10 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IRole } from '../../types/role';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import { useAppSelector} from '../../stores/appStore';
 import RoleService from '../roles/roleService';
 import RoleFeatureService from './roleFeatureService';
+import { IFeature } from '../../types/feature';
 
 interface IFeatureRow {
     _id: string,
@@ -23,6 +25,8 @@ interface IFeatureRow {
 const RoleFeaturesPage = () => {
     const { roleId } = useParams()
     const navigate = useNavigate()
+    // const roles = useAppSelector(state => state.appRefs.roles)
+    const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [role, setRole] = useState<IRole | undefined>()
     const [data, setData] = useState<IFeatureRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -47,15 +51,21 @@ const RoleFeaturesPage = () => {
             try {
                 const resp = await RoleFeatureService.getRoleFeatures(roleId)
                 if (resp.data) {
+                    const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
+                        if (item && item._id) acc[item._id] = item
+                        return acc
+                    }, {})
                     const tarnsformedData:IFeatureRow[] = resp.data.map((item) => {
+                        const feature = featuresMap[item.featureId || '']
                         return {
-                            _id: item._id || '',
-                            name: '--',
-                            value: '--',
-                            type: '--',
-                            tags: '--'
+                            _id: feature._id || '',
+                            name: feature.name || '--',
+                            value: feature.value || '--',
+                            type: feature.type  || '--',
+                            tags: feature.tags?.join(', ')  || '--'
                         }
                     })
+                    console.log(tarnsformedData)
                     setData(tarnsformedData)
                 }
                 // console.log(resp.data)
@@ -66,9 +76,9 @@ const RoleFeaturesPage = () => {
                 })
             }
         }
-        console.log('initiate features page')
+        console.log('initiate role features page')
         init()
-    }, [roleId])
+    }, [roleId, features])
 
     const colDef:IColDef[] = [
         {

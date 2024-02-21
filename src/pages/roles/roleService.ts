@@ -4,6 +4,10 @@ import { IRole } from '../../types/role'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class RoleService {
+    public static getAllRoles():Promise<{data: IPagination<IRole>}> {
+        return roleApi.getAllRoles()
+    }
+
     public static getRoles(query:IPageQuery):Promise<{data: IPagination<IRole>}> {
         return roleApi.getRoles(query)
     }

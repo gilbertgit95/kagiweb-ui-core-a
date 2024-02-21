@@ -4,6 +4,13 @@ import { IPageQuery } from '../../types/mixTypes';
 import { IFeature } from '../../types/feature';
 
 class FeatureApi {
+    public static getAllFeatures() {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: Config.Origin + Config.RootApiEndpoint + 'features?page=1&pageSize=10000'
+        })
+    }
+
     public static getFeatures(query:IPageQuery = {}) {
         const page =  query.hasOwnProperty('page')? 'page=' + query.page: null
         const pageSize = query.hasOwnProperty('pageSize')? 'pageSize=' + query.pageSize: null

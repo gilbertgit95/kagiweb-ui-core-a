@@ -4,6 +4,13 @@ import { IPageQuery } from '../../types/mixTypes';
 import { IRole } from '../../types/role';
 
 class RoleApi {
+    public static getAllRoles() {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: Config.Origin + Config.RootApiEndpoint + 'roles?page=1&pageSize=10000'
+        })
+    }
+
     public static getRoles(query:IPageQuery = {}) {
         const page =  query.hasOwnProperty('page')? 'page=' + query.page: null
         const pageSize = query.hasOwnProperty('pageSize')? 'pageSize=' + query.pageSize: null

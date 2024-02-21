@@ -5,6 +5,10 @@ import { IFeature } from '../../types/feature'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class RoleService {
+    public static getAllFeatures():Promise<{data: IPagination<IFeature>}> {
+        return featureApi.getAllFeatures()
+    }
+
     public static getFeatures(query:IPageQuery):Promise<{data: IPagination<IFeature>}> {
         return featureApi.getFeatures(query)
     }
