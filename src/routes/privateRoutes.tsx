@@ -11,10 +11,10 @@ import FeaturePage from '../pages/feature/featurePage';
 import FeatureCreatePage from '../pages/feature/featureCreatePage';
 import FeatureEditPage from '../pages/feature/featureEditPage';
 
-import RolesPage from '../pages/roles/rolesPage';
-import RolePage from '../pages/roles/rolePage';
-import RoleCreatePage from '../pages/roles/roleCreatePage';
-import RoleEditPage from '../pages/roles/roleEditPage';
+import RolesPage from '../pages/role/rolesPage';
+import RolePage from '../pages/role/rolePage';
+import RoleCreatePage from '../pages/role/roleCreatePage';
+import RoleEditPage from '../pages/role/roleEditPage';
 
 import RoleFeaturesPage from '../pages/roleFeature/roleFeaturesPage';
 import RoleFeaturesEditPage from '../pages/roleFeature/roleFeaturesEditPage';

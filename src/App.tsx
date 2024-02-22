@@ -7,7 +7,7 @@ import { setUserData, ISignedInUser } from './stores/signedInUserSlice';
 import { setAppRefs } from './stores/appRefsSlice';
 import Config from './config';
 import OwnerService from './pages/owner/ownerService';
-import RoleService from './pages/roles/roleService';
+import RoleService from './pages/role/roleService';
 import FeatureService from './pages/feature/featureService';
 
 import InitialDisplay from './components/infoOrWarnings/initialDisplay';

@@ -10,7 +10,7 @@ import { IRole } from '../../types/role';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import { useAppSelector} from '../../stores/appStore';
-import RoleService from '../roles/roleService';
+import RoleService from '../role/roleService';
 import RoleFeatureService from './roleFeatureService';
 import { IFeature } from '../../types/feature';
 
