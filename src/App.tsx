@@ -5,8 +5,6 @@ import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setUserData, ISignedInUser } from './stores/signedInUserSlice';
 import { setAppRefs } from './stores/appRefsSlice';
-import { IRole } from './types/role'
-import { IFeature } from './types/feature'
 // import { setAppRefs } from './stores/appRefsSlice';
 import Config from './config';
 import OwnerService from './pages/owner/ownerService';
@@ -45,18 +43,22 @@ function App() {
       // fetch initial data
       const ownerInfo:ISignedInUser = await OwnerService.reqOwnerCompleteInfo()
 
-      // fetch app references, roles and features
-      const rolesResp = await RoleService.getAllRoles()
-      const featuresResp = await FeatureService.getAllFeatures()
+      try {
+        // fetch app references, roles and features
+        const rolesResp = await RoleService.getAllRoles()
+        const featuresResp = await FeatureService.getAllFeatures()
+        // set roles and features to app storage
+        dispatch(setAppRefs({
+          roles: rolesResp?.data?.items || [],
+          features: featuresResp?.data?.items || []
+        }))
+      } catch (err) {
+        console.log('Not authorized to fetch app data references')
+      }
 
       // set token and owner to the app storage
       dispatch(setUserData({...ownerInfo, ...{token: authToken}}))
 
-      // set roles and features to app storage
-      dispatch(setAppRefs({
-        roles: rolesResp?.data?.items || [],
-        features: featuresResp?.data?.items || []
-      }))
       // console.log({
       //   roles: rolesResp?.data?.items || [],
       //   features: featuresResp?.data?.items || []

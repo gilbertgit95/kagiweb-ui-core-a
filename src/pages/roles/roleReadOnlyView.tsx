@@ -14,7 +14,6 @@ interface Props {
 }
 
 const RoleReadOnlyView = ({role}:Props) => {
-
     const colDef:IColDef[] = [
         {
             header: 'Field',
@@ -46,6 +45,7 @@ const RoleReadOnlyView = ({role}:Props) => {
                 const navigate = useNavigate()
                 return (
                     <Button
+                        disabled={props.disabledLink}
                         startIcon={<VisibilityIcon />}
                         onClick={() => navigate(`/roles/view/${ role?._id }/${ props.moduleRoute }`)}
                         variant="text">View { props.module }</Button>
@@ -55,15 +55,21 @@ const RoleReadOnlyView = ({role}:Props) => {
     ]
 
     const data:{field: string, value: string|undefined}[] = [
-        { field: 'name', value: role?.name },
-        { field: 'description', value: role?.description },
-        { field: 'level', value: String(role?.level) },
-        { field: 'reqLimitPerSec', value: String(role?.reqLimitPerSec) }
+        { field: 'Name', value: role?.name },
+        { field: 'Description', value: role?.description },
+        { field: 'Level', value: String(role?.level) },
+        { field: 'Absolute Authority', value: role?.absoluteAuthority? 'True': 'False' },
+        { field: 'Request Limit/Second', value: String(role?.reqLimitPerSec) }
     ]
 
-    const modulesData:{module: string, moduleRoute: string, contents: number}[] = [
-        { module: 'Features', moduleRoute: 'features', contents: role?.featuresRefs?.length || 0 }
-    ] 
+    const modulesData:{module: string, moduleRoute: string, contents: string, disabledLink: boolean}[] = [
+        {
+            module: 'Features',
+            moduleRoute: 'features',
+            disabledLink: Boolean(role?.absoluteAuthority),
+            contents: String((role?.absoluteAuthority)? 'Everything':(role?.featuresRefs?.length || 0))
+        }
+    ]
 
     return role? (
         <>

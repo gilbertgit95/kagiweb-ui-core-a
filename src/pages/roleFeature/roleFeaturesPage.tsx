@@ -41,6 +41,13 @@ const RoleFeaturesPage = () => {
                     const roleResp = await RoleService.getRole(roleId)
                     setRole(roleResp.data)
 
+                    if (roleResp.data.absoluteAuthority) {
+                        setInfoAndErrors({
+                            ...{infoMessages: ['This role features is not mutable because the role has absolute authority. This means it has access to all features.']},
+                            ...{errorMessages: []}
+                        })
+                    }
+
                 } catch (err:any) {
                     setInfoAndErrors({
                         ...{infoMessages: []},
@@ -101,20 +108,6 @@ const RoleFeaturesPage = () => {
             field: 'tags',
             Component: undefined // react Component or undefined
         }
-        // {
-        //     header: '',
-        //     field: '',
-        //     Component: (props:IFeatureRow) => {
-        //         const navigate = useNavigate()
-    
-        //         return (
-        //             <Button
-        //                 startIcon={<VisibilityIcon />}
-        //                 onClick={() => navigate(`/features/view/${ props._id }`)}
-        //                 variant="text">View Feature</Button>
-        //         )
-        //     }
-        // }
     ]
 
     return (
@@ -141,16 +134,26 @@ const RoleFeaturesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
+                            disabled={role?.absoluteAuthority}
                             onClick={() => navigate(`/roles/edit/${ roleId }/features`)}>
                             Edit
                         </Button>
                     </Box>
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <PrimaryTable
                         columnDefs={colDef}
                         data={data} />
-                </Grid>
+                </Grid> */}
+                {
+                    role?.absoluteAuthority? null:(
+                        <Grid item xs={12}>
+                            <PrimaryTable
+                                columnDefs={colDef}
+                                data={data} />
+                        </Grid>
+                    )
+                }
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
                 </Grid>

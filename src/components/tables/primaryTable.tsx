@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -15,6 +15,8 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import Checkbox from '@mui/material/Checkbox';
+import Radio from '@mui/material/Radio';
 import { Typography } from '@mui/material';
 
 // table:
@@ -53,7 +55,7 @@ interface IPrimaryTableProps {
 
   enableSelection?: boolean,
   enableMultipleSelection?: boolean,
-  onSelect?: Function,
+  onSelect?: (selected:string[]) => void,
 
   pagination?: IPagination,
   onPageChange?: (
@@ -77,26 +79,26 @@ interface ITablePaginationActionsProps {
 }
 
 function TablePaginationActions(props: ITablePaginationActionsProps) {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
+  const theme = useTheme()
+  const { count, page, rowsPerPage, onPageChange } = props
 
   const handleFirstPageButtonClick = (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    onPageChange(event, 0);
-  };
+    onPageChange(event, 0)
+  }
 
   const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page - 1);
-  };
+    onPageChange(event, page - 1)
+  }
 
   const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page + 1);
-  };
+    onPageChange(event, page + 1)
+  }
 
   const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
+    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1))
+  }
 
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
@@ -129,6 +131,7 @@ function TablePaginationActions(props: ITablePaginationActionsProps) {
 }
 
 function PrimaryTable(props:IPrimaryTableProps) {
+  const [selectedItems, setSelectedItems] = useState<string[]>([])
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -136,16 +139,59 @@ function PrimaryTable(props:IPrimaryTableProps) {
   ) => {
     if (props.onPageChange) {
       props.onPageChange(event, newPage)
+      onToggleSelectAll(false)
     }
-  };
+  }
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     if (props.onRowsPerPageChange) {
       props.onRowsPerPageChange(event, parseInt(event.target.value, 10))
+      onToggleSelectAll(false)
     }
-  };
+  }
+
+  const onToggleSelectAll = (value:boolean) => {
+    if (!props.enableSelection) return
+
+    let items:string[] = []
+    if (value) items = props?.data?.map(item => item._id) || []
+    setSelectedItems(items)
+    onSelect(items)
+  }
+
+  const onToggleSelectRow = (row:any, value:boolean) => {
+    if (!props.enableSelection) return
+
+    let items:string[] = []
+
+    // only execute when enableMultipleSelection is true
+    if (props.enableMultipleSelection) items = [...selectedItems]
+
+    const index = items.indexOf(row._id)
+
+    // if toggled is not in the selection
+    if (index === -1) {
+      if (value) items.push(row._id)
+
+    // if toggled is in the selection
+    } else {
+      if (!value) items.splice(index, 1)
+    }
+
+    setSelectedItems(items)
+    onSelect(items)
+  }
+
+  const onSelect = (data:string[]) => {
+    if (props.enableSelection && props.onSelect) {
+      props.onSelect(data)
+    }
+  }
+
+  // select box related variables
+  const selectionMap = new Set(selectedItems)
 
   const data = props.data? props.data: []
   const noEmptyCells = props.pagination?.pageSize? props.pagination?.pageSize - data.length: 0
@@ -155,6 +201,23 @@ function PrimaryTable(props:IPrimaryTableProps) {
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
+            {
+              // show select all checkbox
+              props.enableSelection? (
+                <TableCell>
+                  {
+                    props.enableMultipleSelection? (
+                      <Checkbox
+                        size="small"
+                        onChange={(e) => {
+                          onToggleSelectAll(e.target.checked)
+                        }}
+                        checked={Array.from(selectionMap).length === data.length} />
+                    ): null
+                  }
+                </TableCell>
+              ): null
+            }
             {
               props.columnDefs.map((item, index) => (
                 <TableCell key={index}>
@@ -168,6 +231,29 @@ function PrimaryTable(props:IPrimaryTableProps) {
           {
             data.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
+                  {
+                    props.enableSelection? (
+                      <TableCell>
+                        {
+                          props.enableMultipleSelection? (
+                            <Checkbox
+                              size="small"
+                              onChange={(e) => {
+                                onToggleSelectRow(row, e.target.checked)
+                              }}
+                              checked={ selectionMap.has(row._id) } />
+                          ): (
+                            <Radio
+                              size="small"
+                              onChange={(e) => {
+                                onToggleSelectRow(row, e.target.checked)
+                              }}
+                              checked={ selectionMap.has(row._id) } />
+                          )
+                        }
+                      </TableCell>
+                    ): null
+                  }
                   {
                     props.columnDefs.map((cell, cellIndex) => (
                       cell.Component? (
