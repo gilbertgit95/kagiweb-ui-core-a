@@ -5,7 +5,6 @@ import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
 import { setUserData, ISignedInUser } from './stores/signedInUserSlice';
 import { setAppRefs } from './stores/appRefsSlice';
-// import { setAppRefs } from './stores/appRefsSlice';
 import Config from './config';
 import OwnerService from './pages/owner/ownerService';
 import RoleService from './pages/roles/roleService';
@@ -16,8 +15,6 @@ import PublicRoutes from './routes/publicRoutes';
 import PrivateRoutes from './routes/privateRoutes';
 
 function App() {
-  // const token = useAppSelector(state => state.signedInUser.token)
-  // const userData = useAppSelector(state => state.signedInUser.userData)
   const apptheme = useAppSelector(state => state.appRefs.appTheme)
   const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
   const dispatch = useAppDispatch()
@@ -29,11 +26,6 @@ function App() {
   
 
   useEffect(() => {
-    // const initAppConfig = async () => {
-    //   const theme = localStorage.getItem(Config.AppThemeKey) || undefined
-    //   const finalTheme = theme && theme === 'light'? 'light': 'dark'
-    //   dispatch(setAppRefs({appTheme: finalTheme}))
-    // }
     const initData = async () => {
       const authToken = localStorage.getItem(Config.TokenKey) || undefined
 
@@ -41,12 +33,34 @@ function App() {
       apiHelper.useToken(authToken)
 
       // fetch initial data
-      const ownerInfo:ISignedInUser = await OwnerService.reqOwnerCompleteInfo()
+      // const ownerInfo:ISignedInUser = await OwnerService.reqOwnerCompleteInfo()
+      let ownerInfo:ISignedInUser = {
+          token: undefined,
+          userData: undefined,
+          isSignedIn: false,
+          role: undefined,
+          roles: undefined,
+          features: undefined,
+          workspace: undefined,
+          workspaces: undefined
+      }
 
       try {
+        const ownerReqResp = await OwnerService.reqOwnerCompleteInfo()
+
+        // set app stores data
+        ownerInfo.userData = ownerReqResp?.data?.userData
+        ownerInfo.role = ownerReqResp?.data?.role
+        ownerInfo.roles = ownerReqResp?.data?.roles
+        ownerInfo.features = ownerReqResp?.data?.features
+        ownerInfo.workspace = ownerReqResp?.data?.workspace
+        ownerInfo.workspaces = ownerReqResp?.data?.workspaces
+        ownerInfo.isSignedIn = true
+
         // fetch app references, roles and features
         const rolesResp = await RoleService.getAllRoles()
         const featuresResp = await FeatureService.getAllFeatures()
+
         // set roles and features to app storage
         dispatch(setAppRefs({
           roles: rolesResp?.data?.items || [],
@@ -58,21 +72,14 @@ function App() {
 
       // set token and owner to the app storage
       dispatch(setUserData({...ownerInfo, ...{token: authToken}}))
-
-      // console.log({
-      //   roles: rolesResp?.data?.items || [],
-      //   features: featuresResp?.data?.items || []
-      // })
     }
 
     (async () => {
       console.log('init app')
-      // await initAppConfig()
       await initData()
     })()
   }, [dispatch])
 
-  // console.log('isSignedIn: ', typeof isSignedIn)
 
   return (
     <ThemeProvider theme={darkTheme}>
