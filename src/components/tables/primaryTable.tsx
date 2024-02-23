@@ -6,7 +6,6 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableFooter from '@mui/material/TableFooter';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -27,6 +26,7 @@ import { Typography } from '@mui/material';
 //     enableMultipleSelection: if true then use selectbox else use radio button
 //     onSelect: callsback when doing selection
 
+//     maxHeight: value in pixel
 //     data: arrays of data rows
 //     pagination: recieves paggination data like max, limit, page number and so on
 //     onNextPage: callback when triggering next page button
@@ -49,6 +49,8 @@ interface IPagination {
 }
 
 interface IPrimaryTableProps {
+  maxHeight?: number,
+
   columnDefs: IColDef[],
   data?: any[],
   onClick?: Function,
@@ -197,108 +199,108 @@ function PrimaryTable(props:IPrimaryTableProps) {
   const noEmptyCells = props.pagination?.pageSize? props.pagination?.pageSize - data.length: 0
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
+    <>
+      <TableContainer sx={{ width: '100%', maxHeight: props?.maxHeight || 500, overflow: 'auto' }} component={Paper}>
+        <Table stickyHeader aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              {
+                // show select all checkbox
+                props.enableSelection? (
+                  <TableCell>
+                    {
+                      props.enableMultipleSelection? (
+                        <Checkbox
+                          size="small"
+                          onChange={(e) => {
+                            onToggleSelectAll(e.target.checked)
+                          }}
+                          checked={Array.from(selectionMap).length === data.length} />
+                      ): null
+                    }
+                  </TableCell>
+                ): null
+              }
+              {
+                props.columnDefs.map((item, index) => (
+                  <TableCell key={index}>
+                    <Typography variant="body1" color="primary">{ item.header }</Typography>
+                  </TableCell>
+                ))
+              }
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {
-              // show select all checkbox
-              props.enableSelection? (
-                <TableCell>
-                  {
-                    props.enableMultipleSelection? (
-                      <Checkbox
-                        size="small"
-                        onChange={(e) => {
-                          onToggleSelectAll(e.target.checked)
-                        }}
-                        checked={Array.from(selectionMap).length === data.length} />
-                    ): null
-                  }
-                </TableCell>
-              ): null
-            }
-            {
-              props.columnDefs.map((item, index) => (
-                <TableCell key={index}>
-                  <Typography variant="body1" color="primary">{ item.header }</Typography>
-                </TableCell>
+              data.map((row, rowIndex) => (
+                <TableRow key={rowIndex}>
+                    {
+                      props.enableSelection? (
+                        <TableCell>
+                          {
+                            props.enableMultipleSelection? (
+                              <Checkbox
+                                size="small"
+                                onChange={(e) => {
+                                  onToggleSelectRow(row, e.target.checked)
+                                }}
+                                checked={ selectionMap.has(row._id) } />
+                            ): (
+                              <Radio
+                                size="small"
+                                onChange={(e) => {
+                                  onToggleSelectRow(row, e.target.checked)
+                                }}
+                                checked={ selectionMap.has(row._id) } />
+                            )
+                          }
+                        </TableCell>
+                      ): null
+                    }
+                    {
+                      props.columnDefs.map((cell, cellIndex) => (
+                        cell.Component? (
+                          <TableCell key={cellIndex}>
+                            <cell.Component {...row} />
+                          </TableCell>
+                        ): (
+                          <TableCell key={cellIndex}>
+                            { row && row.hasOwnProperty(cell.field)? row[cell.field]: null }
+                          </TableCell>
+                        )
+                      ))
+                    }
+                </TableRow>
               ))
             }
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {
-            data.map((row, rowIndex) => (
-              <TableRow key={rowIndex}>
-                  {
-                    props.enableSelection? (
-                      <TableCell>
-                        {
-                          props.enableMultipleSelection? (
-                            <Checkbox
-                              size="small"
-                              onChange={(e) => {
-                                onToggleSelectRow(row, e.target.checked)
-                              }}
-                              checked={ selectionMap.has(row._id) } />
-                          ): (
-                            <Radio
-                              size="small"
-                              onChange={(e) => {
-                                onToggleSelectRow(row, e.target.checked)
-                              }}
-                              checked={ selectionMap.has(row._id) } />
-                          )
-                        }
-                      </TableCell>
-                    ): null
-                  }
-                  {
-                    props.columnDefs.map((cell, cellIndex) => (
-                      cell.Component? (
-                        <TableCell key={cellIndex}>
-                          <cell.Component {...row} />
-                        </TableCell>
-                      ): (
-                        <TableCell key={cellIndex}>
-                          { row && row.hasOwnProperty(cell.field)? row[cell.field]: null }
-                        </TableCell>
-                      )
-                    ))
-                  }
-              </TableRow>
-            ))
-          }
 
-          {
-            noEmptyCells? (
-              <TableRow style={{ height: 69 * noEmptyCells }}>
-                <TableCell colSpan={props.columnDefs.length}></TableCell>
-              </TableRow>
-            ): null
-          }
-        </TableBody>
-        {
-          props.pagination? (
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    colSpan={props.columnDefs.length}
-                    rowsPerPageOptions={props.pagination.pageSizeList}
-                    count={props.pagination.totalItems}
-                    rowsPerPage={props.pagination.pageSize}
-                    page={props.pagination.page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                  />
+            {
+              noEmptyCells? (
+                <TableRow style={{ height: 69 * noEmptyCells }}>
+                  <TableCell colSpan={props.columnDefs.length}></TableCell>
                 </TableRow>
-              </TableFooter>
-          ): null
-        }
-      </Table>
-    </TableContainer>
+              ): null
+            }
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {
+        props.pagination? (
+          <TablePagination
+            component="div"
+            sx={{ width: '100%' }}
+            colSpan={props.columnDefs.length}
+            rowsPerPageOptions={props.pagination.pageSizeList}
+            count={props.pagination.totalItems}
+            rowsPerPage={props.pagination.pageSize}
+            page={props.pagination.page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
+          />
+        ): null
+      }
+    </>
   );
 };
 

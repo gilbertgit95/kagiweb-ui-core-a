@@ -51,10 +51,75 @@ const RoleFeaturesEditPage = () => {
 
     const addFeatures = async () => {
         console.log('add this features: ', addTableSelection)
+        // call roleFeature service to add new features to the role
+        // loop to all features id and post call to api
+        for (let featureId of addTableSelection) {
+            try {
+
+            } catch (err) {
+                break
+            }
+        }
+        // close the dialog box
+        setDialog({...dialog, ...{addDialogOpen: false}})
+        await reLoadRole()
     }
 
     const removeFeatures = async () => {
         console.log('selected items to remove: ', tableSelection)
+        // call roleFeature service to delete this list of features refs
+        // loop to all feature refs, then delete call to api
+        for (let featureRef of tableSelection) {
+            try {
+
+            } catch (err) {
+                break
+            }
+        }
+        // close the dialogbox
+        setDialog({...dialog, ...{removeDialogOpen: false}})
+        await reLoadRole()
+    }
+
+    const reLoadRole = async () => {
+        if (roleId) {
+            try {
+                const roleResp = await RoleService.getRole(roleId)
+                setRole(roleResp.data)
+
+                if (roleResp.data && roleResp.data.featuresRefs) {
+                    const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
+                        if (item && item._id) acc[item._id] = item
+                        return acc
+                    }, {})
+                    const tarnsformedData:IFeatureRow[] = roleResp.data.featuresRefs.map((item) => {
+                        const feature = featuresMap[item.featureId || '']
+                        return {
+                            _id: item._id || '',
+                            name: feature.name || '--',
+                            value: feature.value || '--',
+                            type: feature.type  || '--',
+                            tags: feature.tags?.join(', ')  || '--'
+                        }
+                    })
+                    // console.log(tarnsformedData)
+                    setData(tarnsformedData)
+                }
+
+                if (roleResp.data.absoluteAuthority) {
+                    setInfoAndErrors({
+                        ...{infoMessages: ['This role features is not mutable because the role has absolute authority. This means it has access to all features.']},
+                        ...{errorMessages: []}
+                    })
+                }
+
+            } catch (err:any) {
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
     }
 
     useEffect(() => {
@@ -106,22 +171,22 @@ const RoleFeaturesEditPage = () => {
         {
             header: 'Name',
             field: 'name',
-            Component: undefined // react Component or undefined
+            Component: undefined
         },
         {
             header: 'Value',
             field: 'value',
-            Component: undefined // react Component or undefined
+            Component: undefined
         },
         {
             header: 'Type',
             field: 'type',
-            Component: undefined // react Component or undefined
+            Component: undefined
         },
         {
             header: 'Tags',
             field: 'tags',
-            Component: undefined // react Component or undefined
+            Component: undefined
         }
     ]
 
@@ -150,7 +215,10 @@ const RoleFeaturesEditPage = () => {
                             variant="text"
                             disabled={role?.absoluteAuthority}
                             startIcon={<AddIcon />}
-                            onClick={() => setDialog({...dialog, ...{addDialogOpen: true}})}>
+                            onClick={() => {
+                                setDialog({...dialog, ...{addDialogOpen: true}})
+                                setAddTableSelection([])
+                            }}>
                             add
                         </Button>
                         <Button
@@ -158,7 +226,9 @@ const RoleFeaturesEditPage = () => {
                             variant="text"
                             disabled={!Boolean(tableSelection.length) || role?.absoluteAuthority}
                             startIcon={<DeleteIcon />}
-                            onClick={() => setDialog({...dialog, ...{removeDialogOpen: true}})}>
+                            onClick={() => {
+                                setDialog({...dialog, ...{removeDialogOpen: true}})
+                            }}>
                             remove
                         </Button>
                         <Dialog

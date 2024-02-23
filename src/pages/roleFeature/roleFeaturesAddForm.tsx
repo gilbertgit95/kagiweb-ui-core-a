@@ -26,20 +26,18 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
 
     useEffect(() => {
         if (role?.featuresRefs) {
-            const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
-                if (item && item._id) acc[item._id] = item
-                return acc
-            }, {})
-            const tarnsformedData:IFeatureRow[] = role.featuresRefs.map((item) => {
-                const feature = featuresMap[item.featureId || '']
-                return {
-                    _id: item._id || '',
-                    name: feature.name || '--',
-                    value: feature.value || '--',
-                    type: feature.type  || '--',
-                    tags: feature.tags?.join(', ')  || '--'
-                }
-            })
+            const roleFeatures:Set<string> = new Set(role.featuresRefs.map(item => item.featureId))
+            const tarnsformedData:IFeatureRow[] = features
+                .filter(item => !roleFeatures.has(item._id || ''))
+                .map((item) => {
+                    return {
+                        _id: item._id || '',
+                        name: item.name || '--',
+                        value: item.value || '--',
+                        type: item.type  || '--',
+                        tags: item.tags?.join(', ')  || '--'
+                    }
+                })
             setData(tarnsformedData)
         }
     }, [role, features])
