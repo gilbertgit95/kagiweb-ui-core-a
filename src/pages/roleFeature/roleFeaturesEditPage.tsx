@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import AddIcon from '@mui/icons-material/Add';
@@ -14,6 +20,7 @@ import { useAppSelector} from '../../stores/appStore';
 import RoleService from '../role/roleService';
 import RoleFeatureService from './roleFeatureService';
 import { IFeature } from '../../types/feature';
+import RoleFeaturesAddForm from './roleFeaturesAddForm';
 
 interface IFeatureRow {
     _id: string,
@@ -36,23 +43,19 @@ const RoleFeaturesEditPage = () => {
     })
     // selection
     const [tableSelection, setTableSelection] = useState<string[]>([])
+    const [addTableSelection, setAddTableSelection] = useState<string[]>([])
+    const [dialog, setDialog] = useState({
+        addDialogOpen: false,
+        removeDialogOpen: false
+    })
 
-    const onTableSelect = async (data:string[]) => {
-        // console.log('table data selection: ', data)
-        setTableSelection(data)
+    const addFeatures = async () => {
+        console.log('add this features: ', addTableSelection)
     }
 
-    // const openAddFeaturesDialog = async () => {
-        
-    // }
-
-    // const addFeatures = async () => {
-
-    // }
-
-    // const removeFeatures = async () => {
-
-    // }
+    const removeFeatures = async () => {
+        console.log('selected items to remove: ', tableSelection)
+    }
 
     useEffect(() => {
         const init = async () => {
@@ -60,6 +63,25 @@ const RoleFeaturesEditPage = () => {
                 try {
                     const roleResp = await RoleService.getRole(roleId)
                     setRole(roleResp.data)
+
+                    if (roleResp.data && roleResp.data.featuresRefs) {
+                        const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
+                            if (item && item._id) acc[item._id] = item
+                            return acc
+                        }, {})
+                        const tarnsformedData:IFeatureRow[] = roleResp.data.featuresRefs.map((item) => {
+                            const feature = featuresMap[item.featureId || '']
+                            return {
+                                _id: item._id || '',
+                                name: feature.name || '--',
+                                value: feature.value || '--',
+                                type: feature.type  || '--',
+                                tags: feature.tags?.join(', ')  || '--'
+                            }
+                        })
+                        // console.log(tarnsformedData)
+                        setData(tarnsformedData)
+                    }
 
                     if (roleResp.data.absoluteAuthority) {
                         setInfoAndErrors({
@@ -74,33 +96,6 @@ const RoleFeaturesEditPage = () => {
                         ...{errorMessages: [err?.response?.data?.message || '']}
                     })
                 }
-            }
-            try {
-                const resp = await RoleFeatureService.getRoleFeatures(roleId)
-                if (resp.data) {
-                    const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
-                        if (item && item._id) acc[item._id] = item
-                        return acc
-                    }, {})
-                    const tarnsformedData:IFeatureRow[] = resp.data.map((item) => {
-                        const feature = featuresMap[item.featureId || '']
-                        return {
-                            _id: feature._id || '',
-                            name: feature.name || '--',
-                            value: feature.value || '--',
-                            type: feature.type  || '--',
-                            tags: feature.tags?.join(', ')  || '--'
-                        }
-                    })
-                    // console.log(tarnsformedData)
-                    setData(tarnsformedData)
-                }
-                // console.log(resp.data)
-            } catch (err:any) {
-                setInfoAndErrors({
-                    ...{infoMessages: []},
-                    ...{errorMessages: [err?.response?.data?.message || '']}
-                })
             }
         }
         console.log('initiate role features edit page')
@@ -155,7 +150,7 @@ const RoleFeaturesEditPage = () => {
                             variant="text"
                             disabled={role?.absoluteAuthority}
                             startIcon={<AddIcon />}
-                            onClick={() => {}}>
+                            onClick={() => setDialog({...dialog, ...{addDialogOpen: true}})}>
                             add
                         </Button>
                         <Button
@@ -163,9 +158,52 @@ const RoleFeaturesEditPage = () => {
                             variant="text"
                             disabled={!Boolean(tableSelection.length) || role?.absoluteAuthority}
                             startIcon={<DeleteIcon />}
-                            onClick={() => {}}>
+                            onClick={() => setDialog({...dialog, ...{removeDialogOpen: true}})}>
                             remove
                         </Button>
+                        <Dialog
+                            open={dialog.addDialogOpen}
+                            onClose={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
+                            <DialogTitle>
+                                Add features to { role?.name } Role
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Please Select features to add
+                                </DialogContentText>
+                                <RoleFeaturesAddForm
+                                    onSelect={(selectedData) => setAddTableSelection(selectedData)}
+                                    role={role} />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
+                                    cancel
+                                </Button>
+                                <Button onClick={addFeatures} autoFocus>
+                                    confirm
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <Dialog
+                            open={dialog.removeDialogOpen}
+                            onClose={() => setDialog({...dialog, ...{removeDialogOpen: false}})}>
+                            <DialogTitle>
+                                Warning
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Are you sure you want to remove the selected feature/s from { role?.name } Role?
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setDialog({...dialog, ...{removeDialogOpen: false}})}>
+                                    no
+                                </Button>
+                                <Button color="secondary" onClick={removeFeatures} autoFocus>
+                                    yes
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </Box>
                 </Grid>
                 {
@@ -174,7 +212,7 @@ const RoleFeaturesEditPage = () => {
                             <PrimaryTable
                                 enableSelection
                                 enableMultipleSelection
-                                onSelect={onTableSelect}
+                                onSelect={(selectedData) => setTableSelection(selectedData)}
                                 columnDefs={colDef}
                                 data={data} />
                         </Grid>
