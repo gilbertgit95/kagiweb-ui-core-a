@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -191,6 +191,10 @@ function PrimaryTable(props:IPrimaryTableProps) {
       props.onSelect(data)
     }
   }
+
+  useEffect(() => {
+    setSelectedItems([])
+  }, [props.data, props.pagination, ])
 
   // select box related variables
   const selectionMap = new Set(selectedItems)

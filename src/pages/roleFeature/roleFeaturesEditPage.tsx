@@ -84,15 +84,33 @@ const RoleFeaturesEditPage = () => {
     }
 
     const removeFeatures = async () => {
-        console.log('selected items to remove: ', tableSelection)
+        // console.log('selected items to remove: ', tableSelection)
+        const totalItems = tableSelection.length
+        let savedItems = 0
+        let error:string | undefined
         // call roleFeature service to delete this list of features refs
         // loop to all feature refs, then delete call to api
         for (let featureRef of tableSelection) {
             try {
-
-            } catch (err) {
+                await RoleFeatureService.deleteRoleFeature(roleId || '', featureRef)
+                savedItems++
+            } catch (err:any) {
+                error = err?.response?.data?.message || ''
                 break
             }
+        }
+
+        // prompt
+        if (error) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [`Out of ${ totalItems } feature${ totalItems? 's': '' }, ${ savedItems } has been deleted.`]}
+            })
+        } else {
+            setInfoAndErrors({
+                ...{infoMessages: [`Successfully deleted ${ totalItems } feature${ totalItems? 's': '' }.`]},
+                ...{errorMessages: []}
+            })
         }
         // close the dialogbox
         setDialog({...dialog, ...{removeDialogOpen: false}})

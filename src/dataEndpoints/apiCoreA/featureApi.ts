@@ -95,6 +95,14 @@ class FeatureApi {
         })
     }
 
+    public static deleteRoleFeature(roleId:string = '', featureRefId:string) {
+
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features/${ featureRefId }`
+        })
+    }
+
 }
 
 export default FeatureApi

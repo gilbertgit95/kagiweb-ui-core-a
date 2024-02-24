@@ -21,9 +21,9 @@ class RoleService {
         return featureApi.createRoleFeature(roleId, featureId)
     }
 
-    // public static deleteFeature(id:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.deleteFeature(id)
-    // }
+    public static deleteRoleFeature(roleId:string, featureRefId:string):Promise<{data: IFeatureRef}> {
+        return featureApi.deleteRoleFeature(roleId, featureRefId)
+    }
 }
 
 export default RoleService
