@@ -50,15 +50,33 @@ const RoleFeaturesEditPage = () => {
     })
 
     const addFeatures = async () => {
-        console.log('add this features: ', addTableSelection)
+        // console.log('add this features: ', addTableSelection)
+        const totalItems = addTableSelection.length
+        let savedItems = 0
+        let error:string | undefined
         // call roleFeature service to add new features to the role
         // loop to all features id and post call to api
         for (let featureId of addTableSelection) {
             try {
-
-            } catch (err) {
+                await RoleFeatureService.createRoleFeature(roleId || '', featureId)
+                savedItems++
+            } catch (err:any) {
+                error = err?.response?.data?.message || ''
                 break
             }
+        }
+
+        // prompt
+        if (error) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [`Out of ${ totalItems } feature${ totalItems? 's': '' }, ${ savedItems } has been saved.`]}
+            })
+        } else {
+            setInfoAndErrors({
+                ...{infoMessages: [`Successfully added ${ totalItems } feature${ totalItems? 's': '' }.`]},
+                ...{errorMessages: []}
+            })
         }
         // close the dialog box
         setDialog({...dialog, ...{addDialogOpen: false}})

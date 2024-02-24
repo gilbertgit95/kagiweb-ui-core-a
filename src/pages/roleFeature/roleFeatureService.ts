@@ -17,9 +17,9 @@ class RoleService {
     //     return featureApi.updateFeature(feature)
     // }
 
-    // public static createFeature(feature:IFeatureRef):Promise<{data: IFeatureRef}> {
-    //     return featureApi.createFeature(feature)
-    // }
+    public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {
+        return featureApi.createRoleFeature(roleId, featureId)
+    }
 
     // public static deleteFeature(id:string):Promise<{data: IFeatureRef}> {
     //     return featureApi.deleteFeature(id)

@@ -82,6 +82,19 @@ class FeatureApi {
         })
     }
 
+    public static createRoleFeature(roleId:string = '', featureId:string) {
+        const data = {
+            'featureId': featureId
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
 }
 
 export default FeatureApi
