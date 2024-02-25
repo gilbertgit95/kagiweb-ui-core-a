@@ -24,6 +24,8 @@ import UserCreatePage from '../pages/user/userCreatePage';
 import UserPage from '../pages/user/userPage';
 import UserEditPage from '../pages/user/userEditPage';
 
+import UserRolesPage from '../pages/userRole/userRolesPage';
+
 import UserWorkspacesPage from '../pages/userWorkspace/userWorkspacesPage';
 
 import OwnerPage from '../pages/owner/ownerPage';
@@ -56,6 +58,8 @@ const PrivateRoutes = () => {
                     <Route path="users/create" element={<UserCreatePage />} />
                     <Route path="users/view/:userId" element={<UserPage />} />
                     <Route path="users/edit/:userId" element={<UserEditPage />} />
+                    {/* user roles */}
+                    <Route path="users/view/:userId/roles" element={<UserRolesPage />} />
                     {/* user workspace pages */}
                     <Route path="users/view/:userId/workspaces" element={<UserWorkspacesPage />} />
 

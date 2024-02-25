@@ -7,28 +7,31 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IRole } from '../../types/role';
+import { IUser } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import { useAppSelector} from '../../stores/appStore';
-import RoleService from '../role/roleService';
-import RoleFeatureService from './roleFeatureService';
-import { IFeature } from '../../types/feature';
+import UserService from '../user/userService';
+// import RoleService from '../role/roleService';
+// import UserRoleService from './userRoleService';
+// import { IFeature } from '../../types/feature';
 
-interface IFeatureRow {
+interface IRoleRow {
     _id: string,
     name: string,
-    value: string,
-    type: string,
-    tags: string
+    description: string,
+    level: number,
+    absoluteAuthority: string,
+    isActive: string
 }
 
-const RoleFeaturesPage = () => {
-    const { roleId } = useParams()
+const UserRolesPage = () => {
+    const { userId } = useParams()
     const navigate = useNavigate()
-    // const roles = useAppSelector(state => state.appRefs.roles)
-    const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
-    const [role, setRole] = useState<IRole | undefined>()
-    const [data, setData] = useState<IFeatureRow[]>([])
+    const roles = useAppSelector(state => state.appRefs.roles) || []
+    // const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
+    const [user, setUser] = useState<IUser | undefined>()
+    const [data, setData] = useState<IRoleRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -36,35 +39,29 @@ const RoleFeaturesPage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (roleId) {
+            if (userId) {
                 try {
-                    const roleResp = await RoleService.getRole(roleId)
-                    setRole(roleResp.data)
+                    const userResp = await UserService.getUser(userId)
+                    setUser(userResp.data)
 
-                    if (roleResp.data && roleResp.data.featuresRefs) {
-                        const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
+                    if (userResp.data && userResp.data.rolesRefs) {
+                        const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
                             if (item && item._id) acc[item._id] = item
                             return acc
                         }, {})
-                        const tarnsformedData:IFeatureRow[] = roleResp.data.featuresRefs.map((item) => {
-                            const feature = featuresMap[item.featureId || '']
+                        const tarnsformedData:IRoleRow[] = userResp.data.rolesRefs.map((item) => {
+                            const role = rolesMap[item.roleId || '']
                             return {
-                                _id: feature._id || '',
-                                name: feature.name || '--',
-                                value: feature.value || '--',
-                                type: feature.type  || '--',
-                                tags: feature.tags?.join(', ')  || '--'
+                                _id: item._id || '',
+                                name: role.name || '',
+                                description: role?.description || '',
+                                level: role.level,
+                                absoluteAuthority: role.absoluteAuthority? 'True': 'False',
+                                isActive: item.isActive? 'True': 'False',
                             }
                         })
                         // console.log(tarnsformedData)
                         setData(tarnsformedData)
-                    }
-
-                    if (roleResp.data.absoluteAuthority) {
-                        setInfoAndErrors({
-                            ...{infoMessages: ['This role features is not mutable because the role has absolute authority. This means it has access to all features.']},
-                            ...{errorMessages: []}
-                        })
                     }
 
                 } catch (err:any) {
@@ -77,28 +74,33 @@ const RoleFeaturesPage = () => {
         }
         console.log('initiate role features page')
         init()
-    }, [roleId, features])
+    }, [userId, roles])
 
     const colDef:IColDef[] = [
         {
             header: 'Name',
             field: 'name',
-            Component: undefined // react Component or undefined
+            Component: undefined
         },
         {
-            header: 'Value',
-            field: 'value',
-            Component: undefined // react Component or undefined
+            header: 'Description',
+            field: 'description',
+            Component: undefined
         },
         {
-            header: 'Type',
-            field: 'type',
-            Component: undefined // react Component or undefined
+            header: 'Level',
+            field: 'level',
+            Component: undefined
         },
         {
-            header: 'Tags',
-            field: 'tags',
-            Component: undefined // react Component or undefined
+            header: 'Absolute Authority',
+            field: 'absoluteAuthority',
+            Component: undefined
+        },
+        {
+            header: 'Active',
+            field: 'isActive',
+            Component: undefined
         }
     ]
 
@@ -106,7 +108,7 @@ const RoleFeaturesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Role Features View'} subtitle={ role?.name } />
+                    <PrimaryHeader title={'User Roles View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -126,26 +128,19 @@ const RoleFeaturesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            disabled={role?.absoluteAuthority}
-                            onClick={() => navigate(`/roles/edit/${ roleId }/features`)}>
+                            // disabled={role?.absoluteAuthority}
+                            onClick={() => navigate(`/roles/edit/${ userId }/features`)}>
                             Edit
                         </Button>
                     </Box>
                 </Grid>
-                {/* <Grid item xs={12}>
+
+                <Grid item xs={12}>
                     <PrimaryTable
                         columnDefs={colDef}
                         data={data} />
-                </Grid> */}
-                {
-                    role?.absoluteAuthority? null:(
-                        <Grid item xs={12}>
-                            <PrimaryTable
-                                columnDefs={colDef}
-                                data={data} />
-                        </Grid>
-                    )
-                }
+                </Grid>
+
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
                 </Grid>
@@ -154,4 +149,4 @@ const RoleFeaturesPage = () => {
     )
 }
 
-export default RoleFeaturesPage
+export default UserRolesPage
