@@ -10,6 +10,7 @@ import { IRole } from '../../types/role';
 import { IUser } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import Check from '../../components/indicators/check';
 import { useAppSelector} from '../../stores/appStore';
 import UserService from '../user/userService';
 // import RoleService from '../role/roleService';
@@ -21,8 +22,8 @@ interface IRoleRow {
     name: string,
     description: string,
     level: number,
-    absoluteAuthority: string,
-    isActive: string
+    absoluteAuthority: boolean,
+    isActive: boolean
 }
 
 const UserRolesPage = () => {
@@ -53,11 +54,11 @@ const UserRolesPage = () => {
                             const role = rolesMap[item.roleId || '']
                             return {
                                 _id: item._id || '',
-                                name: role.name || '',
-                                description: role?.description || '',
-                                level: role.level,
-                                absoluteAuthority: role.absoluteAuthority? 'True': 'False',
-                                isActive: item.isActive? 'True': 'False',
+                                name: role? role.name: '(None Existing Role)',
+                                description: role? (role?.description || ''): 'This might have been deleted.',
+                                level: role? role.level: -1,
+                                absoluteAuthority: role? Boolean(role.absoluteAuthority): false,
+                                isActive: role? Boolean(item.isActive): false,
                             }
                         })
                         // console.log(tarnsformedData)
@@ -65,6 +66,7 @@ const UserRolesPage = () => {
                     }
 
                 } catch (err:any) {
+                    console.log(err)
                     setInfoAndErrors({
                         ...{infoMessages: []},
                         ...{errorMessages: [err?.response?.data?.message || '']}
@@ -95,12 +97,16 @@ const UserRolesPage = () => {
         {
             header: 'Absolute Authority',
             field: 'absoluteAuthority',
-            Component: undefined
+            Component: (props:IRoleRow) => {
+                return <Check value={props.absoluteAuthority} />
+            }
         },
         {
             header: 'Active',
             field: 'isActive',
-            Component: undefined
+            Component: (props:IRoleRow) => {
+                return <Check value={props.isActive} />
+            }
         }
     ]
 
@@ -128,8 +134,7 @@ const UserRolesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            // disabled={role?.absoluteAuthority}
-                            onClick={() => navigate(`/roles/edit/${ userId }/features`)}>
+                            onClick={() => navigate(`/users/edit/${ userId }/roles`)}>
                             Edit
                         </Button>
                     </Box>
