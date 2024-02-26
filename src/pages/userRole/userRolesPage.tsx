@@ -6,33 +6,15 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import EditIcon from '@mui/icons-material/Edit';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IRole } from '../../types/role';
 import { IUser } from '../../types/user';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import Check from '../../components/indicators/check';
-import { useAppSelector} from '../../stores/appStore';
 import UserService from '../user/userService';
-// import RoleService from '../role/roleService';
-// import UserRoleService from './userRoleService';
-// import { IFeature } from '../../types/feature';
-
-interface IRoleRow {
-    _id: string,
-    name: string,
-    description: string,
-    level: number,
-    absoluteAuthority: boolean,
-    isActive: boolean
-}
+import UserRolesReadOnlyView from './userRolesReadOnlyView';
 
 const UserRolesPage = () => {
     const { userId } = useParams()
     const navigate = useNavigate()
-    const roles = useAppSelector(state => state.appRefs.roles) || []
-    // const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [user, setUser] = useState<IUser | undefined>()
-    const [data, setData] = useState<IRoleRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -44,27 +26,6 @@ const UserRolesPage = () => {
                 try {
                     const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)
-
-                    if (userResp.data && userResp.data.rolesRefs) {
-                        const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
-                            if (item && item._id) acc[item._id] = item
-                            return acc
-                        }, {})
-                        const tarnsformedData:IRoleRow[] = userResp.data.rolesRefs.map((item) => {
-                            const role = rolesMap[item.roleId || '']
-                            return {
-                                _id: item._id || '',
-                                name: role? role.name: '(None Existing Role)',
-                                description: role? (role?.description || ''): 'This might have been deleted.',
-                                level: role? role.level: -1,
-                                absoluteAuthority: role? Boolean(role.absoluteAuthority): false,
-                                isActive: role? Boolean(item.isActive): false,
-                            }
-                        })
-                        // console.log(tarnsformedData)
-                        setData(tarnsformedData)
-                    }
-
                 } catch (err:any) {
                     console.log(err)
                     setInfoAndErrors({
@@ -76,39 +37,7 @@ const UserRolesPage = () => {
         }
         console.log('initiate role features page')
         init()
-    }, [userId, roles])
-
-    const colDef:IColDef[] = [
-        {
-            header: 'Name',
-            field: 'name',
-            Component: undefined
-        },
-        {
-            header: 'Description',
-            field: 'description',
-            Component: undefined
-        },
-        {
-            header: 'Level',
-            field: 'level',
-            Component: undefined
-        },
-        {
-            header: 'Absolute Authority',
-            field: 'absoluteAuthority',
-            Component: (props:IRoleRow) => {
-                return <Check value={props.absoluteAuthority} />
-            }
-        },
-        {
-            header: 'Active',
-            field: 'isActive',
-            Component: (props:IRoleRow) => {
-                return <Check value={props.isActive} />
-            }
-        }
-    ]
+    }, [userId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -140,11 +69,7 @@ const UserRolesPage = () => {
                     </Box>
                 </Grid>
 
-                <Grid item xs={12}>
-                    <PrimaryTable
-                        columnDefs={colDef}
-                        data={data} />
-                </Grid>
+                <UserRolesReadOnlyView user={user} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
