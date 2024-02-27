@@ -38,7 +38,7 @@ import { Typography } from '@mui/material';
 export interface IColDef {
   header: string,
   field: string,
-  Component: React.ElementType | undefined
+  Component?: React.ElementType
 }
 
 interface IPagination {
