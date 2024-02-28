@@ -1,6 +1,15 @@
 {
-  "name": "typescript102",
-  "version": "0.1.0",
+  "name": "@kagiweb-tech/ui-core-a",
+  "version": "1.0.0",
+  "description": "A react webapp library that contains the core functionality of account base application. This app is designed to connect to a @kagiweb/api-core-a base server.",
+  "homepage": "https://github.com/gilbertgit95/kagiweb-ui-core-a",
+  "keywords": [
+    "core webapp ui",
+    "frontend",
+    "react app",
+    "react redux",
+    "typescript react"
+  ],
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.3",
