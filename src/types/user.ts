@@ -34,6 +34,11 @@ export interface IAccessToken {
 export interface IClientDevice {
     _id?: string,
     ua: string,
+    accessTokens?: IAccessToken[],
+    disabled?: boolean
+}
+
+export interface IParsedClientDevice {
     browser: {
         name: string | undefined,
         version: string | undefined,
@@ -54,9 +59,7 @@ export interface IClientDevice {
     },
     cpu: {
         architecture: string | undefined,
-    },
-    accessTokens?: IAccessToken[],
-    disabled?: boolean
+    }
 }
 
 export interface ILimitedTransaction {

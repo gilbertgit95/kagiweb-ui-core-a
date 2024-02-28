@@ -26,6 +26,7 @@
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
+    "ua-parser-js": "^1.0.37",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

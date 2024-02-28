@@ -27,6 +27,7 @@ import UserEditPage from '../pages/user/userEditPage';
 import UserRolesPage from '../pages/userRole/userRolesPage';
 import UserPasswordsPage from '../pages/userPassword/userPasswordsPage';
 import UserLimitedTransactionsPage from '../pages/userLimitedTransaction/userLimitedTransactionsPage';
+import UserClientDevicesPage from '../pages/userClientDevice/userClientDevicesPage';
 
 import UserWorkspacesPage from '../pages/userWorkspace/userWorkspacesPage';
 
@@ -66,6 +67,8 @@ const PrivateRoutes = () => {
                     <Route path="users/view/:userId/passwords" element={<UserPasswordsPage />} />
                     {/* user limited transactions */}
                     <Route path="users/view/:userId/limitedTransactions" element={<UserLimitedTransactionsPage />} />
+                    {/* user client devices */}
+                    <Route path="users/view/:userId/clientDevices" element={<UserClientDevicesPage />} />
                     {/* user workspace pages */}
                     <Route path="users/view/:userId/workspaces" element={<UserWorkspacesPage />} />
 
