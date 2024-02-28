@@ -89,12 +89,12 @@ const UserReadOnlyView = ({user}:props) => {
     const settingsData:IUserSettingsData[] = [
         {
             field: 'User Information',
-            fieldRoute: 'userInfo',
+            fieldRoute: 'userInfos',
             contents: user?.userInfos?.length || 0
         },
         {
             field: 'Contact Information',
-            fieldRoute: 'contactInfo',
+            fieldRoute: 'contactInfos',
             contents: user?.contactInfos?.length || 0
         },
         {

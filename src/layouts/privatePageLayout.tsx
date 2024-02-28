@@ -7,6 +7,7 @@ import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import LockIcon from '@mui/icons-material/Lock';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import SettingsIcon from '@mui/icons-material/Settings';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
@@ -111,7 +112,7 @@ const NavCustomEl = () => {
                     <Divider />
                     <MenuItem onClick={() => handleThemeToggle(appTheme)}>
                         <ListItemIcon>
-                            <DarkModeIcon />
+                            { appTheme === 'dark'? <DarkModeIcon />: <WbSunnyIcon /> }
                         </ListItemIcon>
                         <ListItemText>Theme</ListItemText>
                     </MenuItem>

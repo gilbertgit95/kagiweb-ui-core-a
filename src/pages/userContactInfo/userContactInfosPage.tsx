@@ -9,9 +9,9 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserService from '../user/userService';
-import UserLimitedTransactionsReadOnlyView from './userLimitedTransactionsReadOnlyView';
+import UserContactInfosReadOnlyView from './userContactInfosReadOnlyView';
 
-const UserLimitedTransactionsPage = () => {
+const UserContactInfosPage = () => {
     const { userId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IUser | undefined>()
@@ -35,7 +35,7 @@ const UserLimitedTransactionsPage = () => {
                 }
             }
         }
-        console.log('initiate LimitedTransaction features page')
+        console.log('initiate ContactInfo features page')
         init()
     }, [userId])
 
@@ -43,7 +43,7 @@ const UserLimitedTransactionsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Limited Transactions View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Contact Infos View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -63,13 +63,13 @@ const UserLimitedTransactionsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/edit/${ userId }/limitedTransaction`)}>
+                            onClick={() => navigate(`/users/edit/${ userId }/contactInfo`)}>
                             Edit
                         </Button>
                     </Box>
                 </Grid>
 
-                <UserLimitedTransactionsReadOnlyView user={user} />
+                <UserContactInfosReadOnlyView user={user} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -79,4 +79,4 @@ const UserLimitedTransactionsPage = () => {
     )
 }
 
-export default UserLimitedTransactionsPage
+export default UserContactInfosPage
