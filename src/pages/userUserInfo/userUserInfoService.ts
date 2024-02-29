@@ -4,7 +4,7 @@ import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
 import { IFeatureRef } from '../../types/role'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 
-class UserRoleService {
+class UserUserInfoService {
     // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
     //     return featureApi.getRoleFeatures(roleId)
     // }
@@ -26,4 +26,4 @@ class UserRoleService {
     // }
 }
 
-export default UserRoleService
+export default UserUserInfoService
