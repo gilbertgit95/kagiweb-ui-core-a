@@ -3,7 +3,6 @@ import moment from 'moment';
 import Grid from '@mui/material/Grid';
 import { IUser, IUserInfo } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import Check from '../../components/indicators/check';
 import Config from '../../config';
 
 interface IProps {

@@ -6,6 +6,7 @@ class Config {
     public static TokenKey:string = '_auth_token'
     public static AppThemeKey:string = '_app_theme'
 
+    public static defaultDateFormat:string = 'YYYY-MM-DD'
     public static defaultDateTimeFormat:string = 'YYYY-MM-DD HH:mm:ss'
     public static defaultPageSizeList:number[] = [5, 10, 25, 100]
     public static defaultPageSize:number = 5
