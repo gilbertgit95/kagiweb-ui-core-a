@@ -9,10 +9,10 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserService from '../user/userService';
-import UserLimitedTransactionsReadOnlyView from './userLimitedTransactionsReadOnlyView';
+import UserClientDeviceTokensReadOnlyView from './userClientDeviceTokensReadOnlyView';
 
-const UserLimitedTransactionsPage = () => {
-    const { userId } = useParams()
+const UserClientDeviceTokensPage = () => {
+    const { userId, clientDeviceId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IUser | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -35,7 +35,7 @@ const UserLimitedTransactionsPage = () => {
                 }
             }
         }
-        console.log('initiate LimitedTransaction features page')
+        console.log('initiate ClientDeviceToken features page')
         init()
     }, [userId])
 
@@ -43,7 +43,7 @@ const UserLimitedTransactionsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Limited Transactions View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Client Device Tokens View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -63,13 +63,13 @@ const UserLimitedTransactionsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/edit/${ userId }/limitedTransaction`)}>
+                            onClick={() => navigate(`/users/edit/${ userId }/clientDevices`)}>
                             Edit
                         </Button>
                     </Box>
                 </Grid>
 
-                <UserLimitedTransactionsReadOnlyView user={user} />
+                <UserClientDeviceTokensReadOnlyView user={user} clientDeviceId={ clientDeviceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -79,4 +79,4 @@ const UserLimitedTransactionsPage = () => {
     )
 }
 
-export default UserLimitedTransactionsPage
+export default UserClientDeviceTokensPage
