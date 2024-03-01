@@ -69,7 +69,7 @@ const UserClientDevicePage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceReadOnlyView user={user} />
+                <UserClientDeviceReadOnlyView user={user} clientDeviceId={ clientDeviceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

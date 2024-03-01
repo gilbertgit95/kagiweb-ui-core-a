@@ -3,110 +3,108 @@ import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import Grid from '@mui/material/Grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import { Button } from '@mui/material';
 import { IUser, IClientDevice, IParsedClientDevice } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import SecondaryHeader from '../../components/headers/secondaryHeader';
 import Check from '../../components/indicators/check';
 import Config from '../../config';
+import UserClientDeviceService from './userClientDeviceService';
 
 interface IProps {
     user: IUser | undefined
+    clientDeviceId: string | undefined
 }
 
-interface IClientDeviceRow {
-    _id: string,
-    ua: string,
-    accessTokens: number,
-    // type: string,
-    // key: string,
-    // value: string,
-    // expTime: string,
-    // recipient: string,
-    disabled: boolean,
+interface IClientDeviceInfoRow {
+    label: string,
+    value: string
 }
+interface IClientDeviceSubModuleData {module: string, moduleRoute: string, contents: number}
 
-const UserClientDeviceReadOnlyView = ({user}:IProps) => {
-    const [data, setData] = useState<IClientDeviceRow[]>([])
+const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
+    const navigate = useNavigate()
+    const [clientDevice, setClientDevice] = useState<IClientDevice | null>(null)
 
     useEffect(() => {
-        if (user && user.clientDevices) {
-            const transformedData:IClientDeviceRow[] = user.clientDevices.map((item:IClientDevice & {createdAt?: Date}) => {
-                return {
-                    _id: item._id || '',
-                    ua: item.ua,
-                    accessTokens: item.accessTokens?.length || 0,
-                    // type: item.type,
-                    // key: item.key || '',
-                    // value: item.value || '',
-                    // expTime: moment(item.expTime).format(Config.defaultDateTimeFormat),
-                    // recipient: item.recipient || '',
-                    disabled: Boolean(item.disabled)
-                }
-            })
-            // console.log(transformedData)
-            setData(transformedData)
+        if (user && user.clientDevices && clientDeviceId) {
+            const cd = UserClientDeviceService.getClientDeviceById(user, clientDeviceId)
+            setClientDevice(cd)
         }
 
-    }, [user])
+    }, [user, clientDeviceId])
+
+    const data:IClientDeviceInfoRow[] = [
+        {
+            label: 'User Agent',
+            value: clientDevice?.ua || '--'
+        },
+        {
+            label: 'Disabled',
+            value: Boolean(clientDevice?.disabled)? 'True': 'False'
+        }
+    ]
+
+    const modulesData:IClientDeviceSubModuleData[] = [
+        {
+            module: 'Access Tokens',
+            moduleRoute: 'clientDeviceTokens',
+            contents: clientDevice?.accessTokens?.length || 0
+        }
+    ]
 
     const colDef:IColDef[] = [
         {
-            header: 'User Agent',
-            field: 'ua'
-        },
-        // {
-        //     header: 'Type',
-        //     field: 'type'
-        // },
-        // {
-        //     header: 'Key',
-        //     field: 'key'
-        // },
-        // {
-        //     header: 'Value',
-        //     field: 'value'
-        // },
-        // {
-        //     header: 'Expiration',
-        //     field: 'expTime'
-        // },
-        // {
-        //     header: 'Recipient',
-        //     field: 'recipient'
-        // },
-        {
-            header: 'Tokens',
-            field: 'accessTokens'
+            header: 'Field',
+            field: 'label'
         },
         {
-            header: 'Disabled',
-            field: 'disabled',
-            Component: (props:IClientDeviceRow) => {
-                return <Check value={props.disabled} />
-            }
+            header: 'Value',
+            field: 'value'
+        }
+    ]
+
+    const moduleColDef:IColDef[] = [
+        {
+            header: 'Module',
+            field: 'module'
         },
         {
-            header: '',
-            field: 'accessTokens',
-            Component: (props:IClientDeviceRow) => {
-                const navigate = useNavigate()
-    
+            header: 'Contents',
+            field: 'contents'
+        },
+        {
+            header: 'View',
+            field: 'moduleRoute',
+            Component: (rowProps) => {
                 return (
                     <Button
                         startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(`${ props._id }`)}
-                        variant="text">View User Agent</Button>
+                        onClick={() => navigate(rowProps.moduleRoute)}
+                        variant="text">View { rowProps.module }</Button>
                 )
             }
         }
     ]
 
     return (
-        <Grid item xs={12}>
-            <PrimaryTable
-                columnDefs={colDef}
-                data={data} />
-        </Grid>
+        <>
+            <Grid item xs={12}>
+                <PrimaryTable
+                    columnDefs={colDef}
+                    data={data} />
+            </Grid>
+            <Grid item xs={12}>
+                <SecondaryHeader Icon={SnippetFolderIcon} title={'Sub Modules'} />
+                {/* <Divider /> */}
+            </Grid>
+            <Grid item xs={12}>
+                <PrimaryTable
+                    columnDefs={moduleColDef}
+                    data={modulesData} />
+            </Grid>
+        </>
     )
 }
 

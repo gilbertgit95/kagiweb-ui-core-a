@@ -20,26 +20,22 @@ const UserReadOnlyView = ({user}:props) => {
     const colDef:IColDef[] = [
         {
             header: 'Field',
-            field: 'field',
-            Component: undefined
+            field: 'field'
         },
         {
             header: 'Value',
-            field: 'value',
-            Component: undefined
+            field: 'value'
         }
     ]
 
     const settingsColDef:IColDef[] = [
         {
             header: 'Field',
-            field: 'field',
-            Component: undefined
+            field: 'field'
         },
         {
             header: 'Contents',
-            field: 'contents',
-            Component: undefined
+            field: 'contents'
         },
         {
             header: 'View',
@@ -58,13 +54,11 @@ const UserReadOnlyView = ({user}:props) => {
     const moduleColDef:IColDef[] = [
         {
             header: 'Module',
-            field: 'module',
-            Component: undefined
+            field: 'module'
         },
         {
             header: 'Contents',
-            field: 'contents',
-            Component: undefined
+            field: 'contents'
         },
         {
             header: 'View',
