@@ -9,10 +9,10 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserService from '../user/userService';
-import UserClientDevicesReadOnlyView from './userClientDevicesReadOnlyView';
+import UserClientDeviceReadOnlyView from './userClientDeviceReadOnlyView';
 
-const UserClientDevicesPage = () => {
-    const { userId } = useParams()
+const UserClientDevicePage = () => {
+    const { userId, clientDeviceId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IUser | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -43,7 +43,7 @@ const UserClientDevicesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Client Devices View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Client Device View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -63,13 +63,13 @@ const UserClientDevicesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/clientDevices`)}>
-                            Create
+                            onClick={() => navigate(`/users/edit/${ userId }/clientDevices/${ clientDeviceId }`)}>
+                            Edit
                         </Button>
                     </Box>
                 </Grid>
 
-                <UserClientDevicesReadOnlyView user={user} />
+                <UserClientDeviceReadOnlyView user={user} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -79,4 +79,4 @@ const UserClientDevicesPage = () => {
     )
 }
 
-export default UserClientDevicesPage
+export default UserClientDevicePage

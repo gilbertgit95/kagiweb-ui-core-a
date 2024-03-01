@@ -28,6 +28,7 @@ import UserRolesPage from '../pages/userRole/userRolesPage';
 import UserPasswordsPage from '../pages/userPassword/userPasswordsPage';
 import UserLimitedTransactionsPage from '../pages/userLimitedTransaction/userLimitedTransactionsPage';
 import UserClientDevicesPage from '../pages/userClientDevice/userClientDevicesPage';
+import UserClientDevicePage from '../pages/userClientDevice/userClientDevicePage';
 import UserClientDeviceTokensPage from '../pages/userClientDeviceToken/userClientDeviceTokensPage';
 import UserContactInfosPage from '../pages/userContactInfo/userContactInfosPage';
 import UserUserInfosPage from '../pages/userUserInfo/userUserInfosPage';
@@ -72,6 +73,7 @@ const PrivateRoutes = () => {
                     <Route path="users/view/:userId/limitedTransactions" element={<UserLimitedTransactionsPage />} />
                     {/* user client devices */}
                     <Route path="users/view/:userId/clientDevices" element={<UserClientDevicesPage />} />
+                    <Route path="users/view/:userId/clientDevices/:clientDeviceId" element={<UserClientDevicePage />} />
                     {/* user client device tokens */}
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens" element={<UserClientDeviceTokensPage />} />
                     {/* user contact infos */}
