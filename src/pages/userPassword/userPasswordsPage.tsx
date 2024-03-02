@@ -63,7 +63,7 @@ const UserPasswordsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/edit/${ userId }/passwords`)}>
+                            onClick={() => navigate(`/users/create/${ userId }/passwords`)}>
                             Change Password
                         </Button>
                     </Box>

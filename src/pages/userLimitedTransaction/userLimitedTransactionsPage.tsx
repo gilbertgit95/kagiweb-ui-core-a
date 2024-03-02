@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import EditIcon from '@mui/icons-material/Edit';
+// import EditIcon from '@mui/icons-material/Edit';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
@@ -46,7 +46,7 @@ const UserLimitedTransactionsPage = () => {
                     <PrimaryHeader title={'User Limited Transactions View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}
@@ -54,7 +54,7 @@ const UserLimitedTransactionsPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <Grid item xs={6} style={{alignContent: 'right'}}>
+                {/* <Grid item xs={6} style={{alignContent: 'right'}}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -67,7 +67,7 @@ const UserLimitedTransactionsPage = () => {
                             Edit
                         </Button>
                     </Box>
-                </Grid>
+                </Grid> */}
 
                 <UserLimitedTransactionsReadOnlyView user={user} />
 

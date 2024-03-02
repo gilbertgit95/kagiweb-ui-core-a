@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import EditIcon from '@mui/icons-material/Edit';
+// import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
@@ -62,9 +63,9 @@ const UserContactInfosPage = () => {
                         }}>
                         <Button
                             variant="text"
-                            startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/edit/${ userId }/contactInfo`)}>
-                            Edit
+                            startIcon={<AddIcon />}
+                            onClick={() => navigate(`/users/create/${ userId }/contactInfo`)}>
+                            Create
                         </Button>
                     </Box>
                 </Grid>
