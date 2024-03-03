@@ -95,7 +95,7 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
                     <Button
                         startIcon={<VisibilityIcon />}
                         onClick={() => navigate(`${ props._id }`)}
-                        variant="text">View User Agent</Button>
+                        variant="text">View Client Device</Button>
                 )
             }
         }

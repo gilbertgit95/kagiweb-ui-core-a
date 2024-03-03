@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IUser, ILimitedTransaction } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
@@ -23,6 +26,7 @@ interface ILimitedTransactionRow {
 }
 
 const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
+    const navigate = useNavigate()
     const [data, setData] = useState<ILimitedTransactionRow[]>([])
 
     useEffect(() => {
@@ -80,6 +84,19 @@ const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
             field: 'disabled',
             Component: (props:ILimitedTransactionRow) => {
                 return <Check value={props.disabled} />
+            }
+        },
+        {
+            header: '',
+            field: '_id',
+            Component: (props:ILimitedTransactionRow) => {
+    
+                return (
+                    <Button
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => navigate(props._id)}
+                        variant="text">View LT</Button>
+                )
             }
         }
     ]

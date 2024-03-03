@@ -29,7 +29,7 @@ const UserPasswordsReadOnlyView = ({user}:IProps) => {
                 }
             })
             // console.log(transformedData)
-            setData(transformedData)
+            setData(transformedData.sort((a) => a.isActive? -1:1))
         }
 
     }, [user])

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IUser, IContactInfo } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
@@ -21,6 +24,7 @@ interface IContactInfoRow {
 }
 
 const UserContactInfosReadOnlyView = ({user}:IProps) => {
+    const navigate = useNavigate()
     const [data, setData] = useState<IContactInfoRow[]>([])
 
     useEffect(() => {
@@ -68,6 +72,19 @@ const UserContactInfosReadOnlyView = ({user}:IProps) => {
             field: 'verified',
             Component: (props:IContactInfoRow) => {
                 return <Check value={props.verified} />
+            }
+        },
+        {
+            header: '',
+            field: '_id',
+            Component: (props:IContactInfoRow) => {
+
+                return (
+                    <Button
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => navigate(props._id)}
+                        variant="text">View User Contact</Button>
+                )
             }
         }
     ]

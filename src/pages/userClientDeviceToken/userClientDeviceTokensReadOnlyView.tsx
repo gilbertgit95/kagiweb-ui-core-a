@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IUser, IAccessToken } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
@@ -22,6 +25,7 @@ interface IclientDeviceTokenRow {
 }
 
 const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
+    const navigate = useNavigate()
     const [data, setData] = useState<IclientDeviceTokenRow[]>([])
 
     useEffect(() => {
@@ -65,6 +69,19 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
             field: 'disabled',
             Component: (props:IclientDeviceTokenRow) => {
                 return <Check value={props.disabled} />
+            }
+        },
+        {
+            header: '',
+            field: '_id',
+            Component: (props:IclientDeviceTokenRow) => {
+    
+                return (
+                    <Button
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => navigate(props._id)}
+                        variant="text">View Device Token</Button>
+                )
             }
         }
     ]

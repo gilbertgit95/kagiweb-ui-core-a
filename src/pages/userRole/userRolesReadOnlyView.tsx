@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IRole } from '../../types/role';
 import { IUser } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
@@ -21,6 +23,7 @@ interface IRoleRow {
 }
 
 const UserRolesReadOnlyView = ({user}:IProps) => {
+    const navigate = useNavigate()
     const roles = useAppSelector(state => state.appRefs.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
 
@@ -75,6 +78,19 @@ const UserRolesReadOnlyView = ({user}:IProps) => {
             field: 'isActive',
             Component: (props:IRoleRow) => {
                 return <Check value={props.isActive} />
+            }
+        },
+        {
+            header: '',
+            field: '_id',
+            Component: (props:IRoleRow) => {
+    
+                return (
+                    <Button
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => navigate(props._id)}
+                        variant="text">View Role Ref</Button>
+                )
             }
         }
     ]

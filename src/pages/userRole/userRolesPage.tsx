@@ -46,7 +46,7 @@ const UserRolesPage = () => {
                     <PrimaryHeader title={'User Roles View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}
@@ -54,7 +54,7 @@ const UserRolesPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <Grid item xs={6} style={{alignContent: 'right'}}>
+                {/* <Grid item xs={6} style={{alignContent: 'right'}}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -67,7 +67,7 @@ const UserRolesPage = () => {
                             Edit
                         </Button>
                     </Box>
-                </Grid>
+                </Grid> */}
 
                 <UserRolesReadOnlyView user={user} />
 

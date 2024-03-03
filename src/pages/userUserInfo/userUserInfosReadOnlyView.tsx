@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import { Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IUser, IUserInfo } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Config from '../../config';
@@ -19,6 +22,7 @@ interface IUserInfoRow {
 }
 
 const UserUserInfosReadOnlyView = ({user}:IProps) => {
+    const navigate = useNavigate()
     const [data, setData] = useState<IUserInfoRow[]>([])
 
     useEffect(() => {
@@ -59,6 +63,19 @@ const UserUserInfosReadOnlyView = ({user}:IProps) => {
         {
             header: 'Updated',
             field: 'updatedAt'
+        },
+        {
+            header: '',
+            field: '_id',
+            Component: (props:IUserInfoRow) => {
+    
+                return (
+                    <Button
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => navigate(props._id)}
+                        variant="text">View User Info</Button>
+                )
+            }
         }
     ]
 
