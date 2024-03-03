@@ -4,14 +4,12 @@ import { Button} from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import SettingsIcon from '@mui/icons-material/Settings';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { IUser } from '../../types/user';
 
-interface IUserSettingsData {field: string, fieldRoute: string, contents: number}
-interface IUserSubModuleData {module: string, moduleRoute: string, contents: number}
+interface IModuleData {module: string, moduleRoute: string, contents: number}
 interface props { user?: IUser }
 
 const UserReadOnlyView = ({user}:props) => {
@@ -28,30 +26,7 @@ const UserReadOnlyView = ({user}:props) => {
         }
     ]
 
-    const settingsColDef:IColDef[] = [
-        {
-            header: 'Field',
-            field: 'field'
-        },
-        {
-            header: 'Contents',
-            field: 'contents'
-        },
-        {
-            header: 'View',
-            field: 'moduleRoute',
-            Component: (rowProps) => {
-                return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(rowProps.fieldRoute)}
-                        variant="text">View { rowProps.field }</Button>
-                )
-            }
-        }
-    ]
-
-    const moduleColDef:IColDef[] = [
+    const modulesColDef:IColDef[] = [
         {
             header: 'Module',
             field: 'module'
@@ -80,46 +55,38 @@ const UserReadOnlyView = ({user}:props) => {
         { field: 'verified', value: user?.verified? 'True': 'False' }
     ]
 
-    const settingsData:IUserSettingsData[] = [
+    const modulesData:IModuleData[] = [
         {
-            field: 'User Information',
-            fieldRoute: 'userInfos',
+            module: 'User Information',
+            moduleRoute: 'userInfos',
             contents: user?.userInfos?.length || 0
         },
         {
-            field: 'Contact Information',
-            fieldRoute: 'contactInfos',
+            module: 'Contact Information',
+            moduleRoute: 'contactInfos',
             contents: user?.contactInfos?.length || 0
         },
         {
-            field: 'Roles',
-            fieldRoute: 'roles',
+            module: 'Roles',
+            moduleRoute: 'roles',
             contents: user?.rolesRefs?.length || 0
         },
         {
-            field: 'Limitedtransactions',
-            fieldRoute: 'limitedTransactions',
+            module: 'Limitedtransactions',
+            moduleRoute: 'limitedTransactions',
             contents: user?.limitedTransactions?.length || 0
         },
         {
-            field: 'Client Devices',
-            fieldRoute: 'clientDevices',
+            module: 'Client Devices',
+            moduleRoute: 'clientDevices',
             contents: user?.clientDevices?.length || 0
         },
         {
-            field: 'Passwords',
-            fieldRoute: 'passwords',
+            module: 'Passwords',
+            moduleRoute: 'passwords',
             contents: user?.passwords?.length || 0
         },
     ]
-
-    const modulesData:IUserSubModuleData[] = [
-        {
-            module: 'Workspaces',
-            moduleRoute: 'workspaces',
-            contents: 0
-        }
-    ] 
 
     return user? (
         <>
@@ -129,21 +96,12 @@ const UserReadOnlyView = ({user}:props) => {
                     data={data} />
             </Grid>
             <Grid item xs={12}>
-                <SecondaryHeader Icon={SettingsIcon} title={'Advance Settings'} />
-                {/* <Divider /> */}
-            </Grid>
-            <Grid item xs={12}>
-                <PrimaryTable
-                    columnDefs={settingsColDef}
-                    data={settingsData} />
-            </Grid>
-            <Grid item xs={12}>
                 <SecondaryHeader Icon={SnippetFolderIcon} title={'Sub Modules'} />
                 {/* <Divider /> */}
             </Grid>
             <Grid item xs={12}>
                 <PrimaryTable
-                    columnDefs={moduleColDef}
+                    columnDefs={modulesColDef}
                     data={modulesData} />
             </Grid>
         </>
