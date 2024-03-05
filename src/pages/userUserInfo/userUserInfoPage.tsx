@@ -89,7 +89,7 @@ const UserInfoPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Info Readonly View'} />
+                    <PrimaryHeader title={'User Info Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -110,7 +110,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }`)}>
+                            onClick={() => navigate(`/users/edit/${ user?._id }/userInfos/${ userInfoId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -129,7 +129,7 @@ const UserInfoPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this user?
+                                    Are you sure you want to delete this user info?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
