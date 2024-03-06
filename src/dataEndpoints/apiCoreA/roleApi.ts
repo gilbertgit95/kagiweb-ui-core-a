@@ -69,6 +69,35 @@ class RoleApi {
             url: Config.Origin + Config.RootApiEndpoint + `roles/${ id }`
         })
     }
+
+        // role features
+        public static getRoleFeatures(roleId:string = '') {
+            return apiHelper.privateReq({
+                method: 'GET',
+                url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features`
+            })
+        }
+    
+        public static createRoleFeature(roleId:string = '', featureId:string) {
+            const data = {
+                'featureId': featureId
+            }
+    
+            return apiHelper.privateReq({
+                method: 'POST',
+                url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features`,
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                data
+            })
+        }
+    
+        public static deleteRoleFeature(roleId:string = '', featureRefId:string) {
+    
+            return apiHelper.privateReq({
+                method: 'DELETE',
+                url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features/${ featureRefId }`
+            })
+        }
 }
 
 export default RoleApi

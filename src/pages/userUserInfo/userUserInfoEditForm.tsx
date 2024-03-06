@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment'
-import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-import { Button, Typography, TextField, Switch } from '@mui/material';
+import { Button, Typography, TextField } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../user/userService';
 import UserUserInfoService from './userUserInfoService';
-import { IUser, IUserInfo, TUserInfoType } from '../../types/user';
-import Config from '../../config';
+import { IUser, IUserInfo, TUserInfoType, userInfoTypes } from '../../types/user';
 
 interface props {
-    userId?: string,
-    userInfoId?: string
+    user?: IUser,
+    userInfoId?: string,
+    updateFunc: (userId:string, updateData:IUserInfo) => Promise<{data:IUserInfo}>,
+    updated?: (userId:string|undefined, userInfo:IUserInfo|undefined) => void
 }
 
-const UserUserInfoEditForm = ({userId, userInfoId}:props) => {
-    const [user, setUser] = useState<IUser | undefined>()
+const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => {
     const [userInfo, setUserInfo] = useState<IUserInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedUserInfo, setUpdatedUserInfo] = useState<IUserInfo>({
         key: '',
@@ -33,6 +31,11 @@ const UserUserInfoEditForm = ({userId, userInfoId}:props) => {
         setUpdatedUserInfo({...updatedUserInfo, ...{[field]: value}})
     }
 
+    const handleTypeSelectionChange = (event: SelectChangeEvent) => {
+        const type = event.target.value as TUserInfoType
+        setUpdatedUserInfo({...updatedUserInfo, ...{type}})
+    }
+
     const onUpdate = async () => {
         if (!userInfo) return
 
@@ -45,42 +48,36 @@ const UserUserInfoEditForm = ({userId, userInfoId}:props) => {
         console.log('save update: ', updateData)
 
         // // send update data to the api
-        // try {
-        //     const userResp = await updateFunc(updateData)
-        //     setUser(userResp.data)
-        //     setUpdatedUser(userResp.data)
-        //     setInfoAndErrors({
-        //         ...{infoMessages: ['Successfull Update']},
-        //         ...{errorMessages: []}
-        //     })
-        //     if (updated) updated(userResp?.data)
-        // } catch (err:any) {
-        //     // error while updating
-        //     // log to the UI
-        //     setInfoAndErrors({
-        //         ...infoAndErrors,
-        //         ...{errorMessages: [err?.response?.data?.message || '']}
-        //     })
-        // }
+        if (user?._id) {
+            try {
+                const reqResp = await updateFunc(user._id, updateData)
+                setInfoAndErrors({
+                    ...{infoMessages: ['Successfull Update']},
+                    ...{errorMessages: []}
+                })
+                if (updated) updated(user?._id, reqResp?.data)
+            } catch (err:any) {
+                // error while updating
+                // log to the UI
+                setInfoAndErrors({
+                    ...infoAndErrors,
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
     }
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
-                try {
-                    const userResp = await UserService.getUser(userId)
-                    setUser(userResp.data)
-
-                    if (userResp.data && userResp.data.userInfos && userInfoId) {
-                        const usrInf = UserUserInfoService.getUserInfoById(userResp.data, userInfoId)
-                        setUserInfo(usrInf)
-                        if (usrInf) setUpdatedUserInfo(usrInf)
-                    }
-    
-                } catch (err:any) {
+            if (user && user.userInfos && userInfoId) {
+                const usrInf = UserUserInfoService.getUserInfoById(user, userInfoId)
+                setUserInfo(usrInf)
+                if (usrInf) {
+                    setUpdatedUserInfo(usrInf)
+                } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
+                        ...{errorMessages: ['Info does not exist on this user']}
                     })
                 }
             }
@@ -88,7 +85,7 @@ const UserUserInfoEditForm = ({userId, userInfoId}:props) => {
 
         init()
 
-    }, [userId, userInfoId])
+    }, [user, userInfoId])
 
     const itemSx = {
         display: 'flex',
@@ -114,6 +111,23 @@ const UserUserInfoEditForm = ({userId, userInfoId}:props) => {
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Type</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Select
+                                    fullWidth
+                                    value={updatedUserInfo?.type}
+                                    onChange={handleTypeSelectionChange}>
+                                    {
+                                        userInfoTypes.map((item, index) => (
+                                            <MenuItem key={index} value={item}>{ item }</MenuItem>
+                                        ))
+                                    }
+                                </Select>
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
                                 <Typography variant="subtitle1">Key</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
@@ -132,17 +146,6 @@ const UserUserInfoEditForm = ({userId, userInfoId}:props) => {
                                     fullWidth
                                     defaultValue={updatedUserInfo?.value || ''}
                                     onChange={(e) => handleTextFieldChange('value', e.target.value)} />
-                            </Grid>
-                        </Grid>
-                        <Grid container item xs={12}>
-                            <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">Type</Typography>
-                            </Grid>
-                            <Grid item xs={8} md={9}>
-                                <TextField
-                                    fullWidth
-                                    defaultValue={updatedUserInfo?.type || ''}
-                                    onChange={(e) => handleTextFieldChange('type', e.target.value)} />
                             </Grid>
                         </Grid>
                     </>

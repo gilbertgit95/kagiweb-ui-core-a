@@ -1,4 +1,4 @@
-import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
+import roleApi from '../../dataEndpoints/apiCoreA/roleApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
 // import { IUser, IUserInfo, IContactInfo,TContactInfoType } from '../../types/user'
 import { IFeatureRef } from '../../types/role'
@@ -6,23 +6,23 @@ import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class RoleService {
     public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
-        return featureApi.getRoleFeatures(roleId)
+        return roleApi.getRoleFeatures(roleId)
     }
 
     // public static getFeature(id:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.getFeature(id)
+    //     return roleApi.getFeature(id)
     // }
 
     // public static updateFeature(feature:IFeatureRef):Promise<{data: IFeatureRef}> {
-    //     return featureApi.updateFeature(feature)
+    //     return roleApi.updateFeature(feature)
     // }
 
     public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {
-        return featureApi.createRoleFeature(roleId, featureId)
+        return roleApi.createRoleFeature(roleId, featureId)
     }
 
     public static deleteRoleFeature(roleId:string, featureRefId:string):Promise<{data: IFeatureRef}> {
-        return featureApi.deleteRoleFeature(roleId, featureRefId)
+        return roleApi.deleteRoleFeature(roleId, featureRefId)
     }
 }
 

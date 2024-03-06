@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { Container, Button, Divider } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -14,6 +9,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserUserInfoEditForm from './userUserInfoEditForm';
 import UserService from '../user/userService';
+import UserUserInfoService from './userUserInfoService';
 import { IUser } from '../../types/user';
 import {
   useParams
@@ -26,12 +22,22 @@ const UserInfoEditPage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [pageState, setPageState] = useState({
-        disableEditButton: false,
-        disableDeleteButton: false,
-        deleteDialogOpen: false
-    })
     const [user, setUser] = useState<IUser | undefined>()
+
+    const onUpdated = async () => {
+        if (userId) {
+            try {
+                const userResp = await UserService.getUser(userId)
+                setUser(userResp.data)
+
+            } catch (err:any) {
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
+    }
     
     useEffect(() => {
         const init = async () => {
@@ -43,12 +49,6 @@ const UserInfoEditPage = () => {
                     setUser(userResp.data)
 
                 } catch (err:any) {
-                    setPageState({
-                        disableEditButton: true,
-                        disableDeleteButton: true,
-                        deleteDialogOpen: false
-                    })
-
                     setInfoAndErrors({
                         ...{infoMessages: []},
                         ...{errorMessages: [err?.response?.data?.message || '']}
@@ -77,8 +77,10 @@ const UserInfoEditPage = () => {
                 </Grid>
 
                 <UserUserInfoEditForm
-                    userId={userId}
-                    userInfoId={userInfoId} />
+                    user={user}
+                    userInfoId={userInfoId}
+                    updateFunc={UserUserInfoService.updateUserInfo}
+                    updated={onUpdated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

@@ -1,4 +1,4 @@
-// import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
+import userApi from '../../dataEndpoints/apiCoreA/userApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
 // import { IUser, IUserInfo, IContactInfo,TContactInfoType } from '../../types/user'
 import { IUser, IUserInfo } from '../../types/user'
@@ -15,25 +15,25 @@ class UserUserInfoService {
 
         return undefined
     }
-    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
-    //     return featureApi.getRoleFeatures(roleId)
+    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IUserInfo[]}> {
+    //     return userApi.getRoleFeatures(roleId)
     // }
 
-    // public static getFeature(id:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.getFeature(id)
+    // public static getUserInfo(id:string):Promise<{data: IUserInfo}> {
+    //     return userApi.getFeature(id)
     // }
 
-    // public static updateFeature(feature:IFeatureRef):Promise<{data: IFeatureRef}> {
-    //     return featureApi.updateFeature(feature)
-    // }
+    public static updateUserInfo(userId:string, userInfo:IUserInfo):Promise<{data: IUserInfo}> {
+        return userApi.updateUserInfo(userId, userInfo)
+    }
 
-    // public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.createRoleFeature(roleId, featureId)
-    // }
+    public static createRoleFeature(userId:string, userInfo:IUserInfo):Promise<{data: IUserInfo}> {
+        return userApi.createUserInfo(userId, userInfo)
+    }
 
-    // public static deleteRoleFeature(roleId:string, featureRefId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.deleteRoleFeature(roleId, featureRefId)
-    // }
+    public static deleteRoleFeature(userId:string, userInfoId:string):Promise<{data: IUserInfo}> {
+        return userApi.deleteUserInfo(userId, userInfoId)
+    }
 }
 
 export default UserUserInfoService

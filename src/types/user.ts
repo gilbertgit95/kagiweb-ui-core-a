@@ -3,6 +3,10 @@ export type TContactInfoType = 'email-address' | 'mobile-number' | 'telephone' |
 export type TLimitedTransactionType = 'signin' | 'otp-signin' | 'forgot-pass'| 'reset-pass' | 'verify-contact'
 export type TUserInfoType = 'string' | 'number' | 'date' | 'boolean'
 
+export const contactInfoTypes = ['email-address', 'mobile-number', 'telephone', 'app-admin']
+export const limitedTransactionTypes = ['signin', 'otp-signin', 'forgot-pass', 'reset-pass', 'verify-contact']
+export const userInfoTypes = ['string', 'number', 'date', 'boolean']
+
 // create interfaces
 export interface IRoleRef {
     _id?: string,
