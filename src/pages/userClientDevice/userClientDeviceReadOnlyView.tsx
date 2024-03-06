@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
+// import moment from 'moment';
 import Grid from '@mui/material/Grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import { Button } from '@mui/material';
-import { IUser, IClientDevice, IParsedClientDevice } from '../../types/user';
+import { IUser, IClientDevice } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
-import Check from '../../components/indicators/check';
-import Config from '../../config';
+// import Check from '../../components/indicators/check';
+// import Config from '../../config';
 import UserClientDeviceService from './userClientDeviceService';
 
 interface IProps {
-    user: IUser | undefined
-    clientDeviceId: string | undefined
+    user?: IUser
+    clientDeviceId?: string
 }
 
 interface IClientDeviceInfoRow {

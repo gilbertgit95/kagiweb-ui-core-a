@@ -145,7 +145,8 @@ const UserInfoPage = () => {
                 </Grid>
 
                 <UserUserInfoReadOnlyView
-                    user={user} />
+                    user={user}
+                    userInfoId={userInfoId} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
