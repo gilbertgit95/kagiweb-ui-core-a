@@ -33,6 +33,7 @@ import UserClientDeviceTokensPage from '../pages/userClientDeviceToken/userClien
 import UserContactInfosPage from '../pages/userContactInfo/userContactInfosPage';
 import UserUserInfosPage from '../pages/userUserInfo/userUserInfosPage';
 import UserUserInfoPage from '../pages/userUserInfo/userUserInfoPage';
+import UserUserInfoEditPage from '../pages/userUserInfo/userUserInfoEditPage';
 
 import UserWorkspacesPage from '../pages/userWorkspace/userWorkspacesPage';
 
@@ -82,6 +83,7 @@ const PrivateRoutes = () => {
                     {/* user user infos */}
                     <Route path="users/view/:userId/userInfos" element={<UserUserInfosPage />} />
                     <Route path="users/view/:userId/userInfos/:userInfoId" element={<UserUserInfoPage />} />
+                    <Route path="users/edit/:userId/userInfos/:userInfoId" element={<UserUserInfoEditPage />} />
                     {/* user workspace pages */}
                     <Route path="users/view/:userId/workspaces" element={<UserWorkspacesPage />} />
 
