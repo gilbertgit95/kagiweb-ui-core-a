@@ -16,6 +16,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserUserInfoReadOnlyView from './userUserInfoReadOnlyView';
 import UserService from '../user/userService';
+import UserUserInfoService from './userUserInfoService';
 import { IUser } from '../../types/user';
 import {
   useParams
@@ -36,10 +37,11 @@ const UserInfoPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userId) {
+        if (userId && userInfoId) {
             try {
-                // const userResp = await UserService.deleteUser(userId)
-                // setUser(userResp.data)
+                await UserUserInfoService.deleteUserInfo(userId, userInfoId)
+                const userResp = await UserService.getUser(userId)
+                setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
@@ -50,6 +52,9 @@ const UserInfoPage = () => {
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
+                setPageState({...pageState, ...{
+                    deleteDialogOpen: false
+                }})
                 setInfoAndErrors({
                     ...{infoMessages: []},
                     ...{errorMessages: [err?.response?.data?.message || '']}

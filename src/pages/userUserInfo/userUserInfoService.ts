@@ -15,8 +15,8 @@ class UserUserInfoService {
 
         return undefined
     }
-    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IUserInfo[]}> {
-    //     return userApi.getRoleFeatures(roleId)
+    // public static getUserInfos(roleId:string|undefined):Promise<{data: IUserInfo[]}> {
+    //     return userApi.getUserInfos(roleId)
     // }
 
     // public static getUserInfo(id:string):Promise<{data: IUserInfo}> {
@@ -27,11 +27,11 @@ class UserUserInfoService {
         return userApi.updateUserInfo(userId, userInfo)
     }
 
-    public static createRoleFeature(userId:string, userInfo:IUserInfo):Promise<{data: IUserInfo}> {
+    public static createUserInfo(userId:string, userInfo:IUserInfo):Promise<{data: IUserInfo}> {
         return userApi.createUserInfo(userId, userInfo)
     }
 
-    public static deleteRoleFeature(userId:string, userInfoId:string):Promise<{data: IUserInfo}> {
+    public static deleteUserInfo(userId:string, userInfoId:string):Promise<{data: IUserInfo}> {
         return userApi.deleteUserInfo(userId, userInfoId)
     }
 }

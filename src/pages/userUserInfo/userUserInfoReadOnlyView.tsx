@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import UserUserInfoService from './userUserInfoService';
@@ -42,14 +41,12 @@ const UserUserInfoReadOnlyView = ({user, userInfoId}:props) => {
         { field: 'Updated', value: moment(userInfo?.updatedAt).format(Config.defaultDateTimeFormat) }
     ]
 
-    return user? (
-        <>
-            <Grid item xs={12}>
-                <PrimaryTable
-                    columnDefs={colDef}
-                    data={data} />
-            </Grid>
-        </>
+    return userInfo? (
+        <Grid item xs={12}>
+            <PrimaryTable
+                columnDefs={colDef}
+                data={data} />
+        </Grid>
     ): null
 }
 

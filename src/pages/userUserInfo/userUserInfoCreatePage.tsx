@@ -1,35 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container, Button, Divider } from '@mui/material';
+
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 
-import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import PrimaryHeader from '../../components/headers/primaryHeader';
+import UserUserInfoCreateForm from './userUserInfoCreateForm';
 import UserService from '../user/userService';
-import UserUserInfosReadOnlyView from './userUserInfosReadOnlyView';
+import UserUserInfoService from './userUserInfoService';
+import { IUser } from '../../types/user';
+import {
+  useParams
+} from 'react-router-dom';
 
-const UserUserInfosPage = () => {
+const UserInfoCreatePage = () => {
     const { userId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
+    const [user, setUser] = useState<IUser | undefined>()
 
+    const onCreated = async () => {
+        if (userId) {
+            try {
+                const userResp = await UserService.getUser(userId)
+                setUser(userResp.data)
+
+            } catch (err:any) {
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
+    }
+    
     useEffect(() => {
         const init = async () => {
+            console.log('View: ', userId)
+
             if (userId) {
                 try {
                     const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)
+
                 } catch (err:any) {
-                    console.log(err)
                     setInfoAndErrors({
                         ...{infoMessages: []},
                         ...{errorMessages: [err?.response?.data?.message || '']}
@@ -37,7 +56,7 @@ const UserUserInfosPage = () => {
                 }
             }
         }
-        console.log('initiate UserInfo features page')
+
         init()
     }, [userId])
 
@@ -45,10 +64,10 @@ const UserUserInfosPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User User Infos View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Info Create View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}
@@ -56,29 +75,11 @@ const UserUserInfosPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <Grid item xs={6} style={{alignContent: 'right'}}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                        <Button
-                            variant="text"
-                            startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/userInfos`)}>
-                            Edit
-                        </Button>
-                        <Button
-                            variant="text"
-                            color="secondary"
-                            startIcon={<DeleteIcon />}
-                            onClick={() => console.log('onDelete')}>
-                            Create
-                        </Button>
-                    </Box>
-                </Grid>
 
-                <UserUserInfosReadOnlyView user={user} />
+                <UserUserInfoCreateForm
+                    user={user}
+                    createFunc={UserUserInfoService.createUserInfo}
+                    created={onCreated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -88,4 +89,4 @@ const UserUserInfosPage = () => {
     )
 }
 
-export default UserUserInfosPage
+export default UserInfoCreatePage
