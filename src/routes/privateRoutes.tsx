@@ -30,7 +30,11 @@ import UserLimitedTransactionsPage from '../pages/userLimitedTransaction/userLim
 import UserClientDevicesPage from '../pages/userClientDevice/userClientDevicesPage';
 import UserClientDevicePage from '../pages/userClientDevice/userClientDevicePage';
 import UserClientDeviceTokensPage from '../pages/userClientDeviceToken/userClientDeviceTokensPage';
+
 import UserContactInfosPage from '../pages/userContactInfo/userContactInfosPage';
+import UserContactInfoPage from '../pages/userContactInfo/userContactInfoPage';
+import UserContactInfoEditPage from '../pages/userContactInfo/userContactInfoEditPage';
+import UserContactInfoCreatePage from '../pages/userContactInfo/userContactInfoCreatePage';
 
 import UserUserInfosPage from '../pages/userUserInfo/userUserInfosPage';
 import UserUserInfoPage from '../pages/userUserInfo/userUserInfoPage';
@@ -82,6 +86,9 @@ const PrivateRoutes = () => {
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens" element={<UserClientDeviceTokensPage />} />
                     {/* user contact infos */}
                     <Route path="users/view/:userId/contactInfos" element={<UserContactInfosPage />} />
+                    <Route path="users/view/:userId/contactInfos/:contactInfoId" element={<UserContactInfoPage />} />
+                    <Route path="users/edit/:userId/contactInfos/:contactInfoId" element={<UserContactInfoEditPage />} />
+                    <Route path="users/create/:userId/contactInfos" element={<UserContactInfoCreatePage />} />
                     {/* user user infos */}
                     <Route path="users/view/:userId/userInfos" element={<UserUserInfosPage />} />
                     <Route path="users/view/:userId/userInfos/:userInfoId" element={<UserUserInfoPage />} />

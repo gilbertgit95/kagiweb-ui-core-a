@@ -17,7 +17,6 @@ interface IContactInfoRow {
     _id: string,
     type: string,
     value: string,
-    countryCode: string,
     verified: boolean,
     createdAt: string,
     updatedAt: string
@@ -34,7 +33,6 @@ const UserContactInfosReadOnlyView = ({user}:IProps) => {
                     _id: item._id || '',
                     type: item.type || '--',
                     value: item.value || '--',
-                    countryCode: item.countryCode || '--',
                     verified: Boolean(item.verified),
                     createdAt: moment(item.createdAt || '').format(Config.defaultDateTimeFormat),
                     updatedAt: moment(item.updatedAt || '').format(Config.defaultDateTimeFormat)
@@ -54,10 +52,6 @@ const UserContactInfosReadOnlyView = ({user}:IProps) => {
         {
             header: 'Type',
             field: 'type'
-        },
-        {
-            header: 'Country Code',
-            field: 'countryCode'
         },
         {
             header: 'Created',

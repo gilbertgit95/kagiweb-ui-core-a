@@ -1,29 +1,39 @@
-import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
+import userApi from '../../dataEndpoints/apiCoreA/userApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
-// import { IUser, IUserInfo, IContactInfo,TContactInfoType } from '../../types/user'
-import { IFeatureRef } from '../../types/role'
+// import { IUser, IContactInfo, IContactInfo,TContactInfoType } from '../../types/user'
+import { IUser, IContactInfo } from '../../types/user'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class UserContactInfoService {
-    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
-    //     return featureApi.getRoleFeatures(roleId)
+    public static getContactInfoById(user:IUser, userContactId:string):IContactInfo|undefined {
+
+        if (user && user.contactInfos) {
+            for (const contact of user.contactInfos) {
+                if (contact._id === userContactId) return contact
+            }
+        }
+
+        return undefined
+    }
+    // public static getContactInfos(roleId:string|undefined):Promise<{data: IContactInfo[]}> {
+    //     return userApi.getContactInfos(roleId)
     // }
 
-    // public static getFeature(id:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.getFeature(id)
+    // public static getContactInfo(id:string):Promise<{data: IContactInfo}> {
+    //     return userApi.getFeature(id)
     // }
 
-    // public static updateFeature(feature:IFeatureRef):Promise<{data: IFeatureRef}> {
-    //     return featureApi.updateFeature(feature)
-    // }
+    public static updateContactInfo(userId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
+        return userApi.updateContactInfo(userId, ContactInfo)
+    }
 
-    // public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.createRoleFeature(roleId, featureId)
-    // }
+    public static createContactInfo(userId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
+        return userApi.createContactInfo(userId, ContactInfo)
+    }
 
-    // public static deleteRoleFeature(roleId:string, featureRefId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.deleteRoleFeature(roleId, featureRefId)
-    // }
+    public static deleteContactInfo(userId:string, ContactInfoId:string):Promise<{data: IContactInfo}> {
+        return userApi.deleteContactInfo(userId, ContactInfoId)
+    }
 }
 
 export default UserContactInfoService

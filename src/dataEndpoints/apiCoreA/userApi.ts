@@ -1,7 +1,7 @@
 import apiHelper from "./apiHelper";
 import Config from "../../config";
 import { IPageQuery } from "../../types/mixTypes";
-import { IUser, IUserInfo, IUserUpdate } from "../../types/user";
+import { IUser, IUserInfo, IContactInfo, IUserUpdate } from "../../types/user";
 
 class UserApi {
     public static getUsers(query:IPageQuery = {}) {
@@ -102,6 +102,44 @@ class UserApi {
             url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/userInfos/${ userInfoId }`
         })
     }
+
+    // contact info
+        // user info
+        public static updateContactInfo(userId:string, contactInfo:IContactInfo) {
+            const data:IContactInfo = {
+                '_id': contactInfo._id,
+                'type': contactInfo.type,
+                'value': contactInfo.value
+            }
+    
+            return apiHelper.privateReq({
+                method: 'PUT',
+                url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfo._id }`,
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                data
+            })
+        }
+    
+        public static createContactInfo(userId:string, contactInfo:IContactInfo) {
+            const data:IContactInfo = {
+                'type': contactInfo.type,
+                'value': contactInfo.value
+            }
+    
+            return apiHelper.privateReq({
+                method: 'POST',
+                url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos`,
+                headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                data
+            })
+        }
+    
+        public static deleteContactInfo(userId:string, contactInfoId:string) {
+            return apiHelper.privateReq({
+                method: 'DELETE',
+                url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfoId }`
+            })
+        }
 }
 
 export default UserApi

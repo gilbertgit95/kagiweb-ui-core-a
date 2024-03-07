@@ -5,22 +5,21 @@ import EditIcon from '@mui/icons-material/Edit';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserUserInfoService from './userUserInfoService';
-import { IUser, IUserInfo, TUserInfoType, userInfoTypes } from '../../types/user';
+import UserContactInfoService from './userContactInfoService';
+import { IUser, IContactInfo, TContactInfoType, contactInfoTypes } from '../../types/user';
 
 interface props {
     user?: IUser,
-    userInfoId?: string,
-    updateFunc: (userId:string, updateData:IUserInfo) => Promise<{data:IUserInfo}>,
-    updated?: (userId:string|undefined, userInfo:IUserInfo|undefined) => void
+    contactInfoId?: string,
+    updateFunc: (userId:string, updateData:IContactInfo) => Promise<{data:IContactInfo}>,
+    updated?: (userId:string|undefined, userInfo:IContactInfo|undefined) => void
 }
 
-const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => {
-    const [userInfo, setUserInfo] = useState<IUserInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedUserInfo, setUpdatedUserInfo] = useState<IUserInfo>({
-        key: '',
+const UserUserInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) => {
+    const [contactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedContactInfo, setUpdatedContactInfo] = useState<IContactInfo>({
         value: '',
-        type: userInfoTypes[0] as TUserInfoType
+        type: contactInfoTypes[0] as TContactInfoType
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -28,22 +27,21 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setUpdatedUserInfo({...updatedUserInfo, ...{[field]: value}})
+        setUpdatedContactInfo({...updatedContactInfo, ...{[field]: value}})
     }
 
     const handleTypeSelectionChange = (event: SelectChangeEvent) => {
-        const type = event.target.value as TUserInfoType
-        setUpdatedUserInfo({...updatedUserInfo, ...{type}})
+        const type = event.target.value as TContactInfoType
+        setUpdatedContactInfo({...updatedContactInfo, ...{type}})
     }
 
     const onUpdate = async () => {
-        if (!userInfo) return
+        if (!contactInfo) return
 
-        const updateData:IUserInfo = {
-            _id: updatedUserInfo._id,
-            key: updatedUserInfo.key === userInfo.key? userInfo.key: updatedUserInfo.key,
-            value: updatedUserInfo.value === userInfo.value? userInfo.value: updatedUserInfo.value,
-            type: updatedUserInfo.type === userInfo.type? userInfo.type: updatedUserInfo.type
+        const updateData:IContactInfo = {
+            _id: updatedContactInfo._id,
+            value: updatedContactInfo.value === contactInfo.value? contactInfo.value: updatedContactInfo.value,
+            type: updatedContactInfo.type === contactInfo.type? contactInfo.type: updatedContactInfo.type
         }
         console.log('save update: ', updateData)
 
@@ -69,15 +67,15 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.userInfos && userInfoId) {
-                const usrInf = UserUserInfoService.getUserInfoById(user, userInfoId)
-                setUserInfo(usrInf)
-                if (usrInf) {
-                    setUpdatedUserInfo(usrInf)
+            if (user && user.contactInfos && contactInfoId) {
+                const contactInf = UserContactInfoService.getContactInfoById(user, contactInfoId)
+                setContactInfo(contactInf)
+                if (contactInf) {
+                    setUpdatedContactInfo(contactInf)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Info does not exist on this user']}
+                        ...{errorMessages: ['Contact info does not exist on this user']}
                     })
                 }
             }
@@ -85,7 +83,7 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
 
         init()
 
-    }, [user, userInfoId])
+    }, [user, contactInfoId])
 
     const itemSx = {
         display: 'flex',
@@ -95,19 +93,18 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
     }
 
     const hasChanges = (() => {
-        if (!userInfo) return false
+        if (!contactInfo) return false
 
         return !(
-            userInfo.key !== updatedUserInfo.key ||
-            userInfo.value !== updatedUserInfo.value ||
-            userInfo.type !== updatedUserInfo.type
+            contactInfo.value !== updatedContactInfo.value ||
+            contactInfo.type !== updatedContactInfo.type
         )
     })()
 
     return user? (
         <>
             {
-                userInfo? (
+                contactInfo? (
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
@@ -116,25 +113,14 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
                             <Grid item xs={8} md={9}>
                                 <Select
                                     fullWidth
-                                    value={updatedUserInfo?.type}
+                                    value={updatedContactInfo?.type}
                                     onChange={handleTypeSelectionChange}>
                                     {
-                                        userInfoTypes.map((item, index) => (
+                                        contactInfoTypes.map((item, index) => (
                                             <MenuItem key={index} value={item}>{ item }</MenuItem>
                                         ))
                                     }
                                 </Select>
-                            </Grid>
-                        </Grid>
-                        <Grid container item xs={12}>
-                            <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">Key</Typography>
-                            </Grid>
-                            <Grid item xs={8} md={9}>
-                                <TextField
-                                    fullWidth
-                                    defaultValue={updatedUserInfo?.key || ''}
-                                    onChange={(e) => handleTextFieldChange('key', e.target.value)} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>
@@ -144,7 +130,7 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedUserInfo?.value || ''}
+                                    defaultValue={updatedContactInfo?.value || ''}
                                     onChange={(e) => handleTextFieldChange('value', e.target.value)} />
                             </Grid>
                         </Grid>
@@ -166,7 +152,7 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
                 <Button
                     startIcon={<EditIcon />}
                     onClick={onUpdate}
-                    disabled={hasChanges || !userInfo}>
+                    disabled={hasChanges || !contactInfo}>
                     Update
                 </Button>
             </Grid>

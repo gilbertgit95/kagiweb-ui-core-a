@@ -1,34 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container, Button, Divider } from '@mui/material';
+
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-// import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
 
-import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import PrimaryHeader from '../../components/headers/primaryHeader';
+import UserContactInfoEditForm from './userContactInfoEditForm';
 import UserService from '../user/userService';
-import UserContactInfosReadOnlyView from './userContactInfosReadOnlyView';
+import UserContactInfoService from './userContactInfoService';
+import { IUser } from '../../types/user';
+import {
+  useParams
+} from 'react-router-dom';
 
-const UserContactInfosPage = () => {
-    const { userId } = useParams()
+const UserInfoEditPage = () => {
+    const { userId, contactInfoId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
+    const [user, setUser] = useState<IUser | undefined>()
 
+    const onUpdated = async () => {
+        if (userId) {
+            try {
+                const userResp = await UserService.getUser(userId)
+                setUser(userResp.data)
+
+            } catch (err:any) {
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
+    }
+    
     useEffect(() => {
         const init = async () => {
+            console.log('View: ', userId)
+
             if (userId) {
                 try {
                     const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)
+
                 } catch (err:any) {
-                    console.log(err)
                     setInfoAndErrors({
                         ...{infoMessages: []},
                         ...{errorMessages: [err?.response?.data?.message || '']}
@@ -36,7 +56,7 @@ const UserContactInfosPage = () => {
                 }
             }
         }
-        console.log('initiate ContactInfo features page')
+
         init()
     }, [userId])
 
@@ -44,10 +64,10 @@ const UserContactInfosPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Contact Infos View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Info Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}
@@ -55,22 +75,12 @@ const UserContactInfosPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <Grid item xs={6} style={{alignContent: 'right'}}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                        <Button
-                            variant="text"
-                            startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/contactInfos`)}>
-                            Create
-                        </Button>
-                    </Box>
-                </Grid>
 
-                <UserContactInfosReadOnlyView user={user} />
+                <UserContactInfoEditForm
+                    user={user}
+                    contactInfoId={contactInfoId}
+                    updateFunc={UserContactInfoService.updateContactInfo}
+                    updated={onUpdated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -80,4 +90,4 @@ const UserContactInfosPage = () => {
     )
 }
 
-export default UserContactInfosPage
+export default UserInfoEditPage

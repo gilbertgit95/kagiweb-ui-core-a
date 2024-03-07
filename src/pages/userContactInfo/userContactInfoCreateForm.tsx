@@ -5,19 +5,18 @@ import AddIcon from '@mui/icons-material/Add';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IUser, IUserInfo, TUserInfoType, userInfoTypes } from '../../types/user';
+import { IUser, IContactInfo, TContactInfoType, contactInfoTypes } from '../../types/user';
 
 interface props {
     user?: IUser,
-    createFunc: (userId:string, newData:IUserInfo) => Promise<{data:IUserInfo}>,
-    created?: (userId:string|undefined, userInfo:IUserInfo|undefined) => void
+    createFunc: (userId:string, newData:IContactInfo) => Promise<{data:IContactInfo}>,
+    created?: (userId:string|undefined, userInfo:IContactInfo|undefined) => void
 }
 
-const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
-    const [newUserInfo, setNewUserInfo] = useState<IUserInfo>({
-        key: '',
+const UserContactInfoCreateForm = ({user, createFunc, created}:props) => {
+    const [newContactInfo, setNewContactInfo] = useState<IContactInfo>({
         value: '',
-        type: userInfoTypes[0] as TUserInfoType
+        type: contactInfoTypes[0] as TContactInfoType
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -25,22 +24,21 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setNewUserInfo({...newUserInfo, ...{[field]: value}})
+        setNewContactInfo({...newContactInfo, ...{[field]: value}})
     }
 
     const handleTypeSelectionChange = (event: SelectChangeEvent) => {
-        const type = event.target.value as TUserInfoType
-        setNewUserInfo({...newUserInfo, ...{type}})
+        const type = event.target.value as TContactInfoType
+        setNewContactInfo({...newContactInfo, ...{type}})
     }
 
     const onCreate = async () => {
         if (!user) return
 
-        const newData:IUserInfo = {
-            _id: newUserInfo._id,
-            key: newUserInfo.key,
-            value: newUserInfo.value,
-            type: newUserInfo.type
+        const newData:IContactInfo = {
+            _id: newContactInfo._id,
+            value: newContactInfo.value,
+            type: newContactInfo.type
         }
         console.log('save update: ', newData)
 
@@ -80,25 +78,14 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
                 <Grid item xs={8} md={9}>
                     <Select
                         fullWidth
-                        value={newUserInfo?.type}
+                        value={newContactInfo?.type}
                         onChange={handleTypeSelectionChange}>
                         {
-                            userInfoTypes.map((item, index) => (
+                            contactInfoTypes.map((item, index) => (
                                 <MenuItem key={index} value={item}>{ item }</MenuItem>
                             ))
                         }
                     </Select>
-                </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Key</Typography>
-                </Grid>
-                <Grid item xs={8} md={9}>
-                    <TextField
-                        fullWidth
-                        defaultValue={newUserInfo?.key || ''}
-                        onChange={(e) => handleTextFieldChange('key', e.target.value)} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -108,7 +95,7 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={newUserInfo?.value || ''}
+                        defaultValue={newContactInfo?.value || ''}
                         onChange={(e) => handleTextFieldChange('value', e.target.value)} />
                 </Grid>
             </Grid>
@@ -135,4 +122,4 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
     ): null
 }
 
-export default UserUserInfoCreateForm
+export default UserContactInfoCreateForm
