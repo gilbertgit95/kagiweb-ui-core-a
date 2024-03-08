@@ -1,30 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Button, Divider } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import PrimaryHeader from '../../components/headers/primaryHeader';
-import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../user/userService';
-import UserRoleService from './userRoleService';
-import { IUser } from '../../types/user';
-import UserRolesEditForm from './userRolesEditForm';
 
-const UserRolesEditPage = () => {
-    const { userId } = useParams()
+import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import PrimaryHeader from '../../components/headers/primaryHeader';
+import UserLimitedTransactionEditForm from './userLimitedTransactionEditForm';
+import UserService from '../user/userService';
+import UserLimitedTransactionService from './userLimitedTransactionService';
+import { IUser } from '../../types/user';
+import {
+  useParams
+} from 'react-router-dom';
+
+const UserLimitedTransactionEditPage = () => {
+    const { userId, contactInfoId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
+    const [user, setUser] = useState<IUser | undefined>()
 
-    const reLoadUser = async () => {
+    const onUpdated = async () => {
         if (userId) {
             try {
                 const userResp = await UserService.getUser(userId)
                 setUser(userResp.data)
+
             } catch (err:any) {
                 setInfoAndErrors({
                     ...{infoMessages: []},
@@ -33,9 +38,11 @@ const UserRolesEditPage = () => {
             }
         }
     }
-
+    
     useEffect(() => {
         const init = async () => {
+            console.log('View: ', userId)
+
             if (userId) {
                 try {
                     const userResp = await UserService.getUser(userId)
@@ -49,7 +56,7 @@ const UserRolesEditPage = () => {
                 }
             }
         }
-        console.log('initiate user roles edit page')
+
         init()
     }, [userId])
 
@@ -57,10 +64,10 @@ const UserRolesEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Roles Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Limited Transactions View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}
@@ -68,12 +75,13 @@ const UserRolesEditPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <UserRolesEditForm
+
+                {/* <UserLimitedTransactionEditForm
                     user={user}
-                    updateFunc={UserRoleService.updateUserRole}
-                    createFunc={UserRoleService.createUserRole}
-                    deleteFunc={UserRoleService.deleteUserRole}
-                    onChange={reLoadUser} />
+                    contactInfoId={contactInfoId}
+                    updateFunc={UserLimitedTransactionService.updateLimitedTransaction}
+                    updated={onUpdated} /> */}
+
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
                 </Grid>
@@ -82,4 +90,4 @@ const UserRolesEditPage = () => {
     )
 }
 
-export default UserRolesEditPage
+export default UserLimitedTransactionEditPage

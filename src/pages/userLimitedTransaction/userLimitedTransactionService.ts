@@ -1,10 +1,20 @@
 import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
-// import { IUser, IUserInfo, IContactInfo,TContactInfoType } from '../../types/user'
-import { IFeatureRef } from '../../types/role'
-import { IPagination, IPageQuery } from '../../types/mixTypes'
+import { IUser, ILimitedTransaction } from '../../types/user'
+// import { IFeatureRef } from '../../types/role'
+// import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class UserRoleService {
+    public static getLimitedTransactionById(user:IUser, limitedTransactionId:string):ILimitedTransaction|null {
+
+        if (user && user.limitedTransactions) {
+            for (const lt of user.limitedTransactions) {
+                if (lt._id === limitedTransactionId) return lt
+            }
+        }
+
+        return null
+    }
     // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
     //     return featureApi.getRoleFeatures(roleId)
     // }
