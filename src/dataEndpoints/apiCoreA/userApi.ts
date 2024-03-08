@@ -1,7 +1,7 @@
 import apiHelper from "./apiHelper";
 import Config from "../../config";
 import { IPageQuery } from "../../types/mixTypes";
-import { IUser, IUserInfo, IContactInfo, IUserUpdate } from "../../types/user";
+import { IUser, IUserInfo, IContactInfo, IRoleRef, IUserUpdate } from "../../types/user";
 
 class UserApi {
     public static getUsers(query:IPageQuery = {}) {
@@ -104,42 +104,77 @@ class UserApi {
     }
 
     // contact info
-        // user info
-        public static updateContactInfo(userId:string, contactInfo:IContactInfo) {
-            const data:IContactInfo = {
-                '_id': contactInfo._id,
-                'type': contactInfo.type,
-                'value': contactInfo.value
-            }
-    
-            return apiHelper.privateReq({
-                method: 'PUT',
-                url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfo._id }`,
-                headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                data
-            })
+    public static updateContactInfo(userId:string, contactInfo:IContactInfo) {
+        const data:IContactInfo = {
+            '_id': contactInfo._id,
+            'type': contactInfo.type,
+            'value': contactInfo.value
         }
-    
-        public static createContactInfo(userId:string, contactInfo:IContactInfo) {
-            const data:IContactInfo = {
-                'type': contactInfo.type,
-                'value': contactInfo.value
-            }
-    
-            return apiHelper.privateReq({
-                method: 'POST',
-                url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos`,
-                headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                data
-            })
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfo._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createContactInfo(userId:string, contactInfo:IContactInfo) {
+        const data:IContactInfo = {
+            'type': contactInfo.type,
+            'value': contactInfo.value
         }
-    
-        public static deleteContactInfo(userId:string, contactInfoId:string) {
-            return apiHelper.privateReq({
-                method: 'DELETE',
-                url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfoId }`
-            })
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteContactInfo(userId:string, contactInfoId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfoId }`
+        })
+    }
+
+    // user roles
+    public static updateUserRole(userId:string, userRole:{_id: string, isActive?:boolean, roleId?:string}) {
+        const data = {
+            'roleId': userRole.roleId,
+            'isActive': userRole.isActive
         }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/roles/${ userRole._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createUserRole(userId:string, userRole:IRoleRef) {
+        const data:IRoleRef = {
+            'roleId': userRole.roleId,
+            'isActive': userRole.isActive
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/roles`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteUserRole(userId:string, roleRefId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/roles/${ roleRefId }`
+        })
+    }
 }
 
 export default UserApi

@@ -70,11 +70,11 @@ const RoleFeaturesEditPage = () => {
         if (error) {
             setInfoAndErrors({
                 ...{infoMessages: []},
-                ...{errorMessages: [`Out of ${ totalItems } feature${ totalItems? 's': '' }, ${ savedItems } has been saved.`]}
+                ...{errorMessages: [`Out of ${ totalItems } feature${ totalItems > 1? 's': '' }, ${ savedItems } has been saved.`]}
             })
         } else {
             setInfoAndErrors({
-                ...{infoMessages: [`Successfully added ${ totalItems } feature${ totalItems? 's': '' }.`]},
+                ...{infoMessages: [`Successfully added ${ totalItems } feature${ totalItems > 1? 's': '' }.`]},
                 ...{errorMessages: []}
             })
         }
@@ -104,11 +104,11 @@ const RoleFeaturesEditPage = () => {
         if (error) {
             setInfoAndErrors({
                 ...{infoMessages: []},
-                ...{errorMessages: [`Out of ${ totalItems } feature${ totalItems? 's': '' }, ${ savedItems } has been deleted.`]}
+                ...{errorMessages: [`Out of ${ totalItems } feature${ totalItems > 1? 's': '' }, ${ savedItems } has been deleted.`]}
             })
         } else {
             setInfoAndErrors({
-                ...{infoMessages: [`Successfully deleted ${ totalItems } feature${ totalItems? 's': '' }.`]},
+                ...{infoMessages: [`Successfully deleted ${ totalItems } feature${ totalItems > 1? 's': '' }.`]},
                 ...{errorMessages: []}
             })
         }

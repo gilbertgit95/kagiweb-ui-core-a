@@ -37,7 +37,7 @@ const UserRolesReadOnlyView = ({user}:IProps) => {
                     description: role? (role?.description || ''): 'This might have been deleted.',
                     level: role? role.level: -1,
                     absoluteAuthority: role? Boolean(role.absoluteAuthority): false,
-                    isActive: role? Boolean(item.isActive): false,
+                    isActive: Boolean(item?.isActive),
                 }
             })
             // console.log(tarnsformedData)

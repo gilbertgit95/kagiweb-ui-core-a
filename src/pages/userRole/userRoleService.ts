@@ -1,29 +1,39 @@
-import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
+import userApi from '../../dataEndpoints/apiCoreA/userApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
-// import { IUser, IUserInfo, IContactInfo,TContactInfoType } from '../../types/user'
-import { IFeatureRef } from '../../types/role'
-import { IPagination, IPageQuery } from '../../types/mixTypes'
+import { IUser, IRoleRef } from '../../types/user'
+// import { IFeatureRef } from '../../types/role'
+// import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class UserRoleService {
-    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
-    //     return featureApi.getRoleFeatures(roleId)
+    public static getActiveRoleRef(user:IUser):IRoleRef|undefined {
+        if (user && user.rolesRefs) {
+            for (const ref of user.rolesRefs) {
+                if (ref.isActive) return ref
+            }
+        }
+
+        return
+    }
+
+    // public static getUserRoles(roleId:string|undefined):Promise<{data: IRoleRef[]}> {
+    //     return userApi.getUserRoles(roleId)
     // }
 
-    // public static getFeature(id:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.getFeature(id)
+    // public static getUserRole(id:string):Promise<{data: IRoleRef}> {
+    //     return userApi.getFeature(id)
     // }
 
-    // public static updateFeature(feature:IFeatureRef):Promise<{data: IFeatureRef}> {
-    //     return featureApi.updateFeature(feature)
-    // }
+    public static updateUserRole(userId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
+        return userApi.updateUserRole(userId, UserRole)
+    }
 
-    // public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.createRoleFeature(roleId, featureId)
-    // }
+    public static createUserRole(userId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return userApi.createUserRole(userId, {roleId: roleRefId})
+    }
 
-    // public static deleteRoleFeature(roleId:string, featureRefId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.deleteRoleFeature(roleId, featureRefId)
-    // }
+    public static deleteUserRole(userId:string, UserRoleId:string):Promise<{data: IRoleRef}> {
+        return userApi.deleteUserRole(userId, UserRoleId)
+    }
 }
 
 export default UserRoleService

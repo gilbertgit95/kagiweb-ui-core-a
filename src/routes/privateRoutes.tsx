@@ -25,6 +25,7 @@ import UserPage from '../pages/user/userPage';
 import UserEditPage from '../pages/user/userEditPage';
 
 import UserRolesPage from '../pages/userRole/userRolesPage';
+import UserRolesEditPage from '../pages/userRole/userRolesEditPage';
 import UserPasswordsPage from '../pages/userPassword/userPasswordsPage';
 import UserLimitedTransactionsPage from '../pages/userLimitedTransaction/userLimitedTransactionsPage';
 import UserClientDevicesPage from '../pages/userClientDevice/userClientDevicesPage';
@@ -75,6 +76,7 @@ const PrivateRoutes = () => {
                     <Route path="users/edit/:userId" element={<UserEditPage />} />
                     {/* user roles */}
                     <Route path="users/view/:userId/roles" element={<UserRolesPage />} />
+                    <Route path="users/edit/:userId/roles" element={<UserRolesEditPage />} />
                     {/* user passwords */}
                     <Route path="users/view/:userId/passwords" element={<UserPasswordsPage />} />
                     {/* user limited transactions */}
