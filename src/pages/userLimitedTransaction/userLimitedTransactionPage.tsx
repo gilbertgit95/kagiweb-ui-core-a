@@ -94,7 +94,7 @@ const UserLimitedTransactionPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Limited Transactions Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Limited Transaction Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
