@@ -8,19 +8,19 @@ import Config from '../../config';
 
 interface props {
     user?: IUser,
-    contactInfoId?: string
+    limitedTransactionId?: string
 }
 
-const UserLimitedTransactionReadOnlyView = ({user, contactInfoId}:props) => {
+const UserLimitedTransactionReadOnlyView = ({user, limitedTransactionId}:props) => {
     const [ContactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
-        // if (user && user.contactInfos && contactInfoId) {
-        //     const contact = UserLimitedTransactionService.getLimitedTransactionById(user, contactInfoId)
+        // if (user && user.contactInfos && limitedTransactionId) {
+        //     const contact = UserLimitedTransactionService.getLimitedTransactionById(user, limitedTransactionId)
         //     setContactInfo(contact)
         // }
 
-    }, [user, contactInfoId])
+    }, [user, limitedTransactionId])
 
     const colDef:IColDef[] = [
         {

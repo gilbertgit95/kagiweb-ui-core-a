@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const UserLimitedTransactionPage = () => {
-    const { userId, contactInfoId } = useParams()
+    const { userId, limitedTransactionId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,9 +37,9 @@ const UserLimitedTransactionPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userId && contactInfoId) {
+        if (userId && limitedTransactionId) {
             try {
-                // await UserLimitedTransactionService.deleteContactInfo(userId, contactInfoId)
+                // await UserLimitedTransactionService.deleteContactInfo(userId, limitedTransactionId)
                 // const userResp = await UserService.getUser(userId)
                 // setUser(userResp.data)
                 setPageState({
@@ -65,9 +65,9 @@ const UserLimitedTransactionPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, contactInfoId)
+            console.log('View: ', userId, limitedTransactionId)
 
-            if (userId && contactInfoId) {
+            if (userId && limitedTransactionId) {
                 try {
                     const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)
@@ -115,7 +115,7 @@ const UserLimitedTransactionPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/limitedTransactions/${ contactInfoId }`)}>
+                            onClick={() => navigate(`/users/edit/${ user?._id }/limitedTransactions/${ limitedTransactionId }`)}>
                             Edit
                         </Button>
                     </Box>
@@ -123,7 +123,7 @@ const UserLimitedTransactionPage = () => {
 
                 <UserLimitedTransactionReadOnlyView
                     user={user}
-                    contactInfoId={contactInfoId} />
+                    limitedTransactionId={limitedTransactionId} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

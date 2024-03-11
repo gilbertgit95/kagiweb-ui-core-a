@@ -6,20 +6,20 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserLimitedTransactionService from './userLimitedTransactionService';
-import { IUser, IContactInfo, TContactInfoType, contactInfoTypes } from '../../types/user';
+import { IUser, ILimitedTransaction, TContactInfoType, contactInfoTypes } from '../../types/user';
 
 interface props {
     user?: IUser,
-    contactInfoId?: string,
-    updateFunc: (userId:string, updateData:IContactInfo) => Promise<{data:IContactInfo}>,
-    updated?: (userId:string|undefined, userInfo:IContactInfo|undefined) => void
+    limitedTransactionId?: string,
+    updateFunc: (userId:string, updateData:ILimitedTransaction) => Promise<{data:ILimitedTransaction}>,
+    updated?: (userId:string|undefined, userInfo:ILimitedTransaction|undefined) => void
 }
 
-const UserLimitedTransactionEditForm = ({user, contactInfoId, updateFunc, updated}:props) => {
-    const [contactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedContactInfo, setUpdatedContactInfo] = useState<IContactInfo>({
+const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc, updated}:props) => {
+    const [contactInfo, setLimitedTansaction] = useState<ILimitedTransaction & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedLimitedTransaction, setUpdatedLimitedTransaction] = useState<ILimitedTransaction>({
         value: '',
-        type: contactInfoTypes[0] as TContactInfoType
+        // type: contactInfoTypes[0] as TContactInfoType
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -27,21 +27,21 @@ const UserLimitedTransactionEditForm = ({user, contactInfoId, updateFunc, update
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setUpdatedContactInfo({...updatedContactInfo, ...{[field]: value}})
+        setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{[field]: value}})
     }
 
     const handleTypeSelectionChange = (event: SelectChangeEvent) => {
         const type = event.target.value as TContactInfoType
-        setUpdatedContactInfo({...updatedContactInfo, ...{type}})
+        setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{type}})
     }
 
     const onUpdate = async () => {
         if (!contactInfo) return
 
-        const updateData:IContactInfo = {
-            _id: updatedContactInfo._id,
-            value: updatedContactInfo.value === contactInfo.value? contactInfo.value: updatedContactInfo.value,
-            type: updatedContactInfo.type === contactInfo.type? contactInfo.type: updatedContactInfo.type
+        const updateData:ILimitedTransaction = {
+            _id: updatedLimitedTransaction._id,
+            value: updatedLimitedTransaction.value === contactInfo.value? contactInfo.value: updatedLimitedTransaction.value,
+            type: updatedLimitedTransaction.type === contactInfo.type? contactInfo.type: updatedLimitedTransaction.type
         }
         console.log('save update: ', updateData)
 
@@ -67,11 +67,11 @@ const UserLimitedTransactionEditForm = ({user, contactInfoId, updateFunc, update
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.contactInfos && contactInfoId) {
-                const contactInf = UserLimitedTransactionService.getLimitedTransactionById(user, contactInfoId)
-                // setContactInfo(contactInf)
+            if (user && user.contactInfos && limitedTransactionId) {
+                const contactInf = UserLimitedTransactionService.getLimitedTransactionById(user, limitedTransactionId)
+                // setLimitedTansaction(contactInf)
                 // if (contactInf) {
-                //     setUpdatedContactInfo(contactInf)
+                //     setUpdatedLimitedTransaction(contactInf)
                 // } else {
                 //     setInfoAndErrors({
                 //         ...{infoMessages: []},
@@ -83,7 +83,7 @@ const UserLimitedTransactionEditForm = ({user, contactInfoId, updateFunc, update
 
         init()
 
-    }, [user, contactInfoId])
+    }, [user, limitedTransactionId])
 
     const itemSx = {
         display: 'flex',
@@ -96,8 +96,8 @@ const UserLimitedTransactionEditForm = ({user, contactInfoId, updateFunc, update
         if (!contactInfo) return false
 
         return !(
-            contactInfo.value !== updatedContactInfo.value ||
-            contactInfo.type !== updatedContactInfo.type
+            contactInfo.value !== updatedLimitedTransaction.value ||
+            contactInfo.type !== updatedLimitedTransaction.type
         )
     })()
 
@@ -113,7 +113,7 @@ const UserLimitedTransactionEditForm = ({user, contactInfoId, updateFunc, update
                             <Grid item xs={8} md={9}>
                                 <Select
                                     fullWidth
-                                    value={updatedContactInfo?.type}
+                                    value={updatedLimitedTransaction?.type}
                                     onChange={handleTypeSelectionChange}>
                                     {
                                         contactInfoTypes.map((item, index) => (
@@ -130,7 +130,7 @@ const UserLimitedTransactionEditForm = ({user, contactInfoId, updateFunc, update
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedContactInfo?.value || ''}
+                                    defaultValue={updatedLimitedTransaction?.value || ''}
                                     onChange={(e) => handleTextFieldChange('value', e.target.value)} />
                             </Grid>
                         </Grid>
