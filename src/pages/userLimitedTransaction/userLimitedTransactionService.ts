@@ -5,7 +5,7 @@ import { IUser, ILimitedTransaction } from '../../types/user'
 // import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class UserRoleService {
-    public static getLimitedTransactionById(user:IUser, limitedTransactionId:string):ILimitedTransaction|null {
+    public static getLimitedTransactionById(user:IUser, limitedTransactionId:string):ILimitedTransaction|undefined {
 
         if (user && user.limitedTransactions) {
             for (const lt of user.limitedTransactions) {
@@ -13,7 +13,7 @@ class UserRoleService {
             }
         }
 
-        return null
+        return undefined
     }
     // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
     //     return featureApi.getRoleFeatures(roleId)
