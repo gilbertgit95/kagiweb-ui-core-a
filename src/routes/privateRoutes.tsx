@@ -30,6 +30,7 @@ import UserPasswordsPage from '../pages/userPassword/userPasswordsPage';
 
 import UserLimitedTransactionsPage from '../pages/userLimitedTransaction/userLimitedTransactionsPage';
 import UserLimitedTransactionPage from '../pages/userLimitedTransaction/userLimitedTransactionPage';
+import UserLimitedTransactionEditPage from '../pages/userLimitedTransaction/userLimitedTransactionEditPage';
 
 import UserClientDevicesPage from '../pages/userClientDevice/userClientDevicesPage';
 import UserClientDevicePage from '../pages/userClientDevice/userClientDevicePage';
@@ -85,6 +86,7 @@ const PrivateRoutes = () => {
                     {/* user limited transactions */}
                     <Route path="users/view/:userId/limitedTransactions" element={<UserLimitedTransactionsPage />} />
                     <Route path="users/view/:userId/limitedTransactions/:limitedTransactionId" element={<UserLimitedTransactionPage />} />
+                    <Route path="users/edit/:userId/limitedTransactions/:limitedTransactionId" element={<UserLimitedTransactionEditPage />} />
                     {/* user client devices */}
                     <Route path="users/view/:userId/clientDevices" element={<UserClientDevicesPage />} />
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId" element={<UserClientDevicePage />} />
