@@ -1,7 +1,7 @@
 import apiHelper from "./apiHelper";
 import Config from "../../config";
 import { IPageQuery } from "../../types/mixTypes";
-import { IUser, IUserInfo, IContactInfo, IRoleRef, IUserUpdate } from "../../types/user";
+import { IUser, IUserInfo, IContactInfo, IRoleRef, IUserUpdate, ILimitedTransaction } from "../../types/user";
 
 class UserApi {
     public static getUsers(query:IPageQuery = {}) {
@@ -173,6 +173,26 @@ class UserApi {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/roles/${ roleRefId }`
+        })
+    }
+
+    // limited transaction
+    public static updateUserLT(userId:string, lt:ILimitedTransaction) {
+        const data = {
+            'limit': lt.limit,
+            'attempts': lt.attempts,
+            // 'type': lt.type,
+            'key': lt.key,
+            'value': lt.value,
+            'expTime': lt.expTime,
+            // 'recipient': lt.recipient,
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/limitedTransactions/${ lt._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
         })
     }
 }

@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const UserLimitedTransactionEditPage = () => {
-    const { userId, contactInfoId } = useParams()
+    const { userId, limitedTransactionId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -76,11 +76,11 @@ const UserLimitedTransactionEditPage = () => {
                     </Button>
                 </Grid>
 
-                {/* <UserLimitedTransactionEditForm
+                <UserLimitedTransactionEditForm
                     user={user}
-                    contactInfoId={contactInfoId}
-                    updateFunc={UserLimitedTransactionService.updateLimitedTransaction}
-                    updated={onUpdated} /> */}
+                    limitedTransactionId={limitedTransactionId}
+                    updateFunc={UserLimitedTransactionService.updateLT}
+                    updated={onUpdated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

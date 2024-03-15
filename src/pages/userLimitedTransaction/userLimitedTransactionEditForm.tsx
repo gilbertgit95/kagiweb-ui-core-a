@@ -74,16 +74,16 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
     useEffect(() => {
         const init = async () => {
             if (user && user.limitedTransactions && limitedTransactionId) {
-                const contactInf = UserLimitedTransactionService.getLimitedTransactionById(user, limitedTransactionId)
-                // setLimitedTansaction(contactInf)
-                // if (contactInf) {
-                //     setUpdatedLimitedTransaction(contactInf)
-                // } else {
-                //     setInfoAndErrors({
-                //         ...{infoMessages: []},
-                //         ...{errorMessages: ['Contact info does not exist on this user']}
-                //     })
-                // }
+                const lt = UserLimitedTransactionService.getLimitedTransactionById(user, limitedTransactionId)
+                setLimitedTansaction(lt)
+                if (lt) {
+                    setUpdatedLimitedTransaction(lt)
+                } else {
+                    setInfoAndErrors({
+                        ...{infoMessages: []},
+                        ...{errorMessages: ['Limited transaction does not exist on this user']}
+                    })
+                }
             }
         }
 
@@ -119,8 +119,9 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
                             <Grid item xs={8} md={9}>
                                 <Select
                                     fullWidth
-                                    value={updatedLimitedTransaction?.type}
-                                    onChange={handleTypeSelectionChange}>
+                                    disabled
+                                    value={updatedLimitedTransaction?.type}>
+                                    {/* onChange={handleTypeSelectionChange}> */}
                                     {
                                         limitedTransactionTypes.map((item, index) => (
                                             <MenuItem key={index} value={item}>{ item }</MenuItem>
