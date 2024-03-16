@@ -36,10 +36,10 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
         setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{[field]: value}})
     }
 
-    const handleTypeSelectionChange = (event: SelectChangeEvent) => {
-        const type = event.target.value as TLimitedTransactionType
-        setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{type}})
-    }
+    // const handleTypeSelectionChange = (event: SelectChangeEvent) => {
+    //     const type = event.target.value as TLimitedTransactionType
+    //     setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{type}})
+    // }
 
     const onUpdate = async () => {
         if (!limitedTransaction) return
@@ -132,6 +132,17 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
                         </Grid>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Key</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    defaultValue={updatedLimitedTransaction?.key || ''}
+                                    onChange={(e) => handleTextFieldChange('key', e.target.value)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
                                 <Typography variant="subtitle1">Value</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
@@ -139,6 +150,28 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
                                     fullWidth
                                     defaultValue={updatedLimitedTransaction?.value || ''}
                                     onChange={(e) => handleTextFieldChange('value', e.target.value)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Limit</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    defaultValue={updatedLimitedTransaction?.limit || ''}
+                                    onChange={(e) => handleTextFieldChange('limit', e.target.value)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Attempts</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    defaultValue={updatedLimitedTransaction?.attempts || ''}
+                                    onChange={(e) => handleTextFieldChange('attempts', e.target.value)} />
                             </Grid>
                         </Grid>
                     </>
