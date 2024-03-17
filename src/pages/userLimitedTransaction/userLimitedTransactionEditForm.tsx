@@ -50,31 +50,36 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
     const onUpdate = async () => {
         if (!limitedTransaction) return
 
-        // const updateData:ILimitedTransaction = {
-        //     _id: updatedLimitedTransaction._id,
-        //     value: updatedLimitedTransaction.value === limitedTransaction.value? limitedTransaction.value: updatedLimitedTransaction.value,
-        //     type: updatedLimitedTransaction.type === limitedTransaction.type? limitedTransaction.type: updatedLimitedTransaction.type
-        // }
-        // console.log('save update: ', updateData)
+        const updateData:ILimitedTransaction = {
+            _id: updatedLimitedTransaction._id,
+            key: updatedLimitedTransaction.key === limitedTransaction.key? limitedTransaction.key: updatedLimitedTransaction.key,
+            value: updatedLimitedTransaction.value === limitedTransaction.value? limitedTransaction.value: updatedLimitedTransaction.value,
+            limit: updatedLimitedTransaction.limit === limitedTransaction.limit? limitedTransaction.limit: updatedLimitedTransaction.limit,
+            attempts: updatedLimitedTransaction.attempts === limitedTransaction.attempts? limitedTransaction.attempts: updatedLimitedTransaction.attempts,
+            disabled: updatedLimitedTransaction.disabled === limitedTransaction.disabled? limitedTransaction.disabled: updatedLimitedTransaction.disabled,
+            recipient: limitedTransaction.recipient,
+            type: limitedTransaction.type
+        }
+        console.log('save update: ', updateData)
 
-        // // // send update data to the api
-        // if (user?._id) {
-        //     try {
-        //         const reqResp = await updateFunc(user._id, updateData)
-        //         setInfoAndErrors({
-        //             ...{infoMessages: ['Successfull Update']},
-        //             ...{errorMessages: []}
-        //         })
-        //         if (updated) updated(user?._id, reqResp?.data)
-        //     } catch (err:any) {
-        //         // error while updating
-        //         // log to the UI
-        //         setInfoAndErrors({
-        //             ...infoAndErrors,
-        //             ...{errorMessages: [err?.response?.data?.message || '']}
-        //         })
-        //     }
-        // }
+        // send update data to the api
+        if (user?._id) {
+            try {
+                const reqResp = await updateFunc(user._id, updateData)
+                setInfoAndErrors({
+                    ...{infoMessages: ['Successfull Update']},
+                    ...{errorMessages: []}
+                })
+                if (updated) updated(user?._id, reqResp?.data)
+            } catch (err:any) {
+                // error while updating
+                // log to the UI
+                setInfoAndErrors({
+                    ...infoAndErrors,
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
     }
 
     useEffect(() => {
