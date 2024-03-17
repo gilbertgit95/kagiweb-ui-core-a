@@ -181,10 +181,11 @@ class UserApi {
         const data = {
             'limit': lt.limit,
             'attempts': lt.attempts,
-            // 'type': lt.type,
             'key': lt.key,
             'value': lt.value,
             'expTime': lt.expTime,
+            'disabled': lt.disabled,
+            // 'type': lt.type,
             // 'recipient': lt.recipient,
         }
 

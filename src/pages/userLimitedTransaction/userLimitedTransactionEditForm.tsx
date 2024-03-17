@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { Button, Typography, TextField } from '@mui/material';
+import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,8 +32,14 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
         infoMessages: []
     })
 
-    const handleTextFieldChange = (field:string, value:string) => {
-        setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{[field]: value}})
+    const handleTextFieldChange = (field:string, value:string, isNumber:boolean=false) => {
+        let val:string|number = isNumber? parseInt(value): value
+        setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{[field]: val}})
+    }
+
+    const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
+        // console.log(event.target.checked)
+        setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{[field]: event.target.checked}})
     }
 
     // const handleTypeSelectionChange = (event: SelectChangeEvent) => {
@@ -102,8 +108,11 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
         if (!limitedTransaction) return false
 
         return !(
+            limitedTransaction.key !== updatedLimitedTransaction.key ||
             limitedTransaction.value !== updatedLimitedTransaction.value ||
-            limitedTransaction.type !== updatedLimitedTransaction.type
+            limitedTransaction.limit !== updatedLimitedTransaction.limit ||
+            limitedTransaction.attempts !== updatedLimitedTransaction.attempts ||
+            limitedTransaction.disabled !== updatedLimitedTransaction.disabled
         )
     })()
 
@@ -159,8 +168,9 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedLimitedTransaction?.limit || ''}
-                                    onChange={(e) => handleTextFieldChange('limit', e.target.value)} />
+                                    type="number"
+                                    defaultValue={updatedLimitedTransaction?.limit || 0}
+                                    onChange={(e) => handleTextFieldChange('limit', e.target.value, true)} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>
@@ -170,8 +180,19 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedLimitedTransaction?.attempts || ''}
-                                    onChange={(e) => handleTextFieldChange('attempts', e.target.value)} />
+                                    type="number"
+                                    defaultValue={updatedLimitedTransaction?.attempts || 0}
+                                    onChange={(e) => handleTextFieldChange('attempts', e.target.value, true)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Disabled</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Switch
+                                    onChange={e => handleSwitchChange('disabled', e)}
+                                    checked={updatedLimitedTransaction.disabled} />
                             </Grid>
                         </Grid>
                     </>

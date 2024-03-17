@@ -4,7 +4,7 @@ import { IUser, ILimitedTransaction } from '../../types/user'
 // import { IFeatureRef } from '../../types/role'
 // import { IPagination, IPageQuery } from '../../types/mixTypes'
 
-class UserRoleService {
+class UserLimitedTransactionService {
     public static getLimitedTransactionById(user:IUser, limitedTransactionId:string):ILimitedTransaction|undefined {
 
         if (user && user.limitedTransactions) {
@@ -36,4 +36,4 @@ class UserRoleService {
     // }
 }
 
-export default UserRoleService
+export default UserLimitedTransactionService
