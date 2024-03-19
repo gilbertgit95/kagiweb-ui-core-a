@@ -15,7 +15,7 @@ interface props {
     updated?: (userId:string|undefined, userInfo:IContactInfo|undefined) => void
 }
 
-const UserUserInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) => {
+const UserClientDeviceTokenEditForm = ({user, contactInfoId, updateFunc, updated}:props) => {
     const [contactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedContactInfo, setUpdatedContactInfo] = useState<IContactInfo>({
         value: '',
@@ -160,4 +160,4 @@ const UserUserInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) 
     ): null
 }
 
-export default UserUserInfoEditForm
+export default UserClientDeviceTokenEditForm

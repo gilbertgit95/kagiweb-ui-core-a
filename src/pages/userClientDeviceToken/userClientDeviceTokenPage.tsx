@@ -22,7 +22,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-const UserInfoPage = () => {
+const UserClientDeviceTokenPage = () => {
     const { userId, contactInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -161,4 +161,4 @@ const UserInfoPage = () => {
     )
 }
 
-export default UserInfoPage
+export default UserClientDeviceTokenPage

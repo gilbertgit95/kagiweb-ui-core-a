@@ -11,7 +11,7 @@ interface props {
     contactInfoId?: string
 }
 
-const UserLimitedTransactionReadOnlyView = ({user, contactInfoId}:props) => {
+const UserClientDeviceTokenReadOnlyView = ({user, contactInfoId}:props) => {
     const [ContactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
@@ -50,4 +50,4 @@ const UserLimitedTransactionReadOnlyView = ({user, contactInfoId}:props) => {
     ): null
 }
 
-export default UserLimitedTransactionReadOnlyView
+export default UserClientDeviceTokenReadOnlyView
