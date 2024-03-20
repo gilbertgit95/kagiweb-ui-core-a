@@ -7,16 +7,16 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoEditForm from './userContactInfoEditForm';
+import UserClientDeviceEditForm from './userClientDeviceEditForm';
 import UserService from '../user/userService';
-import UserContactInfoService from './userContactInfoService';
+import UserClientDeviceService from './userClientDeviceService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserClientDeviceTokenEditPage = () => {
-    const { userId, contactInfoId } = useParams()
+    const { userId, clientDeviceId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -64,7 +64,7 @@ const UserClientDeviceTokenEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Info Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Client Device Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,10 +76,10 @@ const UserClientDeviceTokenEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserContactInfoEditForm
+                <UserClientDeviceEditForm
                     user={user}
-                    contactInfoId={contactInfoId}
-                    updateFunc={UserContactInfoService.updateContactInfo}
+                    clientDeviceId={clientDeviceId}
+                    updateFunc={UserClientDeviceService.updateClientDevice}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

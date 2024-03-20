@@ -1,7 +1,7 @@
 import apiHelper from "./apiHelper";
 import Config from "../../config";
 import { IPageQuery } from "../../types/mixTypes";
-import { IUser, IUserInfo, IContactInfo, IRoleRef, IUserUpdate, ILimitedTransaction } from "../../types/user";
+import { IUser, IUserInfo, IContactInfo, IRoleRef, IUserUpdate, ILimitedTransaction, IClientDevice } from "../../types/user";
 
 class UserApi {
     public static getUsers(query:IPageQuery = {}) {
@@ -194,6 +194,42 @@ class UserApi {
             url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/limitedTransactions/${ lt._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
+        })
+    }
+
+    // client device
+    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}) {
+        const data:{_id?:string, ua?:string, disabled?:boolean} = {
+            'ua': clientDevice.ua,
+            'disabled': clientDevice.disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDevice._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createClientDevice(userId:string, clientDevice:IClientDevice) {
+        const data:IClientDevice = {
+            'ua': clientDevice.ua,
+            'disabled': clientDevice.disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteClientDevice(userId:string, clientDeviceId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }`
         })
     }
 }

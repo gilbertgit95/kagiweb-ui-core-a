@@ -7,9 +7,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoCreateForm from './userContactInfoCreateForm';
+import UserClientDeviceCreateForm from './userClientDeviceCreateForm';
 import UserService from '../user/userService';
-import UserContactInfoService from './userContactInfoService';
+import UserClientDeviceService from './userClientDeviceService';
 import { IUser } from '../../types/user';
 import {
   useParams
@@ -64,7 +64,7 @@ const UserClientDeviceTokenCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Info Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Client Device Create View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,9 +76,9 @@ const UserClientDeviceTokenCreatePage = () => {
                     </Button>
                 </Grid>
 
-                <UserContactInfoCreateForm
+                <UserClientDeviceCreateForm
                     user={user}
-                    createFunc={UserContactInfoService.createContactInfo}
+                    createFunc={UserClientDeviceService.createClientDevice}
                     created={onCreated} />
 
                 <Grid item xs={12}>

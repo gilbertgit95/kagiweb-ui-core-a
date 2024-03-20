@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { Button, Typography, TextField } from '@mui/material';
+import { Button, Typography, TextField, Switch } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IUser, IContactInfo, TContactInfoType, contactInfoTypes } from '../../types/user';
+import { IUser, IClientDevice } from '../../types/user';
 
 interface props {
     user?: IUser,
-    createFunc: (userId:string, newData:IContactInfo) => Promise<{data:IContactInfo}>,
-    created?: (userId:string|undefined, userInfo:IContactInfo|undefined) => void
+    createFunc: (userId:string, newData:IClientDevice) => Promise<{data:IClientDevice}>,
+    created?: (userId:string|undefined, userInfo:IClientDevice|undefined) => void
 }
 
-const UserClientDeviceTokenCreateForm = ({user, createFunc, created}:props) => {
-    const [newContactInfo, setNewContactInfo] = useState<IContactInfo>({
-        value: '',
-        type: contactInfoTypes[0] as TContactInfoType
+const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
+    const [newClientDevice, setNewClientDevice] = useState<IClientDevice>({
+        ua: '',
+        disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -24,21 +22,21 @@ const UserClientDeviceTokenCreateForm = ({user, createFunc, created}:props) => {
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setNewContactInfo({...newContactInfo, ...{[field]: value}})
+        setNewClientDevice({...newClientDevice, ...{[field]: value}})
     }
 
-    const handleTypeSelectionChange = (event: SelectChangeEvent) => {
-        const type = event.target.value as TContactInfoType
-        setNewContactInfo({...newContactInfo, ...{type}})
+    const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
+        // console.log(event.target.checked)
+        setNewClientDevice({...newClientDevice, ...{[field]: event.target.checked}})
     }
 
     const onCreate = async () => {
         if (!user) return
 
-        const newData:IContactInfo = {
-            _id: newContactInfo._id,
-            value: newContactInfo.value,
-            type: newContactInfo.type
+        const newData:IClientDevice = {
+            _id: newClientDevice._id,
+            ua: newClientDevice.ua,
+            disabled: newClientDevice.disabled
         }
         console.log('save update: ', newData)
 
@@ -73,30 +71,23 @@ const UserClientDeviceTokenCreateForm = ({user, createFunc, created}:props) => {
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Type</Typography>
-                </Grid>
-                <Grid item xs={8} md={9}>
-                    <Select
-                        fullWidth
-                        value={newContactInfo?.type}
-                        onChange={handleTypeSelectionChange}>
-                        {
-                            contactInfoTypes.map((item, index) => (
-                                <MenuItem key={index} value={item}>{ item }</MenuItem>
-                            ))
-                        }
-                    </Select>
-                </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Value</Typography>
+                    <Typography variant="subtitle1">User Agent</Typography>
                 </Grid>
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={newContactInfo?.value || ''}
-                        onChange={(e) => handleTextFieldChange('value', e.target.value)} />
+                        defaultValue={newClientDevice?.ua || ''}
+                        onChange={(e) => handleTextFieldChange('ua', e.target.value)} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Disabled</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <Switch
+                        onChange={e => handleSwitchChange('disabled', e)}
+                        checked={newClientDevice.disabled} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -122,4 +113,4 @@ const UserClientDeviceTokenCreateForm = ({user, createFunc, created}:props) => {
     ): null
 }
 
-export default UserClientDeviceTokenCreateForm
+export default UserClientDeviceCreateForm

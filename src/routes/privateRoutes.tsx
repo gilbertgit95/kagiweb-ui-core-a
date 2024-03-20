@@ -34,6 +34,8 @@ import UserLimitedTransactionEditPage from '../pages/userLimitedTransaction/user
 
 import UserClientDevicesPage from '../pages/userClientDevice/userClientDevicesPage';
 import UserClientDevicePage from '../pages/userClientDevice/userClientDevicePage';
+import UserClientDeviceCreatePage from '../pages/userClientDevice/userClientDeviceCreatePage';
+import UserClientDeviceEditPage from '../pages/userClientDevice/userClientDeviceEditPage';
 import UserClientDeviceTokensPage from '../pages/userClientDeviceToken/userClientDeviceTokensPage';
 
 import UserContactInfosPage from '../pages/userContactInfo/userContactInfosPage';
@@ -89,7 +91,9 @@ const PrivateRoutes = () => {
                     <Route path="users/edit/:userId/limitedTransactions/:limitedTransactionId" element={<UserLimitedTransactionEditPage />} />
                     {/* user client devices */}
                     <Route path="users/view/:userId/clientDevices" element={<UserClientDevicesPage />} />
+                    <Route path="users/create/:userId/clientDevices" element={<UserClientDeviceCreatePage />} />
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId" element={<UserClientDevicePage />} />
+                    <Route path="users/edit/:userId/clientDevices/:clientDeviceId" element={<UserClientDeviceEditPage />} />
                     {/* user client device tokens */}
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens" element={<UserClientDeviceTokensPage />} />
                     {/* user contact infos */}

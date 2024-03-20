@@ -1,4 +1,4 @@
-import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
+import userApi from '../../dataEndpoints/apiCoreA/userApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
 import { IUser, IClientDevice } from '../../types/user'
 import { IFeatureRef } from '../../types/role'
@@ -15,7 +15,7 @@ class UserClientDeviceService {
         return false
     }
 
-    public static getClientDeviceByUA(user:IUser, ua:string):IClientDevice|null {
+    public static getClientDeviceByUA(user:IUser, ua:string):IClientDevice|undefined {
 
         if (user && user.clientDevices) {
             for (const clientDevice of user.clientDevices) {
@@ -23,10 +23,10 @@ class UserClientDeviceService {
             }
         }
 
-        return null
+        return undefined
     }
 
-    public static getClientDeviceById(user:IUser, clientDeviceId:string):IClientDevice|null {
+    public static getClientDeviceById(user:IUser, clientDeviceId:string):IClientDevice|undefined {
 
         if (user && user.clientDevices) {
             for (const clientDevice of user.clientDevices) {
@@ -34,27 +34,20 @@ class UserClientDeviceService {
             }
         }
 
-        return null
+        return undefined
     }
-    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
-    //     return featureApi.getRoleFeatures(roleId)
-    // }
 
-    // public static getFeature(id:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.getFeature(id)
-    // }
+    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}):Promise<{data: IClientDevice}> {
+        return userApi.updateClientDevice(userId, clientDevice)
+    }
 
-    // public static updateFeature(feature:IFeatureRef):Promise<{data: IFeatureRef}> {
-    //     return featureApi.updateFeature(feature)
-    // }
+    public static createClientDevice(userId:string, clientDevice:IClientDevice):Promise<{data: IClientDevice}> {
+        return userApi.createClientDevice(userId, clientDevice)
+    }
 
-    // public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.createRoleFeature(roleId, featureId)
-    // }
-
-    // public static deleteRoleFeature(roleId:string, featureRefId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.deleteRoleFeature(roleId, featureRefId)
-    // }
+    public static deleteClientDevice(userId:string, clientDeviceId:string):Promise<{data: IClientDevice}> {
+        return userApi.deleteClientDevice(userId, clientDeviceId)
+    }
 }
 
 export default UserClientDeviceService
