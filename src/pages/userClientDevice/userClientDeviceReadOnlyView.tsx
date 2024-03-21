@@ -25,7 +25,7 @@ interface IClientDeviceSubModuleData {module: string, moduleRoute: string, conte
 
 const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
     const navigate = useNavigate()
-    const [clientDevice, setClientDevice] = useState<IClientDevice | null>(null)
+    const [clientDevice, setClientDevice] = useState<IClientDevice | undefined>(undefined)
 
     useEffect(() => {
         if (user && user.clientDevices && clientDeviceId) {
