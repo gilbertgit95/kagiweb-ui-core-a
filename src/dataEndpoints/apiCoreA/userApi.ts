@@ -1,7 +1,7 @@
 import apiHelper from "./apiHelper";
 import Config from "../../config";
 import { IPageQuery } from "../../types/mixTypes";
-import { IUser, IUserInfo, IContactInfo, IRoleRef, IUserUpdate, ILimitedTransaction, IClientDevice } from "../../types/user";
+import { IUser, IUserInfo, IContactInfo, IRoleRef, IUserUpdate, ILimitedTransaction, IClientDevice, IAccessToken } from "../../types/user";
 
 class UserApi {
     public static getUsers(query:IPageQuery = {}) {
@@ -234,29 +234,31 @@ class UserApi {
     }
 
     // client device token
-    public static updateClientDeviceToken(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}) {
-        const data:{_id?:string, ua?:string, disabled?:boolean} = {
-            'ua': clientDevice.ua,
-            'disabled': clientDevice.disabled
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken) {
+        const data:IAccessToken = {
+            'jwt': token.jwt,
+            'ipAddress': token.ipAddress,
+            'disabled': token.disabled
         }
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDevice._id }`,
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens/${ token._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
     }
 
-    public static createClientDeviceToken(userId:string, clientDevice:IClientDevice) {
-        const data:IClientDevice = {
-            'ua': clientDevice.ua,
-            'disabled': clientDevice.disabled
+    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken) {
+        const data:IAccessToken = {
+            'jwt': token.jwt,
+            'ipAddress': token.ipAddress,
+            'disabled': token.disabled
         }
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices`,
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })

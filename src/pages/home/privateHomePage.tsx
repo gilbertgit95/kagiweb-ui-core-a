@@ -11,7 +11,7 @@ const PrivateLandingPage = () => {
             justifyContent="center"
             sx={{ minHeight: '80vh' }}>
             <Grid item xs={12}>
-                <Typography color='primary' variant='h5'>Welcome! this your Dashboard</Typography>
+                <Typography color='primary' variant='h5'>Welcome! this is your Dashboard</Typography>
             </Grid>
             {/* <Grid item xs={12}>
                 <Button

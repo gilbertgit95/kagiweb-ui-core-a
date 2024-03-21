@@ -30,15 +30,15 @@ class UserClientDeviceTokenService {
     //     return featureApi.getFeature(id)
     // }
 
-    // public static updateFeature(feature:IFeatureRef):Promise<{data: IFeatureRef}> {
-    //     return featureApi.updateFeature(feature)
-    // }
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken):Promise<{data: IAccessToken}> {
+        return userApi.updateClientDeviceToken(userId, clientDeviceId, token)
+    }
 
-    // public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.createRoleFeature(roleId, featureId)
-    // }
+    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken):Promise<{data: IAccessToken}> {
+        return userApi.createClientDeviceToken(userId, clientDeviceId, token)
+    }
 
-    public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string):Promise<{data: IFeatureRef}> {
+    public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string):Promise<{data: IAccessToken}> {
         return userApi.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
     }
 }

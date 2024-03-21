@@ -39,6 +39,7 @@ import UserClientDeviceEditPage from '../pages/userClientDevice/userClientDevice
 
 import UserClientDeviceTokensPage from '../pages/userClientDeviceToken/userClientDeviceTokensPage';
 import UserClientDeviceTokenPage from '../pages/userClientDeviceToken/userClientDeviceTokenPage';
+import UserClientDeviceTokenCreatePage from '../pages/userClientDeviceToken/userClientDeviceTokenCreatePage';
 
 import UserContactInfosPage from '../pages/userContactInfo/userContactInfosPage';
 import UserContactInfoPage from '../pages/userContactInfo/userContactInfoPage';
@@ -99,6 +100,7 @@ const PrivateRoutes = () => {
                     {/* user client device tokens */}
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens" element={<UserClientDeviceTokensPage />} />
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<UserClientDeviceTokenPage />} />
+                    <Route path="users/create/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/" element={<UserClientDeviceTokenCreatePage />} />
                     {/* user contact infos */}
                     <Route path="users/view/:userId/contactInfos" element={<UserContactInfosPage />} />
                     <Route path="users/view/:userId/contactInfos/:contactInfoId" element={<UserContactInfoPage />} />

@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { Button, Typography, TextField } from '@mui/material';
+import { Button, Typography, TextField, Switch } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IUser, IContactInfo, TContactInfoType, contactInfoTypes } from '../../types/user';
+import { IUser, IAccessToken } from '../../types/user';
 
 interface props {
     user?: IUser,
-    createFunc: (userId:string, newData:IContactInfo) => Promise<{data:IContactInfo}>,
-    created?: (userId:string|undefined, userInfo:IContactInfo|undefined) => void
+    clientDeviceId?:string,
+    createFunc: (userId:string, clientDeviceId:string, newData:IAccessToken) => Promise<{data:IAccessToken}>,
+    created?: (userId:string|undefined, clientDeviceId:string, token:IAccessToken|undefined) => void
 }
 
-const UserClientDeviceTokenCreateForm = ({user, createFunc, created}:props) => {
-    const [newContactInfo, setNewContactInfo] = useState<IContactInfo>({
-        value: '',
-        type: contactInfoTypes[0] as TContactInfoType
+const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, created}:props) => {
+    const [newToken, setNewToken] = useState<IAccessToken>({
+        ipAddress: '',
+        jwt: '',
+        disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -24,29 +24,29 @@ const UserClientDeviceTokenCreateForm = ({user, createFunc, created}:props) => {
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setNewContactInfo({...newContactInfo, ...{[field]: value}})
+        setNewToken({...newToken, ...{[field]: value}})
     }
 
-    const handleTypeSelectionChange = (event: SelectChangeEvent) => {
-        const type = event.target.value as TContactInfoType
-        setNewContactInfo({...newContactInfo, ...{type}})
+    const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.checked)
+        setNewToken({...newToken, ...{[field]: event.target.checked}})
     }
 
     const onCreate = async () => {
         if (!user) return
 
-        const newData:IContactInfo = {
-            _id: newContactInfo._id,
-            value: newContactInfo.value,
-            type: newContactInfo.type
+        const newData:IAccessToken = {
+            ipAddress: newToken.ipAddress,
+            jwt: newToken.jwt,
+            disabled: newToken.disabled
         }
         console.log('save update: ', newData)
 
         // // send update data to the api
         if (user?._id) {
             try {
-                const reqResp = await createFunc(user._id, newData)
-                if (created) created(user?._id, reqResp?.data)
+                const reqResp = await createFunc(user._id, clientDeviceId || '', newData)
+                if (created) created(user?._id, clientDeviceId || '', reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}
@@ -73,30 +73,34 @@ const UserClientDeviceTokenCreateForm = ({user, createFunc, created}:props) => {
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Type</Typography>
-                </Grid>
-                <Grid item xs={8} md={9}>
-                    <Select
-                        fullWidth
-                        value={newContactInfo?.type}
-                        onChange={handleTypeSelectionChange}>
-                        {
-                            contactInfoTypes.map((item, index) => (
-                                <MenuItem key={index} value={item}>{ item }</MenuItem>
-                            ))
-                        }
-                    </Select>
-                </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Value</Typography>
+                    <Typography variant="subtitle1">IP Address</Typography>
                 </Grid>
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={newContactInfo?.value || ''}
-                        onChange={(e) => handleTextFieldChange('value', e.target.value)} />
+                        defaultValue={newToken?.ipAddress || ''}
+                        onChange={(e) => handleTextFieldChange('ipAddress', e.target.value)} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">JWT</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <TextField
+                        fullWidth
+                        defaultValue={newToken?.jwt || ''}
+                        onChange={(e) => handleTextFieldChange('jwt', e.target.value)} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Disabled</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <Switch
+                        onChange={e => handleSwitchChange('disabled', e)}
+                        checked={newToken.disabled} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>

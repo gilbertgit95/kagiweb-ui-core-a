@@ -11,7 +11,7 @@ const PublicLandingPage = () => {
             justifyContent="center"
             sx={{ minHeight: '80vh' }}>
             <Grid item xs={12}>
-                <Typography color='primary' variant='h5'>Welcome! this the home page</Typography>
+                <Typography color='primary' variant='h5'>Welcome! this is our home page</Typography>
             </Grid>
             <Grid item xs={12}>
                 <Button
