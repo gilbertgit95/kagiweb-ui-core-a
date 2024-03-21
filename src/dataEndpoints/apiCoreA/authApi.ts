@@ -10,7 +10,7 @@ class AuthApi {
 
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + 'signin',
+            url: Config.Origin + Config.RootApiEndpoint + 'signin?rand=' + Math.ceil(Math.random() * 1e12) ,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })

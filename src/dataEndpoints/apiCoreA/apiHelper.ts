@@ -1,5 +1,5 @@
-import axios, { AxiosRequestConfig } from "axios"
-// import Config from "../../config"
+import axios, { AxiosRequestConfig } from 'axios'
+// import Config from '../../config'
 
 export class Api {
     private authToken:string|undefined

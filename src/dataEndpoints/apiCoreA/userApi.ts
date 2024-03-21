@@ -232,6 +232,42 @@ class UserApi {
             url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }`
         })
     }
+
+    // client device token
+    public static updateClientDeviceToken(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}) {
+        const data:{_id?:string, ua?:string, disabled?:boolean} = {
+            'ua': clientDevice.ua,
+            'disabled': clientDevice.disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDevice._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createClientDeviceToken(userId:string, clientDevice:IClientDevice) {
+        const data:IClientDevice = {
+            'ua': clientDevice.ua,
+            'disabled': clientDevice.disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens/${ clientDeviceTokenId }`
+        })
+    }
 }
 
 export default UserApi

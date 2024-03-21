@@ -14,16 +14,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoReadOnlyView from './userContactInfoReadOnlyView';
+import UserClientDeviceTokenReadOnlyView from './userClientDeviceTokenReadOnlyView';
 import UserService from '../user/userService';
-import UserContactInfoService from './userContactInfoService';
+import UserClientDeviceTokenService from './userClientDeviceTokenService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserClientDeviceTokenPage = () => {
-    const { userId, contactInfoId } = useParams()
+    const { userId, clientDeviceId, clientDeviceTokenId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,9 +37,9 @@ const UserClientDeviceTokenPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userId && contactInfoId) {
+        if (userId && clientDeviceId && clientDeviceTokenId) {
             try {
-                await UserContactInfoService.deleteContactInfo(userId, contactInfoId)
+                await UserClientDeviceTokenService.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
                 const userResp = await UserService.getUser(userId)
                 setUser(userResp.data)
                 setPageState({
@@ -48,7 +48,7 @@ const UserClientDeviceTokenPage = () => {
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this user info']},
+                    ...{infoMessages: ['Sucessfully deleted this token']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -65,9 +65,9 @@ const UserClientDeviceTokenPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, contactInfoId)
+            console.log('View: ', userId, clientDeviceId)
 
-            if (userId && contactInfoId) {
+            if (userId && clientDeviceId) {
                 try {
                     const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)
@@ -94,7 +94,7 @@ const UserClientDeviceTokenPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Contact Info Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Token Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const UserClientDeviceTokenPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/contactInfos/${ contactInfoId }`)}>
+                            onClick={() => navigate(`/users/edit/${ user?._id }/clientDevices/${ clientDeviceId }/clientDeviceTokens/${ clientDeviceTokenId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -134,7 +134,7 @@ const UserClientDeviceTokenPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this contact info?
+                                    Are you sure you want to delete this access token?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -149,9 +149,10 @@ const UserClientDeviceTokenPage = () => {
                     </Box>
                 </Grid>
 
-                <UserContactInfoReadOnlyView
+                <UserClientDeviceTokenReadOnlyView
                     user={user}
-                    contactInfoId={contactInfoId} />
+                    clientDeviceId={clientDeviceId}
+                    clientDeviceTokenId={clientDeviceTokenId} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
