@@ -1,4 +1,4 @@
-import { Typography, Grid, Button } from '@mui/material'
+import { Typography, Grid } from '@mui/material'
 // import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 
 const PrivateLandingPage = () => {

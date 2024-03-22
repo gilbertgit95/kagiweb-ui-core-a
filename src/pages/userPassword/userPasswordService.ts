@@ -1,29 +1,27 @@
-import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
+import userApi from '../../dataEndpoints/apiCoreA/userApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
-// import { IUser, IUserInfo, IContactInfo,TContactInfoType } from '../../types/user'
-import { IFeatureRef } from '../../types/role'
-import { IPagination, IPageQuery } from '../../types/mixTypes'
+import { IPassword } from '../../types/user'
 
-class UserRoleService {
-    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
+class UserPasswordService {
+    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IPassword[]}> {
     //     return featureApi.getRoleFeatures(roleId)
     // }
 
-    // public static getFeature(id:string):Promise<{data: IFeatureRef}> {
+    // public static getFeature(id:string):Promise<{data: IPassword}> {
     //     return featureApi.getFeature(id)
     // }
 
-    // public static updateFeature(feature:IFeatureRef):Promise<{data: IFeatureRef}> {
+    // public static updateFeature(feature:IPassword):Promise<{data: IPassword}> {
     //     return featureApi.updateFeature(feature)
     // }
 
-    // public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.createRoleFeature(roleId, featureId)
-    // }
+    public static createPassword(userId:string, passInfo:{currPassword:string, newPassword:string}):Promise<{data: IPassword}> {
+        return userApi.createUserPassword(userId, passInfo)
+    }
 
-    // public static deleteRoleFeature(roleId:string, featureRefId:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.deleteRoleFeature(roleId, featureRefId)
-    // }
+    public static deletePassword(userId:string, passwordId:string):Promise<{data: IPassword}> {
+        return userApi.deleteUserPassword(userId, passwordId)
+    }
 }
 
-export default UserRoleService
+export default UserPasswordService

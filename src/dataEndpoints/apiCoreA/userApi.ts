@@ -234,8 +234,8 @@ class UserApi {
     }
 
     // client device token
-    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken) {
-        const data:IAccessToken = {
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}) {
+        const data:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean} = {
             'jwt': token.jwt,
             'ipAddress': token.ipAddress,
             'disabled': token.disabled
@@ -268,6 +268,29 @@ class UserApi {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens/${ clientDeviceTokenId }`
+        })
+    }
+
+    // user password
+    public static createUserPassword(userId:string, passInfo: {currPassword:string, newPassword:string}) {
+        const data:{userId:string, currentPassword:string, newPassword:string} = {
+            'userId': userId,
+            'newPassword': passInfo.newPassword,
+            'currentPassword': passInfo.currPassword
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/passwords`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteUserPassword(userId:string, passwordId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/passwords/${ passwordId }`
         })
     }
 }
