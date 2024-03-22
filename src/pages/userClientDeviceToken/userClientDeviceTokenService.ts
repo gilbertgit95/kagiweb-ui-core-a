@@ -1,8 +1,6 @@
 import userApi from '../../dataEndpoints/apiCoreA/userApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
 import { IUser, IAccessToken } from '../../types/user'
-import { IFeatureRef } from '../../types/role'
-import { IPagination, IPageQuery } from '../../types/mixTypes'
 import UserClientDeviceService from '../userClientDevice/userClientDeviceService'
 
 class UserClientDeviceTokenService {
@@ -30,7 +28,7 @@ class UserClientDeviceTokenService {
     //     return featureApi.getFeature(id)
     // }
 
-    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken):Promise<{data: IAccessToken}> {
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
         return userApi.updateClientDeviceToken(userId, clientDeviceId, token)
     }
 

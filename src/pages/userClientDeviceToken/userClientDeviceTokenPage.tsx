@@ -88,7 +88,7 @@ const UserClientDeviceTokenPage = () => {
         }
 
         init()
-    }, [userId])
+    }, [userId, clientDeviceId])
 
     return (
         <Container style={{paddingTop: 20}}>

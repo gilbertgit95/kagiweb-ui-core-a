@@ -21,7 +21,7 @@ const UserClientDeviceTokenReadOnlyView = ({user, clientDeviceId, clientDeviceTo
             setToken(tkn)
         }
 
-    }, [user, clientDeviceId])
+    }, [user, clientDeviceId, clientDeviceTokenId])
 
     const colDef:IColDef[] = [
         {
