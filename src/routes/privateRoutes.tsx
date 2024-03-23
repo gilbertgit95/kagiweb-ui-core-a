@@ -60,6 +60,8 @@ import OwnerPage from '../pages/owner/ownerPage';
 import OwnerEditPage from '../pages/owner/ownerEditPage';
 import OwnerUserInfosPage from '../pages/owner/ownerUserInfosPage';
 import OwnerUserInfoCreatePage from '../pages/owner/ownerUserInfoCreatePage';
+import OwnerUserInfoEditPage from '../pages/owner/ownerUserInfoEditPage';
+import OwnerUserInfoPage from '../pages/owner/ownerUserInfoPage';
 
 const PrivateRoutes = () => {
     return (
@@ -128,6 +130,8 @@ const PrivateRoutes = () => {
                     {/* owner user info */}
                     <Route path="owner/view/userInfos" element={<OwnerUserInfosPage />} />
                     <Route path="owner/create/userInfos" element={<OwnerUserInfoCreatePage />} />
+                    <Route path="owner/view/userInfos/:userInfoId" element={<OwnerUserInfoPage />} />
+                    <Route path="owner/edit/userInfos/:userInfoId" element={<OwnerUserInfoEditPage />} />
 
                     {/* for none existing page */}
                     <Route

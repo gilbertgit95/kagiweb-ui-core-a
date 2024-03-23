@@ -53,7 +53,7 @@ const UserInfoCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Info Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Info Create View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

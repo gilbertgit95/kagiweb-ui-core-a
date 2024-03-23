@@ -14,16 +14,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoReadOnlyView from './userUserInfoReadOnlyView';
-import UserService from '../user/userService';
-import UserUserInfoService from './userUserInfoService';
+import UserUserInfoReadOnlyView from '../userUserInfo/userUserInfoReadOnlyView';
+import OwnerService from './ownerService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserInfoPage = () => {
-    const { userId, userInfoId } = useParams()
+    const { userInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,10 +36,10 @@ const UserInfoPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userId && userInfoId) {
+        if (userInfoId) {
             try {
-                await UserUserInfoService.deleteUserInfo(userId, userInfoId)
-                const userResp = await UserService.getUser(userId)
+                await OwnerService.deleteUserInfo('', userInfoId)
+                const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -65,11 +64,11 @@ const UserInfoPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, userInfoId)
+            console.log('View: ', userInfoId)
 
-            if (userId && userInfoId) {
+            if (userInfoId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await OwnerService.getOwner()
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -88,7 +87,7 @@ const UserInfoPage = () => {
         }
 
         init()
-    }, [userId])
+    }, [userInfoId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -115,7 +114,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/userInfos/${ userInfoId }`)}>
+                            onClick={() => navigate(`/owner/edit/userInfos/${ userInfoId }`)}>
                             Edit
                         </Button>
                         <Button
