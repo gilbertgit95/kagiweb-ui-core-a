@@ -12,7 +12,7 @@ class WorkspaceApi {
 
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + `workspaces${ queries.length? '?' + strQueries: '' }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `workspaces${ queries.length? '?' + strQueries: '' }`
         })
     }
 }

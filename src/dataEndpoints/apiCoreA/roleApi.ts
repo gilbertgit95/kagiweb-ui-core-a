@@ -7,7 +7,7 @@ class RoleApi {
     public static getAllRoles() {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + 'roles?page=1&pageSize=10000'
+            url: Config.ServerAddress + Config.RootApiEndpoint + 'roles?page=1&pageSize=10000'
         })
     }
 
@@ -20,14 +20,14 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + `roles${ queries.length? '?' + strQueries: '' }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles${ queries.length? '?' + strQueries: '' }`
         })
     }
 
     public static getRole(id:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + `roles/${ id }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ id }`
         })
     }
 
@@ -41,7 +41,7 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `roles/${ role._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ role._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -57,7 +57,7 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `roles`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -66,7 +66,7 @@ class RoleApi {
     public static deleteRole(id:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `roles/${ id }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ id }`
         })
     }
 
@@ -74,7 +74,7 @@ class RoleApi {
         public static getRoleFeatures(roleId:string = '') {
             return apiHelper.privateReq({
                 method: 'GET',
-                url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features`
+                url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features`
             })
         }
     
@@ -85,7 +85,7 @@ class RoleApi {
     
             return apiHelper.privateReq({
                 method: 'POST',
-                url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features`,
+                url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features`,
                 headers: { 'content-type': 'application/x-www-form-urlencoded' },
                 data
             })
@@ -95,7 +95,7 @@ class RoleApi {
     
             return apiHelper.privateReq({
                 method: 'DELETE',
-                url: Config.Origin + Config.RootApiEndpoint + `roles/${ roleId }/features/${ featureRefId }`
+                url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features/${ featureRefId }`
             })
         }
 }

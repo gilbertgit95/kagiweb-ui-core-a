@@ -13,14 +13,14 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + `users${ queries.length? '?' + strQueries: '' }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users${ queries.length? '?' + strQueries: '' }`
         })
     }
 
     public static getUser(id:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ id }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ id }`
         })
     }
 
@@ -35,7 +35,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ user._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ user._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -50,7 +50,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `users`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -59,7 +59,7 @@ class UserApi {
     public static deleteUser(id:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ id }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ id }`
         })
     }
 
@@ -75,7 +75,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/userInfos/${ userInfo._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/userInfos/${ userInfo._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -90,7 +90,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/userInfos`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/userInfos`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -99,7 +99,7 @@ class UserApi {
     public static deleteUserInfo(userId:string, userInfoId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/userInfos/${ userInfoId }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/userInfos/${ userInfoId }`
         })
     }
 
@@ -113,7 +113,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfo._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfo._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -127,7 +127,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/contactInfos`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -136,7 +136,7 @@ class UserApi {
     public static deleteContactInfo(userId:string, contactInfoId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfoId }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/contactInfos/${ contactInfoId }`
         })
     }
 
@@ -149,7 +149,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/roles/${ userRole._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/roles/${ userRole._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -163,7 +163,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/roles`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/roles`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -172,7 +172,7 @@ class UserApi {
     public static deleteUserRole(userId:string, roleRefId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/roles/${ roleRefId }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/roles/${ roleRefId }`
         })
     }
 
@@ -191,7 +191,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/limitedTransactions/${ lt._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/limitedTransactions/${ lt._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -206,7 +206,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDevice._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDevice._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -220,7 +220,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/clientDevices`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -229,7 +229,7 @@ class UserApi {
     public static deleteClientDevice(userId:string, clientDeviceId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }`
         })
     }
 
@@ -243,7 +243,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens/${ token._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens/${ token._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -258,7 +258,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -267,7 +267,7 @@ class UserApi {
     public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens/${ clientDeviceTokenId }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/clientDevices/${ clientDeviceId }/accessTokens/${ clientDeviceTokenId }`
         })
     }
 
@@ -281,7 +281,7 @@ class UserApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/passwords`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/passwords`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -290,7 +290,7 @@ class UserApi {
     public static deleteUserPassword(userId:string, passwordId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `users/${ userId }/passwords/${ passwordId }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/passwords/${ passwordId }`
         })
     }
 }

@@ -90,18 +90,18 @@ const NavCustomEl = () => {
                 <Menu
                     id="menu-appbar"
                     anchorEl={anchorEl}
-                    // anchorOrigin={{
+                    // anchorServerAddress={{
                     //     vertical: 'top',
                     //     horizontal: 'right',
                     // }}
                     // keepMounted
-                    // transformOrigin={{
+                    // transformServerAddress={{
                     //     vertical: 'top',
                     //     horizontal: 'right',
                     // }}
                     open={Boolean(anchorEl)}
                     onClose={handleClose}>
-                    <MenuItem onClick={() => handleLinkClick('/owner')}>
+                    <MenuItem onClick={() => handleLinkClick('/owner/view')}>
                         <ListItemIcon>
                             <SettingsIcon />
                         </ListItemIcon>

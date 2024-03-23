@@ -58,6 +58,8 @@ import UserWorkspacesPage from '../pages/userWorkspace/userWorkspacesPage';
 
 import OwnerPage from '../pages/owner/ownerPage';
 import OwnerEditPage from '../pages/owner/ownerEditPage';
+import OwnerUserInfosPage from '../pages/owner/ownerUserInfosPage';
+import OwnerUserInfoCreatePage from '../pages/owner/ownerUserInfoCreatePage';
 
 const PrivateRoutes = () => {
     return (
@@ -121,8 +123,11 @@ const PrivateRoutes = () => {
                     <Route path="users/view/:userId/workspaces" element={<UserWorkspacesPage />} />
 
                     {/* owner pages */}
-                    <Route path="owner" element={<OwnerPage />} />
+                    <Route path="owner/view" element={<OwnerPage />} />
                     <Route path="owner/edit" element={<OwnerEditPage />} />
+                    {/* owner user info */}
+                    <Route path="owner/view/userInfos" element={<OwnerUserInfosPage />} />
+                    <Route path="owner/create/userInfos" element={<OwnerUserInfoCreatePage />} />
 
                     {/* for none existing page */}
                     <Route

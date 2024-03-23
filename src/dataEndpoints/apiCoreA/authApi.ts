@@ -10,7 +10,7 @@ class AuthApi {
 
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + 'signin?rand=' + Math.ceil(Math.random() * 1e12) ,
+            url: Config.ServerAddress + Config.RootApiEndpoint + 'signin?rand=' + Math.ceil(Math.random() * 1e12) ,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -23,7 +23,7 @@ class AuthApi {
         }
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + 'signinOTP',
+            url: Config.ServerAddress + Config.RootApiEndpoint + 'signinOTP',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -38,7 +38,7 @@ class AuthApi {
         }
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + 'signup',
+            url: Config.ServerAddress + Config.RootApiEndpoint + 'signup',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -50,7 +50,7 @@ class AuthApi {
         }
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + 'forgotPassword',
+            url: Config.ServerAddress + Config.RootApiEndpoint + 'forgotPassword',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -64,7 +64,7 @@ class AuthApi {
         }
         return apiHelper.publicReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + 'resetPassword',
+            url: Config.ServerAddress + Config.RootApiEndpoint + 'resetPassword',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -73,7 +73,7 @@ class AuthApi {
     public static signout() {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + 'signout',
+            url: Config.ServerAddress + Config.RootApiEndpoint + 'signout',
         })
     }
 }

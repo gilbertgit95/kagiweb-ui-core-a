@@ -7,7 +7,7 @@ class FeatureApi {
     public static getAllFeatures() {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + 'features?page=1&pageSize=10000'
+            url: Config.ServerAddress + Config.RootApiEndpoint + 'features?page=1&pageSize=10000'
         })
     }
 
@@ -20,14 +20,14 @@ class FeatureApi {
 
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + `features${ queries.length? '?' + strQueries: '' }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `features${ queries.length? '?' + strQueries: '' }`
         })
     }
 
     public static getFeature(id:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.Origin + Config.RootApiEndpoint + `features/${ id }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `features/${ id }`
         })
     }
 
@@ -43,7 +43,7 @@ class FeatureApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.Origin + Config.RootApiEndpoint + `features/${ feature._id }`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `features/${ feature._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -61,7 +61,7 @@ class FeatureApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.Origin + Config.RootApiEndpoint + `features`,
+            url: Config.ServerAddress + Config.RootApiEndpoint + `features`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -70,7 +70,7 @@ class FeatureApi {
     public static deleteFeature(id:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.Origin + Config.RootApiEndpoint + `features/${ id }`
+            url: Config.ServerAddress + Config.RootApiEndpoint + `features/${ id }`
         })
     }
 
