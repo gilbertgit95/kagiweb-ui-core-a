@@ -14,15 +14,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoReadOnlyView from '../userUserInfo/userUserInfoReadOnlyView';
-import OwnerService from './ownerService';
+import UserContactInfoReadOnlyView from './userContactInfoReadOnlyView';
+import UserService from '../user/userService';
+import UserContactInfoService from './userContactInfoService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserInfoPage = () => {
-    const { userInfoId } = useParams()
+    const { userId, contactInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -36,10 +37,10 @@ const UserInfoPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userInfoId) {
+        if (userId && contactInfoId) {
             try {
-                await OwnerService.deleteUserInfo('', userInfoId)
-                const userResp = await OwnerService.getOwner()
+                await UserContactInfoService.deleteContactInfo(userId, contactInfoId)
+                const userResp = await UserService.getUser(userId)
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -64,11 +65,11 @@ const UserInfoPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userInfoId)
+            console.log('View: ', userId, contactInfoId)
 
-            if (userInfoId) {
+            if (userId && contactInfoId) {
                 try {
-                    const userResp = await OwnerService.getOwner()
+                    const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -87,13 +88,13 @@ const UserInfoPage = () => {
         }
 
         init()
-    }, [userInfoId])
+    }, [userId])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Info Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Contact Info Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -114,7 +115,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/owner/edit/userInfos/${ userInfoId }`)}>
+                            onClick={() => navigate(`/users/edit/${ user?._id }/contactInfos/${ contactInfoId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -133,7 +134,7 @@ const UserInfoPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this user info?
+                                    Are you sure you want to delete this contact info?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -148,9 +149,9 @@ const UserInfoPage = () => {
                     </Box>
                 </Grid>
 
-                <UserUserInfoReadOnlyView
+                <UserContactInfoReadOnlyView
                     user={user}
-                    userInfoId={userInfoId} />
+                    contactInfoId={contactInfoId} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

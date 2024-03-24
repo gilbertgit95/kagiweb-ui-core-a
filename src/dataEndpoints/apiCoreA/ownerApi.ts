@@ -1,6 +1,6 @@
 import apiHelper from './apiHelper';
 import Config from '../../config';
-import { IUserUpdate, IUserInfo } from '../../types/user';
+import { IUserUpdate, IUserInfo, IContactInfo } from '../../types/user';
 
 class OwnerApi {
     public static getOwner() {
@@ -70,6 +70,43 @@ class OwnerApi {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: Config.ServerAddress + Config.RootApiEndpoint + `owner/userInfos/${ userInfoId }`
+        })
+    }
+
+    // contact info
+    public static updateContactInfo(userId:string, contactInfo:IContactInfo) {
+        const data:IContactInfo = {
+            '_id': contactInfo._id,
+            'type': contactInfo.type,
+            'value': contactInfo.value
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/contactInfos/${ contactInfo._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createContactInfo(userId:string, contactInfo:IContactInfo) {
+        const data:IContactInfo = {
+            'type': contactInfo.type,
+            'value': contactInfo.value
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/contactInfos`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteContactInfo(userId:string, contactInfoId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/contactInfos/${ contactInfoId }`
         })
     }
 }

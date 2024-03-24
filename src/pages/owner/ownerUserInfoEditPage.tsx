@@ -60,7 +60,7 @@ const UserInfoEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Info Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Info Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

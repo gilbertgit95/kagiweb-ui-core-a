@@ -1,6 +1,6 @@
 import OwnerApi from "../../dataEndpoints/apiCoreA/ownerApi"
 import { ISignedInUser } from "../../stores/signedInUserSlice"
-import { IUser, IUserUpdate, IUserInfo } from "../../types/user";
+import { IUser, IUserUpdate, IUserInfo, IContactInfo } from "../../types/user";
 
 class OwnerService {
     public static getOwner():Promise<{data: IUser}> {
@@ -26,6 +26,19 @@ class OwnerService {
 
     public static deleteUserInfo(userId:string, userInfoId:string):Promise<{data: IUserInfo}> {
         return OwnerApi.deleteUserInfo(userId, userInfoId)
+    }
+
+    // contact Info
+    public static updateContactInfo(userId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
+        return OwnerApi.updateContactInfo(userId, ContactInfo)
+    }
+
+    public static createContactInfo(userId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
+        return OwnerApi.createContactInfo(userId, ContactInfo)
+    }
+
+    public static deleteContactInfo(userId:string, ContactInfoId:string):Promise<{data: IContactInfo}> {
+        return OwnerApi.deleteContactInfo(userId, ContactInfoId)
     }
 }
 
