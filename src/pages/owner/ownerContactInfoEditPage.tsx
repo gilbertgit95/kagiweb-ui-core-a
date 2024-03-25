@@ -7,16 +7,17 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoEditForm from './userContactInfoEditForm';
-import UserService from '../user/userService';
-import UserContactInfoService from './userContactInfoService';
+import UserContactInfoEditForm from '../userContactInfo/userContactInfoEditForm';
+// import UserService from '../user/userService';
+// import UserContactInfoService from './userContactInfoService';
+import OwnerService from './ownerService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserInfoEditPage = () => {
-    const { userId, contactInfoId } = useParams()
+    const { contactInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -25,9 +26,22 @@ const UserInfoEditPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onUpdated = async () => {
-        if (userId) {
+        try {
+            const userResp = await OwnerService.getOwner()
+            setUser(userResp.data)
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
+    }
+    
+    useEffect(() => {
+        const init = async () => {
             try {
-                const userResp = await UserService.getUser(userId)
+                const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
 
             } catch (err:any) {
@@ -37,28 +51,9 @@ const UserInfoEditPage = () => {
                 })
             }
         }
-    }
-    
-    useEffect(() => {
-        const init = async () => {
-            console.log('View: ', userId)
-
-            if (userId) {
-                try {
-                    const userResp = await UserService.getUser(userId)
-                    setUser(userResp.data)
-
-                } catch (err:any) {
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
-            }
-        }
 
         init()
-    }, [userId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -79,7 +74,7 @@ const UserInfoEditPage = () => {
                 <UserContactInfoEditForm
                     user={user}
                     contactInfoId={contactInfoId}
-                    updateFunc={UserContactInfoService.updateContactInfo}
+                    updateFunc={OwnerService.updateContactInfo}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>
