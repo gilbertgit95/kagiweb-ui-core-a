@@ -7,16 +7,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoCreateForm from './userContactInfoCreateForm';
-import UserService from '../user/userService';
-import UserContactInfoService from './userContactInfoService';
+import UserContactInfoCreateForm from '../userContactInfo/userContactInfoCreateForm';
+import OwnerService from './ownerService';
 import { IUser } from '../../types/user';
-import {
-  useParams
-} from 'react-router-dom';
 
 const UserContactCreatePage = () => {
-    const { userId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -25,27 +20,23 @@ const UserContactCreatePage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onCreated = async () => {
-        if (userId) {
-            try {
-                const userResp = await UserService.getUser(userId)
-                setUser(userResp.data)
+        try {
+            const userResp = await OwnerService.getOwner()
+            setUser(userResp.data)
 
-            } catch (err:any) {
-                setInfoAndErrors({
-                    ...{infoMessages: []},
-                    ...{errorMessages: [err?.response?.data?.message || '']}
-                })
-            }
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
         }
     }
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId)
 
-            if (userId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await OwnerService.getOwner()
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -54,17 +45,16 @@ const UserContactCreatePage = () => {
                         ...{errorMessages: [err?.response?.data?.message || '']}
                     })
                 }
-            }
         }
 
         init()
-    }, [userId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Info Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Contact Info Create View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -78,7 +68,7 @@ const UserContactCreatePage = () => {
 
                 <UserContactInfoCreateForm
                     user={user}
-                    createFunc={UserContactInfoService.createContactInfo}
+                    createFunc={OwnerService.createContactInfo}
                     created={onCreated} />
 
                 <Grid item xs={12}>

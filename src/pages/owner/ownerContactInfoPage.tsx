@@ -14,16 +14,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoReadOnlyView from './userContactInfoReadOnlyView';
-import UserService from '../user/userService';
-import UserContactInfoService from './userContactInfoService';
+import UserContactInfoReadOnlyView from '../userContactInfo/userContactInfoReadOnlyView';
+// import UserService from '../user/userService';
+import OwnerService from './ownerService';
+// import UserContactInfoService from './userContactInfoService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserInfoPage = () => {
-    const { userId, contactInfoId } = useParams()
+    const { contactInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,10 +38,10 @@ const UserInfoPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userId && contactInfoId) {
+        if (contactInfoId) {
             try {
-                await UserContactInfoService.deleteContactInfo(userId, contactInfoId)
-                const userResp = await UserService.getUser(userId)
+                await OwnerService.deleteContactInfo('', contactInfoId)
+                const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -65,36 +66,32 @@ const UserInfoPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, contactInfoId)
+            try {
+                const userResp = await OwnerService.getOwner()
+                setUser(userResp.data)
 
-            if (userId && contactInfoId) {
-                try {
-                    const userResp = await UserService.getUser(userId)
-                    setUser(userResp.data)
+            } catch (err:any) {
+                setPageState({
+                    disableEditButton: true,
+                    disableDeleteButton: true,
+                    deleteDialogOpen: false
+                })
 
-                } catch (err:any) {
-                    setPageState({
-                        disableEditButton: true,
-                        disableDeleteButton: true,
-                        deleteDialogOpen: false
-                    })
-
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
             }
         }
 
         init()
-    }, [userId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Contact Info Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Contact Info Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +112,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/contactInfos/${ contactInfoId }`)}>
+                            onClick={() => navigate(`/owner/edit/contactInfos/${ contactInfoId }`)}>
                             Edit
                         </Button>
                         <Button

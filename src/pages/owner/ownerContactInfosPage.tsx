@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -9,11 +9,11 @@ import AddIcon from '@mui/icons-material/Add';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../user/userService';
-import UserContactInfosReadOnlyView from './userContactInfosReadOnlyView';
+// import UserService from '../user/userService';
+import OwnerService from './ownerService';
+import UserContactInfosReadOnlyView from '../userContactInfo/userContactInfosReadOnlyView';
 
 const UserContactInfosPage = () => {
-    const { userId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IUser | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -23,28 +23,26 @@ const UserContactInfosPage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
-                try {
-                    const userResp = await UserService.getUser(userId)
-                    setUser(userResp.data)
-                } catch (err:any) {
-                    console.log(err)
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
+            try {
+                const userResp = await OwnerService.getOwner()
+                setUser(userResp.data)
+            } catch (err:any) {
+                console.log(err)
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
             }
         }
         console.log('initiate ContactInfo features page')
         init()
-    }, [userId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Contact Infos View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Contact Infos View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -64,7 +62,7 @@ const UserContactInfosPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/contactInfos`)}>
+                            onClick={() => navigate(`/owner/create/contactInfos`)}>
                             Create
                         </Button>
                     </Box>
