@@ -66,6 +66,7 @@ import OwnerContactInfosPage from '../pages/owner/ownerContactInfosPage';
 import OwnerContactInfoCreatePage from '../pages/owner/ownerContactInfoCreatePage';
 import OwnerContactInfoPage from '../pages/owner/ownerContactInfoPage';
 import OwnerContactInfoEditPage from '../pages/owner/ownerContactInfoEditPage';
+import OwnerRolesPage from '../pages/owner/ownerRolesPage';
 
 const PrivateRoutes = () => {
     return (
@@ -141,6 +142,8 @@ const PrivateRoutes = () => {
                     <Route path="owner/create/contactInfos" element={<OwnerContactInfoCreatePage />} />
                     <Route path="owner/view/contactInfos/:contactInfoId" element={<OwnerContactInfoPage />} />
                     <Route path="owner/edit/contactInfos/:contactInfoId" element={<OwnerContactInfoEditPage />} />
+                    {/* owner roles */}
+                    <Route path="owner/view/roles" element={<OwnerRolesPage />} />
 
                     {/* for none existing page */}
                     <Route
