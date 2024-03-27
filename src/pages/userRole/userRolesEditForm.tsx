@@ -62,6 +62,11 @@ const UserRolesEditForm = ({user, updateFunc, createFunc, deleteFunc, onChange}:
             console.log('to activate: ', user?._id, sel)
 
             try {
+                // activate selected role
+                await updateFunc(
+                    user?._id, {_id: selRef._id || '', isActive: true }
+                )
+
                 // disable active role/s
                 for (let actRole of activeRoles) {
                     // activate selected role
@@ -69,11 +74,6 @@ const UserRolesEditForm = ({user, updateFunc, createFunc, deleteFunc, onChange}:
                         user?._id, {_id: actRole._id || '', isActive: false }
                     )
                 }
-
-                // activate selected role
-                await updateFunc(
-                    user?._id, {_id: selRef._id || '', isActive: true }
-                )
 
                 setInfoAndErrors({
                     ...{infoMessages: [`Successfully activated the selected role.`]},

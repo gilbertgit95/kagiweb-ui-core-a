@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Container, Button, Divider } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../user/userService';
-import UserRoleService from './userRoleService';
+import OwnerService from './ownerService';
 import { IUser } from '../../types/user';
-import UserRolesEditForm from './userRolesEditForm';
+import UserRolesEditForm from '../userRole/userRolesEditForm';
 
-const UserRolesEditPage = () => {
-    const { userId } = useParams()
+const OwnerRolesEditPage = () => {
     const navigate = useNavigate()
     const [user, setUser] = useState<IUser | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -21,10 +19,23 @@ const UserRolesEditPage = () => {
     })
 
     const reLoadUser = async () => {
-        if (userId) {
+        try {
+            const userResp = await OwnerService.getOwner()
+            setUser(userResp.data)
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
+    }
+
+    useEffect(() => {
+        const init = async () => {
             try {
-                const userResp = await UserService.getUser(userId)
+                const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
+
             } catch (err:any) {
                 setInfoAndErrors({
                     ...{infoMessages: []},
@@ -32,32 +43,15 @@ const UserRolesEditPage = () => {
                 })
             }
         }
-    }
-
-    useEffect(() => {
-        const init = async () => {
-            if (userId) {
-                try {
-                    const userResp = await UserService.getUser(userId)
-                    setUser(userResp.data)
-
-                } catch (err:any) {
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
-            }
-        }
         console.log('initiate user roles edit page')
         init()
-    }, [userId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Roles Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Roles Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -70,9 +64,9 @@ const UserRolesEditPage = () => {
                 </Grid>
                 <UserRolesEditForm
                     user={user}
-                    updateFunc={UserRoleService.updateUserRole}
-                    createFunc={UserRoleService.createUserRole}
-                    deleteFunc={UserRoleService.deleteUserRole}
+                    updateFunc={OwnerService.updateUserRole}
+                    createFunc={OwnerService.createUserRole}
+                    deleteFunc={OwnerService.deleteUserRole}
                     onChange={reLoadUser} />
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -82,4 +76,4 @@ const UserRolesEditPage = () => {
     )
 }
 
-export default UserRolesEditPage
+export default OwnerRolesEditPage

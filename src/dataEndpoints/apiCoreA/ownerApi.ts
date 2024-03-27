@@ -1,6 +1,6 @@
 import apiHelper from './apiHelper';
 import Config from '../../config';
-import { IUserUpdate, IUserInfo, IContactInfo } from '../../types/user';
+import { IUserUpdate, IUserInfo, IContactInfo, IRoleRef } from '../../types/user';
 
 class OwnerApi {
     public static getOwner() {
@@ -107,6 +107,42 @@ class OwnerApi {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: Config.ServerAddress + Config.RootApiEndpoint + `owner/contactInfos/${ contactInfoId }`
+        })
+    }
+
+    // roles
+    public static updateUserRole(userId:string, userRole:{_id: string, isActive?:boolean, roleId?:string}) {
+        const data = {
+            'roleId': userRole.roleId,
+            'isActive': userRole.isActive
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/roles/${ userRole._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createUserRole(userId:string, userRole:IRoleRef) {
+        const data:IRoleRef = {
+            'roleId': userRole.roleId,
+            'isActive': userRole.isActive
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/roles`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteUserRole(userId:string, roleRefId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/roles/${ roleRefId }`
         })
     }
 }

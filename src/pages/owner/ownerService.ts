@@ -1,6 +1,6 @@
 import OwnerApi from "../../dataEndpoints/apiCoreA/ownerApi"
 import { ISignedInUser } from "../../stores/signedInUserSlice"
-import { IUser, IUserUpdate, IUserInfo, IContactInfo } from "../../types/user";
+import { IUser, IUserUpdate, IUserInfo, IContactInfo, IRoleRef } from "../../types/user";
 
 class OwnerService {
     public static getOwner():Promise<{data: IUser}> {
@@ -39,6 +39,19 @@ class OwnerService {
 
     public static deleteContactInfo(userId:string, ContactInfoId:string):Promise<{data: IContactInfo}> {
         return OwnerApi.deleteContactInfo(userId, ContactInfoId)
+    }
+
+    // roles
+    public static updateUserRole(userId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
+        return OwnerApi.updateUserRole(userId, UserRole)
+    }
+
+    public static createUserRole(userId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return OwnerApi.createUserRole(userId, {roleId: roleRefId})
+    }
+
+    public static deleteUserRole(userId:string, UserRoleId:string):Promise<{data: IRoleRef}> {
+        return OwnerApi.deleteUserRole(userId, UserRoleId)
     }
 }
 

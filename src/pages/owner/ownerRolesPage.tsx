@@ -41,7 +41,7 @@ const OwnerRolesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Roles View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Roles View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
