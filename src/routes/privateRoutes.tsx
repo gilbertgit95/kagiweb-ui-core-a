@@ -71,7 +71,8 @@ import OwnerRolesEditPage from '../pages/owner/ownerRolesEditPage';
 import OwnerLimitedTransactionsPage from '../pages/owner/ownerLimitedTransactionsPage';
 import OwnerLimitedTransactionPage from '../pages/owner/ownerLimitedTransactionPage';
 import OwnerLimitedTransactionEditPage from '../pages/owner/ownerLimitedTransactionEditPage';
-
+import OwnerPasswordsPage from '../pages/owner/ownerPasswordsPage';
+import OwnerPasswordCreatePage from '../pages/owner/ownerPasswordCreatePage';
 
 const PrivateRoutes = () => {
     return (
@@ -154,6 +155,9 @@ const PrivateRoutes = () => {
                     <Route path="owner/view/limitedTransactions" element={<OwnerLimitedTransactionsPage />} />
                     <Route path="owner/view/limitedTransactions/:limitedTransactionId" element={<OwnerLimitedTransactionPage />} />
                     <Route path="owner/edit/limitedTransactions/:limitedTransactionId" element={<OwnerLimitedTransactionEditPage />} />
+                    {/* owner password */}
+                    <Route path="owner/view/passwords" element={<OwnerPasswordsPage />} />
+                    <Route path="owner/create/passwords" element={<OwnerPasswordCreatePage />} />
 
                     {/* for none existing page */}
                     <Route

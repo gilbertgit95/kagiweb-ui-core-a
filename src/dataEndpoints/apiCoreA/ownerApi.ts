@@ -166,6 +166,22 @@ class OwnerApi {
             data
         })
     }
+
+    // owner passwords
+    public static createUserPassword(userId:string, passInfo: {currPassword:string, newPassword:string}) {
+        const data:{userId:string, currentPassword:string, newPassword:string} = {
+            'userId': userId,
+            'newPassword': passInfo.newPassword,
+            'currentPassword': passInfo.currPassword
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/passwords`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
 }
 
 export default OwnerApi

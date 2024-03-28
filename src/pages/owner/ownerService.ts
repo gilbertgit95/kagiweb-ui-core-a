@@ -1,6 +1,6 @@
-import OwnerApi from "../../dataEndpoints/apiCoreA/ownerApi"
-import { ISignedInUser } from "../../stores/signedInUserSlice"
-import { IUser, IUserUpdate, IUserInfo, IContactInfo, IRoleRef, ILimitedTransaction } from "../../types/user";
+import OwnerApi from '../../dataEndpoints/apiCoreA/ownerApi'
+import { ISignedInUser } from '../../stores/signedInUserSlice'
+import { IUser, IUserUpdate, IUserInfo, IContactInfo, IRoleRef, ILimitedTransaction, IPassword } from '../../types/user';
 
 class OwnerService {
     public static getOwner():Promise<{data: IUser}> {
@@ -57,6 +57,11 @@ class OwnerService {
     // limited transaction
     public static updateLT(userId:string, lt:ILimitedTransaction):Promise<{data: ILimitedTransaction}> {
         return OwnerApi.updateUserLT(userId, lt)
+    }
+
+    // owner password
+    public static createPassword(userId:string, passInfo:{currPassword:string, newPassword:string}):Promise<{data: IPassword}> {
+        return OwnerApi.createUserPassword(userId, passInfo)
     }
 }
 
