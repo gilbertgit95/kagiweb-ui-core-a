@@ -7,16 +7,17 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserLimitedTransactionEditForm from './userLimitedTransactionEditForm';
-import UserService from '../user/userService';
-import UserLimitedTransactionService from './userLimitedTransactionService';
+import UserLimitedTransactionEditForm from '../userLimitedTransaction/userLimitedTransactionEditForm';
+// import UserService from '../user/userService';
+import OwnerService from './ownerService';
+// import UserLimitedTransactionService from './userLimitedTransactionService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const OwnerLimitedTransactionEditPage = () => {
-    const { userId, limitedTransactionId } = useParams()
+    const { limitedTransactionId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -25,9 +26,23 @@ const OwnerLimitedTransactionEditPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onUpdated = async () => {
-        if (userId) {
+        try {
+            const userResp = await OwnerService.getOwner()
+            setUser(userResp.data)
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
+    }
+    
+    useEffect(() => {
+        const init = async () => {
+
             try {
-                const userResp = await UserService.getUser(userId)
+                const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
 
             } catch (err:any) {
@@ -37,34 +52,15 @@ const OwnerLimitedTransactionEditPage = () => {
                 })
             }
         }
-    }
-    
-    useEffect(() => {
-        const init = async () => {
-            console.log('View: ', userId)
-
-            if (userId) {
-                try {
-                    const userResp = await UserService.getUser(userId)
-                    setUser(userResp.data)
-
-                } catch (err:any) {
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
-            }
-        }
 
         init()
-    }, [userId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Limited Transactions Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Limited Transactions Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -79,7 +75,7 @@ const OwnerLimitedTransactionEditPage = () => {
                 <UserLimitedTransactionEditForm
                     user={user}
                     limitedTransactionId={limitedTransactionId}
-                    updateFunc={UserLimitedTransactionService.updateLT}
+                    updateFunc={OwnerService.updateLT}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

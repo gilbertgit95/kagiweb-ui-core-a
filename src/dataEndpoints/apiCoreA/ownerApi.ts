@@ -1,6 +1,6 @@
 import apiHelper from './apiHelper';
 import Config from '../../config';
-import { IUserUpdate, IUserInfo, IContactInfo, IRoleRef } from '../../types/user';
+import { IUserUpdate, IUserInfo, IContactInfo, IRoleRef, ILimitedTransaction } from '../../types/user';
 
 class OwnerApi {
     public static getOwner() {
@@ -143,6 +143,27 @@ class OwnerApi {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: Config.ServerAddress + Config.RootApiEndpoint + `owner/roles/${ roleRefId }`
+        })
+    }
+
+    // limited transaction
+    public static updateUserLT(userId:string, lt:ILimitedTransaction) {
+        const data = {
+            'limit': lt.limit,
+            'attempts': lt.attempts,
+            'key': lt.key,
+            'value': lt.value,
+            'expTime': lt.expTime,
+            'disabled': lt.disabled,
+            // 'type': lt.type,
+            // 'recipient': lt.recipient,
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/limitedTransactions/${ lt._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
         })
     }
 }
