@@ -14,16 +14,17 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserLimitedTransactionReadOnlyView from './userLimitedTransactionReadOnlyView';
-import UserService from '../user/userService';
+import UserLimitedTransactionReadOnlyView from '../userLimitedTransaction/userLimitedTransactionReadOnlyView';
+// import UserService from '../user/userService';
+import OwnerService from './ownerService';
 // import UserLimitedTransactionService from './userLimitedTransactionService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserLimitedTransactionPage = () => {
-    const { userId, limitedTransactionId } = useParams()
+const OwnerLimitedTransactionPage = () => {
+    const { limitedTransactionId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,7 +38,7 @@ const UserLimitedTransactionPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     // const onDelete = async () => {
-    //     if (userId && limitedTransactionId) {
+    //     if (limitedTransactionId) {
     //         try {
     //             // await UserLimitedTransactionService.deleteContactInfo(userId, limitedTransactionId)
     //             // const userResp = await UserService.getUser(userId)
@@ -48,7 +49,7 @@ const UserLimitedTransactionPage = () => {
     //                 deleteDialogOpen: false
     //             })
     //             setInfoAndErrors({
-    //                 ...{infoMessages: ['Sucessfully deleted this user info']},
+    //                 ...{infoMessages: ['Sucessfully deleted this limited transaction']},
     //                 ...{errorMessages: []}
     //             })
     //         } catch (err:any) {
@@ -65,11 +66,11 @@ const UserLimitedTransactionPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, limitedTransactionId)
+            console.log('View: ', limitedTransactionId)
 
-            if (userId && limitedTransactionId) {
+            if (limitedTransactionId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await OwnerService.getOwner()
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -88,13 +89,13 @@ const UserLimitedTransactionPage = () => {
         }
 
         init()
-    }, [userId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Limited Transaction Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Limited Transaction Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +116,7 @@ const UserLimitedTransactionPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/limitedTransactions/${ limitedTransactionId }`)}>
+                            onClick={() => navigate(`/owner/edit/limitedTransactions/${ limitedTransactionId }`)}>
                             Edit
                         </Button>
                     </Box>
@@ -133,4 +134,4 @@ const UserLimitedTransactionPage = () => {
     )
 }
 
-export default UserLimitedTransactionPage
+export default OwnerLimitedTransactionPage
