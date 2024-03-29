@@ -77,6 +77,10 @@ import OwnerClientDevicesPage from '../pages/owner/ownerClientDevicesPage';
 import OwnerClientDevicePage from '../pages/owner/ownerClientDevicePage';
 import OwnerClientDeviceCreatePage from '../pages/owner/ownerClientDeviceCreatePage';
 import OwnerClientDeviceEditPage from '../pages/owner/ownerClientDeviceEditPage';
+import OwnerClientDeviceTokensPage from '../pages/owner/ownerClientDeviceTokensPage';
+import OwnerClientDeviceTokenPage from '../pages/owner/ownerClientDeviceTokenPage';
+import OwnerClientDeviceTokenCreatePage from '../pages/owner/ownerClientDeviceTokenCreatePage';
+import OwnerClientDeviceTokenEditPage from '../pages/owner/ownerClientDeviceTokenEditPage';
 
 const PrivateRoutes = () => {
     return (
@@ -162,11 +166,16 @@ const PrivateRoutes = () => {
                     {/* owner password */}
                     <Route path="owner/view/passwords" element={<OwnerPasswordsPage />} />
                     <Route path="owner/create/passwords" element={<OwnerPasswordCreatePage />} />
-                    {/* user client devices */}
+                    {/* owner client devices */}
                     <Route path="owner/view/clientDevices" element={<OwnerClientDevicesPage />} />
                     <Route path="owner/create/clientDevices" element={<OwnerClientDeviceCreatePage />} />
                     <Route path="owner/view/clientDevices/:clientDeviceId" element={<OwnerClientDevicePage />} />
                     <Route path="owner/edit/clientDevices/:clientDeviceId" element={<OwnerClientDeviceEditPage />} />
+                    {/* owner client device tokens */}
+                    <Route path="owner/view/clientDevices/:clientDeviceId/clientDeviceTokens" element={<OwnerClientDeviceTokensPage />} />
+                    <Route path="owner/create/clientDevices/:clientDeviceId/clientDeviceTokens/" element={<OwnerClientDeviceTokenCreatePage />} />
+                    <Route path="owner/view/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<OwnerClientDeviceTokenPage />} />
+                    <Route path="owner/edit/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<OwnerClientDeviceTokenEditPage />} />
 
                     {/* for none existing page */}
                     <Route

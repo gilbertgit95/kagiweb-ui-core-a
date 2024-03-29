@@ -14,16 +14,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenReadOnlyView from './userClientDeviceTokenReadOnlyView';
-import UserService from '../user/userService';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import UserClientDeviceTokenReadOnlyView from '../userClientDeviceToken/userClientDeviceTokenReadOnlyView';
+// import UserService from '../user/userService';
+// import UserClientDeviceTokenService from './userClientDeviceTokenService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
+import OwnerService from './ownerService';
 
 const UserClientDeviceTokenPage = () => {
-    const { userId, clientDeviceId, clientDeviceTokenId } = useParams()
+    const { clientDeviceId, clientDeviceTokenId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,10 +38,10 @@ const UserClientDeviceTokenPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userId && clientDeviceId && clientDeviceTokenId) {
+        if (clientDeviceId && clientDeviceTokenId) {
             try {
-                await UserClientDeviceTokenService.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
-                const userResp = await UserService.getUser(userId)
+                await OwnerService.deleteClientDeviceToken('', clientDeviceId, clientDeviceTokenId)
+                const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -65,11 +66,11 @@ const UserClientDeviceTokenPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, clientDeviceId)
+            console.log('View: ', clientDeviceId)
 
-            if (userId && clientDeviceId) {
+            if (clientDeviceId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await OwnerService.getOwner()
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -88,13 +89,13 @@ const UserClientDeviceTokenPage = () => {
         }
 
         init()
-    }, [userId, clientDeviceId])
+    }, [clientDeviceId])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Token Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Token Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +116,7 @@ const UserClientDeviceTokenPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/clientDevices/${ clientDeviceId }/clientDeviceTokens/${ clientDeviceTokenId }`)}>
+                            onClick={() => navigate(`/owner/edit/clientDevices/${ clientDeviceId }/clientDeviceTokens/${ clientDeviceTokenId }`)}>
                             Edit
                         </Button>
                         <Button

@@ -7,16 +7,17 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenEditForm from './userClientDeviceTokenEditForm';
-import UserService from '../user/userService';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import UserClientDeviceTokenEditForm from '../userClientDeviceToken/userClientDeviceTokenEditForm';
+// import UserService from '../user/userService';
+// import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import OwnerService from './ownerService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserClientDeviceTokenEditPage = () => {
-    const { userId, clientDeviceId, clientDeviceTokenId } = useParams()
+    const { clientDeviceId, clientDeviceTokenId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -25,9 +26,22 @@ const UserClientDeviceTokenEditPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onUpdated = async () => {
-        if (userId) {
+        try {
+            const userResp = await OwnerService.getOwner()
+            setUser(userResp.data)
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
+    }
+    
+    useEffect(() => {
+        const init = async () => {
             try {
-                const userResp = await UserService.getUser(userId)
+                const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
 
             } catch (err:any) {
@@ -37,34 +51,15 @@ const UserClientDeviceTokenEditPage = () => {
                 })
             }
         }
-    }
-    
-    useEffect(() => {
-        const init = async () => {
-            console.log('View: ', userId)
-
-            if (userId) {
-                try {
-                    const userResp = await UserService.getUser(userId)
-                    setUser(userResp.data)
-
-                } catch (err:any) {
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
-            }
-        }
 
         init()
-    }, [userId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Token Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Token Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -80,7 +75,7 @@ const UserClientDeviceTokenEditPage = () => {
                     user={user}
                     clientDeviceId={clientDeviceId}
                     clientDeviceTokenId={clientDeviceTokenId}
-                    updateFunc={UserClientDeviceTokenService.updateClientDeviceToken}
+                    updateFunc={OwnerService.updateClientDeviceToken}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>
