@@ -73,6 +73,10 @@ import OwnerLimitedTransactionPage from '../pages/owner/ownerLimitedTransactionP
 import OwnerLimitedTransactionEditPage from '../pages/owner/ownerLimitedTransactionEditPage';
 import OwnerPasswordsPage from '../pages/owner/ownerPasswordsPage';
 import OwnerPasswordCreatePage from '../pages/owner/ownerPasswordCreatePage';
+import OwnerClientDevicesPage from '../pages/owner/ownerClientDevicesPage';
+import OwnerClientDevicePage from '../pages/owner/ownerClientDevicePage';
+import OwnerClientDeviceCreatePage from '../pages/owner/ownerClientDeviceCreatePage';
+import OwnerClientDeviceEditPage from '../pages/owner/ownerClientDeviceEditPage';
 
 const PrivateRoutes = () => {
     return (
@@ -158,6 +162,11 @@ const PrivateRoutes = () => {
                     {/* owner password */}
                     <Route path="owner/view/passwords" element={<OwnerPasswordsPage />} />
                     <Route path="owner/create/passwords" element={<OwnerPasswordCreatePage />} />
+                    {/* user client devices */}
+                    <Route path="owner/view/clientDevices" element={<OwnerClientDevicesPage />} />
+                    <Route path="owner/create/clientDevices" element={<OwnerClientDeviceCreatePage />} />
+                    <Route path="owner/view/clientDevices/:clientDeviceId" element={<OwnerClientDevicePage />} />
+                    <Route path="owner/edit/clientDevices/:clientDeviceId" element={<OwnerClientDeviceEditPage />} />
 
                     {/* for none existing page */}
                     <Route

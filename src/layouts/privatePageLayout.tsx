@@ -32,6 +32,7 @@ const NavCustomEl = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const userData = useAppSelector(state => state.signedInUser?.userData)
+    const userRole = useAppSelector(state => state.signedInUser?.role)
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -106,7 +107,8 @@ const NavCustomEl = () => {
                             <SettingsIcon />
                         </ListItemIcon>
                         <ListItemText>
-                            My Account
+                            <Typography variant="subtitle1">My Account</Typography>
+                            <Typography variant="caption" color="primary">{ userRole?.name }</Typography>
                         </ListItemText>
                     </MenuItem>
                     <Divider />

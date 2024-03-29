@@ -1,6 +1,6 @@
 import OwnerApi from '../../dataEndpoints/apiCoreA/ownerApi'
 import { ISignedInUser } from '../../stores/signedInUserSlice'
-import { IUser, IUserUpdate, IUserInfo, IContactInfo, IRoleRef, ILimitedTransaction, IPassword } from '../../types/user';
+import { IUser, IUserUpdate, IUserInfo, IContactInfo, IRoleRef, ILimitedTransaction, IPassword, IClientDevice, IAccessToken } from '../../types/user';
 
 class OwnerService {
     public static getOwner():Promise<{data: IUser}> {
@@ -62,6 +62,43 @@ class OwnerService {
     // owner password
     public static createPassword(userId:string, passInfo:{currPassword:string, newPassword:string}):Promise<{data: IPassword}> {
         return OwnerApi.createUserPassword(userId, passInfo)
+    }
+
+    // owner client device
+    public static getClientDeviceById(user:IUser, clientDeviceId:string):IClientDevice|undefined {
+
+        if (user && user.clientDevices) {
+            for (const clientDevice of user.clientDevices) {
+                if (clientDevice._id === clientDeviceId) return clientDevice
+            }
+        }
+
+        return undefined
+    }
+
+    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}):Promise<{data: IClientDevice}> {
+        return OwnerApi.updateClientDevice(userId, clientDevice)
+    }
+
+    public static createClientDevice(userId:string, clientDevice:IClientDevice):Promise<{data: IClientDevice}> {
+        return OwnerApi.createClientDevice(userId, clientDevice)
+    }
+
+    public static deleteClientDevice(userId:string, clientDeviceId:string):Promise<{data: IClientDevice}> {
+        return OwnerApi.deleteClientDevice(userId, clientDeviceId)
+    }
+
+    // owner client device token
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
+        return OwnerApi.updateClientDeviceToken(userId, clientDeviceId, token)
+    }
+
+    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken):Promise<{data: IAccessToken}> {
+        return OwnerApi.createClientDeviceToken(userId, clientDeviceId, token)
+    }
+
+    public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string):Promise<{data: IAccessToken}> {
+        return OwnerApi.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
     }
 }
 
