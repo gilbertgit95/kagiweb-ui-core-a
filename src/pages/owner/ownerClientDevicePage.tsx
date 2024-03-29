@@ -15,7 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../user/userService';
+// import UserService from '../user/userService';
 // import UserClientDeviceService from '../userClientDevice/userClientDeviceService';
 import UserClientDeviceReadOnlyView from '../userClientDevice/userClientDeviceReadOnlyView';
 import OwnerService from './ownerService';

@@ -65,9 +65,8 @@ const UserLimitedTransactionPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, limitedTransactionId)
 
-            if (userId && limitedTransactionId) {
+            if (userId) {
                 try {
                     const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)

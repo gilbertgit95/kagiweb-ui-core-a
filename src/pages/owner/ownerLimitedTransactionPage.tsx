@@ -66,25 +66,21 @@ const OwnerLimitedTransactionPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', limitedTransactionId)
+            try {
+                const userResp = await OwnerService.getOwner()
+                setUser(userResp.data)
 
-            if (limitedTransactionId) {
-                try {
-                    const userResp = await OwnerService.getOwner()
-                    setUser(userResp.data)
+            } catch (err:any) {
+                setPageState({
+                    disableEditButton: true,
+                    disableDeleteButton: true,
+                    deleteDialogOpen: false
+                })
 
-                } catch (err:any) {
-                    setPageState({
-                        disableEditButton: true,
-                        disableDeleteButton: true,
-                        deleteDialogOpen: false
-                    })
-
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
             }
         }
 
