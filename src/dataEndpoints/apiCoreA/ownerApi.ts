@@ -111,6 +111,14 @@ class OwnerApi {
     }
 
     // roles
+    public static activateUserRole(userId:string, roleRefId:string) {
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/roles/${ roleRefId }/activate`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }
+        })
+    }
+
     public static updateUserRole(userId:string, userRole:{_id: string, isActive?:boolean, roleId?:string}) {
         const data = {
             'roleId': userRole.roleId,

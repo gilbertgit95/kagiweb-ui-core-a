@@ -23,6 +23,10 @@ class UserRoleService {
     //     return userApi.getFeature(id)
     // }
 
+    public static activateUserRole(userId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return userApi.activateUserRole(userId, roleRefId)
+    }
+
     public static updateUserRole(userId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
         return userApi.updateUserRole(userId, UserRole)
     }

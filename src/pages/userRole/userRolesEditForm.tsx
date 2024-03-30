@@ -22,7 +22,8 @@ import UserRolesAddForm from './userRolesAddForm';
 
 interface IProps {
     user:IUser|undefined
-    updateFunc: (userId:string, updateData:{_id: string, isActive?:boolean, roleId?:string}) => Promise<{data:IRoleRef}>,
+    // updateFunc: (userId:string, updateData:{_id: string, isActive?:boolean, roleId?:string}) => Promise<{data:IRoleRef}>,
+    activateFunc: (userId:string, roleRefId:string) => Promise<{data:IRoleRef}>,
     createFunc: (userId:string, roleId:string) => Promise<{data:IRoleRef}>,
     deleteFunc: (userId:string, roleRef:string) => Promise<{data:IRoleRef}>,
     onChange: () => void
@@ -37,8 +38,8 @@ interface IRoleRow {
     isActive: boolean
 }
 
-const UserRolesEditForm = ({user, updateFunc, createFunc, deleteFunc, onChange}:IProps) => {
-    const roles = useAppSelector(state => state.appRefs.roles) || []
+const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange}:IProps) => {
+    const roles = useAppSelector(state => state.appRefs?.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
     const [currActive, setCurrActive] = useState<string | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -56,24 +57,12 @@ const UserRolesEditForm = ({user, updateFunc, createFunc, deleteFunc, onChange}:
 
     const activateUserRole = async () => {
         const sel:IRoleRef[] | undefined = user?.rolesRefs?.filter(item => item._id === tableSelection[0])
-        const activeRoles:IRoleRef[] = user?.rolesRefs?.filter(item => item.isActive) || []
         if (user?._id && sel) {
             const selRef = sel[0]
             console.log('to activate: ', user?._id, sel)
 
             try {
-                // activate selected role
-                await updateFunc(
-                    user?._id, {_id: selRef._id || '', isActive: true }
-                )
-
-                // disable active role/s
-                for (let actRole of activeRoles) {
-                    // activate selected role
-                    await updateFunc(
-                        user?._id, {_id: actRole._id || '', isActive: false }
-                    )
-                }
+                await activateFunc(user?._id, selRef?._id || '')
 
                 setInfoAndErrors({
                     ...{infoMessages: [`Successfully activated the selected role.`]},

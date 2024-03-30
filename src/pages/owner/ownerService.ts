@@ -42,6 +42,10 @@ class OwnerService {
     }
 
     // roles
+    public static activateUserRole(userId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return OwnerApi.activateUserRole(userId, roleRefId)
+    }
+
     public static updateUserRole(userId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
         return OwnerApi.updateUserRole(userId, UserRole)
     }
