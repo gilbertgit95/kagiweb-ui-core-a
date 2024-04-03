@@ -348,8 +348,10 @@ const RoleFeaturesEditPage = () => {
                                 </DialogContentText>
                                 <Divider />
                                 <FormControlLabel
+                                    sx={{ marginTop: '20px', marginBottom: '20px' }}
                                     control={
                                         <Checkbox
+                                            color="secondary"
                                             checked={cloneSettings.overwrite}
                                             onChange={(event) => {
                                                 setCloneSettings({...cloneSettings, ...{overwrite: event.target.checked}})
