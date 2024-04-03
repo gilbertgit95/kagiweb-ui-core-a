@@ -70,34 +70,47 @@ class RoleApi {
         })
     }
 
-        // role features
-        public static getRoleFeatures(roleId:string = '') {
-            return apiHelper.privateReq({
-                method: 'GET',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features`
-            })
+    // role features
+    public static getRoleFeatures(roleId:string = '') {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features`
+        })
+    }
+
+    public static createRoleFeature(roleId:string = '', featureId:string) {
+        const data = {
+            'featureId': featureId
         }
-    
-        public static createRoleFeature(roleId:string = '', featureId:string) {
-            const data = {
-                'featureId': featureId
-            }
-    
-            return apiHelper.privateReq({
-                method: 'POST',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features`,
-                headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                data
-            })
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static cloneFeatures(roleId:string = '', fromRoleId:string, overwrite:boolean) {
+        const data = {
+            'fromRoleId': fromRoleId,
+            'overwrite': overwrite
         }
-    
-        public static deleteRoleFeature(roleId:string = '', featureRefId:string) {
-    
-            return apiHelper.privateReq({
-                method: 'DELETE',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features/${ featureRefId }`
-            })
-        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/clonefeatures/`,
+            data
+        })
+    }
+
+    public static deleteRoleFeature(roleId:string = '', featureRefId:string) {
+
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features/${ featureRefId }`
+        })
+    }
 }
 
 export default RoleApi

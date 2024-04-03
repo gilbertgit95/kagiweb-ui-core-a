@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
+import { Container, Button, Box, Divider, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -8,7 +8,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import Grid from '@mui/material/Grid';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -30,11 +33,58 @@ interface IFeatureRow {
     tags: string
 }
 
+const colDef:IColDef[] = [
+    {
+        header: 'Name',
+        field: 'name',
+        Component: undefined
+    },
+    {
+        header: 'Value',
+        field: 'value',
+        Component: undefined
+    },
+    {
+        header: 'Type',
+        field: 'type',
+        Component: undefined
+    },
+    {
+        header: 'Tags',
+        field: 'tags',
+        Component: undefined
+    }
+]
+
+const colRoleDef:IColDef[] = [
+    {
+        header: 'Name',
+        field: 'name',
+    },
+    {
+        header: 'Description',
+        field: 'description',
+    },
+    {
+        header: 'Level',
+        field: 'level',
+    },
+    {
+        header: 'Number of features',
+        field: 'featureRefs',
+        Component: (props:IRole) => {
+            return <Typography variant='caption'>{ props.featuresRefs?.length || 0}</Typography>
+        }
+    }
+]
+
 const RoleFeaturesEditPage = () => {
     const { roleId } = useParams()
     const navigate = useNavigate()
     // const roles = useAppSelector(state => state.appRefs.roles)
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
+    const roles:IRole[] = useAppSelector(state => state.appRefs.roles) || []
+    const [filteredRoles, setFilteredRoles] = useState<IRole[]>([])
     const [role, setRole] = useState<IRole | undefined>()
     const [data, setData] = useState<IFeatureRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -44,10 +94,34 @@ const RoleFeaturesEditPage = () => {
     // selection
     const [tableSelection, setTableSelection] = useState<string[]>([])
     const [addTableSelection, setAddTableSelection] = useState<string[]>([])
+    const [cloneSettings, setCloneSettings] = useState<{overwrite:boolean, fromRoleId:string|undefined}>({
+        overwrite: false,
+        fromRoleId: undefined
+    })
     const [dialog, setDialog] = useState({
+        cloneDialogOpen: false,
         addDialogOpen: false,
         removeDialogOpen: false
     })
+
+    const cloneFeatures = async () => {
+        // console.log(cloneSettings.fromRoleId, cloneSettings.overwrite)
+        if (!roleId) return
+        if (!cloneSettings.fromRoleId) return
+
+        try {
+            await RoleFeatureService.cloneFeatures(roleId, cloneSettings.fromRoleId, cloneSettings.overwrite)
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
+
+        // close the dialogbox
+        setDialog({...dialog, ...{cloneDialogOpen: false}})
+        await reLoadRole()
+    }
 
     const addFeatures = async () => {
         // console.log('add this features: ', addTableSelection)
@@ -160,7 +234,15 @@ const RoleFeaturesEditPage = () => {
 
     useEffect(() => {
         const init = async () => {
+
             if (roleId) {
+                // set filtered roles
+                setFilteredRoles(
+                    roles
+                        .filter(item => !item.absoluteAuthority)
+                        .filter(item => item._id != roleId)
+                )
+
                 try {
                     const roleResp = await RoleService.getRole(roleId)
                     setRole(roleResp.data)
@@ -201,30 +283,7 @@ const RoleFeaturesEditPage = () => {
         }
         console.log('initiate role features edit page')
         init()
-    }, [roleId, features])
-
-    const colDef:IColDef[] = [
-        {
-            header: 'Name',
-            field: 'name',
-            Component: undefined
-        },
-        {
-            header: 'Value',
-            field: 'value',
-            Component: undefined
-        },
-        {
-            header: 'Type',
-            field: 'type',
-            Component: undefined
-        },
-        {
-            header: 'Tags',
-            field: 'tags',
-            Component: undefined
-        }
-    ]
+    }, [roleId, roles, features])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -250,6 +309,16 @@ const RoleFeaturesEditPage = () => {
                         <Button
                             variant="text"
                             disabled={role?.absoluteAuthority}
+                            startIcon={<FileCopyIcon />}
+                            onClick={() => {
+                                setDialog({...dialog, ...{cloneDialogOpen: true}})
+                                setCloneSettings({overwrite: false, fromRoleId: undefined})
+                            }}>
+                            clone
+                        </Button>
+                        <Button
+                            variant="text"
+                            disabled={role?.absoluteAuthority}
                             startIcon={<AddIcon />}
                             onClick={() => {
                                 setDialog({...dialog, ...{addDialogOpen: true}})
@@ -267,6 +336,46 @@ const RoleFeaturesEditPage = () => {
                             }}>
                             remove
                         </Button>
+                        <Dialog
+                            open={dialog.cloneDialogOpen}
+                            onClose={() => setDialog({...dialog, ...{cloneDialogOpen: false}})}>
+                            <DialogTitle>
+                                Clone features from other role
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText sx={{marginBottom: '10px'}}>
+                                    Please check if you want to overwrite the content with the cloned features, then select a role to clone from.
+                                </DialogContentText>
+                                <Divider />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={cloneSettings.overwrite}
+                                            onChange={(event) => {
+                                                setCloneSettings({...cloneSettings, ...{overwrite: event.target.checked}})
+                                            }}
+                                            inputProps={{ 'aria-label': 'controlled' }} />
+                                    }
+                                    label="Overwrite" />
+                                <PrimaryTable
+                                    enableSelection
+                                    onSelect={(selectedData) => {
+                                        setCloneSettings({
+                                            ...cloneSettings,
+                                            ...{fromRoleId: selectedData.length? selectedData[0]: undefined}})
+                                    }}
+                                    columnDefs={colRoleDef}
+                                    data={ filteredRoles } />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setDialog({...dialog, ...{cloneDialogOpen: false}})}>
+                                    cancel
+                                </Button>
+                                <Button onClick={cloneFeatures} autoFocus>
+                                    confirm
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                         <Dialog
                             open={dialog.addDialogOpen}
                             onClose={() => setDialog({...dialog, ...{addDialogOpen: false}})}>

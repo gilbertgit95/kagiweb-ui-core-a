@@ -21,9 +21,14 @@ class RoleService {
         return roleApi.createRoleFeature(roleId, featureId)
     }
 
+    public static cloneFeatures(roleId:string, fromRoleId:string, overwrite:boolean):Promise<{data: IFeatureRef[]}> {
+        return roleApi.cloneFeatures(roleId, fromRoleId, overwrite)
+    }
+
     public static deleteRoleFeature(roleId:string, featureRefId:string):Promise<{data: IFeatureRef}> {
         return roleApi.deleteRoleFeature(roleId, featureRefId)
     }
+
 }
 
 export default RoleService
