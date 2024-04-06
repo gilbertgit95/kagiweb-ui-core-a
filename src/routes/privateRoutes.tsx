@@ -55,6 +55,15 @@ import UserUserInfoEditPage from '../pages/userUserInfo/userUserInfoEditPage';
 import UserUserInfoCreatePage from '../pages/userUserInfo/userUserInfoCreatePage';
 
 import UserWorkspacesPage from '../pages/userWorkspace/userWorkspacesPage';
+// import UserClientDevicePage from '../pages/userClientDevice/userClientDevicePage';
+import UserWorkspaceCreatePage from '../pages/userWorkspace/userWorkspaceCreatePage';
+// import UserClientDeviceEditPage from '../pages/userClientDevice/userClientDeviceEditPage';
+
+// import UserClientDeviceTokensPage from '../pages/userClientDeviceToken/userClientDeviceTokensPage';
+// import UserClientDeviceTokenPage from '../pages/userClientDeviceToken/userClientDeviceTokenPage';
+// import UserClientDeviceTokenCreatePage from '../pages/userClientDeviceToken/userClientDeviceTokenCreatePage';
+// import UserClientDeviceTokenEditPage from '../pages/userClientDeviceToken/userClientDeviceTokenEditPage';
+
 
 import OwnerPage from '../pages/owner/ownerPage';
 import OwnerEditPage from '../pages/owner/ownerEditPage';
@@ -129,7 +138,6 @@ const PrivateRoutes = () => {
                     <Route path="users/create/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/" element={<UserClientDeviceTokenCreatePage />} />
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<UserClientDeviceTokenPage />} />
                     <Route path="users/edit/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<UserClientDeviceTokenEditPage />} />
-                    
                     {/* user contact infos */}
                     <Route path="users/view/:userId/contactInfos" element={<UserContactInfosPage />} />
                     <Route path="users/view/:userId/contactInfos/:contactInfoId" element={<UserContactInfoPage />} />
@@ -140,8 +148,16 @@ const PrivateRoutes = () => {
                     <Route path="users/view/:userId/userInfos/:userInfoId" element={<UserUserInfoPage />} />
                     <Route path="users/edit/:userId/userInfos/:userInfoId" element={<UserUserInfoEditPage />} />
                     <Route path="users/create/:userId/userInfos" element={<UserUserInfoCreatePage />} />
-                    {/* user workspace pages */}
+                    {/* user workspaces */}
                     <Route path="users/view/:userId/workspaces" element={<UserWorkspacesPage />} />
+                    <Route path="users/create/:userId/workspaces" element={<UserWorkspaceCreatePage />} />
+                    {/* <Route path="users/view/:userId/workspaces/:workspaceId" element={<UserClientDevicePage />} /> */}
+                    {/* <Route path="users/edit/:userId/workspaces/:workspaceId" element={<UserClientDeviceEditPage />} /> */}
+                    {/* user workspace userRefs */}
+                    {/* <Route path="users/view/:userId/workspaces/:workspaceId/userRefs" element={<UserClientDeviceTokensPage />} /> */}
+                    {/* <Route path="users/create/:userId/workspaces/:workspaceId/userRefs/" element={<UserClientDeviceTokenCreatePage />} /> */}
+                    {/* <Route path="users/view/:userId/workspaces/:workspaceId/userRefs/:clientDeviceTokenId" element={<UserClientDeviceTokenPage />} /> */}
+                    {/* <Route path="users/edit/:userId/workspaces/:workspaceId/userRefs/:clientDeviceTokenId" element={<UserClientDeviceTokenEditPage />} /> */}
 
                     {/* owner pages */}
                     <Route path="owner/view" element={<OwnerPage />} />

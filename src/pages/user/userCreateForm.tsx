@@ -23,6 +23,7 @@ export const UserCreateForm = () => {
         contactInfos: [],
         clientDevices: [],
         limitedTransactions: [],
+        workspaces: [],
         disabled: false,
         verified: false
     })

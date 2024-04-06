@@ -28,6 +28,7 @@ export  const UserEditForm = ({ userId, getFunc, updateFunc, updated }:Props) =>
         contactInfos: [],
         clientDevices: [],
         limitedTransactions: [],
+        workspaces: [],
         disabled: false,
         verified: false
     })

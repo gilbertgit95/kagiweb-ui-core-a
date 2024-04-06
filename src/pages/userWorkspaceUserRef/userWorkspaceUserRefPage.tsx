@@ -1,42 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IUser } from '../../types/user';
-import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../user/userService';
-import UserClientDeviceService from './userClientDeviceService';
-import UserClientDeviceReadOnlyView from './userClientDeviceReadOnlyView';
+import Grid from '@mui/material/Grid';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const UserWorkspacePage = () => {
-    const { userId, clientDeviceId } = useParams()
+import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import PrimaryHeader from '../../components/headers/primaryHeader';
+import UserClientDeviceTokenReadOnlyView from './userClientDeviceTokenReadOnlyView';
+import UserService from '../user/userService';
+import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import { IUser } from '../../types/user';
+import {
+  useParams
+} from 'react-router-dom';
+
+const UserWorkspaceUserRefPage = () => {
+    const { userId, clientDeviceId, clientDeviceTokenId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
+        errorMessages: [],
+        infoMessages: []
+    })
     const [pageState, setPageState] = useState({
         disableEditButton: false,
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
-        errorMessages: [],
-        infoMessages: []
-    })
+    const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userId && clientDeviceId) {
+        if (userId && clientDeviceId && clientDeviceTokenId) {
             try {
-                await UserClientDeviceService.deleteClientDevice(userId, clientDeviceId)
+                await UserClientDeviceTokenService.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
                 const userResp = await UserService.getUser(userId)
                 setUser(userResp.data)
                 setPageState({
@@ -45,7 +48,7 @@ const UserWorkspacePage = () => {
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this client device']},
+                    ...{infoMessages: ['Sucessfully deleted this token']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -59,20 +62,23 @@ const UserWorkspacePage = () => {
             }
         }
     }
-
+    
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            console.log('View: ', userId, clientDeviceId)
+
+            if (userId && clientDeviceId) {
                 try {
                     const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)
+
                 } catch (err:any) {
-                    console.log(err)
                     setPageState({
                         disableEditButton: true,
                         disableDeleteButton: true,
                         deleteDialogOpen: false
                     })
+
                     setInfoAndErrors({
                         ...{infoMessages: []},
                         ...{errorMessages: [err?.response?.data?.message || '']}
@@ -80,15 +86,15 @@ const UserWorkspacePage = () => {
                 }
             }
         }
-        console.log('initiate Client Device page')
+
         init()
-    }, [userId])
+    }, [userId, clientDeviceId])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Client Device View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Token Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -109,7 +115,7 @@ const UserWorkspacePage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ userId }/clientDevices/${ clientDeviceId }`)}>
+                            onClick={() => navigate(`/users/edit/${ user?._id }/clientDevices/${ clientDeviceId }/clientDeviceTokens/${ clientDeviceTokenId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -128,7 +134,7 @@ const UserWorkspacePage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this client device?
+                                    Are you sure you want to delete this access token?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -143,7 +149,10 @@ const UserWorkspacePage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceReadOnlyView user={user} clientDeviceId={ clientDeviceId } />
+                <UserClientDeviceTokenReadOnlyView
+                    user={user}
+                    clientDeviceId={clientDeviceId}
+                    clientDeviceTokenId={clientDeviceTokenId} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -153,4 +162,4 @@ const UserWorkspacePage = () => {
     )
 }
 
-export default UserWorkspacePage
+export default UserWorkspaceUserRefPage

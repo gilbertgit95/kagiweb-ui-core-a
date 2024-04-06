@@ -82,6 +82,11 @@ const UserReadOnlyView = ({user}:props) => {
             contents: user?.clientDevices?.length || 0
         },
         {
+            module: 'Workspaces',
+            moduleRoute: 'workspaces',
+            contents: user?.workspaces?.length || 0
+        },
+        {
             module: 'Passwords',
             moduleRoute: 'passwords',
             contents: user?.passwords?.length || 0
@@ -101,6 +106,7 @@ const UserReadOnlyView = ({user}:props) => {
             </Grid>
             <Grid item xs={12}>
                 <PrimaryTable
+                    maxHeight={700}
                     columnDefs={modulesColDef}
                     data={modulesData} />
             </Grid>

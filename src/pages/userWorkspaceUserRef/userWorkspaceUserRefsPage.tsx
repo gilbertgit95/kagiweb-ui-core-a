@@ -3,16 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+// import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserService from '../user/userService';
-import UserWorkspacesReadOnlyView from './userWorkspacesReadOnlyView';
+import UserWorkspaceUserRefsReadOnlyView from './userWorkspaceUserRefsReadOnlyView';
 
-const UserWorkspacesPage = () => {
-    const { userId } = useParams()
+const UserWorkspaceUserRefsPage = () => {
+    const { userId, workspaceId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IUser | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -42,7 +43,7 @@ const UserWorkspacesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspaces View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace User references View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -62,13 +63,13 @@ const UserWorkspacesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/workspaces`)}>
+                            onClick={() => navigate(`/users/create/${ userId }/workspaces/${ workspaceId }/userRefs`)}>
                             Create
                         </Button>
                     </Box>
                 </Grid>
 
-                <UserWorkspacesReadOnlyView user={user} />
+                <UserWorkspaceUserRefsReadOnlyView user={user} workspaceId={ workspaceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -78,4 +79,4 @@ const UserWorkspacesPage = () => {
     )
 }
 
-export default UserWorkspacesPage
+export default UserWorkspaceUserRefsPage

@@ -7,16 +7,16 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceEditForm from './userClientDeviceEditForm';
+import UserClientDeviceTokenEditForm from './userClientDeviceTokenEditForm';
 import UserService from '../user/userService';
-import UserClientDeviceService from './userClientDeviceService';
+import UserClientDeviceTokenService from './userClientDeviceTokenService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserWorkspaceEditPage = () => {
-    const { userId, clientDeviceId } = useParams()
+const UserWorkspaceUserRefEditPage = () => {
+    const { userId, clientDeviceId, clientDeviceTokenId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -64,7 +64,7 @@ const UserWorkspaceEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Client Device Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Token Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,10 +76,11 @@ const UserWorkspaceEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserClientDeviceEditForm
+                <UserClientDeviceTokenEditForm
                     user={user}
                     clientDeviceId={clientDeviceId}
-                    updateFunc={UserClientDeviceService.updateClientDevice}
+                    clientDeviceTokenId={clientDeviceTokenId}
+                    updateFunc={UserClientDeviceTokenService.updateClientDeviceToken}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>
@@ -90,4 +91,4 @@ const UserWorkspaceEditPage = () => {
     )
 }
 
-export default UserWorkspaceEditPage
+export default UserWorkspaceUserRefEditPage

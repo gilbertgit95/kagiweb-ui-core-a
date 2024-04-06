@@ -3,20 +3,22 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserClientDeviceService from './userClientDeviceService';
-import { IUser, IClientDevice } from '../../types/user';
+import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import { IUser, IAccessToken } from '../../types/user';
 
 interface props {
     user?: IUser,
     clientDeviceId?: string,
-    updateFunc: (userId:string, updateData:{_id?:string, ua?:string, disabled?:boolean}) => Promise<{data:IClientDevice}>,
-    updated?: (userId:string|undefined, userInfo:IClientDevice|undefined) => void
+    clientDeviceTokenId?: string,
+    updateFunc: (userId:string, clientDeviceId: string, updateData:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}) => Promise<{data:IAccessToken}>,
+    updated?: (userId:string|undefined, userInfo:IAccessToken|undefined) => void
 }
 
-const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props) => {
-    const [clientDevice, setClientDevice] = useState<IClientDevice & {createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedClientDevice, setUpdatedClientDevice] = useState<IClientDevice>({
-        ua: '',
+const UserWorkspaceUserRefEditForm = ({user, clientDeviceId, clientDeviceTokenId, updateFunc, updated}:props) => {
+    const [token, setToken] = useState<IAccessToken & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedToken, setUpdatedToken] = useState<IAccessToken>({
+        ipAddress: '',
+        jwt: '',
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -25,28 +27,29 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setUpdatedClientDevice({...updatedClientDevice, ...{[field]: value}})
+        setUpdatedToken({...updatedToken, ...{[field]: value}})
     }
 
     const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
-        // console.log(event.target.checked)
-        setUpdatedClientDevice({...updatedClientDevice, ...{[field]: event.target.checked}})
+        console.log(event.target.checked)
+        setUpdatedToken({...updatedToken, ...{[field]: event.target.checked}})
     }
 
     const onUpdate = async () => {
-        if (!clientDevice) return
+        if (!token) return
 
-        const updateData:{_id?:string, ua?:string, disabled?:boolean} = {
-            _id: updatedClientDevice._id,
-            ua: updatedClientDevice.ua === clientDevice.ua? undefined: updatedClientDevice.ua,
-            disabled: updatedClientDevice.disabled === clientDevice.disabled? undefined: updatedClientDevice.disabled
+        const updateData:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean} = {
+            _id: updatedToken._id,
+            ipAddress: updatedToken.ipAddress === token.ipAddress? undefined: updatedToken.ipAddress,
+            jwt: updatedToken.jwt === token.jwt? undefined: updatedToken.jwt,
+            disabled: updatedToken.disabled === token.disabled? token.disabled: updatedToken.disabled
         }
         console.log('save update: ', updateData)
 
         // // send update data to the api
         if (user?._id) {
             try {
-                const reqResp = await updateFunc(user._id, updateData)
+                const reqResp = await updateFunc(user._id, clientDeviceId || '', updateData)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
@@ -66,14 +69,14 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
     useEffect(() => {
         const init = async () => {
             if (user && user.clientDevices && clientDeviceId) {
-                const contactInf = UserClientDeviceService.getClientDeviceById(user, clientDeviceId)
-                setClientDevice(contactInf)
-                if (contactInf) {
-                    setUpdatedClientDevice(contactInf)
+                const tkn = UserClientDeviceTokenService.getClientDeviceAccessTokenById(user, clientDeviceId, clientDeviceTokenId || '')
+                setToken(tkn)
+                if (tkn) {
+                    setUpdatedToken(tkn)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Client Device does not exist on this user']}
+                        ...{errorMessages: ['Token does not exist on this user']}
                     })
                 }
             }
@@ -81,7 +84,7 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
 
         init()
 
-    }, [user, clientDeviceId])
+    }, [user, clientDeviceId, clientDeviceTokenId])
 
     const itemSx = {
         display: 'flex',
@@ -91,28 +94,40 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
     }
 
     const hasChanges = (() => {
-        if (!clientDevice) return false
+        if (!token) return false
 
         return !(
-            clientDevice.ua !== updatedClientDevice.ua ||
-            clientDevice.disabled !== updatedClientDevice.disabled
+            token.ipAddress !== updatedToken.ipAddress ||
+            token.jwt !== updatedToken.jwt ||
+            token.disabled !== updatedToken.disabled
         )
     })()
 
     return user? (
         <>
             {
-                clientDevice? (
+                token? (
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">User Agent</Typography>
+                                <Typography variant="subtitle1">IP Address</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedClientDevice?.ua || ''}
-                                    onChange={(e) => handleTextFieldChange('ua', e.target.value)} />
+                                    defaultValue={updatedToken?.ipAddress || ''}
+                                    onChange={(e) => handleTextFieldChange('ipAddress', e.target.value)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">JWT</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    defaultValue={updatedToken?.jwt || ''}
+                                    onChange={(e) => handleTextFieldChange('jwt', e.target.value)} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>
@@ -122,7 +137,7 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
                             <Grid item xs={8} md={9}>
                                 <Switch
                                     onChange={e => handleSwitchChange('disabled', e)}
-                                    checked={updatedClientDevice.disabled} />
+                                    checked={updatedToken.disabled} />
                             </Grid>
                         </Grid>
                     </>
@@ -143,7 +158,7 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
                 <Button
                     startIcon={<EditIcon />}
                     onClick={onUpdate}
-                    disabled={hasChanges || !clientDevice}>
+                    disabled={hasChanges || !token}>
                     Update
                 </Button>
             </Grid>
@@ -151,4 +166,4 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
     ): null
 }
 
-export default UserWorkspaceEditForm
+export default UserWorkspaceUserRefEditForm

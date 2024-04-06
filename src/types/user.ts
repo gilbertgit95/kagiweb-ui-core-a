@@ -85,6 +85,26 @@ export interface IUserInfo {
     type: TUserInfoType
 }
 
+export interface IWorkspaceUserRef {
+    _id?: string,
+    userId: string,
+    readAccess?: boolean,
+    updateAccess?: boolean,
+    createAccess?: boolean,
+    deleteAccess?: boolean,
+    accepted?: boolean,
+    disabled?: boolean
+}
+
+export interface IWorkspace {
+    _id?: string,
+    name: string,
+    description?: string,
+    userRefs?: IWorkspaceUserRef[],
+    isActive?: boolean,
+    disabled?: boolean
+}
+
 export interface IUser {
     _id?: string,
     username: string,
@@ -97,6 +117,8 @@ export interface IUser {
     clientDevices: IClientDevice[],
 
     limitedTransactions: ILimitedTransaction[],
+
+    workspaces: IWorkspace[],
 
     disabled?: boolean,
     verified?: boolean

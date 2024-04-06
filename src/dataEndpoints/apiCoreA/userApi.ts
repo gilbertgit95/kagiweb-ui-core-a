@@ -301,6 +301,112 @@ class UserApi {
             url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/passwords/${ passwordId }`
         })
     }
+
+
+    // workspaces
+    public static updateWorkspace(userId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
+        const data = {
+            'name': name,
+            'description': description,
+            'isActive': isActive,
+            'disabled': disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/workspaces/${ workspaceId }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createWorkspace(userId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
+        const data = {
+            'name': name,
+            'description': description,
+            'isActive': isActive,
+            'disabled': disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/workspaces`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteWorkspace(userId:string, workspaceId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/workspaces/${ workspaceId }`
+        })
+    }
+
+    // workspace user references
+    public static updateWorkspaceUserRef(
+        userId:string,
+        workspaceId:string,
+        userRefId:string,
+        userRef:string,
+        readAccess: boolean,
+        updateAccess: boolean,
+        createAccess: boolean,
+        deleteAccess: boolean,
+        accepted: boolean,
+        disabled: boolean) {
+        const data = {
+            'userRef': userRef,
+            'readAccess': readAccess,
+            'updateAccess': updateAccess,
+            'createAccess': createAccess,
+            'deleteAccess': deleteAccess,
+            'accepted': accepted,
+            'disabled': disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/workspaces/${ workspaceId }/userRefs/${ userRefId }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createWorkspaceUserRef(
+        userId:string,
+        workspaceId:string,
+        userRef:string,
+        readAccess: boolean,
+        updateAccess: boolean,
+        createAccess: boolean,
+        deleteAccess: boolean,
+        accepted: boolean,
+        disabled: boolean) {
+        const data = {
+            'userRef': userRef,
+            'readAccess': readAccess,
+            'updateAccess': updateAccess,
+            'createAccess': createAccess,
+            'deleteAccess': deleteAccess,
+            'accepted': accepted,
+            'disabled': disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/workspaces/${ workspaceId }/userRefs`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteWorkspaceUserRef(userId:string, workspaceId:string, userRefId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `users/${ userId }/workspaces/${ workspaceId }/userRefs/${ userRefId }`
+        })
+    }
 }
 
 export default UserApi

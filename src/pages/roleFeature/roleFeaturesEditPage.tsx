@@ -81,7 +81,6 @@ const colRoleDef:IColDef[] = [
 const RoleFeaturesEditPage = () => {
     const { roleId } = useParams()
     const navigate = useNavigate()
-    // const roles = useAppSelector(state => state.appRefs.roles)
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const roles:IRole[] = useAppSelector(state => state.appRefs.roles) || []
     const [filteredRoles, setFilteredRoles] = useState<IRole[]>([])
@@ -364,7 +363,8 @@ const RoleFeaturesEditPage = () => {
                                     onSelect={(selectedData) => {
                                         setCloneSettings({
                                             ...cloneSettings,
-                                            ...{fromRoleId: selectedData.length? selectedData[0]: undefined}})
+                                            ...{fromRoleId: selectedData.length? selectedData[0]: undefined}
+                                        })
                                     }}
                                     columnDefs={colRoleDef}
                                     data={ filteredRoles } />

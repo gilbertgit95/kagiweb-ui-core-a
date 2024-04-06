@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFeature } from "../types/feature";
 import { IRole } from "../types/role";
-import { IUser } from "../types/user";
-import { IWorkspace } from "../types/workspace";
+import { IUser, IWorkspace } from "../types/user";
 
 export interface ISignedInUser {
     token: string|undefined,
