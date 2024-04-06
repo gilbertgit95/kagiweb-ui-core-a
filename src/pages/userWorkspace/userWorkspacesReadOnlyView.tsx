@@ -61,7 +61,7 @@ const UserWorkspacesReadOnlyView = ({user}:IProps) => {
             field: 'userRefs'
         },
         {
-            header: 'Active',
+            header: 'Default Active',
             field: 'isActive',
             Component: (props:IWorkspaceRow) => {
                 return <Check value={props.isActive} />

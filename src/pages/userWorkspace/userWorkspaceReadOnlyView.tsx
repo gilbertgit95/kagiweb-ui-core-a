@@ -1,56 +1,72 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import moment from 'moment';
+import moment from 'moment';
 import Grid from '@mui/material/Grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import { Button } from '@mui/material';
-import { IUser, IClientDevice } from '../../types/user';
+import { IUser, IWorkspace } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 // import Check from '../../components/indicators/check';
-// import Config from '../../config';
-import UserClientDeviceService from './userClientDeviceService';
+import Config from '../../config';
+import UserWorkspaceService from './userWorkspaceService';
 
 interface IProps {
     user?: IUser
-    clientDeviceId?: string
+    workspaceId?: string
 }
 
-interface IClientDeviceInfoRow {
+interface IWorkspaceInfoRow {
     label: string,
     value: string
 }
-interface IClientDeviceSubModuleData {module: string, moduleRoute: string, contents: number}
+interface IWorkspaceSubModuleData {module: string, moduleRoute: string, contents: number}
 
-const UserWorkspaceReadOnlyView = ({user, clientDeviceId}:IProps) => {
+const UserWorkspaceReadOnlyView = ({user, workspaceId}:IProps) => {
     const navigate = useNavigate()
-    const [clientDevice, setClientDevice] = useState<IClientDevice | undefined>(undefined)
+    const [workspace, setWorkspace] = useState<IWorkspace & {createdAt?: Date, updatedAt?: Date} | undefined>(undefined)
 
     useEffect(() => {
-        if (user && user.clientDevices && clientDeviceId) {
-            const cd = UserClientDeviceService.getClientDeviceById(user, clientDeviceId)
-            setClientDevice(cd)
+        if (user && user.workspaces && workspaceId) {
+            const cd = UserWorkspaceService.getWorkspaceById(user, workspaceId)
+            setWorkspace(cd)
         }
 
-    }, [user, clientDeviceId])
+    }, [user, workspaceId])
 
-    const data:IClientDeviceInfoRow[] = [
+    const data:IWorkspaceInfoRow[] = [
         {
-            label: 'User Agent',
-            value: clientDevice?.ua || '--'
+            label: 'Name',
+            value: workspace?.name || '--'
+        },
+        {
+            label: 'Description',
+            value: workspace?.description || '--'
+        },
+        {
+            label: 'Default Active',
+            value: Boolean(workspace?.isActive)? 'True': 'False'
         },
         {
             label: 'Disabled',
-            value: Boolean(clientDevice?.disabled)? 'True': 'False'
+            value: Boolean(workspace?.disabled)? 'True': 'False'
+        },
+        {
+            label: 'Updated',
+            value: workspace?.updatedAt? moment(workspace.updatedAt).format(Config.defaultDateTimeFormat): '--'
+        },
+        {
+            label: 'Created',
+            value: workspace?.createdAt? moment(workspace.createdAt).format(Config.defaultDateTimeFormat): '--'
         }
     ]
 
-    const modulesData:IClientDeviceSubModuleData[] = [
+    const modulesData:IWorkspaceSubModuleData[] = [
         {
-            module: 'Access Tokens',
-            moduleRoute: 'clientDeviceTokens',
-            contents: clientDevice?.accessTokens?.length || 0
+            module: 'Users',
+            moduleRoute: 'userRefs',
+            contents: workspace?.userRefs?.length || 0
         }
     ]
 

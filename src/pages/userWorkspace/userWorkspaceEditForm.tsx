@@ -3,20 +3,22 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserClientDeviceService from './userClientDeviceService';
-import { IUser, IClientDevice } from '../../types/user';
+import UserWorkspaceService from './userWorkspaceService';
+import { IUser, IWorkspace } from '../../types/user';
 
 interface props {
     user?: IUser,
-    clientDeviceId?: string,
-    updateFunc: (userId:string, updateData:{_id?:string, ua?:string, disabled?:boolean}) => Promise<{data:IClientDevice}>,
-    updated?: (userId:string|undefined, userInfo:IClientDevice|undefined) => void
+    workspaceId?: string,
+    updateFunc: (userId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
+    updated?: (userId:string|undefined, userInfo:IWorkspace|undefined) => void
 }
 
-const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props) => {
-    const [clientDevice, setClientDevice] = useState<IClientDevice & {createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedClientDevice, setUpdatedClientDevice] = useState<IClientDevice>({
-        ua: '',
+const UserWorkspaceEditForm = ({user, workspaceId, updateFunc, updated}:props) => {
+    const [workspace, setWorkspace] = useState<IWorkspace & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedWorkspace, setUpdatedWorkspace] = useState<IWorkspace>({
+        name: '',
+        description: '',
+        isActive: false,
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -25,28 +27,37 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setUpdatedClientDevice({...updatedClientDevice, ...{[field]: value}})
+        setUpdatedWorkspace({...updatedWorkspace, ...{[field]: value}})
     }
 
     const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
         // console.log(event.target.checked)
-        setUpdatedClientDevice({...updatedClientDevice, ...{[field]: event.target.checked}})
+        setUpdatedWorkspace({...updatedWorkspace, ...{[field]: event.target.checked}})
     }
 
     const onUpdate = async () => {
-        if (!clientDevice) return
+        if (!workspace) return
 
-        const updateData:{_id?:string, ua?:string, disabled?:boolean} = {
-            _id: updatedClientDevice._id,
-            ua: updatedClientDevice.ua === clientDevice.ua? undefined: updatedClientDevice.ua,
-            disabled: updatedClientDevice.disabled === clientDevice.disabled? undefined: updatedClientDevice.disabled
+        const updateData = {
+            _id: updatedWorkspace._id,
+            name: updatedWorkspace.name,
+            description: updatedWorkspace.description,
+            isActive: updatedWorkspace.isActive,
+            disabled: updatedWorkspace.disabled
         }
         console.log('save update: ', updateData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (user?._id && updatedWorkspace) {
             try {
-                const reqResp = await updateFunc(user._id, updateData)
+                const reqResp = await updateFunc(
+                    user._id,
+                    workspaceId || '',
+                    updatedWorkspace.name,
+                    updatedWorkspace.description || '',
+                    Boolean(workspace.isActive),
+                    Boolean(updatedWorkspace.disabled)
+                )
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
@@ -65,15 +76,15 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.clientDevices && clientDeviceId) {
-                const contactInf = UserClientDeviceService.getClientDeviceById(user, clientDeviceId)
-                setClientDevice(contactInf)
+            if (user && user.workspaces && workspaceId) {
+                const contactInf = UserWorkspaceService.getWorkspaceById(user, workspaceId)
+                setWorkspace(contactInf)
                 if (contactInf) {
-                    setUpdatedClientDevice(contactInf)
+                    setUpdatedWorkspace(contactInf)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Client Device does not exist on this user']}
+                        ...{errorMessages: ['Workspace does not exist on this user']}
                     })
                 }
             }
@@ -81,7 +92,7 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
 
         init()
 
-    }, [user, clientDeviceId])
+    }, [user, workspaceId])
 
     const itemSx = {
         display: 'flex',
@@ -91,28 +102,40 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
     }
 
     const hasChanges = (() => {
-        if (!clientDevice) return false
+        if (!workspace) return false
 
         return !(
-            clientDevice.ua !== updatedClientDevice.ua ||
-            clientDevice.disabled !== updatedClientDevice.disabled
+            workspace.name !== updatedWorkspace.name ||
+            workspace.description !== updatedWorkspace.description ||
+            workspace.disabled !== updatedWorkspace.disabled
         )
     })()
 
     return user? (
         <>
             {
-                clientDevice? (
+                workspace? (
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">User Agent</Typography>
+                                <Typography variant="subtitle1">Name</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedClientDevice?.ua || ''}
-                                    onChange={(e) => handleTextFieldChange('ua', e.target.value)} />
+                                    defaultValue={updatedWorkspace?.name || ''}
+                                    onChange={(e) => handleTextFieldChange('name', e.target.value)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Description</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    defaultValue={updatedWorkspace?.description || ''}
+                                    onChange={(e) => handleTextFieldChange('description', e.target.value)} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>
@@ -122,7 +145,7 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
                             <Grid item xs={8} md={9}>
                                 <Switch
                                     onChange={e => handleSwitchChange('disabled', e)}
-                                    checked={updatedClientDevice.disabled} />
+                                    checked={updatedWorkspace.disabled} />
                             </Grid>
                         </Grid>
                     </>
@@ -143,7 +166,7 @@ const UserWorkspaceEditForm = ({user, clientDeviceId, updateFunc, updated}:props
                 <Button
                     startIcon={<EditIcon />}
                     onClick={onUpdate}
-                    disabled={hasChanges || !clientDevice}>
+                    disabled={hasChanges || !workspace}>
                     Update
                 </Button>
             </Grid>

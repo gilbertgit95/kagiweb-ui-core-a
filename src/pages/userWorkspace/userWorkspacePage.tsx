@@ -16,11 +16,11 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserService from '../user/userService';
-import UserClientDeviceService from './userClientDeviceService';
-import UserClientDeviceReadOnlyView from './userClientDeviceReadOnlyView';
+import UserWorkspaceService from './userWorkspaceService';
+import UserWorkspaceReadOnlyView from './userWorkspaceReadOnlyView';
 
 const UserWorkspacePage = () => {
-    const { userId, clientDeviceId } = useParams()
+    const { userId, workspaceId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IUser | undefined>()
     const [pageState, setPageState] = useState({
@@ -34,9 +34,9 @@ const UserWorkspacePage = () => {
     })
 
     const onDelete = async () => {
-        if (userId && clientDeviceId) {
+        if (userId && workspaceId) {
             try {
-                await UserClientDeviceService.deleteClientDevice(userId, clientDeviceId)
+                await UserWorkspaceService.deleteWorkspace(userId, workspaceId)
                 const userResp = await UserService.getUser(userId)
                 setUser(userResp.data)
                 setPageState({
@@ -45,7 +45,7 @@ const UserWorkspacePage = () => {
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this client device']},
+                    ...{infoMessages: ['Sucessfully deleted this workspace']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -80,7 +80,6 @@ const UserWorkspacePage = () => {
                 }
             }
         }
-        console.log('initiate Client Device page')
         init()
     }, [userId])
 
@@ -88,7 +87,7 @@ const UserWorkspacePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Client Device View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -109,7 +108,7 @@ const UserWorkspacePage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ userId }/clientDevices/${ clientDeviceId }`)}>
+                            onClick={() => navigate(`/users/edit/${ userId }/workspaces/${ workspaceId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -128,7 +127,7 @@ const UserWorkspacePage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this client device?
+                                    Are you sure you want to delete this workspace?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -143,7 +142,7 @@ const UserWorkspacePage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceReadOnlyView user={user} clientDeviceId={ clientDeviceId } />
+                <UserWorkspaceReadOnlyView user={user} workspaceId={ workspaceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

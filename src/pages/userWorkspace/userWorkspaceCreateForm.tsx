@@ -37,13 +37,14 @@ const UserWorkspaceCreateForm = ({user, createFunc, created}:props) => {
 
         // // send update data to the api
         if (user?._id) {
+            console.log('description: ', JSON.stringify(newWorkspace))
             try {
                 const reqResp = await createFunc(
                     user._id,
                     newWorkspace.name,
                     newWorkspace.description || '',
-                    newWorkspace.isActive || false,
-                    newWorkspace.disabled || false
+                    Boolean(newWorkspace.isActive),
+                    Boolean(newWorkspace.disabled)
                 )
                 if (created) created(user?._id, reqResp?.data)
                 setInfoAndErrors({
