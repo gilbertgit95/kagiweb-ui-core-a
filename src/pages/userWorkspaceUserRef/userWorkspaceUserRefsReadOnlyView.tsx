@@ -37,8 +37,8 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId}:IProps) => {
 
     useEffect(() => {
         if (user && user.workspaces && workspaceId) {
-            const wotkspace = UserWorkspaceService.getWorkspaceById(user, workspaceId)
-            const transformedData:IWorkspaceUserRefRow[] = wotkspace?.userRefs?.map((item:IWorkspaceUserRef & {createdAt?: Date, updatedAt?: Date}) => {
+            const workspace = UserWorkspaceService.getWorkspaceById(user, workspaceId)
+            const transformedData:IWorkspaceUserRefRow[] = workspace?.userRefs?.map((item:IWorkspaceUserRef & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     userId: item.userId,

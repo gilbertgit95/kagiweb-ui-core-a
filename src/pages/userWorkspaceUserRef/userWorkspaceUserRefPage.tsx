@@ -14,16 +14,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenReadOnlyView from './userClientDeviceTokenReadOnlyView';
+import UserWorkspaceUserRefReadOnlyView from './userWorkspaceUserRefReadOnlyView';
 import UserService from '../user/userService';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserWorkspaceUserRefPage = () => {
-    const { userId, clientDeviceId, clientDeviceTokenId } = useParams()
+    const { userId, workspaceId, userRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,9 +37,9 @@ const UserWorkspaceUserRefPage = () => {
     const [user, setUser] = useState<IUser | undefined>()
 
     const onDelete = async () => {
-        if (userId && clientDeviceId && clientDeviceTokenId) {
+        if (userId && workspaceId && userRefId) {
             try {
-                await UserClientDeviceTokenService.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
+                await UserWorkspaceUserRefService.deleteWorkspaceUserRef(userId, workspaceId, userRefId)
                 const userResp = await UserService.getUser(userId)
                 setUser(userResp.data)
                 setPageState({
@@ -48,7 +48,7 @@ const UserWorkspaceUserRefPage = () => {
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this token']},
+                    ...{infoMessages: ['Sucessfully deleted this user reference']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -65,9 +65,9 @@ const UserWorkspaceUserRefPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, clientDeviceId)
+            console.log('View: ', userId, workspaceId)
 
-            if (userId && clientDeviceId) {
+            if (userId && workspaceId) {
                 try {
                     const userResp = await UserService.getUser(userId)
                     setUser(userResp.data)
@@ -88,13 +88,13 @@ const UserWorkspaceUserRefPage = () => {
         }
 
         init()
-    }, [userId, clientDeviceId])
+    }, [userId, workspaceId])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Token Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace User reference Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const UserWorkspaceUserRefPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/clientDevices/${ clientDeviceId }/clientDeviceTokens/${ clientDeviceTokenId }`)}>
+                            onClick={() => navigate(`/users/edit/${ user?._id }/workspaces/${ workspaceId }/userRefs/${ userRefId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -134,7 +134,7 @@ const UserWorkspaceUserRefPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this access token?
+                                    Are you sure you want to delete this user reference?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -149,10 +149,10 @@ const UserWorkspaceUserRefPage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceTokenReadOnlyView
+                <UserWorkspaceUserRefReadOnlyView
                     user={user}
-                    clientDeviceId={clientDeviceId}
-                    clientDeviceTokenId={clientDeviceTokenId} />
+                    workspaceId={workspaceId}
+                    userRefId={userRefId} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

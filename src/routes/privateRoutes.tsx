@@ -60,7 +60,7 @@ import UserWorkspaceCreatePage from '../pages/userWorkspace/userWorkspaceCreateP
 import UserWorkspaceEditPage from '../pages/userWorkspace/userWorkspaceEditPage';
 
 import UserWorkspaceUserRefsPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefsPage';
-// import UserWorkspaceUserRefPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefPage';
+import UserWorkspaceUserRefPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefPage';
 import UserWorkspaceUserRefCreatePage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefCreatePage';
 // import UserWorkspaceUserRefEditPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefEditPage';
 
@@ -156,8 +156,8 @@ const PrivateRoutes = () => {
                     {/* user workspace userRefs */}
                     <Route path="users/view/:userId/workspaces/:workspaceId/userRefs" element={<UserWorkspaceUserRefsPage />} />
                     <Route path="users/create/:userId/workspaces/:workspaceId/userRefs" element={<UserWorkspaceUserRefCreatePage />} />
-                    {/* <Route path="users/view/:userId/workspaces/:workspaceId/userRefs/:clientDeviceTokenId" element={<UserClientDeviceTokenPage />} /> */}
-                    {/* <Route path="users/edit/:userId/workspaces/:workspaceId/userRefs/:clientDeviceTokenId" element={<UserClientDeviceTokenEditPage />} /> */}
+                    <Route path="users/view/:userId/workspaces/:workspaceId/userRefs/:userRefId" element={<UserWorkspaceUserRefPage />} />
+                    {/* <Route path="users/edit/:userId/workspaces/:workspaceId/userRefs/:userRefId" element={<UserWorkspaceUserRefEditPage />} /> */}
 
                     {/* owner pages */}
                     <Route path="owner/view" element={<OwnerPage />} />

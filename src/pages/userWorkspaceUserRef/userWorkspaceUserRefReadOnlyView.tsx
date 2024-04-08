@@ -2,26 +2,26 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment'
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
-import { IUser, IAccessToken } from '../../types/user';
+import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
+import { IUser, IWorkspaceUserRef } from '../../types/user';
 import Config from '../../config';
 
 interface props {
     user?: IUser,
-    clientDeviceId?: string,
-    clientDeviceTokenId?: string
+    workspaceId?: string,
+    userRefId?: string
 }
 
-const UserWorkspaceUserRefReadOnlyView = ({user, clientDeviceId, clientDeviceTokenId}:props) => {
-    const [token, setToken] = useState<IAccessToken & {createdAt?:Date, updatedAt?:Date} | undefined>()
+const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId}:props) => {
+    const [userRef, setUserRef] = useState<IWorkspaceUserRef & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
-        if (user && user.contactInfos && clientDeviceId) {
-            const tkn = UserClientDeviceTokenService.getClientDeviceAccessTokenById(user, clientDeviceId, clientDeviceTokenId || '')
-            setToken(tkn)
+        if (user && user.contactInfos && workspaceId) {
+            const usrRef = UserWorkspaceUserRefService.getWorkspaceUserRefById(user, workspaceId, userRefId || '')
+            setUserRef(usrRef)
         }
 
-    }, [user, clientDeviceId, clientDeviceTokenId])
+    }, [user, workspaceId, userRefId])
 
     const colDef:IColDef[] = [
         {
@@ -35,16 +35,23 @@ const UserWorkspaceUserRefReadOnlyView = ({user, clientDeviceId, clientDeviceTok
     ]
 
     const data:{field: string, value: string|undefined}[] = [
-        { field: 'IP Address', value: token?.ipAddress },
-        { field: 'JWT', value: token?.jwt },
-        { field: 'Disabled', value: token?.disabled? 'True': 'False' },
-        { field: 'Created', value: moment(token?.createdAt).format(Config.defaultDateTimeFormat) },
-        { field: 'Updated', value: moment(token?.updatedAt).format(Config.defaultDateTimeFormat) }
+        { field: 'User ID', value: userRef?.userId },
+        { field: 'Username', value: userRef?.username },
+        { field: 'Read Access', value: userRef?.readAccess? 'True': 'False' },
+        { field: 'Update Access', value: userRef?.updateAccess? 'True': 'False' },
+        { field: 'Create Access', value: userRef?.createAccess? 'True': 'False' },
+        { field: 'Delete Access', value: userRef?.deleteAccess? 'True': 'False' },
+        { field: 'Accepted', value: userRef?.disabled? 'True': 'False' },
+        { field: 'Declined', value: userRef?.disabled? 'True': 'False' },
+        { field: 'Disabled', value: userRef?.disabled? 'True': 'False' },
+        { field: 'Created', value: moment(userRef?.createdAt).format(Config.defaultDateTimeFormat) },
+        { field: 'Updated', value: moment(userRef?.updatedAt).format(Config.defaultDateTimeFormat) }
     ]
 
-    return token? (
+    return userRef? (
         <Grid item xs={12}>
             <PrimaryTable
+                maxHeight={700}
                 columnDefs={colDef}
                 data={data} />
         </Grid>
