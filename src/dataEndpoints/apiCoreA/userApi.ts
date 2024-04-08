@@ -348,20 +348,16 @@ class UserApi {
         userId:string,
         workspaceId:string,
         userRefId:string,
-        userRef:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
-        accepted: boolean,
         disabled: boolean) {
         const data = {
-            'userRef': userRef,
             'readAccess': readAccess,
             'updateAccess': updateAccess,
             'createAccess': createAccess,
             'deleteAccess': deleteAccess,
-            'accepted': accepted,
             'disabled': disabled
         }
 
@@ -376,20 +372,18 @@ class UserApi {
     public static createWorkspaceUserRef(
         userId:string,
         workspaceId:string,
-        userRef:string,
+        username:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
-        accepted: boolean,
         disabled: boolean) {
         const data = {
-            'userRef': userRef,
+            'username': username,
             'readAccess': readAccess,
             'updateAccess': updateAccess,
             'createAccess': createAccess,
             'deleteAccess': deleteAccess,
-            'accepted': accepted,
             'disabled': disabled
         }
 

@@ -59,10 +59,10 @@ import UserWorkspacePage from '../pages/userWorkspace/userWorkspacePage';
 import UserWorkspaceCreatePage from '../pages/userWorkspace/userWorkspaceCreatePage';
 import UserWorkspaceEditPage from '../pages/userWorkspace/userWorkspaceEditPage';
 
-// import UserClientDeviceTokensPage from '../pages/userClientDeviceToken/userClientDeviceTokensPage';
-// import UserClientDeviceTokenPage from '../pages/userClientDeviceToken/userClientDeviceTokenPage';
-// import UserClientDeviceTokenCreatePage from '../pages/userClientDeviceToken/userClientDeviceTokenCreatePage';
-// import UserClientDeviceTokenEditPage from '../pages/userClientDeviceToken/userClientDeviceTokenEditPage';
+import UserWorkspaceUserRefsPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefsPage';
+// import UserWorkspaceUserRefPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefPage';
+import UserWorkspaceUserRefCreatePage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefCreatePage';
+// import UserWorkspaceUserRefEditPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefEditPage';
 
 
 import OwnerPage from '../pages/owner/ownerPage';
@@ -135,7 +135,7 @@ const PrivateRoutes = () => {
                     <Route path="users/edit/:userId/clientDevices/:clientDeviceId" element={<UserClientDeviceEditPage />} />
                     {/* user client device tokens */}
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens" element={<UserClientDeviceTokensPage />} />
-                    <Route path="users/create/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/" element={<UserClientDeviceTokenCreatePage />} />
+                    <Route path="users/create/:userId/clientDevices/:clientDeviceId/clientDeviceTokens" element={<UserClientDeviceTokenCreatePage />} />
                     <Route path="users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<UserClientDeviceTokenPage />} />
                     <Route path="users/edit/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<UserClientDeviceTokenEditPage />} />
                     {/* user contact infos */}
@@ -154,8 +154,8 @@ const PrivateRoutes = () => {
                     <Route path="users/view/:userId/workspaces/:workspaceId" element={<UserWorkspacePage />} />
                     <Route path="users/edit/:userId/workspaces/:workspaceId" element={<UserWorkspaceEditPage />} />
                     {/* user workspace userRefs */}
-                    {/* <Route path="users/view/:userId/workspaces/:workspaceId/userRefs" element={<UserClientDeviceTokensPage />} /> */}
-                    {/* <Route path="users/create/:userId/workspaces/:workspaceId/userRefs/" element={<UserClientDeviceTokenCreatePage />} /> */}
+                    <Route path="users/view/:userId/workspaces/:workspaceId/userRefs" element={<UserWorkspaceUserRefsPage />} />
+                    <Route path="users/create/:userId/workspaces/:workspaceId/userRefs" element={<UserWorkspaceUserRefCreatePage />} />
                     {/* <Route path="users/view/:userId/workspaces/:workspaceId/userRefs/:clientDeviceTokenId" element={<UserClientDeviceTokenPage />} /> */}
                     {/* <Route path="users/edit/:userId/workspaces/:workspaceId/userRefs/:clientDeviceTokenId" element={<UserClientDeviceTokenEditPage />} /> */}
 
@@ -189,7 +189,7 @@ const PrivateRoutes = () => {
                     <Route path="owner/edit/clientDevices/:clientDeviceId" element={<OwnerClientDeviceEditPage />} />
                     {/* owner client device tokens */}
                     <Route path="owner/view/clientDevices/:clientDeviceId/clientDeviceTokens" element={<OwnerClientDeviceTokensPage />} />
-                    <Route path="owner/create/clientDevices/:clientDeviceId/clientDeviceTokens/" element={<OwnerClientDeviceTokenCreatePage />} />
+                    <Route path="owner/create/clientDevices/:clientDeviceId/clientDeviceTokens" element={<OwnerClientDeviceTokenCreatePage />} />
                     <Route path="owner/view/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<OwnerClientDeviceTokenPage />} />
                     <Route path="owner/edit/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<OwnerClientDeviceTokenEditPage />} />
 

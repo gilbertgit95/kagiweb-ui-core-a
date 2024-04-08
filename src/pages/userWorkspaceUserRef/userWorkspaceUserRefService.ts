@@ -20,23 +20,19 @@ class UserWorkspaceUserRefService {
         userId:string,
         workspaceId:string,
         userRefId:string,
-        userRef:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
-        accepted: boolean,
         disabled: boolean):Promise<{data: IWorkspaceUserRef}> {
         return userApi.updateWorkspaceUserRef(
             userId,
             workspaceId,
             userRefId,
-            userRef,
             readAccess,
             updateAccess,
             createAccess,
             deleteAccess,
-            accepted,
             disabled
         )
     }
@@ -44,22 +40,20 @@ class UserWorkspaceUserRefService {
     public static createWorkspaceUserRef(
         userId:string,
         workspaceId:string,
-        userRef:string,
+        username:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
-        accepted: boolean,
         disabled: boolean):Promise<{data: IWorkspaceUserRef}> {
         return userApi.createWorkspaceUserRef(
             userId,
             workspaceId,
-            userRef,
+            username,
             readAccess,
             updateAccess,
             createAccess,
             deleteAccess,
-            accepted,
             disabled
         )
     }

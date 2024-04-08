@@ -3,19 +3,32 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IUser, IAccessToken } from '../../types/user';
+import { IUser, IWorkspaceUserRef } from '../../types/user';
 
 interface props {
     user?: IUser,
-    clientDeviceId?:string,
-    createFunc: (userId:string, clientDeviceId:string, newData:IAccessToken) => Promise<{data:IAccessToken}>,
-    created?: (userId:string|undefined, clientDeviceId:string, token:IAccessToken|undefined) => void
+    workspaceId?:string,
+    createFunc: (
+        userId:string,
+        workspaceId:string,
+        username:string,
+        readAccess: boolean,
+        updateAccess: boolean,
+        createAccess: boolean,
+        deleteAccess: boolean,
+        disabled: boolean
+    ) => Promise<{data:IWorkspaceUserRef}>,
+    created?: (userId:string|undefined, workspaceId:string, token:IWorkspaceUserRef|undefined) => void
 }
 
-const UserWorkspaceUserRefCreateForm = ({user, clientDeviceId, createFunc, created}:props) => {
-    const [newToken, setNewToken] = useState<IAccessToken>({
-        ipAddress: '',
-        jwt: '',
+const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}:props) => {
+    const [newToken, setNewToken] = useState<IWorkspaceUserRef>({
+        userId: '',
+        username: '',
+        readAccess: true,
+        updateAccess: false,
+        createAccess: false,
+        deleteAccess: false,
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -35,9 +48,13 @@ const UserWorkspaceUserRefCreateForm = ({user, clientDeviceId, createFunc, creat
     const onCreate = async () => {
         if (!user) return
 
-        const newData:IAccessToken = {
-            ipAddress: newToken.ipAddress,
-            jwt: newToken.jwt,
+        const newData:IWorkspaceUserRef = {
+            userId: '',
+            username: newToken.username,
+            readAccess: newToken.readAccess,
+            updateAccess: newToken.updateAccess,
+            createAccess: newToken.createAccess,
+            deleteAccess: newToken.deleteAccess,
             disabled: newToken.disabled
         }
         console.log('save update: ', newData)
@@ -45,8 +62,17 @@ const UserWorkspaceUserRefCreateForm = ({user, clientDeviceId, createFunc, creat
         // // send update data to the api
         if (user?._id) {
             try {
-                const reqResp = await createFunc(user._id, clientDeviceId || '', newData)
-                if (created) created(user?._id, clientDeviceId || '', reqResp?.data)
+                const reqResp = await createFunc(
+                    user._id,
+                    workspaceId || '',
+                    newToken.username,
+                    Boolean(newToken.readAccess),
+                    Boolean(newToken.updateAccess),
+                    Boolean(newToken.createAccess),
+                    Boolean(newToken.deleteAccess),
+                    Boolean(newToken.disabled)
+                )
+                if (created) created(user?._id, workspaceId || '', reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}
@@ -73,24 +99,53 @@ const UserWorkspaceUserRefCreateForm = ({user, clientDeviceId, createFunc, creat
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">IP Address</Typography>
+                    <Typography variant="subtitle1">Username</Typography>
                 </Grid>
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={newToken?.ipAddress || ''}
-                        onChange={(e) => handleTextFieldChange('ipAddress', e.target.value)} />
+                        defaultValue={newToken?.username || ''}
+                        onChange={(e) => handleTextFieldChange('username', e.target.value)} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">JWT</Typography>
+                    <Typography variant="subtitle1">Read Access</Typography>
                 </Grid>
                 <Grid item xs={8} md={9}>
-                    <TextField
-                        fullWidth
-                        defaultValue={newToken?.jwt || ''}
-                        onChange={(e) => handleTextFieldChange('jwt', e.target.value)} />
+                    <Switch
+                        onChange={e => handleSwitchChange('readAccess', e)}
+                        checked={newToken.readAccess} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Update Access</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <Switch
+                        onChange={e => handleSwitchChange('updateAccess', e)}
+                        checked={newToken.updateAccess} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Create Access</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <Switch
+                        onChange={e => handleSwitchChange('createAccess', e)}
+                        checked={newToken.createAccess} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Delete Access</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <Switch
+                        onChange={e => handleSwitchChange('deleteAccess', e)}
+                        checked={newToken.deleteAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>

@@ -4,21 +4,28 @@ import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import { Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { IUser, IAccessToken } from '../../types/user';
+import { IUser, IWorkspaceUserRef } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import Config from '../../config';
-import UserClientDeviceService from '../userClientDevice/userClientDeviceService';
+// import UserWorkspaceUserRefService from '../userWorkspaceUserRef/userWorkspaceUserRefService';
+import UserWorkspaceService from '../userWorkspace/userWorkspaceService';
 
 interface IProps {
     user: IUser | undefined,
     workspaceId: string | undefined
 }
 
-interface IclientDeviceTokenRow {
+interface IWorkspaceUserRefRow {
     _id: string,
-    jwt: string,
-    ipAddress: string,
+    userId: string,
+    username: string,
+    readAccess: boolean,
+    createAccess: boolean,
+    updateAccess: boolean,
+    deleteAccess: boolean,
+    accepted: boolean,
+    declined: boolean,
     disabled: boolean,
     createdAt: string,
     updatedAt: string
@@ -26,16 +33,22 @@ interface IclientDeviceTokenRow {
 
 const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId}:IProps) => {
     const navigate = useNavigate()
-    const [data, setData] = useState<IclientDeviceTokenRow[]>([])
+    const [data, setData] = useState<IWorkspaceUserRefRow[]>([])
 
     useEffect(() => {
-        if (user && user.clientDevices && workspaceId) {
-            const clientDevice = UserClientDeviceService.getClientDeviceById(user, workspaceId)
-            const transformedData:IclientDeviceTokenRow[] = clientDevice?.accessTokens?.map((item:IAccessToken & {createdAt?: Date, updatedAt?: Date}) => {
+        if (user && user.workspaces && workspaceId) {
+            const wotkspace = UserWorkspaceService.getWorkspaceById(user, workspaceId)
+            const transformedData:IWorkspaceUserRefRow[] = wotkspace?.userRefs?.map((item:IWorkspaceUserRef & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
-                    jwt: item.jwt,
-                    ipAddress: item.ipAddress || '--',
+                    userId: item.userId,
+                    username: item.username,
+                    readAccess: Boolean(item.readAccess),
+                    createAccess: Boolean(item.createAccess),
+                    updateAccess: Boolean(item.updateAccess),
+                    deleteAccess: Boolean(item.deleteAccess),
+                    accepted: Boolean(item.accepted),
+                    declined: Boolean(item.declined),
                     disabled: Boolean(item.disabled),
                     createdAt: moment(item.createdAt).format(Config.defaultDateTimeFormat),
                     updatedAt: moment(item.updatedAt).format(Config.defaultDateTimeFormat)
@@ -49,12 +62,54 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId}:IProps) => {
 
     const colDef:IColDef[] = [
         {
-            header: 'IP Address',
-            field: 'ipAddress'
+            header: 'User ID',
+            field: 'userId'
         },
         {
-            header: 'Token',
-            field: 'jwt'
+            header: 'Username',
+            field: 'username'
+        },
+        {
+            header: 'Read',
+            field: 'readAccess',
+            Component: (props:IWorkspaceUserRefRow) => {
+                return <Check value={props.readAccess} />
+            }
+        },
+        {
+            header: 'Update',
+            field: 'updateAccess',
+            Component: (props:IWorkspaceUserRefRow) => {
+                return <Check value={props.updateAccess} />
+            }
+        },
+        {
+            header: 'Create',
+            field: 'createAccess',
+            Component: (props:IWorkspaceUserRefRow) => {
+                return <Check value={props.createAccess} />
+            }
+        },
+        {
+            header: 'Delete',
+            field: 'deleteAccess',
+            Component: (props:IWorkspaceUserRefRow) => {
+                return <Check value={props.deleteAccess} />
+            }
+        },
+        {
+            header: 'Accepted',
+            field: 'accepted',
+            Component: (props:IWorkspaceUserRefRow) => {
+                return <Check value={props.accepted} />
+            }
+        },
+        {
+            header: 'Declined',
+            field: 'declined',
+            Component: (props:IWorkspaceUserRefRow) => {
+                return <Check value={props.declined} />
+            }
         },
         {
             header: 'Created',
@@ -67,20 +122,20 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId}:IProps) => {
         {
             header: 'Disabled',
             field: 'disabled',
-            Component: (props:IclientDeviceTokenRow) => {
+            Component: (props:IWorkspaceUserRefRow) => {
                 return <Check value={props.disabled} />
             }
         },
         {
             header: '',
             field: '_id',
-            Component: (props:IclientDeviceTokenRow) => {
+            Component: (props:IWorkspaceUserRefRow) => {
     
                 return (
                     <Button
                         startIcon={<VisibilityIcon />}
                         onClick={() => navigate(props._id)}
-                        variant="text">View Device Token</Button>
+                        variant="text">View User Ref</Button>
                 )
             }
         }

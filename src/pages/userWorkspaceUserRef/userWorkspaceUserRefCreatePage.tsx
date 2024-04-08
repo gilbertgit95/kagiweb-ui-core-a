@@ -7,16 +7,16 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenCreateForm from './userClientDeviceTokenCreateForm';
+import UserWorkspaceUserRefCreateForm from './userWorkspaceUserRefCreateForm';
 import UserService from '../user/userService';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserWorkspaceUserRefCreatePage = () => {
-    const { userId, clientDeviceId } = useParams()
+    const { userId, workspaceId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -64,7 +64,7 @@ const UserWorkspaceUserRefCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Token Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace User Reference Create View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,10 +76,10 @@ const UserWorkspaceUserRefCreatePage = () => {
                     </Button>
                 </Grid>
 
-                <UserClientDeviceTokenCreateForm
+                <UserWorkspaceUserRefCreateForm
                     user={user}
-                    clientDeviceId={clientDeviceId}
-                    createFunc={UserClientDeviceTokenService.createClientDeviceToken}
+                    workspaceId={workspaceId}
+                    createFunc={UserWorkspaceUserRefService.createWorkspaceUserRef}
                     created={onCreated} />
 
                 <Grid item xs={12}>
