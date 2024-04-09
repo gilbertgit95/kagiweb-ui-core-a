@@ -62,7 +62,7 @@ import UserWorkspaceEditPage from '../pages/userWorkspace/userWorkspaceEditPage'
 import UserWorkspaceUserRefsPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefsPage';
 import UserWorkspaceUserRefPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefPage';
 import UserWorkspaceUserRefCreatePage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefCreatePage';
-// import UserWorkspaceUserRefEditPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefEditPage';
+import UserWorkspaceUserRefEditPage from '../pages/userWorkspaceUserRef/userWorkspaceUserRefEditPage';
 
 
 import OwnerPage from '../pages/owner/ownerPage';
@@ -157,7 +157,7 @@ const PrivateRoutes = () => {
                     <Route path="users/view/:userId/workspaces/:workspaceId/userRefs" element={<UserWorkspaceUserRefsPage />} />
                     <Route path="users/create/:userId/workspaces/:workspaceId/userRefs" element={<UserWorkspaceUserRefCreatePage />} />
                     <Route path="users/view/:userId/workspaces/:workspaceId/userRefs/:userRefId" element={<UserWorkspaceUserRefPage />} />
-                    {/* <Route path="users/edit/:userId/workspaces/:workspaceId/userRefs/:userRefId" element={<UserWorkspaceUserRefEditPage />} /> */}
+                    <Route path="users/edit/:userId/workspaces/:workspaceId/userRefs/:userRefId" element={<UserWorkspaceUserRefEditPage />} />
 
                     {/* owner pages */}
                     <Route path="owner/view" element={<OwnerPage />} />

@@ -3,22 +3,35 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
-import { IUser, IAccessToken } from '../../types/user';
+import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
+import { IUser, IWorkspaceUserRef } from '../../types/user';
 
 interface props {
     user?: IUser,
-    clientDeviceId?: string,
-    clientDeviceTokenId?: string,
-    updateFunc: (userId:string, clientDeviceId: string, updateData:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}) => Promise<{data:IAccessToken}>,
-    updated?: (userId:string|undefined, userInfo:IAccessToken|undefined) => void
+    workspaceId?: string,
+    userRefId?: string,
+    updateFunc: (
+        userId:string,
+        workspaceId:string,
+        userRefId:string,
+        readAccess:boolean,
+        updateAccess:boolean,
+        createAccess:boolean,
+        deleteAccess:boolean,
+        disabled:boolean
+    ) => Promise<{data:IWorkspaceUserRef}>,
+    updated?: (userId:string|undefined, workspaceId: string, userRef:IWorkspaceUserRef|undefined) => void
 }
 
-const UserWorkspaceUserRefEditForm = ({user, clientDeviceId, clientDeviceTokenId, updateFunc, updated}:props) => {
-    const [token, setToken] = useState<IAccessToken & {createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedToken, setUpdatedToken] = useState<IAccessToken>({
-        ipAddress: '',
-        jwt: '',
+const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, updateFunc, updated}:props) => {
+    const [userRef, setUserRef] = useState<IWorkspaceUserRef & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceUserRef>({
+        userId: '',
+        username: '',
+        readAccess: true,
+        updateAccess: false,
+        createAccess: false,
+        deleteAccess: false,
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -26,35 +39,36 @@ const UserWorkspaceUserRefEditForm = ({user, clientDeviceId, clientDeviceTokenId
         infoMessages: []
     })
 
-    const handleTextFieldChange = (field:string, value:string) => {
-        setUpdatedToken({...updatedToken, ...{[field]: value}})
-    }
+    // const handleTextFieldChange = (field:string, value:string) => {
+    //     setUpdatedUserRef({...updatedUserRef, ...{[field]: value}})
+    // }
 
     const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.checked)
-        setUpdatedToken({...updatedToken, ...{[field]: event.target.checked}})
+        setUpdatedUserRef({...updatedUserRef, ...{[field]: event.target.checked}})
     }
 
     const onUpdate = async () => {
-        if (!token) return
-
-        const updateData:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean} = {
-            _id: updatedToken._id,
-            ipAddress: updatedToken.ipAddress === token.ipAddress? undefined: updatedToken.ipAddress,
-            jwt: updatedToken.jwt === token.jwt? undefined: updatedToken.jwt,
-            disabled: updatedToken.disabled === token.disabled? token.disabled: updatedToken.disabled
-        }
-        console.log('save update: ', updateData)
+        if (!userRef) return
 
         // // send update data to the api
         if (user?._id) {
             try {
-                const reqResp = await updateFunc(user._id, clientDeviceId || '', updateData)
+                const reqResp = await updateFunc(
+                    user._id,
+                    workspaceId || '',
+                    userRefId || '',
+                    Boolean(updatedUserRef.readAccess),
+                    Boolean(updatedUserRef.updateAccess),
+                    Boolean(updatedUserRef.createAccess),
+                    Boolean(updatedUserRef.deleteAccess),
+                    Boolean(updatedUserRef.disabled)
+                )
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(user?._id, reqResp?.data)
+                if (updated) updated(user?._id, workspaceId || '', reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -68,15 +82,15 @@ const UserWorkspaceUserRefEditForm = ({user, clientDeviceId, clientDeviceTokenId
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.clientDevices && clientDeviceId) {
-                const tkn = UserClientDeviceTokenService.getClientDeviceAccessTokenById(user, clientDeviceId, clientDeviceTokenId || '')
-                setToken(tkn)
+            if (user && user.clientDevices && workspaceId) {
+                const tkn = UserWorkspaceUserRefService.getWorkspaceUserRefById(user, workspaceId, userRefId || '')
+                setUserRef(tkn)
                 if (tkn) {
-                    setUpdatedToken(tkn)
+                    setUpdatedUserRef(tkn)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Token does not exist on this user']}
+                        ...{errorMessages: ['User reference does not exist on this user']}
                     })
                 }
             }
@@ -84,7 +98,7 @@ const UserWorkspaceUserRefEditForm = ({user, clientDeviceId, clientDeviceTokenId
 
         init()
 
-    }, [user, clientDeviceId, clientDeviceTokenId])
+    }, [user, workspaceId, userRefId])
 
     const itemSx = {
         display: 'flex',
@@ -94,40 +108,71 @@ const UserWorkspaceUserRefEditForm = ({user, clientDeviceId, clientDeviceTokenId
     }
 
     const hasChanges = (() => {
-        if (!token) return false
+        if (!userRef) return false
 
         return !(
-            token.ipAddress !== updatedToken.ipAddress ||
-            token.jwt !== updatedToken.jwt ||
-            token.disabled !== updatedToken.disabled
+            userRef.readAccess !== updatedUserRef.readAccess ||
+            userRef.updateAccess !== updatedUserRef.updateAccess ||
+            userRef.createAccess !== updatedUserRef.createAccess ||
+            userRef.deleteAccess !== updatedUserRef.deleteAccess ||
+            userRef.disabled !== updatedUserRef.disabled
         )
     })()
 
     return user? (
         <>
             {
-                token? (
+                userRef? (
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">IP Address</Typography>
+                                <Typography variant="subtitle1">Username</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedToken?.ipAddress || ''}
-                                    onChange={(e) => handleTextFieldChange('ipAddress', e.target.value)} />
+                                    disabled
+                                    defaultValue={userRef?.username || ''} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">JWT</Typography>
+                                <Typography variant="subtitle1">Read Access</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
-                                <TextField
-                                    fullWidth
-                                    defaultValue={updatedToken?.jwt || ''}
-                                    onChange={(e) => handleTextFieldChange('jwt', e.target.value)} />
+                                <Switch
+                                    onChange={e => handleSwitchChange('readAccess', e)}
+                                    checked={updatedUserRef.readAccess} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Update Access</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Switch
+                                    onChange={e => handleSwitchChange('updateAccess', e)}
+                                    checked={updatedUserRef.updateAccess} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Create Access</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Switch
+                                    onChange={e => handleSwitchChange('createAccess', e)}
+                                    checked={updatedUserRef.createAccess} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Delete Access</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Switch
+                                    onChange={e => handleSwitchChange('deleteAccess', e)}
+                                    checked={updatedUserRef.deleteAccess} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>
@@ -137,7 +182,7 @@ const UserWorkspaceUserRefEditForm = ({user, clientDeviceId, clientDeviceTokenId
                             <Grid item xs={8} md={9}>
                                 <Switch
                                     onChange={e => handleSwitchChange('disabled', e)}
-                                    checked={updatedToken.disabled} />
+                                    checked={updatedUserRef.disabled} />
                             </Grid>
                         </Grid>
                     </>
@@ -158,7 +203,7 @@ const UserWorkspaceUserRefEditForm = ({user, clientDeviceId, clientDeviceTokenId
                 <Button
                     startIcon={<EditIcon />}
                     onClick={onUpdate}
-                    disabled={hasChanges || !token}>
+                    disabled={hasChanges || !userRef}>
                     Update
                 </Button>
             </Grid>

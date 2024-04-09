@@ -62,10 +62,6 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId}:IProps) => {
 
     const colDef:IColDef[] = [
         {
-            header: 'User ID',
-            field: 'userId'
-        },
-        {
             header: 'Username',
             field: 'username'
         },

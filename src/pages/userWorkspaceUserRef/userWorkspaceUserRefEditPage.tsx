@@ -7,16 +7,16 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenEditForm from './userClientDeviceTokenEditForm';
+import UserWorkspaceUserRefEditForm from './userWorkspaceUserRefEditForm';
 import UserService from '../user/userService';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import { IUser } from '../../types/user';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserWorkspaceUserRefEditPage = () => {
-    const { userId, clientDeviceId, clientDeviceTokenId } = useParams()
+    const { userId, workspaceId, userRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -64,7 +64,7 @@ const UserWorkspaceUserRefEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Token Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace User Reference Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,11 +76,11 @@ const UserWorkspaceUserRefEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserClientDeviceTokenEditForm
+                <UserWorkspaceUserRefEditForm
                     user={user}
-                    clientDeviceId={clientDeviceId}
-                    clientDeviceTokenId={clientDeviceTokenId}
-                    updateFunc={UserClientDeviceTokenService.updateClientDeviceToken}
+                    workspaceId={workspaceId}
+                    userRefId={userRefId}
+                    updateFunc={UserWorkspaceUserRefService.updateWorkspaceUserRef}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

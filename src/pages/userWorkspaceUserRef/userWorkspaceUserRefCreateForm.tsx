@@ -18,11 +18,11 @@ interface props {
         deleteAccess: boolean,
         disabled: boolean
     ) => Promise<{data:IWorkspaceUserRef}>,
-    created?: (userId:string|undefined, workspaceId:string, token:IWorkspaceUserRef|undefined) => void
+    created?: (userId:string|undefined, workspaceId:string, userRef:IWorkspaceUserRef|undefined) => void
 }
 
 const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}:props) => {
-    const [newToken, setNewToken] = useState<IWorkspaceUserRef>({
+    const [userRef, setNewUserRef] = useState<IWorkspaceUserRef>({
         userId: '',
         username: '',
         readAccess: true,
@@ -37,12 +37,12 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setNewToken({...newToken, ...{[field]: value}})
+        setNewUserRef({...userRef, ...{[field]: value}})
     }
 
     const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.checked)
-        setNewToken({...newToken, ...{[field]: event.target.checked}})
+        setNewUserRef({...userRef, ...{[field]: event.target.checked}})
     }
 
     const onCreate = async () => {
@@ -50,12 +50,12 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
 
         const newData:IWorkspaceUserRef = {
             userId: '',
-            username: newToken.username,
-            readAccess: newToken.readAccess,
-            updateAccess: newToken.updateAccess,
-            createAccess: newToken.createAccess,
-            deleteAccess: newToken.deleteAccess,
-            disabled: newToken.disabled
+            username: userRef.username,
+            readAccess: userRef.readAccess,
+            updateAccess: userRef.updateAccess,
+            createAccess: userRef.createAccess,
+            deleteAccess: userRef.deleteAccess,
+            disabled: userRef.disabled
         }
         console.log('save update: ', newData)
 
@@ -65,12 +65,12 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                 const reqResp = await createFunc(
                     user._id,
                     workspaceId || '',
-                    newToken.username,
-                    Boolean(newToken.readAccess),
-                    Boolean(newToken.updateAccess),
-                    Boolean(newToken.createAccess),
-                    Boolean(newToken.deleteAccess),
-                    Boolean(newToken.disabled)
+                    userRef.username,
+                    Boolean(userRef.readAccess),
+                    Boolean(userRef.updateAccess),
+                    Boolean(userRef.createAccess),
+                    Boolean(userRef.deleteAccess),
+                    Boolean(userRef.disabled)
                 )
                 if (created) created(user?._id, workspaceId || '', reqResp?.data)
                 setInfoAndErrors({
@@ -104,7 +104,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={newToken?.username || ''}
+                        defaultValue={userRef?.username || ''}
                         onChange={(e) => handleTextFieldChange('username', e.target.value)} />
                 </Grid>
             </Grid>
@@ -115,7 +115,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('readAccess', e)}
-                        checked={newToken.readAccess} />
+                        checked={userRef.readAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -125,7 +125,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('updateAccess', e)}
-                        checked={newToken.updateAccess} />
+                        checked={userRef.updateAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -135,7 +135,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('createAccess', e)}
-                        checked={newToken.createAccess} />
+                        checked={userRef.createAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -145,7 +145,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('deleteAccess', e)}
-                        checked={newToken.deleteAccess} />
+                        checked={userRef.deleteAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -155,7 +155,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('disabled', e)}
-                        checked={newToken.disabled} />
+                        checked={userRef.disabled} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
