@@ -191,79 +191,178 @@ class OwnerApi {
         })
     }
 
-        // client device
-        public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}) {
-            const data:{_id?:string, ua?:string, disabled?:boolean} = {
-                'ua': clientDevice.ua,
-                'disabled': clientDevice.disabled
-            }
-    
-            return apiHelper.privateReq({
-                method: 'PUT',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDevice._id }`,
-                headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                data
-            })
+    // client device
+    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}) {
+        const data:{_id?:string, ua?:string, disabled?:boolean} = {
+            'ua': clientDevice.ua,
+            'disabled': clientDevice.disabled
         }
-    
-        public static createClientDevice(userId:string, clientDevice:IClientDevice) {
-            const data:IClientDevice = {
-                'ua': clientDevice.ua,
-                'disabled': clientDevice.disabled
-            }
-    
-            return apiHelper.privateReq({
-                method: 'POST',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices`,
-                headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                data
-            })
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDevice._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createClientDevice(userId:string, clientDevice:IClientDevice) {
+        const data:IClientDevice = {
+            'ua': clientDevice.ua,
+            'disabled': clientDevice.disabled
         }
-    
-        public static deleteClientDevice(userId:string, clientDeviceId:string) {
-            return apiHelper.privateReq({
-                method: 'DELETE',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }`
-            })
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteClientDevice(userId:string, clientDeviceId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }`
+        })
+    }
+
+    // client device token
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}) {
+        const data:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean} = {
+            'jwt': token.jwt,
+            'ipAddress': token.ipAddress,
+            'disabled': token.disabled
         }
-    
-        // client device token
-        public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}) {
-            const data:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean} = {
-                'jwt': token.jwt,
-                'ipAddress': token.ipAddress,
-                'disabled': token.disabled
-            }
-    
-            return apiHelper.privateReq({
-                method: 'PUT',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }/accessTokens/${ token._id }`,
-                headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                data
-            })
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }/accessTokens/${ token._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken) {
+        const data:IAccessToken = {
+            'jwt': token.jwt,
+            'ipAddress': token.ipAddress,
+            'disabled': token.disabled
         }
-    
-        public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken) {
-            const data:IAccessToken = {
-                'jwt': token.jwt,
-                'ipAddress': token.ipAddress,
-                'disabled': token.disabled
-            }
-    
-            return apiHelper.privateReq({
-                method: 'POST',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }/accessTokens`,
-                headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                data
-            })
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }/accessTokens`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }/accessTokens/${ clientDeviceTokenId }`
+        })
+    }
+
+    // workspaces
+    public static updateWorkspace(userId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
+        const data = {
+            'name': name,
+            'description': description,
+            'isActive': isActive,
+            'disabled': disabled
         }
-    
-        public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string) {
-            return apiHelper.privateReq({
-                method: 'DELETE',
-                url: Config.ServerAddress + Config.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }/accessTokens/${ clientDeviceTokenId }`
-            })
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/workspaces/${ workspaceId }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createWorkspace(userId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
+        const data = {
+            'name': name,
+            'description': description,
+            'isActive': isActive,
+            'disabled': disabled
         }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/workspaces`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteWorkspace(userId:string, workspaceId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/workspaces/${ workspaceId }`
+        })
+    }
+
+    // workspace user references
+    public static updateWorkspaceUserRef(
+        userId:string,
+        workspaceId:string,
+        userRefId:string,
+        readAccess: boolean,
+        updateAccess: boolean,
+        createAccess: boolean,
+        deleteAccess: boolean,
+        disabled: boolean) {
+        const data = {
+            'readAccess': readAccess,
+            'updateAccess': updateAccess,
+            'createAccess': createAccess,
+            'deleteAccess': deleteAccess,
+            'disabled': disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${ userRefId }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createWorkspaceUserRef(
+        userId:string,
+        workspaceId:string,
+        username:string,
+        readAccess: boolean,
+        updateAccess: boolean,
+        createAccess: boolean,
+        deleteAccess: boolean,
+        disabled: boolean) {
+        const data = {
+            'username': username,
+            'readAccess': readAccess,
+            'updateAccess': updateAccess,
+            'createAccess': createAccess,
+            'deleteAccess': deleteAccess,
+            'disabled': disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteWorkspaceUserRef(userId:string, workspaceId:string, userRefId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${ userRefId }`
+        })
+    }
 }
 
 export default OwnerApi

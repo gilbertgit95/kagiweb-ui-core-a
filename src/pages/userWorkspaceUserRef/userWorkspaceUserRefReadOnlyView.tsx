@@ -41,8 +41,8 @@ const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId}:props) 
         { field: 'Update Access', value: userRef?.updateAccess? 'True': 'False' },
         { field: 'Create Access', value: userRef?.createAccess? 'True': 'False' },
         { field: 'Delete Access', value: userRef?.deleteAccess? 'True': 'False' },
-        { field: 'Accepted', value: userRef?.disabled? 'True': 'False' },
-        { field: 'Declined', value: userRef?.disabled? 'True': 'False' },
+        { field: 'Accepted', value: userRef?.accepted? 'True': 'False' },
+        { field: 'Declined', value: userRef?.declined? 'True': 'False' },
         { field: 'Disabled', value: userRef?.disabled? 'True': 'False' },
         { field: 'Created', value: moment(userRef?.createdAt).format(Config.defaultDateTimeFormat) },
         { field: 'Updated', value: moment(userRef?.updatedAt).format(Config.defaultDateTimeFormat) }

@@ -1,6 +1,18 @@
 import OwnerApi from '../../dataEndpoints/apiCoreA/ownerApi'
 import { ISignedInUser } from '../../stores/signedInUserSlice'
-import { IUser, IUserUpdate, IUserInfo, IContactInfo, IRoleRef, ILimitedTransaction, IPassword, IClientDevice, IAccessToken } from '../../types/user';
+import {
+    IUser,
+    IUserUpdate,
+    IUserInfo,
+    IContactInfo,
+    IRoleRef,
+    ILimitedTransaction,
+    IPassword,
+    IClientDevice,
+    IAccessToken,
+    IWorkspace,
+    IWorkspaceUserRef
+} from '../../types/user';
 
 class OwnerService {
     public static getOwner():Promise<{data: IUser}> {
@@ -103,6 +115,66 @@ class OwnerService {
 
     public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string):Promise<{data: IAccessToken}> {
         return OwnerApi.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
+    }
+
+    // workspaces
+    public static updateWorkspace(userId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
+        return OwnerApi.updateWorkspace(userId, workspaceId, name, description, isActive, disabled)
+    }
+
+    public static createWorkspace(userId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
+        return OwnerApi.createWorkspace(userId, name, description, isActive, disabled)
+    }
+
+    public static deleteWorkspace(userId:string, clientDeviceId:string):Promise<{data: IWorkspace}> {
+        return OwnerApi.deleteWorkspace(userId, clientDeviceId)
+    }
+
+    // workspace user refs
+    public static updateWorkspaceUserRef(
+        userId:string,
+        workspaceId:string,
+        userRefId:string,
+        readAccess: boolean,
+        updateAccess: boolean,
+        createAccess: boolean,
+        deleteAccess: boolean,
+        disabled: boolean):Promise<{data: IWorkspaceUserRef}> {
+        return OwnerApi.updateWorkspaceUserRef(
+            userId,
+            workspaceId,
+            userRefId,
+            readAccess,
+            updateAccess,
+            createAccess,
+            deleteAccess,
+            disabled
+        )
+    }
+
+    public static createWorkspaceUserRef(
+        userId:string,
+        workspaceId:string,
+        username:string,
+        readAccess: boolean,
+        updateAccess: boolean,
+        createAccess: boolean,
+        deleteAccess: boolean,
+        disabled: boolean):Promise<{data: IWorkspaceUserRef}> {
+        return OwnerApi.createWorkspaceUserRef(
+            userId,
+            workspaceId,
+            username,
+            readAccess,
+            updateAccess,
+            createAccess,
+            deleteAccess,
+            disabled
+        )
+    }
+
+    public static deleteWorkspaceUserRef(userId:string, workspaceId:string, userRefId:string):Promise<{data: IWorkspaceUserRef}> {
+        return OwnerApi.deleteWorkspaceUserRef(userId, workspaceId, userRefId)
     }
 }
 

@@ -90,6 +90,14 @@ import OwnerClientDeviceTokensPage from '../pages/owner/ownerClientDeviceTokensP
 import OwnerClientDeviceTokenPage from '../pages/owner/ownerClientDeviceTokenPage';
 import OwnerClientDeviceTokenCreatePage from '../pages/owner/ownerClientDeviceTokenCreatePage';
 import OwnerClientDeviceTokenEditPage from '../pages/owner/ownerClientDeviceTokenEditPage';
+import OwnerWorkspacesPage from '../pages/owner/ownerWorkspacesPage';
+import OwnerWorkspacePage from '../pages/owner/ownerWorkspacePage';
+import OwnerWorkspaceCreatePage from '../pages/owner/ownerWorkspaceCreatePage';
+import OwnerWorkspaceEditPage from '../pages/owner/ownerWorkspaceEditPage';
+import OwnerWorkspaceUserRefsPage from '../pages/owner/ownerWorkspaceUserRefsPage';
+import OwnerWorkspaceUserRefPage from '../pages/owner/ownerWorkspaceUserRefPage';
+import OwnerWorkspaceUserRefCreatePage from '../pages/owner/ownerWorkspaceUserRefCreatePage';
+import OwnerWorkspaceUserRefEditPage from '../pages/owner/ownerWorkspaceUserRefEditPage';
 
 const PrivateRoutes = () => {
     return (
@@ -192,6 +200,16 @@ const PrivateRoutes = () => {
                     <Route path="owner/create/clientDevices/:clientDeviceId/clientDeviceTokens" element={<OwnerClientDeviceTokenCreatePage />} />
                     <Route path="owner/view/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<OwnerClientDeviceTokenPage />} />
                     <Route path="owner/edit/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId" element={<OwnerClientDeviceTokenEditPage />} />
+                    {/* owner workspaces */}
+                    <Route path="owner/view/workspaces" element={<OwnerWorkspacesPage />} />
+                    <Route path="owner/create/workspaces" element={<OwnerWorkspaceCreatePage />} />
+                    <Route path="owner/view/workspaces/:workspaceId" element={<OwnerWorkspacePage />} />
+                    <Route path="owner/edit/workspaces/:workspaceId" element={<OwnerWorkspaceEditPage />} />
+                    {/* owner workspace userRefs */}
+                    <Route path="owner/view/workspaces/:workspaceId/userRefs" element={<OwnerWorkspaceUserRefsPage />} />
+                    <Route path="owner/create/workspaces/:workspaceId/userRefs" element={<OwnerWorkspaceUserRefCreatePage />} />
+                    <Route path="owner/view/workspaces/:workspaceId/userRefs/:userRefId" element={<OwnerWorkspaceUserRefPage />} />
+                    <Route path="owner/edit/workspaces/:workspaceId/userRefs/:userRefId" element={<OwnerWorkspaceUserRefEditPage />} />
 
                     {/* for none existing page */}
                     <Route
