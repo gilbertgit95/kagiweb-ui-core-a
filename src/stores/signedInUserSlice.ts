@@ -11,7 +11,8 @@ export interface ISignedInUser {
     roles: IRole[]|undefined,
     features: IFeature[]|undefined,
     workspace: IWorkspace|undefined,
-    workspaces: IWorkspace[]|undefined
+    workspaces: IWorkspace[]|undefined,
+    externalWorkspaces: (IWorkspace & {ownerId:string, ownerUsername: string})[]|undefined
 }
 
 export interface IOptSignedInUser {
@@ -22,7 +23,8 @@ export interface IOptSignedInUser {
     roles?: IRole[]|undefined,
     features?: IFeature[]|undefined,
     workspace?: IWorkspace|undefined,
-    workspaces?: IWorkspace[]|undefined
+    workspaces?: IWorkspace[]|undefined,
+    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerUsername: string})[]|undefined
 }
 
 const initialState:ISignedInUser = {
@@ -33,7 +35,8 @@ const initialState:ISignedInUser = {
     roles: undefined,
     features: undefined,
     workspace: undefined,
-    workspaces: undefined
+    workspaces: undefined,
+    externalWorkspaces: undefined
 }
 
 export const SignedInUser = createSlice({
@@ -53,6 +56,7 @@ export const SignedInUser = createSlice({
             if (action.payload.hasOwnProperty('features')) state.features = action.payload.features
             if (action.payload.hasOwnProperty('workspace')) state.workspace = action.payload.workspace
             if (action.payload.hasOwnProperty('workspaces')) state.workspaces = action.payload.workspaces
+            if (action.payload.hasOwnProperty('externalWorkspaces')) state.externalWorkspaces = action.payload.externalWorkspaces
         },
         clearUserData: (state) => {
             state.token = undefined
@@ -63,6 +67,7 @@ export const SignedInUser = createSlice({
             state.features = undefined
             state.workspace = undefined
             state.workspaces = undefined
+            state.externalWorkspaces = undefined
         }
     }
 })

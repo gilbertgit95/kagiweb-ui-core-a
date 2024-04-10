@@ -42,7 +42,8 @@ function App() {
           roles: undefined,
           features: undefined,
           workspace: undefined,
-          workspaces: undefined
+          workspaces: undefined,
+          externalWorkspaces: undefined
       }
 
       try {
@@ -55,6 +56,7 @@ function App() {
         ownerInfo.features = ownerReqResp?.data?.features
         ownerInfo.workspace = ownerReqResp?.data?.workspace
         ownerInfo.workspaces = ownerReqResp?.data?.workspaces
+        ownerInfo.externalWorkspaces = ownerReqResp?.data?.externalWorkspaces
         ownerInfo.isSignedIn = true
 
         // fetch app references, roles and features
