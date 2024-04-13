@@ -10,15 +10,16 @@ interface props {
     user?: IUser,
     clientDeviceId?: string,
     clientDeviceTokenId?: string,
-    updateFunc: (userId:string, clientDeviceId: string, updateData:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}) => Promise<{data:IAccessToken}>,
+    updateFunc: (userId:string, clientDeviceId: string, updateData:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}) => Promise<{data:IAccessToken}>,
     updated?: (userId:string|undefined, userInfo:IAccessToken|undefined) => void
 }
 
 const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenId, updateFunc, updated}:props) => {
     const [token, setToken] = useState<IAccessToken & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedToken, setUpdatedToken] = useState<IAccessToken>({
-        ipAddress: '',
         jwt: '',
+        description: '',
+        ipAddress: '',
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -38,10 +39,10 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
     const onUpdate = async () => {
         if (!token) return
 
-        const updateData:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean} = {
+        const updateData:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean} = {
             _id: updatedToken._id,
             ipAddress: updatedToken.ipAddress === token.ipAddress? undefined: updatedToken.ipAddress,
-            jwt: updatedToken.jwt === token.jwt? undefined: updatedToken.jwt,
+            description: updatedToken.description === token.description? undefined: updatedToken.description,
             disabled: updatedToken.disabled === token.disabled? token.disabled: updatedToken.disabled
         }
         console.log('save update: ', updateData)
@@ -97,8 +98,8 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
         if (!token) return false
 
         return !(
+            token.description !== updatedToken.description ||
             token.ipAddress !== updatedToken.ipAddress ||
-            token.jwt !== updatedToken.jwt ||
             token.disabled !== updatedToken.disabled
         )
     })()
@@ -110,6 +111,17 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Description</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    defaultValue={updatedToken?.description || ''}
+                                    onChange={(e) => handleTextFieldChange('description', e.target.value)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
                                 <Typography variant="subtitle1">IP Address</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
@@ -117,17 +129,6 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
                                     fullWidth
                                     defaultValue={updatedToken?.ipAddress || ''}
                                     onChange={(e) => handleTextFieldChange('ipAddress', e.target.value)} />
-                            </Grid>
-                        </Grid>
-                        <Grid container item xs={12}>
-                            <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">JWT</Typography>
-                            </Grid>
-                            <Grid item xs={8} md={9}>
-                                <TextField
-                                    fullWidth
-                                    defaultValue={updatedToken?.jwt || ''}
-                                    onChange={(e) => handleTextFieldChange('jwt', e.target.value)} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>

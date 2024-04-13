@@ -17,8 +17,9 @@ interface IProps {
 
 interface IclientDeviceTokenRow {
     _id: string,
-    jwt: string,
+    description: string,
     ipAddress: string,
+    expiration: string,
     disabled: boolean,
     createdAt: string,
     updatedAt: string
@@ -34,8 +35,9 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
             const transformedData:IclientDeviceTokenRow[] = clientDevice?.accessTokens?.map((item:IAccessToken & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
-                    jwt: item.jwt,
+                    description: item.description || '--',
                     ipAddress: item.ipAddress || '--',
+                    expiration: item?.expTime? moment(item?.expTime).format(Config.defaultDateTimeFormat): '--',
                     disabled: Boolean(item.disabled),
                     createdAt: moment(item.createdAt).format(Config.defaultDateTimeFormat),
                     updatedAt: moment(item.updatedAt).format(Config.defaultDateTimeFormat)
@@ -53,8 +55,8 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
             field: 'ipAddress'
         },
         {
-            header: 'Token',
-            field: 'jwt'
+            header: 'Description',
+            field: 'description'
         },
         {
             header: 'Created',
@@ -63,6 +65,10 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
         {
             header: 'Updated',
             field: 'updatedAt'
+        },
+        {
+            header: 'Expiration',
+            field: 'expiration'
         },
         {
             header: 'Disabled',

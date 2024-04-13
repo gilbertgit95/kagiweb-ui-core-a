@@ -32,7 +32,9 @@ export interface IContactInfo {
 export interface IAccessToken {
     _id?: string,
     jwt: string,
+    description?: string,
     ipAddress?: string,
+    expTime?: Date,
     disabled?: boolean
 }
 

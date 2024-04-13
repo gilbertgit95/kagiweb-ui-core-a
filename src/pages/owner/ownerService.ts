@@ -105,11 +105,11 @@ class OwnerService {
     }
 
     // owner client device token
-    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
         return OwnerApi.updateClientDeviceToken(userId, clientDeviceId, token)
     }
 
-    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken):Promise<{data: IAccessToken}> {
+    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}):Promise<{data: IAccessToken}> {
         return OwnerApi.createClientDeviceToken(userId, clientDeviceId, token)
     }
 

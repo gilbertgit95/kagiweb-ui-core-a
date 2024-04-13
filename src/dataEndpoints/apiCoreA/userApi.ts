@@ -242,9 +242,9 @@ class UserApi {
     }
 
     // client device token
-    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}) {
-        const data:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean} = {
-            'jwt': token.jwt,
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}) {
+        const data:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean} = {
+            'description': token.description,
             'ipAddress': token.ipAddress,
             'disabled': token.disabled
         }
@@ -257,9 +257,10 @@ class UserApi {
         })
     }
 
-    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken) {
-        const data:IAccessToken = {
-            'jwt': token.jwt,
+    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}) {
+        const data:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean, expiration:number|undefined} = {
+            'expiration': token.expiration,
+            'description': token.description,
             'ipAddress': token.ipAddress,
             'disabled': token.disabled
         }

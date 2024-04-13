@@ -35,8 +35,9 @@ const UserClientDeviceTokenReadOnlyView = ({user, clientDeviceId, clientDeviceTo
     ]
 
     const data:{field: string, value: string|undefined}[] = [
+        { field: 'Description', value: token?.description },
         { field: 'IP Address', value: token?.ipAddress },
-        { field: 'JWT', value: token?.jwt },
+        { field: 'Expiration', value: token?.expTime? moment(token?.expTime).format(Config.defaultDateTimeFormat): '--' },
         { field: 'Disabled', value: token?.disabled? 'True': 'False' },
         { field: 'Created', value: moment(token?.createdAt).format(Config.defaultDateTimeFormat) },
         { field: 'Updated', value: moment(token?.updatedAt).format(Config.defaultDateTimeFormat) }

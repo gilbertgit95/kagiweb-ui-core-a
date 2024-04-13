@@ -28,11 +28,11 @@ class UserClientDeviceTokenService {
     //     return featureApi.getFeature(id)
     // }
 
-    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, jwt?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
+    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
         return userApi.updateClientDeviceToken(userId, clientDeviceId, token)
     }
 
-    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken):Promise<{data: IAccessToken}> {
+    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}):Promise<{data: IAccessToken}> {
         return userApi.createClientDeviceToken(userId, clientDeviceId, token)
     }
 

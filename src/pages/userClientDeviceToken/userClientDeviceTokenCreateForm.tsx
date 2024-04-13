@@ -8,14 +8,16 @@ import { IUser, IAccessToken } from '../../types/user';
 interface props {
     user?: IUser,
     clientDeviceId?:string,
-    createFunc: (userId:string, clientDeviceId:string, newData:IAccessToken) => Promise<{data:IAccessToken}>,
+    createFunc: (userId:string, clientDeviceId:string, newData:IAccessToken & {expiration:number|undefined}) => Promise<{data:IAccessToken}>,
     created?: (userId:string|undefined, clientDeviceId:string, token:IAccessToken|undefined) => void
 }
 
 const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, created}:props) => {
-    const [newToken, setNewToken] = useState<IAccessToken>({
-        ipAddress: '',
+    const [newToken, setNewToken] = useState<IAccessToken & {expiration:number|undefined}>({
+        expiration: undefined,
         jwt: '',
+        description: '',
+        ipAddress: '',
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -35,9 +37,11 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
     const onCreate = async () => {
         if (!user) return
 
-        const newData:IAccessToken = {
+        const newData:IAccessToken & {expiration:number|undefined} = {
+            jwt: '',
+            expiration: undefined,
+            description: newToken.description,
             ipAddress: newToken.ipAddress,
-            jwt: newToken.jwt,
             disabled: newToken.disabled
         }
         console.log('save update: ', newData)
@@ -73,6 +77,17 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Description</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <TextField
+                        fullWidth
+                        defaultValue={newToken?.description || ''}
+                        onChange={(e) => handleTextFieldChange('description', e.target.value)} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
                     <Typography variant="subtitle1">IP Address</Typography>
                 </Grid>
                 <Grid item xs={8} md={9}>
@@ -80,17 +95,6 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
                         fullWidth
                         defaultValue={newToken?.ipAddress || ''}
                         onChange={(e) => handleTextFieldChange('ipAddress', e.target.value)} />
-                </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">JWT</Typography>
-                </Grid>
-                <Grid item xs={8} md={9}>
-                    <TextField
-                        fullWidth
-                        defaultValue={newToken?.jwt || ''}
-                        onChange={(e) => handleTextFieldChange('jwt', e.target.value)} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
