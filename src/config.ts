@@ -9,7 +9,7 @@ class Config {
     public static defaultDateFormat:string = 'YYYY-MM-DD'
     public static defaultDateTimeFormat:string = 'ddd MMM DD YYYY, hh:mm:ss A'
     public static defaultPageSizeList:number[] = [5, 10, 25, 100]
-    public static defaultPageSize:number = 5
+    public static defaultPageSize:number = 10
     public static defaultPage:number = 1
 }
 

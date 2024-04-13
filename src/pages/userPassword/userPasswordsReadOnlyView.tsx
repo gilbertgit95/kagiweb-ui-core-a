@@ -13,6 +13,7 @@ interface IProps {
 interface IPasswordRow {
     _id: string,
     isActive: boolean,
+    expTime: string,
     createdAt: string,
 }
 
@@ -25,6 +26,7 @@ const UserPasswordsReadOnlyView = ({user}:IProps) => {
                 return {
                     _id: item._id || '',
                     isActive: Boolean(item.isActive),
+                    expTime: item?.expTime? moment(item?.expTime).format(Config.defaultDateTimeFormat): '--',
                     createdAt: moment(item?.createdAt).format(Config.defaultDateTimeFormat)
                 }
             })
@@ -36,16 +38,21 @@ const UserPasswordsReadOnlyView = ({user}:IProps) => {
 
     const colDef:IColDef[] = [
         {
-            header: 'Created Date',
-            field: 'createdAt',
-            Component: undefined
-        },
-        {
             header: 'Active',
             field: 'isActive',
             Component: (props:IPasswordRow) => {
                 return <Check value={props.isActive} />
             }
+        },
+        {
+            header: 'Expiration',
+            field: 'expTime',
+            Component: undefined
+        },
+        {
+            header: 'Created',
+            field: 'createdAt',
+            Component: undefined
         }
     ]
 

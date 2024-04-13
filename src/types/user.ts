@@ -17,6 +17,7 @@ export interface IRoleRef {
 export interface IPassword {
     _id?: string,
     key: string,
+    expTime?: Date,
     isActive?: boolean
 }
 
