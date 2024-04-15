@@ -76,7 +76,7 @@ export interface ILimitedTransaction {
     type: TLimitedTransactionType,
     key?: string,
     value?: string, // optional, can be use to store additional info
-    expTime?: string, // optional expiration time, only for timed LT
+    expTime?: Date, // optional expiration time, only for timed LT
     recipient?: string, // optional, only for some LT like: otp, pass reset
     disabled?: boolean
 }

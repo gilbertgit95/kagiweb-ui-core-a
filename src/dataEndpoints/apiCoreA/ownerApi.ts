@@ -161,7 +161,6 @@ class OwnerApi {
             'attempts': lt.attempts,
             'key': lt.key,
             'value': lt.value,
-            'expTime': lt.expTime,
             'disabled': lt.disabled,
             // 'type': lt.type,
             // 'recipient': lt.recipient,

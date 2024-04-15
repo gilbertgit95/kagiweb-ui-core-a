@@ -23,7 +23,6 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
         type: limitedTransactionTypes[0] as TLimitedTransactionType,
         key: '',
         value: '', // optional, can be use to store additional info
-        expTime: '', // optional expiration time, only for timed LT
         recipient: '', // optional, only for some LT like: otp, pass reset
         disabled: false
     })
