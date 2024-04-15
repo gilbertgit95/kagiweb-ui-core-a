@@ -25,7 +25,7 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
         infoMessages: []
     })
 
-    const handleTextFieldChange = (field:string, value:string) => {
+    const handleTextFieldChange = (field:string, value:string|number) => {
         setNewToken({...newToken, ...{[field]: value}})
     }
 
@@ -39,7 +39,7 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
 
         const newData:IAccessToken & {expiration:number|undefined} = {
             jwt: '',
-            expiration: undefined,
+            expiration: newToken.expiration,
             description: newToken.description,
             ipAddress: newToken.ipAddress,
             disabled: newToken.disabled
@@ -75,6 +75,19 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
 
     return user? (
         <>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Expiration</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <TextField
+                        fullWidth
+                        type="number"
+                        placeholder="in hours"
+                        defaultValue={newToken?.expiration || ''}
+                        onChange={(e) => handleTextFieldChange('expiration', e.target.value)} />
+                </Grid>
+            </Grid>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
                     <Typography variant="subtitle1">Description</Typography>
