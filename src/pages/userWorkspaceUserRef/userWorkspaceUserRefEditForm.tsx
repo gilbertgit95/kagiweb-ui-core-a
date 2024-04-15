@@ -3,13 +3,14 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
+// import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import { IUser, IWorkspaceUserRef } from '../../types/user';
 
 interface props {
     user?: IUser,
     workspaceId?: string,
     userRefId?: string,
+    getFunc: (userId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceUserRef & {username?:string} | null}>
     updateFunc: (
         userId:string,
         workspaceId:string,
@@ -23,11 +24,10 @@ interface props {
     updated?: (userId:string|undefined, workspaceId: string, userRef:IWorkspaceUserRef|undefined) => void
 }
 
-const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, updateFunc, updated}:props) => {
-    const [userRef, setUserRef] = useState<IWorkspaceUserRef & {createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceUserRef>({
+const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, getFunc, updateFunc, updated}:props) => {
+    const [userRef, setUserRef] = useState<IWorkspaceUserRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceUserRef & {username?:string}>({
         userId: '',
-        username: '',
         readAccess: true,
         updateAccess: false,
         createAccess: false,
@@ -82,11 +82,11 @@ const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, updateFunc,
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.clientDevices && workspaceId) {
-                const tkn = UserWorkspaceUserRefService.getWorkspaceUserRefById(user, workspaceId, userRefId || '')
-                setUserRef(tkn)
-                if (tkn) {
-                    setUpdatedUserRef(tkn)
+            if (user && workspaceId && userRefId) {
+                const usrRef = await getFunc(user._id || '', workspaceId, userRefId || '')
+                if (usrRef?.data) {
+                    setUserRef(usrRef.data)
+                    setUpdatedUserRef(usrRef.data)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},

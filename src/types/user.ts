@@ -91,7 +91,6 @@ export interface IUserInfo {
 export interface IWorkspaceUserRef {
     _id?: string,
     userId: string,
-    username: string,
     readAccess?: boolean,
     updateAccess?: boolean,
     createAccess?: boolean,

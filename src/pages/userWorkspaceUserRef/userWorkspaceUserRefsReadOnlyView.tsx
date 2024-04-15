@@ -13,7 +13,8 @@ import UserWorkspaceService from '../userWorkspace/userWorkspaceService';
 
 interface IProps {
     user: IUser | undefined,
-    workspaceId: string | undefined
+    workspaceId: string | undefined,
+    getFunc: (userId:string, workspaceId:string) => Promise<{data: (IWorkspaceUserRef & {username?:string})[]}>
 }
 
 interface IWorkspaceUserRefRow {
@@ -31,32 +32,36 @@ interface IWorkspaceUserRefRow {
     updatedAt: string
 }
 
-const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId}:IProps) => {
+const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) => {
     const navigate = useNavigate()
     const [data, setData] = useState<IWorkspaceUserRefRow[]>([])
 
     useEffect(() => {
-        if (user && user.workspaces && workspaceId) {
-            const workspace = UserWorkspaceService.getWorkspaceById(user, workspaceId)
-            const transformedData:IWorkspaceUserRefRow[] = workspace?.userRefs?.map((item:IWorkspaceUserRef & {createdAt?: Date, updatedAt?: Date}) => {
-                return {
-                    _id: item._id || '',
-                    userId: item.userId,
-                    username: item.username,
-                    readAccess: Boolean(item.readAccess),
-                    createAccess: Boolean(item.createAccess),
-                    updateAccess: Boolean(item.updateAccess),
-                    deleteAccess: Boolean(item.deleteAccess),
-                    accepted: Boolean(item.accepted),
-                    declined: Boolean(item.declined),
-                    disabled: Boolean(item.disabled),
-                    createdAt: moment(item.createdAt).format(Config.defaultDateTimeFormat),
-                    updatedAt: moment(item.updatedAt).format(Config.defaultDateTimeFormat)
-                }
-            }) || []
-            // console.log(transformedData)
-            setData(transformedData)
+        const init = async () => {
+            if (user && user.workspaces && workspaceId) {
+                const userRefs = await getFunc(user._id || '', workspaceId)
+                const transformedData:IWorkspaceUserRefRow[] = userRefs?.data.map((item:IWorkspaceUserRef & {username?:string, createdAt?: Date, updatedAt?: Date}) => {
+                    return {
+                        _id: item._id || '',
+                        userId: item.userId,
+                        username: item.username || '--',
+                        readAccess: Boolean(item.readAccess),
+                        createAccess: Boolean(item.createAccess),
+                        updateAccess: Boolean(item.updateAccess),
+                        deleteAccess: Boolean(item.deleteAccess),
+                        accepted: Boolean(item.accepted),
+                        declined: Boolean(item.declined),
+                        disabled: Boolean(item.disabled),
+                        createdAt: moment(item.createdAt).format(Config.defaultDateTimeFormat),
+                        updatedAt: moment(item.updatedAt).format(Config.defaultDateTimeFormat)
+                    }
+                }) || []
+                // console.log(transformedData)
+                setData(transformedData)
+            }
         }
+
+        init()
 
     }, [user, workspaceId])
 

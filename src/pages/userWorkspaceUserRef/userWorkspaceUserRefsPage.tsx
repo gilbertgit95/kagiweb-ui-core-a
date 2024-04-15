@@ -10,6 +10,7 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IUser } from '../../types/user';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserService from '../user/userService';
+import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import UserWorkspaceUserRefsReadOnlyView from './userWorkspaceUserRefsReadOnlyView';
 
 const UserWorkspaceUserRefsPage = () => {
@@ -69,7 +70,7 @@ const UserWorkspaceUserRefsPage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspaceUserRefsReadOnlyView user={user} workspaceId={ workspaceId } />
+                <UserWorkspaceUserRefsReadOnlyView user={user} workspaceId={ workspaceId } getFunc={UserWorkspaceUserRefService.getWorkspaceUserRefs} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

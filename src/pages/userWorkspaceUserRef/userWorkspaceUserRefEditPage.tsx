@@ -80,6 +80,7 @@ const UserWorkspaceUserRefEditPage = () => {
                     user={user}
                     workspaceId={workspaceId}
                     userRefId={userRefId}
+                    getFunc={UserWorkspaceUserRefService.getWorkspaceUserRef}
                     updateFunc={UserWorkspaceUserRefService.updateWorkspaceUserRef}
                     updated={onUpdated} />
 

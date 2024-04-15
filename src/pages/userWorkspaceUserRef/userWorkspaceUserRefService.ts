@@ -16,6 +16,21 @@ class UserWorkspaceUserRefService {
         return undefined
     }
 
+    public static getWorkspaceUserRef( userId:string, workspaceId:string, userRefId:string):Promise<{data: IWorkspaceUserRef & {username?:string} | null}> {
+        return userApi.getWorkspaceUserRef(
+            userId,
+            workspaceId,
+            userRefId
+        )
+    }
+
+    public static getWorkspaceUserRefs( userId:string, workspaceId:string):Promise<{data: (IWorkspaceUserRef & {username?:string})[]}> {
+        return userApi.getWorkspaceUserRefs(
+            userId,
+            workspaceId
+        )
+    }
+
     public static updateWorkspaceUserRef(
         userId:string,
         workspaceId:string,

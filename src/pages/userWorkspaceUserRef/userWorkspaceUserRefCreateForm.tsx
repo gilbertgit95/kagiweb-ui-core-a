@@ -17,12 +17,12 @@ interface props {
         createAccess: boolean,
         deleteAccess: boolean,
         disabled: boolean
-    ) => Promise<{data:IWorkspaceUserRef}>,
+    ) => Promise<{data:IWorkspaceUserRef & {username?: string}}>,
     created?: (userId:string|undefined, workspaceId:string, userRef:IWorkspaceUserRef|undefined) => void
 }
 
 const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}:props) => {
-    const [userRef, setNewUserRef] = useState<IWorkspaceUserRef>({
+    const [userRef, setNewUserRef] = useState<IWorkspaceUserRef & {username?: string}>({
         userId: '',
         username: '',
         readAccess: true,
@@ -48,7 +48,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
     const onCreate = async () => {
         if (!user) return
 
-        const newData:IWorkspaceUserRef = {
+        const newData:IWorkspaceUserRef & {username?: string} = {
             userId: '',
             username: userRef.username,
             readAccess: userRef.readAccess,
@@ -65,7 +65,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                 const reqResp = await createFunc(
                     user._id,
                     workspaceId || '',
-                    userRef.username,
+                    userRef.username || '',
                     Boolean(userRef.readAccess),
                     Boolean(userRef.updateAccess),
                     Boolean(userRef.createAccess),

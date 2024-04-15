@@ -152,7 +152,8 @@ const UserWorkspaceUserRefPage = () => {
                 <UserWorkspaceUserRefReadOnlyView
                     user={user}
                     workspaceId={workspaceId}
-                    userRefId={userRefId} />
+                    userRefId={userRefId}
+                    getFunc={UserWorkspaceUserRefService.getWorkspaceUserRef} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

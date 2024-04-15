@@ -9,17 +9,22 @@ import Config from '../../config';
 interface props {
     user?: IUser,
     workspaceId?: string,
-    userRefId?: string
+    userRefId?: string,
+    getFunc: (userId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceUserRef & {username?:string} | null}>
 }
 
-const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId}:props) => {
-    const [userRef, setUserRef] = useState<IWorkspaceUserRef & {createdAt?:Date, updatedAt?:Date} | undefined>()
+const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId, getFunc}:props) => {
+    const [userRef, setUserRef] = useState<IWorkspaceUserRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
-        if (user && user.contactInfos && workspaceId) {
-            const usrRef = UserWorkspaceUserRefService.getWorkspaceUserRefById(user, workspaceId, userRefId || '')
-            setUserRef(usrRef)
+        const init = async () => {
+            if (user && user.contactInfos && workspaceId) {
+                const usrRef = await getFunc(user._id || '', workspaceId, userRefId || '')
+                if (usrRef?.data) setUserRef(usrRef.data)
+            }
         }
+
+        init()
 
     }, [user, workspaceId, userRefId])
 
@@ -36,7 +41,7 @@ const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId}:props) 
 
     const data:{field: string, value: string|undefined}[] = [
         { field: 'User ID', value: userRef?.userId },
-        { field: 'Username', value: userRef?.username },
+        { field: 'Username', value: userRef?.username || '--' },
         { field: 'Read Access', value: userRef?.readAccess? 'True': 'False' },
         { field: 'Update Access', value: userRef?.updateAccess? 'True': 'False' },
         { field: 'Create Access', value: userRef?.createAccess? 'True': 'False' },

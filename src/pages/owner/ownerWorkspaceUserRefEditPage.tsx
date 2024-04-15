@@ -75,6 +75,7 @@ const OwnerWorkspaceUserRefEditPage = () => {
                     user={user}
                     workspaceId={workspaceId}
                     userRefId={userRefId}
+                    getFunc={OwnerService.getWorkspaceUserRef}
                     updateFunc={OwnerService.updateWorkspaceUserRef}
                     updated={onUpdated} />
 

@@ -131,6 +131,21 @@ class OwnerService {
     }
 
     // workspace user refs
+    public static getWorkspaceUserRef( userId:string, workspaceId:string, userRefId:string):Promise<{data: IWorkspaceUserRef & {username?:string} | null}> {
+        return OwnerApi.getWorkspaceUserRef(
+            userId,
+            workspaceId,
+            userRefId
+        )
+    }
+
+    public static getWorkspaceUserRefs( userId:string, workspaceId:string):Promise<{data: (IWorkspaceUserRef & {username?:string})[]}> {
+        return OwnerApi.getWorkspaceUserRefs(
+            userId,
+            workspaceId
+        )
+    }
+
     public static updateWorkspaceUserRef(
         userId:string,
         workspaceId:string,

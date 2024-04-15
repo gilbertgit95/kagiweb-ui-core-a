@@ -306,6 +306,22 @@ class OwnerApi {
     }
 
     // workspace user references
+    public static getWorkspaceUserRef(userId:string, workspaceId:string, userRefId:string) {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${userRefId  }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }
+        })
+    }
+
+    public static getWorkspaceUserRefs(userId:string, workspaceId:string) {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: Config.ServerAddress + Config.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }
+        })
+    }
+    
     public static updateWorkspaceUserRef(
         userId:string,
         workspaceId:string,
