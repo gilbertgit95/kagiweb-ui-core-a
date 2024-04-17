@@ -41,6 +41,10 @@ const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
             value: clientDevice?.ua || '--'
         },
         {
+            label: 'Description',
+            value: clientDevice?.description || '--'
+        },
+        {
             label: 'Disabled',
             value: Boolean(clientDevice?.disabled)? 'True': 'False'
         }

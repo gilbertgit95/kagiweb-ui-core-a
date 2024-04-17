@@ -37,7 +37,7 @@ class UserClientDeviceService {
         return undefined
     }
 
-    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}):Promise<{data: IClientDevice}> {
+    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, description?:string, disabled?:boolean}):Promise<{data: IClientDevice}> {
         return userApi.updateClientDevice(userId, clientDevice)
     }
 

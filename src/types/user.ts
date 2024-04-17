@@ -41,6 +41,7 @@ export interface IAccessToken {
 export interface IClientDevice {
     _id?: string,
     ua: string,
+    description?: string,
     accessTokens?: IAccessToken[],
     disabled?: boolean
 }

@@ -14,6 +14,7 @@ interface props {
 const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
     const [newClientDevice, setNewClientDevice] = useState<IClientDevice>({
         ua: '',
+        description: '',
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -36,6 +37,7 @@ const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
         const newData:IClientDevice = {
             _id: newClientDevice._id,
             ua: newClientDevice.ua,
+            description: newClientDevice.description,
             disabled: newClientDevice.disabled
         }
         console.log('save update: ', newData)
@@ -78,6 +80,17 @@ const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
                         fullWidth
                         defaultValue={newClientDevice?.ua || ''}
                         onChange={(e) => handleTextFieldChange('ua', e.target.value)} />
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Description</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <TextField
+                        fullWidth
+                        defaultValue={newClientDevice?.description || ''}
+                        onChange={(e) => handleTextFieldChange('description', e.target.value)} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>

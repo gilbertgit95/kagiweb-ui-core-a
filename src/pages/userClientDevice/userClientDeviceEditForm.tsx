@@ -9,7 +9,7 @@ import { IUser, IClientDevice } from '../../types/user';
 interface props {
     user?: IUser,
     clientDeviceId?: string,
-    updateFunc: (userId:string, updateData:{_id?:string, ua?:string, disabled?:boolean}) => Promise<{data:IClientDevice}>,
+    updateFunc: (userId:string, updateData:{_id?:string, ua?:string, description?: string, disabled?:boolean}) => Promise<{data:IClientDevice}>,
     updated?: (userId:string|undefined, userInfo:IClientDevice|undefined) => void
 }
 
@@ -17,6 +17,7 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
     const [clientDevice, setClientDevice] = useState<IClientDevice & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedClientDevice, setUpdatedClientDevice] = useState<IClientDevice>({
         ua: '',
+        description: '',
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -36,9 +37,10 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
     const onUpdate = async () => {
         if (!clientDevice) return
 
-        const updateData:{_id?:string, ua?:string, disabled?:boolean} = {
+        const updateData:{_id?:string, ua?:string, description?: string, disabled?:boolean} = {
             _id: updatedClientDevice._id,
             ua: updatedClientDevice.ua === clientDevice.ua? undefined: updatedClientDevice.ua,
+            description: updatedClientDevice.description === clientDevice.description? undefined: updatedClientDevice.description,
             disabled: updatedClientDevice.disabled === clientDevice.disabled? undefined: updatedClientDevice.disabled
         }
         console.log('save update: ', updateData)
@@ -95,6 +97,7 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
 
         return !(
             clientDevice.ua !== updatedClientDevice.ua ||
+            clientDevice.description !== updatedClientDevice.description ||
             clientDevice.disabled !== updatedClientDevice.disabled
         )
     })()
@@ -113,6 +116,17 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
                                     fullWidth
                                     defaultValue={updatedClientDevice?.ua || ''}
                                     onChange={(e) => handleTextFieldChange('ua', e.target.value)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Description</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    defaultValue={updatedClientDevice?.description || ''}
+                                    onChange={(e) => handleTextFieldChange('description', e.target.value)} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>

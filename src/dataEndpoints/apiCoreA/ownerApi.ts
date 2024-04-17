@@ -191,9 +191,10 @@ class OwnerApi {
     }
 
     // client device
-    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, disabled?:boolean}) {
-        const data:{_id?:string, ua?:string, disabled?:boolean} = {
+    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, description?:string, disabled?:boolean}) {
+        const data:{_id?:string, ua?:string, description?:string, disabled?:boolean} = {
             'ua': clientDevice.ua,
+            'description': clientDevice.description,
             'disabled': clientDevice.disabled
         }
 
@@ -208,6 +209,7 @@ class OwnerApi {
     public static createClientDevice(userId:string, clientDevice:IClientDevice) {
         const data:IClientDevice = {
             'ua': clientDevice.ua,
+            'description': clientDevice.description,
             'disabled': clientDevice.disabled
         }
 

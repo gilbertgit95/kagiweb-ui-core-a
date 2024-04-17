@@ -16,6 +16,7 @@ interface IProps {
 interface IClientDeviceRow {
     _id: string,
     ua: string,
+    description: string,
     accessTokens: number,
     // type: string,
     // key: string,
@@ -34,6 +35,7 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
                 return {
                     _id: item._id || '',
                     ua: item.ua,
+                    description: item.description || '--',
                     accessTokens: item.accessTokens?.length || 0,
                     // type: item.type,
                     // key: item.key || '',
@@ -54,26 +56,10 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
             header: 'User Agent',
             field: 'ua'
         },
-        // {
-        //     header: 'Type',
-        //     field: 'type'
-        // },
-        // {
-        //     header: 'Key',
-        //     field: 'key'
-        // },
-        // {
-        //     header: 'Value',
-        //     field: 'value'
-        // },
-        // {
-        //     header: 'Expiration',
-        //     field: 'expTime'
-        // },
-        // {
-        //     header: 'Recipient',
-        //     field: 'recipient'
-        // },
+        {
+            header: 'Description',
+            field: 'description'
+        },
         {
             header: 'Tokens',
             field: 'accessTokens'
