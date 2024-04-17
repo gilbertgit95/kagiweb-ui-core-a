@@ -111,6 +111,17 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">JWT</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <TextField
+                                    fullWidth
+                                    disabled
+                                    defaultValue={updatedToken?.jwt || ''} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
                                 <Typography variant="subtitle1">Description</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>

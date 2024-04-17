@@ -52,7 +52,7 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
                 const reqResp = await createFunc(user._id, clientDeviceId || '', newData)
                 if (created) created(user?._id, clientDeviceId || '', reqResp?.data)
                 setInfoAndErrors({
-                    ...{infoMessages: ['Successfull Created']},
+                    ...{infoMessages: [`Successfully created the token. Please copy the token before you exit the page! --> ${ reqResp?.data?.jwt }`]},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {

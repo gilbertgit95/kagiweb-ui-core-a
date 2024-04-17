@@ -35,6 +35,7 @@ const UserClientDeviceTokenReadOnlyView = ({user, clientDeviceId, clientDeviceTo
     ]
 
     const data:{field: string, value: string|undefined}[] = [
+        { field: 'JWT', value: token?.jwt },
         { field: 'Description', value: token?.description },
         { field: 'IP Address', value: token?.ipAddress },
         { field: 'Expiration', value: token?.expTime? moment(token?.expTime).format(Config.defaultDateTimeFormat): '--' },
