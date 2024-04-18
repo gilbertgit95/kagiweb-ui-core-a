@@ -71,13 +71,13 @@ const NavCustomEl = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 { Config.AppName }
             </Typography>
-            <div>
+            {/* <div>
                 <Typography
                     variant="subtitle1"
                     sx={{ flexGrow: 1 }}>
                     { userData && userData.username? userData.username: '' }
                 </Typography>
-            </div>
+            </div> */}
             <div>
                 <IconButton
                     size="large"
@@ -107,7 +107,7 @@ const NavCustomEl = () => {
                             <SettingsIcon />
                         </ListItemIcon>
                         <ListItemText>
-                            <Typography variant="subtitle1">My Account</Typography>
+                            <Typography variant="subtitle1">{ userData && userData.username? userData.username: '' }</Typography>
                             <Typography variant="caption" color="primary">{ userRole?.name }</Typography>
                         </ListItemText>
                     </MenuItem>
