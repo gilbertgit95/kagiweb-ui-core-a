@@ -11,6 +11,7 @@ import { useSearchParams } from 'react-router-dom';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
 import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
+import SimpleLink from '../../components/links/simpleLink';
 import FeatureService from './featureService';
 import Config from '../../config';
 import { IFeature } from '../../types/feature';
@@ -61,13 +62,10 @@ const colDef:IColDef[] = [
         header: '',
         field: '',
         Component: (props:IFeatureRow & IChangeDate) => {
-            const navigate = useNavigate()
-
             return (
-                <Button
-                    startIcon={<VisibilityIcon />}
-                    onClick={() => navigate(`/features/view/${ props._id }`)}
-                    variant="text">View Feature</Button>
+                <SimpleLink
+                    link={`/features/view/${ props._id }`}
+                    text="View Feature" />
             )
         }
     }
