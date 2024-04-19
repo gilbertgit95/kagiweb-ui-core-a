@@ -8,28 +8,35 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
-
+import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
+import ListItems from '../../components/lists/listItems';
+import ShortendDescription from '../../components/texts/shortendDescription';
 import FeatureService from './featureService';
 import Config from '../../config';
+import { IFeature } from '../../types/feature';
 
 interface IFeatureRow {
     _id: string,
     name: string,
     value: string,
     type: string,
-    tags: string
+    tags: string[]
 }
 
 const colDef:IColDef[] = [
     {
         header: 'Name',
-        field: 'name',
-        Component: undefined // react Component or undefined
+        field: '',
+        Component: (props:IFeatureRow & IChangeDate) => {
+            return <ShortendDescription value={props.name} />
+        }
     },
     {
         header: 'Value',
-        field: 'value',
-        Component: undefined // react Component or undefined
+        field: '',
+        Component: (props:IFeatureRow & IChangeDate) => {
+            return <ShortendDescription value={props.value} />
+        }
     },
     {
         header: 'Type',
@@ -38,18 +45,22 @@ const colDef:IColDef[] = [
     },
     {
         header: 'Tags',
-        field: 'tags',
-        Component: undefined // react Component or undefined
+        field: '',
+        Component: (props:IFeatureRow & IChangeDate) => {
+            return <ListItems items={props.tags} />
+        }
     },
-    // {
-    //     header: 'ID',
-    //     field: '_id',
-    //     Component: undefined // react Component or undefined
-    // },
+    {
+        header: 'Changed',
+        field: '',
+        Component: (props:IFeatureRow & IChangeDate) => {
+            return <DateChanges {...props} />
+        }
+    },
     {
         header: '',
         field: '',
-        Component: (props:IFeatureRow) => {
+        Component: (props:IFeatureRow & IChangeDate) => {
             const navigate = useNavigate()
 
             return (
@@ -74,7 +85,7 @@ const FeaturesPage = () => {
         totalItems: 0,
         pageSizeList: Config.defaultPageSizeList
     })
-    const [data, setData] = useState<IFeatureRow[]>([])
+    const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
 
     const search = async (page:number, pageSize:number) => {
         // console.log('pagination: ', pagination)
@@ -85,13 +96,15 @@ const FeaturesPage = () => {
                 pageSize: pageSize
             })
             if (resp.data && resp.data.items) {
-                const tarnsformedData:IFeatureRow[] = resp.data.items.map(item => {
+                const tarnsformedData:(IFeatureRow & IChangeDate)[] = resp.data.items.map((item:IFeature & IChangeDate) => {
                     return {
                         _id: item._id || '',
                         name: item.name || '--',
                         value: item.value || '--',
                         type: item.type || '--',
-                        tags: item.tags?.join(', ') || '--'
+                        tags: item.tags || [],
+                        createdAt: item.createdAt,
+                        updatedAt: item.updatedAt
                     }
                 })
                 setPagination({
@@ -130,13 +143,15 @@ const FeaturesPage = () => {
                     pageSize: pageSizeQuery
                 })
                 if (resp.data && resp.data.items) {
-                    const tarnsformedData:IFeatureRow[] = resp.data.items.map((item) => {
+                    const tarnsformedData:(IFeatureRow & IChangeDate)[] = resp.data.items.map((item:IFeature & IChangeDate) => {
                         return {
                             _id: item._id || '',
                             name: item.name || '--',
                             value: item.value || '--',
                             type: item.type || '--',
-                            tags: item.tags?.join(', ') || '--'
+                            tags: item.tags || [],
+                            createdAt: item.createdAt,
+                            updatedAt: item.updatedAt
                         }
                     })
                     setPagination({
@@ -179,6 +194,7 @@ const FeaturesPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <PrimaryTable
+                        maxHeight={700}
                         pagination={pagination}
                         columnDefs={colDef}
                         data={data}
