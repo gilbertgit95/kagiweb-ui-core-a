@@ -1,13 +1,11 @@
 import React from 'react';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import SimpleLink from '../../components/links/simpleLink';
 import { IRole } from '../../types/role';
 
 import Config from '../../config';
@@ -45,14 +43,10 @@ const RoleReadOnlyView = ({role}:Props) => {
             header: 'View',
             field: 'moduleRoute',
             Component: (props) => {
-                const navigate = useNavigate()
-                return (
-                    <Button
-                        disabled={props.disabledLink}
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(`/roles/view/${ role?._id }/${ props.moduleRoute }`)}
-                        variant="text">View { props.module }</Button>
-                )
+                return <SimpleLink
+                            disabled={props.disabledLink}
+                            link={`/roles/view/${ role?._id }/${ props.moduleRoute }`}
+                            text={`View ${ props.module }`} />
             }
         }
     ]

@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 interface IProps {
     text: string,
-    link: string
+    link: string,
+    disabled?: boolean
 }
 
 const SimpleLink = (props:IProps) => {
@@ -12,6 +13,7 @@ const SimpleLink = (props:IProps) => {
 
     return (
         <Button
+            disabled={Boolean(props.disabled)}
             startIcon={<VisibilityIcon />}
             onClick={() => navigate(props.link)}
             variant="text">
