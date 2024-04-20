@@ -16,6 +16,8 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
+import ShortendDescription from '../../components/texts/shortendDescription';
+import ListItems from '../../components/lists/listItems';
 import { IRole } from '../../types/role';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
@@ -30,47 +32,59 @@ interface IFeatureRow {
     name: string,
     value: string,
     type: string,
-    tags: string
+    tags: string[]
 }
 
 const colDef:IColDef[] = [
     {
         header: 'Name',
-        field: 'name',
-        Component: undefined
+        field: '',
+        Component: (props:IFeatureRow) => {
+            return <ShortendDescription maxWidth={250} value={props.name} />
+        }
     },
     {
         header: 'Value',
-        field: 'value',
-        Component: undefined
+        field: '',
+        Component: (props:IFeatureRow) => {
+            return <ShortendDescription maxWidth={250} value={props.value} />
+        }
     },
     {
         header: 'Type',
         field: 'type',
-        Component: undefined
+        Component: undefined // react Component or undefined
     },
     {
         header: 'Tags',
-        field: 'tags',
-        Component: undefined
+        field: '',
+        Component: (props:IFeatureRow) => {
+            return <ListItems items={props.tags} />
+        }
     }
 ]
 
 const colRoleDef:IColDef[] = [
     {
         header: 'Name',
-        field: 'name',
+        field: '',
+        Component: (props:IRole) => {
+            return <ShortendDescription maxWidth={100} value={props.name} />
+        }
     },
     {
         header: 'Description',
-        field: 'description',
+        field: '',
+        Component: (props:IRole) => {
+            return <ShortendDescription maxWidth={150} value={props.description || '--'} />
+        }
     },
     {
         header: 'Level',
         field: 'level',
     },
     {
-        header: 'Number of features',
+        header: 'No. of features',
         field: 'featureRefs',
         Component: (props:IRole) => {
             return <Typography variant='caption'>{ props.featuresRefs?.length || 0}</Typography>
@@ -208,7 +222,7 @@ const RoleFeaturesEditPage = () => {
                             name: feature.name || '--',
                             value: feature.value || '--',
                             type: feature.type  || '--',
-                            tags: feature.tags?.join(', ')  || '--'
+                            tags: feature.tags || []
                         }
                     })
                     // console.log(tarnsformedData)
@@ -258,7 +272,7 @@ const RoleFeaturesEditPage = () => {
                                 name: feature.name || '--',
                                 value: feature.value || '--',
                                 type: feature.type  || '--',
-                                tags: feature.tags?.join(', ')  || '--'
+                                tags: feature.tags || []
                             }
                         })
                         // console.log(tarnsformedData)

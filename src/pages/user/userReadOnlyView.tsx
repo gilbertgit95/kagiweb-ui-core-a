@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { Button} from '@mui/material';
 
@@ -7,10 +8,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import SimpleLink from '../../components/links/simpleLink';
 import { IUser } from '../../types/user';
 
+import Config from '../../config';
+
 interface IModuleData {module: string, moduleRoute: string, contents: number}
-interface props { user?: IUser }
+interface props { user?: IUser & {createdAt?:Date, updatedAt?:Date} }
 
 const UserReadOnlyView = ({user}:props) => {
     const navigate = useNavigate()
@@ -40,10 +44,9 @@ const UserReadOnlyView = ({user}:props) => {
             field: 'moduleRoute',
             Component: (rowProps) => {
                 return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(rowProps.moduleRoute)}
-                        variant="text">View { rowProps.module }</Button>
+                    <SimpleLink
+                        text={`View ${ rowProps.module }`}
+                        link={rowProps.moduleRoute} />
                 )
             }
         }
@@ -52,7 +55,9 @@ const UserReadOnlyView = ({user}:props) => {
     const data:{field: string, value: string|undefined}[] = [
         { field: 'username', value: user?.username },
         { field: 'disabled', value: user?.disabled? 'True': 'False' },
-        { field: 'verified', value: user?.verified? 'True': 'False' }
+        { field: 'verified', value: user?.verified? 'True': 'False' },
+        { field: 'Created', value: user?.createdAt? moment(user?.createdAt).format(Config.defaultDateTimeFormat): '--' },
+        { field: 'Updated', value: user?.updatedAt? moment(user?.updatedAt).format(Config.defaultDateTimeFormat): '--' }
     ]
 
     const modulesData:IModuleData[] = [

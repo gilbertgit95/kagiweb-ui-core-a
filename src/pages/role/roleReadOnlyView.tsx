@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -9,8 +10,10 @@ import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { IRole } from '../../types/role';
 
+import Config from '../../config';
+
 interface Props {
-    role: IRole | undefined
+    role: IRole & {createdAt?:Date, updatedAt?:Date} | undefined
 }
 
 const RoleReadOnlyView = ({role}:Props) => {
@@ -59,7 +62,9 @@ const RoleReadOnlyView = ({role}:Props) => {
         { field: 'Description', value: role?.description },
         { field: 'Level', value: String(role?.level) },
         { field: 'Absolute Authority', value: role?.absoluteAuthority? 'True': 'False' },
-        { field: 'Request Limit/Second', value: String(role?.reqLimitPerSec) }
+        { field: 'Request Limit/Second', value: String(role?.reqLimitPerSec) },
+        { field: 'Created', value: role?.createdAt? moment(role?.createdAt).format(Config.defaultDateTimeFormat): '--' },
+        { field: 'Updated', value: role?.updatedAt? moment(role?.updatedAt).format(Config.defaultDateTimeFormat): '--' }
     ]
 
     const modulesData:{module: string, moduleRoute: string, contents: string, disabledLink: boolean}[] = [

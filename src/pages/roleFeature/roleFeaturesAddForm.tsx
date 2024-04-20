@@ -6,6 +6,8 @@ import { IRole } from '../../types/role';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
+import ShortendDescription from '../../components/texts/shortendDescription';
+import ListItems from '../../components/lists/listItems';
 
 interface IProp {
     role:IRole|undefined,
@@ -17,7 +19,7 @@ interface IFeatureRow {
     name: string,
     value: string,
     type: string,
-    tags: string
+    tags: string[]
 }
 
 const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
@@ -34,8 +36,8 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
                         _id: item._id || '',
                         name: item.name || '--',
                         value: item.value || '--',
-                        type: item.type  || '--',
-                        tags: item.tags?.join(', ')  || '--'
+                        type: item.type || '--',
+                        tags: item.tags || []
                     }
                 })
             setData(tarnsformedData)
@@ -45,13 +47,17 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
     const colDef:IColDef[] = [
         {
             header: 'Name',
-            field: 'name',
-            Component: undefined // react Component or undefined
+            field: '',
+            Component: (props:IFeatureRow) => {
+                return <ShortendDescription maxWidth={50} value={props.name} />
+            }
         },
         {
             header: 'Value',
-            field: 'value',
-            Component: undefined // react Component or undefined
+            field: '',
+            Component: (props:IFeatureRow) => {
+                return <ShortendDescription maxWidth={50} value={props.value} />
+            }
         },
         {
             header: 'Type',
@@ -60,8 +66,10 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
         },
         {
             header: 'Tags',
-            field: 'tags',
-            Component: undefined // react Component or undefined
+            field: '',
+            Component: (props:IFeatureRow) => {
+                return <ListItems items={props.tags} />
+            }
         }
     ]
 

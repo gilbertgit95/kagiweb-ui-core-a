@@ -1,4 +1,4 @@
-import { Typography, Box, Tooltip } from '@mui/material'
+import { Typography, Tooltip } from '@mui/material'
 
 interface IProps {
     value: string,
@@ -8,13 +8,19 @@ interface IProps {
 
 const ShortendDescription = (props:IProps) => {
     return (
-        <Box sx={{maxWidth: props.maxWidth || 150, maxHeight: props.maxHeight || 30, overflow: 'hidden'}}>
-            <Tooltip title={ props.value }>
-                <Typography component="div" variant="caption" sx={{lineBreak: 'anywhere'}}>
-                    { props.value }
-                </Typography>
-            </Tooltip>
-        </Box>
+        <Tooltip title={ props.value }>
+            <Typography
+                component="div"
+                variant="caption"
+                sx={{
+                    maxWidth: props.maxWidth || 150,
+                    maxHeight: props.maxHeight || 40,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                }}>
+                { props.value }
+            </Typography>
+        </Tooltip>
     )
 }
 

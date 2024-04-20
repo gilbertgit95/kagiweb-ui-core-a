@@ -6,19 +6,22 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import Check from '../../components/indicators/check';
+import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
+import SimpleLink from '../../components/links/simpleLink';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
 import UserService from './userService';
 import Config from '../../config';
+import { IUser } from '../../types/user';
 // import { IUser } from "../../types/user";
 // import { IPagination } from "../../types/mixTypes";
 
 interface IUserRow {
     _id: string,
     username: string,
-    name: string,
+    // name: string,
     email: string,
     phone: string,
     verified: boolean,
@@ -31,11 +34,11 @@ const colDef:IColDef[] = [
         field: 'username',
         Component: undefined // react Component or undefined
     },
-    {
-        header: 'Name',
-        field: 'name',
-        Component: undefined // react Component or undefined
-    },
+    // {
+    //     header: 'Name',
+    //     field: 'name',
+    //     Component: undefined // react Component or undefined
+    // },
     {
         header: 'Email',
         field: 'email',
@@ -60,22 +63,21 @@ const colDef:IColDef[] = [
             return <Check value={props.disabled} />
         }
     },
-    // {
-    //     header: 'ID',
-    //     field: '_id',
-    //     Component: undefined // react Component or undefined
-    // },
+    {
+        header: 'Changed',
+        field: '',
+        Component: (props:IUserRow & IChangeDate) => {
+            return <DateChanges {...props} />
+        }
+    },
     {
         header: '',
-        field: 'phone',
+        field: '',
         Component: (props:IUserRow) => {
-            const navigate = useNavigate()
-
             return (
-                <Button
-                    startIcon={<VisibilityIcon />}
-                    onClick={() => navigate(`/users/view/${ props._id }`)}
-                    variant="text">View User</Button>
+                <SimpleLink
+                    link={`/users/view/${ props._id }`}
+                    text="View User" />
             )
         }
     }
@@ -104,15 +106,17 @@ const Users = () => {
                 pageSize: pageSize
             })
             if (resp.data && resp.data.items) {
-                const tarnsformedData:IUserRow[] = resp.data.items.map(item => {
+                const tarnsformedData:(IUserRow & IChangeDate)[] = resp.data.items.map((item:IUser & IChangeDate) => {
                     return {
                         _id: item._id || '',
                         username: item.username,
-                        name: UserService.getUserInfo(item, 'fullname')?.key || '--',
+                        // name: UserService.getUserInfo(item, 'Fullname')?.value || '--',
                         email: UserService.getContactInfo(item, 'email-address')?.value || '--',
                         phone: UserService.getContactInfo(item, 'mobile-number')?.value || '--',
                         verified: Boolean(item.verified),
-                        disabled: Boolean(item.disabled)
+                        disabled: Boolean(item.disabled),
+                        createdAt: item.createdAt,
+                        updatedAt: item.updatedAt
                     }
                 })
                 setPagination({
@@ -151,15 +155,17 @@ const Users = () => {
                     pageSize: pageSizeQuery
                 })
                 if (resp.data && resp.data.items) {
-                    const tarnsformedData:IUserRow[] = resp.data.items.map((item) => {
+                    const tarnsformedData:(IUserRow & IChangeDate)[] = resp.data.items.map((item:IUser & IChangeDate) => {
                         return {
                             _id: item._id || '',
                             username: item.username,
-                            name: UserService.getUserInfo(item, 'fullname')?.key || '--',
+                            // name: UserService.getUserInfo(item, 'Fullname')?.value || '--',
                             email: UserService.getContactInfo(item, 'email-address')?.value || '--',
                             phone: UserService.getContactInfo(item, 'mobile-number')?.value || '--',
                             verified: Boolean(item.verified),
-                            disabled: Boolean(item.disabled)
+                            disabled: Boolean(item.disabled),
+                            createdAt: item.createdAt,
+                            updatedAt: item.updatedAt
                         }
                     })
                     setPagination({

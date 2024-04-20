@@ -1,8 +1,10 @@
 import React from 'react';
+import moment from 'moment';
 import Grid from '@mui/material/Grid';
 
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { IFeature } from '../../types/feature';
+import Config from '../../config';
 
 const colDef:IColDef[] = [
     {
@@ -18,7 +20,7 @@ const colDef:IColDef[] = [
 ]
 
 interface Props {
-    feature: IFeature | undefined
+    feature: IFeature & {createdAt?:Date, updatedAt?:Date} | undefined
 }
 
 const FeatureReadOnlyView = ({feature}: Props) => {
@@ -27,7 +29,9 @@ const FeatureReadOnlyView = ({feature}: Props) => {
         { field: 'description', value: feature?.description },
         { field: 'type', value: feature?.type },
         { field: 'value', value: feature?.value },
-        { field: 'tags', value: feature?.tags?.join(', ') }
+        { field: 'tags', value: feature?.tags?.join(', ') },
+        { field: 'Created', value: feature?.createdAt? moment(feature?.createdAt).format(Config.defaultDateTimeFormat): '--' },
+        { field: 'Updated', value: feature?.updatedAt? moment(feature?.updatedAt).format(Config.defaultDateTimeFormat): '--' }
     ]
 
     return feature? (

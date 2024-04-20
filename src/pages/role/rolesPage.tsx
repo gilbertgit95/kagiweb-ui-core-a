@@ -10,8 +10,13 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
+import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
+import SimpleLink from '../../components/links/simpleLink';
+import ShortendDescription from '../../components/texts/shortendDescription';
+
 import RoleService from './roleService';
 import Config from '../../config';
+import { IRole } from '../../types/role';
 // import { IUser } from '../../types/user';
 // import { IPagination } from '../../types/mixTypes';
 
@@ -31,8 +36,10 @@ const colDef:IColDef[] = [
     },
     {
         header: 'Description',
-        field: 'description',
-        Component: undefined // react Component or undefined
+        field: '',
+        Component: (props:IRoleRow) => {
+            return <ShortendDescription maxWidth={300} value={props.description} />
+        }
     },
     {
         header: 'Level',
@@ -44,22 +51,21 @@ const colDef:IColDef[] = [
         field: 'features',
         Component: undefined // react Component or undefined
     },
-    // {
-    //     header: 'ID',
-    //     field: '_id',
-    //     Component: undefined // react Component or undefined
-    // },
+    {
+        header: 'Changed',
+        field: '',
+        Component: (props:IRoleRow & IChangeDate) => {
+            return <DateChanges {...props} />
+        }
+    },
     {
         header: '',
         field: '',
         Component: (props:IRoleRow) => {
-            const navigate = useNavigate()
-
             return (
-                <Button
-                    startIcon={<VisibilityIcon />}
-                    onClick={() => navigate(`/roles/view/${ props._id }`)}
-                    variant="text">View Role</Button>
+                <SimpleLink
+                    link={`/roles/view/${ props._id }`}
+                    text="View Role" />
             )
         }
     }
@@ -88,13 +94,15 @@ const RolesPage = () => {
                 pageSize: pageSize
             })
             if (resp.data && resp.data.items) {
-                const tarnsformedData:IRoleRow[] = resp.data.items.map(item => {
+                const tarnsformedData:(IRoleRow & IChangeDate)[] = resp.data.items.map((item:IRole & IChangeDate) => {
                     return {
                         _id: item._id || '',
                         name: item.name || '--',
                         description: item.description || '--',
                         level: String(item.level) || '--',
-                        features: item.absoluteAuthority? 'All':  String(item.featuresRefs?.length)
+                        features: item.absoluteAuthority? 'All':  String(item.featuresRefs?.length),
+                        createdAt: item.createdAt,
+                        updatedAt: item.updatedAt
                     }
                 })
                 setPagination({
@@ -133,13 +141,15 @@ const RolesPage = () => {
                     pageSize: pageSizeQuery
                 })
                 if (resp.data && resp.data.items) {
-                    const tarnsformedData:IRoleRow[] = resp.data.items.map((item) => {
+                    const tarnsformedData:(IRoleRow & IChangeDate)[] = resp.data.items.map((item:IRole & IChangeDate) => {
                         return {
                             _id: item._id || '',
                             name: item.name || '--',
                             description: item.description || '--',
                             level: String(item.level) || '--',
-                            features: item.absoluteAuthority? 'Everything':  String(item.featuresRefs?.length)
+                            features: item.absoluteAuthority? 'Everything':  String(item.featuresRefs?.length),
+                            createdAt: item.createdAt,
+                            updatedAt: item.updatedAt
                         }
                     })
                     setPagination({
