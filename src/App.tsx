@@ -21,7 +21,19 @@ function App() {
   const darkTheme = createTheme({
     palette: {
       mode: apptheme,
-    },
+      primary: {
+        main: '#9C27B0',
+        light: '#E1BEE7',
+        dark: '#7B1FA2',
+        contrastText: '#FFFFFF',
+      },
+      secondary: {
+        main: '#673AB7',
+        contrastText: '#FFFFFF',
+        dark: '#512DA8',
+        light: '#D1C4E9',
+      },
+    }
   })
   
 

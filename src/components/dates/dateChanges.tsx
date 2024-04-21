@@ -1,5 +1,9 @@
 import moment from 'moment'
-import { Typography, Box, Stack, Divider } from '@mui/material'
+import { Typography, Box, Stack, Divider, Tooltip } from '@mui/material'
+// import MoreTimeIcon from '@mui/icons-material/MoreTime';
+// import UpdateIcon from '@mui/icons-material/Update';
+// import AddIcon from '@mui/icons-material/Add';
+// import EditIcon from '@mui/icons-material/Edit';
 import Config from '../../config'
 
 export interface IChangeDate {
@@ -14,30 +18,16 @@ const DateChanges = (props:IChangeDate) => {
                 direction="column"
                 divider={<Divider orientation="horizontal" flexItem />}
                 spacing={1}>
-                <Stack
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={1}>
+                <Tooltip title="Created">
                     <Typography component="div" variant="caption">
-                        CREATED
-                    </Typography>
-                    <Typography component="div" variant="caption" color="primary">
                         { props.createdAt? moment(props.createdAt).format(Config.defaultDateTimeFormat): '' }
                     </Typography>
-                </Stack>
-                <Stack
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={1}>
-                    <Typography component="div" variant="caption">
-                        UPDATED
-                    </Typography>
+                </Tooltip>
+                <Tooltip title="Updated">
                     <Typography component="div" variant="caption" color="primary">
                         { props.updatedAt? moment(props.updatedAt).format(Config.defaultDateTimeFormat): '' }
                     </Typography>
-                </Stack>
+                </Tooltip>
             </Stack>
         </Box>
     )
