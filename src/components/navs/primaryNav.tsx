@@ -15,6 +15,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 
 import { useLocation } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 export type TLink = {
     url?: string,
@@ -22,10 +23,15 @@ export type TLink = {
     Icon?: FC,
     action?: Function
 }
-       
+
+export type TLinkGroup = {
+    label?: string,
+    links?: TLink[]
+}
+
 type Props = {
     MenuIcon?: FC,
-    links?: TLink[]
+    linkGroups?: TLinkGroup[],
     CustomEl?: FC,
     manuIsDrawer?: boolean
 }
@@ -68,31 +74,43 @@ const PrimaryNav = (props:Props) => {
                             anchor={'left'}
                             open={open}
                             onClose={handleClose}>
-                            {/* <List><ListItem></ListItem></List> */}
-                            <List>
-                                {
-                                    props.links?.map((item, index) => (
-                                        <ListItem
-                                            disablePadding
-                                            key={item.label}>
-                                            <ListItemButton
-                                                onClick={() => {handleItemClick(item)}}
-                                                disabled={item.url === pathname}>
+                            {
+                                props.linkGroups?.map((lg, lgIndex) => {
+                                    if (!lg.links?.length) return null
+                                    return (
+                                        <React.Fragment key={lgIndex}>
+                                            <Typography color="primary" sx={{margin: '10px'}}>{ lg.label }</Typography>
+                                            {/* <Divider /> */}
+                                            <List>
                                                 {
-                                                    item.Icon? (
-                                                        <ListItemIcon>
-                                                            <item.Icon />
-                                                        </ListItemIcon>
-                                                    ): null
+                                                    lg.links?.map((item, index) => (
+                                                        <ListItem
+                                                            disablePadding
+                                                            key={index}>
+                                                            <ListItemButton
+                                                                onClick={() => {handleItemClick(item)}}
+                                                                disabled={item.url === pathname}>
+                                                                {
+                                                                    item.Icon? (
+                                                                        <ListItemIcon>
+                                                                            <item.Icon />
+                                                                        </ListItemIcon>
+                                                                    ): null
+                                                                }
+                                                                <ListItemText primary={item.label} />
+                                                            </ListItemButton>
+                                                        </ListItem>
+                                                    ))
                                                 }
-                                                <ListItemText primary={item.label} />
-                                            </ListItemButton>
-                                        </ListItem>
-                                    ))
-                                }
-                            </List>
-                            <Divider />
+                                            </List>
+                                            {/* <Divider /> */}
+                                            { (props.linkGroups?.length === (lgIndex + 1))? null: <Divider /> }
+                                        </React.Fragment>
+                                    )
+                                })
+                            }
                         </Drawer>
+                    // ): null
                     ): (
                         <Menu
                             id="basic-menu"
@@ -103,21 +121,32 @@ const PrimaryNav = (props:Props) => {
                             'aria-labelledby': 'basic-button',
                             }}>
                             {
-                                props.links?.map((item, index) => {
+                                props.linkGroups?.map((lg, lgIndex) => {
+                                    if (!lg.links?.length) return null
                                     return (
-                                        <MenuItem
-                                            key={index}
-                                            disabled={item.url === pathname}
-                                            onClick={() => {handleItemClick(item)}}>
+                                        <React.Fragment key={lgIndex}>
+                                            <Typography color="primary" sx={{margin: '10px'}}>{ lg.label }</Typography>
                                             {
-                                                item.Icon? (
-                                                    <ListItemIcon>
-                                                        <item.Icon />
-                                                    </ListItemIcon>
-                                                ): null
+                                                lg.links?.map((item, index) => {
+                                                    return (
+                                                        <MenuItem
+                                                            key={index}
+                                                            disabled={item.url === pathname}
+                                                            onClick={() => {handleItemClick(item)}}>
+                                                            {
+                                                                item.Icon? (
+                                                                    <ListItemIcon>
+                                                                        <item.Icon />
+                                                                    </ListItemIcon>
+                                                                ): null
+                                                            }
+                                                            <ListItemText>{ item.label }</ListItemText>
+                                                        </MenuItem>
+                                                    )
+                                                })
                                             }
-                                            <ListItemText>{ item.label }</ListItemText>
-                                        </MenuItem>
+                                            { (props.linkGroups?.length === (lgIndex + 1))? null: <Divider /> }
+                                        </React.Fragment>
                                     )
                                 })
                             }

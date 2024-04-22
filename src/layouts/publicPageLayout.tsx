@@ -1,6 +1,6 @@
 // import React from "react";
 import React, {FC} from 'react';
-import PrimaryNav, { TLink } from '../components/navs/primaryNav';
+import PrimaryNav, { TLinkGroup, TLink } from '../components/navs/primaryNav';
 import { Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import PagesIcon from '@mui/icons-material/Pages';
@@ -25,20 +25,30 @@ const NavCustomEl = () => {
 
 
 const PublicPageLayout = () => {
-    const links:TLink[] = [
-        { label: 'Home', url: '/', Icon: HomeIcon },
-        { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
-        { label: 'Signin OTP', url: '/signinOTP', Icon: KeyIcon },
-        { label: 'Signup', url: '/signup', Icon: AccountBoxOutlinedIcon },
-        { label: 'Forgot Password', url: '/forgotPassword', Icon: KeyOffOutlinedIcon },
-        { label: 'Reset Password', url: '/resetPassword', Icon: LockResetOutlinedIcon }
+    const links:TLinkGroup[] = [
+        {
+            label: 'Info Pages',
+            links: [
+                { label: 'Home', url: '/', Icon: HomeIcon },
+            ]
+        },
+        {
+            label: 'Auth Pages',
+            links: [
+                { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
+                { label: 'Signin OTP', url: '/signinOTP', Icon: KeyIcon },
+                { label: 'Signup', url: '/signup', Icon: AccountBoxOutlinedIcon },
+                { label: 'Forgot Password', url: '/forgotPassword', Icon: KeyOffOutlinedIcon },
+                { label: 'Reset Password', url: '/resetPassword', Icon: LockResetOutlinedIcon }
+            ]
+        }
     ]
 
     return (
         <>
             <PrimaryNav
                 MenuIcon={PagesIcon}
-                links={links}
+                linkGroups={links}
                 CustomEl={NavCustomEl} />
             <Outlet />
         </>

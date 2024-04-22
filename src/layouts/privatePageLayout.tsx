@@ -12,6 +12,9 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PeopleIcon from '@mui/icons-material/People';
+import NotesIcon from '@mui/icons-material/Notes';
+import TaskIcon from '@mui/icons-material/Task';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 // import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ListItemText from '@mui/material/ListItemText';
@@ -23,7 +26,7 @@ import { toggleTheme } from '../stores/appRefsSlice';
 
 import Config from "../config";
 import AuthService from "../pages/auth/authService";
-import PrimaryNav, { TLink } from '../components/navs/primaryNav';
+import PrimaryNav, { TLinkGroup, TLink } from '../components/navs/primaryNav';
 
 // type Props = {
 //     children?: React.ReactNode
@@ -132,19 +135,39 @@ const NavCustomEl = () => {
 
 
 const PrivatePageLayout =() => {
-    const links:TLink[] = [
-        { label: 'Dashboard', url: '/', Icon: HomeIcon },
-        { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
-        { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
-        { label: 'Users', url: '/users', Icon: PeopleIcon },
-        // { label: 'Workspaces', url: '/workspaces', Icon: WorkspacesIcon },
+    const links:TLinkGroup[] = [
+        {
+            label: 'Global Data',
+            links:  [
+                { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
+                { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
+                { label: 'Users', url: '/users', Icon: PeopleIcon },
+                // { label: 'Workspaces', url: '/workspaces', Icon: WorkspacesIcon },
+            ]
+        },
+        {
+            label: 'User Data',
+            links:  [
+                { label: 'Home', url: '/', Icon: HomeIcon },
+                { label: 'Notes*', url: '/notes', Icon: NotesIcon },
+                { label: 'Tasks*', url: '/tasks', Icon: TaskIcon },
+                { label: 'Notifications*', url: '/notifications', Icon: NotificationsIcon }
+            ]
+        },
+        {
+            label: 'Workspace Data',
+            links:  [
+                // { label: 'Workspace Products*', url: '/userWorkspaceProducts', Icon: HomeIcon },
+                // { label: 'Products*', url: '/', Icon: HomeIcon }
+            ]
+        },
     ]
 
     return (
         <>
             <PrimaryNav
                 manuIsDrawer
-                links={links}
+                linkGroups={links}
                 CustomEl={NavCustomEl} />
             <Outlet />
         </>
