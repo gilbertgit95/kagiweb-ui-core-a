@@ -13,9 +13,11 @@ export interface IChangeDate {
 
 const DateChanges = (props:IChangeDate) => {
     return (
-        <Box sx={{minWidth: 200}}>
+        <Box sx={{width: 200}}>
             <Stack
                 direction="column"
+                // justifyContent="center"
+                alignItems="center"
                 divider={<Divider orientation="horizontal" flexItem />}
                 spacing={1}>
                 <Tooltip title="Created">

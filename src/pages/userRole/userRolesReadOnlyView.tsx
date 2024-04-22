@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { IRole } from '../../types/role';
-import { IUser } from '../../types/user';
+import { IUser, IRoleRef } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
+import DateChanges from '../../components/dates/dateChanges';
 import { useAppSelector} from '../../stores/appStore';
 
 interface IProps {
@@ -16,7 +17,9 @@ interface IRoleRow {
     description: string,
     level: number,
     absoluteAuthority: boolean,
-    isActive: boolean
+    isActive: boolean,
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const UserRolesReadOnlyView = ({user}:IProps) => {
@@ -29,7 +32,7 @@ const UserRolesReadOnlyView = ({user}:IProps) => {
                 if (item && item._id) acc[item._id] = item
                 return acc
             }, {})
-            const tarnsformedData:IRoleRow[] = user.rolesRefs.map((item) => {
+            const tarnsformedData:IRoleRow[] = user.rolesRefs.map((item:IRoleRef & {createdAt?: Date, updatedAt?: Date}) => {
                 const role = rolesMap[item.roleId || '']
                 return {
                     _id: item._id || '',
@@ -38,6 +41,8 @@ const UserRolesReadOnlyView = ({user}:IProps) => {
                     level: role? role.level: -1,
                     absoluteAuthority: role? Boolean(role.absoluteAuthority): false,
                     isActive: Boolean(item?.isActive),
+                    createdAt: item.createdAt,
+                    updatedAt: item.updatedAt
                 }
             })
             // console.log(tarnsformedData)
@@ -75,25 +80,20 @@ const UserRolesReadOnlyView = ({user}:IProps) => {
             Component: (props:IRoleRow) => {
                 return <Check value={props.isActive} />
             }
+        },
+        {
+            header: 'Changed',
+            field: '',
+            Component: (props:IRoleRow) => {
+                return <DateChanges {...props} />
+            }
         }
-        // {
-        //     header: '',
-        //     field: '_id',
-        //     Component: (props:IRoleRow) => {
-    
-        //         return (
-        //             <Button
-        //                 startIcon={<VisibilityIcon />}
-        //                 onClick={() => navigate(props._id)}
-        //                 variant="text">View Role Ref</Button>
-        //         )
-        //     }
-        // }
     ]
 
     return (
         <Grid item xs={12}>
             <PrimaryTable
+                maxHeight={700}
                 columnDefs={colDef}
                 data={data} />
         </Grid>

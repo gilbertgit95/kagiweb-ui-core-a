@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
+// import { useNavigate } from 'react-router-dom';
+// import moment from 'moment';
 import Grid from '@mui/material/Grid';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Button } from '@mui/material';
-import { IUser, IClientDevice, IParsedClientDevice } from '../../types/user';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
+// import { Button } from '@mui/material';
+import { IUser, IClientDevice } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
-import Config from '../../config';
+import DateChanges from '../../components/dates/dateChanges';
+import SimpleLink from '../../components/links/simpleLink';
+import ShortendDescription from '../../components/texts/shortendDescription';
+// import Config from '../../config';
 
 interface IProps {
     user: IUser | undefined
@@ -18,12 +21,9 @@ interface IClientDeviceRow {
     ua: string,
     description: string,
     accessTokens: number,
-    // type: string,
-    // key: string,
-    // value: string,
-    // expTime: string,
-    // recipient: string,
     disabled: boolean,
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const UserClientDevicesReadOnlyView = ({user}:IProps) => {
@@ -31,21 +31,17 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
 
     useEffect(() => {
         if (user && user.clientDevices) {
-            const transformedData:IClientDeviceRow[] = user.clientDevices.map((item:IClientDevice & {createdAt?: Date}) => {
+            const transformedData:IClientDeviceRow[] = user.clientDevices.map((item:IClientDevice & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     ua: item.ua,
                     description: item.description || '--',
                     accessTokens: item.accessTokens?.length || 0,
-                    // type: item.type,
-                    // key: item.key || '',
-                    // value: item.value || '',
-                    // expTime: moment(item.expTime).format(Config.defaultDateTimeFormat),
-                    // recipient: item.recipient || '',
-                    disabled: Boolean(item.disabled)
+                    disabled: Boolean(item.disabled),
+                    createdAt: item.createdAt,
+                    updatedAt: item.updatedAt
                 }
             })
-            // console.log(transformedData)
             setData(transformedData)
         }
 
@@ -54,11 +50,17 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
     const colDef:IColDef[] = [
         {
             header: 'User Agent',
-            field: 'ua'
+            field: '',
+            Component: (props:IClientDeviceRow) => {
+                return <ShortendDescription value={props.ua} />
+            }
         },
         {
             header: 'Description',
-            field: 'description'
+            field: '',
+            Component: (props:IClientDeviceRow) => {
+                return <ShortendDescription value={props.description} />
+            }
         },
         {
             header: 'Tokens',
@@ -72,16 +74,20 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
             }
         },
         {
+            header: 'Changed',
+            field: '',
+            Component: (props:IClientDeviceRow) => {
+                return <DateChanges {...props} />
+            }
+        },
+        {
             header: '',
             field: 'accessTokens',
             Component: (props:IClientDeviceRow) => {
-                const navigate = useNavigate()
-    
                 return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(`${ props._id }`)}
-                        variant="text">View Client Device</Button>
+                    <SimpleLink
+                        link={`${ props._id }`}
+                        text="View Client Device" />
                 )
             }
         }
@@ -90,6 +96,7 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
     return (
         <Grid item xs={12}>
             <PrimaryTable
+                maxHeight={700}
                 columnDefs={colDef}
                 data={data} />
         </Grid>

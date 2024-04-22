@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
+// import { useNavigate } from 'react-router-dom';
+// import moment from 'moment';
 import Grid from '@mui/material/Grid';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Button } from '@mui/material';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
+// import { Button } from '@mui/material';
 import { IUser, IWorkspace } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
-import Config from '../../config';
+import ShortendDescription from '../../components/texts/shortendDescription';
+import DateChanges from '../../components/dates/dateChanges';
+import SimpleLink from '../../components/links/simpleLink';
+// import Config from '../../config';
 
 interface IProps {
     user: IUser | undefined
@@ -20,8 +23,8 @@ interface IWorkspaceRow {
     userRefs: number,
     isActive: boolean,
     disabled: boolean,
-    createdAt: string,
-    updatedAt: string
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const UserWorkspacesReadOnlyView = ({user}:IProps) => {
@@ -37,8 +40,8 @@ const UserWorkspacesReadOnlyView = ({user}:IProps) => {
                     userRefs: item.userRefs?.length || 0,
                     isActive: Boolean(item.isActive),
                     disabled: Boolean(item.disabled),
-                    createdAt: moment(item.createdAt).format(Config.defaultDateTimeFormat),
-                    updatedAt: moment(item.updatedAt).format(Config.defaultDateTimeFormat)
+                    createdAt: item.createdAt,
+                    updatedAt: item.updatedAt
                 }
             })
             // console.log(transformedData)
@@ -54,7 +57,10 @@ const UserWorkspacesReadOnlyView = ({user}:IProps) => {
         },
         {
             header: 'Description',
-            field: 'description'
+            field: '',
+            Component: (props:IWorkspaceRow) => {
+                return <ShortendDescription value={props.description} />
+            }
         },
         {
             header: 'Users',
@@ -75,24 +81,20 @@ const UserWorkspacesReadOnlyView = ({user}:IProps) => {
             }
         },
         {
-            header: 'Updated',
-            field: 'updatedAt'
-        },
-        {
-            header: 'Created',
-            field: 'createdAt'
+            header: 'Changed',
+            field: '',
+            Component: (props:IWorkspaceRow) => {
+                return <DateChanges {...props} />
+            }
         },
         {
             header: '',
             field: 'userRefs',
             Component: (props:IWorkspaceRow) => {
-                const navigate = useNavigate()
-    
                 return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(`${ props._id }`)}
-                        variant="text">View Workspace</Button>
+                    <SimpleLink
+                        link={`${ props._id }`}
+                        text="View Workspace" />
                 )
             }
         }
@@ -101,6 +103,7 @@ const UserWorkspacesReadOnlyView = ({user}:IProps) => {
     return (
         <Grid item xs={12}>
             <PrimaryTable
+                maxHeight={700}
                 columnDefs={colDef}
                 data={data} />
         </Grid>

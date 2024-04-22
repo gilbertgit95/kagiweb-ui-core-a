@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import moment from 'moment';
+// import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import Grid from '@mui/material/Grid';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import { IUser, IClientDevice } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
+import SimpleLink from '../../components/links/simpleLink';
 // import Check from '../../components/indicators/check';
-// import Config from '../../config';
+import Config from '../../config';
 import UserClientDeviceService from './userClientDeviceService';
 
 interface IProps {
@@ -24,8 +25,8 @@ interface IClientDeviceInfoRow {
 interface IClientDeviceSubModuleData {module: string, moduleRoute: string, contents: number}
 
 const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
-    const navigate = useNavigate()
-    const [clientDevice, setClientDevice] = useState<IClientDevice | undefined>(undefined)
+    // const navigate = useNavigate()
+    const [clientDevice, setClientDevice] = useState<IClientDevice & {createdAt?:Date, updatedAt?:Date} | undefined>(undefined)
 
     useEffect(() => {
         if (user && user.clientDevices && clientDeviceId) {
@@ -47,6 +48,14 @@ const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
         {
             label: 'Disabled',
             value: Boolean(clientDevice?.disabled)? 'True': 'False'
+        },
+        {   
+            label: 'Created',
+            value: moment(clientDevice?.createdAt).format(Config.defaultDateTimeFormat)
+        },
+        {   
+            label: 'Updated',
+            value: moment(clientDevice?.updatedAt).format(Config.defaultDateTimeFormat)
         }
     ]
 
@@ -83,10 +92,9 @@ const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
             field: 'moduleRoute',
             Component: (rowProps) => {
                 return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(rowProps.moduleRoute)}
-                        variant="text">View { rowProps.module }</Button>
+                    <SimpleLink
+                        link={`${ rowProps.moduleRoute }`}
+                        text={`View ${ rowProps.module }`} />
                 )
             }
         }

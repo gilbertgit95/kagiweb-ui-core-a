@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-import { Button } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+// import { Button } from '@mui/material';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IUser, IAccessToken } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
+import DateChanges from '../../components/dates/dateChanges';
+import SimpleLink from '../../components/links/simpleLink';
+import ShortendDescription from '../../components/texts/shortendDescription';
 import Config from '../../config';
 import UserClientDeviceService from '../userClientDevice/userClientDeviceService';
 
@@ -22,12 +25,12 @@ interface IclientDeviceTokenRow {
     ipAddress: string,
     expiration: string,
     disabled: boolean,
-    createdAt: string,
-    updatedAt: string
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [data, setData] = useState<IclientDeviceTokenRow[]>([])
 
     useEffect(() => {
@@ -41,8 +44,8 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
                     ipAddress: item.ipAddress || '--',
                     expiration: item?.expTime? moment(item?.expTime).format(Config.defaultDateTimeFormat): '--',
                     disabled: Boolean(item.disabled),
-                    createdAt: moment(item.createdAt).format(Config.defaultDateTimeFormat),
-                    updatedAt: moment(item.updatedAt).format(Config.defaultDateTimeFormat)
+                    createdAt: item.createdAt,
+                    updatedAt: item.updatedAt
                 }
             }) || []
             // console.log(transformedData)
@@ -62,15 +65,10 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
         },
         {
             header: 'Description',
-            field: 'description'
-        },
-        {
-            header: 'Created',
-            field: 'createdAt'
-        },
-        {
-            header: 'Updated',
-            field: 'updatedAt'
+            field: '',
+            Component: (props:IclientDeviceTokenRow) => {
+                return <ShortendDescription value={props.description} />
+            }
         },
         {
             header: 'Expiration',
@@ -84,15 +82,20 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
             }
         },
         {
-            header: '',
-            field: '_id',
+            header: 'Changed',
+            field: '',
             Component: (props:IclientDeviceTokenRow) => {
-    
+                return <DateChanges {...props} />
+            }
+        },
+        {
+            header: '',
+            field: '',
+            Component: (props:IclientDeviceTokenRow) => {
                 return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(props._id)}
-                        variant="text">View Device Token</Button>
+                    <SimpleLink
+                        link={`${ props._id }`}
+                        text="View Device Token" />
                 )
             }
         }
@@ -101,6 +104,7 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
     return (
         <Grid item xs={12}>
             <PrimaryTable
+                maxHeight={700}
                 columnDefs={colDef}
                 data={data} />
         </Grid>

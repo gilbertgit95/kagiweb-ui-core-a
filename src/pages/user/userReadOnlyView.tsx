@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
-import { Button} from '@mui/material';
+// import { useNavigate } from 'react-router-dom';
+// import { Button} from '@mui/material';
 
 import Grid from '@mui/material/Grid';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
@@ -17,7 +17,7 @@ interface IModuleData {module: string, moduleRoute: string, contents: number}
 interface props { user?: IUser & {createdAt?:Date, updatedAt?:Date} }
 
 const UserReadOnlyView = ({user}:props) => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const colDef:IColDef[] = [
         {
@@ -77,7 +77,7 @@ const UserReadOnlyView = ({user}:props) => {
             contents: user?.rolesRefs?.length || 0
         },
         {
-            module: 'Limitedtransactions',
+            module: 'Limited Transactions',
             moduleRoute: 'limitedTransactions',
             contents: user?.limitedTransactions?.length || 0
         },

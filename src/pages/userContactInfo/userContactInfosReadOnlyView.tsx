@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+// import moment from 'moment';
+// import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-import { Button } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+// import { Button } from '@mui/material';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IUser, IContactInfo } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
-import Config from '../../config';
+import DateChanges from '../../components/dates/dateChanges';
+import SimpleLink from '../../components/links/simpleLink';
+// import Config from '../../config';
 
 interface IProps {
     user: IUser | undefined
@@ -18,12 +20,12 @@ interface IContactInfoRow {
     type: string,
     value: string,
     verified: boolean,
-    createdAt: string,
-    updatedAt: string
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const UserContactInfosReadOnlyView = ({user}:IProps) => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [data, setData] = useState<IContactInfoRow[]>([])
 
     useEffect(() => {
@@ -34,8 +36,8 @@ const UserContactInfosReadOnlyView = ({user}:IProps) => {
                     type: item.type || '--',
                     value: item.value || '--',
                     verified: Boolean(item.verified),
-                    createdAt: moment(item.createdAt || '').format(Config.defaultDateTimeFormat),
-                    updatedAt: moment(item.updatedAt || '').format(Config.defaultDateTimeFormat)
+                    createdAt: item.createdAt,
+                    updatedAt: item.updatedAt
                 }
             })
             // console.log(transformedData)
@@ -46,20 +48,19 @@ const UserContactInfosReadOnlyView = ({user}:IProps) => {
 
     const colDef:IColDef[] = [
         {
-            header: 'Value',
-            field: 'value'
-        },
-        {
             header: 'Type',
             field: 'type'
         },
         {
-            header: 'Created',
-            field: 'createdAt'
+            header: 'Value',
+            field: 'value'
         },
         {
-            header: 'Updated',
-            field: 'updatedAt'
+            header: 'Changed',
+            field: '_id',
+            Component: (props:IContactInfoRow) => {
+                return <DateChanges {...props} />
+            }
         },
         {
             header: 'Verified',
@@ -72,12 +73,10 @@ const UserContactInfosReadOnlyView = ({user}:IProps) => {
             header: '',
             field: '_id',
             Component: (props:IContactInfoRow) => {
-
                 return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(props._id)}
-                        variant="text">View User Contact</Button>
+                    <SimpleLink
+                        link={`${ props._id }`}
+                        text="View User Contact" />
                 )
             }
         }
@@ -86,6 +85,7 @@ const UserContactInfosReadOnlyView = ({user}:IProps) => {
     return (
         <Grid item xs={12}>
             <PrimaryTable
+                maxHeight={700}
                 columnDefs={colDef}
                 data={data} />
         </Grid>

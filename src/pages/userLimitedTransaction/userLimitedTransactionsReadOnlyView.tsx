@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-import { Button } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+// import { Button } from '@mui/material';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IUser, ILimitedTransaction } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
+import DateChanges from '../../components/dates/dateChanges';
+import SimpleLink from '../../components/links/simpleLink';
 import Config from '../../config';
 
 interface IProps {
@@ -23,15 +25,17 @@ interface ILimitedTransactionRow {
     expTime: string,
     recipient: string,
     disabled: boolean,
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [data, setData] = useState<ILimitedTransactionRow[]>([])
 
     useEffect(() => {
         if (user && user.limitedTransactions) {
-            const transformedData:ILimitedTransactionRow[] = user.limitedTransactions.map((item:ILimitedTransaction & {createdAt?: Date}) => {
+            const transformedData:ILimitedTransactionRow[] = user.limitedTransactions.map((item:ILimitedTransaction & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     limit: item.limit,
@@ -41,7 +45,9 @@ const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
                     value: item.value || '',
                     expTime: moment(item.expTime).format(Config.defaultDateTimeFormat),
                     recipient: item.recipient || '',
-                    disabled: Boolean(item.disabled)
+                    disabled: Boolean(item.disabled),
+                    createdAt: item.createdAt,
+                    updatedAt: item.updatedAt
                 }
             })
             // console.log(transformedData)
@@ -87,15 +93,20 @@ const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
             }
         },
         {
-            header: '',
-            field: '_id',
+            header: 'Changed',
+            field: '',
             Component: (props:ILimitedTransactionRow) => {
-    
+                return <DateChanges {...props} />
+            }
+        },
+        {
+            header: '',
+            field: '',
+            Component: (props:ILimitedTransactionRow) => {
                 return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(props._id)}
-                        variant="text">View LT</Button>
+                    <SimpleLink
+                        link={`${ props._id }`}
+                        text="View LT" />
                 )
             }
         }
@@ -104,6 +115,7 @@ const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
     return (
         <Grid item xs={12}>
             <PrimaryTable
+                maxHeight={700}
                 columnDefs={colDef}
                 data={data} />
         </Grid>

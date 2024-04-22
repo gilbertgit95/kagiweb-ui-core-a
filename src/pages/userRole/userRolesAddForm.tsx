@@ -6,8 +6,9 @@ import { IRole } from '../../types/role';
 import { IUser } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
+import ShortendDescription from '../../components/texts/shortendDescription';
 import { useAppSelector} from '../../stores/appStore';
-import { IFeature } from '../../types/feature';
+// import { IFeature } from '../../types/feature';
 
 interface IProp {
     user:IUser|undefined,
@@ -51,7 +52,10 @@ const UserRolesAddForm = ({user, onSelect}:IProp) => {
         },
         {
             header: 'Description',
-            field: 'description',
+            field: '',
+            Component: (props:IRoleRow) => {
+                return <ShortendDescription value={props.description} />
+            }
         },
         {
             header: 'Level',

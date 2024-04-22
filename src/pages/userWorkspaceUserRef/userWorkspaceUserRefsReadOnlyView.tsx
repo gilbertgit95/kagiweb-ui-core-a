@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+// import moment from 'moment';
+// import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-import { Button } from '@mui/material';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+// import { Button } from '@mui/material';
+// import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IUser, IWorkspaceUserRef } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
-import Config from '../../config';
+import DateChanges from '../../components/dates/dateChanges';
+import SimpleLink from '../../components/links/simpleLink';
+// import Config from '../../config';
 // import UserWorkspaceUserRefService from '../userWorkspaceUserRef/userWorkspaceUserRefService';
-import UserWorkspaceService from '../userWorkspace/userWorkspaceService';
+// import UserWorkspaceService from '../userWorkspace/userWorkspaceService';
 
 interface IProps {
     user: IUser | undefined,
@@ -28,12 +30,12 @@ interface IWorkspaceUserRefRow {
     accepted: boolean,
     declined: boolean,
     disabled: boolean,
-    createdAt: string,
-    updatedAt: string
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [data, setData] = useState<IWorkspaceUserRefRow[]>([])
 
     useEffect(() => {
@@ -52,8 +54,8 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) 
                         accepted: Boolean(item.accepted),
                         declined: Boolean(item.declined),
                         disabled: Boolean(item.disabled),
-                        createdAt: moment(item.createdAt).format(Config.defaultDateTimeFormat),
-                        updatedAt: moment(item.updatedAt).format(Config.defaultDateTimeFormat)
+                        createdAt: item.createdAt,
+                        updatedAt: item.updatedAt
                     }
                 }) || []
                 // console.log(transformedData)
@@ -113,12 +115,11 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) 
             }
         },
         {
-            header: 'Created',
-            field: 'createdAt'
-        },
-        {
-            header: 'Updated',
-            field: 'updatedAt'
+            header: 'Changed',
+            field: '_id',
+            Component: (props:IWorkspaceUserRefRow) => {
+                return <DateChanges {...props} />
+            }
         },
         {
             header: 'Disabled',
@@ -131,12 +132,10 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) 
             header: '',
             field: '_id',
             Component: (props:IWorkspaceUserRefRow) => {
-    
                 return (
-                    <Button
-                        startIcon={<VisibilityIcon />}
-                        onClick={() => navigate(props._id)}
-                        variant="text">View User Ref</Button>
+                    <SimpleLink
+                        link={`${ props._id }`}
+                        text="View User Ref" />
                 )
             }
         }
@@ -145,6 +144,7 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) 
     return (
         <Grid item xs={12}>
             <PrimaryTable
+                maxHeight={700}
                 columnDefs={colDef}
                 data={data} />
         </Grid>
