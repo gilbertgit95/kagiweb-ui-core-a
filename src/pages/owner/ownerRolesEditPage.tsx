@@ -9,6 +9,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import OwnerService from './ownerService';
 import { IUser } from '../../types/user';
 import UserRolesEditForm from '../userRole/userRolesEditForm';
+import AppUtils from '../../utils/appUtils';
 
 const OwnerRolesEditPage = () => {
     const navigate = useNavigate()
@@ -20,6 +21,10 @@ const OwnerRolesEditPage = () => {
 
     const reLoadUser = async () => {
         try {
+            // reload signedin user state
+            await AppUtils.loadSigninUserData()
+
+            // reload local owner state in this page
             const userResp = await OwnerService.getOwner()
             setUser(userResp.data)
         } catch (err:any) {

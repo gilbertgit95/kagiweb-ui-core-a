@@ -4,19 +4,19 @@ import { IRole } from "../types/role";
 import { IUser, IWorkspace } from "../types/user";
 
 export interface ISignedInUser {
-    token: string|undefined,
-    userData: IUser|undefined,
-    isSignedIn: boolean|undefined,
-    role: IRole|undefined,
-    roles: IRole[]|undefined,
-    features: IFeature[]|undefined,
-    workspace: IWorkspace|undefined,
-    workspaces: IWorkspace[]|undefined,
-    externalWorkspaces: (IWorkspace & {ownerId:string, ownerUsername: string})[]|undefined
+    // token?: string,
+    userData?: IUser,
+    isSignedIn?: boolean,
+    role?: IRole,
+    roles?: IRole[],
+    features?: IFeature[],
+    workspace?: IWorkspace,
+    workspaces?: IWorkspace[],
+    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerUsername: string})[]
 }
 
 export interface IOptSignedInUser {
-    token?: string|undefined,
+    // token?: string|undefined,
     userData?: IUser|undefined,
     isSignedIn?: boolean|undefined,
     role?: IRole|undefined,
@@ -28,7 +28,7 @@ export interface IOptSignedInUser {
 }
 
 const initialState:ISignedInUser = {
-    token: undefined,
+    // token: undefined,
     userData: undefined,
     isSignedIn: undefined,
     role: undefined,
@@ -48,7 +48,7 @@ export const SignedInUser = createSlice({
             state,
             action: PayloadAction<IOptSignedInUser>
         ) => {
-            if (action.payload.hasOwnProperty('token')) state.token = action.payload.token
+            // if (action.payload.hasOwnProperty('token')) state.token = action.payload.token
             if (action.payload.hasOwnProperty('userData')) state.userData = action.payload.userData
             if (action.payload.hasOwnProperty('isSignedIn')) state.isSignedIn = action.payload.isSignedIn
             if (action.payload.hasOwnProperty('role')) state.role = action.payload.role
@@ -59,7 +59,7 @@ export const SignedInUser = createSlice({
             if (action.payload.hasOwnProperty('externalWorkspaces')) state.externalWorkspaces = action.payload.externalWorkspaces
         },
         clearUserData: (state) => {
-            state.token = undefined
+            // state.token = undefined
             state.userData = undefined
             state.isSignedIn = false
             state.role = undefined
