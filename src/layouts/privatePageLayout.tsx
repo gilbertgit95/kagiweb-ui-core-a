@@ -74,13 +74,6 @@ const NavCustomEl = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 { Config.AppName }
             </Typography>
-            {/* <div>
-                <Typography
-                    variant="subtitle1"
-                    sx={{ flexGrow: 1 }}>
-                    { userData && userData.username? userData.username: '' }
-                </Typography>
-            </div> */}
             <div>
                 <IconButton
                     size="large"
@@ -94,15 +87,6 @@ const NavCustomEl = () => {
                 <Menu
                     id="menu-appbar"
                     anchorEl={anchorEl}
-                    // anchorServerAddress={{
-                    //     vertical: 'top',
-                    //     horizontal: 'right',
-                    // }}
-                    // keepMounted
-                    // transformServerAddress={{
-                    //     vertical: 'top',
-                    //     horizontal: 'right',
-                    // }}
                     open={Boolean(anchorEl)}
                     onClose={handleClose}>
                     <MenuItem onClick={() => handleLinkClick('/owner/view')}>
@@ -115,6 +99,12 @@ const NavCustomEl = () => {
                         </ListItemText>
                     </MenuItem>
                     <Divider />
+                    <MenuItem onClick={() => handleLinkClick('/owner/edit/roles')}>
+                        <ListItemIcon>
+                            <AdminPanelSettingsIcon />
+                        </ListItemIcon>
+                        <ListItemText>Change Role</ListItemText>
+                    </MenuItem>
                     <MenuItem onClick={() => handleThemeToggle(appTheme)}>
                         <ListItemIcon>
                             { appTheme === 'dark'? <DarkModeIcon />: <WbSunnyIcon /> }
