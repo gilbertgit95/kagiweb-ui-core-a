@@ -5,6 +5,7 @@ import PrivatePageLayout from '../layouts/privatePageLayout';
 import NotFoundPage from '../components/infoOrWarnings/pageNotFound';
 
 import PrivateHomePage from '../pages/home/privateHomePage';
+import WorkspaceHomePage from '../pages/home/workspacesHomePage';
 
 import FeaturesPage from '../pages/feature/featuresPage';
 import FeaturePage from '../pages/feature/featurePage';
@@ -210,6 +211,9 @@ const PrivateRoutes = () => {
                     <Route path="owner/create/workspaces/:workspaceId/userRefs" element={<OwnerWorkspaceUserRefCreatePage />} />
                     <Route path="owner/view/workspaces/:workspaceId/userRefs/:userRefId" element={<OwnerWorkspaceUserRefPage />} />
                     <Route path="owner/edit/workspaces/:workspaceId/userRefs/:userRefId" element={<OwnerWorkspaceUserRefEditPage />} />
+
+                    {/* workspace data */}
+                    <Route path="workspace" element={<WorkspaceHomePage />} />
 
                     {/* for none existing page */}
                     <Route

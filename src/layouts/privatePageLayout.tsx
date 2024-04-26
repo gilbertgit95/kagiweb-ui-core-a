@@ -127,12 +127,10 @@ const NavCustomEl = () => {
 const PrivatePageLayout =() => {
     const links:TLinkGroup[] = [
         {
-            label: 'Global Data',
+            label: 'Workspace Data',
             links:  [
-                { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
-                { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
-                { label: 'Users', url: '/users', Icon: PeopleIcon },
-                // { label: 'Workspaces', url: '/workspaces', Icon: WorkspacesIcon },
+                { label: 'Workspace Dash*', url: '/workspace', Icon: HomeIcon },
+                { label: 'Products*', url: '/', Icon: HomeIcon }
             ]
         },
         {
@@ -145,12 +143,14 @@ const PrivatePageLayout =() => {
             ]
         },
         {
-            label: 'Workspace Data',
+            label: 'Global Data',
             links:  [
-                // { label: 'Workspace Products*', url: '/userWorkspaceProducts', Icon: HomeIcon },
-                // { label: 'Products*', url: '/', Icon: HomeIcon }
+                { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
+                { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
+                { label: 'Users', url: '/users', Icon: PeopleIcon },
+                // { label: 'Workspaces', url: '/workspaces', Icon: WorkspacesIcon },
             ]
-        },
+        }
     ]
 
     return (
