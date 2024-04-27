@@ -75,6 +75,7 @@ const DropDownSearch = (props: IProps) => {
                 startIcon={<ExpandMoreIcon />}
                 onClick={handleMenu}
                 size="large"
+                color="primary"
                 variant="outlined">
                 { selectedLabel || placeholder }
             </Button>

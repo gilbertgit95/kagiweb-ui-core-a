@@ -109,7 +109,7 @@ const NavCustomEl = () => {
                         <ListItemIcon>
                             { appTheme === 'dark'? <DarkModeIcon />: <WbSunnyIcon /> }
                         </ListItemIcon>
-                        <ListItemText>Theme</ListItemText>
+                        <ListItemText>Toggle Theme</ListItemText>
                     </MenuItem>
                     <MenuItem onClick={handleSignout}>
                         <ListItemIcon>
@@ -129,7 +129,7 @@ const PrivatePageLayout =() => {
         {
             label: 'Workspace Data',
             links:  [
-                { label: 'Workspace Dash*', url: '/workspace', Icon: HomeIcon },
+                { label: 'Workspace Dash*', url: '/workspaces/view/none', Icon: HomeIcon },
                 { label: 'Products*', url: '/', Icon: HomeIcon }
             ]
         },

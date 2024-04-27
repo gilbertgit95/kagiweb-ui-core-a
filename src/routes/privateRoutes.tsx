@@ -213,7 +213,7 @@ const PrivateRoutes = () => {
                     <Route path="owner/edit/workspaces/:workspaceId/userRefs/:userRefId" element={<OwnerWorkspaceUserRefEditPage />} />
 
                     {/* workspace data */}
-                    <Route path="workspace" element={<WorkspaceHomePage />} />
+                    <Route path="workspaces/view/:workspaceId" element={<WorkspaceHomePage />} />
 
                     {/* for none existing page */}
                     <Route

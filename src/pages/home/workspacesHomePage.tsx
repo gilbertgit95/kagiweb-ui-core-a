@@ -4,7 +4,7 @@ import WorkspaceDataLayout from '../../layouts/workspaceDataLayout'
 const WorkspaceLandingPage = () => {
     return (
         <WorkspaceDataLayout>
-            {/* <Typography color='primary' variant='h5'>Workspace Dashboard</Typography> */}
+            <Typography color='primary' variant='h5'>Workspace Dashboard</Typography>
         </WorkspaceDataLayout>
     )
 }

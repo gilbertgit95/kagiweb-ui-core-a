@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Grid } from '@mui/material';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { Container, Grid, Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
@@ -13,14 +15,24 @@ interface Props {
 }
 
 const WorkspaceDataLayout = (props:Props) => {
+    const { workspaceId } = useParams()
+    const navigate = useNavigate()
+    const location = useLocation()
+
     const defaultWorkspace = useAppSelector(state => state.signedInUser?.workspace)
     const ownWorkspaces = useAppSelector(state => state.signedInUser?.workspaces) || []
     const externalWorkspaces = useAppSelector(state => state.signedInUser?.externalWorkspaces) || []
 
     const [workspaces, setWorkspaces] = useState<{key: string, label: string, subLabel?:string, Icon?:React.FC}[]>([])
     const [selectedWorkspace, setSelectedWorkspace] = useState<string | undefined>(undefined)
+    const [selectedIsOwned, setSelectedIsOwned] = useState<boolean>(false)
 
     useEffect(() => {
+        setSelectedWorkspace(workspaceId)
+    }, [workspaceId])
+
+    useEffect(() => {
+        const ownedSet = new Set(ownWorkspaces.map(item => item._id))
         let workspaces = [
             ...ownWorkspaces.map(item => ({
                 key: item._id || '',
@@ -37,7 +49,8 @@ const WorkspaceDataLayout = (props:Props) => {
         ]
 
         setWorkspaces(workspaces)
-    }, [defaultWorkspace, ownWorkspaces, externalWorkspaces])
+        setSelectedIsOwned(selectedWorkspace? ownedSet.has(selectedWorkspace): false)
+    }, [selectedWorkspace, defaultWorkspace, ownWorkspaces, externalWorkspaces])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -52,11 +65,31 @@ const WorkspaceDataLayout = (props:Props) => {
                         selected={selectedWorkspace}
                         options={workspaces}
                         onSelect={(sel) => {
+                            const workspaceIdIndex = 4
+                            const path = location.pathname.split('/')
+                            // console.log(path.split('/'))
                             setSelectedWorkspace(sel)
+                            if (path.length >= workspaceIdIndex) {
+                                path[workspaceIdIndex - 1] = sel
+                                navigate(path.join('/'))
+                            }
                         }} />
+                    <Button
+                        sx={{marginLeft: 1}}
+                        size="large"
+                        variant="outlined"
+                        disabled={!selectedIsOwned}
+                        startIcon={<VisibilityIcon />}
+                        onClick={() => {
+                            navigate(`/owner/view/workspaces/${ selectedWorkspace }`)
+                        }}>
+                        View
+                    </Button>
                 </Grid>
                 <Grid item xs={12} md={6}></Grid>
-                { props.children }
+                <Grid item xs={12}>
+                    { props.children }
+                </Grid>
             </Grid>
         </Container>
     )
