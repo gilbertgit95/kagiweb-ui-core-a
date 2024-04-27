@@ -1,28 +1,35 @@
-import React from 'react'
-import { Divider, TextField } from '@mui/material';
+import React, { useState, useEffect } from 'react'
+import { Divider, TextField, Box, Typography, Button } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import SearchIcon from '@mui/icons-material/Search';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InputAdornment from '@mui/material/InputAdornment';
 
 interface IOption {
     key: string,
     label: string,
+    subLabel?: string,
     Icon?: React.FC
 }
 
 interface IProps {
+    // minWidth?: number,
     selected?: string,
     options: IOption[],
     ariaLabel: string,
     ariaControls: string,
-    placeholder?: string
+    placeholder?: string,
+    onSelect?: (selected:string) => void
 }
 
 const DropDownSearch = (props: IProps) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+    const [selectedLabel, setSelectedLabel] = useState<string | undefined>(undefined)
+    const [search, setSearch] = useState<string>('')
+    const [filteredOptions, setFilteredOptions] = useState<IOption[]>([])
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget)
@@ -30,19 +37,54 @@ const DropDownSearch = (props: IProps) => {
 
     const handleClose = () => {
         setAnchorEl(null)
+        setSearch('')
     }
 
     const handleSelect = (selected:string) => {
-        console.log(selected)
+        if (props.onSelect) props.onSelect(selected)
+        handleClose()
     }
+
+    useEffect(() => {
+        for (let sel of props.options) {
+            if (props.selected === sel.key) {
+                setSelectedLabel(sel.label)
+                break
+            }
+        }
+    }, [props.selected, props.options])
+
+    useEffect(() => {
+        let searchKey = search.toLowerCase()
+        let filteredOpts = props.options.filter(item => {
+            const itemLabel = item.label.toLowerCase()
+            return itemLabel.indexOf(searchKey) > -1
+        })
+        setFilteredOptions(filteredOpts)
+    }, [search, props.options])
+
+    const placeholder =  `${ props.placeholder || 'Select' }*`
 
     return (
         <>
-            <TextField
+            <Button
+                // sx={{minWidth: `${ props.minWidth || 300 }px`}}
+                aria-label={props.ariaLabel}
+                aria-controls={props.ariaControls}
+                aria-haspopup="true"
+                startIcon={<ExpandMoreIcon />}
+                onClick={handleMenu}
+                size="large"
+                variant="outlined">
+                { selectedLabel || placeholder }
+            </Button>
+            
+            {/* <TextField
                 aria-label={props.ariaLabel}
                 aria-controls={props.ariaControls}
                 aria-haspopup="true"
                 placeholder={props.placeholder || 'Search'}
+                value={selectedLabel || ''}
                 InputProps={{
                     startAdornment: (
                     <InputAdornment position="start">
@@ -50,13 +92,13 @@ const DropDownSearch = (props: IProps) => {
                     </InputAdornment>
                     ),
                 }}
-                onClick={handleMenu} />
+                onClick={handleMenu} /> */}
             <Menu
                 id={props.ariaControls}
-                // anchorPosition={{
-                //     vertical: 'top',
-                //     horizontal: 'left'
-                // }}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left'
+                }}
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}>
@@ -69,12 +111,19 @@ const DropDownSearch = (props: IProps) => {
                             <SearchIcon />
                         </InputAdornment>
                         ),
+                    }}
+                    value={search}
+                    onChange={e => {
+                        setSearch(e.target.value)
                     }} />
+                {/* render options */}
                 {
-                    props.options.map((item, index) => {
+                    filteredOptions.map((item, index) => {
                         return (
-                            <React.Fragment key={index}>
-                                <MenuItem onClick={() => handleSelect(item.key)}>
+                            <Box key={index}>
+                                <MenuItem
+                                    disabled={item.key === props.selected}
+                                    onClick={() => handleSelect(item.key)}>
                                     {
                                         item.Icon? (
                                             <ListItemIcon>
@@ -82,12 +131,30 @@ const DropDownSearch = (props: IProps) => {
                                             </ListItemIcon>
                                         ): null
                                     }
-                                    <ListItemText>{ item.label }</ListItemText>
+                                    <ListItemText>
+                                        <Typography>{ item.label }</Typography>
+                                        {
+                                            item.subLabel? <Typography variant="caption" color="primary">{ item.subLabel }</Typography>: null
+                                        }
+                                    </ListItemText>
                                 </MenuItem>
-                                { index !== props.options?.length - 1? <Divider />: null }
-                            </React.Fragment>
+                                { index !== filteredOptions?.length - 1? <Divider />: null }
+                            </Box>
                         )
                     })
+                }
+                {/* render no result */}
+                {
+                    !filteredOptions.length? (
+                        <MenuItem
+                            disabled={true}>
+                            <ListItemText>
+                                <Typography>
+                                    { props.options.length === filteredOptions.length? 'No options available': 'No search result Found' }
+                                </Typography>
+                            </ListItemText>
+                        </MenuItem>
+                    ): null
                 }
             </Menu>
         </>
