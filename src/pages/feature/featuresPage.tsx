@@ -7,13 +7,11 @@ import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import { useSearchParams } from 'react-router-dom';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
 import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import SimpleLink from '../../components/links/simpleLink';
-import FeatureService from './featureService';
-import Config from '../../config';
+import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
 
 interface IFeatureRow {
@@ -73,75 +71,14 @@ const colDef:IColDef[] = [
 
 const FeaturesPage = () => {
     const navigate = useNavigate()
-    const [searchParams] = useSearchParams();
-    const pageQuery = parseInt(searchParams.get('page') || '') || Config.defaultPage;
-    const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || Config.defaultPageSize;
-
-    const [pagination, setPagination] = useState({
-        page: 0,
-        pageSize: pageSizeQuery,
-        totalItems: 0,
-        pageSizeList: Config.defaultPageSizeList
-    })
+    const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
-
-    const search = async (page:number, pageSize:number) => {
-        // console.log('pagination: ', pagination)
-        window.history.replaceState(null, '', `?page=${ page + 1 }&pageSize=${ pageSize }`)
-        try {
-            const resp = await FeatureService.getFeatures({
-                page: page + 1,
-                pageSize: pageSize
-            })
-            if (resp.data && resp.data.items) {
-                const tarnsformedData:(IFeatureRow & IChangeDate)[] = resp.data.items.map((item:IFeature & IChangeDate) => {
-                    return {
-                        _id: item._id || '',
-                        name: item.name || '--',
-                        value: item.value || '--',
-                        type: item.type || '--',
-                        tags: item.tags || [],
-                        createdAt: item.createdAt,
-                        updatedAt: item.updatedAt
-                    }
-                })
-                setPagination({
-                    page: resp.data.page - 1,
-                    pageSize: resp.data.pageSize,
-                    totalItems: resp.data.totalItems,
-                    pageSizeList: Config.defaultPageSizeList
-                })
-                setData(tarnsformedData)
-            }
-            // console.log(resp.data)
-        } catch (err) {
-        }
-    }
-
-    const onPageChange = (
-        e:React.MouseEvent<HTMLButtonElement> | null,
-        newPage:number) => {
-        // setPagination({...pagination, ...{page: newPage}})
-        search(newPage, pagination.pageSize)
-    }
-
-    const onPageSizeChange = (
-        e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-        newPageSize:number) => {
-            // setPagination({...pagination, ...{pageSize: newPageSize}})
-        search(0, newPageSize)
-    }
 
     useEffect(() => {
         const init = async () => {
-            window.history.replaceState(null, '', `?page=${ pageQuery }&pageSize=${ pageSizeQuery }`)
             try {
-                const resp = await FeatureService.getFeatures({
-                    page: pageQuery,
-                    pageSize: pageSizeQuery
-                })
-                if (resp.data && resp.data.items) {
-                    const tarnsformedData:(IFeatureRow & IChangeDate)[] = resp.data.items.map((item:IFeature & IChangeDate) => {
+                if (features) {
+                    const tarnsformedData:(IFeatureRow & IChangeDate)[] = features.map((item:IFeature & IChangeDate) => {
                         return {
                             _id: item._id || '',
                             name: item.name || '--',
@@ -152,21 +89,14 @@ const FeaturesPage = () => {
                             updatedAt: item.updatedAt
                         }
                     })
-                    setPagination({
-                        page: resp.data.page - 1,
-                        pageSize: resp.data.pageSize,
-                        totalItems: resp.data.totalItems,
-                        pageSizeList: Config.defaultPageSizeList
-                    })
                     setData(tarnsformedData)
                 }
-                // console.log(resp.data)
             } catch (err) {
             }
         }
         console.log('initiate features page')
         init()
-    }, [pageQuery, pageSizeQuery])
+    }, [features])
 
 
     return (
@@ -193,11 +123,8 @@ const FeaturesPage = () => {
                 <Grid item xs={12}>
                     <PrimaryTable
                         maxHeight={700}
-                        pagination={pagination}
                         columnDefs={colDef}
-                        data={data}
-                        onPageChange={onPageChange}
-                        onRowsPerPageChange={onPageSizeChange} />
+                        data={data} />
                 </Grid>
             </Grid>
         </Container>

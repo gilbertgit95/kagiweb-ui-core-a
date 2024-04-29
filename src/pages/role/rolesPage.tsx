@@ -2,23 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
-// import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import { useSearchParams } from 'react-router-dom';
 
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
 import ShortendDescription from '../../components/texts/shortendDescription';
 
-import RoleService from './roleService';
-import Config from '../../config';
+import { useAppSelector} from '../../stores/appStore';
 import { IRole } from '../../types/role';
-// import { IUser } from '../../types/user';
-// import { IPagination } from '../../types/mixTypes';
 
 interface IRoleRow {
     _id: string,
@@ -73,75 +67,14 @@ const colDef:IColDef[] = [
 
 const RolesPage = () => {
     const navigate = useNavigate()
-    const [searchParams] = useSearchParams();
-    const pageQuery = parseInt(searchParams.get('page') || '') || Config.defaultPage;
-    const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || Config.defaultPageSize;
-
-    const [pagination, setPagination] = useState({
-        page: 0,
-        pageSize: pageSizeQuery,
-        totalItems: 0,
-        pageSizeList: Config.defaultPageSizeList
-    })
+    const roles:IRole[] = useAppSelector(state => state.appRefs.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
-
-    const search = async (page:number, pageSize:number) => {
-        // console.log('pagination: ', pagination)
-        window.history.replaceState(null, '', `?page=${ page + 1 }&pageSize=${ pageSize }`)
-        try {
-            const resp = await RoleService.getRoles({
-                page: page + 1,
-                pageSize: pageSize
-            })
-            if (resp.data && resp.data.items) {
-                const tarnsformedData:(IRoleRow & IChangeDate)[] = resp.data.items.map((item:IRole & IChangeDate) => {
-                    return {
-                        _id: item._id || '',
-                        name: item.name || '--',
-                        description: item.description || '--',
-                        level: String(item.level) || '--',
-                        features: item.absoluteAuthority? 'All':  String(item.featuresRefs?.length),
-                        createdAt: item.createdAt,
-                        updatedAt: item.updatedAt
-                    }
-                })
-                setPagination({
-                    page: resp.data.page - 1,
-                    pageSize: resp.data.pageSize,
-                    totalItems: resp.data.totalItems,
-                    pageSizeList: Config.defaultPageSizeList
-                })
-                setData(tarnsformedData)
-            }
-            // console.log(resp.data)
-        } catch (err) {
-        }
-    }
-
-    const onPageChange = (
-        e:React.MouseEvent<HTMLButtonElement> | null,
-        newPage:number) => {
-        // setPagination({...pagination, ...{page: newPage}})
-        search(newPage, pagination.pageSize)
-    }
-
-    const onPageSizeChange = (
-        e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-        newPageSize:number) => {
-            // setPagination({...pagination, ...{pageSize: newPageSize}})
-        search(0, newPageSize)
-    }
 
     useEffect(() => {
         const init = async () => {
-            window.history.replaceState(null, '', `?page=${ pageQuery }&pageSize=${ pageSizeQuery }`)
             try {
-                const resp = await RoleService.getRoles({
-                    page: pageQuery,
-                    pageSize: pageSizeQuery
-                })
-                if (resp.data && resp.data.items) {
-                    const tarnsformedData:(IRoleRow & IChangeDate)[] = resp.data.items.map((item:IRole & IChangeDate) => {
+                if (roles) {
+                    const tarnsformedData:(IRoleRow & IChangeDate)[] = roles.map((item:IRole & IChangeDate) => {
                         return {
                             _id: item._id || '',
                             name: item.name || '--',
@@ -152,21 +85,13 @@ const RolesPage = () => {
                             updatedAt: item.updatedAt
                         }
                     })
-                    setPagination({
-                        page: resp.data.page - 1,
-                        pageSize: resp.data.pageSize,
-                        totalItems: resp.data.totalItems,
-                        pageSizeList: Config.defaultPageSizeList
-                    })
                     setData(tarnsformedData)
                 }
-                // console.log(resp.data)
             } catch (err) {
             }
         }
-        console.log('initiate users page')
         init()
-    }, [pageQuery, pageSizeQuery])
+    }, [roles])
 
 
     return (
@@ -192,11 +117,9 @@ const RolesPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <PrimaryTable
-                        pagination={pagination}
+                        maxHeight={700}
                         columnDefs={colDef}
-                        data={data}
-                        onPageChange={onPageChange}
-                        onRowsPerPageChange={onPageSizeChange} />
+                        data={data} />
                 </Grid>
             </Grid>
         </Container>
