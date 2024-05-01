@@ -100,34 +100,12 @@ const FeaturesReadOnlyView = () => {
 
 
     return (
-        <Container style={{paddingTop: 20}}>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <PrimaryHeader title={'Feature List View'} />
-                    <Divider />
-                </Grid>
-                <Grid item xs={12}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                        <Button
-                            variant="text"
-                            startIcon={<FeaturedPlayListIcon />}
-                            onClick={() => navigate('/features/create')}>
-                            Create Feature
-                        </Button>
-                    </Box>
-                </Grid>
-                <Grid item xs={12}>
-                    <PrimaryTable
-                        maxHeight={700}
-                        columnDefs={colDef}
-                        data={data} />
-                </Grid>
-            </Grid>
-        </Container>
+        <Grid item xs={12}>
+            <PrimaryTable
+                maxHeight={700}
+                columnDefs={colDef}
+                data={data} />
+        </Grid>
     )
 }
 

@@ -1,103 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Container, Box, Divider, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from '@mui/material/Grid';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+import ListIcon from '@mui/icons-material/List';
+import GroupWorkIcon from '@mui/icons-material/GroupWork';
+import Stack from '@mui/material/Stack';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
-import ListItems from '../../components/lists/listItems';
-import ShortendDescription from '../../components/texts/shortendDescription';
-import SimpleLink from '../../components/links/simpleLink';
-import { useAppSelector} from '../../stores/appStore';
-import { IFeature } from '../../types/feature';
-
-interface IFeatureRow {
-    _id: string,
-    name: string,
-    value: string,
-    type: string,
-    tags: string[]
-}
-
-const colDef:IColDef[] = [
-    {
-        header: 'Name',
-        field: '',
-        Component: (props:IFeatureRow & IChangeDate) => {
-            return <ShortendDescription value={props.name} />
-        }
-    },
-    {
-        header: 'Value',
-        field: '',
-        Component: (props:IFeatureRow & IChangeDate) => {
-            return <ShortendDescription value={props.value} />
-        }
-    },
-    {
-        header: 'Type',
-        field: 'type',
-        Component: undefined // react Component or undefined
-    },
-    {
-        header: 'Tags',
-        field: '',
-        Component: (props:IFeatureRow & IChangeDate) => {
-            return <ListItems items={props.tags} />
-        }
-    },
-    {
-        header: 'Changed',
-        field: '',
-        Component: (props:IFeatureRow & IChangeDate) => {
-            return <DateChanges {...props} />
-        }
-    },
-    {
-        header: '',
-        field: '',
-        Component: (props:IFeatureRow & IChangeDate) => {
-            return (
-                <SimpleLink
-                    link={`/features/view/${ props._id }`}
-                    text="View Feature" />
-            )
-        }
-    }
-]
+import FeaturesReadOnlyView from './featuresReadOnlyView';
 
 const FeaturesPage = () => {
+    let [searchParams] = useSearchParams()
+    const view = searchParams.get('view')
+    const viewTypes = ['list', 'grouped']
+    const [viewType, setViewType] = useState<string|null>((new Set(viewTypes)).has(view || '')? view: viewTypes[0])
+
     const navigate = useNavigate()
-    const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
-    const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
 
-    useEffect(() => {
-        const init = async () => {
-            try {
-                if (features) {
-                    const tarnsformedData:(IFeatureRow & IChangeDate)[] = features.map((item:IFeature & IChangeDate) => {
-                        return {
-                            _id: item._id || '',
-                            name: item.name || '--',
-                            value: item.value || '--',
-                            type: item.type || '--',
-                            tags: item.tags || [],
-                            createdAt: item.createdAt,
-                            updatedAt: item.updatedAt
-                        }
-                    })
-                    setData(tarnsformedData)
-                }
-            } catch (err) {
-            }
-        }
-        console.log('initiate features page')
-        init()
-    }, [features])
+    const onClickView = (vType:string) => {
+        setViewType(vType)
+        window.history.replaceState(null, '', `?view=${ vType }`)
+    }
 
+    console.log('viewType: ', viewType, view)
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -106,7 +35,38 @@ const FeaturesPage = () => {
                     <PrimaryHeader title={'Feature List View'} />
                     <Divider />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        spacing={1}>
+                        <ButtonGroup>
+                            <Button
+                                size="small"
+                                onClick={() => {
+                                    onClickView('list')
+                                }}
+                                variant={viewType === 'list'? 'contained': 'outlined'}>
+                                <ListIcon />
+                            </Button>
+                            <Button
+                                size="small"
+                                onClick={() => {
+                                    onClickView('grouped')
+                                }}
+                                variant={viewType === 'grouped'? 'contained': 'outlined'}>
+                                <GroupWorkIcon />
+                            </Button>
+                        </ButtonGroup>
+                        {/* <Typography
+                            component="span"
+                            variant="subtitle1"
+                            color="primary">
+                            Group View
+                        </Typography> */}
+                    </Stack>
+                </Grid>
+                <Grid item xs={12} md={6}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -120,12 +80,7 @@ const FeaturesPage = () => {
                         </Button>
                     </Box>
                 </Grid>
-                <Grid item xs={12}>
-                    <PrimaryTable
-                        maxHeight={700}
-                        columnDefs={colDef}
-                        data={data} />
-                </Grid>
+                <FeaturesReadOnlyView />
             </Grid>
         </Container>
     )
