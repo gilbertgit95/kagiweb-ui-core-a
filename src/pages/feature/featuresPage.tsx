@@ -7,11 +7,13 @@ import Grid from '@mui/material/Grid';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import ListIcon from '@mui/icons-material/List';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
+import TableViewIcon from '@mui/icons-material/TableView';
 import Stack from '@mui/material/Stack';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import FeaturesReadOnlyView from './featuresReadOnlyView';
+import FeaturesListReadOnlyView from './featuresListReadOnlyView';
+import FeaturesGroupedReadOnlyView from './featuresGroupedReadOnlyView';
 
 const FeaturesPage = () => {
     let [searchParams] = useSearchParams()
@@ -55,7 +57,7 @@ const FeaturesPage = () => {
                                     onClickView('grouped')
                                 }}
                                 variant={viewType === 'grouped'? 'contained': 'outlined'}>
-                                <GroupWorkIcon />
+                                <TableViewIcon />
                             </Button>
                         </ButtonGroup>
                         {/* <Typography
@@ -80,7 +82,8 @@ const FeaturesPage = () => {
                         </Button>
                     </Box>
                 </Grid>
-                <FeaturesReadOnlyView />
+                { viewType === 'list'? <FeaturesListReadOnlyView />: null }
+                { viewType === 'grouped'? <FeaturesGroupedReadOnlyView />: null }
             </Grid>
         </Container>
     )

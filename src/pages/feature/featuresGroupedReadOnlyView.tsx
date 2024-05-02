@@ -69,7 +69,7 @@ const colDef:IColDef[] = [
     }
 ]
 
-const FeaturesReadOnlyView = () => {
+const FeaturesGroupedReadOnlyView = () => {
     const navigate = useNavigate()
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
@@ -109,4 +109,4 @@ const FeaturesReadOnlyView = () => {
     )
 }
 
-export default FeaturesReadOnlyView
+export default FeaturesGroupedReadOnlyView
