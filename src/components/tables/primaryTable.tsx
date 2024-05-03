@@ -49,6 +49,7 @@ interface IPagination {
 }
 
 interface IPrimaryTableProps {
+  noHeader?: boolean,
   maxHeight?: number,
 
   columnDefs: IColDef[],
@@ -206,34 +207,38 @@ function PrimaryTable(props:IPrimaryTableProps) {
     <>
       <TableContainer sx={{ width: '100%', maxHeight: props?.maxHeight || 500, overflow: 'auto' }} component={Paper}>
         <Table stickyHeader aria-label="custom pagination table">
-          <TableHead>
-            <TableRow>
-              {
-                // show select all checkbox
-                props.enableSelection? (
-                  <TableCell>
-                    {
-                      props.enableMultipleSelection? (
-                        <Checkbox
-                          size="small"
-                          onChange={(e) => {
-                            onToggleSelectAll(e.target.checked)
-                          }}
-                          checked={Array.from(selectionMap).length === data.length} />
-                      ): null
-                    }
-                  </TableCell>
-                ): null
-              }
-              {
-                props.columnDefs.map((item, index) => (
-                  <TableCell key={index}>
-                    <Typography variant="body1" color="primary">{ item.header }</Typography>
-                  </TableCell>
-                ))
-              }
-            </TableRow>
-          </TableHead>
+          {
+            props.noHeader? null: (
+              <TableHead>
+                <TableRow>
+                  {
+                    // show select all checkbox
+                    props.enableSelection? (
+                      <TableCell>
+                        {
+                          props.enableMultipleSelection? (
+                            <Checkbox
+                              size="small"
+                              onChange={(e) => {
+                                onToggleSelectAll(e.target.checked)
+                              }}
+                              checked={Array.from(selectionMap).length === data.length} />
+                          ): null
+                        }
+                      </TableCell>
+                    ): null
+                  }
+                  {
+                    props.columnDefs.map((item, index) => (
+                      <TableCell key={index}>
+                        <Typography variant="body1" color="primary">{ item.header }</Typography>
+                      </TableCell>
+                    ))
+                  }
+                </TableRow>
+              </TableHead>
+            )
+          }
           <TableBody>
             {
               data.map((row, rowIndex) => (
