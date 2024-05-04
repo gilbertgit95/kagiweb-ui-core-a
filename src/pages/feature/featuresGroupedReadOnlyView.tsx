@@ -7,12 +7,14 @@ import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import TreeDirectory, { IDir } from '../../components/navs/treeDirectory';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
 import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import SimpleLink from '../../components/links/simpleLink';
 import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
+import Users from '../user/usersPage';
 
 interface IFeatureRow {
     _id: string,
@@ -74,6 +76,30 @@ const FeaturesGroupedReadOnlyView = () => {
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
 
+    // grouped features by
+    // - features
+    // - roles
+    //     - role features
+    // - users
+    //     - user infos
+    //     - contact infos
+    //     - roles
+    //     - limited transactions
+    //     - passwords
+    //     - workspaces
+    //     - client devices
+    //         - tokens
+
+    // - owner
+    //     - user infos
+    //     - contact infos
+    //     - roles
+    //     - limited transactions
+    //     - passwords
+    //     - workspaces
+    //     - client devices
+    //         - tokens
+
     useEffect(() => {
         const init = async () => {
             try {
@@ -98,13 +124,128 @@ const FeaturesGroupedReadOnlyView = () => {
         init()
     }, [features])
 
+    const testDir:IDir[] = [
+        {
+            name: 'System',
+            subDir: [
+                
+            ]
+        },
+        {
+            name: 'Features',
+            subDir: [
+
+            ]
+        },
+        {
+            name: 'Roles',
+            subDir: [
+                {
+                    name: 'Role Features',
+                    subDir: []
+                }
+            ]
+        },
+        {
+            name: 'Users',
+            subDir: [
+                {
+                    name: 'User Infos',
+                    subDir: [
+                        
+                    ]
+                },
+                {
+                    name: 'Contact Infos',
+                    subDir: [
+        
+                    ]
+                },
+                {
+                    name: 'Limited Transactions',
+                    subDir: [
+                        
+                    ]
+                },
+                {
+                    name: 'Roles',
+                    subDir: [
+        
+                    ]
+                },
+                {
+                    name: 'Passwords',
+                    subDir: [
+                        
+                    ]
+                },
+                {
+                    name: 'Client Devices',
+                    subDir: [
+                        {
+                            name: 'Tokens',
+                            subDir: [
+                            ]
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            name: 'Owner',
+            subDir: [
+                {
+                    name: 'User Infos',
+                    subDir: [
+                        
+                    ]
+                },
+                {
+                    name: 'Contact Infos',
+                    subDir: [
+        
+                    ]
+                },
+                {
+                    name: 'Limited Transactions',
+                    subDir: [
+                        
+                    ]
+                },
+                {
+                    name: 'Roles',
+                    subDir: [
+        
+                    ]
+                },
+                {
+                    name: 'Passwords',
+                    subDir: [
+                        
+                    ]
+                },
+                {
+                    name: 'Client Devices',
+                    subDir: [
+                        {
+                            name: 'Tokens',
+                            subDir: [
+                            ]
+                        },
+                    ]
+                },
+            ]
+        }
+    ]
 
     return (
         <Grid item xs={12}>
-            <PrimaryTable
+            <TreeDirectory
+                directories={testDir} />
+            {/* <PrimaryTable
                 maxHeight={700}
                 columnDefs={colDef}
-                data={data} />
+                data={data} /> */}
         </Grid>
     )
 }
