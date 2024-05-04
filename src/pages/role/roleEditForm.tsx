@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import { IRole } from '../../types/role';
+import AppUtils from '../../utils/appUtils';
 
 interface Props {
     roleId: string | undefined,
@@ -47,6 +48,10 @@ export  const RoleEditForm = ({roleId, getFunc, updateFunc}:Props) => {
             const roleResp = await updateFunc(updateData)
             setRole(roleResp.data)
             setUpdatedRole(roleResp.data)
+
+            // re load app refs
+            await AppUtils.loadAppRefsData()
+
             setInfoAndErrors({
                 ...{infoMessages: ['Successfull Update']},
                 ...{errorMessages: []}

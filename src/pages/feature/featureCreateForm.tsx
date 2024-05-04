@@ -7,6 +7,7 @@ import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import FeatureService from './featureService';
 import { IFeature, TFeatureType, featureTypes } from '../../types/feature';
+import AppUtils from '../../utils/appUtils';
 
 export const FeatureCreateForm = () => {
     const [pageState, setPageState] = useState({
@@ -55,6 +56,10 @@ export const FeatureCreateForm = () => {
                 ...featureResp.data,
                 ...{ stringTags: featureResp.data.tags? featureResp.data.tags.join(', '): '' }
             })
+
+            // re load app refs
+            await AppUtils.loadAppRefsData()
+
             setInfoAndErrors({
                 ...{infoMessages: ['Successfull Creation']},
                 ...{errorMessages: []}

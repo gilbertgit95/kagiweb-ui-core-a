@@ -7,6 +7,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import RoleService from './roleService';
 import { IRole } from '../../types/role';
+import AppUtils from '../../utils/appUtils';
 
 export const RoleCreateForm = () => {
     const [pageState, setPageState] = useState({
@@ -44,6 +45,10 @@ export const RoleCreateForm = () => {
         try {
             const roleResp = await RoleService.createRole(newRole)
             setRole(roleResp.data)
+
+            // re load app refs
+            await AppUtils.loadAppRefsData()
+
             setInfoAndErrors({
                 ...{infoMessages: ['Successfull Creation']},
                 ...{errorMessages: []}

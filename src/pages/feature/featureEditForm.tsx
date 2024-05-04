@@ -8,6 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import { IFeature, TFeatureType, featureTypes } from '../../types/feature';
+import AppUtils from '../../utils/appUtils';
 
 interface Props {
     featureId: string | undefined,
@@ -61,6 +62,10 @@ export  const FeatureEditForm = ({featureId, getFunc, updateFunc}:Props) => {
                 ...featureResp.data,
                 ...{ stringTags: featureResp.data.tags? featureResp.data.tags.join(', '): '' }
             })
+
+             // re load app refs
+             await AppUtils.loadAppRefsData()
+
             setInfoAndErrors({
                 ...{infoMessages: ['Successfull Update']},
                 ...{errorMessages: []}

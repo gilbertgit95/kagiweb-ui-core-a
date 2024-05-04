@@ -18,6 +18,7 @@ import RoleService from './roleService';
 import { IRole } from '../../types/role';
 import { useParams} from 'react-router-dom';
 import RoleReadOnlyView from './roleReadOnlyView';
+import AppUtils from '../../utils/appUtils';
 
 const RolePage = () => {
     const { roleId } = useParams()
@@ -43,6 +44,10 @@ const RolePage = () => {
                     disableDeleteButton: true,
                     deleteDialogOpen: false
                 })
+
+                // re load app refs
+                await AppUtils.loadAppRefsData()
+
                 setInfoAndErrors({
                     ...{infoMessages: ['Sucessfully deleted this role']},
                     ...{errorMessages: []}

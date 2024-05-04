@@ -16,6 +16,7 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import FeatureService from './featureService';
 import { IFeature } from '../../types/feature';
+import AppUtils from '../../utils/appUtils';
 
 import FeatureReadOnlyView from './featureReadOnlyView';
 
@@ -44,6 +45,10 @@ const FeaturePage = () => {
                     disableDeleteButton: true,
                     deleteDialogOpen: false
                 })
+
+                // re load app refs
+                await AppUtils.loadAppRefsData()
+
                 setInfoAndErrors({
                     ...{infoMessages: ['Sucessfully deleted this feature']},
                     ...{errorMessages: []}
