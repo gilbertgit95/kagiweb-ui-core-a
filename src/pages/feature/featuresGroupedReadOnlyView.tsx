@@ -239,14 +239,18 @@ const FeaturesGroupedReadOnlyView = () => {
     ]
 
     return (
-        <Grid item xs={12}>
-            <TreeDirectory
-                directories={testDir} />
-            {/* <PrimaryTable
-                maxHeight={700}
-                columnDefs={colDef}
-                data={data} /> */}
-        </Grid>
+        <>
+            <Grid item xs={12} md={3}>
+                <TreeDirectory
+                    directories={testDir} />
+            </Grid>
+            <Grid item xs={12} md={9}>
+                <PrimaryTable
+                    maxHeight={800}
+                    columnDefs={colDef}
+                    data={data} />
+            </Grid>
+        </>
     )
 }
 
