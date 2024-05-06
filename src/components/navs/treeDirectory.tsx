@@ -15,7 +15,9 @@ export interface IRecursiveDir {
 }
 
 interface IProps {
-    directories?: IDir[]
+    directories?: IDir[],
+    selected?: string[],
+    onSelect?:(items:string[]) => void
 }
 
 
@@ -56,23 +58,29 @@ const RecursiveComponent = (props:IRecursiveDir) => {
 }
 
 const TreeDirectory = (props:IProps) => {
-    const [selected, setSelected] = useState<string[]>(['Root', 'Owner', 'Contact Infos'])
+    const [selected, setSelected] = useState<string[]>([])
+
+    useEffect(() => {
+        setSelected(props.selected || [])
+    }, [props.selected])
 
     const onClick = (parents:string[]) => {
-        setSelected(parents)
+        if (props.onSelect) {
+            props.onSelect(parents)
+        } else {
+            setSelected(parents)
+        }
     }
 
     return (
         <Box
             sx={{
-                // paddingLeft: '20px',
-                // borderTop: '1px solid black',
                 paddingTop: '10px',
                 paddingBottom: '10px',
             }}>
             {
                 RecursiveComponent({
-                    name: 'Root',
+                    name: 'All',
                     subDir: props.directories || [],
                     selected,
                     onClick

@@ -14,7 +14,6 @@ import ShortendDescription from '../../components/texts/shortendDescription';
 import SimpleLink from '../../components/links/simpleLink';
 import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
-import Users from '../user/usersPage';
 
 interface IFeatureRow {
     _id: string,
@@ -72,8 +71,8 @@ const colDef:IColDef[] = [
 ]
 
 const FeaturesGroupedReadOnlyView = () => {
-    const navigate = useNavigate()
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
+    const [tagSelection, setTagSelection] = useState<string[]>()
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
 
     // grouped features by
@@ -242,6 +241,10 @@ const FeaturesGroupedReadOnlyView = () => {
         <>
             <Grid item xs={12} md={3}>
                 <TreeDirectory
+                    onSelect={(selection) => {
+                        setTagSelection(selection)
+                    }}
+                    selected={tagSelection}
                     directories={testDir} />
             </Grid>
             <Grid item xs={12} md={9}>
