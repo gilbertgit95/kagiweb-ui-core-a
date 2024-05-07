@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
+// import { useNavigate } from 'react-router-dom';
+// import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+// import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import PrimaryHeader from '../../components/headers/primaryHeader';
+// import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import TreeDirectory, { IDir } from '../../components/navs/treeDirectory';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
-import ListItems from '../../components/lists/listItems';
+// import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import SimpleLink from '../../components/links/simpleLink';
 import { useAppSelector} from '../../stores/appStore';
@@ -43,13 +43,13 @@ const colDef:IColDef[] = [
         field: 'type',
         Component: undefined // react Component or undefined
     },
-    {
-        header: 'Tags',
-        field: '',
-        Component: (props:IFeatureRow & IChangeDate) => {
-            return <ListItems items={props.tags} />
-        }
-    },
+    // {
+    //     header: 'Tags',
+    //     field: '',
+    //     Component: (props:IFeatureRow & IChangeDate) => {
+    //         return <ListItems items={props.tags} />
+    //     }
+    // },
     {
         header: 'Changed',
         field: '',
@@ -72,7 +72,7 @@ const colDef:IColDef[] = [
 
 const FeaturesGroupedReadOnlyView = () => {
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
-    const [tagSelection, setTagSelection] = useState<string[]>()
+    const [tagSelection, setTagSelection] = useState<string[]>([])
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
 
     // grouped features by
@@ -101,9 +101,17 @@ const FeaturesGroupedReadOnlyView = () => {
 
     useEffect(() => {
         const init = async () => {
-            try {
-                if (features) {
-                    const tarnsformedData:(IFeatureRow & IChangeDate)[] = features.map((item:IFeature & IChangeDate) => {
+            const filterTags = (tagSelection.length > 1? tagSelection.slice(1): []).join('')
+
+            console.log(filterTags)
+
+            if (features) {
+                const tarnsformedData:(IFeatureRow & IChangeDate)[] = features
+                    .filter(item => {
+                        const itemTags = item.tags? item.tags.join(''): ''
+                        return itemTags.indexOf(filterTags) === 0
+                    })
+                    .map((item:IFeature & IChangeDate) => {
                         return {
                             _id: item._id || '',
                             name: item.name || '--',
@@ -114,14 +122,12 @@ const FeaturesGroupedReadOnlyView = () => {
                             updatedAt: item.updatedAt
                         }
                     })
-                    setData(tarnsformedData)
-                }
-            } catch (err) {
+                setData(tarnsformedData)
             }
         }
         console.log('initiate features page')
         init()
-    }, [features])
+    }, [features, tagSelection])
 
     const testDir:IDir[] = [
         {
