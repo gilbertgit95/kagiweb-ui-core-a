@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 
 // import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import TreeDirectory, { IDir } from '../../components/navs/treeDirectory';
+import TreeDirectory, { objectGenerator, IDir } from '../../components/navs/treeDirectory';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
 // import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
@@ -43,13 +43,6 @@ const colDef:IColDef[] = [
         field: 'type',
         Component: undefined // react Component or undefined
     },
-    // {
-    //     header: 'Tags',
-    //     field: '',
-    //     Component: (props:IFeatureRow & IChangeDate) => {
-    //         return <ListItems items={props.tags} />
-    //     }
-    // },
     {
         header: 'Changed',
         field: '',
@@ -74,36 +67,11 @@ const FeaturesGroupedReadOnlyView = () => {
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [tagSelection, setTagSelection] = useState<string[]>([])
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
-
-    // grouped features by
-    // - features
-    // - roles
-    //     - Features
-    // - users
-    //     - user infos
-    //     - contact infos
-    //     - roles
-    //     - limited transactions
-    //     - passwords
-    //     - workspaces
-    //     - client devices
-    //         - Access Tokens
-
-    // - owner
-    //     - user infos
-    //     - contact infos
-    //     - roles
-    //     - limited transactions
-    //     - passwords
-    //     - workspaces
-    //     - client devices
-    //         - Access Tokens
+    const [directories, setDirectories] = useState<IDir>({name: 'All', subDir: []})
 
     useEffect(() => {
         const init = async () => {
             const filterTags = (tagSelection.length > 1? tagSelection.slice(1): []).join('')
-
-            console.log(filterTags)
 
             if (features) {
                 const tarnsformedData:(IFeatureRow & IChangeDate)[] = features
@@ -129,139 +97,11 @@ const FeaturesGroupedReadOnlyView = () => {
         init()
     }, [features, tagSelection])
 
-    const testDir:IDir[] = [
-        {
-            name: 'System',
-            subDir: [
-                
-            ]
-        },
-        {
-            name: 'Features',
-            subDir: [
-
-            ]
-        },
-        {
-            name: 'Roles',
-            subDir: [
-                {
-                    name: 'Features',
-                    subDir: []
-                }
-            ]
-        },
-        {
-            name: 'Users',
-            subDir: [
-                {
-                    name: 'User Infos',
-                    subDir: [
-                        
-                    ]
-                },
-                {
-                    name: 'Contact Infos',
-                    subDir: [
-        
-                    ]
-                },
-                {
-                    name: 'Limited Transactions',
-                    subDir: [
-                        
-                    ]
-                },
-                {
-                    name: 'Roles',
-                    subDir: [
-        
-                    ]
-                },
-                {
-                    name: 'Passwords',
-                    subDir: [
-                        
-                    ]
-                },
-                {
-                    name: 'Client Devices',
-                    subDir: [
-                        {
-                            name: 'Access Tokens',
-                            subDir: [
-                            ]
-                        },
-                    ]
-                },
-                {
-                    name: 'Workspaces',
-                    subDir: [
-                        {
-                            name: 'User References',
-                            subDir: [
-                            ]
-                        },
-                    ]
-                },
-            ]
-        },
-        {
-            name: 'Owner',
-            subDir: [
-                {
-                    name: 'User Infos',
-                    subDir: [
-                        
-                    ]
-                },
-                {
-                    name: 'Contact Infos',
-                    subDir: [
-        
-                    ]
-                },
-                {
-                    name: 'Limited Transactions',
-                    subDir: [
-                        
-                    ]
-                },
-                {
-                    name: 'Roles',
-                    subDir: [
-        
-                    ]
-                },
-                {
-                    name: 'Passwords',
-                    subDir: [
-                        
-                    ]
-                },
-                {
-                    name: 'Client Devices',
-                    subDir: [
-                        {
-                            name: 'Access Tokens',
-                            subDir: [
-                            ]
-                        },
-                    ]
-                },
-                {
-                    name: 'Workspaces',
-                    subDir: [
-                        {
-                            name: 'User References',
-                            subDir: [
-                            ]
-                        },
-                    ]
-                },
-            ]
-        }
-    ]
+    useEffect(() => {
+        const tags = features? features.map(item => item.tags || []): []
+        const dir = objectGenerator(tags)
+        setDirectories(dir)
+    }, [features])
 
     return (
         <>
@@ -271,7 +111,7 @@ const FeaturesGroupedReadOnlyView = () => {
                         setTagSelection(selection)
                     }}
                     selected={tagSelection}
-                    directories={testDir} />
+                    directory={directories} />
             </Grid>
             <Grid item xs={12} md={9}>
                 <PrimaryTable

@@ -15,7 +15,7 @@ export interface IRecursiveDir {
 }
 
 interface IProps {
-    directories?: IDir[],
+    directory?: IDir,
     selected?: string[],
     onSelect?:(items:string[]) => void
 }
@@ -34,6 +34,7 @@ const RecursiveComponent = (props:IRecursiveDir) => {
                 borderLeftColor: 'primary.main'
             }}>
             <Button
+                size="small"
                 variant={isCurrentSelected? 'contained': 'text'}
                 onClick={() => {
                     if (props.onClick) props.onClick(parents)
@@ -80,25 +81,40 @@ const TreeDirectory = (props:IProps) => {
             }}>
             {
                 RecursiveComponent({
-                    name: 'All',
-                    subDir: props.directories || [],
-                    selected,
-                    onClick
+                    ...props.directory || {name: 'All', subDir: []},
+                    ...{
+                        selected,
+                        onClick
+                    }
                 })
             }
         </Box>
     )
 }
 
+const getObjectNode = (acc:IDir, name:string):IDir|undefined => {
+    const index = acc.subDir.map(item => item.name).indexOf(name)
+    if (index > -1) return acc.subDir[index]
+    return
+}
+
 const recursiveObjectGenerator = (acc:IDir, dirs:string[]) => {
-    const node = dirs.length? dirs.splice(0, 1)[0]: undefined
-    if (node && acc.subDir.map(item => item.name).indexOf(node) === -1) {
-        const objNode = {
+    const node = dirs.slice(0,1)[0]
+    const newDirs = dirs.slice(1)
+
+    if (node) {
+        const objNode = getObjectNode(acc, node)
+        const newObjNode = {
             name: node,
             subDir: []
         }
-        acc.subDir.push(objNode)
-        if (dirs.length) recursiveObjectGenerator(objNode, dirs)
+
+        if (objNode) {
+            recursiveObjectGenerator(objNode, newDirs)
+        } else {
+            acc.subDir.push(newObjNode)
+            recursiveObjectGenerator(newObjNode, newDirs)
+        }
     }
 }
 
