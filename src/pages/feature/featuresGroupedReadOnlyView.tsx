@@ -78,7 +78,7 @@ const FeaturesGroupedReadOnlyView = () => {
     // grouped features by
     // - features
     // - roles
-    //     - role features
+    //     - Features
     // - users
     //     - user infos
     //     - contact infos
@@ -87,7 +87,7 @@ const FeaturesGroupedReadOnlyView = () => {
     //     - passwords
     //     - workspaces
     //     - client devices
-    //         - tokens
+    //         - Access Tokens
 
     // - owner
     //     - user infos
@@ -97,7 +97,7 @@ const FeaturesGroupedReadOnlyView = () => {
     //     - passwords
     //     - workspaces
     //     - client devices
-    //         - tokens
+    //         - Access Tokens
 
     useEffect(() => {
         const init = async () => {
@@ -146,7 +146,7 @@ const FeaturesGroupedReadOnlyView = () => {
             name: 'Roles',
             subDir: [
                 {
-                    name: 'Role Features',
+                    name: 'Features',
                     subDir: []
                 }
             ]
@@ -188,7 +188,17 @@ const FeaturesGroupedReadOnlyView = () => {
                     name: 'Client Devices',
                     subDir: [
                         {
-                            name: 'Tokens',
+                            name: 'Access Tokens',
+                            subDir: [
+                            ]
+                        },
+                    ]
+                },
+                {
+                    name: 'Workspaces',
+                    subDir: [
+                        {
+                            name: 'User References',
                             subDir: [
                             ]
                         },
@@ -233,7 +243,17 @@ const FeaturesGroupedReadOnlyView = () => {
                     name: 'Client Devices',
                     subDir: [
                         {
-                            name: 'Tokens',
+                            name: 'Access Tokens',
+                            subDir: [
+                            ]
+                        },
+                    ]
+                },
+                {
+                    name: 'Workspaces',
+                    subDir: [
+                        {
+                            name: 'User References',
                             subDir: [
                             ]
                         },

@@ -90,4 +90,32 @@ const TreeDirectory = (props:IProps) => {
     )
 }
 
+const recursiveObjectGenerator = (acc:IDir, dirs:string[]) => {
+    const node = dirs.length? dirs.splice(0, 1)[0]: undefined
+    if (node && acc.subDir.map(item => item.name).indexOf(node) === -1) {
+        const objNode = {
+            name: node,
+            subDir: []
+        }
+        acc.subDir.push(objNode)
+        if (dirs.length) recursiveObjectGenerator(objNode, dirs)
+    }
+}
+
+const objectGenerator = (plainDirs:(string[])[]):IDir => {
+    const result:IDir = {
+        name: 'All',
+        subDir: []
+    }
+
+    for (let dirs of plainDirs) {
+        recursiveObjectGenerator(result, dirs)
+    }
+
+    return result
+}
+
+export {
+    objectGenerator
+}
 export default TreeDirectory
