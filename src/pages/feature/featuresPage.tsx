@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Container, Box, Divider, Typography } from '@mui/material';
+import { Container, Box, Divider } from '@mui/material';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from '@mui/material/Grid';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import ListIcon from '@mui/icons-material/List';
-import GroupWorkIcon from '@mui/icons-material/GroupWork';
+// import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import TableViewIcon from '@mui/icons-material/TableView';
 import Stack from '@mui/material/Stack';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -27,8 +27,6 @@ const FeaturesPage = () => {
         setViewType(vType)
         window.history.replaceState(null, '', `?view=${ vType }`)
     }
-
-    console.log('viewType: ', viewType, view)
 
     return (
         <Container style={{paddingTop: 20}}>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
+// import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+// import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
@@ -70,7 +70,7 @@ const colDef:IColDef[] = [
 ]
 
 const FeaturesListReadOnlyView = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
 

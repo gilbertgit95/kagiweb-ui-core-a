@@ -1,39 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Container, Box, Divider } from '@mui/material';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import EditIcon from '@mui/icons-material/Edit';
+import ListIcon from '@mui/icons-material/List';
+// import GroupWorkIcon from '@mui/icons-material/GroupWork';
+import TableViewIcon from '@mui/icons-material/TableView';
+import Stack from '@mui/material/Stack';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IRole } from '../../types/role';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { useAppSelector} from '../../stores/appStore';
 import RoleService from '../role/roleService';
-import ShortendDescription from '../../components/texts/shortendDescription';
-import ListItems from '../../components/lists/listItems';
-import { IFeature } from '../../types/feature';
-
-interface IFeatureRow {
-    _id: string,
-    name: string,
-    value: string,
-    type: string,
-    tags: string[]
-}
+import RoleFeaturesListReadOnlyView from './roleFeaturesListReadOnlyView';
+import RoleFeaturesGroupedReadOnlyView from './roleFeaturesGroupedReadOnlyView';
+// import { IFeature } from '../../types/feature';
 
 const RoleFeaturesPage = () => {
     const { roleId } = useParams()
     const navigate = useNavigate()
-    // const roles = useAppSelector(state => state.appRefs.roles)
-    const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
+    let [searchParams] = useSearchParams()
+    const view = searchParams.get('view')
+    const viewTypes = ['list', 'grouped']
+    const [viewType, setViewType] = useState<string|null>((new Set(viewTypes)).has(view || '')? view: viewTypes[0])
     const [role, setRole] = useState<IRole | undefined>()
-    const [data, setData] = useState<IFeatureRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
+
+    const onClickView = (vType:string) => {
+        setViewType(vType)
+        window.history.replaceState(null, '', `?view=${ vType }`)
+    }
 
     useEffect(() => {
         const init = async () => {
@@ -41,32 +43,6 @@ const RoleFeaturesPage = () => {
                 try {
                     const roleResp = await RoleService.getRole(roleId)
                     setRole(roleResp.data)
-
-                    if (roleResp.data && roleResp.data.featuresRefs) {
-                        const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
-                            if (item && item._id) acc[item._id] = item
-                            return acc
-                        }, {})
-                        const tarnsformedData:IFeatureRow[] = roleResp.data.featuresRefs.map((item) => {
-                            const feature = featuresMap[item.featureId || '']
-                            return {
-                                _id: feature._id || '',
-                                name: feature.name || '--',
-                                value: feature.value || '--',
-                                type: feature.type  || '--',
-                                tags: feature.tags || []
-                            }
-                        })
-                        // console.log(tarnsformedData)
-                        setData(tarnsformedData)
-                    }
-
-                    if (roleResp.data.absoluteAuthority) {
-                        setInfoAndErrors({
-                            ...{infoMessages: ['This role features is not mutable because the role has absolute authority. This means it has access to all features.']},
-                            ...{errorMessages: []}
-                        })
-                    }
 
                 } catch (err:any) {
                     setInfoAndErrors({
@@ -78,36 +54,7 @@ const RoleFeaturesPage = () => {
         }
         console.log('initiate role features page')
         init()
-    }, [roleId, features])
-
-    const colDef:IColDef[] = [
-        {
-            header: 'Name',
-            field: '',
-            Component: (props:IFeatureRow) => {
-                return <ShortendDescription maxWidth={250} value={props.name} />
-            }
-        },
-        {
-            header: 'Value',
-            field: '',
-            Component: (props:IFeatureRow) => {
-                return <ShortendDescription maxWidth={250} value={props.value} />
-            }
-        },
-        {
-            header: 'Type',
-            field: 'type',
-            Component: undefined // react Component or undefined
-        },
-        {
-            header: 'Tags',
-            field: '',
-            Component: (props:IFeatureRow) => {
-                return <ListItems items={props.tags} />
-            }
-        }
-    ]
+    }, [roleId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -130,6 +77,36 @@ const RoleFeaturesPage = () => {
                             display: 'flex',
                             justifyContent: 'flex-end',
                         }}>
+                        <Stack
+                            sx={{marginRight: '10px'}}
+                            direction="row"
+                            alignItems="center"
+                            spacing={1}>
+                            <ButtonGroup>
+                                <Button
+                                    size="small"
+                                    onClick={() => {
+                                        onClickView('list')
+                                    }}
+                                    variant={viewType === 'list'? 'contained': 'outlined'}>
+                                    <ListIcon />
+                                </Button>
+                                <Button
+                                    size="small"
+                                    onClick={() => {
+                                        onClickView('grouped')
+                                    }}
+                                    variant={viewType === 'grouped'? 'contained': 'outlined'}>
+                                    <TableViewIcon />
+                                </Button>
+                            </ButtonGroup>
+                            {/* <Typography
+                                component="span"
+                                variant="subtitle1"
+                                color="primary">
+                                Group View
+                            </Typography> */}
+                        </Stack>
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
@@ -139,20 +116,8 @@ const RoleFeaturesPage = () => {
                         </Button>
                     </Box>
                 </Grid>
-                {/* <Grid item xs={12}>
-                    <PrimaryTable
-                        columnDefs={colDef}
-                        data={data} />
-                </Grid> */}
-                {
-                    role?.absoluteAuthority? null:(
-                        <Grid item xs={12}>
-                            <PrimaryTable
-                                columnDefs={colDef}
-                                data={data} />
-                        </Grid>
-                    )
-                }
+                { viewType === 'list'? <RoleFeaturesListReadOnlyView role={role} />: null }
+                { viewType === 'grouped'? <RoleFeaturesGroupedReadOnlyView role={role} />: null }
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
                 </Grid>

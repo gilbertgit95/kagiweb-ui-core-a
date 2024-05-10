@@ -115,7 +115,7 @@ const FeaturesGroupedReadOnlyView = () => {
             </Grid>
             <Grid item xs={12} md={9}>
                 <PrimaryTable
-                    maxHeight={800}
+                    maxHeight={750}
                     columnDefs={colDef}
                     data={data} />
             </Grid>
