@@ -441,7 +441,6 @@ const RoleFeaturesEditPage = () => {
                     role?.absoluteAuthority? null:(
                         <Grid item xs={12}>
                             <PrimaryTable
-                                maxHeight={700}
                                 enableSelection
                                 enableMultipleSelection
                                 onSelect={(selectedData) => setTableSelection(selectedData)}

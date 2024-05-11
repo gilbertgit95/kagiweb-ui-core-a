@@ -85,6 +85,7 @@ const RoleFeaturesListReadOnlyView = ({role}:IProps) => {
         role?.absoluteAuthority? null:(
             <Grid item xs={12}>
                 <PrimaryTable
+                    maxHeight={700}
                     columnDefs={colDef}
                     data={data} />
             </Grid>
