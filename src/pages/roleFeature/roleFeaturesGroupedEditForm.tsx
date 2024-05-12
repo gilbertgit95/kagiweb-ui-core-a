@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Box, Divider, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Button, Box, Divider, Typography } from '@mui/material';
+import ListIcon from '@mui/icons-material/List';
+// import GroupWorkIcon from '@mui/icons-material/GroupWork';
+import TableViewIcon from '@mui/icons-material/TableView';
+import Stack from '@mui/material/Stack';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -15,17 +21,22 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import PrimaryHeader from '../../components/headers/primaryHeader';
 import ShortendDescription from '../../components/texts/shortendDescription';
-import ListItems from '../../components/lists/listItems';
 import { IRole } from '../../types/role';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import { useAppSelector} from '../../stores/appStore';
-import RoleService from '../role/roleService';
 import RoleFeatureService from './roleFeatureService';
 import { IFeature } from '../../types/feature';
 import RoleFeaturesAddForm from './roleFeaturesAddForm';
+import TreeDirectory, { objectGenerator, IDir } from '../../components/navs/treeDirectory';
+
+interface IProps {
+    role?: IRole
+    onChange?: () => void,
+    view?: string,
+    onChangeView?: (view:string) => void
+}
 
 interface IFeatureRow {
     _id: string,
@@ -54,13 +65,6 @@ const colDef:IColDef[] = [
         header: 'Type',
         field: 'type',
         Component: undefined // react Component or undefined
-    },
-    {
-        header: 'Tags',
-        field: '',
-        Component: (props:IFeatureRow) => {
-            return <ListItems items={props.tags} />
-        }
     }
 ]
 
@@ -92,13 +96,11 @@ const colRoleDef:IColDef[] = [
     }
 ]
 
-const RoleFeaturesEditPage = () => {
-    const { roleId } = useParams()
+const RoleFeaturesGroupedEditForm = ({role, onChange, view, onChangeView}:IProps) => {
     const navigate = useNavigate()
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const roles:IRole[] = useAppSelector(state => state.appRefs.roles) || []
     const [filteredRoles, setFilteredRoles] = useState<IRole[]>([])
-    const [role, setRole] = useState<IRole | undefined>()
     const [data, setData] = useState<IFeatureRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -116,14 +118,20 @@ const RoleFeaturesEditPage = () => {
         addDialogOpen: false,
         removeDialogOpen: false
     })
+    const [directories, setDirectories] = useState<IDir>({name: 'All', subDir: []})
+    const [tagSelection, setTagSelection] = useState<string[]>([])
+
+    const onClickView = (vType:string) => {
+        if (onChangeView) onChangeView(vType)
+    }
 
     const cloneFeatures = async () => {
         // console.log(cloneSettings.fromRoleId, cloneSettings.overwrite)
-        if (!roleId) return
+        if (!role) return
         if (!cloneSettings.fromRoleId) return
 
         try {
-            await RoleFeatureService.cloneFeatures(roleId, cloneSettings.fromRoleId, cloneSettings.overwrite)
+            await RoleFeatureService.cloneFeatures(role._id || '', cloneSettings.fromRoleId, cloneSettings.overwrite)
         } catch (err:any) {
             setInfoAndErrors({
                 ...{infoMessages: []},
@@ -133,7 +141,7 @@ const RoleFeaturesEditPage = () => {
 
         // close the dialogbox
         setDialog({...dialog, ...{cloneDialogOpen: false}})
-        await reLoadRole()
+        if (onChange) onChange()
     }
 
     const addFeatures = async () => {
@@ -145,7 +153,7 @@ const RoleFeaturesEditPage = () => {
         // loop to all features id and post call to api
         for (let featureId of addTableSelection) {
             try {
-                await RoleFeatureService.createRoleFeature(roleId || '', featureId)
+                await RoleFeatureService.createRoleFeature(role?._id || '', featureId)
                 savedItems++
             } catch (err:any) {
                 error = err?.response?.data?.message || ''
@@ -167,7 +175,7 @@ const RoleFeaturesEditPage = () => {
         }
         // close the dialog box
         setDialog({...dialog, ...{addDialogOpen: false}})
-        await reLoadRole()
+        if (onChange) onChange()
     }
 
     const removeFeatures = async () => {
@@ -179,7 +187,7 @@ const RoleFeaturesEditPage = () => {
         // loop to all feature refs, then delete call to api
         for (let featureRef of tableSelection) {
             try {
-                await RoleFeatureService.deleteRoleFeature(roleId || '', featureRef)
+                await RoleFeatureService.deleteRoleFeature(role?._id || '', featureRef)
                 savedItems++
             } catch (err:any) {
                 error = err?.response?.data?.message || ''
@@ -201,85 +209,48 @@ const RoleFeaturesEditPage = () => {
         }
         // close the dialogbox
         setDialog({...dialog, ...{removeDialogOpen: false}})
-        await reLoadRole()
-    }
-
-    const reLoadRole = async () => {
-        if (roleId && features.length) {
-            try {
-                const roleResp = await RoleService.getRole(roleId)
-                setRole(roleResp.data)
-
-                if (roleResp.data && roleResp.data.featuresRefs) {
-                    const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
-                        if (item && item._id) acc[item._id] = item
-                        return acc
-                    }, {})
-                    const tarnsformedData:IFeatureRow[] = roleResp.data.featuresRefs.map((item) => {
-                        const feature = featuresMap[item.featureId || '']
-                        return {
-                            _id: item._id || '',
-                            name: feature?.name || '--',
-                            value: feature?.value || '--',
-                            type: feature?.type  || '--',
-                            tags: feature?.tags || []
-                        }
-                    })
-                    // console.log(tarnsformedData)
-                    setData(tarnsformedData)
-                }
-
-                if (roleResp.data.absoluteAuthority) {
-                    setInfoAndErrors({
-                        ...{infoMessages: ['This role features is not mutable because the role has absolute authority. This means it has access to all features.']},
-                        ...{errorMessages: []}
-                    })
-                }
-
-            } catch (err:any) {
-                setInfoAndErrors({
-                    ...{infoMessages: []},
-                    ...{errorMessages: [err?.response?.data?.message || '']}
-                })
-            }
-        }
+        if (onChange) onChange()
     }
 
     useEffect(() => {
         const init = async () => {
+            const filterTags = (tagSelection.length > 1? tagSelection.slice(1): []).join('')
 
-            if (roleId && features.length) {
+            if (role && features.length) {
                 // set filtered roles
                 setFilteredRoles(
                     roles
                         .filter(item => !item.absoluteAuthority)
-                        .filter(item => item._id != roleId)
+                        .filter(item => item._id != role._id)
                 )
 
                 try {
-                    const roleResp = await RoleService.getRole(roleId)
-                    setRole(roleResp.data)
 
-                    if (roleResp.data && roleResp.data.featuresRefs) {
+                    if (role.featuresRefs) {
                         const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
                             if (item && item._id) acc[item._id] = item
                             return acc
                         }, {})
-                        const tarnsformedData:IFeatureRow[] = roleResp.data.featuresRefs.map((item) => {
-                            const feature = featuresMap[item.featureId || '']
-                            return {
-                                _id: item._id || '',
-                                name: feature?.name || '--',
-                                value: feature?.value || '--',
-                                type: feature?.type  || '--',
-                                tags: feature?.tags || []
-                            }
-                        })
+                        const tarnsformedData:IFeatureRow[] = role.featuresRefs
+                            .map((item) => {
+                                const feature = featuresMap[item.featureId || '']
+                                return {
+                                    _id: item._id || '',
+                                    name: feature?.name || '--',
+                                    value: feature?.value || '--',
+                                    type: feature?.type  || '--',
+                                    tags: feature?.tags || []
+                                }
+                            })
+                            .filter(item => {
+                                const itemTags = item.tags? item.tags.join(''): ''
+                                return itemTags.indexOf(filterTags) === 0
+                            })
                         // console.log(tarnsformedData)
                         setData(tarnsformedData)
                     }
 
-                    if (roleResp.data.absoluteAuthority) {
+                    if (role.absoluteAuthority) {
                         setInfoAndErrors({
                             ...{infoMessages: ['This role features is not mutable because the role has absolute authority. This means it has access to all features.']},
                             ...{errorMessages: []}
@@ -296,165 +267,207 @@ const RoleFeaturesEditPage = () => {
         }
         console.log('initiate role features edit page')
         init()
-    }, [roleId, roles, features])
+    }, [role, roles, features, tagSelection])
+
+    useEffect(() => {
+        const tags = features? features.map(item => item.tags || []): []
+        const dir = objectGenerator(tags)
+        setDirectories(dir)
+    }, [features])
 
     return (
-        <Container style={{paddingTop: 20}}>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <PrimaryHeader title={'Role Features Update'} subtitle={ role?.name } />
-                    <Divider />
-                </Grid>
-                <Grid item xs={6}>
+        <>
+            <Grid item xs={6}>
+                <Button
+                    variant="text"
+                    startIcon={<ArrowBackIosNewIcon />}
+                    onClick={() => navigate(-1)}>
+                    Back
+                </Button>
+            </Grid>
+            <Grid item xs={6} style={{alignContent: 'right'}}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                    }}>
+                    <Stack
+                        sx={{marginRight: '10px'}}
+                        direction="row"
+                        alignItems="center"
+                        spacing={1}>
+                        <ButtonGroup>
+                            <Button
+                                size="small"
+                                onClick={() => {
+                                    onClickView('list')
+                                }}
+                                variant={view === 'list'? 'contained': 'outlined'}>
+                                <ListIcon />
+                            </Button>
+                            <Button
+                                size="small"
+                                onClick={() => {
+                                    onClickView('grouped')
+                                }}
+                                variant={view === 'grouped'? 'contained': 'outlined'}>
+                                <TableViewIcon />
+                            </Button>
+                        </ButtonGroup>
+                        {/* <Typography
+                            component="span"
+                            variant="subtitle1"
+                            color="primary">
+                            Group View
+                        </Typography> */}
+                    </Stack>
                     <Button
                         variant="text"
-                        startIcon={<ArrowBackIosNewIcon />}
-                        onClick={() => navigate(-1)}>
-                        Back
-                    </Button>
-                </Grid>
-                <Grid item xs={6} style={{alignContent: 'right'}}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
+                        disabled={role?.absoluteAuthority}
+                        startIcon={<FileCopyIcon />}
+                        onClick={() => {
+                            setDialog({...dialog, ...{cloneDialogOpen: true}})
+                            setCloneSettings({overwrite: false, fromRoleId: undefined})
                         }}>
-                        <Button
-                            variant="text"
-                            disabled={role?.absoluteAuthority}
-                            startIcon={<FileCopyIcon />}
-                            onClick={() => {
-                                setDialog({...dialog, ...{cloneDialogOpen: true}})
-                                setCloneSettings({overwrite: false, fromRoleId: undefined})
-                            }}>
-                            clone
-                        </Button>
-                        <Button
-                            variant="text"
-                            disabled={role?.absoluteAuthority}
-                            startIcon={<AddIcon />}
-                            onClick={() => {
-                                setDialog({...dialog, ...{addDialogOpen: true}})
-                                setAddTableSelection([])
-                            }}>
-                            add
-                        </Button>
-                        <Button
-                            color="secondary"
-                            variant="text"
-                            disabled={!Boolean(tableSelection.length) || role?.absoluteAuthority}
-                            startIcon={<DeleteIcon />}
-                            onClick={() => {
-                                setDialog({...dialog, ...{removeDialogOpen: true}})
-                            }}>
-                            remove
-                        </Button>
-                        <Dialog
-                            open={dialog.cloneDialogOpen}
-                            onClose={() => setDialog({...dialog, ...{cloneDialogOpen: false}})}>
-                            <DialogTitle>
-                                Clone features from other role
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText sx={{marginBottom: '10px'}}>
-                                    Please check if you want to overwrite the content with the cloned features, then select a role to clone from.
-                                </DialogContentText>
-                                <Divider />
-                                <FormControlLabel
-                                    sx={{ marginTop: '20px', marginBottom: '20px' }}
-                                    control={
-                                        <Checkbox
-                                            color="secondary"
-                                            checked={cloneSettings.overwrite}
-                                            onChange={(event) => {
-                                                setCloneSettings({...cloneSettings, ...{overwrite: event.target.checked}})
-                                            }}
-                                            inputProps={{ 'aria-label': 'controlled' }} />
-                                    }
-                                    label="Overwrite" />
-                                <PrimaryTable
-                                    enableSelection
-                                    onSelect={(selectedData) => {
-                                        setCloneSettings({
-                                            ...cloneSettings,
-                                            ...{fromRoleId: selectedData.length? selectedData[0]: undefined}
-                                        })
-                                    }}
-                                    columnDefs={colRoleDef}
-                                    data={ filteredRoles } />
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => setDialog({...dialog, ...{cloneDialogOpen: false}})}>
-                                    cancel
-                                </Button>
-                                <Button onClick={cloneFeatures} autoFocus>
-                                    confirm
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-                        <Dialog
-                            open={dialog.addDialogOpen}
-                            onClose={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
-                            <DialogTitle>
-                                Add features to { role?.name } Role
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    Please Select features to add
-                                </DialogContentText>
-                                <RoleFeaturesAddForm
-                                    onSelect={(selectedData) => setAddTableSelection(selectedData)}
-                                    role={role} />
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
-                                    cancel
-                                </Button>
-                                <Button onClick={addFeatures} autoFocus>
-                                    confirm
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-                        <Dialog
-                            open={dialog.removeDialogOpen}
-                            onClose={() => setDialog({...dialog, ...{removeDialogOpen: false}})}>
-                            <DialogTitle>
-                                Warning
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    Are you sure you want to remove the selected feature/s from { role?.name } Role?
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => setDialog({...dialog, ...{removeDialogOpen: false}})}>
-                                    no
-                                </Button>
-                                <Button color="secondary" onClick={removeFeatures} autoFocus>
-                                    yes
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-                    </Box>
-                </Grid>
-                {
-                    role?.absoluteAuthority? null:(
-                        <Grid item xs={12}>
+                        clone
+                    </Button>
+                    <Button
+                        variant="text"
+                        disabled={role?.absoluteAuthority}
+                        startIcon={<AddIcon />}
+                        onClick={() => {
+                            setDialog({...dialog, ...{addDialogOpen: true}})
+                            setAddTableSelection([])
+                        }}>
+                        add
+                    </Button>
+                    <Button
+                        color="secondary"
+                        variant="text"
+                        disabled={!Boolean(tableSelection.length) || role?.absoluteAuthority}
+                        startIcon={<DeleteIcon />}
+                        onClick={() => {
+                            setDialog({...dialog, ...{removeDialogOpen: true}})
+                        }}>
+                        remove
+                    </Button>
+                    <Dialog
+                        open={dialog.cloneDialogOpen}
+                        onClose={() => setDialog({...dialog, ...{cloneDialogOpen: false}})}>
+                        <DialogTitle>
+                            Clone features from other role
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText sx={{marginBottom: '10px'}}>
+                                Please check if you want to overwrite the content with the cloned features, then select a role to clone from.
+                            </DialogContentText>
+                            <Divider />
+                            <FormControlLabel
+                                sx={{ marginTop: '20px', marginBottom: '20px' }}
+                                control={
+                                    <Checkbox
+                                        color="secondary"
+                                        checked={cloneSettings.overwrite}
+                                        onChange={(event) => {
+                                            setCloneSettings({...cloneSettings, ...{overwrite: event.target.checked}})
+                                        }}
+                                        inputProps={{ 'aria-label': 'controlled' }} />
+                                }
+                                label="Overwrite" />
                             <PrimaryTable
+                                enableSelection
+                                onSelect={(selectedData) => {
+                                    setCloneSettings({
+                                        ...cloneSettings,
+                                        ...{fromRoleId: selectedData.length? selectedData[0]: undefined}
+                                    })
+                                }}
+                                columnDefs={colRoleDef}
+                                data={ filteredRoles } />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setDialog({...dialog, ...{cloneDialogOpen: false}})}>
+                                cancel
+                            </Button>
+                            <Button onClick={cloneFeatures} autoFocus>
+                                confirm
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Dialog
+                        open={dialog.addDialogOpen}
+                        onClose={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
+                        <DialogTitle>
+                            Add features to { role?.name } Role
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Please Select features to add
+                            </DialogContentText>
+                            <RoleFeaturesAddForm
+                                onSelect={(selectedData) => setAddTableSelection(selectedData)}
+                                role={role} />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
+                                cancel
+                            </Button>
+                            <Button onClick={addFeatures} autoFocus>
+                                confirm
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Dialog
+                        open={dialog.removeDialogOpen}
+                        onClose={() => setDialog({...dialog, ...{removeDialogOpen: false}})}>
+                        <DialogTitle>
+                            Warning
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Are you sure you want to remove the selected feature/s from { role?.name } Role?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setDialog({...dialog, ...{removeDialogOpen: false}})}>
+                                no
+                            </Button>
+                            <Button color="secondary" onClick={removeFeatures} autoFocus>
+                                yes
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </Box>
+            </Grid>
+            {
+                role?.absoluteAuthority? null:(
+                    <>
+                        <Grid item xs={12} md={3}>
+                            <TreeDirectory
+                                onSelect={(selection) => {
+                                    setTagSelection(selection)
+                                }}
+                                selected={tagSelection}
+                                directory={directories} />
+                        </Grid>
+                        <Grid item xs={12} md={9}>
+                            <PrimaryTable
+                                maxHeight={700}
                                 enableSelection
                                 enableMultipleSelection
                                 onSelect={(selectedData) => setTableSelection(selectedData)}
                                 columnDefs={colDef}
                                 data={data} />
+
                         </Grid>
-                    )
-                }
-                <Grid item xs={12}>
-                    <ResponseStatus {...infoAndErrors} />
-                </Grid>
+                    </>
+                )
+            }
+            <Grid item xs={12}>
+                <ResponseStatus {...infoAndErrors} />
             </Grid>
-        </Container>
+        </>
     )
 }
 
-export default RoleFeaturesEditPage
+export default RoleFeaturesGroupedEditForm

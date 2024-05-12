@@ -111,7 +111,7 @@ const RoleFeaturesPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={role?.absoluteAuthority}
-                            onClick={() => navigate(`/roles/edit/${ roleId }/features`)}>
+                            onClick={() => navigate(`/roles/edit/${ roleId }/features?view=${ viewType }`)}>
                             Edit
                         </Button>
                     </Box>
