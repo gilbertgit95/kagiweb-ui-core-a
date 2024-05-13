@@ -28,7 +28,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { useAppSelector} from '../../stores/appStore';
 import RoleFeatureService from './roleFeatureService';
 import { IFeature } from '../../types/feature';
-import RoleFeaturesAddForm from './roleFeaturesAddForm';
+import RoleFeaturesGroupedAddForm from './roleFeaturesGroupedAddForm';
 import TreeDirectory, { objectGenerator, IDir } from '../../components/navs/treeDirectory';
 
 interface IProps {
@@ -395,6 +395,7 @@ const RoleFeaturesGroupedEditForm = ({role, onChange, view, onChangeView}:IProps
                         </DialogActions>
                     </Dialog>
                     <Dialog
+                        maxWidth="xl"
                         open={dialog.addDialogOpen}
                         onClose={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
                         <DialogTitle>
@@ -404,7 +405,7 @@ const RoleFeaturesGroupedEditForm = ({role, onChange, view, onChangeView}:IProps
                             <DialogContentText>
                                 Please Select features to add
                             </DialogContentText>
-                            <RoleFeaturesAddForm
+                            <RoleFeaturesGroupedAddForm
                                 onSelect={(selectedData) => setAddTableSelection(selectedData)}
                                 role={role} />
                         </DialogContent>

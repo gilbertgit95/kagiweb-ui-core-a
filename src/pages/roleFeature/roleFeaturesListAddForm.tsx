@@ -49,14 +49,14 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
             header: 'Name',
             field: '',
             Component: (props:IFeatureRow) => {
-                return <ShortendDescription maxWidth={50} value={props.name} />
+                return <ShortendDescription maxWidth={100} value={props.name} />
             }
         },
         {
             header: 'Value',
             field: '',
             Component: (props:IFeatureRow) => {
-                return <ShortendDescription maxWidth={50} value={props.value} />
+                return <ShortendDescription maxWidth={100} value={props.value} />
             }
         },
         {
