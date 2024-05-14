@@ -14,7 +14,7 @@ function App() {
   const apptheme = useAppSelector(state => state.appRefs.appTheme)
   const isSignedIn = useAppSelector(state => state.signedInUser?.isSignedIn)
   const dispatch = useAppDispatch()
-  const darkTheme = createTheme({
+  const themeConfiguration = createTheme({
     palette: {
       mode: apptheme,
       primary: {
@@ -51,7 +51,7 @@ function App() {
 
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={themeConfiguration}>
       <CssBaseline />
       {
         isSignedIn === undefined? <InitialDisplay />:isSignedIn? <PrivateRoutes />: <PublicRoutes />

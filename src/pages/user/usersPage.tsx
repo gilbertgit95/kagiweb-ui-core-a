@@ -208,6 +208,7 @@ const Users = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <PrimaryTable
+                        maxHeight={650}
                         pagination={pagination}
                         columnDefs={colDef}
                         data={data}
