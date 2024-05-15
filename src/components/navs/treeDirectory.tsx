@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Box, Button } from '@mui/material'
+import { Box, Button, TextField } from '@mui/material'
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
 
 export interface IDir {
     name: string,
@@ -79,6 +81,19 @@ const TreeDirectory = (props:IProps) => {
                 paddingTop: '10px',
                 paddingBottom: '10px',
             }}>
+            <TextField
+                size="small"
+                sx={{marginBottom: 1}}
+                onChange={e => {
+                    console.log(e.target.value)
+                }}
+                InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                 }}/>
             {
                 RecursiveComponent({
                     ...props.directory || {name: 'All', subDir: []},
