@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import DebouncingTextField from '../inputs/debouncingTextField';
 
 export interface IDir {
     name: string,
@@ -81,6 +82,19 @@ const TreeDirectory = (props:IProps) => {
                 paddingTop: '10px',
                 paddingBottom: '10px',
             }}>
+            <DebouncingTextField
+                size="small"
+                sx={{marginBottom: 1}}
+                onChange={e => {
+                    console.log(e.target.value)
+                }}
+                InputProps={{
+                    startAdornment: (
+                    <InputAdornment position="start">
+                        <SearchIcon />
+                    </InputAdornment>
+                    ),
+                }}/>
             {
                 RecursiveComponent({
                     ...props.directory || {name: 'All', subDir: []},
@@ -133,7 +147,13 @@ const objectGenerator = (plainDirs:(string[])[]):IDir => {
     return result
 }
 
+
+const plainDirsGenerator = (objDir:IDir):(string[])[] => {
+    return []
+}
+
 export {
-    objectGenerator
+    objectGenerator,
+    plainDirsGenerator
 }
 export default TreeDirectory

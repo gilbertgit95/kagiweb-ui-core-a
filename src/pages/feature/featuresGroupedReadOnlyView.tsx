@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
-import { TextField } from '@mui/material'
 import Grid from '@mui/material/Grid';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
 
 // import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
@@ -106,19 +103,6 @@ const FeaturesGroupedReadOnlyView = () => {
     return (
         <>
             <Grid item xs={12} md={3}>
-                <TextField
-                    size="small"
-                    sx={{marginBottom: 1}}
-                    onChange={e => {
-                        console.log(e.target.value)
-                    }}
-                    InputProps={{
-                        startAdornment: (
-                        <InputAdornment position="start">
-                            <SearchIcon />
-                        </InputAdornment>
-                        ),
-                    }}/>
                 <TreeDirectory
                     onSelect={(selection) => {
                         setTagSelection(selection)
