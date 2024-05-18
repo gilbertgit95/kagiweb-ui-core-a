@@ -63,10 +63,7 @@ const RecursiveComponent = (props:IRecursiveDir) => {
 
 const TreeDirectory = (props:IProps) => {
     const [selected, setSelected] = useState<string[]>([])
-
-    useEffect(() => {
-        setSelected(props.selected || [])
-    }, [props.selected])
+    const [searchValue, setSearchValue] = useState<string>('')
 
     const onClick = (parents:string[]) => {
         if (props.onSelect) {
@@ -75,6 +72,16 @@ const TreeDirectory = (props:IProps) => {
             setSelected(parents)
         }
     }
+
+    useEffect(() => {
+        setSelected(props.selected || [])
+    }, [props.selected])
+
+    useEffect(() => {
+        if (!props.directory) return
+        const reverseObject = reverseObjectGenerator(props.directory)
+        console.log(reverseObject)
+    }, [searchValue])
 
     return (
         <Box
@@ -85,8 +92,8 @@ const TreeDirectory = (props:IProps) => {
             <DebouncingTextField
                 size="small"
                 sx={{marginBottom: 1}}
-                onChange={val => {
-                    console.log(val)
+                delayedChange={val => {
+                    setSearchValue(val)
                 }}
                 InputProps={{
                     startAdornment: (
@@ -147,13 +154,26 @@ const objectGenerator = (plainDirs:(string[])[]):IDir => {
     return result
 }
 
+const recursiveReverseObjectGenerator = (acc:(string[])[], objDir:IDir) => {
+    const dir:string[] = []
 
-const plainDirsGenerator = (objDir:IDir):(string[])[] => {
-    return []
+    dir.push(objDir.name)
+
+    acc.push(dir)
+}
+
+const reverseObjectGenerator = (objDir:IDir):(string[])[] => {
+    const plainDirs:(string[])[] = []
+
+    for (const dir of objDir.subDir) {
+        recursiveReverseObjectGenerator(plainDirs, dir)
+    }
+
+    return plainDirs
 }
 
 export {
     objectGenerator,
-    plainDirsGenerator
+    reverseObjectGenerator
 }
 export default TreeDirectory
