@@ -85,8 +85,8 @@ const TreeDirectory = (props:IProps) => {
             <DebouncingTextField
                 size="small"
                 sx={{marginBottom: 1}}
-                onChange={e => {
-                    console.log(e.target.value)
+                onChange={val => {
+                    console.log(val)
                 }}
                 InputProps={{
                     startAdornment: (
