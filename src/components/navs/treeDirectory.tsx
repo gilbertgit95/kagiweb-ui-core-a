@@ -63,6 +63,7 @@ const RecursiveComponent = (props:IRecursiveDir) => {
 
 const TreeDirectory = (props:IProps) => {
     const [selected, setSelected] = useState<string[]>([])
+    const [filteredDir, setFilteredDir] = useState<IDir>()
     const [searchValue, setSearchValue] = useState<string>('')
 
     const onClick = (parents:string[]) => {
@@ -79,9 +80,24 @@ const TreeDirectory = (props:IProps) => {
 
     useEffect(() => {
         if (!props.directory) return
+        const searchText = searchValue.toLowerCase()
+        // reverse object dir to plain dir
         const reverseObject = reverseObjectGenerator(props.directory)
-        console.log(reverseObject)
-    }, [searchValue])
+        // filter by search text
+        const filteredData = reverseObject.filter(dir => {
+            for (const route of dir) {
+                const r = route.toLowerCase()
+                if (r.indexOf(searchText) > -1) return true
+            }
+
+            return false
+        })
+        // generate object dir
+        const obj = objectGenerator(filteredData)
+        // set to filtered dir
+        setFilteredDir(obj)
+        // console.log(filteredData)
+    }, [props.directory, searchValue])
 
     return (
         <Box
@@ -92,7 +108,7 @@ const TreeDirectory = (props:IProps) => {
             <DebouncingTextField
                 size="small"
                 sx={{marginBottom: 1}}
-                delayedChange={val => {
+                delayedchange={val => {
                     setSearchValue(val)
                 }}
                 InputProps={{
@@ -104,7 +120,7 @@ const TreeDirectory = (props:IProps) => {
                 }}/>
             {
                 RecursiveComponent({
-                    ...props.directory || {name: 'All', subDir: []},
+                    ...filteredDir || {name: 'All', subDir: []},
                     ...{
                         selected,
                         onClick
@@ -154,10 +170,13 @@ const objectGenerator = (plainDirs:(string[])[]):IDir => {
     return result
 }
 
-const recursiveReverseObjectGenerator = (acc:(string[])[], objDir:IDir) => {
-    const dir:string[] = []
+const recursiveReverseObjectGenerator = (acc:(string[])[], objDir:IDir, parentDir:string[] = []) => {
+    const dir:string[] = [...parentDir]
 
     dir.push(objDir.name)
+    for (const subDir of objDir.subDir) {
+        recursiveReverseObjectGenerator(acc, subDir, dir)
+    }
 
     acc.push(dir)
 }
@@ -166,7 +185,7 @@ const reverseObjectGenerator = (objDir:IDir):(string[])[] => {
     const plainDirs:(string[])[] = []
 
     for (const dir of objDir.subDir) {
-        recursiveReverseObjectGenerator(plainDirs, dir)
+        recursiveReverseObjectGenerator(plainDirs, dir, [])
     }
 
     return plainDirs

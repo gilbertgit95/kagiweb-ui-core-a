@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { TextField, TextFieldProps } from '@mui/material'
 
-const timeInSec = 2
+const timeInSec = 1
 
 interface IProps {
-    delayedChange: (val:string) => void
+    delayedchange: (val:string) => void
 }
 
 const DebouncingTextField = (props:TextFieldProps & IProps) => {
@@ -16,14 +16,14 @@ const DebouncingTextField = (props:TextFieldProps & IProps) => {
 
         setTime(
             setTimeout(() => {
-                if (props.delayedChange) props.delayedChange(val)
+                if (props.delayedchange) props.delayedchange(val)
             }, timeInSec * 1e3)
         )
     }
 
     return (
         <TextField
-            {...{...props, ...{delayedChange: undefined}}}
+            {...{...props, ...{delayedchange: undefined}}}
             onChange={e => change(e.target.value || '')} />
     )
 }
