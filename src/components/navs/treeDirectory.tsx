@@ -20,7 +20,8 @@ export interface IRecursiveDir {
 interface IProps {
     directory?: IDir,
     selected?: string[],
-    onSelect?:(items:string[]) => void
+    onSelect?:(items:string[]) => void,
+    enableSearch?: boolean
 }
 
 
@@ -74,6 +75,10 @@ const TreeDirectory = (props:IProps) => {
         }
     }
 
+    const clearSearch = () => {
+        setSearchValue('')
+    }
+
     useEffect(() => {
         setSelected(props.selected || [])
     }, [props.selected])
@@ -105,19 +110,25 @@ const TreeDirectory = (props:IProps) => {
                 paddingTop: '10px',
                 paddingBottom: '10px',
             }}>
-            <DebouncingTextField
-                size="small"
-                sx={{marginBottom: 1}}
-                delayedchange={val => {
-                    setSearchValue(val)
-                }}
-                InputProps={{
-                    startAdornment: (
-                    <InputAdornment position="start">
-                        <SearchIcon />
-                    </InputAdornment>
-                    ),
-                }}/>
+            {/* search box */}
+            {
+                props.enableSearch? (
+                    <DebouncingTextField
+                        size="small"
+                        sx={{marginBottom: 1}}
+                        delayedchange={val => {
+                            setSearchValue(val)
+                        }}
+                        InputProps={{
+                            startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                            ),
+                        }}/>
+                ): null
+            }
+            {/* tree view */}
             {
                 RecursiveComponent({
                     ...filteredDir || {name: 'All', subDir: []},
