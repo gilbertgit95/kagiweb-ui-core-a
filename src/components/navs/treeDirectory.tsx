@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 import DebouncingTextField from '../inputs/debouncingTextField';
 
 export interface IDir {
@@ -121,9 +122,16 @@ const TreeDirectory = (props:IProps) => {
                         }}
                         InputProps={{
                             startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            ),
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <CloseIcon
+                                        onClick={clearSearch}
+                                        sx={{cursor: 'pointer'}}/>
+                                </InputAdornment>
                             ),
                         }}/>
                 ): null
