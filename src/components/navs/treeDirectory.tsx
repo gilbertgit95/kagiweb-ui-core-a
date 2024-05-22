@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Box, Button } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
@@ -67,6 +67,7 @@ const TreeDirectory = (props:IProps) => {
     const [selected, setSelected] = useState<string[]>([])
     const [filteredDir, setFilteredDir] = useState<IDir>()
     const [searchValue, setSearchValue] = useState<string>('')
+    const inpuRef = useRef<HTMLInputElement>()
 
     const onClick = (parents:string[]) => {
         if (props.onSelect) {
@@ -77,6 +78,7 @@ const TreeDirectory = (props:IProps) => {
     }
 
     const clearSearch = () => {
+        if (inpuRef?.current?.value) inpuRef.current.value = ''
         setSearchValue('')
     }
 
@@ -117,6 +119,7 @@ const TreeDirectory = (props:IProps) => {
                     <DebouncingTextField
                         size="small"
                         sx={{marginBottom: 1}}
+                        inputRef={inpuRef}
                         delayedchange={val => {
                             setSearchValue(val)
                         }}
