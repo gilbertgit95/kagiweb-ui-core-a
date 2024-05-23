@@ -445,6 +445,7 @@ const RoleFeaturesGroupedEditForm = ({role, onChange, view, onChangeView}:IProps
                     <>
                         <Grid item xs={12} md={3}>
                             <TreeDirectory
+                                enableSearch
                                 onSelect={(selection) => {
                                     setTagSelection(selection)
                                 }}

@@ -92,6 +92,7 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
                         <>
                             <Grid item xs={12} md={5} lg={4} xl={3}>
                                 <TreeDirectory
+                                    enableSearch
                                     onSelect={(selection) => {
                                         setTagSelection(selection)
                                         if (onSelect) onSelect([])
