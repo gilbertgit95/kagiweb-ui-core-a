@@ -17,6 +17,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
 import { Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 // table:
 //     columnDefs: column definations
@@ -80,6 +81,16 @@ interface ITablePaginationActionsProps {
     newPage: number,
   ) => void;
 }
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}))
 
 function TablePaginationActions(props: ITablePaginationActionsProps) {
   const theme = useTheme()
@@ -224,7 +235,7 @@ function PrimaryTable(props:IPrimaryTableProps) {
           {
             props.noHeader? null: (
               <TableHead>
-                <TableRow>
+                <TableRow sx={{bgColor: 'text.secondary'}}>
                   {
                     // show select all checkbox
                     props.enableSelection? (
@@ -256,7 +267,7 @@ function PrimaryTable(props:IPrimaryTableProps) {
           <TableBody>
             {
               data.map((row, rowIndex) => (
-                <TableRow key={rowIndex}>
+                <StyledTableRow key={rowIndex}>
                     {
                       props.enableSelection? (
                         <TableCell>
@@ -293,15 +304,15 @@ function PrimaryTable(props:IPrimaryTableProps) {
                         )
                       ))
                     }
-                </TableRow>
+                </StyledTableRow>
               ))
             }
 
             {
               noEmptyCells? (
-                <TableRow style={{ height: 69 * noEmptyCells }}>
+                <StyledTableRow style={{ height: 69 * noEmptyCells }}>
                   <TableCell colSpan={props.columnDefs.length}></TableCell>
-                </TableRow>
+                </StyledTableRow>
               ): null
             }
           </TableBody>
