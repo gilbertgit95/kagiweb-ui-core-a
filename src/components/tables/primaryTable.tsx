@@ -135,6 +135,15 @@ function TablePaginationActions(props: ITablePaginationActionsProps) {
 
 function PrimaryTable(props:IPrimaryTableProps) {
   const [selectedItems, setSelectedItems] = useState<string[]>([])
+  const [transformedData, setTransformedData] = useState()
+  const [dataTransformation, setDataTransformation] = useState({
+    searchField: '',
+    searchKey: '',
+    filterField: '',
+    filterKey: '',
+    sortField: '',
+    sortKey: ''
+  })
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -195,7 +204,12 @@ function PrimaryTable(props:IPrimaryTableProps) {
 
   useEffect(() => {
     setSelectedItems([])
-  }, [props.data, props.pagination, ])
+  }, [props.data, props.pagination])
+
+  // data filtering and sorting
+  useEffect(() => {
+
+  })
 
   // select box related variables
   const selectionMap = new Set(selectedItems)
