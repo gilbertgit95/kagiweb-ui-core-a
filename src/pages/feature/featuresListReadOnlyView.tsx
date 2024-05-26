@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import Tablefilters from '../../components/tables/tableFilters';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
 import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
@@ -101,6 +102,7 @@ const FeaturesListReadOnlyView = () => {
 
     return (
         <Grid item xs={12}>
+            <Tablefilters />
             <PrimaryTable
                 maxHeight={700}
                 columnDefs={colDef}
