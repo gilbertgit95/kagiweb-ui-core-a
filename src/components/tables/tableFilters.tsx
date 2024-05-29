@@ -3,19 +3,23 @@ import Popover from '@mui/material/Popover'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select, { SelectChangeEvent } from '@mui/material/Select'
 import ManageSearchIcon from '@mui/icons-material/ManageSearch'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import SortIcon from '@mui/icons-material/Sort'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import DebouncingTextField from '../inputs/debouncingTextField'
 
 export interface ITransformationConfig {
     searchValue?: string,
     searchFields?: string[],
 
-    filterValue?: string[],
+    filterValue?: string,
+    filterOption?: string[],
     filterFields?: string[],
 
     sortValue?: 'asc' | 'dsc',
@@ -24,30 +28,38 @@ export interface ITransformationConfig {
     textFieldsOption?: string[],
 }
 
-interface IProps<T> {
-    data?: T[],
+interface IProps {
     config?: ITransformationConfig,
-    onChange?: (filteredData:ITransformationConfig, data:T[]) => void
+    onChange?: (conf:ITransformationConfig) => void
 }
 
-export default function Tablefilters<T>({
+export default function Tablefilters({
     config,
-    onChange,
-    data
-}:ITransformationConfig & IProps<T>) {
+    onChange
+}:ITransformationConfig & IProps) {
     const [anchorSearch, setAnchorSearch] = React.useState<HTMLButtonElement | null>(null);
     const [anchorFilter, setAnchorFilter] = React.useState<HTMLButtonElement | null>(null);
     const [anchorSort, setAnchorSort] = React.useState<HTMLButtonElement | null>(null);
 
+    const handleChange = (overwrite:ITransformationConfig) => {
+        const configUpdate = {...config, ...overwrite}
+        if (onChange) onChange(configUpdate)
+    }
+
+    let sortIcon = <HorizontalRuleIcon />
+    if (config?.sortValue === 'asc') sortIcon = <KeyboardArrowUpIcon />
+    if (config?.sortValue === 'dsc') sortIcon = <KeyboardArrowDownIcon />
+
     return (
         <>
             <ButtonGroup
+                size="small"
                 sx={{marginRight: '10px'}}
                 variant="outlined">
                 <DebouncingTextField
                     size="small"
                     delayedchange={(val) => {
-                        console.log(val)
+                        handleChange({searchValue: val})
                     }} />
                 <Button
                     onClick={(event) => {
@@ -57,20 +69,23 @@ export default function Tablefilters<T>({
                 </Button>
             </ButtonGroup>
             <ButtonGroup
+                size="small"
                 sx={{marginRight: '10px'}}
                 variant="outlined">
                 <Select
                     size="small"
-                    value={10}
-                    onChange={() => {
-
+                    value={config?.filterValue}
+                    onChange={(e) => {
+                        handleChange({filterValue: e.target.value as string})
                     }}>
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    <MenuItem value={''}>None</MenuItem>
+                    {
+                        config?.filterOption?.map((item, index) => {
+                            return (
+                                <MenuItem key={index} value={item}>{ item }</MenuItem>
+                            )
+                        })
+                    }
                 </Select>
                 <Button
                     onClick={(event) => {
@@ -80,9 +95,23 @@ export default function Tablefilters<T>({
                 </Button>
             </ButtonGroup>
             <ButtonGroup
+                size="medium"
                 sx={{marginRight: '10px'}}
                 variant="outlined">
-                <Button>Sort</Button>
+                <Button
+                    onClick={() => {
+                        const val = config?.sortValue
+                        let newVal: 'asc'|'dsc'|undefined = undefined
+
+                        if (val === 'asc') newVal = 'dsc'
+                        if (val === 'dsc') newVal = undefined
+                        if (val === undefined) newVal = 'asc'
+
+                        handleChange({sortValue: newVal})
+                    }}
+                    startIcon={sortIcon}>
+                    Sort
+                </Button>
                 <Button
                     onClick={(event) => {
                         setAnchorSort(event.currentTarget);

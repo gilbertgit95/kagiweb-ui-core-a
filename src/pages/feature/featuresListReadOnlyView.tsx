@@ -78,7 +78,8 @@ const FeaturesListReadOnlyView = () => {
         searchValue: '',
         searchFields: ['field1', 'field2'],
     
-        filterValue: ['field1'],
+        filterValue: '',
+        filterOption: ['value 1', 'value2', 'item3', 'item4'],
         filterFields: ['field1', 'field3'],
     
         sortValue: undefined,
@@ -116,8 +117,8 @@ const FeaturesListReadOnlyView = () => {
         <Grid item xs={12}>
             <Tablefilters
                 config={filterConfig}
-                onChange={(confUpdate, resultData) => {
-                    console.log(confUpdate, resultData)
+                onChange={(confUpdate) => {
+                    console.log(confUpdate)
                     setFilterConfig(confUpdate)
                 }} />
 
