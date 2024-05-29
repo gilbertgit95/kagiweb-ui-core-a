@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import Tablefilters from '../../components/tables/tableFilters';
+import Tablefilters, { ITransformationConfig } from '../../components/tables/tableFilters';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
 import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
@@ -74,6 +74,18 @@ const FeaturesListReadOnlyView = () => {
     // const navigate = useNavigate()
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
+    const [filterConfig, setFilterConfig] = useState<ITransformationConfig>({
+        searchValue: '',
+        searchFields: ['field1', 'field2'],
+    
+        filterValue: ['field1'],
+        filterFields: ['field1', 'field3'],
+    
+        sortValue: undefined,
+        sortFields: ['field1', 'field4'],
+
+        textFieldsOption: ['field1', 'field2', 'field3', 'field4']
+    })
 
     useEffect(() => {
         const init = async () => {
@@ -102,7 +114,13 @@ const FeaturesListReadOnlyView = () => {
 
     return (
         <Grid item xs={12}>
-            <Tablefilters />
+            <Tablefilters
+                config={filterConfig}
+                onChange={(confUpdate, resultData) => {
+                    console.log(confUpdate, resultData)
+                    setFilterConfig(confUpdate)
+                }} />
+
             <PrimaryTable
                 maxHeight={700}
                 columnDefs={colDef}

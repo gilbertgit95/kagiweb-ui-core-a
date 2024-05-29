@@ -11,39 +11,30 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import SortIcon from '@mui/icons-material/Sort'
 import DebouncingTextField from '../inputs/debouncingTextField'
 
-interface ITransformationConfig {
+export interface ITransformationConfig {
     searchValue?: string,
     searchFields?: string[],
-    searchFieldsOption?: string[],
 
-    filterValue?: boolean,
+    filterValue?: string[],
     filterFields?: string[],
-    filterFieldsOption?: string[],
 
     sortValue?: 'asc' | 'dsc',
     sortFields?: string[],
-    sortFieldsOption?: string[],
+
+    textFieldsOption?: string[],
 }
 
-interface IProps {
-    onChange?: (filteredData:ITransformationConfig) => void
+interface IProps<T> {
+    data?: T[],
+    config?: ITransformationConfig,
+    onChange?: (filteredData:ITransformationConfig, data:T[]) => void
 }
 
-export default function Tablefilters({
-    searchValue,
-    searchFields,
-    searchFieldsOption,
-
-    filterValue,
-    filterFields,
-    filterFieldsOption,
-
-    sortValue,
-    sortFields,
-    sortFieldsOption,
-
-    onChange
-}:ITransformationConfig & IProps) {
+export default function Tablefilters<T>({
+    config,
+    onChange,
+    data
+}:ITransformationConfig & IProps<T>) {
     const [anchorSearch, setAnchorSearch] = React.useState<HTMLButtonElement | null>(null);
     const [anchorFilter, setAnchorFilter] = React.useState<HTMLButtonElement | null>(null);
     const [anchorSort, setAnchorSort] = React.useState<HTMLButtonElement | null>(null);
