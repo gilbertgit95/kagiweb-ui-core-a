@@ -73,7 +73,7 @@ const FeaturesListReadOnlyView = () => {
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
     const [filterConfig, setFilterConfig] = useState<ITransformationConfig>({
         searchValue: '',
-        searchFields: ['field1', 'field2'],
+        searchField: 'field2',
     
         filterValue: '',
         filterField: 'field1',

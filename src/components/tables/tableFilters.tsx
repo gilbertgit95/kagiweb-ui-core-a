@@ -22,7 +22,7 @@ import { PropaneSharp } from '@mui/icons-material'
 
 export interface ITransformationConfig {
     searchValue?: string,
-    searchFields?: string[],
+    searchField?: string,
 
     filterValue?: string,
     filterField?: string,
@@ -136,11 +136,14 @@ export default function Tablefilters({
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}>
-                <Box sx={{padding: '10px'}}>
+                <Box sx={{padding: '10px', paddingLeft: '20px', paddingRight: '20px'}}>
                     <FormControl>
-                        <FormLabel>Searchable Fields</FormLabel>
+                        <Typography variant="subtitle1" color="primary">Searchable Fields</Typography>
                         <RadioGroup
-                            defaultValue="">
+                            value={config?.searchField}
+                            onChange={(e) => {
+                                handleChange({searchField: e.target.value})
+                            }}>
                             {
                                 config?.fieldOptions?.map((item, index) => (
                                     <FormControlLabel
@@ -165,7 +168,26 @@ export default function Tablefilters({
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}>
-                <Typography sx={{ p: 2 }}>The content of the Filter.</Typography>
+                <Box sx={{padding: '10px', paddingLeft: '20px', paddingRight: '20px'}}>
+                    <FormControl>
+                        <Typography variant="subtitle1" color="primary">Filterable Fields</Typography>
+                        <RadioGroup
+                            value={config?.filterField}
+                            onChange={(e) => {
+                                handleChange({filterField: e.target.value})
+                            }}>
+                            {
+                                config?.fieldOptions?.map((item, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        value={item}
+                                        control={<Radio />}
+                                        label={item} />
+                                ))
+                            }
+                        </RadioGroup>
+                    </FormControl>
+                </Box>
             </Popover>
             {/* sort settings */}
             <Popover
@@ -178,7 +200,26 @@ export default function Tablefilters({
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}>
-                <Typography sx={{ p: 2 }}>The content of the Sort.</Typography>
+                <Box sx={{padding: '10px', paddingLeft: '20px', paddingRight: '20px'}}>
+                    <FormControl>
+                        <Typography variant="subtitle1" color="primary">Sortable Fields</Typography>
+                        <RadioGroup
+                            value={config?.sortField}
+                            onChange={(e) => {
+                                handleChange({sortField: e.target.value})
+                            }}>
+                            {
+                                config?.fieldOptions?.map((item, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        value={item}
+                                        control={<Radio />}
+                                        label={item} />
+                                ))
+                            }
+                        </RadioGroup>
+                    </FormControl>
+                </Box>
             </Popover>
         </>
     )
