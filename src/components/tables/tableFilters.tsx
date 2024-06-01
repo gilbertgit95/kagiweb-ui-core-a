@@ -1,30 +1,37 @@
 import React from 'react'
 import Popover from '@mui/material/Popover'
+import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
 import ManageSearchIcon from '@mui/icons-material/ManageSearch'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import SortIcon from '@mui/icons-material/Sort'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import DebouncingTextField from '../inputs/debouncingTextField'
+import { PropaneSharp } from '@mui/icons-material'
 
 export interface ITransformationConfig {
     searchValue?: string,
     searchFields?: string[],
 
     filterValue?: string,
-    filterOption?: string[],
-    filterFields?: string[],
+    filterField?: string,
+    filterOptions?: string[],
 
     sortValue?: 'asc' | 'dsc',
-    sortFields?: string[],
+    sortField?: string,
 
-    textFieldsOption?: string[],
+    fieldOptions?: string[],
 }
 
 interface IProps {
@@ -79,7 +86,7 @@ export default function Tablefilters({
                     }}>
                     <MenuItem value={''}>None</MenuItem>
                     {
-                        config?.filterOption?.map((item, index) => {
+                        config?.filterOptions?.map((item, index) => {
                             return (
                                 <MenuItem key={index} value={item}>{ item }</MenuItem>
                             )
@@ -129,7 +136,23 @@ export default function Tablefilters({
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}>
-                <Typography sx={{ p: 2 }}>The content of the Search.</Typography>
+                <Box sx={{padding: '10px'}}>
+                    <FormControl>
+                        <FormLabel>Searchable Fields</FormLabel>
+                        <RadioGroup
+                            defaultValue="">
+                            {
+                                config?.fieldOptions?.map((item, index) => (
+                                    <FormControlLabel
+                                        key={index}
+                                        value={item}
+                                        control={<Radio />}
+                                        label={item} />
+                                ))
+                            }
+                        </RadioGroup>
+                    </FormControl>
+                </Box>
             </Popover>
             {/* filter settings */}
             <Popover

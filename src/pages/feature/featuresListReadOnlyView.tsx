@@ -76,13 +76,13 @@ const FeaturesListReadOnlyView = () => {
         searchFields: ['field1', 'field2'],
     
         filterValue: '',
-        filterOption: ['value 1', 'value2', 'item3', 'item4'],
-        filterFields: ['field1', 'field3'],
+        filterField: 'field1',
+        filterOptions: ['value 1', 'value2', 'item3', 'item4'],
     
         sortValue: undefined,
-        sortFields: ['field1', 'field4'],
+        sortField: 'field1',
 
-        textFieldsOption: ['field1', 'field2', 'field3', 'field4']
+        fieldOptions: ['field1', 'field2', 'field3', 'field4']
     })
 
     useEffect(() => {
