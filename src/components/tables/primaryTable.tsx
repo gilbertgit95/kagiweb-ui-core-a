@@ -49,7 +49,7 @@ interface IPagination {
   totalItems: number
 }
 
-interface IPrimaryTableProps {
+export interface IPrimaryTableProps {
   noHeader?: boolean,
   maxHeight?: number,
 

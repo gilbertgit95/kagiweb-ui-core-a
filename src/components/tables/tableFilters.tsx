@@ -10,7 +10,6 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
 import ManageSearchIcon from '@mui/icons-material/ManageSearch'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import SortIcon from '@mui/icons-material/Sort'
@@ -18,7 +17,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import DebouncingTextField from '../inputs/debouncingTextField'
-import { PropaneSharp } from '@mui/icons-material'
 
 export interface ITransformationConfig {
     searchValue?: string,
