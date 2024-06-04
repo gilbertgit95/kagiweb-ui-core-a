@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
+import React, { useEffect, useState } from 'react'
+// import { useNavigate } from 'react-router-dom'
+import Grid from '@mui/material/Grid'
 
-import PrimaryHeader from '../../components/headers/primaryHeader';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import Tablefilters, { ITransformationConfig } from '../../components/tables/tableFilters';
-import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
-import ListItems from '../../components/lists/listItems';
-import ShortendDescription from '../../components/texts/shortendDescription';
-import SimpleLink from '../../components/links/simpleLink';
-import { useAppSelector} from '../../stores/appStore';
-import { IFeature } from '../../types/feature';
+// import PrimaryHeader from '../../components/headers/primaryHeader'
+import PrimaryTable, { IColDef } from '../../components/tables/primaryTable'
+import FilterableTable from '../../components/tables/filterableTable'
+import Tablefilters, { ITransformationConfig } from '../../components/tables/tableFilters'
+import DateChanges, {IChangeDate} from '../../components/dates/dateChanges'
+import ListItems from '../../components/lists/listItems'
+import ShortendDescription from '../../components/texts/shortendDescription'
+import SimpleLink from '../../components/links/simpleLink'
+import { useAppSelector} from '../../stores/appStore'
+import { IFeature } from '../../types/feature'
 
 interface IFeatureRow {
     _id: string,
@@ -112,7 +113,7 @@ const FeaturesListReadOnlyView = () => {
 
     return (
         <Grid item xs={12}>
-            <Tablefilters
+            {/* <Tablefilters
                 config={filterConfig}
                 onChange={(confUpdate) => {
                     console.log(confUpdate)
@@ -122,7 +123,24 @@ const FeaturesListReadOnlyView = () => {
             <PrimaryTable
                 maxHeight={700}
                 columnDefs={colDef}
-                data={data} />
+                data={data} /> */}
+
+            <FilterableTable
+                filterConfig={{
+                    searchValue: '',
+                    searchField: 'field2',
+                    filterValue: '',
+                    filterField: 'field1',
+                    filterOptions: ['value 1', 'value2', 'item3', 'item4'],
+                    sortValue: undefined,
+                    sortField: 'field1',
+                    fieldOptions: ['field1', 'field2', 'field3', 'field4']
+                }}
+                tableConfig={{
+                    maxHeight: 700,
+                    columnDefs: colDef,
+                    data: data
+                }} />
         </Grid>
     )
 }

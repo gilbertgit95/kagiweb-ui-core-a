@@ -19,7 +19,7 @@ interface IProps {
  * @param param0 
  * @returns 
  */
-const Filterabletable = ({filterConfig, tableConfig}:IProps) => {
+const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
     const [tablefilter, setTableFilter] = useState<ITransformationConfig>({
         searchValue: '',
         searchField: '',
@@ -36,25 +36,27 @@ const Filterabletable = ({filterConfig, tableConfig}:IProps) => {
     // only executes if there are changes in the input table filter
     // and executes if there are changes in the input table config
     useEffect(() => {
-        // compute 
         setTableFilter({...tablefilter, ...filterConfig})
-        setTableData({...tableData, ...tableConfig})
-    }, [filterConfig, tableConfig])
+    }, [filterConfig])
 
-    // executes if local filter configurations and local table data updates
+    // executes if local filter configurations and table data has updates
     useEffect(() => {
         // data transformation will be executed here
-        let newData = []
+        let transformed = []
         // filter by filter value
         // filter by search text
         // if sort is enable sort by sort field
         setTransformedTableData([])
-    }, [tablefilter, tableData])
+    }, [tablefilter, tableConfig])
 
     return (
         <>
             <Grid item xs={12}>
-                <Tablefilters config={filterConfig} />
+                <Tablefilters
+                    onChange={(filterConf) => {
+                        setTableFilter(filterConf)
+                    }}
+                    config={tablefilter} />
             </Grid>
             <Grid item xs={12}>
                 <PrimaryTable {...tableConfig} />
@@ -63,4 +65,4 @@ const Filterabletable = ({filterConfig, tableConfig}:IProps) => {
     )
 }
 
-export default Filterabletable
+export default FilterableTable
