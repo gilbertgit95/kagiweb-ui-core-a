@@ -110,7 +110,7 @@ const TreeDirectory = (props:IProps) => {
     return (
         <Box
             sx={{
-                paddingTop: '10px',
+                // paddingTop: '10px',
                 paddingBottom: '10px',
             }}>
             {/* search box */}

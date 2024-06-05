@@ -9,6 +9,7 @@ import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
 // import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import SimpleLink from '../../components/links/simpleLink';
+import FilterableTable from '../../components/tables/filterableTable';
 import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
 
@@ -112,10 +113,26 @@ const FeaturesGroupedReadOnlyView = () => {
                     directory={directories} />
             </Grid>
             <Grid item xs={12} md={9}>
-                <PrimaryTable
+                {/* <PrimaryTable
                     maxHeight={750}
                     columnDefs={colDef}
-                    data={data} />
+                    data={data} /> */}
+                <FilterableTable
+                    filterConfig={{
+                        searchValue: '',
+                        searchField: 'name',
+                        filterValue: '',
+                        filterField: 'type',
+                        filterOptions: [],
+                        sortValue: undefined,
+                        sortField: 'name',
+                        fieldOptions: ['name', 'value', 'type']
+                    }}
+                    tableConfig={{
+                        maxHeight: 700,
+                        columnDefs: colDef,
+                        data: data
+                    }} />
             </Grid>
         </>
     )

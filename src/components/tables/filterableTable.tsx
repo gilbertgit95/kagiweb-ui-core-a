@@ -47,7 +47,7 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
         // filter by search text
         // if sort is enable sort by sort field
         setTransformedTableData([])
-    }, [tablefilter, tableConfig])
+    }, [tablefilter.filterField, tableConfig.data])
 
     return (
         <>

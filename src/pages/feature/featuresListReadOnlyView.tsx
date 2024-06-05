@@ -128,13 +128,13 @@ const FeaturesListReadOnlyView = () => {
             <FilterableTable
                 filterConfig={{
                     searchValue: '',
-                    searchField: 'field2',
+                    searchField: 'name',
                     filterValue: '',
-                    filterField: 'field1',
-                    filterOptions: ['value 1', 'value2', 'item3', 'item4'],
+                    filterField: 'type',
+                    filterOptions: [],
                     sortValue: undefined,
-                    sortField: 'field1',
-                    fieldOptions: ['field1', 'field2', 'field3', 'field4']
+                    sortField: 'name',
+                    fieldOptions: ['name', 'value', 'type']
                 }}
                 tableConfig={{
                     maxHeight: 700,
