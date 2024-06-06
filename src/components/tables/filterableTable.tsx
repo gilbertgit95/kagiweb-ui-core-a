@@ -30,23 +30,28 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
         sortField: '',
         fieldOptions: [],
     })
-    const [tableData, setTableData] = useState<IPrimaryTableProps>()
-    const [transformedTableData, setTransformedTableData] = useState([])
 
-    // only executes if there are changes in the input table filter
-    // and executes if there are changes in the input table config
+    const [filterOptions, setFilterOptions] = useState<string[]>([])
+    const [transformedTableData, setTransformedTableData] = useState<any[]>([])
+
+    // this will be executer if the input table filter config and
+    // input table config changes
+    // this will set the local state for table filter
     useEffect(() => {
         setTableFilter({...tablefilter, ...filterConfig})
-    }, [filterConfig])
+        setFilterOptions(filterConfig?.filterOptions || [])
+        setTransformedTableData(tableConfig.data || [])
+    }, [filterConfig, tableConfig.data])
 
-    // executes if local filter configurations and table data has updates
+    // this will be executed if the local table filter
+    // and the input table config change
     useEffect(() => {
         // data transformation will be executed here
         let transformed = []
         // filter by filter value
         // filter by search text
         // if sort is enable sort by sort field
-        setTransformedTableData([])
+        // setTransformedTableData([])
     }, [tablefilter.filterField, tableConfig.data])
 
     return (
@@ -56,10 +61,13 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
                     onChange={(filterConf) => {
                         setTableFilter(filterConf)
                     }}
-                    config={tablefilter} />
+                    config={{
+                        ...tablefilter,
+                        ...{filterOptions}
+                    }} />
             </Grid>
             <Grid item xs={12}>
-                <PrimaryTable {...tableConfig} />
+                <PrimaryTable {...{...tableConfig, ...{data: transformedTableData}}} />
             </Grid>
         </>
     )
