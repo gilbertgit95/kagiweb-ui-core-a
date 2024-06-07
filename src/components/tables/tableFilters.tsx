@@ -172,7 +172,10 @@ export default function Tablefilters({
                         <RadioGroup
                             value={config?.filterField}
                             onChange={(e) => {
-                                handleChange({filterField: e.target.value})
+                                handleChange({
+                                    filterField: e.target.value,
+                                    filterValue: undefined
+                                })
                             }}>
                             {
                                 config?.fieldOptions?.map((item, index) => (

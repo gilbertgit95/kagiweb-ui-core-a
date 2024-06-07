@@ -52,6 +52,21 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
         // filter by search text
         // if sort is enable sort by sort field
         // setTransformedTableData([])
+        let filterOpts:string[] = []
+        let filterField:string = ''
+        filterField = tablefilter?.filterField || ''
+
+        // assign filter options if the parameters exists
+        if (filterField && tableConfig.data) {
+            filterOpts = tableConfig.data.map(item => {
+                return item[filterField] as string
+            }) || []
+        }
+        // get unique values
+        filterOpts = Array.from(new Set(filterOpts)).sort()
+
+        setFilterOptions(filterOpts)
+
     }, [tablefilter.filterField, tableConfig.data])
 
     return (
