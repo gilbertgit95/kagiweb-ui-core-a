@@ -43,15 +43,8 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
         setTransformedTableData(tableConfig.data || [])
     }, [filterConfig, tableConfig.data])
 
-    // this will be executed if the local table filter
-    // and the input table config change
+    // table filter setting
     useEffect(() => {
-        // data transformation will be executed here
-        let transformed = []
-        // filter by filter value
-        // filter by search text
-        // if sort is enable sort by sort field
-        // setTransformedTableData([])
         let filterOpts:string[] = []
         let filterField:string = ''
         filterField = tablefilter?.filterField || ''
@@ -68,6 +61,47 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
         setFilterOptions(filterOpts)
 
     }, [tablefilter.filterField, tableConfig.data])
+
+    // actual data filtering
+    useEffect(() => {
+        let transformedData = tableConfig.data || []
+
+        // check search filtering
+        if (tablefilter.searchField?.length) {
+
+        }
+
+        // check value filtering
+        if (tablefilter.filterField?.length) {
+
+        }
+
+        // check sort
+        if (tablefilter.sortValue && tablefilter.sortField) {
+            const sortVal = tablefilter.sortValue
+            const sortField = tablefilter.sortField
+
+            // default to ascending
+            transformedData = transformedData.sort((a, b) => {
+                if (a[sortField] > b[sortField]) {
+                    return -1
+                } else if (a[sortField] < b[sortField]) {
+                    return 1
+                }
+
+                return 0
+            })
+
+            // for descending sort
+            if (sortVal === 'dsc') {
+                transformedData = transformedData.reverse()
+            }
+        }
+
+        setTransformedTableData(transformedData)
+
+        console.log('table filter changes!', tablefilter)
+    }, [tablefilter, tableConfig.data])
 
     return (
         <>
