@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Grid } from '@mui/material'
+import _ from 'lodash'
+import { Grid, Box } from '@mui/material'
 import Tablefilters, { ITransformationConfig } from './tableFilters'
 import PrimaryTable, { IPrimaryTableProps } from './primaryTable'
 
@@ -67,13 +68,19 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
         let transformedData = tableConfig.data || []
 
         // check search filtering
-        if (tablefilter.searchField?.length) {
-
+        if (tablefilter.searchValue && tablefilter.searchField) {
+            const searchVal = tablefilter.searchValue.toLowerCase()
+            transformedData = transformedData.filter(item => {
+                const itemVal = item[tablefilter.searchField!].toLowerCase()
+                return itemVal.indexOf(searchVal) > -1
+            })
         }
 
         // check value filtering
-        if (tablefilter.filterField?.length) {
-
+        if (tablefilter.filterValue && tablefilter.filterField) {
+            transformedData = transformedData.filter(item => {
+                return tablefilter.filterValue === item[tablefilter.filterField!]
+            })
         }
 
         // check sort
@@ -82,15 +89,7 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
             const sortField = tablefilter.sortField
 
             // default to ascending
-            transformedData = transformedData.sort((a, b) => {
-                if (a[sortField] > b[sortField]) {
-                    return -1
-                } else if (a[sortField] < b[sortField]) {
-                    return 1
-                }
-
-                return 0
-            })
+            transformedData = _.sortBy(transformedData, sortField)
 
             // for descending sort
             if (sortVal === 'dsc') {
@@ -106,14 +105,16 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
     return (
         <>
             <Grid item xs={12}>
-                <Tablefilters
-                    onChange={(filterConf) => {
-                        setTableFilter(filterConf)
-                    }}
-                    config={{
-                        ...tablefilter,
-                        ...{filterOptions}
-                    }} />
+                <Box sx={{paddingBottom: '10px'}}>
+                    <Tablefilters
+                        onChange={(filterConf) => {
+                            setTableFilter(filterConf)
+                        }}
+                        config={{
+                            ...tablefilter,
+                            ...{filterOptions}
+                        }} />
+                </Box>
             </Grid>
             <Grid item xs={12}>
                 <PrimaryTable {...{...tableConfig, ...{data: transformedTableData}}} />
