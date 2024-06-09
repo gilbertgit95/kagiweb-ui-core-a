@@ -3,11 +3,12 @@ import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 import { IRole } from '../../types/role';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import { IColDef } from '../../components/tables/primaryTable';
+import FilterableTable from '../../components/tables/filterableTable';
 import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
 import ShortendDescription from '../../components/texts/shortendDescription';
-import ListItems from '../../components/lists/listItems';
+// import ListItems from '../../components/lists/listItems';
 import TreeDirectory, { objectGenerator, IDir } from '../../components/navs/treeDirectory';
 
 interface IProp {
@@ -101,13 +102,32 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
                                     directory={directories} />
                             </Grid>
                             <Grid item xs={12} md={7} lg={8} xl={9}>
-                                <PrimaryTable
+                                {/* <PrimaryTable
                                     maxHeight={700}
                                     enableSelection
                                     enableMultipleSelection
                                     onSelect={(data) => {if (onSelect) onSelect(data)}}
                                     columnDefs={colDef}
-                                    data={filteredData} />
+                                    data={filteredData} /> */}
+                                <FilterableTable
+                                    filterConfig={{
+                                        searchValue: '',
+                                        searchField: 'name',
+                                        filterValue: '',
+                                        filterField: 'type',
+                                        filterOptions: [],
+                                        sortValue: undefined,
+                                        sortField: 'name',
+                                        fieldOptions: ['name', 'value', 'type']
+                                    }}
+                                    tableConfig={{
+                                        maxHeight: 700,
+                                        enableSelection: true,
+                                        enableMultipleSelection: true,
+                                        onSelect: (data) => {if (onSelect) onSelect(data)},
+                                        columnDefs: colDef,
+                                        data: filteredData
+                                    }} />
                             </Grid>
                         </>
                     )

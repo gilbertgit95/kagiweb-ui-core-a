@@ -25,6 +25,7 @@ import ShortendDescription from '../../components/texts/shortendDescription';
 import ListItems from '../../components/lists/listItems';
 import { IRole } from '../../types/role';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import FilterableTable from '../../components/tables/filterableTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import { useAppSelector} from '../../stores/appStore';
 import RoleFeatureService from './roleFeatureService';
@@ -225,7 +226,7 @@ const RoleFeaturesListEditForm = ({role, onChange, view, onChangeView}:IProps) =
                 setFilteredRoles(
                     roles
                         .filter(item => !item.absoluteAuthority)
-                        .filter(item => item._id != role._id)
+                        .filter(item => item._id !== role._id)
                 )
 
                 try {
@@ -436,13 +437,32 @@ const RoleFeaturesListEditForm = ({role, onChange, view, onChangeView}:IProps) =
             {
                 role?.absoluteAuthority? null:(
                     <Grid item xs={12}>
-                        <PrimaryTable
+                        {/* <PrimaryTable
                             maxHeight={700}
                             enableSelection
                             enableMultipleSelection
                             onSelect={(selectedData) => setTableSelection(selectedData)}
                             columnDefs={colDef}
-                            data={data} />
+                            data={data} /> */}
+                        <FilterableTable
+                            filterConfig={{
+                                searchValue: '',
+                                searchField: 'name',
+                                filterValue: '',
+                                filterField: 'type',
+                                filterOptions: [],
+                                sortValue: undefined,
+                                sortField: 'name',
+                                fieldOptions: ['name', 'value', 'type']
+                            }}
+                            tableConfig={{
+                                maxHeight: 700,
+                                enableSelection: true,
+                                enableMultipleSelection: true,
+                                onSelect: (selectedData) => setTableSelection(selectedData),
+                                columnDefs: colDef,
+                                data: data
+                            }} />
                     </Grid>
                 )
             }

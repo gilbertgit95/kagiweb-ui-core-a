@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 
 import { IRole } from '../../types/role';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import { IColDef } from '../../components/tables/primaryTable';
+import FilterableTable from '../../components/tables/filterableTable';
 import { useAppSelector} from '../../stores/appStore';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import ListItems from '../../components/lists/listItems';
@@ -125,10 +126,22 @@ const RoleFeaturesGroupedReadOnlyView = ({role}:IProps) => {
                 {
                     role?.absoluteAuthority? null:(
                         <Grid item xs={12}>
-                            <PrimaryTable
-                                maxHeight={700}
-                                columnDefs={colDef}
-                                data={data} />
+                            <FilterableTable
+                                filterConfig={{
+                                    searchValue: '',
+                                    searchField: 'name',
+                                    filterValue: '',
+                                    filterField: 'type',
+                                    filterOptions: [],
+                                    sortValue: undefined,
+                                    sortField: 'name',
+                                    fieldOptions: ['name', 'value', 'type']
+                                }}
+                                tableConfig={{
+                                    maxHeight: 700,
+                                    columnDefs: colDef,
+                                    data: data
+                                }} />
                         </Grid>
                     )
                 }

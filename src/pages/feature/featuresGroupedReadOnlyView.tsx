@@ -113,10 +113,6 @@ const FeaturesGroupedReadOnlyView = () => {
                     directory={directories} />
             </Grid>
             <Grid item xs={12} md={9}>
-                {/* <PrimaryTable
-                    maxHeight={750}
-                    columnDefs={colDef}
-                    data={data} /> */}
                 <FilterableTable
                     filterConfig={{
                         searchValue: '',

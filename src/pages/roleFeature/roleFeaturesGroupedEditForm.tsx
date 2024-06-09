@@ -24,6 +24,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import { IRole } from '../../types/role';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import FilterableTable from '../../components/tables/filterableTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import { useAppSelector} from '../../stores/appStore';
 import RoleFeatureService from './roleFeatureService';
@@ -221,7 +222,7 @@ const RoleFeaturesGroupedEditForm = ({role, onChange, view, onChangeView}:IProps
                 setFilteredRoles(
                     roles
                         .filter(item => !item.absoluteAuthority)
-                        .filter(item => item._id != role._id)
+                        .filter(item => item._id !== role._id)
                 )
 
                 try {
@@ -270,10 +271,13 @@ const RoleFeaturesGroupedEditForm = ({role, onChange, view, onChangeView}:IProps
     }, [role, roles, features, tagSelection])
 
     useEffect(() => {
-        const tags = features? features.map(item => item.tags || []): []
+        const roleFeaturesSet = new Set(role?.featuresRefs?.map(item => item.featureId))
+        const tags = role && features? features
+            .filter(item => roleFeaturesSet.has(item._id!))
+            .map(item => item.tags || []): []
         const dir = objectGenerator(tags)
         setDirectories(dir)
-    }, [features])
+    }, [role, features])
 
     return (
         <>
@@ -453,14 +457,32 @@ const RoleFeaturesGroupedEditForm = ({role, onChange, view, onChangeView}:IProps
                                 directory={directories} />
                         </Grid>
                         <Grid item xs={12} md={9}>
-                            <PrimaryTable
+                            {/* <PrimaryTable
                                 maxHeight={700}
                                 enableSelection
                                 enableMultipleSelection
                                 onSelect={(selectedData) => setTableSelection(selectedData)}
                                 columnDefs={colDef}
-                                data={data} />
-
+                                data={data} /> */}
+                            <FilterableTable
+                                filterConfig={{
+                                    searchValue: '',
+                                    searchField: 'name',
+                                    filterValue: '',
+                                    filterField: 'type',
+                                    filterOptions: [],
+                                    sortValue: undefined,
+                                    sortField: 'name',
+                                    fieldOptions: ['name', 'value', 'type']
+                                }}
+                                tableConfig={{
+                                    maxHeight: 700,
+                                    enableSelection: true,
+                                    enableMultipleSelection: true,
+                                    onSelect: (selectedData) => setTableSelection(selectedData),
+                                    columnDefs: colDef,
+                                    data: data
+                                }} />
                         </Grid>
                     </>
                 )

@@ -3,7 +3,8 @@ import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 import { IRole } from '../../types/role';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import { IColDef } from '../../components/tables/primaryTable';
+import FilterableTable from '../../components/tables/filterableTable';
 import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
 import ShortendDescription from '../../components/texts/shortendDescription';
@@ -79,12 +80,31 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
                 {
                     role?.absoluteAuthority? null:(
                         <Grid item xs={12}>
-                            <PrimaryTable
+                            {/* <PrimaryTable
                                 enableSelection
                                 enableMultipleSelection
                                 onSelect={(data) => {if (onSelect) onSelect(data)}}
                                 columnDefs={colDef}
-                                data={data} />
+                                data={data} /> */}
+                            <FilterableTable
+                                filterConfig={{
+                                    searchValue: '',
+                                    searchField: 'name',
+                                    filterValue: '',
+                                    filterField: 'type',
+                                    filterOptions: [],
+                                    sortValue: undefined,
+                                    sortField: 'name',
+                                    fieldOptions: ['name', 'value', 'type']
+                                }}
+                                tableConfig={{
+                                    maxHeight: 700,
+                                    enableSelection: true,
+                                    enableMultipleSelection: true,
+                                    onSelect: (data) => {if (onSelect) onSelect(data)},
+                                    columnDefs: colDef,
+                                    data: data
+                                }} />
                         </Grid>
                     )
                 }
