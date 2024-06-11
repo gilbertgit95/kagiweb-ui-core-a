@@ -34,12 +34,14 @@ export interface ITransformationConfig {
 
 interface IProps {
     config?: ITransformationConfig,
-    onChange?: (conf:ITransformationConfig) => void
+    onChange?: (conf:ITransformationConfig) => void,
+    customSection?: React.ReactNode
 }
 
 export default function Tablefilters({
     config,
-    onChange
+    onChange,
+    customSection
 }:ITransformationConfig & IProps) {
     const [anchorSearch, setAnchorSearch] = React.useState<HTMLButtonElement | null>(null);
     const [anchorFilter, setAnchorFilter] = React.useState<HTMLButtonElement | null>(null);
@@ -123,6 +125,8 @@ export default function Tablefilters({
                     <SortIcon />
                 </Button>
             </ButtonGroup>
+            {/* display */}
+            { customSection? customSection: null }
             {/* search settings */}
             <Popover
                 open={Boolean(anchorSearch)}

@@ -28,25 +28,23 @@ const RoleFeaturesListReadOnlyView = ({role}:IProps) => {
 
     useEffect(() => {
         const init = async () => {
-            if (role) {
-                    if (role && role.featuresRefs) {
-                        const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
-                            if (item && item._id) acc[item._id] = item
-                            return acc
-                        }, {})
-                        const tarnsformedData:IFeatureRow[] = role.featuresRefs.map((item) => {
-                            const feature = featuresMap[item.featureId || '']
-                            return {
-                                _id: feature?._id || '',
-                                name: feature?.name || '--',
-                                value: feature?.value || '--',
-                                type: feature?.type  || '--',
-                                tags: feature?.tags || []
-                            }
-                        })
-                        // console.log(tarnsformedData)
-                        setData(tarnsformedData)
+            if (role && role.featuresRefs) {
+                const featuresMap:{[key: string]:IFeature} = features.reduce((acc:{[key:string]:IFeature}, item:IFeature) => {
+                    if (item && item._id) acc[item._id] = item
+                    return acc
+                }, {})
+                const tarnsformedData:IFeatureRow[] = role.featuresRefs.map((item) => {
+                    const feature = featuresMap[item.featureId || '']
+                    return {
+                        _id: feature?._id || '',
+                        name: feature?.name || '--',
+                        value: feature?.value || '--',
+                        type: feature?.type  || '--',
+                        tags: feature?.tags || []
                     }
+                })
+                // console.log(tarnsformedData)
+                setData(tarnsformedData)
             }
         }
         console.log('initiate role features page')

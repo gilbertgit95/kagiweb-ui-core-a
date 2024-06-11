@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
-import { Grid, Box } from '@mui/material'
+import { Grid, Box, Typography } from '@mui/material'
 import Tablefilters, { ITransformationConfig } from './tableFilters'
 import PrimaryTable, { IPrimaryTableProps } from './primaryTable'
 
@@ -113,7 +113,16 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
                         config={{
                             ...tablefilter,
                             ...{filterOptions}
-                        }} />
+                        }}
+                        customSection={
+                            <Typography
+                                sx={{marginLeft: '10px'}}
+                                component="span"
+                                color="primary"
+                                variant="subtitle1">
+                                { transformedTableData.length }
+                            </Typography>
+                        } />
                 </Box>
             </Grid>
             <Grid item xs={12}>
