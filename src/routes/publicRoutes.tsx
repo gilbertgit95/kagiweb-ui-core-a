@@ -1,27 +1,32 @@
+import { useMemo } from 'react';
+
 import { Grid, Button } from '@mui/material'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PublicPageLayout from '../layouts/publicPageLayout';
 import NotFoundPage from '../components/infoOrWarnings/pageNotFound';
 
-import PublicHomePage from '../pages/home/publicHomePage';
-import SigninPage from '../pages/auth/signinPage';
-import SignupPage from '../pages/auth/signupPage';
-import SigninOTPPage from '../pages/auth/signinOtpPage';
-import ForgotPasswordPage from '../pages/auth/forgotPasswordPage';
-import ResetPasswordPage from '../pages/auth/resetPasswordPage';
+import appComponentsHandler from '../utils/appComponentsHandler';
 
 const PublicRoutes = () => {
+    const publicRoutes = useMemo(() => {
+        return appComponentsHandler.routes.publicRoutes
+    }, [])
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<PublicPageLayout />}>
-                    <Route index element={<PublicHomePage />} />
-                    <Route path="signin" element={<SigninPage />} />
-                    <Route path="signup" element={<SignupPage />} />
-                    <Route path="signinOTP" element={<SigninOTPPage />} />
-                    <Route path="forgotPassword" element={<ForgotPasswordPage />} />
-                    <Route path="resetPassword" element={<ResetPasswordPage />} />
+                    {
+                        publicRoutes.map((route, routeIndex)  => {
+                            return route.url === 'index'? (
+                                <Route key={routeIndex} index element={<route.page />} />
+                            ): (
+                                <Route key={routeIndex} path={ route.url } element={<route.page />} />
+                            )
+                        })
+                    }
+
                     <Route
                         path="*"
                         element={

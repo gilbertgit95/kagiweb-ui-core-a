@@ -10,6 +10,9 @@ import InitialDisplay from './components/infoOrWarnings/initialDisplay';
 import PublicRoutes from './routes/publicRoutes';
 import PrivateRoutes from './routes/privateRoutes';
 
+import appComponentsHandler from './utils/appComponentsHandler';
+import appStore from './stores/appStore';
+
 function App() {
   const apptheme = useAppSelector(state => state.appRefs.appTheme)
   const isSignedIn = useAppSelector(state => state.signedInUser?.isSignedIn)
@@ -61,4 +64,8 @@ function App() {
   )
 }
 
+export {
+  appStore,
+  appComponentsHandler
+}
 export default App;

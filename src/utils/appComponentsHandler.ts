@@ -2,7 +2,7 @@ import React from 'react'
 
 export interface IAppRoute {
     url: string,
-    page: React.ReactNode
+    page: React.FC
 }
 
 export interface IAppNav {
@@ -19,16 +19,16 @@ export interface IUserDrawer {
 }
 
 class AppComponentsHandler {
-    private routes:{privateRoutes:IAppRoute[], publicRoutes:IAppRoute[]} = {
+    public routes:{privateRoutes:IAppRoute[], publicRoutes:IAppRoute[]} = {
         privateRoutes: [],
         publicRoutes: []
     }
-    private mainDrawer:{workspaceNavs:IAppNav[], userNavs:IAppNav[], globalNavs:IAppNav[]} = {
+    public mainDrawer:{workspaceNavs:IAppNav[], userNavs:IAppNav[], globalNavs:IAppNav[]} = {
         workspaceNavs: [],
         userNavs: [],
         globalNavs: []
     }
-    private userDrawer:{privateUserDrawers:IUserDrawer[], publicUserDrawers:IUserDrawer[]} = {
+    public userDrawer:{privateUserDrawers:IUserDrawer[], publicUserDrawers:IUserDrawer[]} = {
         privateUserDrawers:[],
         publicUserDrawers:[]
     }
@@ -59,4 +59,6 @@ class AppComponentsHandler {
 
 }
 
-export default AppComponentsHandler
+const appComponentsHandler = new AppComponentsHandler
+
+export default appComponentsHandler
