@@ -59,6 +59,6 @@ class AppComponentsHandler {
 
 }
 
-const appComponentsHandler = new AppComponentsHandler
+const appComponentsHandler = new AppComponentsHandler()
 
 export default appComponentsHandler
