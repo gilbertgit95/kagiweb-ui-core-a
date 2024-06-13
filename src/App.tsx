@@ -1,5 +1,19 @@
 import React, {useEffect, useCallback} from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import HomeIcon from '@mui/icons-material/Home';
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import PeopleIcon from '@mui/icons-material/People';
+import NotesIcon from '@mui/icons-material/Notes';
+import TaskIcon from '@mui/icons-material/Task';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import KeyIcon from '@mui/icons-material/Key';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import KeyOffOutlinedIcon from '@mui/icons-material/KeyOffOutlined';
+import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
+
 import CssBaseline from '@mui/material/CssBaseline';
 import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
@@ -244,8 +258,66 @@ appComponentsHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId/u
 appComponentsHandler.addPrivateRoute({url: 'workspaces/view/:workspaceId', page: WorkspaceHomePage })
 
 // add items to main drawers
+appComponentsHandler.addMainDrawer({
+  label: 'Workspace Data',
+  links:  [
+      { label: 'Workspace Dash*', url: '/workspaces/view/none', Icon: HomeIcon },
+      { label: 'Products*', url: '/', Icon: HomeIcon }
+  ]
+})
+appComponentsHandler.addMainDrawer({
+  label: 'User Data',
+  links:  [
+      { label: 'Home', url: '/', Icon: HomeIcon },
+      { label: 'Notes*', url: '/notes', Icon: NotesIcon },
+      { label: 'Tasks*', url: '/tasks', Icon: TaskIcon },
+      { label: 'Notifications*', url: '/notifications', Icon: NotificationsIcon }
+  ]
+})
+appComponentsHandler.addMainDrawer({
+  label: 'Global Data',
+  links:  [
+      { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
+      { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
+      { label: 'Users', url: '/users', Icon: PeopleIcon }
+  ]
+})
 
 // add items to user drawers
+// for public
+appComponentsHandler.addPublicUserDrawerNav({
+  label: 'Info Pages',
+  links: [
+      { label: 'Home', url: '/', Icon: HomeIcon },
+  ]
+})
+appComponentsHandler.addPublicUserDrawerNav({
+  label: 'Auth Pages',
+  links: [
+      { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
+      { label: 'Signin OTP', url: '/signinOTP', Icon: KeyIcon },
+      { label: 'Signup', url: '/signup', Icon: AccountBoxOutlinedIcon },
+      { label: 'Forgot Password', url: '/forgotPassword', Icon: KeyOffOutlinedIcon },
+      { label: 'Reset Password', url: '/resetPassword', Icon: LockResetOutlinedIcon }
+  ]
+})
+// for private
+appComponentsHandler.addPrivateUserDrawerNav({
+  label: 'Custom Actions',
+  links: [
+      { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
+      { label: 'Signin OTP', url: '/signinOTP', Icon: KeyIcon },
+      {
+        label: 'Test Action',
+        action: () => {
+          console.log('do some actions!!')
+        },
+        Icon: AccountBoxOutlinedIcon
+      },
+  ]
+})
+
+
 interface IAppProps {
   theme?: any
 }

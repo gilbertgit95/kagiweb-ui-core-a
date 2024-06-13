@@ -1,17 +1,11 @@
-// import React from "react";
-import React, {FC} from 'react';
+import React, {useMemo} from 'react';
 import PrimaryNav, { TLinkGroup, TLink } from '../components/navs/primaryNav';
 import { Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import PagesIcon from '@mui/icons-material/Pages';
-import HomeIcon from '@mui/icons-material/Home';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import KeyIcon from '@mui/icons-material/Key';
-import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
-import KeyOffOutlinedIcon from '@mui/icons-material/KeyOffOutlined';
-import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 
 import Config from '../config';
+import appComponentsHandler from '../utils/appComponentsHandler';
 
 const NavCustomEl = () => {
     return (
@@ -25,24 +19,9 @@ const NavCustomEl = () => {
 
 
 const PublicPageLayout = () => {
-    const links:TLinkGroup[] = [
-        {
-            label: 'Info Pages',
-            links: [
-                { label: 'Home', url: '/', Icon: HomeIcon },
-            ]
-        },
-        {
-            label: 'Auth Pages',
-            links: [
-                { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
-                { label: 'Signin OTP', url: '/signinOTP', Icon: KeyIcon },
-                { label: 'Signup', url: '/signup', Icon: AccountBoxOutlinedIcon },
-                { label: 'Forgot Password', url: '/forgotPassword', Icon: KeyOffOutlinedIcon },
-                { label: 'Reset Password', url: '/resetPassword', Icon: LockResetOutlinedIcon }
-            ]
-        }
-    ]
+    const links:TLinkGroup[] = useMemo(() => {
+        return appComponentsHandler.userDrawer.publicUserDrawers
+    }, [])
 
     return (
         <>

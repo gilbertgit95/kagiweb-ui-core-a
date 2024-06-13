@@ -1,7 +1,6 @@
-import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { Typography, Divider } from "@mui/material";
-import HomeIcon from '@mui/icons-material/Home';
+import React, {useMemo} from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { Typography, Divider } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
@@ -9,13 +8,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import SettingsIcon from '@mui/icons-material/Settings';
-import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import PeopleIcon from '@mui/icons-material/People';
-import NotesIcon from '@mui/icons-material/Notes';
-import TaskIcon from '@mui/icons-material/Task';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-// import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -24,13 +17,12 @@ import { useAppDispatch, useAppSelector} from '../stores/appStore';
 import { clearUserData } from '../stores/signedInUserSlice';
 import { toggleTheme } from '../stores/appRefsSlice';
 
-import Config from "../config";
-import AuthService from "../pages/auth/authService";
-import PrimaryNav, { TLinkGroup, TLink } from '../components/navs/primaryNav';
+import Config from '../config';
+import AuthService from '../pages/auth/authService';
+import PrimaryNav, { TLinkGroup } from '../components/navs/primaryNav';
 
-// type Props = {
-//     children?: React.ReactNode
-// }
+import appComponentsHandler from '../utils/appComponentsHandler';
+
 const NavCustomEl = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
@@ -38,6 +30,9 @@ const NavCustomEl = () => {
     const userRole = useAppSelector(state => state.signedInUser?.role)
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const customLinks:TLinkGroup[] = useMemo(() => {
+        return appComponentsHandler.userDrawer.privateUserDrawers
+    }, [])
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget)
@@ -99,6 +94,41 @@ const NavCustomEl = () => {
                         </ListItemText>
                     </MenuItem>
                     <Divider />
+                    {/* custom menu items */}
+                    {
+                        customLinks?.map((lg, lgIndex) => {
+                            if (!lg.links?.length) return null
+                            return (
+                                <React.Fragment key={lgIndex}>
+                                    <Typography color="primary" sx={{margin: '10px'}}>{ lg.label }</Typography>
+                                    {
+                                        lg.links?.map((item, index) => {
+                                            return (
+                                                <MenuItem
+                                                    key={index}
+                                                    onClick={async () => {
+                                                        if (item.action) await item.action()
+                                                        if (item.url) window.location.replace(item.url)
+                                                    }}>
+                                                    {
+                                                        item.Icon? (
+                                                            <ListItemIcon>
+                                                                <item.Icon />
+                                                            </ListItemIcon>
+                                                        ): null
+                                                    }
+                                                    <ListItemText>{ item.label }</ListItemText>
+                                                </MenuItem>
+                                            )
+                                        })
+                                    }
+                                    { (customLinks?.length === (lgIndex + 1))? null: <Divider /> }
+                                </React.Fragment>
+                            )
+                        })
+                    }
+                    {/* default user actions */}
+                    { customLinks?.length? <Typography color="primary" sx={{margin: '10px'}}>Default Actions</Typography>: null }
                     <MenuItem onClick={() => handleLinkClick('/owner/edit/roles')}>
                         <ListItemIcon>
                             <AdminPanelSettingsIcon />
@@ -125,33 +155,9 @@ const NavCustomEl = () => {
 
 
 const PrivatePageLayout =() => {
-    const links:TLinkGroup[] = [
-        {
-            label: 'Workspace Data',
-            links:  [
-                { label: 'Workspace Dash*', url: '/workspaces/view/none', Icon: HomeIcon },
-                { label: 'Products*', url: '/', Icon: HomeIcon }
-            ]
-        },
-        {
-            label: 'User Data',
-            links:  [
-                { label: 'Home', url: '/', Icon: HomeIcon },
-                { label: 'Notes*', url: '/notes', Icon: NotesIcon },
-                { label: 'Tasks*', url: '/tasks', Icon: TaskIcon },
-                { label: 'Notifications*', url: '/notifications', Icon: NotificationsIcon }
-            ]
-        },
-        {
-            label: 'Global Data',
-            links:  [
-                { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
-                { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
-                { label: 'Users', url: '/users', Icon: PeopleIcon },
-                // { label: 'Workspaces', url: '/workspaces', Icon: WorkspacesIcon },
-            ]
-        }
-    ]
+    const links:TLinkGroup[] = useMemo(() => {
+        return appComponentsHandler.mainDrawer
+    }, [])
 
     return (
         <>
