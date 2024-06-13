@@ -1,21 +1,9 @@
 import React from 'react'
+import { TLinkGroup } from '../components/navs/primaryNav'
 
 export interface IAppRoute {
     url: string,
     page: React.FC
-}
-
-export interface IAppNav {
-    label: string,
-    url: string,
-    icon: React.FC
-}
-
-export interface IUserDrawer {
-    label: string,
-    url: string,
-    action: () => void,
-    icon: React.FC
 }
 
 class AppComponentsHandler {
@@ -23,12 +11,8 @@ class AppComponentsHandler {
         privateRoutes: [],
         publicRoutes: []
     }
-    public mainDrawer:{workspaceNavs:IAppNav[], userNavs:IAppNav[], globalNavs:IAppNav[]} = {
-        workspaceNavs: [],
-        userNavs: [],
-        globalNavs: []
-    }
-    public userDrawer:{privateUserDrawers:IUserDrawer[], publicUserDrawers:IUserDrawer[]} = {
+    public mainDrawer:TLinkGroup[] = []
+    public userDrawer:{privateUserDrawers:TLinkGroup[], publicUserDrawers:TLinkGroup[]} = {
         privateUserDrawers:[],
         publicUserDrawers:[]
     }
@@ -40,20 +24,14 @@ class AppComponentsHandler {
         this.routes.publicRoutes.push(route)
     }
 
-    public addMainDrawerWorkspaceNav(nav:IAppNav):void {
-        this.mainDrawer.workspaceNavs.push(nav)
-    }
-    public addMainDrawerUserNav(nav:IAppNav):void {
-        this.mainDrawer.userNavs.push(nav)
-    }
-    public addMainDrawerGlobalNav(nav:IAppNav):void {
-        this.mainDrawer.globalNavs.push(nav)
+    public addMainDrawer(nav:TLinkGroup):void {
+        this.mainDrawer.push(nav)
     }
 
-    public addPrivateUserDrawerNav(nav:IUserDrawer):void {
+    public addPrivateUserDrawerNav(nav:TLinkGroup):void {
         this.userDrawer.privateUserDrawers.push(nav)
     }
-    public addPublicUserDrawerNav(nav:IUserDrawer):void {
+    public addPublicUserDrawerNav(nav:TLinkGroup):void {
         this.userDrawer.publicUserDrawers.push(nav)
     }
 
