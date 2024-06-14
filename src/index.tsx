@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import App, {
   appStore,
-  // appComponentsHandler
+  appComponentsHandler
 } from './App';
 
 // create root component
@@ -31,9 +31,26 @@ const customTheme = {
   }
 }
 
+const customConfig = {
+  AppName: 'Kagiweb tech',
+  AppDescription: '',
+  ServerAddress: 'http://127.0.0.1:5000',
+  RootApiEndpoint: '/api/v1/',
+  TokenKey: '_auth_token',
+  AppThemeKey: '_app_theme',
+  AppThemeConfig: customTheme,
+
+  defaultDateFormat: 'YYYY-MM-DD',
+  defaultDateTimeFormat: 'ddd MMM DD YYYY, hh:mm:ss A',
+  defaultPageSizeList: [5, 10, 25, 100],
+  defaultPageSize: 10,
+  defaultPage: 1
+}
+
+appComponentsHandler.setAppConfig(customConfig)
 root.render(
   <Provider store={appStore}>
-    <App theme={customTheme} />
+    <App />
   </Provider>
 );
 

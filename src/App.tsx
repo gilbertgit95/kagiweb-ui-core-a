@@ -30,7 +30,7 @@ import InitialDisplay from './components/infoOrWarnings/initialDisplay';
 import PublicRoutes from './routes/publicRoutes';
 import PrivateRoutes from './routes/privateRoutes';
 
-import appComponentsHandler from './utils/appComponentsHandler';
+import appComponentsHandler, { IAppConfig } from './utils/appComponentsHandler';
 import appStore from './stores/appStore';
 
 // public pages
@@ -317,24 +317,19 @@ appComponentsHandler.addPrivateUserDrawerNav({
   ]
 })
 
-
-interface IAppProps {
-  theme?: any
-}
-
-function App({theme}:IAppProps) {
+function App() {
   const apptheme = useAppSelector(state => state.appRefs.appTheme)
   const isSignedIn = useAppSelector(state => state.signedInUser?.isSignedIn)
   const dispatch = useAppDispatch()
   const finalTheme = useCallback(() => {
-    const defaultTheme = theme? theme: {}
+    const defaultTheme = appComponentsHandler.appConfig.AppThemeConfig || {}
     defaultTheme['palette'] = {
       ...(defaultTheme['palette'] || {}),
       ...{mode: apptheme}
     }
   
     return defaultTheme
-  }, [theme, apptheme])
+  }, [apptheme])
   const themeConfiguration = createTheme(finalTheme())
 
   useEffect(() => {
@@ -352,7 +347,6 @@ function App({theme}:IAppProps) {
       }
     })()
   }, [dispatch])
-
 
   return (
     <ThemeProvider theme={themeConfiguration}>

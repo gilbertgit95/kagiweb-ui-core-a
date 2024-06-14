@@ -6,7 +6,55 @@ export interface IAppRoute {
     page: React.FC
 }
 
+export interface IAppConfig {
+    AppName: string,
+    AppDescription: string,
+    ServerAddress:string,
+    RootApiEndpoint:string,
+    TokenKey:string,
+    AppThemeKey:string,
+    AppThemeConfig:any,
+    
+    defaultDateFormat:string,
+    defaultDateTimeFormat:string,
+    defaultPageSizeList:number[],
+    defaultPageSize:number,
+    defaultPage:number
+}
+
+interface IAppConfigOpt {
+    AppName?: string,
+    AppDescription?: string,
+    ServerAddress?:string,
+    RootApiEndpoint?:string,
+    TokenKey?:string,
+    AppThemeKey?:string,
+    AppThemeConfig?:any,
+    
+    defaultDateFormat?:string,
+    defaultDateTimeFormat?:string,
+    defaultPageSizeList?:number[],
+    defaultPageSize?:number,
+    defaultPage?:number
+}
+
 class AppComponentsHandler {
+    public appConfig:IAppConfig = {
+        AppName: 'Kagiweb tech',
+        AppDescription: '',
+        ServerAddress: 'http://127.0.0.1:5000',
+        RootApiEndpoint: '/api/v1/',
+        TokenKey: '_auth_token',
+        AppThemeKey: '_app_theme',
+        AppThemeConfig: {},
+    
+        defaultDateFormat: 'YYYY-MM-DD',
+        defaultDateTimeFormat: 'ddd MMM DD YYYY, hh:mm:ss A',
+        defaultPageSizeList: [5, 10, 25, 100],
+        defaultPageSize: 10,
+        defaultPage: 1
+    }
+
     public routes:{privateRoutes:IAppRoute[], publicRoutes:IAppRoute[]} = {
         privateRoutes: [],
         publicRoutes: []
@@ -15,6 +63,10 @@ class AppComponentsHandler {
     public userDrawer:{privateUserDrawers:TLinkGroup[], publicUserDrawers:TLinkGroup[]} = {
         privateUserDrawers:[],
         publicUserDrawers:[]
+    }
+
+    public setAppConfig(conf:IAppConfigOpt) {
+        this.appConfig = {...this.appConfig, ...conf}
     }
 
     public addPrivateRoute(route:IAppRoute):void {
