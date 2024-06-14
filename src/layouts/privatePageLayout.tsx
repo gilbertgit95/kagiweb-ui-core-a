@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Typography, Divider } from '@mui/material';
+import { Typography, Divider, Box } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
@@ -84,69 +84,71 @@ const NavCustomEl = () => {
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleClose}>
-                    <MenuItem onClick={() => handleLinkClick('/owner/view')}>
-                        <ListItemIcon>
-                            <SettingsIcon />
-                        </ListItemIcon>
-                        <ListItemText>
-                            <Typography variant="subtitle1">{ userData && userData.username? userData.username: '' }</Typography>
-                            <Typography variant="caption" color="primary">{ userRole?.name }</Typography>
-                        </ListItemText>
-                    </MenuItem>
-                    <Divider />
-                    {/* custom menu items */}
-                    {
-                        customLinks?.map((lg, lgIndex) => {
-                            if (!lg.links?.length) return null
-                            return (
-                                <React.Fragment key={lgIndex}>
-                                    <Typography color="primary" sx={{margin: '10px'}}>{ lg.label }</Typography>
-                                    {
-                                        lg.links?.map((item, index) => {
-                                            return (
-                                                <MenuItem
-                                                    key={index}
-                                                    onClick={async () => {
-                                                        if (item.action) await item.action()
-                                                        if (item.url) window.location.replace(item.url)
-                                                    }}>
-                                                    {
-                                                        item.Icon? (
-                                                            <ListItemIcon>
-                                                                <item.Icon />
-                                                            </ListItemIcon>
-                                                        ): null
-                                                    }
-                                                    <ListItemText>{ item.label }</ListItemText>
-                                                </MenuItem>
-                                            )
-                                        })
-                                    }
-                                    { (customLinks?.length === (lgIndex + 1))? null: <Divider /> }
-                                </React.Fragment>
-                            )
-                        })
-                    }
-                    {/* default user actions */}
-                    { customLinks?.length? <Typography color="primary" sx={{margin: '10px'}}>Default Actions</Typography>: null }
-                    <MenuItem onClick={() => handleLinkClick('/owner/edit/roles')}>
-                        <ListItemIcon>
-                            <AdminPanelSettingsIcon />
-                        </ListItemIcon>
-                        <ListItemText>Change Role</ListItemText>
-                    </MenuItem>
-                    <MenuItem onClick={() => handleThemeToggle(appTheme)}>
-                        <ListItemIcon>
-                            { appTheme === 'dark'? <DarkModeIcon />: <WbSunnyIcon /> }
-                        </ListItemIcon>
-                        <ListItemText>Toggle Theme</ListItemText>
-                    </MenuItem>
-                    <MenuItem onClick={handleSignout}>
-                        <ListItemIcon>
-                            <LockIcon />
-                        </ListItemIcon>
-                        <ListItemText>Signout</ListItemText>
-                    </MenuItem>
+                    <Box>
+                        <MenuItem onClick={() => handleLinkClick('/owner/view')}>
+                            <ListItemIcon>
+                                <SettingsIcon />
+                            </ListItemIcon>
+                            <ListItemText>
+                                <Typography variant="subtitle1">{ userData && userData.username? userData.username: '' }</Typography>
+                                <Typography variant="caption" color="primary">{ userRole?.name }</Typography>
+                            </ListItemText>
+                        </MenuItem>
+                        <Divider />
+                        {/* custom menu items */}
+                        {
+                            customLinks?.map((lg, lgIndex) => {
+                                if (!lg.links?.length) return null
+                                return (
+                                    <React.Fragment key={lgIndex}>
+                                        <Typography color="primary" sx={{margin: '10px'}}>{ lg.label }</Typography>
+                                        {
+                                            lg.links?.map((item, index) => {
+                                                return (
+                                                    <MenuItem
+                                                        key={index}
+                                                        onClick={async () => {
+                                                            if (item.action) await item.action()
+                                                            if (item.url) window.location.replace(item.url)
+                                                        }}>
+                                                        {
+                                                            item.Icon? (
+                                                                <ListItemIcon>
+                                                                    <item.Icon />
+                                                                </ListItemIcon>
+                                                            ): null
+                                                        }
+                                                        <ListItemText>{ item.label }</ListItemText>
+                                                    </MenuItem>
+                                                )
+                                            })
+                                        }
+                                        { (customLinks?.length === (lgIndex + 1))? null: <Divider /> }
+                                    </React.Fragment>
+                                )
+                            })
+                        }
+                        {/* default user actions */}
+                        { customLinks?.length? <Typography color="primary" sx={{margin: '10px'}}>Default Actions</Typography>: null }
+                        <MenuItem onClick={() => handleLinkClick('/owner/edit/roles')}>
+                            <ListItemIcon>
+                                <AdminPanelSettingsIcon />
+                            </ListItemIcon>
+                            <ListItemText>Change Role</ListItemText>
+                        </MenuItem>
+                        <MenuItem onClick={() => handleThemeToggle(appTheme)}>
+                            <ListItemIcon>
+                                { appTheme === 'dark'? <DarkModeIcon />: <WbSunnyIcon /> }
+                            </ListItemIcon>
+                            <ListItemText>Toggle Theme</ListItemText>
+                        </MenuItem>
+                        <MenuItem onClick={handleSignout}>
+                            <ListItemIcon>
+                                <LockIcon />
+                            </ListItemIcon>
+                            <ListItemText>Signout</ListItemText>
+                        </MenuItem>
+                    </Box>
                 </Menu>
             </div>
         </>

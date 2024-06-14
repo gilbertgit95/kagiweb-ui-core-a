@@ -1,5 +1,6 @@
 // import React from "react";
 import React, { FC } from 'react';
+import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
@@ -120,36 +121,38 @@ const PrimaryNav = (props:Props) => {
                             MenuListProps={{
                             'aria-labelledby': 'basic-button',
                             }}>
-                            {
-                                props.linkGroups?.map((lg, lgIndex) => {
-                                    if (!lg.links?.length) return null
-                                    return (
-                                        <React.Fragment key={lgIndex}>
-                                            <Typography color="primary" sx={{margin: '10px'}}>{ lg.label }</Typography>
-                                            {
-                                                lg.links?.map((item, index) => {
-                                                    return (
-                                                        <MenuItem
-                                                            key={index}
-                                                            disabled={item.url === pathname}
-                                                            onClick={() => {handleItemClick(item)}}>
-                                                            {
-                                                                item.Icon? (
-                                                                    <ListItemIcon>
-                                                                        <item.Icon />
-                                                                    </ListItemIcon>
-                                                                ): null
-                                                            }
-                                                            <ListItemText>{ item.label }</ListItemText>
-                                                        </MenuItem>
-                                                    )
-                                                })
-                                            }
-                                            { (props.linkGroups?.length === (lgIndex + 1))? null: <Divider /> }
-                                        </React.Fragment>
-                                    )
-                                })
-                            }
+                            <Box>
+                                {
+                                    props.linkGroups?.map((lg, lgIndex) => {
+                                        if (!lg.links?.length) return null
+                                        return (
+                                            <React.Fragment key={lgIndex}>
+                                                <Typography color="primary" sx={{margin: '10px'}}>{ lg.label }</Typography>
+                                                {
+                                                    lg.links?.map((item, index) => {
+                                                        return (
+                                                            <MenuItem
+                                                                key={index}
+                                                                disabled={item.url === pathname}
+                                                                onClick={() => {handleItemClick(item)}}>
+                                                                {
+                                                                    item.Icon? (
+                                                                        <ListItemIcon>
+                                                                            <item.Icon />
+                                                                        </ListItemIcon>
+                                                                    ): null
+                                                                }
+                                                                <ListItemText>{ item.label }</ListItemText>
+                                                            </MenuItem>
+                                                        )
+                                                    })
+                                                }
+                                                { (props.linkGroups?.length === (lgIndex + 1))? null: <Divider /> }
+                                            </React.Fragment>
+                                        )
+                                    })
+                                }
+                            </Box>
                         </Menu>
                     )
                 }

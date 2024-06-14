@@ -121,7 +121,7 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
                                         fieldOptions: ['name', 'value', 'type']
                                     }}
                                     tableConfig={{
-                                        maxHeight: 700,
+                                        maxHeight: 400,
                                         enableSelection: true,
                                         enableMultipleSelection: true,
                                         onSelect: (data) => {if (onSelect) onSelect(data)},

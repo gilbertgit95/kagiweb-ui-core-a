@@ -230,7 +230,7 @@ function PrimaryTable(props:IPrimaryTableProps) {
 
   return (
     <>
-      <TableContainer sx={{ width: '100%', maxHeight: props?.maxHeight || 500, overflow: 'auto' }} component={Paper}>
+      <TableContainer sx={{ width: '100%', maxHeight: props?.maxHeight, overflow: 'auto' }} component={Paper}>
         <Table stickyHeader aria-label="custom pagination table">
           {
             props.noHeader? null: (

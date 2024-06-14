@@ -456,7 +456,7 @@ const RoleFeaturesListEditForm = ({role, onChange, view, onChangeView}:IProps) =
                                 fieldOptions: ['name', 'value', 'type']
                             }}
                             tableConfig={{
-                                maxHeight: 700,
+                                // maxHeight: 700,
                                 enableSelection: true,
                                 enableMultipleSelection: true,
                                 onSelect: (selectedData) => setTableSelection(selectedData),

@@ -137,7 +137,7 @@ const FeaturesListReadOnlyView = () => {
                     fieldOptions: ['name', 'value', 'type']
                 }}
                 tableConfig={{
-                    maxHeight: 700,
+                    // maxHeight: 700,
                     columnDefs: colDef,
                     data: data
                 }} />

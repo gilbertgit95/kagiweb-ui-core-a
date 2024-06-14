@@ -117,7 +117,7 @@ const RolesPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                     <PrimaryTable
-                        maxHeight={700}
+                        // maxHeight={700}
                         columnDefs={colDef}
                         data={data} />
                 </Grid>
