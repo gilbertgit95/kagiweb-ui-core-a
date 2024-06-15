@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import UserClientDeviceTokenService from './userClientDeviceTokenService';
 import { IUser, IAccessToken } from '../../types/user';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     user?: IUser,
@@ -38,10 +38,10 @@ const UserClientDeviceTokenReadOnlyView = ({user, clientDeviceId, clientDeviceTo
         { field: 'JWT', value: token?.jwt },
         { field: 'Description', value: token?.description },
         { field: 'IP Address', value: token?.ipAddress },
-        { field: 'Expiration', value: token?.expTime? moment(token?.expTime).format(Config.defaultDateTimeFormat): '--' },
+        { field: 'Expiration', value: token?.expTime? moment(token?.expTime).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' },
         { field: 'Disabled', value: token?.disabled? 'True': 'False' },
-        { field: 'Created', value: moment(token?.createdAt).format(Config.defaultDateTimeFormat) },
-        { field: 'Updated', value: moment(token?.updatedAt).format(Config.defaultDateTimeFormat) }
+        { field: 'Created', value: moment(token?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) },
+        { field: 'Updated', value: moment(token?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) }
     ]
 
     return token? (

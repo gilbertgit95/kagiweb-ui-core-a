@@ -10,8 +10,8 @@ import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
 import ShortendDescription from '../../components/texts/shortendDescription';
-import Config from '../../config';
 import UserClientDeviceService from '../userClientDevice/userClientDeviceService';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
     user: IUser | undefined,
@@ -42,7 +42,7 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
                     jwt: item.jwt,
                     description: item.description || '--',
                     ipAddress: item.ipAddress || '--',
-                    expiration: item?.expTime? moment(item?.expTime).format(Config.defaultDateTimeFormat): '--',
+                    expiration: item?.expTime? moment(item?.expTime).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--',
                     disabled: Boolean(item.disabled),
                     createdAt: item.createdAt,
                     updatedAt: item.updatedAt

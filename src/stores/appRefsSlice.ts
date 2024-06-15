@@ -2,13 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFeature } from "../types/feature";
 import { IRole } from "../types/role";
 
-import Config from "../config";
+// import Config from "../config";
 // import { IUser } from "../types/user";
 // import { IWorkspace } from "../types/workspace";
+import appComponentsHandler from '../utils/appComponentsHandler'
 
 export type TAppTheme = 'light' | 'dark'
 
-const savedTheme = localStorage.getItem(Config.AppThemeKey) || undefined;
+const savedTheme = localStorage.getItem(appComponentsHandler.appConfig.AppThemeKey) || undefined;
 const theme = savedTheme && savedTheme === 'light'? 'light': 'dark';
 
 export interface IAppRefs {

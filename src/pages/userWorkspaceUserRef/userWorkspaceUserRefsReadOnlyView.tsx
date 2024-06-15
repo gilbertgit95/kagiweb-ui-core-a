@@ -9,7 +9,6 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
-// import Config from '../../config';
 // import UserWorkspaceUserRefService from '../userWorkspaceUserRef/userWorkspaceUserRefService';
 // import UserWorkspaceService from '../userWorkspace/userWorkspaceService';
 
@@ -65,7 +64,7 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) 
 
         init()
 
-    }, [user, workspaceId])
+    }, [user, workspaceId, getFunc])
 
     const colDef:IColDef[] = [
         {

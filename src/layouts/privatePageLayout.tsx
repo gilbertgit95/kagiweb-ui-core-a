@@ -17,7 +17,6 @@ import { useAppDispatch, useAppSelector} from '../stores/appStore';
 import { clearUserData } from '../stores/signedInUserSlice';
 import { toggleTheme } from '../stores/appRefsSlice';
 
-import Config from '../config';
 import AuthService from '../pages/auth/authService';
 import PrimaryNav, { TLinkGroup } from '../components/navs/primaryNav';
 
@@ -50,7 +49,7 @@ const NavCustomEl = () => {
     const handleThemeToggle = (theme:string) => {
         const updatedTheme = theme === 'light'? 'dark': 'light'
         dispatch(toggleTheme())
-        localStorage.setItem(Config.AppThemeKey, updatedTheme)
+        localStorage.setItem(appComponentsHandler.appConfig.AppThemeKey, updatedTheme)
     }
 
     const handleSignout = async () => {
@@ -60,14 +59,14 @@ const NavCustomEl = () => {
             console.log('Token has not been remove successfully from the database end, but will be cleared from the browser storage.')
         }
         dispatch(clearUserData())
-        localStorage.removeItem(Config.TokenKey)
+        localStorage.removeItem(appComponentsHandler.appConfig.TokenKey)
         window.location.replace('/signin')
     }
 
     return (
         <>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                { Config.AppName }
+                { appComponentsHandler.appConfig.AppName }
             </Typography>
             <div>
                 <IconButton

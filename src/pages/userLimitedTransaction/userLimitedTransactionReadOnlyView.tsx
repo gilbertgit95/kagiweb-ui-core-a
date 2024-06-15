@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import UserLimitedTransactionService from './userLimitedTransactionService';
 import { IUser, ILimitedTransaction } from '../../types/user';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     user?: IUser,
@@ -39,11 +39,11 @@ const UserLimitedTransactionReadOnlyView = ({user, limitedTransactionId}:props) 
         { field: 'Attempts', value: String(limitedtransaction?.attempts) },
         { field: 'Key', value: limitedtransaction?.key || '--' },
         { field: 'Value', value: limitedtransaction?.value || '--' },
-        { field: 'Expiration', value: moment(limitedtransaction?.expTime).format(Config.defaultDateTimeFormat) === 'Invalid date'? '--': moment(limitedtransaction?.expTime).format(Config.defaultDateTimeFormat) },
+        { field: 'Expiration', value: moment(limitedtransaction?.expTime).format(appComponentsHandler.appConfig.defaultDateTimeFormat) === 'Invalid date'? '--': moment(limitedtransaction?.expTime).format(appComponentsHandler.appConfig.defaultDateTimeFormat) },
         { field: 'Recipient', value: limitedtransaction?.recipient || '--' },
         { field: 'Disabled', value: Boolean(limitedtransaction?.disabled)? 'True': 'False' },
-        { field: 'Created', value: moment(limitedtransaction?.createdAt).format(Config.defaultDateTimeFormat) },
-        { field: 'Updated', value: moment(limitedtransaction?.updatedAt).format(Config.defaultDateTimeFormat) }
+        { field: 'Created', value: moment(limitedtransaction?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) },
+        { field: 'Updated', value: moment(limitedtransaction?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) }
     ]
 
     return limitedtransaction? (

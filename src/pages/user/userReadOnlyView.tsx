@@ -10,8 +10,7 @@ import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SimpleLink from '../../components/links/simpleLink';
 import { IUser } from '../../types/user';
-
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IModuleData {module: string, moduleRoute: string, contents: number}
 interface props { user?: IUser & {createdAt?:Date, updatedAt?:Date} }
@@ -56,8 +55,8 @@ const UserReadOnlyView = ({user}:props) => {
         { field: 'username', value: user?.username },
         { field: 'disabled', value: user?.disabled? 'True': 'False' },
         { field: 'verified', value: user?.verified? 'True': 'False' },
-        { field: 'Created', value: user?.createdAt? moment(user?.createdAt).format(Config.defaultDateTimeFormat): '--' },
-        { field: 'Updated', value: user?.updatedAt? moment(user?.updatedAt).format(Config.defaultDateTimeFormat): '--' }
+        { field: 'Created', value: user?.createdAt? moment(user?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' },
+        { field: 'Updated', value: user?.updatedAt? moment(user?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' }
     ]
 
     const modulesData:IModuleData[] = [

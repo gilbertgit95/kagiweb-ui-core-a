@@ -5,7 +5,7 @@ import { IUser, IPassword } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
     user: IUser | undefined
@@ -28,7 +28,7 @@ const UserPasswordsReadOnlyView = ({user}:IProps) => {
                 return {
                     _id: item._id || '',
                     isActive: Boolean(item.isActive),
-                    expTime: item?.expTime? moment(item?.expTime).format(Config.defaultDateTimeFormat): '--',
+                    expTime: item?.expTime? moment(item?.expTime).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--',
                     createdAt: item.createdAt,
                     updatedAt: item.updatedAt
                 }

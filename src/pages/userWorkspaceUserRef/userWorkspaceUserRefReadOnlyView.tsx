@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import { IUser, IWorkspaceUserRef } from '../../types/user';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     user?: IUser,
@@ -49,8 +49,8 @@ const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId, getFunc
         { field: 'Accepted', value: userRef?.accepted? 'True': 'False' },
         { field: 'Declined', value: userRef?.declined? 'True': 'False' },
         { field: 'Disabled', value: userRef?.disabled? 'True': 'False' },
-        { field: 'Created', value: moment(userRef?.createdAt).format(Config.defaultDateTimeFormat) },
-        { field: 'Updated', value: moment(userRef?.updatedAt).format(Config.defaultDateTimeFormat) }
+        { field: 'Created', value: moment(userRef?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) },
+        { field: 'Updated', value: moment(userRef?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) }
     ]
 
     return userRef? (

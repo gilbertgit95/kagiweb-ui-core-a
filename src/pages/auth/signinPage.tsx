@@ -12,11 +12,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 
-import Config from '../../config';
 import TimeUtils from '../../utils/timeUtils';
 import AuthService from './authService';
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 const Signin = () => {
     const [pageState, setPageState] = useState<{isLoading:boolean}>({
@@ -49,7 +49,7 @@ const Signin = () => {
             // if direct signin or if token was on the response then save the token to loca storage
             // then redirect to home
             if (signinResp.token) {
-                localStorage.setItem(Config.TokenKey, 'Bearer ' + signinResp.token)
+                localStorage.setItem(appComponentsHandler.appConfig.TokenKey, 'Bearer ' + signinResp.token)
                 window.location.replace('/')
 
             // if otp signin is enabled then show resp status info for a while

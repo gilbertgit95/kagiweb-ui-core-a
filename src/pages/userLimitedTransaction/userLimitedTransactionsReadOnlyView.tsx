@@ -9,7 +9,7 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
     user: IUser | undefined
@@ -43,7 +43,7 @@ const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
                     type: item.type,
                     key: item.key || '',
                     value: item.value || '',
-                    expTime: moment(item.expTime).format(Config.defaultDateTimeFormat),
+                    expTime: moment(item.expTime).format(appComponentsHandler.appConfig.defaultDateTimeFormat),
                     recipient: item.recipient || '',
                     disabled: Boolean(item.disabled),
                     createdAt: item.createdAt,

@@ -1,13 +1,13 @@
 import apiHelper from './apiHelper';
-import Config from '../../config';
 import { IPageQuery } from '../../types/mixTypes';
 import { IRole } from '../../types/role';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 class RoleApi {
     public static getAllRoles() {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.ServerAddress + Config.RootApiEndpoint + 'roles?page=1&pageSize=10000'
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'roles?page=1&pageSize=10000'
         })
     }
 
@@ -20,14 +20,14 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles${ queries.length? '?' + strQueries: '' }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles${ queries.length? '?' + strQueries: '' }`
         })
     }
 
     public static getRole(id:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ id }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles/${ id }`
         })
     }
 
@@ -41,7 +41,7 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ role._id }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles/${ role._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -57,7 +57,7 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -66,7 +66,7 @@ class RoleApi {
     public static deleteRole(id:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ id }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles/${ id }`
         })
     }
 
@@ -74,7 +74,7 @@ class RoleApi {
     public static getRoleFeatures(roleId:string = '') {
         return apiHelper.privateReq({
             method: 'GET',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles/${ roleId }/features`
         })
     }
 
@@ -85,7 +85,7 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles/${ roleId }/features`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -99,7 +99,7 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/clonefeatures/`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles/${ roleId }/clonefeatures/`,
             data
         })
     }
@@ -108,7 +108,7 @@ class RoleApi {
 
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.ServerAddress + Config.RootApiEndpoint + `roles/${ roleId }/features/${ featureRefId }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `roles/${ roleId }/features/${ featureRefId }`
         })
     }
 }

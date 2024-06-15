@@ -10,8 +10,8 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import SimpleLink from '../../components/links/simpleLink';
 // import Check from '../../components/indicators/check';
-import Config from '../../config';
 import UserClientDeviceService from './userClientDeviceService';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
     user?: IUser
@@ -51,11 +51,11 @@ const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
         },
         {   
             label: 'Created',
-            value: moment(clientDevice?.createdAt).format(Config.defaultDateTimeFormat)
+            value: moment(clientDevice?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat)
         },
         {   
             label: 'Updated',
-            value: moment(clientDevice?.updatedAt).format(Config.defaultDateTimeFormat)
+            value: moment(clientDevice?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat)
         }
     ]
 

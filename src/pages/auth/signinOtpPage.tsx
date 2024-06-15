@@ -13,8 +13,8 @@ import Container from '@mui/material/Container';
 import { useSearchParams } from 'react-router-dom';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import Config from '../../config';
 import AuthService from './authService';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
@@ -54,7 +54,7 @@ const SigninOTP = () => {
             // if direct signin or if token was on the response then save the token to loca storage
             // then redirect to home
             if (signinOTPResp.token) {
-                localStorage.setItem(Config.TokenKey, 'Bearer ' + signinOTPResp.token)
+                localStorage.setItem(appComponentsHandler.appConfig.TokenKey, 'Bearer ' + signinOTPResp.token)
                 window.location.replace('/')
             }
 

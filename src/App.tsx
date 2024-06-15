@@ -17,7 +17,6 @@ import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import CssBaseline from '@mui/material/CssBaseline';
 import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
-import Config from './config';
 import appUtils from './utils/appUtils';
 
 import '@fontsource/roboto/300.css';
@@ -30,7 +29,7 @@ import InitialDisplay from './components/infoOrWarnings/initialDisplay';
 import PublicRoutes from './routes/publicRoutes';
 import PrivateRoutes from './routes/privateRoutes';
 
-import appComponentsHandler, { IAppConfig } from './utils/appComponentsHandler';
+import appHandler from './utils/appComponentsHandler';
 import appStore from './stores/appStore';
 
 // public pages
@@ -140,132 +139,132 @@ import OwnerWorkspaceUserRefEditPage from './pages/owner/ownerWorkspaceUserRefEd
 
 // register routes
 //  for public routes
-appComponentsHandler.addPublicRoute({url: 'index', page: PublicHomePage})
-appComponentsHandler.addPublicRoute({url: 'signin', page: SigninPage})
-appComponentsHandler.addPublicRoute({url: 'signup', page: SignupPage})
-appComponentsHandler.addPublicRoute({url: 'signinOTP', page: SigninOTPPage})
-appComponentsHandler.addPublicRoute({url: 'forgotPassword', page: ForgotPasswordPage})
-appComponentsHandler.addPublicRoute({url: 'resetPassword', page: ResetPasswordPage})
+appHandler.addPublicRoute({url: 'index', page: PublicHomePage})
+appHandler.addPublicRoute({url: 'signin', page: SigninPage})
+appHandler.addPublicRoute({url: 'signup', page: SignupPage})
+appHandler.addPublicRoute({url: 'signinOTP', page: SigninOTPPage})
+appHandler.addPublicRoute({url: 'forgotPassword', page: ForgotPasswordPage})
+appHandler.addPublicRoute({url: 'resetPassword', page: ResetPasswordPage})
 //  for private routes
-appComponentsHandler.addPrivateRoute({url: 'index', page: PrivateHomePage })
+appHandler.addPrivateRoute({url: 'index', page: PrivateHomePage })
 
-{/* feature pages */}
-appComponentsHandler.addPrivateRoute({url: 'features', page: FeaturesPage })
-appComponentsHandler.addPrivateRoute({url: 'features/create', page: FeatureCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'features/view/:featureId', page: FeaturePage })
-appComponentsHandler.addPrivateRoute({url: 'features/edit/:featureId', page: FeatureEditPage })
+// feature pages
+appHandler.addPrivateRoute({url: 'features', page: FeaturesPage })
+appHandler.addPrivateRoute({url: 'features/create', page: FeatureCreatePage })
+appHandler.addPrivateRoute({url: 'features/view/:featureId', page: FeaturePage })
+appHandler.addPrivateRoute({url: 'features/edit/:featureId', page: FeatureEditPage })
 
-{/* role pages */}
-appComponentsHandler.addPrivateRoute({url: 'roles', page: RolesPage })
-appComponentsHandler.addPrivateRoute({url: 'roles/create', page: RoleCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'roles/view/:roleId', page: RolePage })
-appComponentsHandler.addPrivateRoute({url: 'roles/edit/:roleId', page: RoleEditPage })
-{/* role feature pages */}
-appComponentsHandler.addPrivateRoute({url: 'roles/view/:roleId/features', page: RoleFeaturesPage })
-appComponentsHandler.addPrivateRoute({url: 'roles/edit/:roleId/features', page: RoleFeaturesEditPage })
+// role pages
+appHandler.addPrivateRoute({url: 'roles', page: RolesPage })
+appHandler.addPrivateRoute({url: 'roles/create', page: RoleCreatePage })
+appHandler.addPrivateRoute({url: 'roles/view/:roleId', page: RolePage })
+appHandler.addPrivateRoute({url: 'roles/edit/:roleId', page: RoleEditPage })
+// role feature pages
+appHandler.addPrivateRoute({url: 'roles/view/:roleId/features', page: RoleFeaturesPage })
+appHandler.addPrivateRoute({url: 'roles/edit/:roleId/features', page: RoleFeaturesEditPage })
 
-{/* user pages */}
-appComponentsHandler.addPrivateRoute({url: 'users', page: UsersPage })
-appComponentsHandler.addPrivateRoute({url: 'users/create', page: UserCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId', page: UserPage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId', page: UserEditPage })
-{/* user roles */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/roles', page: UserRolesPage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId/roles', page: UserRolesEditPage })
-{/* user passwords */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/passwords', page: UserPasswordsPage })
-appComponentsHandler.addPrivateRoute({url: 'users/create/:userId/passwords', page: UserPasswordCreatePage })
-{/* user limited transactions */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/limitedTransactions', page: UserLimitedTransactionsPage })
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/limitedTransactions/:limitedTransactionId', page: UserLimitedTransactionPage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId/limitedTransactions/:limitedTransactionId', page: UserLimitedTransactionEditPage })
-{/* user client devices */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/clientDevices', page: UserClientDevicesPage })
-appComponentsHandler.addPrivateRoute({url: 'users/create/:userId/clientDevices', page: UserClientDeviceCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/clientDevices/:clientDeviceId', page: UserClientDevicePage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId/clientDevices/:clientDeviceId', page: UserClientDeviceEditPage })
-{/* user client device tokens */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens', page: UserClientDeviceTokensPage })
-appComponentsHandler.addPrivateRoute({url: 'users/create/:userId/clientDevices/:clientDeviceId/clientDeviceTokens', page: UserClientDeviceTokenCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: UserClientDeviceTokenPage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: UserClientDeviceTokenEditPage })
-{/* user contact infos */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/contactInfos', page: UserContactInfosPage })
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/contactInfos/:contactInfoId', page: UserContactInfoPage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId/contactInfos/:contactInfoId', page: UserContactInfoEditPage })
-appComponentsHandler.addPrivateRoute({url: 'users/create/:userId/contactInfos', page: UserContactInfoCreatePage })
-{/* user user infos */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/userInfos', page: UserUserInfosPage })
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/userInfos/:userInfoId', page: UserUserInfoPage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId/userInfos/:userInfoId', page: UserUserInfoEditPage })
-appComponentsHandler.addPrivateRoute({url: 'users/create/:userId/userInfos', page: UserUserInfoCreatePage })
-{/* user workspaces */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/workspaces', page: UserWorkspacesPage })
-appComponentsHandler.addPrivateRoute({url: 'users/create/:userId/workspaces', page: UserWorkspaceCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/workspaces/:workspaceId', page: UserWorkspacePage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId/workspaces/:workspaceId', page: UserWorkspaceEditPage })
-{/* user workspace userRefs */}
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/workspaces/:workspaceId/userRefs', page: UserWorkspaceUserRefsPage })
-appComponentsHandler.addPrivateRoute({url: 'users/create/:userId/workspaces/:workspaceId/userRefs', page: UserWorkspaceUserRefCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'users/view/:userId/workspaces/:workspaceId/userRefs/:userRefId', page: UserWorkspaceUserRefPage })
-appComponentsHandler.addPrivateRoute({url: 'users/edit/:userId/workspaces/:workspaceId/userRefs/:userRefId', page: UserWorkspaceUserRefEditPage })
+// user pages
+appHandler.addPrivateRoute({url: 'users', page: UsersPage })
+appHandler.addPrivateRoute({url: 'users/create', page: UserCreatePage })
+appHandler.addPrivateRoute({url: 'users/view/:userId', page: UserPage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId', page: UserEditPage })
+// user roles
+appHandler.addPrivateRoute({url: 'users/view/:userId/roles', page: UserRolesPage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId/roles', page: UserRolesEditPage })
+// user passwords
+appHandler.addPrivateRoute({url: 'users/view/:userId/passwords', page: UserPasswordsPage })
+appHandler.addPrivateRoute({url: 'users/create/:userId/passwords', page: UserPasswordCreatePage })
+// user limited transactions
+appHandler.addPrivateRoute({url: 'users/view/:userId/limitedTransactions', page: UserLimitedTransactionsPage })
+appHandler.addPrivateRoute({url: 'users/view/:userId/limitedTransactions/:limitedTransactionId', page: UserLimitedTransactionPage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId/limitedTransactions/:limitedTransactionId', page: UserLimitedTransactionEditPage })
+// user client devices
+appHandler.addPrivateRoute({url: 'users/view/:userId/clientDevices', page: UserClientDevicesPage })
+appHandler.addPrivateRoute({url: 'users/create/:userId/clientDevices', page: UserClientDeviceCreatePage })
+appHandler.addPrivateRoute({url: 'users/view/:userId/clientDevices/:clientDeviceId', page: UserClientDevicePage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId/clientDevices/:clientDeviceId', page: UserClientDeviceEditPage })
+// user client device tokens
+appHandler.addPrivateRoute({url: 'users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens', page: UserClientDeviceTokensPage })
+appHandler.addPrivateRoute({url: 'users/create/:userId/clientDevices/:clientDeviceId/clientDeviceTokens', page: UserClientDeviceTokenCreatePage })
+appHandler.addPrivateRoute({url: 'users/view/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: UserClientDeviceTokenPage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: UserClientDeviceTokenEditPage })
+// user contact infos
+appHandler.addPrivateRoute({url: 'users/view/:userId/contactInfos', page: UserContactInfosPage })
+appHandler.addPrivateRoute({url: 'users/view/:userId/contactInfos/:contactInfoId', page: UserContactInfoPage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId/contactInfos/:contactInfoId', page: UserContactInfoEditPage })
+appHandler.addPrivateRoute({url: 'users/create/:userId/contactInfos', page: UserContactInfoCreatePage })
+// user user infos
+appHandler.addPrivateRoute({url: 'users/view/:userId/userInfos', page: UserUserInfosPage })
+appHandler.addPrivateRoute({url: 'users/view/:userId/userInfos/:userInfoId', page: UserUserInfoPage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId/userInfos/:userInfoId', page: UserUserInfoEditPage })
+appHandler.addPrivateRoute({url: 'users/create/:userId/userInfos', page: UserUserInfoCreatePage })
+// user workspaces
+appHandler.addPrivateRoute({url: 'users/view/:userId/workspaces', page: UserWorkspacesPage })
+appHandler.addPrivateRoute({url: 'users/create/:userId/workspaces', page: UserWorkspaceCreatePage })
+appHandler.addPrivateRoute({url: 'users/view/:userId/workspaces/:workspaceId', page: UserWorkspacePage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId/workspaces/:workspaceId', page: UserWorkspaceEditPage })
+// user workspace userRefs
+appHandler.addPrivateRoute({url: 'users/view/:userId/workspaces/:workspaceId/userRefs', page: UserWorkspaceUserRefsPage })
+appHandler.addPrivateRoute({url: 'users/create/:userId/workspaces/:workspaceId/userRefs', page: UserWorkspaceUserRefCreatePage })
+appHandler.addPrivateRoute({url: 'users/view/:userId/workspaces/:workspaceId/userRefs/:userRefId', page: UserWorkspaceUserRefPage })
+appHandler.addPrivateRoute({url: 'users/edit/:userId/workspaces/:workspaceId/userRefs/:userRefId', page: UserWorkspaceUserRefEditPage })
 
-{/* owner pages */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view', page: OwnerPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit', page: OwnerEditPage })
-{/* owner user info */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/userInfos', page: OwnerUserInfosPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/create/userInfos', page: OwnerUserInfoCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'owner/view/userInfos/:userInfoId', page: OwnerUserInfoPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit/userInfos/:userInfoId', page: OwnerUserInfoEditPage })
-{/* owner contact info */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/contactInfos', page: OwnerContactInfosPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/create/contactInfos', page: OwnerContactInfoCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'owner/view/contactInfos/:contactInfoId', page: OwnerContactInfoPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit/contactInfos/:contactInfoId', page: OwnerContactInfoEditPage })
-{/* owner roles */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/roles', page: OwnerRolesPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit/roles', page: OwnerRolesEditPage })
-{/* owner limited transaction */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/limitedTransactions', page: OwnerLimitedTransactionsPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/view/limitedTransactions/:limitedTransactionId', page: OwnerLimitedTransactionPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit/limitedTransactions/:limitedTransactionId', page: OwnerLimitedTransactionEditPage })
-{/* owner password */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/passwords', page: OwnerPasswordsPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/create/passwords', page: OwnerPasswordCreatePage })
-{/* owner client devices */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/clientDevices', page: OwnerClientDevicesPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/create/clientDevices', page: OwnerClientDeviceCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'owner/view/clientDevices/:clientDeviceId', page: OwnerClientDevicePage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit/clientDevices/:clientDeviceId', page: OwnerClientDeviceEditPage })
-{/* owner client device tokens */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/clientDevices/:clientDeviceId/clientDeviceTokens', page: OwnerClientDeviceTokensPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/create/clientDevices/:clientDeviceId/clientDeviceTokens', page: OwnerClientDeviceTokenCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'owner/view/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: OwnerClientDeviceTokenPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: OwnerClientDeviceTokenEditPage })
-{/* owner workspaces */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/workspaces', page: OwnerWorkspacesPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/create/workspaces', page: OwnerWorkspaceCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId', page: OwnerWorkspacePage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId', page: OwnerWorkspaceEditPage })
-{/* owner workspace userRefs */}
-appComponentsHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/userRefs', page: OwnerWorkspaceUserRefsPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/create/workspaces/:workspaceId/userRefs', page: OwnerWorkspaceUserRefCreatePage })
-appComponentsHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/userRefs/:userRefId', page: OwnerWorkspaceUserRefPage })
-appComponentsHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId/userRefs/:userRefId', page: OwnerWorkspaceUserRefEditPage })
+// owner pages
+appHandler.addPrivateRoute({url: 'owner/view', page: OwnerPage })
+appHandler.addPrivateRoute({url: 'owner/edit', page: OwnerEditPage })
+// owner user info
+appHandler.addPrivateRoute({url: 'owner/view/userInfos', page: OwnerUserInfosPage })
+appHandler.addPrivateRoute({url: 'owner/create/userInfos', page: OwnerUserInfoCreatePage })
+appHandler.addPrivateRoute({url: 'owner/view/userInfos/:userInfoId', page: OwnerUserInfoPage })
+appHandler.addPrivateRoute({url: 'owner/edit/userInfos/:userInfoId', page: OwnerUserInfoEditPage })
+// owner contact info
+appHandler.addPrivateRoute({url: 'owner/view/contactInfos', page: OwnerContactInfosPage })
+appHandler.addPrivateRoute({url: 'owner/create/contactInfos', page: OwnerContactInfoCreatePage })
+appHandler.addPrivateRoute({url: 'owner/view/contactInfos/:contactInfoId', page: OwnerContactInfoPage })
+appHandler.addPrivateRoute({url: 'owner/edit/contactInfos/:contactInfoId', page: OwnerContactInfoEditPage })
+// owner roles
+appHandler.addPrivateRoute({url: 'owner/view/roles', page: OwnerRolesPage })
+appHandler.addPrivateRoute({url: 'owner/edit/roles', page: OwnerRolesEditPage })
+// owner limited transaction
+appHandler.addPrivateRoute({url: 'owner/view/limitedTransactions', page: OwnerLimitedTransactionsPage })
+appHandler.addPrivateRoute({url: 'owner/view/limitedTransactions/:limitedTransactionId', page: OwnerLimitedTransactionPage })
+appHandler.addPrivateRoute({url: 'owner/edit/limitedTransactions/:limitedTransactionId', page: OwnerLimitedTransactionEditPage })
+// owner password
+appHandler.addPrivateRoute({url: 'owner/view/passwords', page: OwnerPasswordsPage })
+appHandler.addPrivateRoute({url: 'owner/create/passwords', page: OwnerPasswordCreatePage })
+// owner client devices
+appHandler.addPrivateRoute({url: 'owner/view/clientDevices', page: OwnerClientDevicesPage })
+appHandler.addPrivateRoute({url: 'owner/create/clientDevices', page: OwnerClientDeviceCreatePage })
+appHandler.addPrivateRoute({url: 'owner/view/clientDevices/:clientDeviceId', page: OwnerClientDevicePage })
+appHandler.addPrivateRoute({url: 'owner/edit/clientDevices/:clientDeviceId', page: OwnerClientDeviceEditPage })
+// owner client device tokens
+appHandler.addPrivateRoute({url: 'owner/view/clientDevices/:clientDeviceId/clientDeviceTokens', page: OwnerClientDeviceTokensPage })
+appHandler.addPrivateRoute({url: 'owner/create/clientDevices/:clientDeviceId/clientDeviceTokens', page: OwnerClientDeviceTokenCreatePage })
+appHandler.addPrivateRoute({url: 'owner/view/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: OwnerClientDeviceTokenPage })
+appHandler.addPrivateRoute({url: 'owner/edit/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: OwnerClientDeviceTokenEditPage })
+// owner workspaces
+appHandler.addPrivateRoute({url: 'owner/view/workspaces', page: OwnerWorkspacesPage })
+appHandler.addPrivateRoute({url: 'owner/create/workspaces', page: OwnerWorkspaceCreatePage })
+appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId', page: OwnerWorkspacePage })
+appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId', page: OwnerWorkspaceEditPage })
+// owner workspace userRefs
+appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/userRefs', page: OwnerWorkspaceUserRefsPage })
+appHandler.addPrivateRoute({url: 'owner/create/workspaces/:workspaceId/userRefs', page: OwnerWorkspaceUserRefCreatePage })
+appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/userRefs/:userRefId', page: OwnerWorkspaceUserRefPage })
+appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId/userRefs/:userRefId', page: OwnerWorkspaceUserRefEditPage })
 
-{/* workspace data */}
-appComponentsHandler.addPrivateRoute({url: 'workspaces/view/:workspaceId', page: WorkspaceHomePage })
+// workspace data
+appHandler.addPrivateRoute({url: 'workspaces/view/:workspaceId', page: WorkspaceHomePage })
 
 // add items to main drawers
-appComponentsHandler.addMainDrawer({
+appHandler.addMainDrawer({
   label: 'Workspace Data',
   links:  [
       { label: 'Workspace Dash*', url: '/workspaces/view/none', Icon: HomeIcon },
       { label: 'Products*', url: '/', Icon: HomeIcon }
   ]
 })
-appComponentsHandler.addMainDrawer({
+appHandler.addMainDrawer({
   label: 'User Data',
   links:  [
       { label: 'Home', url: '/', Icon: HomeIcon },
@@ -274,7 +273,7 @@ appComponentsHandler.addMainDrawer({
       { label: 'Notifications*', url: '/notifications', Icon: NotificationsIcon }
   ]
 })
-appComponentsHandler.addMainDrawer({
+appHandler.addMainDrawer({
   label: 'Global Data',
   links:  [
       { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
@@ -285,13 +284,13 @@ appComponentsHandler.addMainDrawer({
 
 // add items to user drawers
 // for public
-appComponentsHandler.addPublicUserDrawerNav({
+appHandler.addPublicUserDrawerNav({
   label: 'Info Pages',
   links: [
       { label: 'Home', url: '/', Icon: HomeIcon },
   ]
 })
-appComponentsHandler.addPublicUserDrawerNav({
+appHandler.addPublicUserDrawerNav({
   label: 'Auth Pages',
   links: [
       { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
@@ -302,7 +301,7 @@ appComponentsHandler.addPublicUserDrawerNav({
   ]
 })
 // for private
-appComponentsHandler.addPrivateUserDrawerNav({
+appHandler.addPrivateUserDrawerNav({
   label: 'Custom Actions',
   links: [
       { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
@@ -322,7 +321,7 @@ function App() {
   const isSignedIn = useAppSelector(state => state.signedInUser?.isSignedIn)
   const dispatch = useAppDispatch()
   const finalTheme = useCallback(() => {
-    const defaultTheme = appComponentsHandler.appConfig.AppThemeConfig || {}
+    const defaultTheme = appHandler.appConfig.AppThemeConfig || {}
     defaultTheme['palette'] = {
       ...(defaultTheme['palette'] || {}),
       ...{mode: apptheme}
@@ -335,7 +334,7 @@ function App() {
   useEffect(() => {
     (async () => {
       console.log('init app')
-      const authToken = localStorage.getItem(Config.TokenKey) || undefined
+      const authToken = localStorage.getItem(appHandler.appConfig.TokenKey) || undefined
       // use the auth token from local storage on every private api request
       apiHelper.useToken(authToken)
 
@@ -361,6 +360,6 @@ function App() {
 
 export {
   appStore,
-  appComponentsHandler
+  appHandler
 }
 export default App;

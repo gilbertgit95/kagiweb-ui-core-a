@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import UserContactInfoService from './userContactInfoService';
 import { IUser, IContactInfo } from '../../types/user';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     user?: IUser,
@@ -37,8 +37,8 @@ const UserLimitedTransactionReadOnlyView = ({user, contactInfoId}:props) => {
         { field: 'Type', value: ContactInfo?.type },
         { field: 'Value', value: ContactInfo?.value },
         { field: 'Verified', value: ContactInfo?.verified? 'True': 'False' },
-        { field: 'Created', value: moment(ContactInfo?.createdAt).format(Config.defaultDateTimeFormat) },
-        { field: 'Updated', value: moment(ContactInfo?.updatedAt).format(Config.defaultDateTimeFormat) }
+        { field: 'Created', value: moment(ContactInfo?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) },
+        { field: 'Updated', value: moment(ContactInfo?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) }
     ]
 
     return ContactInfo? (

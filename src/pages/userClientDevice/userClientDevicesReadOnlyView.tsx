@@ -10,7 +10,6 @@ import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
 import ShortendDescription from '../../components/texts/shortendDescription';
-// import Config from '../../config';
 
 interface IProps {
     user: IUser | undefined

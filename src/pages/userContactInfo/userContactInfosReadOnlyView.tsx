@@ -9,7 +9,6 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
-// import Config from '../../config';
 
 interface IProps {
     user: IUser | undefined

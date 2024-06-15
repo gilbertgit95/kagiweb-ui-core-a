@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import UserUserInfoService from './userUserInfoService';
 import { IUser, IUserInfo } from '../../types/user';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     user?: IUser,
@@ -37,8 +37,8 @@ const UserUserInfoReadOnlyView = ({user, userInfoId}:props) => {
         { field: 'Key', value: userInfo?.key },
         { field: 'Value', value: userInfo?.value },
         { field: 'Type', value: userInfo?.type },
-        { field: 'Created', value: moment(userInfo?.createdAt).format(Config.defaultDateTimeFormat) },
-        { field: 'Updated', value: moment(userInfo?.updatedAt).format(Config.defaultDateTimeFormat) }
+        { field: 'Created', value: moment(userInfo?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) },
+        { field: 'Updated', value: moment(userInfo?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) }
     ]
 
     return userInfo? (

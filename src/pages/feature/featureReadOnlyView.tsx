@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { IFeature } from '../../types/feature';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 const colDef:IColDef[] = [
     {
@@ -30,8 +30,8 @@ const FeatureReadOnlyView = ({feature}: Props) => {
         { field: 'type', value: feature?.type },
         { field: 'value', value: feature?.value },
         { field: 'tags', value: feature?.tags?.join(', ') },
-        { field: 'Created', value: feature?.createdAt? moment(feature?.createdAt).format(Config.defaultDateTimeFormat): '--' },
-        { field: 'Updated', value: feature?.updatedAt? moment(feature?.updatedAt).format(Config.defaultDateTimeFormat): '--' }
+        { field: 'Created', value: feature?.createdAt? moment(feature?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' },
+        { field: 'Updated', value: feature?.updatedAt? moment(feature?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' }
     ]
 
     return feature? (

@@ -9,8 +9,8 @@ import { IUser, IWorkspace } from '../../types/user';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 // import Check from '../../components/indicators/check';
-import Config from '../../config';
 import UserWorkspaceService from './userWorkspaceService';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
     user?: IUser
@@ -54,11 +54,11 @@ const UserWorkspaceReadOnlyView = ({user, workspaceId}:IProps) => {
         },
         {
             label: 'Updated',
-            value: workspace?.updatedAt? moment(workspace.updatedAt).format(Config.defaultDateTimeFormat): '--'
+            value: workspace?.updatedAt? moment(workspace.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--'
         },
         {
             label: 'Created',
-            value: workspace?.createdAt? moment(workspace.createdAt).format(Config.defaultDateTimeFormat): '--'
+            value: workspace?.createdAt? moment(workspace.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--'
         }
     ]
 

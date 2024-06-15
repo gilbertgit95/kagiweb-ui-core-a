@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import App, {
   appStore,
-  appComponentsHandler
+  appHandler
 } from './App';
 
 // create root component
@@ -47,7 +47,7 @@ const customConfig = {
   defaultPage: 1
 }
 
-appComponentsHandler.setAppConfig(customConfig)
+appHandler.setAppConfig(customConfig)
 root.render(
   <Provider store={appStore}>
     <App />

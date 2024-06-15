@@ -13,10 +13,10 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
 import UserService from './userService';
-import Config from '../../config';
 import { IUser } from '../../types/user';
 // import { IUser } from "../../types/user";
 // import { IPagination } from "../../types/mixTypes";
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IUserRow {
     _id: string,
@@ -86,14 +86,14 @@ const colDef:IColDef[] = [
 const Users = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
-    const pageQuery = parseInt(searchParams.get('page') || '') || Config.defaultPage;
-    const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || Config.defaultPageSize;
+    const pageQuery = parseInt(searchParams.get('page') || '') || appComponentsHandler.appConfig.defaultPage;
+    const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || appComponentsHandler.appConfig.defaultPageSize;
 
     const [pagination, setPagination] = useState({
         page: 0,
         pageSize: pageSizeQuery,
         totalItems: 0,
-        pageSizeList: Config.defaultPageSizeList
+        pageSizeList: appComponentsHandler.appConfig.defaultPageSizeList
     })
     const [data, setData] = useState<IUserRow[]>([])
 
@@ -123,7 +123,7 @@ const Users = () => {
                     page: resp.data.page - 1,
                     pageSize: resp.data.pageSize,
                     totalItems: resp.data.totalItems,
-                    pageSizeList: Config.defaultPageSizeList
+                    pageSizeList: appComponentsHandler.appConfig.defaultPageSizeList
                 })
                 setData(tarnsformedData)
             }
@@ -172,7 +172,7 @@ const Users = () => {
                         page: resp.data.page - 1,
                         pageSize: resp.data.pageSize,
                         totalItems: resp.data.totalItems,
-                        pageSizeList: Config.defaultPageSizeList
+                        pageSizeList: appComponentsHandler.appConfig.defaultPageSizeList
                     })
                     setData(tarnsformedData)
                 }

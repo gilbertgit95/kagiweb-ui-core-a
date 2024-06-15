@@ -7,8 +7,7 @@ import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SimpleLink from '../../components/links/simpleLink';
 import { IRole } from '../../types/role';
-
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface Props {
     role: IRole & {createdAt?:Date, updatedAt?:Date} | undefined
@@ -57,8 +56,8 @@ const RoleReadOnlyView = ({role}:Props) => {
         { field: 'Level', value: String(role?.level) },
         { field: 'Absolute Authority', value: role?.absoluteAuthority? 'True': 'False' },
         { field: 'Request Limit/Second', value: String(role?.reqLimitPerSec) },
-        { field: 'Created', value: role?.createdAt? moment(role?.createdAt).format(Config.defaultDateTimeFormat): '--' },
-        { field: 'Updated', value: role?.updatedAt? moment(role?.updatedAt).format(Config.defaultDateTimeFormat): '--' }
+        { field: 'Created', value: role?.createdAt? moment(role?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' },
+        { field: 'Updated', value: role?.updatedAt? moment(role?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' }
     ]
 
     const modulesData:{module: string, moduleRoute: string, contents: string, disabledLink: boolean}[] = [

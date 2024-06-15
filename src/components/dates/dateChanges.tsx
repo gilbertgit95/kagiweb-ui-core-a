@@ -4,7 +4,7 @@ import { Typography, Box, Stack, Divider, Tooltip } from '@mui/material'
 // import UpdateIcon from '@mui/icons-material/Update';
 // import AddIcon from '@mui/icons-material/Add';
 // import EditIcon from '@mui/icons-material/Edit';
-import Config from '../../config'
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 export interface IChangeDate {
     createdAt?: Date,
@@ -22,12 +22,12 @@ const DateChanges = (props:IChangeDate) => {
                 spacing={1}>
                 <Tooltip title="Created">
                     <Typography component="div" variant="caption">
-                        { props.createdAt? moment(props.createdAt).format(Config.defaultDateTimeFormat): '' }
+                        { props.createdAt? moment(props.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '' }
                     </Typography>
                 </Tooltip>
                 <Tooltip title="Updated">
                     <Typography component="div" variant="caption" color="primary">
-                        { props.updatedAt? moment(props.updatedAt).format(Config.defaultDateTimeFormat): '' }
+                        { props.updatedAt? moment(props.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '' }
                     </Typography>
                 </Tooltip>
             </Stack>

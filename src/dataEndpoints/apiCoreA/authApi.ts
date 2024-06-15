@@ -1,5 +1,5 @@
 import apiHelper from './apiHelper';
-import Config from '../../config';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 class AuthApi {
     public static signin(username:string, password:string) {
@@ -10,7 +10,7 @@ class AuthApi {
 
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.ServerAddress + Config.RootApiEndpoint + 'signin?rand=' + Math.ceil(Math.random() * 1e12) ,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'signin?rand=' + Math.ceil(Math.random() * 1e12) ,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -23,7 +23,7 @@ class AuthApi {
         }
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.ServerAddress + Config.RootApiEndpoint + 'signinOTP',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'signinOTP',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -38,7 +38,7 @@ class AuthApi {
         }
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.ServerAddress + Config.RootApiEndpoint + 'signup',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'signup',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -50,7 +50,7 @@ class AuthApi {
         }
         return apiHelper.publicReq({
             method: 'POST',
-            url: Config.ServerAddress + Config.RootApiEndpoint + 'forgotPassword',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'forgotPassword',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -64,7 +64,7 @@ class AuthApi {
         }
         return apiHelper.publicReq({
             method: 'PUT',
-            url: Config.ServerAddress + Config.RootApiEndpoint + 'resetPassword',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'resetPassword',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -73,7 +73,7 @@ class AuthApi {
     public static signout() {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: Config.ServerAddress + Config.RootApiEndpoint + 'signout',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'signout',
         })
     }
 }
