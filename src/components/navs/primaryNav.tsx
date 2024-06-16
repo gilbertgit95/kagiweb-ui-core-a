@@ -1,5 +1,6 @@
 // import React from "react";
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -39,6 +40,7 @@ type Props = {
 
 const PrimaryNav = (props:Props) => {
     const location = useLocation()
+    const navigate = useNavigate()
     const { pathname } = location
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
@@ -50,7 +52,9 @@ const PrimaryNav = (props:Props) => {
     }
     const handleItemClick = async (item:TLink) => {
         if (item.action) await item.action()
-        if (item.url) window.location.replace(item.url)
+        // if (item.url) window.location.replace(item.url)
+        if (item.url) navigate(item.url)
+        handleClose()
     }
 
     return (

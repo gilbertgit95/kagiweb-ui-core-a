@@ -337,6 +337,8 @@ function App() {
       const authToken = localStorage.getItem(appHandler.appConfig.TokenKey) || undefined
       // use the auth token from local storage on every private api request
       apiHelper.useToken(authToken)
+      // set document title
+      document.title = appHandler.appConfig.AppName
 
       try {
         await appUtils.loadSigninUserData()
