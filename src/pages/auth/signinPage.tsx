@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 // import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -19,6 +20,7 @@ import AuthService from './authService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 const Signin = () => {
+    const navigate = useNavigate()
     const [pageState, setPageState] = useState<{isLoading:boolean}>({
         isLoading: false
     })
@@ -60,7 +62,8 @@ const Signin = () => {
                     errorMessages: []
                 })
                 await TimeUtils.doNothingFor(5)
-                window.location.replace(`/signinOTP?username=${ signinResp.username }`)
+                // window.location.replace(`/signinOTP?username=${ signinResp.username }`)
+                navigate(`/signinOTP?username=${ signinResp.username }`)
             }
 
         } catch (err:any) {

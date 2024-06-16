@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 // import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -20,6 +21,7 @@ import AuthService from './authService';
 // import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
 
 const ForgotPassword = () => {
+    const navigate = useNavigate()
     const [pageState, setPageState] = useState<{isLoading:boolean}>({
         isLoading: false
     })
@@ -58,8 +60,8 @@ const ForgotPassword = () => {
             })
 
             await TimeUtils.doNothingFor(5)
-            window.location.replace('/resetPassword?username=' + data.get('username')?.toString())
-
+            // window.location.replace('/resetPassword?username=' + data.get('username')?.toString())
+            navigate('/resetPassword?username=' + data.get('username')?.toString())
         } catch (err:any) {
             setInfoAndErrors({
                 ...infoAndErrors,
