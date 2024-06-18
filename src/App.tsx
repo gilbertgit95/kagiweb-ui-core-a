@@ -317,8 +317,8 @@ appHandler.addPrivateUserDrawerNav({
 })
 
 function App() {
-  const apptheme = useAppSelector(state => state.appRefs.appTheme)
-  const isSignedIn = useAppSelector(state => state.signedInUser?.isSignedIn)
+  const apptheme = useAppSelector(state => state?.appRefs.appTheme)
+  const isSignedIn = useAppSelector(state => state?.signedInUser?.isSignedIn)
   const dispatch = useAppDispatch()
   const finalTheme = useCallback(() => {
     const defaultTheme = appHandler.appConfig.AppThemeConfig || {}

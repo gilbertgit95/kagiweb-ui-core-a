@@ -87,6 +87,14 @@ class AppComponentsHandler {
         this.userDrawer.publicUserDrawers.push(nav)
     }
 
+    public async syncToFeatures():Promise<void> {
+        // prepare and sync private routes
+
+        // prepare and sync main drawer
+
+        // prepare and sync private user drawer
+    }
+
 }
 
 const appComponentsHandler = new AppComponentsHandler()
