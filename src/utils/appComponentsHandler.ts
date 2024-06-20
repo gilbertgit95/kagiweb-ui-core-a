@@ -1,5 +1,7 @@
 import React from 'react'
+import { IFeature, TFeatureType } from '../types/feature'
 import { TLinkGroup } from '../components/navs/primaryNav'
+import FeatureService from '../pages/feature/featureService'
 
 export interface IAppRoute {
     url: string,
@@ -88,11 +90,62 @@ class AppComponentsHandler {
     }
 
     public async syncToFeatures():Promise<void> {
+        const features:IFeature[] = []
+
         // prepare and sync private routes
+        features.push(...this.routes.privateRoutes.map(item => {
+            return {
+                description: 'One of the ui private route',
+                name: `PRIVATE ROUTE - ${ item.url }`,
+                tags: [],
+                type: 'ui-route' as TFeatureType,
+                value: `PRIVATE ROUTE - ${ item.url }`
+            }
+        }))
 
         // prepare and sync main drawer
+        features.push(...this.mainDrawer.reduce<IFeature[]>((acc, item) => {
+            acc = [
+                ...acc,
+                ...item.links?.map(item => {
+                    return {
+                        description: 'One of the ui main drawer nav',
+                        name: `PRIVATE MAIN NAV - ${ item.label }`,
+                        tags: [],
+                        type: 'ui-main-drawer' as TFeatureType,
+                        value: `PRIVATE MAIN NAV - ${ item.label }`
+                    }
+                }) || []
+            ]
+            return acc
+        }, []))
 
         // prepare and sync private user drawer
+        features.push(...this.userDrawer.privateUserDrawers.reduce<IFeature[]>((acc, item) => {
+            acc = [
+                ...acc,
+                ...item.links?.map(item => {
+                    return {
+                        description: 'One of the ui private user drawer nav',
+                        name: `PRIVATE USER NAV - ${ item.label }`,
+                        tags: [],
+                        type: 'ui-main-drawer' as TFeatureType,
+                        value: `PRIVATE USER NAV - ${ item.label }`
+                    }
+                }) || []
+            ]
+            return acc
+        }, []))
+
+        // sync all features
+        for (const feat of features) {
+            try {
+                console.log('saving... ', `${ feat.type }: `, feat.value)
+                await FeatureService.createFeature(feat)
+            } catch(err) {
+                console.log(err)
+            }
+        }
     }
 
 }
