@@ -28,10 +28,11 @@ const NavCustomEl = () => {
     const userData = useAppSelector(state => state.signedInUser?.userData)
     const userRole = useAppSelector(state => state.signedInUser?.role)
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
+    const features = useAppSelector(state => state.appRefs.features)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const customLinks:TLinkGroup[] = useMemo(() => {
         return appComponentsHandler.userDrawer.privateUserDrawers
-    }, [])
+    }, [features])
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget)
