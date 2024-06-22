@@ -21,6 +21,8 @@ import AuthService from '../pages/auth/authService';
 import PrimaryNav, { TLinkGroup } from '../components/navs/primaryNav';
 
 import appComponentsHandler from '../utils/appComponentsHandler';
+import DataTransformer from '../utils/dataTransformer';
+import { IFeature } from '../types/feature';
 
 const NavCustomEl = () => {
     const navigate = useNavigate()
@@ -31,7 +33,12 @@ const NavCustomEl = () => {
     const features = useAppSelector(state => state.appRefs.features)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const customLinks:TLinkGroup[] = useMemo(() => {
-        return appComponentsHandler.userDrawer.privateUserDrawers
+        const filterType = 'ui-user-drawer'
+        let featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(features?.filter(item => item.type === filterType) || [])
+        let links = appComponentsHandler.userDrawer.privateUserDrawers
+
+        console.log(featuresMap)
+        return links
     }, [features])
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
