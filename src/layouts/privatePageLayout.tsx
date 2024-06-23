@@ -163,10 +163,17 @@ const NavCustomEl = () => {
 }
 
 
-const PrivatePageLayout =() => {
+const PrivatePageLayout = () => {
+    const features = useAppSelector(state => state.appRefs.features)
+
     const links:TLinkGroup[] = useMemo(() => {
-        return appComponentsHandler.mainDrawer
-    }, [])
+        const filterType = 'ui-main-drawer'
+        let featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(features?.filter(item => item.type === filterType) || [])
+        let links = appComponentsHandler.mainDrawer
+
+        console.log(featuresMap)
+        return links
+    }, [features])
 
     return (
         <>

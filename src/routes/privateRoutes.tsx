@@ -5,12 +5,22 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PrivatePageLayout from '../layouts/privatePageLayout';
 import NotFoundPage from '../components/infoOrWarnings/pageNotFound';
 
+import { IFeature } from '../types/feature';
 import appComponentsHandler from '../utils/appComponentsHandler';
+import { useAppSelector} from '../stores/appStore';
+import DataTransformer from '../utils/dataTransformer';
 
 const PrivateRoutes = () => {
+    const features = useAppSelector(state => state.appRefs.features)
+
     const privateRoutes = useMemo(() => {
-        return appComponentsHandler.routes.privateRoutes
-    }, [])
+        const filterType = 'ui-route'
+        let featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(features?.filter(item => item.type === filterType) || [])
+        let routes = appComponentsHandler.routes.privateRoutes
+
+        console.log(featuresMap)
+        return routes
+    }, [features])
 
     return (
         <BrowserRouter>
