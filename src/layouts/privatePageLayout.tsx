@@ -29,17 +29,20 @@ const NavCustomEl = () => {
     const dispatch = useAppDispatch()
     const userData = useAppSelector(state => state.signedInUser?.userData)
     const userRole = useAppSelector(state => state.signedInUser?.role)
+    const userFeatures = useAppSelector(state => state.signedInUser?.features) || []
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
-    const features = useAppSelector(state => state.appRefs.features)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const customLinks:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-user-drawer'
-        let featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(features?.filter(item => item.type === filterType) || [])
-        let links = appComponentsHandler.userDrawer.privateUserDrawers
-
-        console.log(featuresMap)
-        return links
-    }, [features])
+        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item.type === filterType) || [])
+        const links = appComponentsHandler.userDrawer.privateUserDrawers
+        const filteredLinks = links.reduce<TLinkGroup[]>((acc, group) => {
+            group.links = group.links?.filter(item => featuresMap[item.label])
+            acc.push(group)
+            return acc
+        }, [])
+        return filteredLinks
+    }, [userFeatures])
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget)
@@ -164,16 +167,21 @@ const NavCustomEl = () => {
 
 
 const PrivatePageLayout = () => {
-    const features = useAppSelector(state => state.appRefs.features)
+    const userFeatures = useAppSelector(state => state.signedInUser?.features) || []
 
     const links:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-main-drawer'
-        let featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(features?.filter(item => item.type === filterType) || [])
-        let links = appComponentsHandler.mainDrawer
-
-        console.log(featuresMap)
-        return links
-    }, [features])
+        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item.type === filterType) || [])
+        const links = appComponentsHandler.mainDrawer
+        const filteredLinks = links.reduce<TLinkGroup[]>((acc, group) => {
+            group.links = group.links?.filter(item => featuresMap[item.label])
+            acc.push(group)
+            return acc
+        }, [])
+        // console.log('featuresMap: ', featuresMap)
+        // console.log('filteredLinks: ', filteredLinks)
+        return filteredLinks
+    }, [userFeatures])
 
     return (
         <>
