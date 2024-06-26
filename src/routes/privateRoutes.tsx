@@ -11,16 +11,19 @@ import { useAppSelector} from '../stores/appStore';
 import DataTransformer from '../utils/dataTransformer';
 
 const PrivateRoutes = () => {
-    const features = useAppSelector(state => state.appRefs.features)
+    const userFeatures = useAppSelector(state => state.signedInUser?.features) || []
 
     const privateRoutes = useMemo(() => {
         const filterType = 'ui-route'
-        let featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(features?.filter(item => item.type === filterType) || [])
+        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item.type === filterType) || [])
         let routes = appComponentsHandler.routes.privateRoutes
-
+        const filteredRoutes = routes.filter(route => {
+            const url = route.url
+            return featuresMap[url]
+        })
         console.log(featuresMap)
-        return routes
-    }, [features])
+        return filteredRoutes
+    }, [userFeatures])
 
     return (
         <BrowserRouter>
