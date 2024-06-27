@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import _ from 'lodash';
 import { Grid, Button } from '@mui/material'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -16,12 +17,12 @@ const PrivateRoutes = () => {
     const privateRoutes = useMemo(() => {
         const filterType = 'ui-route'
         const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item.type === filterType) || [])
-        let routes = appComponentsHandler.routes.privateRoutes
+        let routes = _.clone(appComponentsHandler.routes.privateRoutes)
         const filteredRoutes = routes.filter(route => {
             const url = route.url
             return featuresMap[url]
         })
-        console.log(featuresMap)
+        console.log(featuresMap, routes, filteredRoutes)
         return filteredRoutes
     }, [userFeatures])
 
