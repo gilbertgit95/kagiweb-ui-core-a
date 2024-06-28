@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
@@ -26,6 +26,17 @@ interface IFeatureRow {
 const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [data, setData] = useState<IFeatureRow[]>([])
+
+    const filterConfig = useMemo(() => ({
+        searchValue: '',
+        searchField: 'name',
+        filterValue: '',
+        filterField: 'type',
+        filterOptions: [],
+        sortValue: undefined,
+        sortField: 'name',
+        fieldOptions: ['name', 'value', 'type']
+    }), [])
 
     useEffect(() => {
         if (role?.featuresRefs) {
@@ -87,16 +98,7 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
                                 columnDefs={colDef}
                                 data={data} /> */}
                             <FilterableTable
-                                filterConfig={{
-                                    searchValue: '',
-                                    searchField: 'name',
-                                    filterValue: '',
-                                    filterField: 'type',
-                                    filterOptions: [],
-                                    sortValue: undefined,
-                                    sortField: 'name',
-                                    fieldOptions: ['name', 'value', 'type']
-                                }}
+                                filterConfig={filterConfig}
                                 tableConfig={{
                                     maxHeight: 400,
                                     enableSelection: true,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Divider, Typography } from '@mui/material';
 import ListIcon from '@mui/icons-material/List';
@@ -126,6 +126,17 @@ const RoleFeaturesListEditForm = ({role, onChange, view, onChangeView}:IProps) =
         addDialogOpen: false,
         removeDialogOpen: false
     })
+
+    const filterConfig = useMemo(() => ({
+        searchValue: '',
+        searchField: 'name',
+        filterValue: '',
+        filterField: 'type',
+        filterOptions: [],
+        sortValue: undefined,
+        sortField: 'name',
+        fieldOptions: ['name', 'value', 'type']
+    }), [])
 
     const onClickView = (vType:string) => {
         if (onChangeView) onChangeView(vType)
@@ -445,16 +456,7 @@ const RoleFeaturesListEditForm = ({role, onChange, view, onChangeView}:IProps) =
                             columnDefs={colDef}
                             data={data} /> */}
                         <FilterableTable
-                            filterConfig={{
-                                searchValue: '',
-                                searchField: 'name',
-                                filterValue: '',
-                                filterField: 'type',
-                                filterOptions: [],
-                                sortValue: undefined,
-                                sortField: 'name',
-                                fieldOptions: ['name', 'value', 'type']
-                            }}
+                            filterConfig={filterConfig}
                             tableConfig={{
                                 // maxHeight: 700,
                                 enableSelection: true,

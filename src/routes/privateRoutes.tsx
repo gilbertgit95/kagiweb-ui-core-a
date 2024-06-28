@@ -22,7 +22,7 @@ const PrivateRoutes = () => {
             const url = route.url
             return featuresMap[url]
         })
-        console.log(featuresMap, routes, filteredRoutes)
+        // console.log(featuresMap, routes, filteredRoutes)
         return filteredRoutes
     }, [userFeatures])
 
