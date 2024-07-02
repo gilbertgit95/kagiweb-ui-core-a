@@ -59,7 +59,7 @@ const OwnerRolesEditPage = () => {
                     <PrimaryHeader title={'My Account Roles Update View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}

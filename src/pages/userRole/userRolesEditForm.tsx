@@ -221,20 +221,21 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
 
     return (
         <>
-            <Grid item xs={6} style={{alignContent: 'right'}}>
+            <Grid item xs={12} style={{alignContent: 'right'}}>
                 <Box
                     sx={{
                         display: 'flex',
                         justifyContent: 'flex-end',
                     }}>
                     <Button
-                        variant="text"
+                        variant="contained"
+                        color="secondary"
                         disabled={!Boolean(tableSelection.length) || currActiveIsInSelected}
                         startIcon={<AdjustIcon />}
                         onClick={() => {
                             setDialog({...dialog, ...{activateDialogOpen: true}})
                         }}>
-                        Activate
+                        Activate Selected Role
                     </Button>
                     <Button
                         variant="text"
