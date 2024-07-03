@@ -1,41 +1,38 @@
-# Kagiweb ui core (type A)
- > Project: kagiweb-ui-core-a  
- > Created: Gilbert D. Cuerbo, 2021
-
-
-## Contents  
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Architecture](#architecture)
-
+# ui core (type A)
+> **Note**
+This app is still on its early stage of development
 
 ## Overview
-This repository contains the ui part of a web application. The main purpose of this repo is tobe a client
-base code application, so we dont need to create a new webapp from scratch everytime we develop a web page. The main
-technology use in this app is React, MUI (material ui), graphQL, Jest (for testing).
+A react webapp library that contains the core functionalities of account base application. This app is designed to connect to a @kagiweb/api-core-a base server.
 
+## Contents
+The root package contains a ready to use core web application, redux store and an app handler (for customization).
+To use the app using the default configuration, just follow the code below.
 
-## Features
-Why we should use this boilerplate? below are some of its features
-- easy to setup
-- use of the best technologies like, **React**, **MUI**, **JEST** (testing), **JSDoc** (for documentation).
-- ready to use utilites and pages. You dont need to implement most of the core features of a webapp because its included
-  on this base app.
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 
+import App, { appStore, appHandler } from '@kagiweb/api-core-a';
 
-## Installation
-To succesfully run the application. please follow the steps below.
+root.render(
+  <Provider store={appStore}>
+    <App />
+  </Provider>
+);
+```
 
-### Execution
-- run by typing `npm start` for development
-- open a browser, then goto localhost:**port** to view the webapp.
+The `<App>` component contains, app subsystems, webpages and components such as `signin`, `singout`, `otp signin`, `user management`, `owner settings` and more.
+You dont need to create the core functionality of an account base system because the app is already configured to for this.
 
-### Build
-- run by typing `npm run build` for production
-- the build app resides on the dist folder
+<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/public-pages-e1.png" width="500" />
 
+<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/private-pages-e1.png" width="500" />
 
+<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/private-pages-e2.png" width="500" />
+
+## Customization
 
 ## Architecture
 inprogress...
