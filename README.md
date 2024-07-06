@@ -48,5 +48,13 @@ The package contains `apphandler` object, and this is use to customise the app. 
 - `private user navigations` - the popup links in the top right corner when you are signed in
 - `private pages` - pages and routes when you are signed in
 
+## Setting App Information
+
+## Setting App Theme
+
+## Setting public and private navigations
+
+## Setting public and private pages
+
 ## Architecture
 inprogress...
