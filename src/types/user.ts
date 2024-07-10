@@ -1,8 +1,10 @@
 // types
+type TAccountType = 'user' | 'organization'
 export type TContactInfoType = 'email-address' | 'mobile-number' | 'telephone' | 'app-admin'
 export type TLimitedTransactionType = 'signin' | 'otp-signin' | 'forgot-pass'| 'reset-pass' | 'verify-contact'
 export type TUserInfoType = 'string' | 'number' | 'date' | 'boolean'
 
+const acountTypes:TAccountType[] = ['user', 'organization']
 export const contactInfoTypes = ['email-address', 'mobile-number', 'telephone', 'app-admin']
 export const limitedTransactionTypes = ['signin', 'otp-signin', 'forgot-pass', 'reset-pass', 'verify-contact']
 export const userInfoTypes = ['string', 'number', 'date', 'boolean']
@@ -112,6 +114,7 @@ export interface IWorkspace {
 
 export interface IUser {
     _id?: string,
+    accountType?: TAccountType,
     username: string,
     rolesRefs: IRoleRef[],
     userInfos: IUserInfo[],
