@@ -5,6 +5,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import PersonIcon from '@mui/icons-material/Person';
 import DropDownSearch from '../components/inputs/dropdownSearch';
 
 import { useAppDispatch, useAppSelector} from '../stores/appStore';
@@ -19,6 +20,7 @@ const WorkspaceDataLayout = (props:Props) => {
     const navigate = useNavigate()
     const location = useLocation()
 
+    const userData = useAppSelector(state => state.signedInUser?.userData)
     const defaultWorkspace = useAppSelector(state => state.signedInUser?.workspace)
     const ownWorkspaces = useAppSelector(state => state.signedInUser?.workspaces) || []
     const externalWorkspaces = useAppSelector(state => state.signedInUser?.externalWorkspaces) || []
@@ -38,13 +40,13 @@ const WorkspaceDataLayout = (props:Props) => {
                 key: item._id || '',
                 label: `${ item.name }`,
                 subLabel: 'owned',
-                Icon: BookmarkIcon
+                Icon: userData?.accountType === 'user'? PersonIcon: ScatterPlotIcon
             })),
             ...externalWorkspaces.map(item => ({
                 key: item._id || '',
                 label: item.name,
                 subLabel: item.ownerUsername,
-                Icon: ScatterPlotIcon
+                Icon: item?.ownerAccountType === 'user'? PersonIcon: ScatterPlotIcon
             }))
         ]
 
