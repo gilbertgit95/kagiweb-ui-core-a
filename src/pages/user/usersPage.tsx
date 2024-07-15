@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
+import PersonIcon from '@mui/icons-material/Person';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import Check from '../../components/indicators/check';
@@ -20,6 +22,7 @@ import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IUserRow {
     _id: string,
+    accountType: string,
     username: string,
     // name: string,
     email: string,
@@ -29,6 +32,13 @@ interface IUserRow {
 }
 
 const colDef:IColDef[] = [
+    {
+        header: 'Account Type',
+        field: 'accountType',
+        Component: (props:IUserRow) => {
+            return props.accountType === 'user'? <PersonIcon />: <ScatterPlotIcon />
+        }
+    },
     {
         header: 'Username',
         field: 'username',
@@ -109,6 +119,7 @@ const Users = () => {
                 const tarnsformedData:(IUserRow & IChangeDate)[] = resp.data.items.map((item:IUser & IChangeDate) => {
                     return {
                         _id: item._id || '',
+                        accountType: item.accountType || '--',
                         username: item.username,
                         // name: UserService.getUserInfo(item, 'Fullname')?.value || '--',
                         email: UserService.getContactInfo(item, 'email-address')?.value || '--',
@@ -158,6 +169,7 @@ const Users = () => {
                     const tarnsformedData:(IUserRow & IChangeDate)[] = resp.data.items.map((item:IUser & IChangeDate) => {
                         return {
                             _id: item._id || '',
+                            accountType: item.accountType || '--',
                             username: item.username,
                             // name: UserService.getUserInfo(item, 'Fullname')?.value || '--',
                             email: UserService.getContactInfo(item, 'email-address')?.value || '--',
