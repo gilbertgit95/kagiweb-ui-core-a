@@ -89,7 +89,7 @@ const UserPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Readonly View'} />
+                    <PrimaryHeader title={'Account Readonly View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -129,7 +129,7 @@ const UserPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this user?
+                                    Are you sure you want to delete this account?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>

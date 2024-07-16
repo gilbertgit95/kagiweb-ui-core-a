@@ -87,7 +87,7 @@ const colDef:IColDef[] = [
             return (
                 <SimpleLink
                     link={`/users/view/${ props._id }`}
-                    text="View User" />
+                    text={ props.accountType === 'user'? 'view user': 'view organization' } />
             )
         }
     }
@@ -201,7 +201,7 @@ const Users = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User List View'} />
+                    <PrimaryHeader title={'Account List View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -214,7 +214,7 @@ const Users = () => {
                             variant="text"
                             startIcon={<PersonAddIcon />}
                             onClick={() => navigate('/users/create')}>
-                            Create User
+                            Create Account
                         </Button>
                     </Box>
                 </Grid>

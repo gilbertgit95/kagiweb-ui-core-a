@@ -20,7 +20,7 @@ export const UserEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Update View'} />
+                    <PrimaryHeader title={'Account Update View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

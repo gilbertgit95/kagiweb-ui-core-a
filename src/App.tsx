@@ -278,7 +278,7 @@ appHandler.addMainDrawer({
   links:  [
       { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
       { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
-      { label: 'Users', url: '/users', Icon: PeopleIcon }
+      { label: 'Accounts', url: '/users', Icon: PeopleIcon }
   ]
 })
 
