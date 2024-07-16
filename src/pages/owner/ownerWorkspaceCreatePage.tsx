@@ -7,11 +7,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserWorkspaceCreateForm from '../userWorkspace/userWorkspaceCreateForm';
-// import UserService from '../user/userService';
+import UserWorkspaceCreateForm from '../accountWorkspace/userWorkspaceCreateForm';
+// import UserService from '../user/accountService';
 // import UserWorkspaceService from './userWorkspaceService';
 import OwnerService from './ownerService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 
 const OwnerWorkspaceCreatePage = () => {
     const navigate = useNavigate()
@@ -19,7 +19,7 @@ const OwnerWorkspaceCreatePage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
         try {

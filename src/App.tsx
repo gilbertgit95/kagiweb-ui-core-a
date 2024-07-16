@@ -57,50 +57,50 @@ import RoleEditPage from './pages/role/roleEditPage';
 import RoleFeaturesPage from './pages/roleFeature/roleFeaturesPage';
 import RoleFeaturesEditPage from './pages/roleFeature/roleFeaturesEditPage';
 
-import UsersPage from './pages/user/usersPage';
-import UserCreatePage from './pages/user/userCreatePage';
-import UserPage from './pages/user/userPage';
-import UserEditPage from './pages/user/userEditPage';
+import UsersPage from './pages/account/usersPage';
+import UserCreatePage from './pages/account/userCreatePage';
+import UserPage from './pages/account/userPage';
+import UserEditPage from './pages/account/userEditPage';
 
-import UserRolesPage from './pages/userRole/userRolesPage';
-import UserRolesEditPage from './pages/userRole/userRolesEditPage';
+import UserRolesPage from './pages/accountRole/userRolesPage';
+import UserRolesEditPage from './pages/accountRole/userRolesEditPage';
 
-import UserPasswordsPage from './pages/userPassword/userPasswordsPage';
-import UserPasswordCreatePage from './pages/userPassword/userPasswordCreatePage';
+import UserPasswordsPage from './pages/accountPassword/userPasswordsPage';
+import UserPasswordCreatePage from './pages/accountPassword/userPasswordCreatePage';
 
-import UserLimitedTransactionsPage from './pages/userLimitedTransaction/userLimitedTransactionsPage';
-import UserLimitedTransactionPage from './pages/userLimitedTransaction/userLimitedTransactionPage';
-import UserLimitedTransactionEditPage from './pages/userLimitedTransaction/userLimitedTransactionEditPage';
+import UserLimitedTransactionsPage from './pages/accountLimitedTransaction/userLimitedTransactionsPage';
+import UserLimitedTransactionPage from './pages/accountLimitedTransaction/userLimitedTransactionPage';
+import UserLimitedTransactionEditPage from './pages/accountLimitedTransaction/userLimitedTransactionEditPage';
 
-import UserClientDevicesPage from './pages/userClientDevice/userClientDevicesPage';
-import UserClientDevicePage from './pages/userClientDevice/userClientDevicePage';
-import UserClientDeviceCreatePage from './pages/userClientDevice/userClientDeviceCreatePage';
-import UserClientDeviceEditPage from './pages/userClientDevice/userClientDeviceEditPage';
+import UserClientDevicesPage from './pages/accountClientDevice/userClientDevicesPage';
+import UserClientDevicePage from './pages/accountClientDevice/userClientDevicePage';
+import UserClientDeviceCreatePage from './pages/accountClientDevice/userClientDeviceCreatePage';
+import UserClientDeviceEditPage from './pages/accountClientDevice/userClientDeviceEditPage';
 
-import UserClientDeviceTokensPage from './pages/userClientDeviceToken/userClientDeviceTokensPage';
-import UserClientDeviceTokenPage from './pages/userClientDeviceToken/userClientDeviceTokenPage';
-import UserClientDeviceTokenCreatePage from './pages/userClientDeviceToken/userClientDeviceTokenCreatePage';
-import UserClientDeviceTokenEditPage from './pages/userClientDeviceToken/userClientDeviceTokenEditPage';
+import UserClientDeviceTokensPage from './pages/accountClientDeviceToken/userClientDeviceTokensPage';
+import UserClientDeviceTokenPage from './pages/accountClientDeviceToken/userClientDeviceTokenPage';
+import UserClientDeviceTokenCreatePage from './pages/accountClientDeviceToken/userClientDeviceTokenCreatePage';
+import UserClientDeviceTokenEditPage from './pages/accountClientDeviceToken/userClientDeviceTokenEditPage';
 
-import UserContactInfosPage from './pages/userContactInfo/userContactInfosPage';
-import UserContactInfoPage from './pages/userContactInfo/userContactInfoPage';
-import UserContactInfoEditPage from './pages/userContactInfo/userContactInfoEditPage';
-import UserContactInfoCreatePage from './pages/userContactInfo/userContactInfoCreatePage';
+import UserContactInfosPage from './pages/accountContactInfo/userContactInfosPage';
+import UserContactInfoPage from './pages/accountContactInfo/userContactInfoPage';
+import UserContactInfoEditPage from './pages/accountContactInfo/userContactInfoEditPage';
+import UserContactInfoCreatePage from './pages/accountContactInfo/userContactInfoCreatePage';
 
-import UserUserInfosPage from './pages/userUserInfo/userUserInfosPage';
-import UserUserInfoPage from './pages/userUserInfo/userUserInfoPage';
-import UserUserInfoEditPage from './pages/userUserInfo/userUserInfoEditPage';
-import UserUserInfoCreatePage from './pages/userUserInfo/userUserInfoCreatePage';
+import UserUserInfosPage from './pages/accountInfo/userUserInfosPage';
+import UserUserInfoPage from './pages/accountInfo/userUserInfoPage';
+import UserUserInfoEditPage from './pages/accountInfo/userUserInfoEditPage';
+import UserUserInfoCreatePage from './pages/accountInfo/userUserInfoCreatePage';
 
-import UserWorkspacesPage from './pages/userWorkspace/userWorkspacesPage';
-import UserWorkspacePage from './pages/userWorkspace/userWorkspacePage';
-import UserWorkspaceCreatePage from './pages/userWorkspace/userWorkspaceCreatePage';
-import UserWorkspaceEditPage from './pages/userWorkspace/userWorkspaceEditPage';
+import UserWorkspacesPage from './pages/accountWorkspace/userWorkspacesPage';
+import UserWorkspacePage from './pages/accountWorkspace/userWorkspacePage';
+import UserWorkspaceCreatePage from './pages/accountWorkspace/userWorkspaceCreatePage';
+import UserWorkspaceEditPage from './pages/accountWorkspace/userWorkspaceEditPage';
 
-import UserWorkspaceUserRefsPage from './pages/userWorkspaceUserRef/userWorkspaceUserRefsPage';
-import UserWorkspaceUserRefPage from './pages/userWorkspaceUserRef/userWorkspaceUserRefPage';
-import UserWorkspaceUserRefCreatePage from './pages/userWorkspaceUserRef/userWorkspaceUserRefCreatePage';
-import UserWorkspaceUserRefEditPage from './pages/userWorkspaceUserRef/userWorkspaceUserRefEditPage';
+import UserWorkspaceUserRefsPage from './pages/accountWorkspaceUserRef/userWorkspaceUserRefsPage';
+import UserWorkspaceUserRefPage from './pages/accountWorkspaceUserRef/userWorkspaceUserRefPage';
+import UserWorkspaceUserRefCreatePage from './pages/accountWorkspaceUserRef/userWorkspaceUserRefCreatePage';
+import UserWorkspaceUserRefEditPage from './pages/accountWorkspaceUserRef/userWorkspaceUserRefEditPage';
 
 
 import OwnerPage from './pages/owner/ownerPage';

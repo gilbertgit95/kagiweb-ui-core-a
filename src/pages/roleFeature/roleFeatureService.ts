@@ -1,6 +1,6 @@
 import roleApi from '../../dataEndpoints/apiCoreA/roleApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
-// import { IUser, IUserInfo, IContactInfo,TContactInfoType } from '../../types/user'
+// import { IAccount, IUserInfo, IContactInfo,TContactInfoType } from '../../types/account'
 import { IFeatureRef } from '../../types/role'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 

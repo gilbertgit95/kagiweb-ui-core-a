@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFeature } from "../types/feature";
 import { IRole } from "../types/role";
-import { IUser, IWorkspace } from "../types/user";
+import { IAccount, IWorkspace } from "../types/account";
 
 export interface ISignedInUser {
     // token?: string,
-    userData?: IUser,
+    userData?: IAccount,
     isSignedIn?: boolean,
     role?: IRole,
     roles?: IRole[],
@@ -17,7 +17,7 @@ export interface ISignedInUser {
 
 export interface IOptSignedInUser {
     // token?: string|undefined,
-    userData?: IUser|undefined,
+    userData?: IAccount|undefined,
     isSignedIn?: boolean|undefined,
     role?: IRole|undefined,
     roles?: IRole[]|undefined,

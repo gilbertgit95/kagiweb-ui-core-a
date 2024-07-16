@@ -7,15 +7,15 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import AddIcon from '@mui/icons-material/Add';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import UserService from '../user/userService';
+// import UserService from '../user/accountService';
 import OwnerService from './ownerService';
-import UserContactInfosReadOnlyView from '../userContactInfo/userContactInfosReadOnlyView';
+import UserContactInfosReadOnlyView from '../accountContactInfo/userContactInfosReadOnlyView';
 
 const UserContactInfosPage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []

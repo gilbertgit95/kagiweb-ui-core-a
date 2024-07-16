@@ -7,11 +7,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenCreateForm from '../userClientDeviceToken/userClientDeviceTokenCreateForm';
-// import UserService from '../user/userService';
+import UserClientDeviceTokenCreateForm from '../accountClientDeviceToken/userClientDeviceTokenCreateForm';
+// import UserService from '../user/accountService';
 // import UserClientDeviceTokenService from './userClientDeviceTokenService';
 import OwnerService from './ownerService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -23,7 +23,7 @@ const UserClientDeviceTokenCreatePage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
         try {

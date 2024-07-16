@@ -14,9 +14,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoReadOnlyView from '../userUserInfo/userUserInfoReadOnlyView';
+import UserUserInfoReadOnlyView from '../accountInfo/userUserInfoReadOnlyView';
 import OwnerService from './ownerService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -33,7 +33,7 @@ const UserInfoPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (userInfoId) {

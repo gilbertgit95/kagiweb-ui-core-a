@@ -3,7 +3,7 @@ import { IFeature } from "../types/feature";
 import { IRole } from "../types/role";
 
 // import Config from "../config";
-// import { IUser } from "../types/user";
+// import { IAccount } from "../types/account";
 // import { IWorkspace } from "../types/workspace";
 import appComponentsHandler from '../utils/appComponentsHandler'
 

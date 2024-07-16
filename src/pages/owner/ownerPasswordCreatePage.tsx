@@ -5,16 +5,16 @@ import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserPasswordCreateForm from '../userPassword/userPasswordCreateForm';
+import UserPasswordCreateForm from '../accountPassword/userPasswordCreateForm';
 import OwnerService from './ownerService';
-// import UserService from '../user/userService';
+// import UserService from '../user/accountService';
 // import UserPasswordService from './userPasswordService';
 
 const OwnerPasswordCreatePage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []

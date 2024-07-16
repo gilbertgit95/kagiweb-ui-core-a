@@ -7,11 +7,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserLimitedTransactionEditForm from '../userLimitedTransaction/userLimitedTransactionEditForm';
-// import UserService from '../user/userService';
+import UserLimitedTransactionEditForm from '../accountLimitedTransaction/userLimitedTransactionEditForm';
+// import UserService from '../user/accountService';
 import OwnerService from './ownerService';
 // import UserLimitedTransactionService from './userLimitedTransactionService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -23,7 +23,7 @@ const OwnerLimitedTransactionEditPage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
         try {

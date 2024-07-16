@@ -1,6 +1,6 @@
 import featureApi from '../../dataEndpoints/apiCoreA/featureApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
-// import { IUser, IUserInfo, IContactInfo,TContactInfoType } from '../../types/user'
+// import { IAccount, IUserInfo, IContactInfo,TContactInfoType } from '../../types/account'
 import { IFeature } from '../../types/feature'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 

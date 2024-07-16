@@ -14,11 +14,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoReadOnlyView from '../userContactInfo/userContactInfoReadOnlyView';
-// import UserService from '../user/userService';
+import UserContactInfoReadOnlyView from '../accountContactInfo/userContactInfoReadOnlyView';
+// import UserService from '../user/accountService';
 import OwnerService from './ownerService';
 // import UserContactInfoService from './userContactInfoService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -35,7 +35,7 @@ const UserInfoPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (contactInfoId) {

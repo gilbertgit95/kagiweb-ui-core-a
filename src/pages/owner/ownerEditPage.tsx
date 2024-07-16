@@ -4,16 +4,16 @@ import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 import { setUserData } from '../../stores/signedInUserSlice';
 import { useNavigate } from 'react-router-dom';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserEditForm from '../user/userEditForm';
+import UserEditForm from '../account/userEditForm';
 import OwnerService from './ownerService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 
 const OwnerEditPage = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const userData = useAppSelector(state => state.signedInUser.userData)
 
-    const onUpdated = async (user:IUser|undefined) => {
+    const onUpdated = async (user:IAccount|undefined) => {
         if (user) {
             dispatch(setUserData({userData: user}))
         }

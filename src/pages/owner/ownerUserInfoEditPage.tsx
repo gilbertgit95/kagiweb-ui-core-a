@@ -7,11 +7,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoEditForm from '../userUserInfo/userUserInfoEditForm';
+import UserUserInfoEditForm from '../accountInfo/userUserInfoEditForm';
 import OwnerService from './ownerService';
-// import UserService from '../user/userService';
+// import UserService from '../user/accountService';
 // import UserUserInfoService from './userUserInfoService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -23,7 +23,7 @@ const UserInfoEditPage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
         try {

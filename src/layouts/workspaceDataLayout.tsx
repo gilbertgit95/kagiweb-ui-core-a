@@ -9,7 +9,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import DropDownSearch from '../components/inputs/dropdownSearch';
 
 import { useAppDispatch, useAppSelector} from '../stores/appStore';
-import { IWorkspace } from '../types/user';
+import { IWorkspace } from '../types/account';
 
 interface Props {
     children?: React.ReactNode

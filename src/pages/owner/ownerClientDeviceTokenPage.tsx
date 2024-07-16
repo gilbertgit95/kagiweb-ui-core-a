@@ -14,10 +14,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenReadOnlyView from '../userClientDeviceToken/userClientDeviceTokenReadOnlyView';
-// import UserService from '../user/userService';
+import UserClientDeviceTokenReadOnlyView from '../accountClientDeviceToken/userClientDeviceTokenReadOnlyView';
+// import UserService from '../user/accountService';
 // import UserClientDeviceTokenService from './userClientDeviceTokenService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -35,7 +35,7 @@ const UserClientDeviceTokenPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (clientDeviceId && clientDeviceTokenId) {

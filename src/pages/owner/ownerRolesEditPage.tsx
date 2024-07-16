@@ -7,13 +7,13 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import OwnerService from './ownerService';
-import { IUser } from '../../types/user';
-import UserRolesEditForm from '../userRole/userRolesEditForm';
+import { IAccount } from '../../types/account';
+import UserRolesEditForm from '../accountRole/userRolesEditForm';
 import AppUtils from '../../utils/appUtils';
 
 const OwnerRolesEditPage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []

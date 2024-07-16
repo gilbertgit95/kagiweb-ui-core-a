@@ -13,17 +13,17 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import UserService from '../user/userService';
+// import UserService from '../user/accountService';
 // import UserWorkspaceService from './userWorkspaceService';
 import OwnerService from './ownerService';
-import UserWorkspaceReadOnlyView from '../userWorkspace/userWorkspaceReadOnlyView';
+import UserWorkspaceReadOnlyView from '../accountWorkspace/userWorkspaceReadOnlyView';
 
 const OwnerWorkspacePage = () => {
     const { workspaceId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
     const [pageState, setPageState] = useState({
         disableEditButton: false,
         disableDeleteButton: false,

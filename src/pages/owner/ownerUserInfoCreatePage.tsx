@@ -7,9 +7,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoCreateForm from '../userUserInfo/userUserInfoCreateForm';
+import UserUserInfoCreateForm from '../accountInfo/userUserInfoCreateForm';
 import OwnerService from './ownerService';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 
 const UserInfoCreatePage = () => {
     const navigate = useNavigate()
@@ -17,7 +17,7 @@ const UserInfoCreatePage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
         try {

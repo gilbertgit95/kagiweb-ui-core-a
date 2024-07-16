@@ -13,17 +13,17 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import UserService from '../user/userService';
+// import UserService from '../user/accountService';
 // import UserClientDeviceService from '../userClientDevice/userClientDeviceService';
-import UserClientDeviceReadOnlyView from '../userClientDevice/userClientDeviceReadOnlyView';
+import UserClientDeviceReadOnlyView from '../accountClientDevice/userClientDeviceReadOnlyView';
 import OwnerService from './ownerService';
 
 const OwnerClientDevicePage = () => {
     const { clientDeviceId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
     const [pageState, setPageState] = useState({
         disableEditButton: false,
         disableDeleteButton: false,

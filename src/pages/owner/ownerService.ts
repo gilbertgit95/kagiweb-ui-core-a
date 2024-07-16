@@ -1,7 +1,7 @@
 import OwnerApi from '../../dataEndpoints/apiCoreA/ownerApi'
 import { ISignedInUser } from '../../stores/signedInUserSlice'
 import {
-    IUser,
+    IAccount,
     IUserUpdate,
     IUserInfo,
     IContactInfo,
@@ -12,14 +12,14 @@ import {
     IAccessToken,
     IWorkspace,
     IWorkspaceUserRef
-} from '../../types/user';
+} from '../../types/account';
 
 class OwnerService {
-    public static getOwner():Promise<{data: IUser}> {
+    public static getOwner():Promise<{data: IAccount}> {
         return OwnerApi.getOwner()
     }
 
-    public static updateOwner(user:IUserUpdate):Promise<{data: IUser}> {
+    public static updateOwner(user:IUserUpdate):Promise<{data: IAccount}> {
         return OwnerApi.updateOwner(user)
     }
 
@@ -81,7 +81,7 @@ class OwnerService {
     }
 
     // owner client device
-    public static getClientDeviceById(user:IUser, clientDeviceId:string):IClientDevice|undefined {
+    public static getClientDeviceById(user:IAccount, clientDeviceId:string):IClientDevice|undefined {
 
         if (user && user.clientDevices) {
             for (const clientDevice of user.clientDevices) {

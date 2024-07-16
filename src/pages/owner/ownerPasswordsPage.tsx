@@ -6,15 +6,15 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import EditIcon from '@mui/icons-material/Edit';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IUser } from '../../types/user';
+import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import UserService from '../user/userService';
+// import UserService from '../user/accountService';
 import OwnerService from './ownerService';
-import UserPasswordsReadOnlyView from '../userPassword/userPasswordsReadOnlyView';
+import UserPasswordsReadOnlyView from '../accountPassword/userPasswordsReadOnlyView';
 
 const OwnerPasswordsPage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IUser | undefined>()
+    const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
