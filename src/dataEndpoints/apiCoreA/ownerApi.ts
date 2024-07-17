@@ -1,5 +1,5 @@
 import apiHelper from './apiHelper';
-import { IUserUpdate, IUserInfo, IContactInfo, IRoleRef, ILimitedTransaction, IClientDevice, IAccessToken } from '../../types/account';
+import { IAccountUpdate, IAccountInfo, IContactInfo, IRoleRef, ILimitedTransaction, IClientDevice, IAccessToken } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 class OwnerApi {
@@ -10,14 +10,14 @@ class OwnerApi {
         })
     }
 
-    public static updateOwner(user:IUserUpdate) {
-        const data:IUserUpdate = {
-            _id: user._id
+    public static updateOwner(account:IAccountUpdate) {
+        const data:IAccountUpdate = {
+            _id: account._id
         }
 
-        if (user.username !== undefined) data['username'] = user.username
-        if (user.disabled !== undefined) data['disabled'] = user.disabled
-        if (user.verified !== undefined) data['verified'] = user.verified
+        if (account.username !== undefined) data['username'] = account.username
+        if (account.disabled !== undefined) data['disabled'] = account.disabled
+        if (account.verified !== undefined) data['verified'] = account.verified
 
         return apiHelper.privateReq({
             method: 'PUT',
@@ -35,27 +35,27 @@ class OwnerApi {
     }
 
     // user info
-    public static updateUserInfo(userId:string, userInfo:IUserInfo) {
-        const data:IUserInfo = {
-            '_id': userInfo._id,
-            'key': userInfo.key,
-            'value': userInfo.value,
-            'type': userInfo.type
+    public static updateUserInfo(accountId:string, accountInfo:IAccountInfo) {
+        const data:IAccountInfo = {
+            '_id': accountInfo._id,
+            'key': accountInfo.key,
+            'value': accountInfo.value,
+            'type': accountInfo.type
         }
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/userInfos/${ userInfo._id }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/userInfos/${ accountInfo._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
     }
 
-    public static createUserInfo(userId:string, userInfo:IUserInfo) {
-        const data:IUserInfo = {
-            'key': userInfo.key,
-            'value': userInfo.value,
-            'type': userInfo.type
+    public static createAccountInfo(accountId:string, accountInfo:IAccountInfo) {
+        const data:IAccountInfo = {
+            'key': accountInfo.key,
+            'value': accountInfo.value,
+            'type': accountInfo.type
         }
 
         return apiHelper.privateReq({
@@ -66,15 +66,15 @@ class OwnerApi {
         })
     }
 
-    public static deleteUserInfo(userId:string, userInfoId:string) {
+    public static deleteUserInfo(accountId:string, accountInfoId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/userInfos/${ userInfoId }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/userInfos/${ accountInfoId }`
         })
     }
 
     // contact info
-    public static updateContactInfo(userId:string, contactInfo:IContactInfo) {
+    public static updateContactInfo(accountId:string, contactInfo:IContactInfo) {
         const data:IContactInfo = {
             '_id': contactInfo._id,
             'type': contactInfo.type,
@@ -89,7 +89,7 @@ class OwnerApi {
         })
     }
 
-    public static createContactInfo(userId:string, contactInfo:IContactInfo) {
+    public static createContactInfo(accountId:string, contactInfo:IContactInfo) {
         const data:IContactInfo = {
             'type': contactInfo.type,
             'value': contactInfo.value
@@ -103,7 +103,7 @@ class OwnerApi {
         })
     }
 
-    public static deleteContactInfo(userId:string, contactInfoId:string) {
+    public static deleteContactInfo(accountId:string, contactInfoId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/contactInfos/${ contactInfoId }`
@@ -111,7 +111,7 @@ class OwnerApi {
     }
 
     // roles
-    public static activateUserRole(userId:string, roleRefId:string) {
+    public static activateAccountRole(accountId:string, roleRefId:string) {
         return apiHelper.privateReq({
             method: 'PUT',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/roles/${ roleRefId }/activate`,
@@ -119,24 +119,24 @@ class OwnerApi {
         })
     }
 
-    public static updateUserRole(userId:string, userRole:{_id: string, isActive?:boolean, roleId?:string}) {
+    public static updateAccountRole(accountId:string, accountRole:{_id: string, isActive?:boolean, roleId?:string}) {
         const data = {
-            'roleId': userRole.roleId,
-            'isActive': userRole.isActive
+            'roleId': accountRole.roleId,
+            'isActive': accountRole.isActive
         }
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/roles/${ userRole._id }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/roles/${ accountRole._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
     }
 
-    public static createUserRole(userId:string, userRole:IRoleRef) {
+    public static createAccountRole(accountId:string, accountRole:IRoleRef) {
         const data:IRoleRef = {
-            'roleId': userRole.roleId,
-            'isActive': userRole.isActive
+            'roleId': accountRole.roleId,
+            'isActive': accountRole.isActive
         }
 
         return apiHelper.privateReq({
@@ -147,7 +147,7 @@ class OwnerApi {
         })
     }
 
-    public static deleteUserRole(userId:string, roleRefId:string) {
+    public static deleteAccountRole(accountId:string, roleRefId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/roles/${ roleRefId }`
@@ -155,7 +155,7 @@ class OwnerApi {
     }
 
     // limited transaction
-    public static updateUserLT(userId:string, lt:ILimitedTransaction) {
+    public static updateAccountLT(accountId:string, lt:ILimitedTransaction) {
         const data = {
             'limit': lt.limit,
             'attempts': lt.attempts,
@@ -175,9 +175,9 @@ class OwnerApi {
     }
 
     // owner passwords
-    public static createUserPassword(userId:string, passInfo: {currPassword:string, newPassword:string}) {
-        const data:{userId:string, currentPassword:string, newPassword:string} = {
-            'userId': userId,
+    public static createAccountPassword(accountId:string, passInfo: {currPassword:string, newPassword:string}) {
+        const data:{accountId:string, currentPassword:string, newPassword:string} = {
+            'accountId': accountId,
             'newPassword': passInfo.newPassword,
             'currentPassword': passInfo.currPassword
         }
@@ -191,7 +191,7 @@ class OwnerApi {
     }
 
     // client device
-    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, description?:string, disabled?:boolean}) {
+    public static updateClientDevice(accountId:string, clientDevice:{_id?:string, ua?:string, description?:string, disabled?:boolean}) {
         const data:{_id?:string, ua?:string, description?:string, disabled?:boolean} = {
             'ua': clientDevice.ua,
             'description': clientDevice.description,
@@ -206,7 +206,7 @@ class OwnerApi {
         })
     }
 
-    public static createClientDevice(userId:string, clientDevice:IClientDevice) {
+    public static createClientDevice(accountId:string, clientDevice:IClientDevice) {
         const data:IClientDevice = {
             'ua': clientDevice.ua,
             'description': clientDevice.description,
@@ -221,7 +221,7 @@ class OwnerApi {
         })
     }
 
-    public static deleteClientDevice(userId:string, clientDeviceId:string) {
+    public static deleteClientDevice(accountId:string, clientDeviceId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }`
@@ -229,7 +229,7 @@ class OwnerApi {
     }
 
     // client device token
-    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}) {
+    public static updateClientDeviceToken(accountId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}) {
         const data:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean} = {
             'description': token.description,
             'ipAddress': token.ipAddress,
@@ -244,7 +244,7 @@ class OwnerApi {
         })
     }
 
-    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}) {
+    public static createClientDeviceToken(accountId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}) {
         const data:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean, expiration:number|undefined} = {
             'expiration': token.expiration,
             'description': token.description,
@@ -260,7 +260,7 @@ class OwnerApi {
         })
     }
 
-    public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string) {
+    public static deleteClientDeviceToken(accountId:string, clientDeviceId:string, clientDeviceTokenId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/clientDevices/${ clientDeviceId }/accessTokens/${ clientDeviceTokenId }`
@@ -268,7 +268,7 @@ class OwnerApi {
     }
 
     // workspaces
-    public static updateWorkspace(userId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
+    public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
         const data = {
             'name': name,
             'description': description,
@@ -284,7 +284,7 @@ class OwnerApi {
         })
     }
 
-    public static createWorkspace(userId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
+    public static createWorkspace(accountId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
         const data = {
             'name': name,
             'description': description,
@@ -300,7 +300,7 @@ class OwnerApi {
         })
     }
 
-    public static deleteWorkspace(userId:string, workspaceId:string) {
+    public static deleteWorkspace(accountId:string, workspaceId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }`
@@ -308,15 +308,15 @@ class OwnerApi {
     }
 
     // workspace user references
-    public static getWorkspaceUserRef(userId:string, workspaceId:string, userRefId:string) {
+    public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${userRefId  }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${accountRefId  }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' }
         })
     }
 
-    public static getWorkspaceUserRefs(userId:string, workspaceId:string) {
+    public static getWorkspaceAccountRefs(accountId:string, workspaceId:string) {
         return apiHelper.privateReq({
             method: 'GET',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs`,
@@ -324,10 +324,10 @@ class OwnerApi {
         })
     }
     
-    public static updateWorkspaceUserRef(
-        userId:string,
+    public static updateWorkspaceAccountRef(
+        accountId:string,
         workspaceId:string,
-        userRefId:string,
+        accountRefId:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
@@ -343,14 +343,14 @@ class OwnerApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${ userRefId }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${ accountRefId }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
     }
 
-    public static createWorkspaceUserRef(
-        userId:string,
+    public static createWorkspaceAccountRef(
+        accountId:string,
         workspaceId:string,
         username:string,
         readAccess: boolean,
@@ -375,10 +375,10 @@ class OwnerApi {
         })
     }
 
-    public static deleteWorkspaceUserRef(userId:string, workspaceId:string, userRefId:string) {
+    public static deleteWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${ userRefId }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${ accountRefId }`
         })
     }
 }
