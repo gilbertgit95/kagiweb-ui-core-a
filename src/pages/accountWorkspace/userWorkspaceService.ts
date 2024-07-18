@@ -14,16 +14,16 @@ class UserWorkspaceService {
         return undefined
     }
 
-    public static updateWorkspace(userId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
-        return AccountApi.updateWorkspace(userId, workspaceId, name, description, isActive, disabled)
+    public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
+        return AccountApi.updateWorkspace(accountId, workspaceId, name, description, isActive, disabled)
     }
 
-    public static createWorkspace(userId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
-        return AccountApi.createWorkspace(userId, name, description, isActive, disabled)
+    public static createWorkspace(accountId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
+        return AccountApi.createWorkspace(accountId, name, description, isActive, disabled)
     }
 
-    public static deleteWorkspace(userId:string, clientDeviceId:string):Promise<{data: IWorkspace}> {
-        return AccountApi.deleteWorkspace(userId, clientDeviceId)
+    public static deleteWorkspace(accountId:string, clientDeviceId:string):Promise<{data: IWorkspace}> {
+        return AccountApi.deleteWorkspace(accountId, clientDeviceId)
     }
 }
 

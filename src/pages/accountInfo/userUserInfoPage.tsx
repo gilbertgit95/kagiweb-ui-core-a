@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserUserInfoReadOnlyView from './userUserInfoReadOnlyView';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserUserInfoService from './userUserInfoService';
 import { IAccount } from '../../types/account';
 import {
@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const UserInfoPage = () => {
-    const { userId, userInfoId } = useParams()
+    const { accountId, userInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,10 +37,10 @@ const UserInfoPage = () => {
     const [user, setUser] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
-        if (userId && userInfoId) {
+        if (accountId && userInfoId) {
             try {
-                await UserUserInfoService.deleteUserInfo(userId, userInfoId)
-                const userResp = await UserService.getUser(userId)
+                await UserUserInfoService.deleteAccountInfo(accountId, userInfoId)
+                const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -65,11 +65,11 @@ const UserInfoPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, userInfoId)
+            console.log('View: ', accountId, userInfoId)
 
-            if (userId && userInfoId) {
+            if (accountId && userInfoId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -88,7 +88,7 @@ const UserInfoPage = () => {
         }
 
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>

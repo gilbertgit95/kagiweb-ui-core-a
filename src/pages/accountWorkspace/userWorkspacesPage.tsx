@@ -8,11 +8,11 @@ import AddIcon from '@mui/icons-material/Add';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserWorkspacesReadOnlyView from './userWorkspacesReadOnlyView';
 
 const UserWorkspacesPage = () => {
-    const { userId } = useParams()
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -22,9 +22,9 @@ const UserWorkspacesPage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
                 } catch (err:any) {
                     console.log(err)
@@ -36,7 +36,7 @@ const UserWorkspacesPage = () => {
             }
         }
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -62,7 +62,7 @@ const UserWorkspacesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/workspaces`)}>
+                            onClick={() => navigate(`/users/create/${ accountId }/workspaces`)}>
                             Create
                         </Button>
                     </Box>

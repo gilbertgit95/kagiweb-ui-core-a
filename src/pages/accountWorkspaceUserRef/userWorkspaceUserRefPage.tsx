@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserWorkspaceUserRefReadOnlyView from './userWorkspaceUserRefReadOnlyView';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import { IAccount } from '../../types/account';
 import {
@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const UserWorkspaceUserRefPage = () => {
-    const { userId, workspaceId, userRefId } = useParams()
+    const { accountId, workspaceId, userRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,10 +37,10 @@ const UserWorkspaceUserRefPage = () => {
     const [user, setUser] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
-        if (userId && workspaceId && userRefId) {
+        if (accountId && workspaceId && userRefId) {
             try {
-                await UserWorkspaceUserRefService.deleteWorkspaceUserRef(userId, workspaceId, userRefId)
-                const userResp = await UserService.getUser(userId)
+                await UserWorkspaceUserRefService.deleteWorkspaceAccountRef(accountId, workspaceId, userRefId)
+                const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -65,11 +65,11 @@ const UserWorkspaceUserRefPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, workspaceId)
+            console.log('View: ', accountId, workspaceId)
 
-            if (userId && workspaceId) {
+            if (accountId && workspaceId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -88,7 +88,7 @@ const UserWorkspaceUserRefPage = () => {
         }
 
         init()
-    }, [userId, workspaceId])
+    }, [accountId, workspaceId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -153,7 +153,7 @@ const UserWorkspaceUserRefPage = () => {
                     user={user}
                     workspaceId={workspaceId}
                     userRefId={userRefId}
-                    getFunc={UserWorkspaceUserRefService.getWorkspaceUserRef} />
+                    getFunc={UserWorkspaceUserRefService.getWorkspaceAccountRef} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

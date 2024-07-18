@@ -5,16 +5,16 @@ import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IAccount, IUserUpdate } from '../../types/account';
+import { IAccount, IAccountUpdate } from '../../types/account';
 
 interface Props {
-    userId: string | undefined,
-    getFunc: (userId:string) => Promise<{data:IAccount}>,
-    updateFunc: (updateData:IUserUpdate) => Promise<{data:IAccount}>,
+    accountId: string | undefined,
+    getFunc: (accountId:string) => Promise<{data:IAccount}>,
+    updateFunc: (updateData:IAccountUpdate) => Promise<{data:IAccount}>,
     updated?: (user:IAccount|undefined) => void
 }
 
-export  const UserEditForm = ({ userId, getFunc, updateFunc, updated }:Props) => {
+export  const UserEditForm = ({ accountId, getFunc, updateFunc, updated }:Props) => {
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -45,7 +45,7 @@ export  const UserEditForm = ({ userId, getFunc, updateFunc, updated }:Props) =>
     const onUpdate = async () => {
         if (!user) return
 
-        const updateData:IUserUpdate = {
+        const updateData:IAccountUpdate = {
             _id: updatedUser._id,
             username: updatedUser.username === user.username? undefined: updatedUser.username,
             disabled: updatedUser.disabled === user.disabled? undefined: updatedUser.disabled,
@@ -75,11 +75,11 @@ export  const UserEditForm = ({ userId, getFunc, updateFunc, updated }:Props) =>
     
     useEffect(() => {
         const init = async () => {
-            console.log('Edit: ', userId)
+            console.log('Edit: ', accountId)
 
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await getFunc(userId)
+                    const userResp = await getFunc(accountId)
                     setUser(userResp.data)
                     setUpdatedUser(userResp.data)
                 } catch (err:any) {
@@ -94,7 +94,7 @@ export  const UserEditForm = ({ userId, getFunc, updateFunc, updated }:Props) =>
         }
 
         init()
-    }, [userId, getFunc])
+    }, [accountId, getFunc])
 
     const itemSx = {
         display: 'flex',

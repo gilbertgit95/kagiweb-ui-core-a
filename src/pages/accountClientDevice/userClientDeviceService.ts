@@ -37,16 +37,16 @@ class UserClientDeviceService {
         return undefined
     }
 
-    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, description?:string, disabled?:boolean}):Promise<{data: IClientDevice}> {
-        return AccountApi.updateClientDevice(userId, clientDevice)
+    public static updateClientDevice(accountId:string, clientDevice:{_id?:string, ua?:string, description?:string, disabled?:boolean}):Promise<{data: IClientDevice}> {
+        return AccountApi.updateClientDevice(accountId, clientDevice)
     }
 
-    public static createClientDevice(userId:string, clientDevice:IClientDevice):Promise<{data: IClientDevice}> {
-        return AccountApi.createClientDevice(userId, clientDevice)
+    public static createClientDevice(accountId:string, clientDevice:IClientDevice):Promise<{data: IClientDevice}> {
+        return AccountApi.createClientDevice(accountId, clientDevice)
     }
 
-    public static deleteClientDevice(userId:string, clientDeviceId:string):Promise<{data: IClientDevice}> {
-        return AccountApi.deleteClientDevice(userId, clientDeviceId)
+    public static deleteClientDevice(accountId:string, clientDeviceId:string):Promise<{data: IClientDevice}> {
+        return AccountApi.deleteClientDevice(accountId, clientDeviceId)
     }
 }
 

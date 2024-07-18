@@ -1,49 +1,49 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
-import { IAccount, IWorkspaceUserRef } from '../../types/account'
+import { IAccount, IWorkspaceAccountRef } from '../../types/account'
 import UserWorkspaceService from '../accountWorkspace/userWorkspaceService'
 
-class UserWorkspaceUserRefService {
-    public static getWorkspaceUserRefById(user:IAccount, workspaceId:string, userRefId:string):IWorkspaceUserRef|undefined {
+class AccountWorkspaceAccountRefService {
+    public static getWorkspaceAccountRefById(user:IAccount, workspaceId:string, accountRefId:string):IWorkspaceAccountRef|undefined {
 
         const workspace = UserWorkspaceService.getWorkspaceById(user, workspaceId)
         if (workspace && workspace.userRefs) {
             for (const userRef of workspace.userRefs) {
-                if (userRef._id === userRefId) return userRef
+                if (userRef._id === accountRefId) return userRef
             }
         }
 
         return undefined
     }
 
-    public static getWorkspaceUserRef( userId:string, workspaceId:string, userRefId:string):Promise<{data: IWorkspaceUserRef & {username?:string} | null}> {
-        return AccountApi.getWorkspaceUserRef(
-            userId,
+    public static getWorkspaceAccountRef( accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef & {username?:string} | null}> {
+        return AccountApi.getWorkspaceAccountRef(
+            accountId,
             workspaceId,
-            userRefId
+            accountRefId
         )
     }
 
-    public static getWorkspaceUserRefs( userId:string, workspaceId:string):Promise<{data: (IWorkspaceUserRef & {username?:string})[]}> {
-        return AccountApi.getWorkspaceUserRefs(
-            userId,
+    public static getWorkspaceAccountRefs( accountId:string, workspaceId:string):Promise<{data: (IWorkspaceAccountRef & {username?:string})[]}> {
+        return AccountApi.getWorkspaceAccountRefs(
+            accountId,
             workspaceId
         )
     }
 
-    public static updateWorkspaceUserRef(
-        userId:string,
+    public static updateWorkspaceAccountRef(
+        accountId:string,
         workspaceId:string,
-        userRefId:string,
+        accountRefId:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
-        disabled: boolean):Promise<{data: IWorkspaceUserRef}> {
-        return AccountApi.updateWorkspaceUserRef(
-            userId,
+        disabled: boolean):Promise<{data: IWorkspaceAccountRef}> {
+        return AccountApi.updateWorkspaceAccountRef(
+            accountId,
             workspaceId,
-            userRefId,
+            accountRefId,
             readAccess,
             updateAccess,
             createAccess,
@@ -52,17 +52,17 @@ class UserWorkspaceUserRefService {
         )
     }
 
-    public static createWorkspaceUserRef(
-        userId:string,
+    public static createWorkspaceAccountRef(
+        accountId:string,
         workspaceId:string,
         username:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
-        disabled: boolean):Promise<{data: IWorkspaceUserRef}> {
-        return AccountApi.createWorkspaceUserRef(
-            userId,
+        disabled: boolean):Promise<{data: IWorkspaceAccountRef}> {
+        return AccountApi.createWorkspaceAccountRef(
+            accountId,
             workspaceId,
             username,
             readAccess,
@@ -73,9 +73,9 @@ class UserWorkspaceUserRefService {
         )
     }
 
-    public static deleteWorkspaceUserRef(userId:string, workspaceId:string, userRefId:string):Promise<{data: IWorkspaceUserRef}> {
-        return AccountApi.deleteWorkspaceUserRef(userId, workspaceId, userRefId)
+    public static deleteWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef}> {
+        return AccountApi.deleteWorkspaceAccountRef(accountId, workspaceId, accountRefId)
     }
 }
 
-export default UserWorkspaceUserRefService
+export default AccountWorkspaceAccountRefService

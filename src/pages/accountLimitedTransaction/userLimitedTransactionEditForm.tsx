@@ -11,8 +11,8 @@ import { IAccount, ILimitedTransaction, TLimitedTransactionType, limitedTransact
 interface props {
     user?: IAccount,
     limitedTransactionId?: string,
-    updateFunc: (userId:string, updateData:ILimitedTransaction) => Promise<{data:ILimitedTransaction}>,
-    updated?: (userId:string|undefined, userInfo:ILimitedTransaction|undefined) => void
+    updateFunc: (accountId:string, updateData:ILimitedTransaction) => Promise<{data:ILimitedTransaction}>,
+    updated?: (accountId:string|undefined, userInfo:ILimitedTransaction|undefined) => void
 }
 
 const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc, updated}:props) => {

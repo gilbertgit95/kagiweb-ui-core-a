@@ -9,8 +9,8 @@ import { IAccount, IWorkspace } from '../../types/account';
 interface props {
     user?: IAccount,
     workspaceId?: string,
-    updateFunc: (userId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
-    updated?: (userId:string|undefined, userInfo:IWorkspace|undefined) => void
+    updateFunc: (accountId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
+    updated?: (accountId:string|undefined, userInfo:IWorkspace|undefined) => void
 }
 
 const UserWorkspaceEditForm = ({user, workspaceId, updateFunc, updated}:props) => {

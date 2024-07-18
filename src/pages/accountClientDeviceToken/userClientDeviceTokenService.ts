@@ -28,16 +28,16 @@ class UserClientDeviceTokenService {
     //     return featureApi.getFeature(id)
     // }
 
-    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
-        return AccountApi.updateClientDeviceToken(userId, clientDeviceId, token)
+    public static updateClientDeviceToken(accountId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
+        return AccountApi.updateClientDeviceToken(accountId, clientDeviceId, token)
     }
 
-    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}):Promise<{data: IAccessToken}> {
-        return AccountApi.createClientDeviceToken(userId, clientDeviceId, token)
+    public static createClientDeviceToken(accountId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}):Promise<{data: IAccessToken}> {
+        return AccountApi.createClientDeviceToken(accountId, clientDeviceId, token)
     }
 
-    public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string):Promise<{data: IAccessToken}> {
-        return AccountApi.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
+    public static deleteClientDeviceToken(accountId:string, clientDeviceId:string, clientDeviceTokenId:string):Promise<{data: IAccessToken}> {
+        return AccountApi.deleteClientDeviceToken(accountId, clientDeviceId, clientDeviceTokenId)
     }
 }
 

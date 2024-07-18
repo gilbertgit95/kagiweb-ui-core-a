@@ -1,15 +1,15 @@
-import usersApi from "../../dataEndpoints/apiCoreA/accountApi"
+import AccountApi from "../../dataEndpoints/apiCoreA/accountApi"
 // import { ISignedInUser } from "../../stores/signedInUserSlice"
-import { IAccount, IUserInfo, IContactInfo,TContactInfoType, IUserUpdate } from "../../types/account"
+import { IAccount, IAccountInfo, IContactInfo,TContactInfoType, IAccountUpdate } from "../../types/account"
 import { IPagination, IPageQuery } from "../../types/mixTypes"
 
-class UserService {
-    public static getUsers(query:IPageQuery):Promise<{data: IPagination<IAccount>}> {
-        return usersApi.getUsers(query)
+class AccountService {
+    public static getAccounts(query:IPageQuery):Promise<{data: IPagination<IAccount>}> {
+        return AccountApi.getAccounts(query)
     }
 
-    public static getUserInfo(user:IAccount, key:string):IUserInfo|undefined {
-        for (const info of user?.userInfos || []) {
+    public static getAccountInfo(account:IAccount, key:string):IAccountInfo|undefined {
+        for (const info of account?.userInfos || []) {
             if (info.key === key) return info
         }
 
@@ -24,21 +24,21 @@ class UserService {
         return undefined
     }
 
-    public static getUser(id:string):Promise<{data: IAccount}> {
-        return usersApi.getUser(id)
+    public static getAccount(id:string):Promise<{data: IAccount}> {
+        return AccountApi.getAccount(id)
     }
 
-    public static updateUser(user:IUserUpdate):Promise<{data: IAccount}> {
-        return usersApi.updateUser(user)
+    public static updateAccount(user:IAccountUpdate):Promise<{data: IAccount}> {
+        return AccountApi.updateAccount(user)
     }
 
-    public static createUser(user:IAccount):Promise<{data: IAccount}> {
-        return usersApi.createUser(user)
+    public static createAccount(user:IAccount):Promise<{data: IAccount}> {
+        return AccountApi.createAccount(user)
     }
 
-    public static deleteUser(id:string):Promise<{data: IAccount}> {
-        return usersApi.deleteUser(id)
+    public static deleteAccount(id:string):Promise<{data: IAccount}> {
+        return AccountApi.deleteAccount(id)
     }
 }
 
-export default UserService
+export default AccountService

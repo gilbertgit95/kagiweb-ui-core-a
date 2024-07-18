@@ -5,19 +5,19 @@ import AddIcon from '@mui/icons-material/Add';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IAccount, IUserInfo, TUserInfoType, userInfoTypes } from '../../types/account';
+import { IAccount, IAccountInfo, TAccountInfoType, accountInfoTypes } from '../../types/account';
 
 interface props {
     user?: IAccount,
-    createFunc: (userId:string, newData:IUserInfo) => Promise<{data:IUserInfo}>,
-    created?: (userId:string|undefined, userInfo:IUserInfo|undefined) => void
+    createFunc: (accountId:string, newData:IAccountInfo) => Promise<{data:IAccountInfo}>,
+    created?: (accountId:string|undefined, userInfo:IAccountInfo|undefined) => void
 }
 
 const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
-    const [newUserInfo, setNewUserInfo] = useState<IUserInfo>({
+    const [newUserInfo, setNewUserInfo] = useState<IAccountInfo>({
         key: '',
         value: '',
-        type: userInfoTypes[0] as TUserInfoType
+        type: accountInfoTypes[0] as TAccountInfoType
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -29,14 +29,14 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
     }
 
     const handleTypeSelectionChange = (event: SelectChangeEvent) => {
-        const type = event.target.value as TUserInfoType
+        const type = event.target.value as TAccountInfoType
         setNewUserInfo({...newUserInfo, ...{type}})
     }
 
     const onCreate = async () => {
         if (!user) return
 
-        const newData:IUserInfo = {
+        const newData:IAccountInfo = {
             _id: newUserInfo._id,
             key: newUserInfo.key,
             value: newUserInfo.value,
@@ -83,7 +83,7 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
                         value={newUserInfo?.type}
                         onChange={handleTypeSelectionChange}>
                         {
-                            userInfoTypes.map((item, index) => (
+                            accountInfoTypes.map((item, index) => (
                                 <MenuItem key={index} value={item}>{ item }</MenuItem>
                             ))
                         }

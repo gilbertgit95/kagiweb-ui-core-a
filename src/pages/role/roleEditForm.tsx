@@ -9,7 +9,7 @@ import AppUtils from '../../utils/appUtils';
 
 interface Props {
     roleId: string | undefined,
-    getFunc: (userId:string) => Promise<{data:IRole}>,
+    getFunc: (accountId:string) => Promise<{data:IRole}>,
     updateFunc: (updateData:IRole) => Promise<{data:IRole}>,
     updated?: (user:IRole|undefined) => void
 }

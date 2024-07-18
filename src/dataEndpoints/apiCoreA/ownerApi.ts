@@ -35,7 +35,7 @@ class OwnerApi {
     }
 
     // user info
-    public static updateUserInfo(accountId:string, accountInfo:IAccountInfo) {
+    public static updateAccountInfo(accountId:string, accountInfo:IAccountInfo) {
         const data:IAccountInfo = {
             '_id': accountInfo._id,
             'key': accountInfo.key,
@@ -66,7 +66,7 @@ class OwnerApi {
         })
     }
 
-    public static deleteUserInfo(accountId:string, accountInfoId:string) {
+    public static deleteAccountInfo(accountId:string, accountInfoId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/userInfos/${ accountInfoId }`

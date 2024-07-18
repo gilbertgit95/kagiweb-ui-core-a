@@ -9,7 +9,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserUserInfoEditForm from '../accountInfo/userUserInfoEditForm';
 import OwnerService from './ownerService';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 // import UserUserInfoService from './userUserInfoService';
 import { IAccount } from '../../types/account';
 import {
@@ -75,7 +75,7 @@ const UserInfoEditPage = () => {
                 <UserUserInfoEditForm
                     user={user}
                     userInfoId={userInfoId}
-                    updateFunc={OwnerService.updateUserInfo}
+                    updateFunc={OwnerService.updateAccountInfo}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

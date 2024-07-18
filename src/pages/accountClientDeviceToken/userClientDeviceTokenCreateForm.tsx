@@ -8,8 +8,8 @@ import { IAccount, IAccessToken } from '../../types/account';
 interface props {
     user?: IAccount,
     clientDeviceId?:string,
-    createFunc: (userId:string, clientDeviceId:string, newData:IAccessToken & {expiration:number|undefined}) => Promise<{data:IAccessToken}>,
-    created?: (userId:string|undefined, clientDeviceId:string, token:IAccessToken|undefined) => void
+    createFunc: (accountId:string, clientDeviceId:string, newData:IAccessToken & {expiration:number|undefined}) => Promise<{data:IAccessToken}>,
+    created?: (accountId:string|undefined, clientDeviceId:string, token:IAccessToken|undefined) => void
 }
 
 const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, created}:props) => {

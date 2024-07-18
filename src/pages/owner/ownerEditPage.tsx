@@ -35,7 +35,7 @@ const OwnerEditPage = () => {
                     </Button>
                 </Grid>
                 <UserEditForm
-                    userId={userData?._id}
+                    accountId={userData?._id}
                     getFunc={OwnerService.getOwner}
                     updateFunc={OwnerService.updateOwner}
                     updated={onUpdated} />

@@ -7,13 +7,13 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserEditForm from './userEditForm';
-import UserService from './accountService';
+import AccountService from './accountService';
 import {
   useParams
 } from 'react-router-dom';
 
 export const UserEditPage = () => {
-    let { userId } = useParams()
+    let { accountId } = useParams()
     const navigate = useNavigate()
 
     return (
@@ -32,9 +32,9 @@ export const UserEditPage = () => {
                     </Button>
                 </Grid>
                 <UserEditForm
-                    getFunc={UserService.getUser}
-                    updateFunc={UserService.updateUser}
-                    userId={ userId } />
+                    getFunc={AccountService.getAccount}
+                    updateFunc={AccountService.updateAccount}
+                    accountId={ accountId } />
             </Grid>
         </Container>
     )

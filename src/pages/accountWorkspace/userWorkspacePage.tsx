@@ -15,12 +15,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserWorkspaceService from './userWorkspaceService';
 import UserWorkspaceReadOnlyView from './userWorkspaceReadOnlyView';
 
 const UserWorkspacePage = () => {
-    const { userId, workspaceId } = useParams()
+    const { accountId, workspaceId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
     const [pageState, setPageState] = useState({
@@ -34,10 +34,10 @@ const UserWorkspacePage = () => {
     })
 
     const onDelete = async () => {
-        if (userId && workspaceId) {
+        if (accountId && workspaceId) {
             try {
-                await UserWorkspaceService.deleteWorkspace(userId, workspaceId)
-                const userResp = await UserService.getUser(userId)
+                await UserWorkspaceService.deleteWorkspace(accountId, workspaceId)
+                const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -62,9 +62,9 @@ const UserWorkspacePage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
                 } catch (err:any) {
                     console.log(err)
@@ -81,7 +81,7 @@ const UserWorkspacePage = () => {
             }
         }
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -108,7 +108,7 @@ const UserWorkspacePage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ userId }/workspaces/${ workspaceId }`)}>
+                            onClick={() => navigate(`/users/edit/${ accountId }/workspaces/${ workspaceId }`)}>
                             Edit
                         </Button>
                         <Button

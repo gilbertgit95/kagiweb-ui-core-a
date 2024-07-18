@@ -9,8 +9,8 @@ import { IAccount, IContactInfo, TContactInfoType, contactInfoTypes } from '../.
 
 interface props {
     user?: IAccount,
-    createFunc: (userId:string, newData:IContactInfo) => Promise<{data:IContactInfo}>,
-    created?: (userId:string|undefined, userInfo:IContactInfo|undefined) => void
+    createFunc: (accountId:string, newData:IContactInfo) => Promise<{data:IContactInfo}>,
+    created?: (accountId:string|undefined, userInfo:IContactInfo|undefined) => void
 }
 
 const UserContactInfoCreateForm = ({user, createFunc, created}:props) => {

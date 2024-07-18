@@ -8,7 +8,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserWorkspaceUserRefEditForm from './userWorkspaceUserRefEditForm';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import { IAccount } from '../../types/account';
 import {
@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const UserWorkspaceUserRefEditPage = () => {
-    const { userId, workspaceId, userRefId } = useParams()
+    const { accountId, workspaceId, userRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -25,9 +25,9 @@ const UserWorkspaceUserRefEditPage = () => {
     const [user, setUser] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
-        if (userId) {
+        if (accountId) {
             try {
-                const userResp = await UserService.getUser(userId)
+                const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
 
             } catch (err:any) {
@@ -41,11 +41,11 @@ const UserWorkspaceUserRefEditPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId)
+            console.log('View: ', accountId)
 
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -58,7 +58,7 @@ const UserWorkspaceUserRefEditPage = () => {
         }
 
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -80,8 +80,8 @@ const UserWorkspaceUserRefEditPage = () => {
                     user={user}
                     workspaceId={workspaceId}
                     userRefId={userRefId}
-                    getFunc={UserWorkspaceUserRefService.getWorkspaceUserRef}
-                    updateFunc={UserWorkspaceUserRefService.updateWorkspaceUserRef}
+                    getFunc={UserWorkspaceUserRefService.getWorkspaceAccountRef}
+                    updateFunc={UserWorkspaceUserRefService.updateWorkspaceAccountRef}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

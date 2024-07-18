@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 // import { Button } from '@mui/material';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
-import { IAccount, IWorkspaceUserRef } from '../../types/account';
+import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
@@ -15,12 +15,12 @@ import SimpleLink from '../../components/links/simpleLink';
 interface IProps {
     user: IAccount | undefined,
     workspaceId: string | undefined,
-    getFunc: (userId:string, workspaceId:string) => Promise<{data: (IWorkspaceUserRef & {username?:string})[]}>
+    getFunc: (accountId:string, workspaceId:string) => Promise<{data: (IWorkspaceAccountRef & {username?:string})[]}>
 }
 
 interface IWorkspaceUserRefRow {
     _id: string,
-    userId: string,
+    accountId: string,
     username: string,
     readAccess: boolean,
     createAccess: boolean,
@@ -41,10 +41,10 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) 
         const init = async () => {
             if (user && user.workspaces && workspaceId) {
                 const userRefs = await getFunc(user._id || '', workspaceId)
-                const transformedData:IWorkspaceUserRefRow[] = userRefs?.data.map((item:IWorkspaceUserRef & {username?:string, createdAt?: Date, updatedAt?: Date}) => {
+                const transformedData:IWorkspaceUserRefRow[] = userRefs?.data.map((item:IWorkspaceAccountRef & {username?:string, createdAt?: Date, updatedAt?: Date}) => {
                     return {
                         _id: item._id || '',
-                        userId: item.userId,
+                        accountId: item.accountId,
                         username: item.username || '--',
                         readAccess: Boolean(item.readAccess),
                         createAccess: Boolean(item.createAccess),

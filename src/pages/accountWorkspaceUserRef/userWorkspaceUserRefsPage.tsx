@@ -9,12 +9,12 @@ import AddIcon from '@mui/icons-material/Add';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import UserWorkspaceUserRefsReadOnlyView from './userWorkspaceUserRefsReadOnlyView';
 
 const UserWorkspaceUserRefsPage = () => {
-    const { userId, workspaceId } = useParams()
+    const { accountId, workspaceId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -24,9 +24,9 @@ const UserWorkspaceUserRefsPage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
                 } catch (err:any) {
                     console.log(err)
@@ -38,7 +38,7 @@ const UserWorkspaceUserRefsPage = () => {
             }
         }
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -64,7 +64,7 @@ const UserWorkspaceUserRefsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/workspaces/${ workspaceId }/userRefs`)}>
+                            onClick={() => navigate(`/users/create/${ accountId }/workspaces/${ workspaceId }/userRefs`)}>
                             Create
                         </Button>
                     </Box>
@@ -73,7 +73,7 @@ const UserWorkspaceUserRefsPage = () => {
                 <UserWorkspaceUserRefsReadOnlyView
                     user={user}
                     workspaceId={ workspaceId }
-                    getFunc={UserWorkspaceUserRefService.getWorkspaceUserRefs} />
+                    getFunc={UserWorkspaceUserRefService.getWorkspaceAccountRefs} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

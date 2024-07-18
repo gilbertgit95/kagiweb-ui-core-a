@@ -8,11 +8,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserLimitedTransactionsReadOnlyView from './userLimitedTransactionsReadOnlyView';
 
 const UserLimitedTransactionsPage = () => {
-    const { userId } = useParams()
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -22,9 +22,9 @@ const UserLimitedTransactionsPage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
                 } catch (err:any) {
                     console.log(err)
@@ -37,7 +37,7 @@ const UserLimitedTransactionsPage = () => {
         }
         console.log('initiate LimitedTransaction features page')
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -63,7 +63,7 @@ const UserLimitedTransactionsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/edit/${ userId }/limitedTransaction`)}>
+                            onClick={() => navigate(`/users/edit/${ accountId }/limitedTransaction`)}>
                             Edit
                         </Button>
                     </Box>

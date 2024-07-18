@@ -38,7 +38,7 @@ const UserInfoPage = () => {
     const onDelete = async () => {
         if (userInfoId) {
             try {
-                await OwnerService.deleteUserInfo('', userInfoId)
+                await OwnerService.deleteAccountInfo('', userInfoId)
                 const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
                 setPageState({

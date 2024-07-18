@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserWorkspaceUserRefReadOnlyView from '../accountWorkspaceUserRef/userWorkspaceUserRefReadOnlyView';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 // import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
@@ -40,7 +40,7 @@ const OwnerWorkspaceUserRefPage = () => {
     const onDelete = async () => {
         if (workspaceId && userRefId) {
             try {
-                await OwnerService.deleteWorkspaceUserRef('', workspaceId, userRefId)
+                await OwnerService.deleteWorkspaceAccountRef('', workspaceId, userRefId)
                 const userResp = await OwnerService.getOwner()
                 setUser(userResp.data)
                 setPageState({
@@ -153,7 +153,7 @@ const OwnerWorkspaceUserRefPage = () => {
                     user={user}
                     workspaceId={workspaceId}
                     userRefId={userRefId}
-                    getFunc={OwnerService.getWorkspaceUserRef} />
+                    getFunc={OwnerService.getWorkspaceAccountRef} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

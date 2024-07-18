@@ -12,7 +12,7 @@ import AppUtils from '../../utils/appUtils';
 
 interface Props {
     featureId: string | undefined,
-    getFunc: (userId:string) => Promise<{data:IFeature}>,
+    getFunc: (accountId:string) => Promise<{data:IFeature}>,
     updateFunc: (updateData:IFeature) => Promise<{data:IFeature}>,
     updated?: (user:IFeature|undefined) => void
 }

@@ -6,21 +6,21 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserUserInfoService from './userUserInfoService';
-import { IAccount, IUserInfo, TUserInfoType, userInfoTypes } from '../../types/account';
+import { IAccount, IAccountInfo, TAccountInfoType, accountInfoTypes } from '../../types/account';
 
 interface props {
     user?: IAccount,
     userInfoId?: string,
-    updateFunc: (userId:string, updateData:IUserInfo) => Promise<{data:IUserInfo}>,
-    updated?: (userId:string|undefined, userInfo:IUserInfo|undefined) => void
+    updateFunc: (accountId:string, updateData:IAccountInfo) => Promise<{data:IAccountInfo}>,
+    updated?: (accountId:string|undefined, userInfo:IAccountInfo|undefined) => void
 }
 
 const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => {
-    const [userInfo, setUserInfo] = useState<IUserInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedUserInfo, setUpdatedUserInfo] = useState<IUserInfo>({
+    const [userInfo, setUserInfo] = useState<IAccountInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedUserInfo, setUpdatedUserInfo] = useState<IAccountInfo>({
         key: '',
         value: '',
-        type: userInfoTypes[0] as TUserInfoType
+        type: accountInfoTypes[0] as TAccountInfoType
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -32,14 +32,14 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
     }
 
     const handleTypeSelectionChange = (event: SelectChangeEvent) => {
-        const type = event.target.value as TUserInfoType
+        const type = event.target.value as TAccountInfoType
         setUpdatedUserInfo({...updatedUserInfo, ...{type}})
     }
 
     const onUpdate = async () => {
         if (!userInfo) return
 
-        const updateData:IUserInfo = {
+        const updateData:IAccountInfo = {
             _id: updatedUserInfo._id,
             key: updatedUserInfo.key === userInfo.key? userInfo.key: updatedUserInfo.key,
             value: updatedUserInfo.value === userInfo.value? userInfo.value: updatedUserInfo.value,
@@ -119,7 +119,7 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
                                     value={updatedUserInfo?.type}
                                     onChange={handleTypeSelectionChange}>
                                     {
-                                        userInfoTypes.map((item, index) => (
+                                        accountInfoTypes.map((item, index) => (
                                             <MenuItem key={index} value={item}>{ item }</MenuItem>
                                         ))
                                     }

@@ -19,24 +19,24 @@ class UserRoleService {
     //     return AccountApi.getUserRoles(roleId)
     // }
 
-    // public static getUserRole(id:string):Promise<{data: IRoleRef}> {
+    // public static getAccountRole(id:string):Promise<{data: IRoleRef}> {
     //     return AccountApi.getFeature(id)
     // }
 
-    public static activateUserRole(userId:string, roleRefId:string):Promise<{data: IRoleRef}> {
-        return AccountApi.activateUserRole(userId, roleRefId)
+    public static activateAccountRole(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return AccountApi.activateAccountRole(accountId, roleRefId)
     }
 
-    public static updateUserRole(userId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
-        return AccountApi.updateUserRole(userId, UserRole)
+    public static updateAccountRole(accountId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
+        return AccountApi.updateAccountRole(accountId, UserRole)
     }
 
-    public static createUserRole(userId:string, roleRefId:string):Promise<{data: IRoleRef}> {
-        return AccountApi.createUserRole(userId, {roleId: roleRefId})
+    public static createAccountRole(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return AccountApi.createAccountRole(accountId, {roleId: roleRefId})
     }
 
-    public static deleteUserRole(userId:string, UserRoleId:string):Promise<{data: IRoleRef}> {
-        return AccountApi.deleteUserRole(userId, UserRoleId)
+    public static deleteAccountRole(accountId:string, UserRoleId:string):Promise<{data: IRoleRef}> {
+        return AccountApi.deleteAccountRole(accountId, UserRoleId)
     }
 }
 

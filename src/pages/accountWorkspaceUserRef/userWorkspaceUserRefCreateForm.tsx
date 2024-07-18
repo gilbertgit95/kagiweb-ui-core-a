@@ -3,13 +3,13 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IAccount, IWorkspaceUserRef } from '../../types/account';
+import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 
 interface props {
     user?: IAccount,
     workspaceId?:string,
     createFunc: (
-        userId:string,
+        accountId:string,
         workspaceId:string,
         username:string,
         readAccess: boolean,
@@ -17,13 +17,13 @@ interface props {
         createAccess: boolean,
         deleteAccess: boolean,
         disabled: boolean
-    ) => Promise<{data:IWorkspaceUserRef & {username?: string}}>,
-    created?: (userId:string|undefined, workspaceId:string, userRef:IWorkspaceUserRef|undefined) => void
+    ) => Promise<{data:IWorkspaceAccountRef & {username?: string}}>,
+    created?: (accountId:string|undefined, workspaceId:string, userRef:IWorkspaceAccountRef|undefined) => void
 }
 
 const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}:props) => {
-    const [userRef, setNewUserRef] = useState<IWorkspaceUserRef & {username?: string}>({
-        userId: '',
+    const [userRef, setNewUserRef] = useState<IWorkspaceAccountRef & {username?: string}>({
+        accountId: '',
         username: '',
         readAccess: true,
         updateAccess: false,
@@ -48,8 +48,8 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
     const onCreate = async () => {
         if (!user) return
 
-        const newData:IWorkspaceUserRef & {username?: string} = {
-            userId: '',
+        const newData:IWorkspaceAccountRef & {username?: string} = {
+            accountId: '',
             username: userRef.username,
             readAccess: userRef.readAccess,
             updateAccess: userRef.updateAccess,

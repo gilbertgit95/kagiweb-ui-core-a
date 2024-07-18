@@ -2,8 +2,8 @@ import OwnerApi from '../../dataEndpoints/apiCoreA/ownerApi'
 import { ISignedInUser } from '../../stores/signedInUserSlice'
 import {
     IAccount,
-    IUserUpdate,
-    IUserInfo,
+    IAccountUpdate,
+    IAccountInfo,
     IContactInfo,
     IRoleRef,
     ILimitedTransaction,
@@ -11,7 +11,7 @@ import {
     IClientDevice,
     IAccessToken,
     IWorkspace,
-    IWorkspaceUserRef
+    IWorkspaceAccountRef
 } from '../../types/account';
 
 class OwnerService {
@@ -19,7 +19,7 @@ class OwnerService {
         return OwnerApi.getOwner()
     }
 
-    public static updateOwner(user:IUserUpdate):Promise<{data: IAccount}> {
+    public static updateOwner(user:IAccountUpdate):Promise<{data: IAccount}> {
         return OwnerApi.updateOwner(user)
     }
 
@@ -28,63 +28,63 @@ class OwnerService {
     }
 
     // user info
-    public static updateUserInfo(userId:string, userInfo:IUserInfo):Promise<{data: IUserInfo}> {
-        return OwnerApi.updateUserInfo(userId, userInfo)
+    public static updateAccountInfo(accountId:string, userInfo:IAccountInfo):Promise<{data: IAccountInfo}> {
+        return OwnerApi.updateAccountInfo(accountId, userInfo)
     }
 
-    public static createUserInfo(userId:string, userInfo:IUserInfo):Promise<{data: IUserInfo}> {
-        return OwnerApi.createUserInfo(userId, userInfo)
+    public static createAccountInfo(accountId:string, userInfo:IAccountInfo):Promise<{data: IAccountInfo}> {
+        return OwnerApi.createAccountInfo(accountId, userInfo)
     }
 
-    public static deleteUserInfo(userId:string, userInfoId:string):Promise<{data: IUserInfo}> {
-        return OwnerApi.deleteUserInfo(userId, userInfoId)
+    public static deleteAccountInfo(accountId:string, userInfoId:string):Promise<{data: IAccountInfo}> {
+        return OwnerApi.deleteAccountInfo(accountId, userInfoId)
     }
 
     // contact Info
-    public static updateContactInfo(userId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
-        return OwnerApi.updateContactInfo(userId, ContactInfo)
+    public static updateContactInfo(accountId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
+        return OwnerApi.updateContactInfo(accountId, ContactInfo)
     }
 
-    public static createContactInfo(userId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
-        return OwnerApi.createContactInfo(userId, ContactInfo)
+    public static createContactInfo(accountId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
+        return OwnerApi.createContactInfo(accountId, ContactInfo)
     }
 
-    public static deleteContactInfo(userId:string, ContactInfoId:string):Promise<{data: IContactInfo}> {
-        return OwnerApi.deleteContactInfo(userId, ContactInfoId)
+    public static deleteContactInfo(accountId:string, ContactInfoId:string):Promise<{data: IContactInfo}> {
+        return OwnerApi.deleteContactInfo(accountId, ContactInfoId)
     }
 
     // roles
-    public static activateUserRole(userId:string, roleRefId:string):Promise<{data: IRoleRef}> {
-        return OwnerApi.activateUserRole(userId, roleRefId)
+    public static activateAccountRole(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return OwnerApi.activateAccountRole(accountId, roleRefId)
     }
 
-    public static updateUserRole(userId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
-        return OwnerApi.updateUserRole(userId, UserRole)
+    public static updateAccountRole(accountId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
+        return OwnerApi.updateAccountRole(accountId, UserRole)
     }
 
-    public static createUserRole(userId:string, roleRefId:string):Promise<{data: IRoleRef}> {
-        return OwnerApi.createUserRole(userId, {roleId: roleRefId})
+    public static createAccountRole(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return OwnerApi.createAccountRole(accountId, {roleId: roleRefId})
     }
 
-    public static deleteUserRole(userId:string, UserRoleId:string):Promise<{data: IRoleRef}> {
-        return OwnerApi.deleteUserRole(userId, UserRoleId)
+    public static deleteAccountRole(accountId:string, UserRoleId:string):Promise<{data: IRoleRef}> {
+        return OwnerApi.deleteAccountRole(accountId, UserRoleId)
     }
 
     // limited transaction
-    public static updateLT(userId:string, lt:ILimitedTransaction):Promise<{data: ILimitedTransaction}> {
-        return OwnerApi.updateUserLT(userId, lt)
+    public static updateLT(accountId:string, lt:ILimitedTransaction):Promise<{data: ILimitedTransaction}> {
+        return OwnerApi.updateAccountLT(accountId, lt)
     }
 
     // owner password
-    public static createPassword(userId:string, passInfo:{currPassword:string, newPassword:string}):Promise<{data: IPassword}> {
-        return OwnerApi.createUserPassword(userId, passInfo)
+    public static createPassword(accountId:string, passInfo:{currPassword:string, newPassword:string}):Promise<{data: IPassword}> {
+        return OwnerApi.createAccountPassword(accountId, passInfo)
     }
 
     // owner client device
-    public static getClientDeviceById(user:IAccount, clientDeviceId:string):IClientDevice|undefined {
+    public static getClientDeviceById(account:IAccount, clientDeviceId:string):IClientDevice|undefined {
 
-        if (user && user.clientDevices) {
-            for (const clientDevice of user.clientDevices) {
+        if (account && account.clientDevices) {
+            for (const clientDevice of account.clientDevices) {
                 if (clientDevice._id === clientDeviceId) return clientDevice
             }
         }
@@ -92,73 +92,73 @@ class OwnerService {
         return undefined
     }
 
-    public static updateClientDevice(userId:string, clientDevice:{_id?:string, ua?:string, description?:string, disabled?:boolean}):Promise<{data: IClientDevice}> {
-        return OwnerApi.updateClientDevice(userId, clientDevice)
+    public static updateClientDevice(accountId:string, clientDevice:{_id?:string, ua?:string, description?:string, disabled?:boolean}):Promise<{data: IClientDevice}> {
+        return OwnerApi.updateClientDevice(accountId, clientDevice)
     }
 
-    public static createClientDevice(userId:string, clientDevice:IClientDevice):Promise<{data: IClientDevice}> {
-        return OwnerApi.createClientDevice(userId, clientDevice)
+    public static createClientDevice(accountId:string, clientDevice:IClientDevice):Promise<{data: IClientDevice}> {
+        return OwnerApi.createClientDevice(accountId, clientDevice)
     }
 
-    public static deleteClientDevice(userId:string, clientDeviceId:string):Promise<{data: IClientDevice}> {
-        return OwnerApi.deleteClientDevice(userId, clientDeviceId)
+    public static deleteClientDevice(accountId:string, clientDeviceId:string):Promise<{data: IClientDevice}> {
+        return OwnerApi.deleteClientDevice(accountId, clientDeviceId)
     }
 
     // owner client device token
-    public static updateClientDeviceToken(userId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
-        return OwnerApi.updateClientDeviceToken(userId, clientDeviceId, token)
+    public static updateClientDeviceToken(accountId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
+        return OwnerApi.updateClientDeviceToken(accountId, clientDeviceId, token)
     }
 
-    public static createClientDeviceToken(userId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}):Promise<{data: IAccessToken}> {
-        return OwnerApi.createClientDeviceToken(userId, clientDeviceId, token)
+    public static createClientDeviceToken(accountId:string, clientDeviceId:string, token:IAccessToken & {expiration:number|undefined}):Promise<{data: IAccessToken}> {
+        return OwnerApi.createClientDeviceToken(accountId, clientDeviceId, token)
     }
 
-    public static deleteClientDeviceToken(userId:string, clientDeviceId:string, clientDeviceTokenId:string):Promise<{data: IAccessToken}> {
-        return OwnerApi.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
+    public static deleteClientDeviceToken(accountId:string, clientDeviceId:string, clientDeviceTokenId:string):Promise<{data: IAccessToken}> {
+        return OwnerApi.deleteClientDeviceToken(accountId, clientDeviceId, clientDeviceTokenId)
     }
 
     // workspaces
-    public static updateWorkspace(userId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
-        return OwnerApi.updateWorkspace(userId, workspaceId, name, description, isActive, disabled)
+    public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
+        return OwnerApi.updateWorkspace(accountId, workspaceId, name, description, isActive, disabled)
     }
 
-    public static createWorkspace(userId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
-        return OwnerApi.createWorkspace(userId, name, description, isActive, disabled)
+    public static createWorkspace(accountId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
+        return OwnerApi.createWorkspace(accountId, name, description, isActive, disabled)
     }
 
-    public static deleteWorkspace(userId:string, clientDeviceId:string):Promise<{data: IWorkspace}> {
-        return OwnerApi.deleteWorkspace(userId, clientDeviceId)
+    public static deleteWorkspace(accountId:string, clientDeviceId:string):Promise<{data: IWorkspace}> {
+        return OwnerApi.deleteWorkspace(accountId, clientDeviceId)
     }
 
     // workspace user refs
-    public static getWorkspaceUserRef( userId:string, workspaceId:string, userRefId:string):Promise<{data: IWorkspaceUserRef & {username?:string} | null}> {
-        return OwnerApi.getWorkspaceUserRef(
-            userId,
+    public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef & {username?:string} | null}> {
+        return OwnerApi.getWorkspaceAccountRef(
+            accountId,
             workspaceId,
-            userRefId
+            accountRefId
         )
     }
 
-    public static getWorkspaceUserRefs( userId:string, workspaceId:string):Promise<{data: (IWorkspaceUserRef & {username?:string})[]}> {
-        return OwnerApi.getWorkspaceUserRefs(
-            userId,
+    public static getWorkspaceAccountRefs( accountId:string, workspaceId:string):Promise<{data: (IWorkspaceAccountRef & {username?:string})[]}> {
+        return OwnerApi.getWorkspaceAccountRefs(
+            accountId,
             workspaceId
         )
     }
 
-    public static updateWorkspaceUserRef(
-        userId:string,
+    public static updateWorkspaceAccountRef(
+        accountId:string,
         workspaceId:string,
-        userRefId:string,
+        accountRefId:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
-        disabled: boolean):Promise<{data: IWorkspaceUserRef}> {
-        return OwnerApi.updateWorkspaceUserRef(
-            userId,
+        disabled: boolean):Promise<{data: IWorkspaceAccountRef}> {
+        return OwnerApi.updateWorkspaceAccountRef(
+            accountId,
             workspaceId,
-            userRefId,
+            accountRefId,
             readAccess,
             updateAccess,
             createAccess,
@@ -167,17 +167,17 @@ class OwnerService {
         )
     }
 
-    public static createWorkspaceUserRef(
-        userId:string,
+    public static createWorkspaceAccountRef(
+        accountId:string,
         workspaceId:string,
         username:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
-        disabled: boolean):Promise<{data: IWorkspaceUserRef}> {
-        return OwnerApi.createWorkspaceUserRef(
-            userId,
+        disabled: boolean):Promise<{data: IWorkspaceAccountRef}> {
+        return OwnerApi.createWorkspaceAccountRef(
+            accountId,
             workspaceId,
             username,
             readAccess,
@@ -188,8 +188,8 @@ class OwnerService {
         )
     }
 
-    public static deleteWorkspaceUserRef(userId:string, workspaceId:string, userRefId:string):Promise<{data: IWorkspaceUserRef}> {
-        return OwnerApi.deleteWorkspaceUserRef(userId, workspaceId, userRefId)
+    public static deleteWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef}> {
+        return OwnerApi.deleteWorkspaceAccountRef(accountId, workspaceId, accountRefId)
     }
 }
 

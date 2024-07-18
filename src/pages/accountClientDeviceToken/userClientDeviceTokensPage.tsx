@@ -9,11 +9,11 @@ import AddIcon from '@mui/icons-material/Add';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserClientDeviceTokensReadOnlyView from './userClientDeviceTokensReadOnlyView';
 
 const UserClientDeviceTokensPage = () => {
-    const { userId, clientDeviceId } = useParams()
+    const { accountId, clientDeviceId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -23,9 +23,9 @@ const UserClientDeviceTokensPage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
                 } catch (err:any) {
                     console.log(err)
@@ -38,7 +38,7 @@ const UserClientDeviceTokensPage = () => {
         }
         console.log('initiate ClientDeviceToken features page')
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -64,7 +64,7 @@ const UserClientDeviceTokensPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/clientDevices/${ clientDeviceId }/clientDeviceTokens`)}>
+                            onClick={() => navigate(`/users/create/${ accountId }/clientDevices/${ clientDeviceId }/clientDeviceTokens`)}>
                             Create
                         </Button>
                     </Box>

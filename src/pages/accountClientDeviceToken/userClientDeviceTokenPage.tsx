@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserClientDeviceTokenReadOnlyView from './userClientDeviceTokenReadOnlyView';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserClientDeviceTokenService from './userClientDeviceTokenService';
 import { IAccount } from '../../types/account';
 import {
@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const UserClientDeviceTokenPage = () => {
-    const { userId, clientDeviceId, clientDeviceTokenId } = useParams()
+    const { accountId, clientDeviceId, clientDeviceTokenId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,10 +37,10 @@ const UserClientDeviceTokenPage = () => {
     const [user, setUser] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
-        if (userId && clientDeviceId && clientDeviceTokenId) {
+        if (accountId && clientDeviceId && clientDeviceTokenId) {
             try {
-                await UserClientDeviceTokenService.deleteClientDeviceToken(userId, clientDeviceId, clientDeviceTokenId)
-                const userResp = await UserService.getUser(userId)
+                await UserClientDeviceTokenService.deleteClientDeviceToken(accountId, clientDeviceId, clientDeviceTokenId)
+                const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -65,11 +65,11 @@ const UserClientDeviceTokenPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId, clientDeviceId)
+            console.log('View: ', accountId, clientDeviceId)
 
-            if (userId && clientDeviceId) {
+            if (accountId && clientDeviceId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -88,7 +88,7 @@ const UserClientDeviceTokenPage = () => {
         }
 
         init()
-    }, [userId, clientDeviceId])
+    }, [accountId, clientDeviceId])
 
     return (
         <Container style={{paddingTop: 20}}>

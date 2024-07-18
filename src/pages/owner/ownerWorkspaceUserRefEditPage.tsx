@@ -8,7 +8,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserWorkspaceUserRefEditForm from '../accountWorkspaceUserRef/userWorkspaceUserRefEditForm';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 // import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
@@ -75,8 +75,8 @@ const OwnerWorkspaceUserRefEditPage = () => {
                     user={user}
                     workspaceId={workspaceId}
                     userRefId={userRefId}
-                    getFunc={OwnerService.getWorkspaceUserRef}
-                    updateFunc={OwnerService.updateWorkspaceUserRef}
+                    getFunc={OwnerService.getWorkspaceAccountRef}
+                    updateFunc={OwnerService.updateWorkspaceAccountRef}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

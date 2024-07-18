@@ -9,7 +9,7 @@ import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import UserPasswordCreateForm from '../accountPassword/userPasswordCreateForm';
 import OwnerService from './ownerService';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 // import UserPasswordService from './userPasswordService';
 
 const OwnerPasswordCreatePage = () => {

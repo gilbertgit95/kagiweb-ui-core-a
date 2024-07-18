@@ -8,7 +8,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserUserInfoCreateForm from './userUserInfoCreateForm';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserUserInfoService from './userUserInfoService';
 import { IAccount } from '../../types/account';
 import {
@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const UserInfoCreatePage = () => {
-    const { userId } = useParams()
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -25,9 +25,9 @@ const UserInfoCreatePage = () => {
     const [user, setUser] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
-        if (userId) {
+        if (accountId) {
             try {
-                const userResp = await UserService.getUser(userId)
+                const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
 
             } catch (err:any) {
@@ -41,11 +41,11 @@ const UserInfoCreatePage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId)
+            console.log('View: ', accountId)
 
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -58,7 +58,7 @@ const UserInfoCreatePage = () => {
         }
 
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -78,7 +78,7 @@ const UserInfoCreatePage = () => {
 
                 <UserUserInfoCreateForm
                     user={user}
-                    createFunc={UserUserInfoService.createUserInfo}
+                    createFunc={UserUserInfoService.createAccountInfo}
                     created={onCreated} />
 
                 <Grid item xs={12}>

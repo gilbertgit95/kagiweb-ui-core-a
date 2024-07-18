@@ -4,15 +4,15 @@ import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 // import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
-import { IAccount, IWorkspaceUserRef } from '../../types/account';
+import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 
 interface props {
     user?: IAccount,
     workspaceId?: string,
     userRefId?: string,
-    getFunc: (userId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceUserRef & {username?:string} | null}>
+    getFunc: (accountId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceAccountRef & {username?:string} | null}>
     updateFunc: (
-        userId:string,
+        accountId:string,
         workspaceId:string,
         userRefId:string,
         readAccess:boolean,
@@ -20,14 +20,14 @@ interface props {
         createAccess:boolean,
         deleteAccess:boolean,
         disabled:boolean
-    ) => Promise<{data:IWorkspaceUserRef}>,
-    updated?: (userId:string|undefined, workspaceId: string, userRef:IWorkspaceUserRef|undefined) => void
+    ) => Promise<{data:IWorkspaceAccountRef}>,
+    updated?: (accountId:string|undefined, workspaceId: string, userRef:IWorkspaceAccountRef|undefined) => void
 }
 
 const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, getFunc, updateFunc, updated}:props) => {
-    const [userRef, setUserRef] = useState<IWorkspaceUserRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceUserRef & {username?:string}>({
-        userId: '',
+    const [userRef, setUserRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceAccountRef & {username?:string}>({
+        accountId: '',
         readAccess: true,
         updateAccess: false,
         createAccess: false,

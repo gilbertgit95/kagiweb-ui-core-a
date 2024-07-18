@@ -8,7 +8,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
 import UserLimitedTransactionsReadOnlyView from '../accountLimitedTransaction/userLimitedTransactionsReadOnlyView';
 
@@ -61,7 +61,7 @@ const OwnerLimitedTransactionsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/edit/${ userId }/limitedTransaction`)}>
+                            onClick={() => navigate(`/users/edit/${ accountId }/limitedTransaction`)}>
                             Edit
                         </Button>
                     </Box>

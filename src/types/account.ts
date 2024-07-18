@@ -2,12 +2,12 @@
 export type TAccountType = 'user' | 'organization'
 export type TContactInfoType = 'email-address' | 'mobile-number' | 'telephone' | 'app-admin'
 export type TLimitedTransactionType = 'signin' | 'otp-signin' | 'forgot-pass'| 'reset-pass' | 'verify-contact'
-export type TUserInfoType = 'string' | 'number' | 'date' | 'boolean'
+export type TAccountInfoType = 'string' | 'number' | 'date' | 'boolean'
 
 export const acountTypes:TAccountType[] = ['user', 'organization']
 export const contactInfoTypes = ['email-address', 'mobile-number', 'telephone', 'app-admin']
 export const limitedTransactionTypes = ['signin', 'otp-signin', 'forgot-pass', 'reset-pass', 'verify-contact']
-export const userInfoTypes = ['string', 'number', 'date', 'boolean']
+export const accountInfoTypes = ['string', 'number', 'date', 'boolean']
 
 // create interfaces
 export interface IRoleRef {
@@ -84,16 +84,16 @@ export interface ILimitedTransaction {
     disabled?: boolean
 }
 
-export interface IUserInfo {
+export interface IAccountInfo {
     _id?: string,
     key: string,
     value: string,
-    type: TUserInfoType
+    type: TAccountInfoType
 }
 
-export interface IWorkspaceUserRef {
+export interface IWorkspaceAccountRef {
     _id?: string,
-    userId: string,
+    accountId: string,
     readAccess?: boolean,
     updateAccess?: boolean,
     createAccess?: boolean,
@@ -107,7 +107,7 @@ export interface IWorkspace {
     _id?: string,
     name: string,
     description?: string,
-    userRefs?: IWorkspaceUserRef[],
+    userRefs?: IWorkspaceAccountRef[],
     isActive?: boolean,
     disabled?: boolean
 }
@@ -117,7 +117,7 @@ export interface IAccount {
     accountType?: TAccountType,
     username: string,
     rolesRefs: IRoleRef[],
-    userInfos: IUserInfo[],
+    userInfos: IAccountInfo[],
 
     passwords: IPassword[],
 
@@ -132,7 +132,7 @@ export interface IAccount {
     verified?: boolean
 }
 
-export interface IUserUpdate {
+export interface IAccountUpdate {
     _id?: string,
     username?: string,
     disabled?: boolean,

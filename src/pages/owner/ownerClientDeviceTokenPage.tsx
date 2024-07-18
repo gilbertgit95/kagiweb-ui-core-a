@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserClientDeviceTokenReadOnlyView from '../accountClientDeviceToken/userClientDeviceTokenReadOnlyView';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 // import UserClientDeviceTokenService from './userClientDeviceTokenService';
 import { IAccount } from '../../types/account';
 import {

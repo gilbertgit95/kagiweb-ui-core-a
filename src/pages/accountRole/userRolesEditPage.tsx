@@ -6,13 +6,13 @@ import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserRoleService from './userRoleService';
 import { IAccount } from '../../types/account';
 import UserRolesEditForm from './userRolesEditForm';
 
 const UserRolesEditPage = () => {
-    const { userId } = useParams()
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -21,9 +21,9 @@ const UserRolesEditPage = () => {
     })
 
     const reLoadUser = async () => {
-        if (userId) {
+        if (accountId) {
             try {
-                const userResp = await UserService.getUser(userId)
+                const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
             } catch (err:any) {
                 setInfoAndErrors({
@@ -36,9 +36,9 @@ const UserRolesEditPage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -51,7 +51,7 @@ const UserRolesEditPage = () => {
         }
         console.log('initiate user roles edit page')
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -70,9 +70,9 @@ const UserRolesEditPage = () => {
                 </Grid>
                 <UserRolesEditForm
                     user={user}
-                    activateFunc={UserRoleService.activateUserRole}
-                    createFunc={UserRoleService.createUserRole}
-                    deleteFunc={UserRoleService.deleteUserRole}
+                    activateFunc={UserRoleService.activateAccountRole}
+                    createFunc={UserRoleService.createAccountRole}
+                    deleteFunc={UserRoleService.deleteAccountRole}
                     onChange={reLoadUser} />
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

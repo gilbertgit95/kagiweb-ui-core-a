@@ -7,8 +7,8 @@ import { IAccount, IWorkspace } from '../../types/account';
 
 interface props {
     user?: IAccount,
-    createFunc: (userId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
-    created?: (userId:string|undefined, userInfo:IWorkspace|undefined) => void
+    createFunc: (accountId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
+    created?: (accountId:string|undefined, userInfo:IWorkspace|undefined) => void
 }
 
 const UserWorkspaceCreateForm = ({user, createFunc, created}:props) => {

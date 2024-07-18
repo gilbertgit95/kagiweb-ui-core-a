@@ -7,8 +7,8 @@ import { IAccount, IPassword } from '../../types/account';
 
 interface props {
     user?: IAccount,
-    createFunc: (userId:string, passInfo:{currPassword:string, newPassword:string}) => Promise<{data:IPassword}>,
-    created?: (userId:string|undefined, password:IPassword|undefined) => void
+    createFunc: (accountId:string, passInfo:{currPassword:string, newPassword:string}) => Promise<{data:IPassword}>,
+    created?: (accountId:string|undefined, password:IPassword|undefined) => void
 }
 
 const UserPasswordCreateForm = ({user, createFunc, created}:props) => {

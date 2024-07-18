@@ -11,8 +11,8 @@ import { IAccount, IContactInfo, TContactInfoType, contactInfoTypes } from '../.
 interface props {
     user?: IAccount,
     contactInfoId?: string,
-    updateFunc: (userId:string, updateData:IContactInfo) => Promise<{data:IContactInfo}>,
-    updated?: (userId:string|undefined, userInfo:IContactInfo|undefined) => void
+    updateFunc: (accountId:string, updateData:IContactInfo) => Promise<{data:IContactInfo}>,
+    updated?: (accountId:string|undefined, userInfo:IContactInfo|undefined) => void
 }
 
 const UserUserInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) => {

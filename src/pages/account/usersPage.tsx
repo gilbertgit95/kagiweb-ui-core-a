@@ -111,7 +111,7 @@ const Users = () => {
         // console.log('pagination: ', pagination)
         window.history.replaceState(null, '', `?page=${ page + 1 }&pageSize=${ pageSize }`)
         try {
-            const resp = await AccountService.getUsers({
+            const resp = await AccountService.getAccounts({
                 page: page + 1,
                 pageSize: pageSize
             })
@@ -161,7 +161,7 @@ const Users = () => {
         const init = async () => {
             window.history.replaceState(null, '', `?page=${ pageQuery }&pageSize=${ pageSizeQuery }`)
             try {
-                const resp = await AccountService.getUsers({
+                const resp = await AccountService.getAccounts({
                     page: pageQuery,
                     pageSize: pageSizeQuery
                 })

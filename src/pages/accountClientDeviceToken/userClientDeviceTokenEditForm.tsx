@@ -10,8 +10,8 @@ interface props {
     user?: IAccount,
     clientDeviceId?: string,
     clientDeviceTokenId?: string,
-    updateFunc: (userId:string, clientDeviceId: string, updateData:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}) => Promise<{data:IAccessToken}>,
-    updated?: (userId:string|undefined, userInfo:IAccessToken|undefined) => void
+    updateFunc: (accountId:string, clientDeviceId: string, updateData:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}) => Promise<{data:IAccessToken}>,
+    updated?: (accountId:string|undefined, userInfo:IAccessToken|undefined) => void
 }
 
 const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenId, updateFunc, updated}:props) => {

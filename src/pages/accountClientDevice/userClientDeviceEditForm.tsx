@@ -9,8 +9,8 @@ import { IAccount, IClientDevice } from '../../types/account';
 interface props {
     user?: IAccount,
     clientDeviceId?: string,
-    updateFunc: (userId:string, updateData:{_id?:string, ua?:string, description?: string, disabled?:boolean}) => Promise<{data:IClientDevice}>,
-    updated?: (userId:string|undefined, userInfo:IClientDevice|undefined) => void
+    updateFunc: (accountId:string, updateData:{_id?:string, ua?:string, description?: string, disabled?:boolean}) => Promise<{data:IClientDevice}>,
+    updated?: (accountId:string|undefined, userInfo:IClientDevice|undefined) => void
 }
 
 const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:props) => {

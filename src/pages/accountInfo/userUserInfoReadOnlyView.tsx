@@ -3,7 +3,7 @@ import moment from 'moment'
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import UserUserInfoService from './userUserInfoService';
-import { IAccount, IUserInfo } from '../../types/account';
+import { IAccount, IAccountInfo } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
@@ -12,7 +12,7 @@ interface props {
 }
 
 const UserUserInfoReadOnlyView = ({user, userInfoId}:props) => {
-    const [userInfo, setUserInfo] = useState<IUserInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [userInfo, setUserInfo] = useState<IAccountInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         if (user && user.userInfos && userInfoId) {

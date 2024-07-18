@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from './accountService';
+import AccountService from './accountService';
 import { IAccount } from '../../types/account';
 
 export const UserCreateForm = () => {
@@ -37,13 +37,13 @@ export const UserCreateForm = () => {
     }
 
     const onCreate = async () => {
-        const newUser:IAccount = user
-        console.log('create update: ', newUser)
+        const newAccount:IAccount = user
+        console.log('create update: ', newAccount)
         setPageState({disableSaveButton: true})
 
         // send update data to the api
         try {
-            const userResp = await UserService.createUser(newUser)
+            const userResp = await AccountService.createAccount(newAccount)
             setUser(userResp.data)
             setInfoAndErrors({
                 ...{infoMessages: ['Successfull Creation']},

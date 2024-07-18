@@ -15,7 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserLimitedTransactionReadOnlyView from '../accountLimitedTransaction/userLimitedTransactionReadOnlyView';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
 // import UserLimitedTransactionService from './userLimitedTransactionService';
 import { IAccount } from '../../types/account';
@@ -40,8 +40,8 @@ const OwnerLimitedTransactionPage = () => {
     // const onDelete = async () => {
     //     if (limitedTransactionId) {
     //         try {
-    //             // await UserLimitedTransactionService.deleteContactInfo(userId, limitedTransactionId)
-    //             // const userResp = await UserService.getUser(userId)
+    //             // await UserLimitedTransactionService.deleteContactInfo(accountId, limitedTransactionId)
+    //             // const userResp = await AccountService.getAccount(accountId)
     //             // setUser(userResp.data)
     //             setPageState({
     //                 disableEditButton: true,

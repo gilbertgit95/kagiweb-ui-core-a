@@ -69,9 +69,9 @@ const OwnerRolesEditPage = () => {
                 </Grid>
                 <UserRolesEditForm
                     user={user}
-                    activateFunc={OwnerService.activateUserRole}
-                    createFunc={OwnerService.createUserRole}
-                    deleteFunc={OwnerService.deleteUserRole}
+                    activateFunc={OwnerService.activateAccountRole}
+                    createFunc={OwnerService.createAccountRole}
+                    deleteFunc={OwnerService.deleteAccountRole}
                     onChange={reLoadUser} />
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

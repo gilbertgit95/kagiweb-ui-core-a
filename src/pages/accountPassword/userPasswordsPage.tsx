@@ -8,11 +8,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserPasswordsReadOnlyView from './userPasswordsReadOnlyView';
 
 const UserPasswordsPage = () => {
-    const { userId } = useParams()
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -22,9 +22,9 @@ const UserPasswordsPage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
                 } catch (err:any) {
                     console.log(err)
@@ -37,7 +37,7 @@ const UserPasswordsPage = () => {
         }
         console.log('initiate role features page')
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -63,7 +63,7 @@ const UserPasswordsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/create/${ userId }/passwords`)}>
+                            onClick={() => navigate(`/users/create/${ accountId }/passwords`)}>
                             Change Password
                         </Button>
                     </Box>

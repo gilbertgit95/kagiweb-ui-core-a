@@ -2,7 +2,7 @@ import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 // import { ISignedInUser } from '../../stores/signedInUserSlice'
 import { IPassword } from '../../types/account'
 
-class UserPasswordService {
+class AccountPasswordService {
     // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IPassword[]}> {
     //     return featureApi.getRoleFeatures(roleId)
     // }
@@ -15,13 +15,13 @@ class UserPasswordService {
     //     return featureApi.updateFeature(feature)
     // }
 
-    public static createPassword(userId:string, passInfo:{currPassword:string, newPassword:string}):Promise<{data: IPassword}> {
-        return AccountApi.createUserPassword(userId, passInfo)
+    public static createPassword(accountId:string, passInfo:{currPassword:string, newPassword:string}):Promise<{data: IPassword}> {
+        return AccountApi.createAccountPassword(accountId, passInfo)
     }
 
-    public static deletePassword(userId:string, passwordId:string):Promise<{data: IPassword}> {
-        return AccountApi.deleteUserPassword(userId, passwordId)
+    public static deletePassword(accountId:string, passwordId:string):Promise<{data: IPassword}> {
+        return AccountApi.deleteAccountPassword(accountId, passwordId)
     }
 }
 
-export default UserPasswordService
+export default AccountPasswordService

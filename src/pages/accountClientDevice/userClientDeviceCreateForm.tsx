@@ -7,8 +7,8 @@ import { IAccount, IClientDevice } from '../../types/account';
 
 interface props {
     user?: IAccount,
-    createFunc: (userId:string, newData:IClientDevice) => Promise<{data:IClientDevice}>,
-    created?: (userId:string|undefined, userInfo:IClientDevice|undefined) => void
+    createFunc: (accountId:string, newData:IClientDevice) => Promise<{data:IClientDevice}>,
+    created?: (accountId:string|undefined, userInfo:IClientDevice|undefined) => void
 }
 
 const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {

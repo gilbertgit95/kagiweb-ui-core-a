@@ -8,7 +8,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserClientDeviceTokenCreateForm from '../accountClientDeviceToken/userClientDeviceTokenCreateForm';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 // import UserClientDeviceTokenService from './userClientDeviceTokenService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';

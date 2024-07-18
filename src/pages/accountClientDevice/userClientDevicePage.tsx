@@ -15,12 +15,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 import UserClientDeviceService from './userClientDeviceService';
 import UserClientDeviceReadOnlyView from './userClientDeviceReadOnlyView';
 
 const UserClientDevicePage = () => {
-    const { userId, clientDeviceId } = useParams()
+    const { accountId, clientDeviceId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
     const [pageState, setPageState] = useState({
@@ -34,10 +34,10 @@ const UserClientDevicePage = () => {
     })
 
     const onDelete = async () => {
-        if (userId && clientDeviceId) {
+        if (accountId && clientDeviceId) {
             try {
-                await UserClientDeviceService.deleteClientDevice(userId, clientDeviceId)
-                const userResp = await UserService.getUser(userId)
+                await UserClientDeviceService.deleteClientDevice(accountId, clientDeviceId)
+                const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -62,9 +62,9 @@ const UserClientDevicePage = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
                 } catch (err:any) {
                     console.log(err)
@@ -82,7 +82,7 @@ const UserClientDevicePage = () => {
         }
         console.log('initiate Client Device page')
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -109,7 +109,7 @@ const UserClientDevicePage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ userId }/clientDevices/${ clientDeviceId }`)}>
+                            onClick={() => navigate(`/users/edit/${ accountId }/clientDevices/${ clientDeviceId }`)}>
                             Edit
                         </Button>
                         <Button

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 // import { Button } from '@mui/material';
 // import VisibilityIcon from '@mui/icons-material/Visibility';
-import { IAccount, IUserInfo } from '../../types/account';
+import { IAccount, IAccountInfo } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
@@ -28,7 +28,7 @@ const UserUserInfosReadOnlyView = ({user}:IProps) => {
 
     useEffect(() => {
         if (user && user.userInfos) {
-            const transformedData:IUserInfoRow[] = user.userInfos.map((item:IUserInfo & {createdAt?: Date, updatedAt?: Date}) => {
+            const transformedData:IUserInfoRow[] = user.userInfos.map((item:IAccountInfo & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     key: item.key || '--',

@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
 import UserWorkspaceUserRefsReadOnlyView from '../accountWorkspaceUserRef/userWorkspaceUserRefsReadOnlyView';
 
@@ -68,7 +68,7 @@ const OwnerWorkspaceUserRefsPage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspaceUserRefsReadOnlyView user={user} workspaceId={ workspaceId } getFunc={OwnerService.getWorkspaceUserRefs} />
+                <UserWorkspaceUserRefsReadOnlyView user={user} workspaceId={ workspaceId } getFunc={OwnerService.getWorkspaceAccountRefs} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

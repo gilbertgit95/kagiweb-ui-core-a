@@ -81,7 +81,7 @@ class AccountApi {
         })
     }
 
-    public static createUserInfo(accountInfo:string, userInfo:IAccountInfo) {
+    public static createAccountInfo(accountInfo:string, userInfo:IAccountInfo) {
         const data:IAccountInfo = {
             'key': userInfo.key,
             'value': userInfo.value,
@@ -283,8 +283,8 @@ class AccountApi {
 
     // user password
     public static createAccountPassword(accountId:string, passInfo: {currPassword:string, newPassword:string}) {
-        const data:{userId:string, currentPassword:string, newPassword:string} = {
-            'userId': accountId,
+        const data:{accountId:string, currentPassword:string, newPassword:string} = {
+            'accountId': accountId,
             'newPassword': passInfo.newPassword,
             'currentPassword': passInfo.currPassword
         }
@@ -354,7 +354,7 @@ class AccountApi {
         })
     }
 
-    public static getWorkspaceUserRefs(accountId:string, workspaceId:string) {
+    public static getWorkspaceAccountRefs(accountId:string, workspaceId:string) {
         return apiHelper.privateReq({
             method: 'GET',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `users/${ accountId }/workspaces/${ workspaceId }/userRefs`,

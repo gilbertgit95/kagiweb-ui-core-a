@@ -8,7 +8,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserWorkspaceCreateForm from '../accountWorkspace/userWorkspaceCreateForm';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 // import UserWorkspaceService from './userWorkspaceService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';

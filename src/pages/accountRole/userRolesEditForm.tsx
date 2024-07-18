@@ -22,10 +22,10 @@ import UserRolesAddForm from './userRolesAddForm';
 
 interface IProps {
     user:IAccount|undefined
-    // updateFunc: (userId:string, updateData:{_id: string, isActive?:boolean, roleId?:string}) => Promise<{data:IRoleRef}>,
-    activateFunc: (userId:string, roleRefId:string) => Promise<{data:IRoleRef}>,
-    createFunc: (userId:string, roleId:string) => Promise<{data:IRoleRef}>,
-    deleteFunc: (userId:string, roleRef:string) => Promise<{data:IRoleRef}>,
+    // updateFunc: (accountId:string, updateData:{_id: string, isActive?:boolean, roleId?:string}) => Promise<{data:IRoleRef}>,
+    activateFunc: (accountId:string, roleRefId:string) => Promise<{data:IRoleRef}>,
+    createFunc: (accountId:string, roleId:string) => Promise<{data:IRoleRef}>,
+    deleteFunc: (accountId:string, roleRef:string) => Promise<{data:IRoleRef}>,
     onChange: () => void
 }
 
@@ -55,7 +55,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
         activateDialogOpen: false
     })
 
-    const activateUserRole = async () => {
+    const activateAccountRole = async () => {
         const sel:IRoleRef[] | undefined = user?.rolesRefs?.filter(item => item._id === tableSelection[0])
         if (user?._id && sel) {
             const selRef = sel[0]
@@ -272,7 +272,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
                             <Button onClick={() => setDialog({...dialog, ...{activateDialogOpen: false}})}>
                                 no
                             </Button>
-                            <Button color="secondary" onClick={activateUserRole} autoFocus>
+                            <Button color="secondary" onClick={activateAccountRole} autoFocus>
                                 yes
                             </Button>
                         </DialogActions>

@@ -23,16 +23,16 @@ class UserContactInfoService {
     //     return AccountApi.getFeature(id)
     // }
 
-    public static updateContactInfo(userId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
-        return AccountApi.updateContactInfo(userId, ContactInfo)
+    public static updateContactInfo(accountId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
+        return AccountApi.updateContactInfo(accountId, ContactInfo)
     }
 
-    public static createContactInfo(userId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
-        return AccountApi.createContactInfo(userId, ContactInfo)
+    public static createContactInfo(accountId:string, ContactInfo:IContactInfo):Promise<{data: IContactInfo}> {
+        return AccountApi.createContactInfo(accountId, ContactInfo)
     }
 
-    public static deleteContactInfo(userId:string, ContactInfoId:string):Promise<{data: IContactInfo}> {
-        return AccountApi.deleteContactInfo(userId, ContactInfoId)
+    public static deleteContactInfo(accountId:string, ContactInfoId:string):Promise<{data: IContactInfo}> {
+        return AccountApi.deleteContactInfo(accountId, ContactInfoId)
     }
 }
 

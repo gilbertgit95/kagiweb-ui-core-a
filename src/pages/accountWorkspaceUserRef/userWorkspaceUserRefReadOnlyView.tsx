@@ -3,18 +3,18 @@ import moment from 'moment'
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
-import { IAccount, IWorkspaceUserRef } from '../../types/account';
+import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     user?: IAccount,
     workspaceId?: string,
     userRefId?: string,
-    getFunc: (userId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceUserRef & {username?:string} | null}>
+    getFunc: (accountId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceAccountRef & {username?:string} | null}>
 }
 
 const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId, getFunc}:props) => {
-    const [userRef, setUserRef] = useState<IWorkspaceUserRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [userRef, setUserRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         const init = async () => {
@@ -40,7 +40,7 @@ const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId, getFunc
     ]
 
     const data:{field: string, value: string|undefined}[] = [
-        { field: 'User ID', value: userRef?.userId },
+        { field: 'User ID', value: userRef?.accountId },
         { field: 'Username', value: userRef?.username || '--' },
         { field: 'Read Access', value: userRef?.readAccess? 'True': 'False' },
         { field: 'Update Access', value: userRef?.updateAccess? 'True': 'False' },

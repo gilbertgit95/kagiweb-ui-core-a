@@ -23,8 +23,8 @@ class UserLimitedTransactionService {
     //     return AccountApi.getFeature(id)
     // }
 
-    public static updateLT(userId:string, lt:ILimitedTransaction):Promise<{data: ILimitedTransaction}> {
-        return AccountApi.updateUserLT(userId, lt)
+    public static updateLT(accountId:string, lt:ILimitedTransaction):Promise<{data: ILimitedTransaction}> {
+        return AccountApi.updateAccountLT(accountId, lt)
     }
 
     // public static createRoleFeature(roleId:string, featureId:string):Promise<{data: IFeatureRef}> {

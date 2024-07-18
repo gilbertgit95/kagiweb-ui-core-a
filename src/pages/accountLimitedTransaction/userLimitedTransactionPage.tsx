@@ -15,7 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserLimitedTransactionReadOnlyView from './userLimitedTransactionReadOnlyView';
-import UserService from '../account/accountService';
+import AccountService from '../account/accountService';
 // import UserLimitedTransactionService from './userLimitedTransactionService';
 import { IAccount } from '../../types/account';
 import {
@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const UserLimitedTransactionPage = () => {
-    const { userId, limitedTransactionId } = useParams()
+    const { accountId, limitedTransactionId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,10 +37,10 @@ const UserLimitedTransactionPage = () => {
     const [user, setUser] = useState<IAccount | undefined>()
 
     // const onDelete = async () => {
-    //     if (userId && limitedTransactionId) {
+    //     if (accountId && limitedTransactionId) {
     //         try {
-    //             // await UserLimitedTransactionService.deleteContactInfo(userId, limitedTransactionId)
-    //             // const userResp = await UserService.getUser(userId)
+    //             // await UserLimitedTransactionService.deleteContactInfo(accountId, limitedTransactionId)
+    //             // const userResp = await AccountService.getAccount(accountId)
     //             // setUser(userResp.data)
     //             setPageState({
     //                 disableEditButton: true,
@@ -66,9 +66,9 @@ const UserLimitedTransactionPage = () => {
     useEffect(() => {
         const init = async () => {
 
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -87,7 +87,7 @@ const UserLimitedTransactionPage = () => {
         }
 
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>

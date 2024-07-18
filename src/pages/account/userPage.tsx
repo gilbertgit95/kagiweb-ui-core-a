@@ -15,14 +15,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserReadOnlyView from './userReadOnlyView';
-import UserService from './accountService';
+import AccountService from './accountService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
 const UserPage = () => {
-    const { userId } = useParams()
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -36,9 +36,9 @@ const UserPage = () => {
     const [user, setUser] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
-        if (userId) {
+        if (accountId) {
             try {
-                const userResp = await UserService.deleteUser(userId)
+                const userResp = await AccountService.deleteAccount(accountId)
                 setUser(userResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -60,11 +60,11 @@ const UserPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', userId)
+            console.log('View: ', accountId)
 
-            if (userId) {
+            if (accountId) {
                 try {
-                    const userResp = await UserService.getUser(userId)
+                    const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
 
                 } catch (err:any) {
@@ -83,7 +83,7 @@ const UserPage = () => {
         }
 
         init()
-    }, [userId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>

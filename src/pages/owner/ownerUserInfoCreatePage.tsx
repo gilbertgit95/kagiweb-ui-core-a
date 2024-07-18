@@ -67,7 +67,7 @@ const UserInfoCreatePage = () => {
 
                 <UserUserInfoCreateForm
                     user={user}
-                    createFunc={OwnerService.createUserInfo}
+                    createFunc={OwnerService.createAccountInfo}
                     created={onCreated} />
 
                 <Grid item xs={12}>

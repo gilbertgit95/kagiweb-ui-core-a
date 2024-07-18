@@ -8,7 +8,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserLimitedTransactionEditForm from '../accountLimitedTransaction/userLimitedTransactionEditForm';
-// import UserService from '../user/accountService';
+// import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
 // import UserLimitedTransactionService from './userLimitedTransactionService';
 import { IAccount } from '../../types/account';
