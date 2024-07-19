@@ -108,7 +108,7 @@ const UserWorkspacePage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ accountId }/workspaces/${ workspaceId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ accountId }/workspaces/${ workspaceId }`)}>
                             Edit
                         </Button>
                         <Button

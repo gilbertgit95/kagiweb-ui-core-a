@@ -60,7 +60,7 @@ const OwnerUserInfosPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/owner/create/userInfos`)}>
+                            onClick={() => navigate(`/owner/create/accountInfos`)}>
                             Create
                         </Button>
                     </Box>

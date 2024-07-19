@@ -62,7 +62,7 @@ const UserWorkspacesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ accountId }/workspaces`)}>
+                            onClick={() => navigate(`/accounts/create/${ accountId }/workspaces`)}>
                             Create
                         </Button>
                     </Box>

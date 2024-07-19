@@ -35,7 +35,7 @@ const NavCustomEl = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
     const customLinks:TLinkGroup[] = useMemo(() => {
-        const filterType = 'ui-user-drawer'
+        const filterType = 'ui-account-drawer'
         const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item.type === filterType) || [])
         const drawers = appComponentsHandler.userDrawer.privateUserDrawers
         const filteredLinks = drawers.reduce<TLinkGroup[]>((acc, group) => {

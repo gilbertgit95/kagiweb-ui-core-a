@@ -63,7 +63,7 @@ const UserRolesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/edit/${ accountId }/roles`)}>
+                            onClick={() => navigate(`/accounts/edit/${ accountId }/roles`)}>
                             Edit
                         </Button>
                     </Box>

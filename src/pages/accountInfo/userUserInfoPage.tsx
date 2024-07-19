@@ -94,7 +94,7 @@ const UserInfoPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Info Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Account Info Readonly View'} subtitle={ user?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/userInfos/${ userInfoId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ user?._id }/accountInfos/${ userInfoId }`)}>
                             Edit
                         </Button>
                         <Button

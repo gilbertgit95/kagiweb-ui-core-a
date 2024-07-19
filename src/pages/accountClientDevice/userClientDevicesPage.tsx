@@ -63,7 +63,7 @@ const UserClientDevicesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ accountId }/clientDevices`)}>
+                            onClick={() => navigate(`/accounts/create/${ accountId }/clientDevices`)}>
                             Create
                         </Button>
                     </Box>

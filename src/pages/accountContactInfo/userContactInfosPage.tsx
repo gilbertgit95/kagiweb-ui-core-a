@@ -64,7 +64,7 @@ const UserContactInfosPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ accountId }/contactInfos`)}>
+                            onClick={() => navigate(`/accounts/create/${ accountId }/contactInfos`)}>
                             Create
                         </Button>
                     </Box>

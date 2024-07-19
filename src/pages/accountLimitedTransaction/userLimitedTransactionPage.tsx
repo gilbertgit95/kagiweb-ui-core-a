@@ -114,7 +114,7 @@ const UserLimitedTransactionPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/limitedTransactions/${ limitedTransactionId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ user?._id }/limitedTransactions/${ limitedTransactionId }`)}>
                             Edit
                         </Button>
                     </Box>

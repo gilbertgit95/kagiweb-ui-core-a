@@ -62,7 +62,7 @@ const UserReadOnlyView = ({user}:props) => {
     const modulesData:IModuleData[] = [
         {
             module: 'User Information',
-            moduleRoute: 'userInfos',
+            moduleRoute: 'accountInfos',
             contents: user?.userInfos?.length || 0
         },
         {

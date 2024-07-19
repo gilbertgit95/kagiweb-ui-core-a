@@ -64,7 +64,7 @@ const UserWorkspaceUserRefsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/users/create/${ accountId }/workspaces/${ workspaceId }/userRefs`)}>
+                            onClick={() => navigate(`/accounts/create/${ accountId }/workspaces/${ workspaceId }/userRefs`)}>
                             Create
                         </Button>
                     </Box>

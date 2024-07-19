@@ -71,7 +71,7 @@ const UserUserInfosReadOnlyView = ({user}:IProps) => {
                 return (
                     <SimpleLink
                         link={`${ props._id }`}
-                        text="View User Info" />
+                        text="View Account Info" />
                 )
             }
         }

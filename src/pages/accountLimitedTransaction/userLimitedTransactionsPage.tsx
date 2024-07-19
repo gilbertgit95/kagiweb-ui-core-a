@@ -63,7 +63,7 @@ const UserLimitedTransactionsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/users/edit/${ accountId }/limitedTransaction`)}>
+                            onClick={() => navigate(`/accounts/edit/${ accountId }/limitedTransaction`)}>
                             Edit
                         </Button>
                     </Box>

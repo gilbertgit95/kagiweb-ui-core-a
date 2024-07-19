@@ -109,7 +109,7 @@ const UserClientDevicePage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ accountId }/clientDevices/${ clientDeviceId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ accountId }/clientDevices/${ clientDeviceId }`)}>
                             Edit
                         </Button>
                         <Button

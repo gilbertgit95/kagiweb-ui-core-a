@@ -86,7 +86,7 @@ const colDef:IColDef[] = [
         Component: (props:IAccountRow) => {
             return (
                 <SimpleLink
-                    link={`/users/view/${ props._id }`}
+                    link={`/accounts/view/${ props._id }`}
                     text={ props.accountType === 'user'? 'view user': 'view organization' } />
             )
         }
@@ -214,7 +214,7 @@ const Users = () => {
                         <Button
                             variant="text"
                             startIcon={<PersonAddIcon />}
-                            onClick={() => navigate('/users/create')}>
+                            onClick={() => navigate('/accounts/create')}>
                             Create Account
                         </Button>
                     </Box>

@@ -115,7 +115,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/users/edit/${ user?._id }/contactInfos/${ contactInfoId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ user?._id }/contactInfos/${ contactInfoId }`)}>
                             Edit
                         </Button>
                         <Button
