@@ -311,7 +311,7 @@ class OwnerApi {
     public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${accountRefId  }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs/${accountRefId  }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' }
         })
     }
@@ -319,7 +319,7 @@ class OwnerApi {
     public static getWorkspaceAccountRefs(accountId:string, workspaceId:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' }
         })
     }
@@ -343,7 +343,7 @@ class OwnerApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${ accountRefId }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs/${ accountRefId }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -369,7 +369,7 @@ class OwnerApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -378,7 +378,7 @@ class OwnerApi {
     public static deleteWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/userRefs/${ accountRefId }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs/${ accountRefId }`
         })
     }
 }

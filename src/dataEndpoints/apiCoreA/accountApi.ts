@@ -349,7 +349,7 @@ class AccountApi {
     public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/userRefs/${accountRefId  }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs/${accountRefId  }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' }
         })
     }
@@ -357,7 +357,7 @@ class AccountApi {
     public static getWorkspaceAccountRefs(accountId:string, workspaceId:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/userRefs`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' }
         })
     }
@@ -381,7 +381,7 @@ class AccountApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/userRefs/${ accountRefId }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -407,7 +407,7 @@ class AccountApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/userRefs`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -416,7 +416,7 @@ class AccountApi {
     public static deleteWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/userRefs/${ accountRefId }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }`
         })
     }
 }

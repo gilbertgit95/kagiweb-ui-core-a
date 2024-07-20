@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const UserInfoPage = () => {
-    const { accountId, userInfoId } = useParams()
+    const { accountId, accountInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,9 +37,9 @@ const UserInfoPage = () => {
     const [user, setUser] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
-        if (accountId && userInfoId) {
+        if (accountId && accountInfoId) {
             try {
-                await UserUserInfoService.deleteAccountInfo(accountId, userInfoId)
+                await UserUserInfoService.deleteAccountInfo(accountId, accountInfoId)
                 const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
                 setPageState({
@@ -65,9 +65,9 @@ const UserInfoPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', accountId, userInfoId)
+            console.log('View: ', accountId, accountInfoId)
 
-            if (accountId && userInfoId) {
+            if (accountId && accountInfoId) {
                 try {
                     const userResp = await AccountService.getAccount(accountId)
                     setUser(userResp.data)
@@ -115,7 +115,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ user?._id }/accountInfos/${ userInfoId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ user?._id }/accountInfos/${ accountInfoId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -151,7 +151,7 @@ const UserInfoPage = () => {
 
                 <UserUserInfoReadOnlyView
                     user={user}
-                    userInfoId={userInfoId} />
+                    accountInfoId={accountInfoId} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

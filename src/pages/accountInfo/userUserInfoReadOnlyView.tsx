@@ -8,19 +8,19 @@ import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     user?: IAccount,
-    userInfoId?: string
+    accountInfoId?: string
 }
 
-const UserUserInfoReadOnlyView = ({user, userInfoId}:props) => {
+const UserUserInfoReadOnlyView = ({user, accountInfoId}:props) => {
     const [userInfo, setUserInfo] = useState<IAccountInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
-        if (user && user.userInfos && userInfoId) {
-            const usrInf = UserUserInfoService.getUserInfoById(user, userInfoId)
+        if (user && user.userInfos && accountInfoId) {
+            const usrInf = UserUserInfoService.getUserInfoById(user, accountInfoId)
             setUserInfo(usrInf)
         }
 
-    }, [user, userInfoId])
+    }, [user, accountInfoId])
 
     const colDef:IColDef[] = [
         {
