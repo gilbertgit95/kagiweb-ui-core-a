@@ -22,7 +22,7 @@ const OwnerRolesEditPage = () => {
     const reLoadUser = async () => {
         try {
             // reload signedin user state
-            await AppUtils.loadSigninUserData()
+            await AppUtils.loadSigninAccountData()
 
             // reload local owner state in this page
             const userResp = await OwnerService.getOwner()

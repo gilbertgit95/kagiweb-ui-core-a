@@ -1,5 +1,5 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
-// import { ISignedInUser } from '../../stores/signedInUserSlice'
+// import { ISignedInUser } from '../../stores/signedInAccountSlice'
 // import { IAccount, IAccountInfo, IContactInfo,TContactInfoType } from '../../types/account'
 import { IAccount, IAccountInfo } from '../../types/account'
 // import { IPagination, IPageQuery } from '../../types/mixTypes'

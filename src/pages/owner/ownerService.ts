@@ -1,5 +1,5 @@
 import OwnerApi from '../../dataEndpoints/apiCoreA/ownerApi'
-import { ISignedInUser } from '../../stores/signedInUserSlice'
+import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import {
     IAccount,
     IAccountUpdate,

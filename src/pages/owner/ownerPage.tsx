@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 const OwnerPage = () => {
     const navigate = useNavigate()
-    const userData = useAppSelector(state => state.signedInUser.userData)
+    const accountData = useAppSelector(state => state.signedInAccount.accountData)
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={ 'My Account' } subtitle={ userData?.username } />
+                    <PrimaryHeader title={ 'My Account' } subtitle={ accountData?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12} style={{alignContent: 'right'}}>
@@ -30,7 +30,7 @@ const OwnerPage = () => {
                         </Button>
                     </Box>
                 </Grid>
-                <UserReadOnlyView user={userData} />
+                <UserReadOnlyView user={accountData} />
             </Grid>
         </Container>
     )

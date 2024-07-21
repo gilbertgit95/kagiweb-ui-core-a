@@ -5,7 +5,7 @@ import { IAccount, IWorkspace } from "../types/account";
 
 export interface ISignedInUser {
     // token?: string,
-    userData?: IAccount,
+    accountData?: IAccount,
     isSignedIn?: boolean,
     role?: IRole,
     roles?: IRole[],
@@ -17,7 +17,7 @@ export interface ISignedInUser {
 
 export interface IOptSignedInUser {
     // token?: string|undefined,
-    userData?: IAccount|undefined,
+    accountData?: IAccount|undefined,
     isSignedIn?: boolean|undefined,
     role?: IRole|undefined,
     roles?: IRole[]|undefined,
@@ -29,7 +29,7 @@ export interface IOptSignedInUser {
 
 const initialState:ISignedInUser = {
     // token: undefined,
-    userData: undefined,
+    accountData: undefined,
     isSignedIn: undefined,
     role: undefined,
     roles: undefined,
@@ -40,16 +40,16 @@ const initialState:ISignedInUser = {
 }
 
 export const SignedInUser = createSlice({
-    name: 'signedInUser',
+    name: 'signedInAccount',
     initialState,
 
     reducers: {
-        setUserData: (
+        setAccountData: (
             state,
             action: PayloadAction<IOptSignedInUser>
         ) => {
             // if (action.payload.hasOwnProperty('token')) state.token = action.payload.token
-            if (action.payload.hasOwnProperty('userData')) state.userData = action.payload.userData
+            if (action.payload.hasOwnProperty('accountData')) state.accountData = action.payload.accountData
             if (action.payload.hasOwnProperty('isSignedIn')) state.isSignedIn = action.payload.isSignedIn
             if (action.payload.hasOwnProperty('role')) state.role = action.payload.role
             if (action.payload.hasOwnProperty('roles')) state.roles = action.payload.roles
@@ -58,9 +58,9 @@ export const SignedInUser = createSlice({
             if (action.payload.hasOwnProperty('workspaces')) state.workspaces = action.payload.workspaces
             if (action.payload.hasOwnProperty('externalWorkspaces')) state.externalWorkspaces = action.payload.externalWorkspaces
         },
-        clearUserData: (state) => {
+        clearAccountData: (state) => {
             // state.token = undefined
-            state.userData = undefined
+            state.accountData = undefined
             state.isSignedIn = false
             state.role = undefined
             state.roles = undefined
@@ -72,5 +72,5 @@ export const SignedInUser = createSlice({
     }
 })
 
-export const { setUserData, clearUserData } = SignedInUser.actions
+export const { setAccountData, clearAccountData } = SignedInUser.actions
 export default SignedInUser.reducer

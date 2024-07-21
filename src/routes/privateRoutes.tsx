@@ -12,7 +12,7 @@ import { useAppSelector} from '../stores/appStore';
 import DataTransformer from '../utils/dataTransformer';
 
 const PrivateRoutes = () => {
-    const userFeatures = useAppSelector(state => state.signedInUser?.features) || []
+    const userFeatures = useAppSelector(state => state.signedInAccount?.features) || []
 
     const privateRoutes = useMemo(() => {
         const filterType = 'ui-route'

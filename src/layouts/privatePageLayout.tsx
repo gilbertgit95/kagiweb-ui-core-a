@@ -15,7 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
 import { useAppDispatch, useAppSelector} from '../stores/appStore';
-import { clearUserData } from '../stores/signedInUserSlice';
+import { clearAccountData } from '../stores/signedInAccountSlice';
 import { toggleTheme } from '../stores/appRefsSlice';
 
 import AuthService from '../pages/auth/authService';
@@ -28,9 +28,9 @@ import { IFeature } from '../types/feature';
 const NavCustomEl = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const userData = useAppSelector(state => state.signedInUser?.userData)
-    const userRole = useAppSelector(state => state.signedInUser?.role)
-    const userFeatures = useAppSelector(state => state.signedInUser?.features) || []
+    const accountData = useAppSelector(state => state.signedInAccount?.accountData)
+    const userRole = useAppSelector(state => state.signedInAccount?.role)
+    const userFeatures = useAppSelector(state => state.signedInAccount?.features) || []
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -72,7 +72,7 @@ const NavCustomEl = () => {
         } catch (err) {
             console.log('Token has not been remove successfully from the database end, but will be cleared from the browser storage.')
         }
-        dispatch(clearUserData())
+        dispatch(clearAccountData())
         localStorage.removeItem(appComponentsHandler.appConfig.TokenKey)
         window.location.replace('/signin')
     }
@@ -103,7 +103,7 @@ const NavCustomEl = () => {
                                 <SettingsIcon />
                             </ListItemIcon>
                             <ListItemText>
-                                <Typography variant="subtitle1">{ userData && userData.username? userData.username: '' }</Typography>
+                                <Typography variant="subtitle1">{ accountData && accountData.username? accountData.username: '' }</Typography>
                                 <Typography variant="caption" color="primary">{ userRole?.name }</Typography>
                             </ListItemText>
                         </MenuItem>
@@ -170,7 +170,7 @@ const NavCustomEl = () => {
 
 
 const PrivatePageLayout = () => {
-    const userFeatures:IFeature[] = useAppSelector(state => state.signedInUser?.features) || []
+    const userFeatures:IFeature[] = useAppSelector(state => state.signedInAccount?.features) || []
 
     const links:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-main-drawer'

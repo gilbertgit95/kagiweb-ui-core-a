@@ -16,7 +16,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import TimeUtils from '../../utils/timeUtils';
 import AuthService from './authService';
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
-// import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
+// import { setAccountData, clearAccountData } from '../../stores/signedInAccountSlice';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 const Signin = () => {
@@ -29,8 +29,8 @@ const Signin = () => {
         infoMessages: []
     })
     // const dispatch = useAppDispatch()
-    // const token = useAppSelector(state => state.signedInUser.token)
-    // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
+    // const token = useAppSelector(state => state.signedInAccount.token)
+    // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

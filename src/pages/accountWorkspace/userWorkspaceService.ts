@@ -1,5 +1,5 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
-// import { ISignedInUser } from '../../stores/signedInUserSlice'
+// import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import { IAccount, IWorkspace } from '../../types/account'
 
 class UserWorkspaceService {

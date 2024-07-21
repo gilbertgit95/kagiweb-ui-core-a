@@ -1,5 +1,5 @@
 import roleApi from '../../dataEndpoints/apiCoreA/roleApi'
-// import { ISignedInUser } from '../../stores/signedInUserSlice'
+// import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import { IRole } from '../../types/role'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 

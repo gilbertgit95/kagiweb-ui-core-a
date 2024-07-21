@@ -20,10 +20,10 @@ const WorkspaceDataLayout = (props:Props) => {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const userData = useAppSelector(state => state.signedInUser?.userData)
-    const defaultWorkspace = useAppSelector(state => state.signedInUser?.workspace)
-    const ownWorkspaces = useAppSelector(state => state.signedInUser?.workspaces) || []
-    const externalWorkspaces = useAppSelector(state => state.signedInUser?.externalWorkspaces) || []
+    const accountData = useAppSelector(state => state.signedInAccount?.accountData)
+    const defaultWorkspace = useAppSelector(state => state.signedInAccount?.workspace)
+    const ownWorkspaces = useAppSelector(state => state.signedInAccount?.workspaces) || []
+    const externalWorkspaces = useAppSelector(state => state.signedInAccount?.externalWorkspaces) || []
 
     const [workspaces, setWorkspaces] = useState<{key: string, label: string, subLabel?:string, Icon?:React.FC}[]>([])
     const [selectedWorkspace, setSelectedWorkspace] = useState<string | undefined>(undefined)
@@ -40,7 +40,7 @@ const WorkspaceDataLayout = (props:Props) => {
                 key: item._id || '',
                 label: `${ item.name }`,
                 subLabel: 'owned',
-                Icon: userData?.accountType === 'user'? PersonIcon: ScatterPlotIcon
+                Icon: accountData?.accountType === 'user'? PersonIcon: ScatterPlotIcon
             })),
             ...externalWorkspaces.map(item => ({
                 key: item._id || '',

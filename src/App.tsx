@@ -318,7 +318,7 @@ appHandler.addPrivateUserDrawerNav({
 
 function App() {
   const apptheme = useAppSelector(state => state?.appRefs.appTheme)
-  const isSignedIn = useAppSelector(state => state?.signedInUser?.isSignedIn)
+  const isSignedIn = useAppSelector(state => state?.signedInAccount?.isSignedIn)
   const dispatch = useAppDispatch()
   const finalTheme = useCallback(() => {
     const defaultTheme = appHandler.appConfig.AppThemeConfig || {}
@@ -341,7 +341,7 @@ function App() {
       document.title = appHandler.appConfig.AppName
 
       try {
-        await appUtils.loadSigninUserData()
+        await appUtils.loadSigninAccountData()
         await appUtils.loadAppRefsData()
 
         // !! should be disabled sync features enable only when synching

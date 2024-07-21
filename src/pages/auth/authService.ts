@@ -1,5 +1,5 @@
 import AuthApi from "../../dataEndpoints/apiCoreA/authApi"
-// import { ISignedInUser } from "../../stores/signedInUserSlice"
+// import { ISignedInUser } from "../../stores/signedInAccountSlice"
 
 export interface ISigninResp {
     token?: string,

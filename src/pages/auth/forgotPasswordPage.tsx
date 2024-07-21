@@ -18,7 +18,7 @@ import TimeUtils from '../../utils/timeUtils';
 import AuthService from './authService';
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
-// import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
+// import { setAccountData, clearAccountData } from '../../stores/signedInAccountSlice';
 
 const ForgotPassword = () => {
     const navigate = useNavigate()
@@ -30,8 +30,8 @@ const ForgotPassword = () => {
         infoMessages: []
     })
     // const dispatch = useAppDispatch()
-    // const token = useAppSelector(state => state.signedInUser.token)
-    // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
+    // const token = useAppSelector(state => state.signedInAccount.token)
+    // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
     const [searchParams] = useSearchParams();
     const usernameUrlQuery = searchParams.get('username') || '';
 

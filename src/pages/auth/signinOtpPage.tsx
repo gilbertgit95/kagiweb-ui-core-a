@@ -18,7 +18,7 @@ import AuthService from './authService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 // import { useAppDispatch, useAppSelector} from '../../stores/appStore';
-// import { setUserData, clearUserData } from '../../stores/signedInUserSlice';
+// import { setAccountData, clearAccountData } from '../../stores/signedInAccountSlice';
 
 const SigninOTP = () => {
     // const navigate = useNavigate()
@@ -30,8 +30,8 @@ const SigninOTP = () => {
         infoMessages: []
     })
     // const dispatch = useAppDispatch()
-    // const token = useAppSelector(state => state.signedInUser.token)
-    // const isSignedIn = useAppSelector(state => state.signedInUser.isSignedIn)
+    // const token = useAppSelector(state => state.signedInAccount.token)
+    // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
     const [searchParams] = useSearchParams();
     const usernameUrlQuery = searchParams.get('username') || '';
     const otpUrlQuery = searchParams.get('otp') || '';
