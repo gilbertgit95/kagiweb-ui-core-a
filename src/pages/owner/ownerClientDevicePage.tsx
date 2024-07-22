@@ -15,15 +15,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import AccountService from '../user/accountService';
-// import UserClientDeviceService from '../userClientDevice/userClientDeviceService';
-import UserClientDeviceReadOnlyView from '../accountClientDevice/userClientDeviceReadOnlyView';
+// import AccountService from '../account/accountService';
+// import AccountClientDeviceService from '../accountClientDevice/accountClientDeviceService';
+import AccountClientDeviceReadOnlyView from '../accountClientDevice/accountClientDeviceReadOnlyView';
 import OwnerService from './ownerService';
 
 const OwnerClientDevicePage = () => {
     const { clientDeviceId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [pageState, setPageState] = useState({
         disableEditButton: false,
         disableDeleteButton: false,
@@ -38,8 +38,8 @@ const OwnerClientDevicePage = () => {
         if (clientDeviceId) {
             try {
                 await OwnerService.deleteClientDevice('', clientDeviceId)
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
@@ -64,8 +64,8 @@ const OwnerClientDevicePage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
             } catch (err:any) {
                 console.log(err)
                 setPageState({
@@ -87,7 +87,7 @@ const OwnerClientDevicePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Client Device View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Client Device View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -142,7 +142,7 @@ const OwnerClientDevicePage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceReadOnlyView user={user} clientDeviceId={ clientDeviceId } />
+                <AccountClientDeviceReadOnlyView account={account} clientDeviceId={ clientDeviceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

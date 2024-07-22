@@ -9,12 +9,12 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import UserClientDevicesReadOnlyView from './userClientDevicesReadOnlyView';
+import AccountClientDevicesReadOnlyView from './accountClientDevicesReadOnlyView';
 
-const UserClientDevicesPage = () => {
+const AccountClientDevicesPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -24,8 +24,8 @@ const UserClientDevicesPage = () => {
         const init = async () => {
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
                 } catch (err:any) {
                     console.log(err)
                     setInfoAndErrors({
@@ -43,7 +43,7 @@ const UserClientDevicesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Client Devices View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Account Client Devices View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -69,7 +69,7 @@ const UserClientDevicesPage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDevicesReadOnlyView user={user} />
+                <AccountClientDevicesReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -79,4 +79,4 @@ const UserClientDevicesPage = () => {
     )
 }
 
-export default UserClientDevicesPage
+export default AccountClientDevicesPage

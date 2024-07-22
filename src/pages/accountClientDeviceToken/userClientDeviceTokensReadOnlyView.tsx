@@ -10,7 +10,7 @@ import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
 import ShortendDescription from '../../components/texts/shortendDescription';
-import UserClientDeviceService from '../accountClientDevice/userClientDeviceService';
+import AccountClientDeviceService from '../accountClientDevice/accountClientDeviceService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
@@ -35,7 +35,7 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
 
     useEffect(() => {
         if (user && user.clientDevices && clientDeviceId) {
-            const clientDevice = UserClientDeviceService.getClientDeviceById(user, clientDeviceId)
+            const clientDevice = AccountClientDeviceService.getClientDeviceById(user, clientDeviceId)
             const transformedData:IclientDeviceTokenRow[] = clientDevice?.accessTokens?.map((item:IAccessToken & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',

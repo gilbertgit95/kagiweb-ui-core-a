@@ -15,7 +15,7 @@ export const AccountCreateForm = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount>({
+    const [account, setAccount] = useState<IAccount>({
         username: '',
         rolesRefs: [],
         userInfos: [],
@@ -29,22 +29,22 @@ export const AccountCreateForm = () => {
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setUser({...user, ...{[field]: value}})
+        setAccount({...account, ...{[field]: value}})
     }
 
     const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
-        setUser({...user, ...{[field]: event.target.checked}})
+        setAccount({...account, ...{[field]: event.target.checked}})
     }
 
     const onCreate = async () => {
-        const newAccount:IAccount = user
+        const newAccount:IAccount = account
         console.log('create update: ', newAccount)
         setPageState({disableSaveButton: true})
 
         // send update data to the api
         try {
-            const userResp = await AccountService.createAccount(newAccount)
-            setUser(userResp.data)
+            const accountResp = await AccountService.createAccount(newAccount)
+            setAccount(accountResp.data)
             setInfoAndErrors({
                 ...{infoMessages: ['Successfull Creation']},
                 ...{errorMessages: []}
@@ -76,7 +76,7 @@ export const AccountCreateForm = () => {
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={user.username}
+                        defaultValue={account.username}
                         onChange={(e) => handleTextFieldChange('username', e.target.value)} />
                 </Grid>
             </Grid>
@@ -87,7 +87,7 @@ export const AccountCreateForm = () => {
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('disabled', e)}
-                        defaultChecked={user.disabled} />
+                        defaultChecked={account.disabled} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -97,7 +97,7 @@ export const AccountCreateForm = () => {
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('verified', e)}
-                        defaultChecked={user.verified} />
+                        defaultChecked={account.verified} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>

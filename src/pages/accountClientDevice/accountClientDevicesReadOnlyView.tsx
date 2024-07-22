@@ -12,7 +12,7 @@ import SimpleLink from '../../components/links/simpleLink';
 import ShortendDescription from '../../components/texts/shortendDescription';
 
 interface IProps {
-    user: IAccount | undefined
+    account: IAccount | undefined
 }
 
 interface IClientDeviceRow {
@@ -25,12 +25,12 @@ interface IClientDeviceRow {
     updatedAt?: Date
 }
 
-const UserClientDevicesReadOnlyView = ({user}:IProps) => {
+const AccountClientDevicesReadOnlyView = ({account}:IProps) => {
     const [data, setData] = useState<IClientDeviceRow[]>([])
 
     useEffect(() => {
-        if (user && user.clientDevices) {
-            const transformedData:IClientDeviceRow[] = user.clientDevices.map((item:IClientDevice & {createdAt?: Date, updatedAt?: Date}) => {
+        if (account && account.clientDevices) {
+            const transformedData:IClientDeviceRow[] = account.clientDevices.map((item:IClientDevice & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     ua: item.ua,
@@ -44,7 +44,7 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
             setData(transformedData)
         }
 
-    }, [user])
+    }, [account])
 
     const colDef:IColDef[] = [
         {
@@ -102,4 +102,4 @@ const UserClientDevicesReadOnlyView = ({user}:IProps) => {
     )
 }
 
-export default UserClientDevicesReadOnlyView
+export default AccountClientDevicesReadOnlyView

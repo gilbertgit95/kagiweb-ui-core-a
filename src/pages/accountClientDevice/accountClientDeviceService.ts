@@ -1,13 +1,10 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
-// import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import { IAccount, IClientDevice } from '../../types/account'
-import { IFeatureRef } from '../../types/role'
-import { IPagination, IPageQuery } from '../../types/mixTypes'
 
-class UserClientDeviceService {
-    public static hasClientDeviceUA(user:IAccount, ua:string):boolean {
-        if (user && user.clientDevices) {
-            for (const clientDevice of user.clientDevices) {
+class AccountClientDeviceService {
+    public static hasClientDeviceUA(account:IAccount, ua:string):boolean {
+        if (account && account.clientDevices) {
+            for (const clientDevice of account.clientDevices) {
                 if (clientDevice.ua === ua) return true
             }
         }
@@ -15,10 +12,10 @@ class UserClientDeviceService {
         return false
     }
 
-    public static getClientDeviceByUA(user:IAccount, ua:string):IClientDevice|undefined {
+    public static getClientDeviceByUA(account:IAccount, ua:string):IClientDevice|undefined {
 
-        if (user && user.clientDevices) {
-            for (const clientDevice of user.clientDevices) {
+        if (account && account.clientDevices) {
+            for (const clientDevice of account.clientDevices) {
                 if (clientDevice.ua === ua) return clientDevice
             }
         }
@@ -26,10 +23,10 @@ class UserClientDeviceService {
         return undefined
     }
 
-    public static getClientDeviceById(user:IAccount, clientDeviceId:string):IClientDevice|undefined {
+    public static getClientDeviceById(account:IAccount, clientDeviceId:string):IClientDevice|undefined {
 
-        if (user && user.clientDevices) {
-            for (const clientDevice of user.clientDevices) {
+        if (account && account.clientDevices) {
+            for (const clientDevice of account.clientDevices) {
                 if (clientDevice._id === clientDeviceId) return clientDevice
             }
         }
@@ -50,4 +47,4 @@ class UserClientDeviceService {
     }
 }
 
-export default UserClientDeviceService
+export default AccountClientDeviceService

@@ -1,12 +1,12 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 // import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import { IAccount, IAccessToken } from '../../types/account'
-import UserClientDeviceService from '../accountClientDevice/userClientDeviceService'
+import AccountClientDeviceService from '../accountClientDevice/accountClientDeviceService'
 
 class UserClientDeviceTokenService {
     public static getClientDeviceAccessTokenById(user:IAccount, clientDeviceId:string, accessTokenId:string):IAccessToken|undefined {
 
-        const clientDevice = UserClientDeviceService.getClientDeviceById(user, clientDeviceId)
+        const clientDevice = AccountClientDeviceService.getClientDeviceById(user, clientDeviceId)
         // check client devices if existed
         if (clientDevice && clientDevice.accessTokens) {
             // then loop to all access token of the client device

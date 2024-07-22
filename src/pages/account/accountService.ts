@@ -1,5 +1,5 @@
 import AccountApi from "../../dataEndpoints/apiCoreA/accountApi"
-// import { ISignedInUser } from "../../stores/signedInAccountSlice"
+// import { ISignedInaccount } from "../../stores/signedInAccountSlice"
 import { IAccount, IAccountInfo, IContactInfo,TContactInfoType, IAccountUpdate } from "../../types/account"
 import { IPagination, IPageQuery } from "../../types/mixTypes"
 
@@ -16,8 +16,8 @@ class AccountService {
         return undefined
     }
 
-    public static getContactInfo(user:IAccount, type:TContactInfoType):IContactInfo|undefined {
-        for (const info of user?.contactInfos || []) {
+    public static getContactInfo(account:IAccount, type:TContactInfoType):IContactInfo|undefined {
+        for (const info of account?.contactInfos || []) {
             if (info.type === type) return info
         }
 
@@ -28,12 +28,12 @@ class AccountService {
         return AccountApi.getAccount(id)
     }
 
-    public static updateAccount(user:IAccountUpdate):Promise<{data: IAccount}> {
-        return AccountApi.updateAccount(user)
+    public static updateAccount(account:IAccountUpdate):Promise<{data: IAccount}> {
+        return AccountApi.updateAccount(account)
     }
 
-    public static createAccount(user:IAccount):Promise<{data: IAccount}> {
-        return AccountApi.createAccount(user)
+    public static createAccount(account:IAccount):Promise<{data: IAccount}> {
+        return AccountApi.createAccount(account)
     }
 
     public static deleteAccount(id:string):Promise<{data: IAccount}> {

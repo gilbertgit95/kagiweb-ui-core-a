@@ -19,8 +19,8 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
-    const [updatedUser, setUpdatedUser] = useState<IAccount>({
+    const [account, setAccount] = useState<IAccount | undefined>()
+    const [updatedAccount, setUpdatedAccount] = useState<IAccount>({
         username: '',
         rolesRefs: [],
         userInfos: [],
@@ -34,35 +34,35 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setUpdatedUser({...updatedUser, ...{[field]: value}})
+        setUpdatedAccount({...updatedAccount, ...{[field]: value}})
     }
 
     const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.checked)
-        setUpdatedUser({...updatedUser, ...{[field]: event.target.checked}})
+        setUpdatedAccount({...updatedAccount, ...{[field]: event.target.checked}})
     }
 
     const onUpdate = async () => {
-        if (!user) return
+        if (!account) return
 
         const updateData:IAccountUpdate = {
-            _id: updatedUser._id,
-            username: updatedUser.username === user.username? undefined: updatedUser.username,
-            disabled: updatedUser.disabled === user.disabled? undefined: updatedUser.disabled,
-            verified: updatedUser.verified === user.verified? undefined: updatedUser.verified
+            _id: updatedAccount._id,
+            username: updatedAccount.username === account.username? undefined: updatedAccount.username,
+            disabled: updatedAccount.disabled === account.disabled? undefined: updatedAccount.disabled,
+            verified: updatedAccount.verified === account.verified? undefined: updatedAccount.verified
         }
         console.log('save update: ', updateData)
 
         // send update data to the api
         try {
-            const userResp = await updateFunc(updateData)
-            setUser(userResp.data)
-            setUpdatedUser(userResp.data)
+            const accountResp = await updateFunc(updateData)
+            setAccount(accountResp.data)
+            setUpdatedAccount(accountResp.data)
             setInfoAndErrors({
                 ...{infoMessages: ['Successfull Update']},
                 ...{errorMessages: []}
             })
-            if (updated) updated(userResp?.data)
+            if (updated) updated(accountResp?.data)
         } catch (err:any) {
             // error while updating
             // log to the UI
@@ -79,11 +79,11 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
 
             if (accountId) {
                 try {
-                    const userResp = await getFunc(accountId)
-                    setUser(userResp.data)
-                    setUpdatedUser(userResp.data)
+                    const accountResp = await getFunc(accountId)
+                    setAccount(accountResp.data)
+                    setUpdatedAccount(accountResp.data)
                 } catch (err:any) {
-                    // error fetching user
+                    // error fetching account
                     // log to the UI
                     setInfoAndErrors({
                         ...{infoMessages: []},
@@ -104,19 +104,19 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
     }
 
     const hasChanges = (() => {
-        if (!user) return false
+        if (!account) return false
 
         return !(
-            user.username !== updatedUser.username ||
-            user.disabled !== updatedUser.disabled ||
-            user.verified !== updatedUser.verified
+            account.username !== updatedAccount.username ||
+            account.disabled !== updatedAccount.disabled ||
+            account.verified !== updatedAccount.verified
         )
     })()
 
     return (
         <>
             {
-                user? (
+                account? (
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
@@ -125,7 +125,7 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedUser.username}
+                                    defaultValue={updatedAccount.username}
                                     onChange={(e) => handleTextFieldChange('username', e.target.value)} />
                             </Grid>
                         </Grid>
@@ -136,7 +136,7 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
                             <Grid item xs={8} md={9}>
                                 <Switch
                                     onChange={e => handleSwitchChange('disabled', e)}
-                                    checked={updatedUser.disabled} />
+                                    checked={updatedAccount.disabled} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>
@@ -146,7 +146,7 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
                             <Grid item xs={8} md={9}>
                                 <Switch
                                     onChange={e => handleSwitchChange('verified', e)}
-                                    checked={updatedUser.verified} />
+                                    checked={updatedAccount.verified} />
                             </Grid>
                         </Grid>
                     </>
@@ -167,7 +167,7 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
                 <Button
                     startIcon={<EditIcon />}
                     onClick={onUpdate}
-                    disabled={hasChanges || !user}>
+                    disabled={hasChanges || !account}>
                     Update
                 </Button>
             </Grid>

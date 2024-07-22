@@ -30,7 +30,7 @@ const OwnerPage = () => {
                         </Button>
                     </Box>
                 </Grid>
-                <AccountReadOnlyView user={accountData} />
+                <AccountReadOnlyView account={accountData} />
             </Grid>
         </Container>
     )

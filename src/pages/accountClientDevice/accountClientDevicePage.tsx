@@ -16,13 +16,13 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import UserClientDeviceService from './userClientDeviceService';
-import UserClientDeviceReadOnlyView from './userClientDeviceReadOnlyView';
+import AccountClientDeviceService from './accountClientDeviceService';
+import AccountClientDeviceReadOnlyView from './accountClientDeviceReadOnlyView';
 
-const UserClientDevicePage = () => {
+const AccountClientDevicePage = () => {
     const { accountId, clientDeviceId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [pageState, setPageState] = useState({
         disableEditButton: false,
         disableDeleteButton: false,
@@ -36,9 +36,9 @@ const UserClientDevicePage = () => {
     const onDelete = async () => {
         if (accountId && clientDeviceId) {
             try {
-                await UserClientDeviceService.deleteClientDevice(accountId, clientDeviceId)
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                await AccountClientDeviceService.deleteClientDevice(accountId, clientDeviceId)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
@@ -64,8 +64,8 @@ const UserClientDevicePage = () => {
         const init = async () => {
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
                 } catch (err:any) {
                     console.log(err)
                     setPageState({
@@ -88,7 +88,7 @@ const UserClientDevicePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Client Device View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Account Client Device View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -143,7 +143,7 @@ const UserClientDevicePage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceReadOnlyView user={user} clientDeviceId={ clientDeviceId } />
+                <AccountClientDeviceReadOnlyView account={account} clientDeviceId={ clientDeviceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -153,4 +153,4 @@ const UserClientDevicePage = () => {
     )
 }
 
-export default UserClientDevicePage
+export default AccountClientDevicePage

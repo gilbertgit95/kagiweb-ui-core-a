@@ -13,9 +13,9 @@ import { IAccount } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IModuleData {module: string, moduleRoute: string, contents: number}
-interface props { user?: IAccount & {createdAt?:Date, updatedAt?:Date} }
+interface props { account?: IAccount & {createdAt?:Date, updatedAt?:Date} }
 
-const AccountReadOnlyView = ({user}:props) => {
+const AccountReadOnlyView = ({account}:props) => {
     // const navigate = useNavigate()
 
     const colDef:IColDef[] = [
@@ -52,52 +52,52 @@ const AccountReadOnlyView = ({user}:props) => {
     ]
 
     const data:{field: string, value: string|undefined}[] = [
-        { field: 'username', value: user?.username },
-        { field: 'disabled', value: user?.disabled? 'True': 'False' },
-        { field: 'verified', value: user?.verified? 'True': 'False' },
-        { field: 'Created', value: user?.createdAt? moment(user?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' },
-        { field: 'Updated', value: user?.updatedAt? moment(user?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' }
+        { field: 'username', value: account?.username },
+        { field: 'disabled', value: account?.disabled? 'True': 'False' },
+        { field: 'verified', value: account?.verified? 'True': 'False' },
+        { field: 'Created', value: account?.createdAt? moment(account?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' },
+        { field: 'Updated', value: account?.updatedAt? moment(account?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' }
     ]
 
     const modulesData:IModuleData[] = [
         {
             module: 'Account Information',
             moduleRoute: 'accountInfos',
-            contents: user?.userInfos?.length || 0
+            contents: account?.userInfos?.length || 0
         },
         {
             module: 'Contact Information',
             moduleRoute: 'contactInfos',
-            contents: user?.contactInfos?.length || 0
+            contents: account?.contactInfos?.length || 0
         },
         {
             module: 'Roles',
             moduleRoute: 'roles',
-            contents: user?.rolesRefs?.length || 0
+            contents: account?.rolesRefs?.length || 0
         },
         {
             module: 'Limited Transactions',
             moduleRoute: 'limitedTransactions',
-            contents: user?.limitedTransactions?.length || 0
+            contents: account?.limitedTransactions?.length || 0
         },
         {
             module: 'Client Devices',
             moduleRoute: 'clientDevices',
-            contents: user?.clientDevices?.length || 0
+            contents: account?.clientDevices?.length || 0
         },
         {
             module: 'Workspaces',
             moduleRoute: 'workspaces',
-            contents: user?.workspaces?.length || 0
+            contents: account?.workspaces?.length || 0
         },
         {
             module: 'Passwords',
             moduleRoute: 'passwords',
-            contents: user?.passwords?.length || 0
+            contents: account?.passwords?.length || 0
         },
     ]
 
-    return user? (
+    return account? (
         <>
             <Grid item xs={12}>
                 <PrimaryTable

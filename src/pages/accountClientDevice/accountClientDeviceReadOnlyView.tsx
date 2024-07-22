@@ -10,11 +10,11 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import SimpleLink from '../../components/links/simpleLink';
 // import Check from '../../components/indicators/check';
-import UserClientDeviceService from './userClientDeviceService';
+import AccountClientDeviceService from './accountClientDeviceService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
-    user?: IAccount
+    account?: IAccount
     clientDeviceId?: string
 }
 
@@ -24,21 +24,21 @@ interface IClientDeviceInfoRow {
 }
 interface IClientDeviceSubModuleData {module: string, moduleRoute: string, contents: number}
 
-const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
+const AccountClientDeviceReadOnlyView = ({account, clientDeviceId}:IProps) => {
     // const navigate = useNavigate()
     const [clientDevice, setClientDevice] = useState<IClientDevice & {createdAt?:Date, updatedAt?:Date} | undefined>(undefined)
 
     useEffect(() => {
-        if (user && user.clientDevices && clientDeviceId) {
-            const cd = UserClientDeviceService.getClientDeviceById(user, clientDeviceId)
+        if (account && account.clientDevices && clientDeviceId) {
+            const cd = AccountClientDeviceService.getClientDeviceById(account, clientDeviceId)
             setClientDevice(cd)
         }
 
-    }, [user, clientDeviceId])
+    }, [account, clientDeviceId])
 
     const data:IClientDeviceInfoRow[] = [
         {
-            label: 'User Agent',
+            label: 'account Agent',
             value: clientDevice?.ua || '--'
         },
         {
@@ -120,4 +120,4 @@ const UserClientDeviceReadOnlyView = ({user, clientDeviceId}:IProps) => {
     )
 }
 
-export default UserClientDeviceReadOnlyView
+export default AccountClientDeviceReadOnlyView

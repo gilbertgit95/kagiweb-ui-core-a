@@ -8,13 +8,13 @@ import AddIcon from '@mui/icons-material/Add';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import AccountService from '../user/accountService';
+// import AccountService from '../account/accountService';
 import OwnerService from './ownerService';
-import UserClientDevicesReadOnlyView from '../accountClientDevice/userClientDevicesReadOnlyView';
+import AccountClientDevicesReadOnlyView from '../accountClientDevice/accountClientDevicesReadOnlyView';
 
 const OwnerClientDevicesPage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -23,8 +23,8 @@ const OwnerClientDevicesPage = () => {
     useEffect(() => {
         const init = async () => {
                 try {
-                    const userResp = await OwnerService.getOwner()
-                    setUser(userResp.data)
+                    const accountResp = await OwnerService.getOwner()
+                    setAccount(accountResp.data)
                 } catch (err:any) {
                     console.log(err)
                     setInfoAndErrors({
@@ -41,7 +41,7 @@ const OwnerClientDevicesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Client Devices View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Client Devices View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -67,7 +67,7 @@ const OwnerClientDevicesPage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDevicesReadOnlyView user={user} />
+                <AccountClientDevicesReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

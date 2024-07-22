@@ -33,20 +33,20 @@ const AccountPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (accountId) {
             try {
-                const userResp = await AccountService.deleteAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.deleteAccount(accountId)
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this user']},
+                    ...{infoMessages: ['Sucessfully deleted this account']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -64,8 +64,8 @@ const AccountPage = () => {
 
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -110,7 +110,7 @@ const AccountPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ user?._id }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }`)}>
                             Edit
                         </Button>
                         <Button
@@ -145,7 +145,7 @@ const AccountPage = () => {
                 </Grid>
 
                 <AccountReadOnlyView
-                    user={user} />
+                    account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

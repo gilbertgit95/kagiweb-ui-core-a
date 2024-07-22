@@ -6,12 +6,12 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { IAccount, IClientDevice } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     createFunc: (accountId:string, newData:IClientDevice) => Promise<{data:IClientDevice}>,
-    created?: (accountId:string|undefined, userInfo:IClientDevice|undefined) => void
+    created?: (accountId:string|undefined, accountInfo:IClientDevice|undefined) => void
 }
 
-const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
+const AccountClientDeviceCreateForm = ({account, createFunc, created}:props) => {
     const [newClientDevice, setNewClientDevice] = useState<IClientDevice>({
         ua: '',
         description: '',
@@ -32,7 +32,7 @@ const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
     }
 
     const onCreate = async () => {
-        if (!user) return
+        if (!account) return
 
         const newData:IClientDevice = {
             _id: newClientDevice._id,
@@ -43,10 +43,10 @@ const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
         console.log('save update: ', newData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await createFunc(user._id, newData)
-                if (created) created(user?._id, reqResp?.data)
+                const reqResp = await createFunc(account._id, newData)
+                if (created) created(account?._id, reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}
@@ -69,7 +69,7 @@ const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
         paddingLeft: '20px'
     }
 
-    return user? (
+    return account? (
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
@@ -126,4 +126,4 @@ const UserClientDeviceCreateForm = ({user, createFunc, created}:props) => {
     ): null
 }
 
-export default UserClientDeviceCreateForm
+export default AccountClientDeviceCreateForm

@@ -193,7 +193,7 @@ const Accounts = () => {
             } catch (err) {
             }
         }
-        console.log('initiate users page')
+        console.log('initiate accounts page')
         init()
     }, [pageQuery, pageSizeQuery])
 

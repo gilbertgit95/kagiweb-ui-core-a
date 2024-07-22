@@ -3,17 +3,17 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserClientDeviceService from './userClientDeviceService';
+import AccountClientDeviceService from './accountClientDeviceService';
 import { IAccount, IClientDevice } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     clientDeviceId?: string,
     updateFunc: (accountId:string, updateData:{_id?:string, ua?:string, description?: string, disabled?:boolean}) => Promise<{data:IClientDevice}>,
-    updated?: (accountId:string|undefined, userInfo:IClientDevice|undefined) => void
+    updated?: (accountId:string|undefined, accountInfo:IClientDevice|undefined) => void
 }
 
-const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:props) => {
+const AccountClientDeviceEditForm = ({account, clientDeviceId, updateFunc, updated}:props) => {
     const [clientDevice, setClientDevice] = useState<IClientDevice & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedClientDevice, setUpdatedClientDevice] = useState<IClientDevice>({
         ua: '',
@@ -46,14 +46,14 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
         console.log('save update: ', updateData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await updateFunc(user._id, updateData)
+                const reqResp = await updateFunc(account._id, updateData)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(user?._id, reqResp?.data)
+                if (updated) updated(account?._id, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -67,15 +67,15 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.clientDevices && clientDeviceId) {
-                const contactInf = UserClientDeviceService.getClientDeviceById(user, clientDeviceId)
+            if (account && account.clientDevices && clientDeviceId) {
+                const contactInf = AccountClientDeviceService.getClientDeviceById(account, clientDeviceId)
                 setClientDevice(contactInf)
                 if (contactInf) {
                     setUpdatedClientDevice(contactInf)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Client Device does not exist on this user']}
+                        ...{errorMessages: ['Client Device does not exist on this account']}
                     })
                 }
             }
@@ -83,7 +83,7 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
 
         init()
 
-    }, [user, clientDeviceId])
+    }, [account, clientDeviceId])
 
     const itemSx = {
         display: 'flex',
@@ -102,14 +102,14 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
         )
     })()
 
-    return user? (
+    return account? (
         <>
             {
                 clientDevice? (
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">User Agent</Typography>
+                                <Typography variant="subtitle1">account Agent</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
                                 <TextField
@@ -165,4 +165,4 @@ const UserClientDeviceEditForm = ({user, clientDeviceId, updateFunc, updated}:pr
     ): null
 }
 
-export default UserClientDeviceEditForm
+export default AccountClientDeviceEditForm

@@ -16,7 +16,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-const UserClientDeviceTokenCreatePage = () => {
+const AccountClientDeviceTokenCreatePage = () => {
     const { clientDeviceId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -85,4 +85,4 @@ const UserClientDeviceTokenCreatePage = () => {
     )
 }
 
-export default UserClientDeviceTokenCreatePage
+export default AccountClientDeviceTokenCreatePage
