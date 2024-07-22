@@ -2,7 +2,7 @@ import { Container, Grid, Divider, Box, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppSelector} from '../../stores/appStore';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserReadOnlyView from '../account/userReadOnlyView';
+import AccountReadOnlyView from '../account/accountReadOnlyView';
 import { useNavigate } from 'react-router-dom';
 
 const OwnerPage = () => {
@@ -30,7 +30,7 @@ const OwnerPage = () => {
                         </Button>
                     </Box>
                 </Grid>
-                <UserReadOnlyView user={accountData} />
+                <AccountReadOnlyView user={accountData} />
             </Grid>
         </Container>
     )

@@ -15,7 +15,7 @@ import appComponentsHandler from '../../utils/appComponentsHandler'
 interface IModuleData {module: string, moduleRoute: string, contents: number}
 interface props { user?: IAccount & {createdAt?:Date, updatedAt?:Date} }
 
-const UserReadOnlyView = ({user}:props) => {
+const AccountReadOnlyView = ({user}:props) => {
     // const navigate = useNavigate()
 
     const colDef:IColDef[] = [
@@ -61,7 +61,7 @@ const UserReadOnlyView = ({user}:props) => {
 
     const modulesData:IModuleData[] = [
         {
-            module: 'User Information',
+            module: 'Account Information',
             moduleRoute: 'accountInfos',
             contents: user?.userInfos?.length || 0
         },
@@ -118,4 +118,4 @@ const UserReadOnlyView = ({user}:props) => {
     ): null
 }
 
-export default UserReadOnlyView
+export default AccountReadOnlyView

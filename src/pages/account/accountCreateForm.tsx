@@ -7,7 +7,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import AccountService from './accountService';
 import { IAccount } from '../../types/account';
 
-export const UserCreateForm = () => {
+export const AccountCreateForm = () => {
     const [pageState, setPageState] = useState({
         disableSaveButton: false
     })
@@ -123,4 +123,4 @@ export const UserCreateForm = () => {
     )
 }
 
-export default UserCreateForm
+export default AccountCreateForm

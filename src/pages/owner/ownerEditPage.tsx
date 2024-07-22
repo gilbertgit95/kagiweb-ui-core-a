@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 import { setAccountData } from '../../stores/signedInAccountSlice';
 import { useNavigate } from 'react-router-dom';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserEditForm from '../account/userEditForm';
+import AccountEditForm from '../account/accountEditForm';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 
@@ -34,7 +34,7 @@ const OwnerEditPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <UserEditForm
+                <AccountEditForm
                     accountId={accountData?._id}
                     getFunc={OwnerService.getOwner}
                     updateFunc={OwnerService.updateOwner}

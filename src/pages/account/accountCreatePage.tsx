@@ -4,23 +4,17 @@ import { Container, Button, Divider } from '@mui/material';
 
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserEditForm from './userEditForm';
-import AccountService from './accountService';
-import {
-  useParams
-} from 'react-router-dom';
+import AccountCreateForm from './accountCreateForm';
 
-export const UserEditPage = () => {
-    let { accountId } = useParams()
+export const AccountCreatePage = () => {
     const navigate = useNavigate()
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Update View'} />
+                    <PrimaryHeader title={'Account Creation View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -31,13 +25,10 @@ export const UserEditPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <UserEditForm
-                    getFunc={AccountService.getAccount}
-                    updateFunc={AccountService.updateAccount}
-                    accountId={ accountId } />
+                <AccountCreateForm />
             </Grid>
         </Container>
     )
 }
 
-export default UserEditPage
+export default AccountCreatePage

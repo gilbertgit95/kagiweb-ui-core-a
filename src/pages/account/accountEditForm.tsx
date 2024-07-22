@@ -14,7 +14,7 @@ interface Props {
     updated?: (user:IAccount|undefined) => void
 }
 
-export  const UserEditForm = ({ accountId, getFunc, updateFunc, updated }:Props) => {
+export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Props) => {
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -175,4 +175,4 @@ export  const UserEditForm = ({ accountId, getFunc, updateFunc, updated }:Props)
     )
 }
 
-export default UserEditForm
+export default AccountEditForm

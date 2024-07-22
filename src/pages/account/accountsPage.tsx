@@ -93,7 +93,7 @@ const colDef:IColDef[] = [
     }
 ]
 
-const Users = () => {
+const Accounts = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
     const pageQuery = parseInt(searchParams.get('page') || '') || appComponentsHandler.appConfig.defaultPage;
@@ -233,4 +233,4 @@ const Users = () => {
     )
 }
 
-export default Users
+export default Accounts

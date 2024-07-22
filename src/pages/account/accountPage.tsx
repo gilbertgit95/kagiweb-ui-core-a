@@ -14,14 +14,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserReadOnlyView from './userReadOnlyView';
+import AccountReadOnlyView from './accountReadOnlyView';
 import AccountService from './accountService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserPage = () => {
+const AccountPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -144,7 +144,7 @@ const UserPage = () => {
                     </Box>
                 </Grid>
 
-                <UserReadOnlyView
+                <AccountReadOnlyView
                     user={user} />
 
                 <Grid item xs={12}>
@@ -155,4 +155,4 @@ const UserPage = () => {
     )
 }
 
-export default UserPage
+export default AccountPage
