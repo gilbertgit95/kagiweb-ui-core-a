@@ -3,18 +3,18 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import AccountClientDeviceTokenService from './accountClientDeviceTokenService';
 import { IAccount, IAccessToken } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     clientDeviceId?: string,
     clientDeviceTokenId?: string,
     updateFunc: (accountId:string, clientDeviceId: string, updateData:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}) => Promise<{data:IAccessToken}>,
-    updated?: (accountId:string|undefined, userInfo:IAccessToken|undefined) => void
+    updated?: (accountId:string|undefined, accountInfo:IAccessToken|undefined) => void
 }
 
-const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenId, updateFunc, updated}:props) => {
+const AccountClientDeviceTokenEditForm = ({account, clientDeviceId, clientDeviceTokenId, updateFunc, updated}:props) => {
     const [token, setToken] = useState<IAccessToken & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedToken, setUpdatedToken] = useState<IAccessToken>({
         jwt: '',
@@ -48,14 +48,14 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
         console.log('save update: ', updateData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await updateFunc(user._id, clientDeviceId || '', updateData)
+                const reqResp = await updateFunc(account._id, clientDeviceId || '', updateData)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(user?._id, reqResp?.data)
+                if (updated) updated(account?._id, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -69,15 +69,15 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.clientDevices && clientDeviceId) {
-                const tkn = UserClientDeviceTokenService.getClientDeviceAccessTokenById(user, clientDeviceId, clientDeviceTokenId || '')
+            if (account && account.clientDevices && clientDeviceId) {
+                const tkn = AccountClientDeviceTokenService.getClientDeviceAccessTokenById(account, clientDeviceId, clientDeviceTokenId || '')
                 setToken(tkn)
                 if (tkn) {
                     setUpdatedToken(tkn)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Token does not exist on this user']}
+                        ...{errorMessages: ['Token does not exist on this account']}
                     })
                 }
             }
@@ -85,7 +85,7 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
 
         init()
 
-    }, [user, clientDeviceId, clientDeviceTokenId])
+    }, [account, clientDeviceId, clientDeviceTokenId])
 
     const itemSx = {
         display: 'flex',
@@ -104,7 +104,7 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
         )
     })()
 
-    return user? (
+    return account? (
         <>
             {
                 token? (
@@ -178,4 +178,4 @@ const UserClientDeviceTokenEditForm = ({user, clientDeviceId, clientDeviceTokenI
     ): null
 }
 
-export default UserClientDeviceTokenEditForm
+export default AccountClientDeviceTokenEditForm

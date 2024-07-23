@@ -3,10 +3,10 @@ import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 import { IAccount, IAccessToken } from '../../types/account'
 import AccountClientDeviceService from '../accountClientDevice/accountClientDeviceService'
 
-class UserClientDeviceTokenService {
-    public static getClientDeviceAccessTokenById(user:IAccount, clientDeviceId:string, accessTokenId:string):IAccessToken|undefined {
+class AccountClientDeviceTokenService {
+    public static getClientDeviceAccessTokenById(account:IAccount, clientDeviceId:string, accessTokenId:string):IAccessToken|undefined {
 
-        const clientDevice = AccountClientDeviceService.getClientDeviceById(user, clientDeviceId)
+        const clientDevice = AccountClientDeviceService.getClientDeviceById(account, clientDeviceId)
         // check client devices if existed
         if (clientDevice && clientDevice.accessTokens) {
             // then loop to all access token of the client device
@@ -41,4 +41,4 @@ class UserClientDeviceTokenService {
     }
 }
 
-export default UserClientDeviceTokenService
+export default AccountClientDeviceTokenService

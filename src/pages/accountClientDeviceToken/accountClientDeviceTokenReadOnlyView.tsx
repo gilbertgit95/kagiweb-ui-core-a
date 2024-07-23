@@ -2,26 +2,26 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment'
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import AccountClientDeviceTokenService from './accountClientDeviceTokenService';
 import { IAccount, IAccessToken } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     clientDeviceId?: string,
     clientDeviceTokenId?: string
 }
 
-const UserClientDeviceTokenReadOnlyView = ({user, clientDeviceId, clientDeviceTokenId}:props) => {
+const AccountClientDeviceTokenReadOnlyView = ({account, clientDeviceId, clientDeviceTokenId}:props) => {
     const [token, setToken] = useState<IAccessToken & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
-        if (user && user.contactInfos && clientDeviceId) {
-            const tkn = UserClientDeviceTokenService.getClientDeviceAccessTokenById(user, clientDeviceId, clientDeviceTokenId || '')
+        if (account && account.contactInfos && clientDeviceId) {
+            const tkn = AccountClientDeviceTokenService.getClientDeviceAccessTokenById(account, clientDeviceId, clientDeviceTokenId || '')
             setToken(tkn)
         }
 
-    }, [user, clientDeviceId, clientDeviceTokenId])
+    }, [account, clientDeviceId, clientDeviceTokenId])
 
     const colDef:IColDef[] = [
         {
@@ -53,4 +53,4 @@ const UserClientDeviceTokenReadOnlyView = ({user, clientDeviceId, clientDeviceTo
     ): null
 }
 
-export default UserClientDeviceTokenReadOnlyView
+export default AccountClientDeviceTokenReadOnlyView

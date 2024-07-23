@@ -7,9 +7,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenEditForm from '../accountClientDeviceToken/userClientDeviceTokenEditForm';
+import AccountClientDeviceTokenEditForm from '../accountClientDeviceToken/accountClientDeviceTokenEditForm';
 // import AccountService from '../user/accountService';
-// import UserClientDeviceTokenService from './userClientDeviceTokenService';
+// import AccountClientDeviceTokenService from './userClientDeviceTokenService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
@@ -23,12 +23,12 @@ const AccountClientDeviceTokenEditPage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
         try {
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
 
         } catch (err:any) {
             setInfoAndErrors({
@@ -41,8 +41,8 @@ const AccountClientDeviceTokenEditPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -59,7 +59,7 @@ const AccountClientDeviceTokenEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Token Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Token Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -71,8 +71,8 @@ const AccountClientDeviceTokenEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserClientDeviceTokenEditForm
-                    user={user}
+                <AccountClientDeviceTokenEditForm
+                    account={account}
                     clientDeviceId={clientDeviceId}
                     clientDeviceTokenId={clientDeviceTokenId}
                     updateFunc={OwnerService.updateClientDeviceToken}

@@ -11,12 +11,12 @@ import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 // import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
-import UserClientDeviceTokensReadOnlyView from '../accountClientDeviceToken/userClientDeviceTokensReadOnlyView';
+import AccountClientDeviceTokensReadOnlyView from '../accountClientDeviceToken/accountClientDeviceTokensReadOnlyView';
 
-const UserClientDeviceTokensPage = () => {
+const AccountClientDeviceTokensPage = () => {
     const { clientDeviceId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -25,8 +25,8 @@ const UserClientDeviceTokensPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
             } catch (err:any) {
                 console.log(err)
                 setInfoAndErrors({
@@ -43,7 +43,7 @@ const UserClientDeviceTokensPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Client Device Tokens View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Client Device Tokens View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -69,7 +69,7 @@ const UserClientDeviceTokensPage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceTokensReadOnlyView user={user} clientDeviceId={ clientDeviceId } />
+                <AccountClientDeviceTokensReadOnlyView account={account} clientDeviceId={ clientDeviceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -79,4 +79,4 @@ const UserClientDeviceTokensPage = () => {
     )
 }
 
-export default UserClientDeviceTokensPage
+export default AccountClientDeviceTokensPage

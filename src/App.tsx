@@ -77,10 +77,10 @@ import AccountClientDevicePage from './pages/accountClientDevice/accountClientDe
 import AccountClientDeviceCreatePage from './pages/accountClientDevice/accountClientDeviceCreatePage';
 import AccountClientDeviceEditPage from './pages/accountClientDevice/accountClientDeviceEditPage';
 
-import UserClientDeviceTokensPage from './pages/accountClientDeviceToken/userClientDeviceTokensPage';
-import UserClientDeviceTokenPage from './pages/accountClientDeviceToken/userClientDeviceTokenPage';
-import AccountClientDeviceTokenCreatePage from './pages/accountClientDeviceToken/userClientDeviceTokenCreatePage';
-import AccountClientDeviceTokenEditPage from './pages/accountClientDeviceToken/userClientDeviceTokenEditPage';
+import AccountClientDeviceTokensPage from './pages/accountClientDeviceToken/accountClientDeviceTokensPage';
+import AccountClientDeviceTokenPage from './pages/accountClientDeviceToken/accountClientDeviceTokenPage';
+import AccountClientDeviceTokenCreatePage from './pages/accountClientDeviceToken/accountClientDeviceTokenCreatePage';
+import AccountClientDeviceTokenEditPage from './pages/accountClientDeviceToken/accountClientDeviceTokenEditPage';
 
 import UserContactInfosPage from './pages/accountContactInfo/userContactInfosPage';
 import UserContactInfoPage from './pages/accountContactInfo/userContactInfoPage';
@@ -184,9 +184,9 @@ appHandler.addPrivateRoute({url: 'accounts/create/:accountId/clientDevices', pag
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/clientDevices/:clientDeviceId', page: AccountClientDevicePage })
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/clientDevices/:clientDeviceId', page: AccountClientDeviceEditPage })
 // user client device tokens
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/clientDevices/:clientDeviceId/clientDeviceTokens', page: UserClientDeviceTokensPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/clientDevices/:clientDeviceId/clientDeviceTokens', page: AccountClientDeviceTokensPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/clientDevices/:clientDeviceId/clientDeviceTokens', page: AccountClientDeviceTokenCreatePage })
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: UserClientDeviceTokenPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: AccountClientDeviceTokenPage })
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: AccountClientDeviceTokenEditPage })
 // user contact infos
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos', page: UserContactInfosPage })

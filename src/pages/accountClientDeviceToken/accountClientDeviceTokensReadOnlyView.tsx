@@ -14,7 +14,7 @@ import AccountClientDeviceService from '../accountClientDevice/accountClientDevi
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
-    user: IAccount | undefined,
+    account: IAccount | undefined,
     clientDeviceId: string | undefined
 }
 
@@ -29,13 +29,13 @@ interface IclientDeviceTokenRow {
     updatedAt?: Date
 }
 
-const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
+const AccountClientDeviceTokensReadOnlyView = ({account, clientDeviceId}:IProps) => {
     // const navigate = useNavigate()
     const [data, setData] = useState<IclientDeviceTokenRow[]>([])
 
     useEffect(() => {
-        if (user && user.clientDevices && clientDeviceId) {
-            const clientDevice = AccountClientDeviceService.getClientDeviceById(user, clientDeviceId)
+        if (account && account.clientDevices && clientDeviceId) {
+            const clientDevice = AccountClientDeviceService.getClientDeviceById(account, clientDeviceId)
             const transformedData:IclientDeviceTokenRow[] = clientDevice?.accessTokens?.map((item:IAccessToken & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
@@ -52,7 +52,7 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
             setData(transformedData)
         }
 
-    }, [user, clientDeviceId])
+    }, [account, clientDeviceId])
 
     const colDef:IColDef[] = [
         {
@@ -111,4 +111,4 @@ const UserclientDeviceTokensReadOnlyView = ({user, clientDeviceId}:IProps) => {
     )
 }
 
-export default UserclientDeviceTokensReadOnlyView
+export default AccountClientDeviceTokensReadOnlyView

@@ -14,16 +14,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenReadOnlyView from '../accountClientDeviceToken/userClientDeviceTokenReadOnlyView';
+import AccountClientDeviceTokenReadOnlyView from '../accountClientDeviceToken/accountClientDeviceTokenReadOnlyView';
 // import AccountService from '../user/accountService';
-// import UserClientDeviceTokenService from './userClientDeviceTokenService';
+// import AccountClientDeviceTokenService from './userClientDeviceTokenService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 import OwnerService from './ownerService';
 
-const UserClientDeviceTokenPage = () => {
+const AccountClientDeviceTokenPage = () => {
     const { clientDeviceId, clientDeviceTokenId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -35,14 +35,14 @@ const UserClientDeviceTokenPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (clientDeviceId && clientDeviceTokenId) {
             try {
                 await OwnerService.deleteClientDeviceToken('', clientDeviceId, clientDeviceTokenId)
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
@@ -70,8 +70,8 @@ const UserClientDeviceTokenPage = () => {
 
             if (clientDeviceId) {
                 try {
-                    const userResp = await OwnerService.getOwner()
-                    setUser(userResp.data)
+                    const accountResp = await OwnerService.getOwner()
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -95,7 +95,7 @@ const UserClientDeviceTokenPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Token Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Token Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -150,8 +150,8 @@ const UserClientDeviceTokenPage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceTokenReadOnlyView
-                    user={user}
+                <AccountClientDeviceTokenReadOnlyView
+                    account={account}
                     clientDeviceId={clientDeviceId}
                     clientDeviceTokenId={clientDeviceTokenId} />
 
@@ -163,4 +163,4 @@ const UserClientDeviceTokenPage = () => {
     )
 }
 
-export default UserClientDeviceTokenPage
+export default AccountClientDeviceTokenPage

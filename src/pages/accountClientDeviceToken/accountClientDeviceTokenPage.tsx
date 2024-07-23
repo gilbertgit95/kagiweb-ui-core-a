@@ -14,15 +14,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenReadOnlyView from './userClientDeviceTokenReadOnlyView';
+import AccountClientDeviceTokenReadOnlyView from './accountClientDeviceTokenReadOnlyView';
 import AccountService from '../account/accountService';
-import UserClientDeviceTokenService from './userClientDeviceTokenService';
+import AccountClientDeviceTokenService from './accountClientDeviceTokenService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserClientDeviceTokenPage = () => {
+const AccountClientDeviceTokenPage = () => {
     const { accountId, clientDeviceId, clientDeviceTokenId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -34,14 +34,14 @@ const UserClientDeviceTokenPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (accountId && clientDeviceId && clientDeviceTokenId) {
             try {
-                await UserClientDeviceTokenService.deleteClientDeviceToken(accountId, clientDeviceId, clientDeviceTokenId)
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                await AccountClientDeviceTokenService.deleteClientDeviceToken(accountId, clientDeviceId, clientDeviceTokenId)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
@@ -69,8 +69,8 @@ const UserClientDeviceTokenPage = () => {
 
             if (accountId && clientDeviceId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -94,7 +94,7 @@ const UserClientDeviceTokenPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Token Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Token Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const UserClientDeviceTokenPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ user?._id }/clientDevices/${ clientDeviceId }/clientDeviceTokens/${ clientDeviceTokenId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }/clientDevices/${ clientDeviceId }/clientDeviceTokens/${ clientDeviceTokenId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -149,8 +149,8 @@ const UserClientDeviceTokenPage = () => {
                     </Box>
                 </Grid>
 
-                <UserClientDeviceTokenReadOnlyView
-                    user={user}
+                <AccountClientDeviceTokenReadOnlyView
+                    account={account}
                     clientDeviceId={clientDeviceId}
                     clientDeviceTokenId={clientDeviceTokenId} />
 
@@ -162,4 +162,4 @@ const UserClientDeviceTokenPage = () => {
     )
 }
 
-export default UserClientDeviceTokenPage
+export default AccountClientDeviceTokenPage

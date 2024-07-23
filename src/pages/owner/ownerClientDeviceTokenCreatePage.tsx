@@ -7,9 +7,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserClientDeviceTokenCreateForm from '../accountClientDeviceToken/userClientDeviceTokenCreateForm';
+import AccountClientDeviceTokenCreateForm from '../accountClientDeviceToken/accountClientDeviceTokenCreateForm';
 // import AccountService from '../user/accountService';
-// import UserClientDeviceTokenService from './userClientDeviceTokenService';
+// import AccountClientDeviceTokenService from './userClientDeviceTokenService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
@@ -23,12 +23,12 @@ const AccountClientDeviceTokenCreatePage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
         try {
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
 
         } catch (err:any) {
             setInfoAndErrors({
@@ -41,8 +41,8 @@ const AccountClientDeviceTokenCreatePage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -59,7 +59,7 @@ const AccountClientDeviceTokenCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Token Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Token Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -71,8 +71,8 @@ const AccountClientDeviceTokenCreatePage = () => {
                     </Button>
                 </Grid>
 
-                <UserClientDeviceTokenCreateForm
-                    user={user}
+                <AccountClientDeviceTokenCreateForm
+                    account={account}
                     clientDeviceId={clientDeviceId}
                     createFunc={OwnerService.createClientDeviceToken}
                     created={onCreated} />

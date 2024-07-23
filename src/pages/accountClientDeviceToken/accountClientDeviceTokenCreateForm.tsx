@@ -6,13 +6,13 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { IAccount, IAccessToken } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     clientDeviceId?:string,
     createFunc: (accountId:string, clientDeviceId:string, newData:IAccessToken & {expiration:number|undefined}) => Promise<{data:IAccessToken}>,
     created?: (accountId:string|undefined, clientDeviceId:string, token:IAccessToken|undefined) => void
 }
 
-const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, created}:props) => {
+const AccountClientDeviceTokenCreateForm = ({account, clientDeviceId, createFunc, created}:props) => {
     const [newToken, setNewToken] = useState<IAccessToken & {expiration:number|undefined}>({
         expiration: undefined,
         jwt: '',
@@ -35,7 +35,7 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
     }
 
     const onCreate = async () => {
-        if (!user) return
+        if (!account) return
 
         const newData:IAccessToken & {expiration:number|undefined} = {
             jwt: '',
@@ -47,10 +47,10 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
         console.log('save update: ', newData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await createFunc(user._id, clientDeviceId || '', newData)
-                if (created) created(user?._id, clientDeviceId || '', reqResp?.data)
+                const reqResp = await createFunc(account._id, clientDeviceId || '', newData)
+                if (created) created(account?._id, clientDeviceId || '', reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: [`Successfully created the token. Please copy the token before you exit the page! --> ${ reqResp?.data?.jwt }`]},
                     ...{errorMessages: []}
@@ -73,7 +73,7 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
         paddingLeft: '20px'
     }
 
-    return user? (
+    return account? (
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
@@ -143,4 +143,4 @@ const UserClientDeviceTokenCreateForm = ({user, clientDeviceId, createFunc, crea
     ): null
 }
 
-export default UserClientDeviceTokenCreateForm
+export default AccountClientDeviceTokenCreateForm
