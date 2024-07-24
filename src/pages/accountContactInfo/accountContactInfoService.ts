@@ -4,7 +4,7 @@ import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 import { IAccount, IContactInfo } from '../../types/account'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 
-class UserContactInfoService {
+class AccountContactInfoService {
     public static getContactInfoById(user:IAccount, userContactId:string):IContactInfo|undefined {
 
         if (user && user.contactInfos) {
@@ -36,4 +36,4 @@ class UserContactInfoService {
     }
 }
 
-export default UserContactInfoService
+export default AccountContactInfoService

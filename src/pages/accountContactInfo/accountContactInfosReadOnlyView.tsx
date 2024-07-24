@@ -23,7 +23,7 @@ interface IContactInfoRow {
     updatedAt?: Date
 }
 
-const UserContactInfosReadOnlyView = ({user}:IProps) => {
+const AccountContactInfosReadOnlyView = ({user}:IProps) => {
     // const navigate = useNavigate()
     const [data, setData] = useState<IContactInfoRow[]>([])
 
@@ -91,4 +91,4 @@ const UserContactInfosReadOnlyView = ({user}:IProps) => {
     )
 }
 
-export default UserContactInfosReadOnlyView
+export default AccountContactInfosReadOnlyView

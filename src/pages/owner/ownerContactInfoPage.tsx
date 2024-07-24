@@ -14,10 +14,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoReadOnlyView from '../accountContactInfo/userContactInfoReadOnlyView';
+import AccountContactInfoReadOnlyView from '../accountContactInfo/accountContactInfoReadOnlyView';
 // import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
-// import UserContactInfoService from './userContactInfoService';
+// import AccountContactInfoService from './userContactInfoService';
 import { IAccount } from '../../types/account';
 import {
   useParams
@@ -146,7 +146,7 @@ const UserInfoPage = () => {
                     </Box>
                 </Grid>
 
-                <UserContactInfoReadOnlyView
+                <AccountContactInfoReadOnlyView
                     user={user}
                     contactInfoId={contactInfoId} />
 

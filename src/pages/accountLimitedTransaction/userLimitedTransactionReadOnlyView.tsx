@@ -11,7 +11,7 @@ interface props {
     limitedTransactionId?: string
 }
 
-const UserLimitedTransactionReadOnlyView = ({user, limitedTransactionId}:props) => {
+const AccountContactInfoReadOnlyView = ({user, limitedTransactionId}:props) => {
     const [limitedtransaction, setLimitedTransaction] = useState<ILimitedTransaction & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
@@ -55,4 +55,4 @@ const UserLimitedTransactionReadOnlyView = ({user, limitedTransactionId}:props) 
     ): null
 }
 
-export default UserLimitedTransactionReadOnlyView
+export default AccountContactInfoReadOnlyView

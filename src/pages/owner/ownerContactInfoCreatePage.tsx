@@ -7,11 +7,11 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoCreateForm from '../accountContactInfo/userContactInfoCreateForm';
+import AccountContactInfoCreateForm from '../accountContactInfo/accountContactInfoCreateForm';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 
-const UserContactCreatePage = () => {
+const AccountContactInfoCreatePage = () => {
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -66,7 +66,7 @@ const UserContactCreatePage = () => {
                     </Button>
                 </Grid>
 
-                <UserContactInfoCreateForm
+                <AccountContactInfoCreateForm
                     user={user}
                     createFunc={OwnerService.createContactInfo}
                     created={onCreated} />
@@ -79,4 +79,4 @@ const UserContactCreatePage = () => {
     )
 }
 
-export default UserContactCreatePage
+export default AccountContactInfoCreatePage

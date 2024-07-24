@@ -14,7 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserLimitedTransactionReadOnlyView from './userLimitedTransactionReadOnlyView';
+import AccountContactInfoReadOnlyView from './userLimitedTransactionReadOnlyView';
 import AccountService from '../account/accountService';
 // import UserLimitedTransactionService from './userLimitedTransactionService';
 import { IAccount } from '../../types/account';
@@ -120,7 +120,7 @@ const UserLimitedTransactionPage = () => {
                     </Box>
                 </Grid>
 
-                <UserLimitedTransactionReadOnlyView
+                <AccountContactInfoReadOnlyView
                     user={user}
                     limitedTransactionId={limitedTransactionId} />
 

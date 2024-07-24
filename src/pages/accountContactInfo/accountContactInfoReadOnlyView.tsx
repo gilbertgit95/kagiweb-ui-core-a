@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment'
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import UserContactInfoService from './userContactInfoService';
+import AccountContactInfoService from './accountContactInfoService';
 import { IAccount, IContactInfo } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
@@ -11,12 +11,12 @@ interface props {
     contactInfoId?: string
 }
 
-const UserLimitedTransactionReadOnlyView = ({user, contactInfoId}:props) => {
+const AccountContactInfoReadOnlyView = ({user, contactInfoId}:props) => {
     const [ContactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         if (user && user.contactInfos && contactInfoId) {
-            const contact = UserContactInfoService.getContactInfoById(user, contactInfoId)
+            const contact = AccountContactInfoService.getContactInfoById(user, contactInfoId)
             setContactInfo(contact)
         }
 
@@ -50,4 +50,4 @@ const UserLimitedTransactionReadOnlyView = ({user, contactInfoId}:props) => {
     ): null
 }
 
-export default UserLimitedTransactionReadOnlyView
+export default AccountContactInfoReadOnlyView

@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserContactInfoService from './userContactInfoService';
+import AccountContactInfoService from './accountContactInfoService';
 import { IAccount, IContactInfo, TContactInfoType, contactInfoTypes } from '../../types/account';
 
 interface props {
@@ -15,7 +15,7 @@ interface props {
     updated?: (accountId:string|undefined, userInfo:IContactInfo|undefined) => void
 }
 
-const UserUserInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) => {
+const AccountContactInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) => {
     const [contactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedContactInfo, setUpdatedContactInfo] = useState<IContactInfo>({
         value: '',
@@ -68,7 +68,7 @@ const UserUserInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) 
     useEffect(() => {
         const init = async () => {
             if (user && user.contactInfos && contactInfoId) {
-                const contactInf = UserContactInfoService.getContactInfoById(user, contactInfoId)
+                const contactInf = AccountContactInfoService.getContactInfoById(user, contactInfoId)
                 setContactInfo(contactInf)
                 if (contactInf) {
                     setUpdatedContactInfo(contactInf)
@@ -160,4 +160,4 @@ const UserUserInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) 
     ): null
 }
 
-export default UserUserInfoEditForm
+export default AccountContactInfoEditForm

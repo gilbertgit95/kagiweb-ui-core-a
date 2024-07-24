@@ -10,9 +10,9 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import UserContactInfosReadOnlyView from './userContactInfosReadOnlyView';
+import AccountContactInfosReadOnlyView from './accountContactInfosReadOnlyView';
 
-const UserContactInfosPage = () => {
+const AccountContactInfosPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
     const [user, setUser] = useState<IAccount | undefined>()
@@ -70,7 +70,7 @@ const UserContactInfosPage = () => {
                     </Box>
                 </Grid>
 
-                <UserContactInfosReadOnlyView user={user} />
+                <AccountContactInfosReadOnlyView user={user} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -80,4 +80,4 @@ const UserContactInfosPage = () => {
     )
 }
 
-export default UserContactInfosPage
+export default AccountContactInfosPage

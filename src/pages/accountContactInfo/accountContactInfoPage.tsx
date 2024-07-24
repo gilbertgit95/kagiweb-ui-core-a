@@ -14,9 +14,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserContactInfoReadOnlyView from './userContactInfoReadOnlyView';
+import AccountContactInfoReadOnlyView from './accountContactInfoReadOnlyView';
 import AccountService from '../account/accountService';
-import UserContactInfoService from './userContactInfoService';
+import AccountContactInfoService from './accountContactInfoService';
 import { IAccount } from '../../types/account';
 import {
   useParams
@@ -39,7 +39,7 @@ const UserInfoPage = () => {
     const onDelete = async () => {
         if (accountId && contactInfoId) {
             try {
-                await UserContactInfoService.deleteContactInfo(accountId, contactInfoId)
+                await AccountContactInfoService.deleteContactInfo(accountId, contactInfoId)
                 const userResp = await AccountService.getAccount(accountId)
                 setUser(userResp.data)
                 setPageState({
@@ -149,7 +149,7 @@ const UserInfoPage = () => {
                     </Box>
                 </Grid>
 
-                <UserContactInfoReadOnlyView
+                <AccountContactInfoReadOnlyView
                     user={user}
                     contactInfoId={contactInfoId} />
 

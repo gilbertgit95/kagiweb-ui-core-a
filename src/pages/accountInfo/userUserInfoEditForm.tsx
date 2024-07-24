@@ -15,7 +15,7 @@ interface props {
     updated?: (accountId:string|undefined, userInfo:IAccountInfo|undefined) => void
 }
 
-const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => {
+const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => {
     const [userInfo, setUserInfo] = useState<IAccountInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedUserInfo, setUpdatedUserInfo] = useState<IAccountInfo>({
         key: '',
@@ -174,4 +174,4 @@ const UserUserInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => 
     ): null
 }
 
-export default UserUserInfoEditForm
+export default AccountContactInfoEditForm

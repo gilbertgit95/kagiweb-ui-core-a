@@ -13,7 +13,7 @@ interface props {
     created?: (accountId:string|undefined, userInfo:IContactInfo|undefined) => void
 }
 
-const UserContactInfoCreateForm = ({user, createFunc, created}:props) => {
+const AccountContactInfoCreateForm = ({user, createFunc, created}:props) => {
     const [newContactInfo, setNewContactInfo] = useState<IContactInfo>({
         value: '',
         type: contactInfoTypes[0] as TContactInfoType
@@ -122,4 +122,4 @@ const UserContactInfoCreateForm = ({user, createFunc, created}:props) => {
     ): null
 }
 
-export default UserContactInfoCreateForm
+export default AccountContactInfoCreateForm

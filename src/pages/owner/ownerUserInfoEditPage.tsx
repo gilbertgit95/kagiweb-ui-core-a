@@ -7,7 +7,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoEditForm from '../accountInfo/userUserInfoEditForm';
+import AccountContactInfoEditForm from '../accountInfo/userUserInfoEditForm';
 import OwnerService from './ownerService';
 // import AccountService from '../user/accountService';
 // import UserUserInfoService from './userUserInfoService';
@@ -16,7 +16,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-const UserInfoEditPage = () => {
+const AccountContactInfoEditPage = () => {
     const { userInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -72,7 +72,7 @@ const UserInfoEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserUserInfoEditForm
+                <AccountContactInfoEditForm
                     user={user}
                     userInfoId={userInfoId}
                     updateFunc={OwnerService.updateAccountInfo}
@@ -86,4 +86,4 @@ const UserInfoEditPage = () => {
     )
 }
 
-export default UserInfoEditPage
+export default AccountContactInfoEditPage

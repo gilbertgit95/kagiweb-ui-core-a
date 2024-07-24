@@ -82,10 +82,10 @@ import AccountClientDeviceTokenPage from './pages/accountClientDeviceToken/accou
 import AccountClientDeviceTokenCreatePage from './pages/accountClientDeviceToken/accountClientDeviceTokenCreatePage';
 import AccountClientDeviceTokenEditPage from './pages/accountClientDeviceToken/accountClientDeviceTokenEditPage';
 
-import UserContactInfosPage from './pages/accountContactInfo/userContactInfosPage';
-import UserContactInfoPage from './pages/accountContactInfo/userContactInfoPage';
-import UserContactInfoEditPage from './pages/accountContactInfo/userContactInfoEditPage';
-import UserContactInfoCreatePage from './pages/accountContactInfo/userContactInfoCreatePage';
+import AccountContactInfosPage from './pages/accountContactInfo/accountContactInfosPage';
+import AccountContactInfoPage from './pages/accountContactInfo/accountContactInfoPage';
+import AccountContactInfoEditPage from './pages/accountContactInfo/accountContactInfoEditPage';
+import UserContactInfoCreatePage from './pages/accountContactInfo/accountContactInfoCreatePage';
 
 import UserUserInfosPage from './pages/accountInfo/userUserInfosPage';
 import UserUserInfoPage from './pages/accountInfo/userUserInfoPage';
@@ -107,7 +107,7 @@ import OwnerPage from './pages/owner/ownerPage';
 import OwnerEditPage from './pages/owner/ownerEditPage';
 import OwnerUserInfosPage from './pages/owner/ownerUserInfosPage';
 import OwnerUserInfoCreatePage from './pages/owner/ownerUserInfoCreatePage';
-import OwnerUserInfoEditPage from './pages/owner/ownerUserInfoEditPage';
+import OwnerAccountContactInfoEditPage from './pages/owner/ownerContactInfoEditPage';
 import OwnerUserInfoPage from './pages/owner/ownerUserInfoPage';
 import OwnerContactInfosPage from './pages/owner/ownerContactInfosPage';
 import OwnerContactInfoCreatePage from './pages/owner/ownerContactInfoCreatePage';
@@ -189,9 +189,9 @@ appHandler.addPrivateRoute({url: 'accounts/create/:accountId/clientDevices/:clie
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: AccountClientDeviceTokenPage })
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: AccountClientDeviceTokenEditPage })
 // user contact infos
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos', page: UserContactInfosPage })
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos/:contactInfoId', page: UserContactInfoPage })
-appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/contactInfos/:contactInfoId', page: UserContactInfoEditPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos', page: AccountContactInfosPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos/:contactInfoId', page: AccountContactInfoPage })
+appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/contactInfos/:contactInfoId', page: AccountContactInfoEditPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/contactInfos', page: UserContactInfoCreatePage })
 // user user infos
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/accountInfos', page: UserUserInfosPage })
@@ -216,7 +216,7 @@ appHandler.addPrivateRoute({url: 'owner/edit', page: OwnerEditPage })
 appHandler.addPrivateRoute({url: 'owner/view/accountInfos', page: OwnerUserInfosPage })
 appHandler.addPrivateRoute({url: 'owner/create/accountInfos', page: OwnerUserInfoCreatePage })
 appHandler.addPrivateRoute({url: 'owner/view/accountInfos/:accountInfoId', page: OwnerUserInfoPage })
-appHandler.addPrivateRoute({url: 'owner/edit/accountInfos/:accountInfoId', page: OwnerUserInfoEditPage })
+appHandler.addPrivateRoute({url: 'owner/edit/accountInfos/:accountInfoId', page: OwnerAccountContactInfoEditPage })
 // owner contact info
 appHandler.addPrivateRoute({url: 'owner/view/contactInfos', page: OwnerContactInfosPage })
 appHandler.addPrivateRoute({url: 'owner/create/contactInfos', page: OwnerContactInfoCreatePage })
