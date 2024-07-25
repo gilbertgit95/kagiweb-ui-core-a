@@ -8,12 +8,12 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { IAccount, IContactInfo, TContactInfoType, contactInfoTypes } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     createFunc: (accountId:string, newData:IContactInfo) => Promise<{data:IContactInfo}>,
-    created?: (accountId:string|undefined, userInfo:IContactInfo|undefined) => void
+    created?: (accountId:string|undefined, accountInfo:IContactInfo|undefined) => void
 }
 
-const AccountContactInfoCreateForm = ({user, createFunc, created}:props) => {
+const AccountContactInfoCreateForm = ({account, createFunc, created}:props) => {
     const [newContactInfo, setNewContactInfo] = useState<IContactInfo>({
         value: '',
         type: contactInfoTypes[0] as TContactInfoType
@@ -33,7 +33,7 @@ const AccountContactInfoCreateForm = ({user, createFunc, created}:props) => {
     }
 
     const onCreate = async () => {
-        if (!user) return
+        if (!account) return
 
         const newData:IContactInfo = {
             _id: newContactInfo._id,
@@ -43,10 +43,10 @@ const AccountContactInfoCreateForm = ({user, createFunc, created}:props) => {
         console.log('save update: ', newData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await createFunc(user._id, newData)
-                if (created) created(user?._id, reqResp?.data)
+                const reqResp = await createFunc(account._id, newData)
+                if (created) created(account?._id, reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}
@@ -69,7 +69,7 @@ const AccountContactInfoCreateForm = ({user, createFunc, created}:props) => {
         paddingLeft: '20px'
     }
 
-    return user? (
+    return account? (
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>

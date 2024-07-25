@@ -7,20 +7,20 @@ import { IAccount, IContactInfo } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     contactInfoId?: string
 }
 
-const AccountContactInfoReadOnlyView = ({user, contactInfoId}:props) => {
+const AccountContactInfoReadOnlyView = ({account, contactInfoId}:props) => {
     const [ContactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
-        if (user && user.contactInfos && contactInfoId) {
-            const contact = AccountContactInfoService.getContactInfoById(user, contactInfoId)
+        if (account && account.contactInfos && contactInfoId) {
+            const contact = AccountContactInfoService.getContactInfoById(account, contactInfoId)
             setContactInfo(contact)
         }
 
-    }, [user, contactInfoId])
+    }, [account, contactInfoId])
 
     const colDef:IColDef[] = [
         {

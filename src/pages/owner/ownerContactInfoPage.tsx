@@ -15,15 +15,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountContactInfoReadOnlyView from '../accountContactInfo/accountContactInfoReadOnlyView';
-// import AccountService from '../user/accountService';
+// import AccountService from '../account/accountService';
 import OwnerService from './ownerService';
-// import AccountContactInfoService from './userContactInfoService';
+// import AccountContactInfoService from './accountContactInfoService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserInfoPage = () => {
+const AccountContactInfoPage = () => {
     const { contactInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -35,21 +35,21 @@ const UserInfoPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (contactInfoId) {
             try {
                 await OwnerService.deleteContactInfo('', contactInfoId)
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this user info']},
+                    ...{infoMessages: ['Sucessfully deleted this account info']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -67,8 +67,8 @@ const UserInfoPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setPageState({
@@ -91,7 +91,7 @@ const UserInfoPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Contact Info Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Contact Info Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -147,7 +147,7 @@ const UserInfoPage = () => {
                 </Grid>
 
                 <AccountContactInfoReadOnlyView
-                    user={user}
+                    account={account}
                     contactInfoId={contactInfoId} />
 
                 <Grid item xs={12}>
@@ -158,4 +158,4 @@ const UserInfoPage = () => {
     )
 }
 
-export default UserInfoPage
+export default AccountContactInfoPage

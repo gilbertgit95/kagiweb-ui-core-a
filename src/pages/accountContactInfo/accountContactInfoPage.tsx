@@ -22,7 +22,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-const UserInfoPage = () => {
+const AccountContactInfoPage = () => {
     const { accountId, contactInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -34,21 +34,21 @@ const UserInfoPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (accountId && contactInfoId) {
             try {
                 await AccountContactInfoService.deleteContactInfo(accountId, contactInfoId)
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this user info']},
+                    ...{infoMessages: ['Sucessfully deleted this account contact info']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -69,8 +69,8 @@ const UserInfoPage = () => {
 
             if (accountId && contactInfoId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -94,7 +94,7 @@ const UserInfoPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Contact Info Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Contact Info Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ user?._id }/contactInfos/${ contactInfoId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }/contactInfos/${ contactInfoId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -150,7 +150,7 @@ const UserInfoPage = () => {
                 </Grid>
 
                 <AccountContactInfoReadOnlyView
-                    user={user}
+                    account={account}
                     contactInfoId={contactInfoId} />
 
                 <Grid item xs={12}>
@@ -161,4 +161,4 @@ const UserInfoPage = () => {
     )
 }
 
-export default UserInfoPage
+export default AccountContactInfoPage

@@ -1,15 +1,15 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
-// import { ISignedInUser } from '../../stores/signedInAccountSlice'
+// import { ISignedInaccount } from '../../stores/signedInAccountSlice'
 // import { IAccount, IContactInfo, IContactInfo,TContactInfoType } from '../../types/account'
 import { IAccount, IContactInfo } from '../../types/account'
 import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class AccountContactInfoService {
-    public static getContactInfoById(user:IAccount, userContactId:string):IContactInfo|undefined {
+    public static getContactInfoById(account:IAccount, accountContactId:string):IContactInfo|undefined {
 
-        if (user && user.contactInfos) {
-            for (const contact of user.contactInfos) {
-                if (contact._id === userContactId) return contact
+        if (account && account.contactInfos) {
+            for (const contact of account.contactInfos) {
+                if (contact._id === accountContactId) return contact
             }
         }
 

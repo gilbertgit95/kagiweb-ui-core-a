@@ -85,7 +85,7 @@ import AccountClientDeviceTokenEditPage from './pages/accountClientDeviceToken/a
 import AccountContactInfosPage from './pages/accountContactInfo/accountContactInfosPage';
 import AccountContactInfoPage from './pages/accountContactInfo/accountContactInfoPage';
 import AccountContactInfoEditPage from './pages/accountContactInfo/accountContactInfoEditPage';
-import UserContactInfoCreatePage from './pages/accountContactInfo/accountContactInfoCreatePage';
+import AccountContactInfoCreatePage from './pages/accountContactInfo/accountContactInfoCreatePage';
 
 import UserUserInfosPage from './pages/accountInfo/userUserInfosPage';
 import UserUserInfoPage from './pages/accountInfo/userUserInfoPage';
@@ -192,7 +192,7 @@ appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/clientDevices/:client
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos', page: AccountContactInfosPage })
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos/:contactInfoId', page: AccountContactInfoPage })
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/contactInfos/:contactInfoId', page: AccountContactInfoEditPage })
-appHandler.addPrivateRoute({url: 'accounts/create/:accountId/contactInfos', page: UserContactInfoCreatePage })
+appHandler.addPrivateRoute({url: 'accounts/create/:accountId/contactInfos', page: AccountContactInfoCreatePage })
 // user user infos
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/accountInfos', page: UserUserInfosPage })
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/accountInfos/:accountInfoId', page: UserUserInfoPage })

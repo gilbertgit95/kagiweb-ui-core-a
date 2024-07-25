@@ -11,7 +11,7 @@ import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
 
 interface IProps {
-    user: IAccount | undefined
+    account: IAccount | undefined
 }
 
 interface IContactInfoRow {
@@ -23,13 +23,13 @@ interface IContactInfoRow {
     updatedAt?: Date
 }
 
-const AccountContactInfosReadOnlyView = ({user}:IProps) => {
+const AccountContactInfosReadOnlyView = ({account}:IProps) => {
     // const navigate = useNavigate()
     const [data, setData] = useState<IContactInfoRow[]>([])
 
     useEffect(() => {
-        if (user && user.contactInfos) {
-            const transformedData:IContactInfoRow[] = user.contactInfos.map((item:IContactInfo & {createdAt?: Date, updatedAt?: Date}) => {
+        if (account && account.contactInfos) {
+            const transformedData:IContactInfoRow[] = account.contactInfos.map((item:IContactInfo & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     type: item.type || '--',
@@ -43,7 +43,7 @@ const AccountContactInfosReadOnlyView = ({user}:IProps) => {
             setData(transformedData)
         }
 
-    }, [user])
+    }, [account])
 
     const colDef:IColDef[] = [
         {
@@ -75,7 +75,7 @@ const AccountContactInfosReadOnlyView = ({user}:IProps) => {
                 return (
                     <SimpleLink
                         link={`${ props._id }`}
-                        text="View User Contact" />
+                        text="View account Contact" />
                 )
             }
         }

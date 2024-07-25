@@ -9,13 +9,13 @@ import AccountContactInfoService from './accountContactInfoService';
 import { IAccount, IContactInfo, TContactInfoType, contactInfoTypes } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     contactInfoId?: string,
     updateFunc: (accountId:string, updateData:IContactInfo) => Promise<{data:IContactInfo}>,
-    updated?: (accountId:string|undefined, userInfo:IContactInfo|undefined) => void
+    updated?: (accountId:string|undefined, accountInfo:IContactInfo|undefined) => void
 }
 
-const AccountContactInfoEditForm = ({user, contactInfoId, updateFunc, updated}:props) => {
+const AccountContactInfoEditForm = ({account, contactInfoId, updateFunc, updated}:props) => {
     const [contactInfo, setContactInfo] = useState<IContactInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedContactInfo, setUpdatedContactInfo] = useState<IContactInfo>({
         value: '',
@@ -46,14 +46,14 @@ const AccountContactInfoEditForm = ({user, contactInfoId, updateFunc, updated}:p
         console.log('save update: ', updateData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await updateFunc(user._id, updateData)
+                const reqResp = await updateFunc(account._id, updateData)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(user?._id, reqResp?.data)
+                if (updated) updated(account?._id, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -67,15 +67,15 @@ const AccountContactInfoEditForm = ({user, contactInfoId, updateFunc, updated}:p
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.contactInfos && contactInfoId) {
-                const contactInf = AccountContactInfoService.getContactInfoById(user, contactInfoId)
+            if (account && account.contactInfos && contactInfoId) {
+                const contactInf = AccountContactInfoService.getContactInfoById(account, contactInfoId)
                 setContactInfo(contactInf)
                 if (contactInf) {
                     setUpdatedContactInfo(contactInf)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Contact info does not exist on this user']}
+                        ...{errorMessages: ['Contact info does not exist on this account']}
                     })
                 }
             }
@@ -83,7 +83,7 @@ const AccountContactInfoEditForm = ({user, contactInfoId, updateFunc, updated}:p
 
         init()
 
-    }, [user, contactInfoId])
+    }, [account, contactInfoId])
 
     const itemSx = {
         display: 'flex',
@@ -101,7 +101,7 @@ const AccountContactInfoEditForm = ({user, contactInfoId, updateFunc, updated}:p
         )
     })()
 
-    return user? (
+    return account? (
         <>
             {
                 contactInfo? (

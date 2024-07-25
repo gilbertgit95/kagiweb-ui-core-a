@@ -9,13 +9,13 @@ import AddIcon from '@mui/icons-material/Add';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import AccountService from '../user/accountService';
+// import AccountService from '../account/accountService';
 import OwnerService from './ownerService';
 import AccountContactInfosReadOnlyView from '../accountContactInfo/accountContactInfosReadOnlyView';
 
 const AccountContactInfosPage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -24,8 +24,8 @@ const AccountContactInfosPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
             } catch (err:any) {
                 console.log(err)
                 setInfoAndErrors({
@@ -42,7 +42,7 @@ const AccountContactInfosPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Contact Infos View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Contact Infos View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -68,7 +68,7 @@ const AccountContactInfosPage = () => {
                     </Box>
                 </Grid>
 
-                <AccountContactInfosReadOnlyView user={user} />
+                <AccountContactInfosReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

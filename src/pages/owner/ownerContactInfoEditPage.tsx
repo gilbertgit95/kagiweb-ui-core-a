@@ -8,8 +8,8 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountContactInfoEditForm from '../accountContactInfo/accountContactInfoEditForm';
-// import AccountService from '../user/accountService';
-// import AccountContactInfoService from './userContactInfoService';
+// import AccountService from '../account/accountService';
+// import AccountContactInfoService from './accountContactInfoService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
@@ -23,12 +23,12 @@ const AccountContactInfoEditPage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
         try {
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
 
         } catch (err:any) {
             setInfoAndErrors({
@@ -41,8 +41,8 @@ const AccountContactInfoEditPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -59,7 +59,7 @@ const AccountContactInfoEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Contact Info Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Contact Info Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -72,7 +72,7 @@ const AccountContactInfoEditPage = () => {
                 </Grid>
 
                 <AccountContactInfoEditForm
-                    user={user}
+                    account={account}
                     contactInfoId={contactInfoId}
                     updateFunc={OwnerService.updateContactInfo}
                     updated={onUpdated} />
