@@ -14,14 +14,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoReadOnlyView from '../accountInfo/userUserInfoReadOnlyView';
+import AccountAccountInfoReadOnlyView from '../accountAccountInfo/accountAccountInfoReadOnlyView';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserInfoPage = () => {
+const OwnerAccountInfoPage = () => {
     const { accountInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -33,21 +33,21 @@ const UserInfoPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (accountInfoId) {
             try {
                 await OwnerService.deleteAccountInfo('', accountInfoId)
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this user info']},
+                    ...{infoMessages: ['Sucessfully deleted this account info']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -68,8 +68,8 @@ const UserInfoPage = () => {
 
             if (accountInfoId) {
                 try {
-                    const userResp = await OwnerService.getOwner()
-                    setUser(userResp.data)
+                    const accountResp = await OwnerService.getOwner()
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -93,7 +93,7 @@ const UserInfoPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Info Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Info Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -133,7 +133,7 @@ const UserInfoPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this user info?
+                                    Are you sure you want to delete this account info?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -148,8 +148,8 @@ const UserInfoPage = () => {
                     </Box>
                 </Grid>
 
-                <UserUserInfoReadOnlyView
-                    user={user}
+                <AccountAccountInfoReadOnlyView
+                    account={account}
                     accountInfoId={accountInfoId} />
 
                 <Grid item xs={12}>
@@ -160,4 +160,4 @@ const UserInfoPage = () => {
     )
 }
 
-export default UserInfoPage
+export default OwnerAccountInfoPage

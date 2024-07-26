@@ -7,28 +7,22 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountContactInfoEditForm from '../accountInfo/userUserInfoEditForm';
+import AccountAccountInfoCreateForm from '../accountAccountInfo/accountAccountInfoCreateForm';
 import OwnerService from './ownerService';
-// import AccountService from '../user/accountService';
-// import UserUserInfoService from './userUserInfoService';
 import { IAccount } from '../../types/account';
-import {
-  useParams
-} from 'react-router-dom';
 
-const AccountContactInfoEditPage = () => {
-    const { userInfoId } = useParams()
+const OwnerAccountInfoCreatePage = () => {
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
-    const onUpdated = async () => {
+    const onCreated = async () => {
         try {
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
 
         } catch (err:any) {
             setInfoAndErrors({
@@ -40,10 +34,9 @@ const AccountContactInfoEditPage = () => {
     
     useEffect(() => {
         const init = async () => {
-
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -60,7 +53,7 @@ const AccountContactInfoEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Info Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Info Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -72,11 +65,10 @@ const AccountContactInfoEditPage = () => {
                     </Button>
                 </Grid>
 
-                <AccountContactInfoEditForm
-                    user={user}
-                    userInfoId={userInfoId}
-                    updateFunc={OwnerService.updateAccountInfo}
-                    updated={onUpdated} />
+                <AccountAccountInfoCreateForm
+                    account={account}
+                    createFunc={OwnerService.createAccountInfo}
+                    created={onCreated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -86,4 +78,4 @@ const AccountContactInfoEditPage = () => {
     )
 }
 
-export default AccountContactInfoEditPage
+export default OwnerAccountInfoCreatePage

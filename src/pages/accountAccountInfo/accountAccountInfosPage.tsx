@@ -9,12 +9,12 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import UserUserInfosReadOnlyView from './userUserInfosReadOnlyView';
+import AccountAccountInfosReadOnlyView from './accountAccountInfosReadOnlyView';
 
-const UserUserInfosPage = () => {
+const AccountAccountInfosPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -24,8 +24,8 @@ const UserUserInfosPage = () => {
         const init = async () => {
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
                 } catch (err:any) {
                     console.log(err)
                     setInfoAndErrors({
@@ -35,7 +35,7 @@ const UserUserInfosPage = () => {
                 }
             }
         }
-        console.log('initiate UserInfo features page')
+        console.log('initiate accountInfo features page')
         init()
     }, [accountId])
 
@@ -43,7 +43,7 @@ const UserUserInfosPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Infos View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'account Infos View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -69,7 +69,7 @@ const UserUserInfosPage = () => {
                     </Box>
                 </Grid>
 
-                <UserUserInfosReadOnlyView user={user} />
+                <AccountAccountInfosReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -79,4 +79,4 @@ const UserUserInfosPage = () => {
     )
 }
 
-export default UserUserInfosPage
+export default AccountAccountInfosPage

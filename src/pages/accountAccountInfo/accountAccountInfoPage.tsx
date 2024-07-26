@@ -14,15 +14,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoReadOnlyView from './userUserInfoReadOnlyView';
+import AccountAccountInfoReadOnlyView from './accountAccountInfoReadOnlyView';
 import AccountService from '../account/accountService';
-import UserUserInfoService from './userUserInfoService';
+import AccountAccountInfoService from './accountAccountInfoService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserInfoPage = () => {
+const AccountAccountInfoPage = () => {
     const { accountId, accountInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -34,21 +34,21 @@ const UserInfoPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (accountId && accountInfoId) {
             try {
-                await UserUserInfoService.deleteAccountInfo(accountId, accountInfoId)
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                await AccountAccountInfoService.deleteAccountInfo(accountId, accountInfoId)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this user info']},
+                    ...{infoMessages: ['Sucessfully deleted this account info']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -69,8 +69,8 @@ const UserInfoPage = () => {
 
             if (accountId && accountInfoId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -94,7 +94,7 @@ const UserInfoPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Info Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Account Info Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const UserInfoPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ user?._id }/accountInfos/${ accountInfoId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }/accountInfos/${ accountInfoId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -134,7 +134,7 @@ const UserInfoPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this user info?
+                                    Are you sure you want to delete this account info?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -149,8 +149,8 @@ const UserInfoPage = () => {
                     </Box>
                 </Grid>
 
-                <UserUserInfoReadOnlyView
-                    user={user}
+                <AccountAccountInfoReadOnlyView
+                    account={account}
                     accountInfoId={accountInfoId} />
 
                 <Grid item xs={12}>
@@ -161,4 +161,4 @@ const UserInfoPage = () => {
     )
 }
 
-export default UserInfoPage
+export default AccountAccountInfoPage

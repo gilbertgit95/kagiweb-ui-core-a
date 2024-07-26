@@ -10,10 +10,10 @@ import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
 
 interface IProps {
-    user: IAccount | undefined
+    account: IAccount | undefined
 }
 
-interface IUserInfoRow {
+interface IAccountInfoRow {
     _id: string,
     key: string,
     value: string,
@@ -22,13 +22,13 @@ interface IUserInfoRow {
     updatedAt?: Date
 }
 
-const UserUserInfosReadOnlyView = ({user}:IProps) => {
+const AccountAccountInfosReadOnlyView = ({account}:IProps) => {
     // const navigate = useNavigate()
-    const [data, setData] = useState<IUserInfoRow[]>([])
+    const [data, setData] = useState<IAccountInfoRow[]>([])
 
     useEffect(() => {
-        if (user && user.userInfos) {
-            const transformedData:IUserInfoRow[] = user.userInfos.map((item:IAccountInfo & {createdAt?: Date, updatedAt?: Date}) => {
+        if (account && account.userInfos) {
+            const transformedData:IAccountInfoRow[] = account.userInfos.map((item:IAccountInfo & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     key: item.key || '--',
@@ -42,7 +42,7 @@ const UserUserInfosReadOnlyView = ({user}:IProps) => {
             setData(transformedData)
         }
 
-    }, [user])
+    }, [account])
 
     const colDef:IColDef[] = [
         {
@@ -60,14 +60,14 @@ const UserUserInfosReadOnlyView = ({user}:IProps) => {
         {
             header: 'Changed',
             field: '_id',
-            Component: (props:IUserInfoRow) => {
+            Component: (props:IAccountInfoRow) => {
                 return <DateChanges {...props} />
             }
         },
         {
             header: '',
             field: '_id',
-            Component: (props:IUserInfoRow) => {
+            Component: (props:IAccountInfoRow) => {
                 return (
                     <SimpleLink
                         link={`${ props._id }`}
@@ -87,4 +87,4 @@ const UserUserInfosReadOnlyView = ({user}:IProps) => {
     )
 }
 
-export default UserUserInfosReadOnlyView
+export default AccountAccountInfosReadOnlyView

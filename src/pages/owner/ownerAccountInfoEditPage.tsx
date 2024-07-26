@@ -7,28 +7,43 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountContactInfoEditForm from './userUserInfoEditForm';
-import AccountService from '../account/accountService';
-import UserUserInfoService from './userUserInfoService';
+import AccountContactInfoEditForm from '../accountAccountInfo/accountAccountInfoEditForm';
+import OwnerService from './ownerService';
+// import AccountService from '../account/accountService';
+// import AccountAccountInfoService from './accountAccountInfoService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const AccountContactInfoEditPage = () => {
-    const { accountId, userInfoId } = useParams()
+const OwnerAccountInfoEditPage = () => {
+    const { accountInfoId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
-        if (accountId) {
+        try {
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
+    }
+    
+    useEffect(() => {
+        const init = async () => {
+
             try {
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -37,34 +52,15 @@ const AccountContactInfoEditPage = () => {
                 })
             }
         }
-    }
-    
-    useEffect(() => {
-        const init = async () => {
-            console.log('View: ', accountId)
-
-            if (accountId) {
-                try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
-
-                } catch (err:any) {
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
-            }
-        }
 
         init()
-    }, [accountId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Info Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Info Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -77,9 +73,9 @@ const AccountContactInfoEditPage = () => {
                 </Grid>
 
                 <AccountContactInfoEditForm
-                    user={user}
-                    userInfoId={userInfoId}
-                    updateFunc={UserUserInfoService.updateAccountInfo}
+                    account={account}
+                    accountInfoId={accountInfoId}
+                    updateFunc={OwnerService.updateAccountInfo}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>
@@ -90,4 +86,4 @@ const AccountContactInfoEditPage = () => {
     )
 }
 
-export default AccountContactInfoEditPage
+export default OwnerAccountInfoEditPage

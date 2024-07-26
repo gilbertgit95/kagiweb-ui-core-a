@@ -8,13 +8,13 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { IAccount, IAccountInfo, TAccountInfoType, accountInfoTypes } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     createFunc: (accountId:string, newData:IAccountInfo) => Promise<{data:IAccountInfo}>,
-    created?: (accountId:string|undefined, userInfo:IAccountInfo|undefined) => void
+    created?: (accountId:string|undefined, accountInfo:IAccountInfo|undefined) => void
 }
 
-const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
-    const [newUserInfo, setNewUserInfo] = useState<IAccountInfo>({
+const AccountAccountInfoCreateForm = ({account, createFunc, created}:props) => {
+    const [newAccountInfo, setNewAccountInfo] = useState<IAccountInfo>({
         key: '',
         value: '',
         type: accountInfoTypes[0] as TAccountInfoType
@@ -25,30 +25,30 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setNewUserInfo({...newUserInfo, ...{[field]: value}})
+        setNewAccountInfo({...newAccountInfo, ...{[field]: value}})
     }
 
     const handleTypeSelectionChange = (event: SelectChangeEvent) => {
         const type = event.target.value as TAccountInfoType
-        setNewUserInfo({...newUserInfo, ...{type}})
+        setNewAccountInfo({...newAccountInfo, ...{type}})
     }
 
     const onCreate = async () => {
-        if (!user) return
+        if (!account) return
 
         const newData:IAccountInfo = {
-            _id: newUserInfo._id,
-            key: newUserInfo.key,
-            value: newUserInfo.value,
-            type: newUserInfo.type
+            _id: newAccountInfo._id,
+            key: newAccountInfo.key,
+            value: newAccountInfo.value,
+            type: newAccountInfo.type
         }
         console.log('save update: ', newData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await createFunc(user._id, newData)
-                if (created) created(user?._id, reqResp?.data)
+                const reqResp = await createFunc(account._id, newData)
+                if (created) created(account?._id, reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}
@@ -71,7 +71,7 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
         paddingLeft: '20px'
     }
 
-    return user? (
+    return account? (
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
@@ -80,7 +80,7 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
                 <Grid item xs={8} md={9}>
                     <Select
                         fullWidth
-                        value={newUserInfo?.type}
+                        value={newAccountInfo?.type}
                         onChange={handleTypeSelectionChange}>
                         {
                             accountInfoTypes.map((item, index) => (
@@ -97,7 +97,7 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={newUserInfo?.key || ''}
+                        defaultValue={newAccountInfo?.key || ''}
                         onChange={(e) => handleTextFieldChange('key', e.target.value)} />
                 </Grid>
             </Grid>
@@ -108,7 +108,7 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={newUserInfo?.value || ''}
+                        defaultValue={newAccountInfo?.value || ''}
                         onChange={(e) => handleTextFieldChange('value', e.target.value)} />
                 </Grid>
             </Grid>
@@ -135,4 +135,4 @@ const UserUserInfoCreateForm = ({user, createFunc, created}:props) => {
     ): null
 }
 
-export default UserUserInfoCreateForm
+export default AccountAccountInfoCreateForm

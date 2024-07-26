@@ -7,28 +7,28 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserUserInfoCreateForm from './userUserInfoCreateForm';
+import AcountAccountInfoCreateForm from './accountAccountInfoCreateForm';
 import AccountService from '../account/accountService';
-import UserUserInfoService from './userUserInfoService';
+import AcountAccountInfoService from './accountAccountInfoService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserInfoCreatePage = () => {
+const AccountAccountInfoCreatePage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
         if (accountId) {
             try {
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -45,8 +45,8 @@ const UserInfoCreatePage = () => {
 
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setInfoAndErrors({
@@ -64,7 +64,7 @@ const UserInfoCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Info Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Account Info Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,9 +76,9 @@ const UserInfoCreatePage = () => {
                     </Button>
                 </Grid>
 
-                <UserUserInfoCreateForm
-                    user={user}
-                    createFunc={UserUserInfoService.createAccountInfo}
+                <AcountAccountInfoCreateForm
+                    account={account}
+                    createFunc={AcountAccountInfoService.createAccountInfo}
                     created={onCreated} />
 
                 <Grid item xs={12}>
@@ -89,4 +89,4 @@ const UserInfoCreatePage = () => {
     )
 }
 
-export default UserInfoCreatePage
+export default AccountAccountInfoCreatePage

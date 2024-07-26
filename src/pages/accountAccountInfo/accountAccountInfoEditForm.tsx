@@ -5,19 +5,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserUserInfoService from './userUserInfoService';
+import AccountAccountInfoService from './accountAccountInfoService';
 import { IAccount, IAccountInfo, TAccountInfoType, accountInfoTypes } from '../../types/account';
 
 interface props {
-    user?: IAccount,
-    userInfoId?: string,
+    account?: IAccount,
+    accountInfoId?: string,
     updateFunc: (accountId:string, updateData:IAccountInfo) => Promise<{data:IAccountInfo}>,
-    updated?: (accountId:string|undefined, userInfo:IAccountInfo|undefined) => void
+    updated?: (accountId:string|undefined, accountInfo:IAccountInfo|undefined) => void
 }
 
-const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:props) => {
-    const [userInfo, setUserInfo] = useState<IAccountInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedUserInfo, setUpdatedUserInfo] = useState<IAccountInfo>({
+const AccountAccountInfoEditForm = ({account, accountInfoId, updateFunc, updated}:props) => {
+    const [accountInfo, setAccountInfo] = useState<IAccountInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedAccountInfo, setUpdatedAccountInfo] = useState<IAccountInfo>({
         key: '',
         value: '',
         type: accountInfoTypes[0] as TAccountInfoType
@@ -28,34 +28,34 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setUpdatedUserInfo({...updatedUserInfo, ...{[field]: value}})
+        setUpdatedAccountInfo({...updatedAccountInfo, ...{[field]: value}})
     }
 
     const handleTypeSelectionChange = (event: SelectChangeEvent) => {
         const type = event.target.value as TAccountInfoType
-        setUpdatedUserInfo({...updatedUserInfo, ...{type}})
+        setUpdatedAccountInfo({...updatedAccountInfo, ...{type}})
     }
 
     const onUpdate = async () => {
-        if (!userInfo) return
+        if (!accountInfo) return
 
         const updateData:IAccountInfo = {
-            _id: updatedUserInfo._id,
-            key: updatedUserInfo.key === userInfo.key? userInfo.key: updatedUserInfo.key,
-            value: updatedUserInfo.value === userInfo.value? userInfo.value: updatedUserInfo.value,
-            type: updatedUserInfo.type === userInfo.type? userInfo.type: updatedUserInfo.type
+            _id: updatedAccountInfo._id,
+            key: updatedAccountInfo.key === accountInfo.key? accountInfo.key: updatedAccountInfo.key,
+            value: updatedAccountInfo.value === accountInfo.value? accountInfo.value: updatedAccountInfo.value,
+            type: updatedAccountInfo.type === accountInfo.type? accountInfo.type: updatedAccountInfo.type
         }
         console.log('save update: ', updateData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await updateFunc(user._id, updateData)
+                const reqResp = await updateFunc(account._id, updateData)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(user?._id, reqResp?.data)
+                if (updated) updated(account?._id, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -69,15 +69,15 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.userInfos && userInfoId) {
-                const usrInf = UserUserInfoService.getUserInfoById(user, userInfoId)
-                setUserInfo(usrInf)
-                if (usrInf) {
-                    setUpdatedUserInfo(usrInf)
+            if (account && account.userInfos && accountInfoId) {
+                const accInf = AccountAccountInfoService.getAccountInfoById(account, accountInfoId)
+                setAccountInfo(accInf)
+                if (accInf) {
+                    setUpdatedAccountInfo(accInf)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Info does not exist on this user']}
+                        ...{errorMessages: ['Info does not exist on this account']}
                     })
                 }
             }
@@ -85,7 +85,7 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
 
         init()
 
-    }, [user, userInfoId])
+    }, [account, accountInfoId])
 
     const itemSx = {
         display: 'flex',
@@ -95,19 +95,19 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
     }
 
     const hasChanges = (() => {
-        if (!userInfo) return false
+        if (!accountInfo) return false
 
         return !(
-            userInfo.key !== updatedUserInfo.key ||
-            userInfo.value !== updatedUserInfo.value ||
-            userInfo.type !== updatedUserInfo.type
+            accountInfo.key !== updatedAccountInfo.key ||
+            accountInfo.value !== updatedAccountInfo.value ||
+            accountInfo.type !== updatedAccountInfo.type
         )
     })()
 
-    return user? (
+    return account? (
         <>
             {
-                userInfo? (
+                accountInfo? (
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
@@ -116,7 +116,7 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
                             <Grid item xs={8} md={9}>
                                 <Select
                                     fullWidth
-                                    value={updatedUserInfo?.type}
+                                    value={updatedAccountInfo?.type}
                                     onChange={handleTypeSelectionChange}>
                                     {
                                         accountInfoTypes.map((item, index) => (
@@ -133,7 +133,7 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedUserInfo?.key || ''}
+                                    defaultValue={updatedAccountInfo?.key || ''}
                                     onChange={(e) => handleTextFieldChange('key', e.target.value)} />
                             </Grid>
                         </Grid>
@@ -144,7 +144,7 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedUserInfo?.value || ''}
+                                    defaultValue={updatedAccountInfo?.value || ''}
                                     onChange={(e) => handleTextFieldChange('value', e.target.value)} />
                             </Grid>
                         </Grid>
@@ -166,7 +166,7 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
                 <Button
                     startIcon={<EditIcon />}
                     onClick={onUpdate}
-                    disabled={hasChanges || !userInfo}>
+                    disabled={hasChanges || !accountInfo}>
                     Update
                 </Button>
             </Grid>
@@ -174,4 +174,4 @@ const AccountContactInfoEditForm = ({user, userInfoId, updateFunc, updated}:prop
     ): null
 }
 
-export default AccountContactInfoEditForm
+export default AccountAccountInfoEditForm
