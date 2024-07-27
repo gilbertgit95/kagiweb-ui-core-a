@@ -7,10 +7,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserPasswordCreateForm from '../accountPassword/userPasswordCreateForm';
+import AccountPasswordCreateForm from '../accountPassword/accountPasswordCreateForm';
 import OwnerService from './ownerService';
 // import AccountService from '../user/accountService';
-// import UserPasswordService from './userPasswordService';
+// import AccountPasswordService from './accountPasswordService';
 
 const OwnerPasswordCreatePage = () => {
     const navigate = useNavigate()
@@ -66,7 +66,7 @@ const OwnerPasswordCreatePage = () => {
                     </Button>
                 </Grid>
 
-                <UserPasswordCreateForm
+                <AccountPasswordCreateForm
                     account={account}
                     createFunc={OwnerService.createPassword}
                     created={onCreated} />

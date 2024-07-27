@@ -3,15 +3,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import EditIcon from '@mui/icons-material/Edit';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import AccountPasswordCreateForm from './accountPasswordCreateForm';
 import AccountService from '../account/accountService';
-import UserPasswordsReadOnlyView from './userPasswordsReadOnlyView';
+import AccountPasswordService from './accountPasswordService';
 
-const UserPasswordsPage = () => {
+const AccountPasswordCreatePage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
@@ -19,6 +19,21 @@ const UserPasswordsPage = () => {
         errorMessages: [],
         infoMessages: []
     })
+
+    const onCreated = async () => {
+        if (accountId) {
+            try {
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
+
+            } catch (err:any) {
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
+    }
 
     useEffect(() => {
         const init = async () => {
@@ -43,10 +58,10 @@ const UserPasswordsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Passwords View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Password Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}
@@ -54,22 +69,11 @@ const UserPasswordsPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <Grid item xs={6} style={{alignContent: 'right'}}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                        <Button
-                            variant="text"
-                            startIcon={<EditIcon />}
-                            onClick={() => navigate(`/accounts/create/${ accountId }/passwords`)}>
-                            Change Password
-                        </Button>
-                    </Box>
-                </Grid>
 
-                <UserPasswordsReadOnlyView account={account} />
+                <AccountPasswordCreateForm
+                    account={account}
+                    createFunc={AccountPasswordService.createPassword}
+                    created={onCreated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -79,4 +83,4 @@ const UserPasswordsPage = () => {
     )
 }
 
-export default UserPasswordsPage
+export default AccountPasswordCreatePage

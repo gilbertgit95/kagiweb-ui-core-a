@@ -10,7 +10,7 @@ import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 // import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
-import UserPasswordsReadOnlyView from '../accountPassword/userPasswordsReadOnlyView';
+import AccountPasswordsReadOnlyView from '../accountPassword/accountPasswordsReadOnlyView';
 
 const OwnerPasswordsPage = () => {
     const navigate = useNavigate()
@@ -67,7 +67,7 @@ const OwnerPasswordsPage = () => {
                     </Box>
                 </Grid>
 
-                <UserPasswordsReadOnlyView account={account} />
+                <AccountPasswordsReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

@@ -11,7 +11,7 @@ interface props {
     created?: (accountId:string|undefined, password:IPassword|undefined) => void
 }
 
-const UserPasswordCreateForm = ({account, createFunc, created}:props) => {
+const AccountPasswordCreateForm = ({account, createFunc, created}:props) => {
     const [passInfo, setPassInfo] = useState<{currPassword:string, repeatPassword:string, newPassword:string}>({
         currPassword: '',
         repeatPassword: '',
@@ -129,4 +129,4 @@ const UserPasswordCreateForm = ({account, createFunc, created}:props) => {
     ): null
 }
 
-export default UserPasswordCreateForm
+export default AccountPasswordCreateForm

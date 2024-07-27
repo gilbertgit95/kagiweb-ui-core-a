@@ -19,7 +19,7 @@ interface IPasswordRow {
     updatedAt?: Date
 }
 
-const UserPasswordsReadOnlyView = ({account}:IProps) => {
+const AccountPasswordsReadOnlyView = ({account}:IProps) => {
     const [data, setData] = useState<IPasswordRow[]>([])
 
     useEffect(() => {
@@ -71,4 +71,4 @@ const UserPasswordsReadOnlyView = ({account}:IProps) => {
     )
 }
 
-export default UserPasswordsReadOnlyView
+export default AccountPasswordsReadOnlyView
