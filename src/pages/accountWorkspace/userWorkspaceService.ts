@@ -3,10 +3,10 @@ import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 import { IAccount, IWorkspace } from '../../types/account'
 
 class UserWorkspaceService {
-    public static getWorkspaceById(user:IAccount, workspaceId:string):IWorkspace|undefined {
+    public static getWorkspaceById(account: IAccount, workspaceId:string):IWorkspace|undefined {
 
-        if (user && user.workspaces) {
-            for (const workspace of user.workspaces) {
+        if (account && account.workspaces) {
+            for (const workspace of account.workspaces) {
                 if (workspace._id === workspaceId) return workspace
             }
         }

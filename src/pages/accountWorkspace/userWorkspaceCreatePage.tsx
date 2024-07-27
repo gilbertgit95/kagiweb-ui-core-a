@@ -22,13 +22,13 @@ const UserWorkspaceCreatePage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
         if (accountId) {
             try {
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -45,8 +45,8 @@ const UserWorkspaceCreatePage = () => {
 
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setInfoAndErrors({
@@ -64,7 +64,7 @@ const UserWorkspaceCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -77,7 +77,7 @@ const UserWorkspaceCreatePage = () => {
                 </Grid>
 
                 <UserWorkspaceCreateForm
-                    user={user}
+                    account={account}
                     createFunc={UserWorkspaceService.createWorkspace}
                     created={onCreated} />
 

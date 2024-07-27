@@ -7,26 +7,26 @@ import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     workspaceId?: string,
     userRefId?: string,
     getFunc: (accountId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceAccountRef & {username?:string} | null}>
 }
 
-const UserWorkspaceUserRefReadOnlyView = ({user, workspaceId, userRefId, getFunc}:props) => {
-    const [userRef, setUserRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+const UserWorkspaceUserRefReadOnlyView = ({account, workspaceId, userRefId, getFunc}:props) => {
+    const [userRef, setAccountRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.contactInfos && workspaceId) {
-                const usrRef = await getFunc(user._id || '', workspaceId, userRefId || '')
-                if (usrRef?.data) setUserRef(usrRef.data)
+            if (account && account.contactInfos && workspaceId) {
+                const usrRef = await getFunc(account._id || '', workspaceId, userRefId || '')
+                if (usrRef?.data) setAccountRef(usrRef.data)
             }
         }
 
         init()
 
-    }, [user, workspaceId, userRefId])
+    }, [account, workspaceId, userRefId])
 
     const colDef:IColDef[] = [
         {

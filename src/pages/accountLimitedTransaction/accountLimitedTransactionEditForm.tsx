@@ -5,17 +5,17 @@ import EditIcon from '@mui/icons-material/Edit';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserLimitedTransactionService from './userLimitedTransactionService';
+import AccountLimitedTransactionService from './accountLimitedTransactionService';
 import { IAccount, ILimitedTransaction, TLimitedTransactionType, limitedTransactionTypes } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     limitedTransactionId?: string,
     updateFunc: (accountId:string, updateData:ILimitedTransaction) => Promise<{data:ILimitedTransaction}>,
-    updated?: (accountId:string|undefined, userInfo:ILimitedTransaction|undefined) => void
+    updated?: (accountId:string|undefined, accountInfo:ILimitedTransaction|undefined) => void
 }
 
-const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc, updated}:props) => {
+const AccountLimitedTransactionEditForm = ({account, limitedTransactionId, updateFunc, updated}:props) => {
     const [limitedTransaction, setLimitedTansaction] = useState<ILimitedTransaction & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedLimitedTransaction, setUpdatedLimitedTransaction] = useState<ILimitedTransaction>({
         limit: 0,
@@ -62,14 +62,14 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
         console.log('save update: ', updateData)
 
         // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await updateFunc(user._id, updateData)
+                const reqResp = await updateFunc(account._id, updateData)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(user?._id, reqResp?.data)
+                if (updated) updated(account?._id, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -83,15 +83,15 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.limitedTransactions && limitedTransactionId) {
-                const lt = UserLimitedTransactionService.getLimitedTransactionById(user, limitedTransactionId)
+            if (account && account.limitedTransactions && limitedTransactionId) {
+                const lt = AccountLimitedTransactionService.getLimitedTransactionById(account, limitedTransactionId)
                 setLimitedTansaction(lt)
                 if (lt) {
                     setUpdatedLimitedTransaction(lt)
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['Limited transaction does not exist on this user']}
+                        ...{errorMessages: ['Limited transaction does not exist on this account']}
                     })
                 }
             }
@@ -99,7 +99,7 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
 
         init()
 
-    }, [user, limitedTransactionId])
+    }, [account, limitedTransactionId])
 
     const itemSx = {
         display: 'flex',
@@ -120,7 +120,7 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
         )
     })()
 
-    return user? (
+    return account? (
         <>
             {
                 limitedTransaction? (
@@ -225,4 +225,4 @@ const UserLimitedTransactionEditForm = ({user, limitedTransactionId, updateFunc,
     ): null
 }
 
-export default UserLimitedTransactionEditForm
+export default AccountLimitedTransactionEditForm

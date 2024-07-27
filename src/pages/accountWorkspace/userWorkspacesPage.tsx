@@ -14,7 +14,7 @@ import UserWorkspacesReadOnlyView from './userWorkspacesReadOnlyView';
 const UserWorkspacesPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -24,8 +24,8 @@ const UserWorkspacesPage = () => {
         const init = async () => {
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
                 } catch (err:any) {
                     console.log(err)
                     setInfoAndErrors({
@@ -42,7 +42,7 @@ const UserWorkspacesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspaces View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspaces View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -68,7 +68,7 @@ const UserWorkspacesPage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspacesReadOnlyView user={user} />
+                <UserWorkspacesReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

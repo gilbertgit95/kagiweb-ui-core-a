@@ -11,7 +11,7 @@ import { useAppSelector} from '../../stores/appStore';
 // import { IFeature } from '../../types/feature';
 
 interface IProp {
-    user:IAccount|undefined,
+    account: IAccount|undefined,
     onSelect?: (selected:string[]) => void,
 }
 
@@ -23,13 +23,13 @@ interface IRoleRow {
     absoluteAuthority: boolean
 }
 
-const UserRolesAddForm = ({user, onSelect}:IProp) => {
+const UserRolesAddForm = ({account, onSelect}:IProp) => {
     const roles:IRole[] = useAppSelector(state => state.appRefs.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
 
     useEffect(() => {
-        if (user?.rolesRefs) {
-            const userRoles:Set<string> = new Set(user?.rolesRefs.map(item => item.roleId))
+        if (account?.rolesRefs) {
+            const userRoles:Set<string> = new Set(account?.rolesRefs.map(item => item.roleId))
             const tarnsformedData:IRoleRow[] = roles
                 .filter(item => !userRoles.has(item._id || ''))
                 .map((item) => {
@@ -43,7 +43,7 @@ const UserRolesAddForm = ({user, onSelect}:IProp) => {
                 })
             setData(tarnsformedData)
         }
-    }, [user, roles])
+    }, [account, roles])
 
     const colDef:IColDef[] = [
         {

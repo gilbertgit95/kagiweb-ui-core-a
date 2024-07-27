@@ -22,13 +22,13 @@ const UserWorkspaceEditPage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
         if (accountId) {
             try {
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -45,8 +45,8 @@ const UserWorkspaceEditPage = () => {
 
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setInfoAndErrors({
@@ -64,7 +64,7 @@ const UserWorkspaceEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -77,7 +77,7 @@ const UserWorkspaceEditPage = () => {
                 </Grid>
 
                 <UserWorkspaceEditForm
-                    user={user}
+                    account={account}
                     workspaceId={workspaceId}
                     updateFunc={UserWorkspaceService.updateWorkspace}
                     updated={onUpdated} />

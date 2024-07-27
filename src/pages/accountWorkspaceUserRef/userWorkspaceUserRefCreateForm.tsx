@@ -6,7 +6,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     workspaceId?:string,
     createFunc: (
         accountId:string,
@@ -21,7 +21,7 @@ interface props {
     created?: (accountId:string|undefined, workspaceId:string, userRef:IWorkspaceAccountRef|undefined) => void
 }
 
-const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}:props) => {
+const UserWorkspaceUserRefCreateForm = ({account, workspaceId, createFunc, created}:props) => {
     const [userRef, setNewUserRef] = useState<IWorkspaceAccountRef & {username?: string}>({
         accountId: '',
         username: '',
@@ -46,7 +46,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
     }
 
     const onCreate = async () => {
-        if (!user) return
+        if (!account) return
 
         const newData:IWorkspaceAccountRef & {username?: string} = {
             accountId: '',
@@ -60,10 +60,10 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
         console.log('save update: ', newData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
                 const reqResp = await createFunc(
-                    user._id,
+                    account._id,
                     workspaceId || '',
                     userRef.username || '',
                     Boolean(userRef.readAccess),
@@ -72,7 +72,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
                     Boolean(userRef.deleteAccess),
                     Boolean(userRef.disabled)
                 )
-                if (created) created(user?._id, workspaceId || '', reqResp?.data)
+                if (created) created(account?._id, workspaceId || '', reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}
@@ -95,7 +95,7 @@ const UserWorkspaceUserRefCreateForm = ({user, workspaceId, createFunc, created}
         paddingLeft: '20px'
     }
 
-    return user? (
+    return account? (
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>

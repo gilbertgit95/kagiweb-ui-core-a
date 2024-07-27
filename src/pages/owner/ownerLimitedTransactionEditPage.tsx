@@ -7,10 +7,10 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserLimitedTransactionEditForm from '../accountLimitedTransaction/userLimitedTransactionEditForm';
+import AccountLimitedTransactionEditForm from '../accountLimitedTransaction/accountLimitedTransactionEditForm';
 // import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
-// import UserLimitedTransactionService from './userLimitedTransactionService';
+// import AccountLimitedTransactionService from './accountLimitedTransactionService';
 import { IAccount } from '../../types/account';
 import {
   useParams
@@ -23,12 +23,12 @@ const OwnerLimitedTransactionEditPage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
         try {
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
 
         } catch (err:any) {
             setInfoAndErrors({
@@ -42,8 +42,8 @@ const OwnerLimitedTransactionEditPage = () => {
         const init = async () => {
 
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -60,7 +60,7 @@ const OwnerLimitedTransactionEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Limited Transactions Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Limited Transactions Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -72,8 +72,8 @@ const OwnerLimitedTransactionEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserLimitedTransactionEditForm
-                    user={user}
+                <AccountLimitedTransactionEditForm
+                    account={account}
                     limitedTransactionId={limitedTransactionId}
                     updateFunc={OwnerService.updateLT}
                     updated={onUpdated} />

@@ -81,16 +81,16 @@ class AccountApi {
         })
     }
 
-    public static createAccountInfo(accountInfo:string, userInfo:IAccountInfo) {
+    public static createAccountInfo(accountId:string, accountInfo: IAccountInfo) {
         const data:IAccountInfo = {
-            'key': userInfo.key,
-            'value': userInfo.value,
-            'type': userInfo.type
+            'key': accountInfo.key,
+            'value': accountInfo.value,
+            'type': accountInfo.type
         }
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountInfo }/userInfos`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/userInfos`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })

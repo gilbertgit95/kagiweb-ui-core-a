@@ -13,7 +13,7 @@ import SimpleLink from '../../components/links/simpleLink';
 // import UserWorkspaceService from '../userWorkspace/userWorkspaceService';
 
 interface IProps {
-    user: IAccount | undefined,
+    account: IAccount | undefined,
     workspaceId: string | undefined,
     getFunc: (accountId:string, workspaceId:string) => Promise<{data: (IWorkspaceAccountRef & {username?:string})[]}>
 }
@@ -33,14 +33,14 @@ interface IWorkspaceUserRefRow {
     updatedAt?: Date
 }
 
-const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) => {
+const UserWorkspaceUserRefsReadOnlyView = ({account, workspaceId, getFunc}:IProps) => {
     // const navigate = useNavigate()
     const [data, setData] = useState<IWorkspaceUserRefRow[]>([])
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.workspaces && workspaceId) {
-                const userRefs = await getFunc(user._id || '', workspaceId)
+            if (account && account.workspaces && workspaceId) {
+                const userRefs = await getFunc(account._id || '', workspaceId)
                 const transformedData:IWorkspaceUserRefRow[] = userRefs?.data.map((item:IWorkspaceAccountRef & {username?:string, createdAt?: Date, updatedAt?: Date}) => {
                     return {
                         _id: item._id || '',
@@ -64,7 +64,7 @@ const UserWorkspaceUserRefsReadOnlyView = ({user, workspaceId, getFunc}:IProps) 
 
         init()
 
-    }, [user, workspaceId, getFunc])
+    }, [account, workspaceId, getFunc])
 
     const colDef:IColDef[] = [
         {

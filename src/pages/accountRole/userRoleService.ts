@@ -5,9 +5,9 @@ import { IAccount, IRoleRef } from '../../types/account'
 // import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class UserRoleService {
-    public static getActiveRoleRef(user:IAccount):IRoleRef|undefined {
-        if (user && user.rolesRefs) {
-            for (const ref of user.rolesRefs) {
+    public static getActiveRoleRef(account: IAccount):IRoleRef|undefined {
+        if (account && account.rolesRefs) {
+            for (const ref of account.rolesRefs) {
                 if (ref.isActive) return ref
             }
         }

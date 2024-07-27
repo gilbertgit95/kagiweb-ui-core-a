@@ -14,10 +14,10 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountContactInfoReadOnlyView from '../accountLimitedTransaction/userLimitedTransactionReadOnlyView';
+import AccountContactInfoReadOnlyView from '../accountLimitedTransaction/accountLimitedTransactionReadOnlyView';
 // import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
-// import UserLimitedTransactionService from './userLimitedTransactionService';
+// import AccountLimitedTransactionService from './accountLimitedTransactionService';
 import { IAccount } from '../../types/account';
 import {
   useParams
@@ -35,14 +35,14 @@ const OwnerLimitedTransactionPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     // const onDelete = async () => {
     //     if (limitedTransactionId) {
     //         try {
-    //             // await UserLimitedTransactionService.deleteContactInfo(accountId, limitedTransactionId)
-    //             // const userResp = await AccountService.getAccount(accountId)
-    //             // setUser(userResp.data)
+    //             // await AccountLimitedTransactionService.deleteContactInfo(accountId, limitedTransactionId)
+    //             // const accountResp = await AccountService.getAccount(accountId)
+    //             // setAccount(accountResp.data)
     //             setPageState({
     //                 disableEditButton: true,
     //                 disableDeleteButton: true,
@@ -67,8 +67,8 @@ const OwnerLimitedTransactionPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setPageState({
@@ -91,7 +91,7 @@ const OwnerLimitedTransactionPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Limited Transaction Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Limited Transaction Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -119,7 +119,7 @@ const OwnerLimitedTransactionPage = () => {
                 </Grid>
 
                 <AccountContactInfoReadOnlyView
-                    user={user}
+                    account={account}
                     limitedTransactionId={limitedTransactionId} />
 
                 <Grid item xs={12}>

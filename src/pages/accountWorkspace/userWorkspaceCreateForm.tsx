@@ -6,12 +6,12 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { IAccount, IWorkspace } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     createFunc: (accountId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
-    created?: (accountId:string|undefined, userInfo:IWorkspace|undefined) => void
+    created?: (accountId:string|undefined, accountInfo:IWorkspace|undefined) => void
 }
 
-const UserWorkspaceCreateForm = ({user, createFunc, created}:props) => {
+const UserWorkspaceCreateForm = ({account, createFunc, created}:props) => {
     const [newWorkspace, setNewWorkspace] = useState<IWorkspace>({
         name: '',
         description: '',
@@ -33,20 +33,20 @@ const UserWorkspaceCreateForm = ({user, createFunc, created}:props) => {
     }
 
     const onCreate = async () => {
-        if (!user) return
+        if (!account) return
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             console.log('description: ', JSON.stringify(newWorkspace))
             try {
                 const reqResp = await createFunc(
-                    user._id,
+                    account._id,
                     newWorkspace.name,
                     newWorkspace.description || '',
                     Boolean(newWorkspace.isActive),
                     Boolean(newWorkspace.disabled)
                 )
-                if (created) created(user?._id, reqResp?.data)
+                if (created) created(account?._id, reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}
@@ -69,7 +69,7 @@ const UserWorkspaceCreateForm = ({user, createFunc, created}:props) => {
         paddingLeft: '20px'
     }
 
-    return user? (
+    return account? (
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>

@@ -16,7 +16,7 @@ import UserWorkspaceUserRefsReadOnlyView from '../accountWorkspaceUserRef/userWo
 const OwnerWorkspaceUserRefsPage = () => {
     const { workspaceId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -25,8 +25,8 @@ const OwnerWorkspaceUserRefsPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
             } catch (err:any) {
                 console.log(err)
                 setInfoAndErrors({
@@ -42,7 +42,7 @@ const OwnerWorkspaceUserRefsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace User references View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Workspace User references View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -68,7 +68,7 @@ const OwnerWorkspaceUserRefsPage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspaceUserRefsReadOnlyView user={user} workspaceId={ workspaceId } getFunc={OwnerService.getWorkspaceAccountRefs} />
+                <UserWorkspaceUserRefsReadOnlyView account={account} workspaceId={ workspaceId } getFunc={OwnerService.getWorkspaceAccountRefs} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

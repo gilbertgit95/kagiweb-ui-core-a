@@ -4,11 +4,11 @@ import { IAccount, ILimitedTransaction } from '../../types/account'
 // import { IFeatureRef } from '../../types/role'
 // import { IPagination, IPageQuery } from '../../types/mixTypes'
 
-class UserLimitedTransactionService {
-    public static getLimitedTransactionById(user:IAccount, limitedTransactionId:string):ILimitedTransaction|undefined {
+class AccountLimitedTransactionService {
+    public static getLimitedTransactionById(account: IAccount, limitedTransactionId:string):ILimitedTransaction|undefined {
 
-        if (user && user.limitedTransactions) {
-            for (const lt of user.limitedTransactions) {
+        if (account && account.limitedTransactions) {
+            for (const lt of account.limitedTransactions) {
                 if (lt._id === limitedTransactionId) return lt
             }
         }
@@ -36,4 +36,4 @@ class UserLimitedTransactionService {
     // }
 }
 
-export default UserLimitedTransactionService
+export default AccountLimitedTransactionService

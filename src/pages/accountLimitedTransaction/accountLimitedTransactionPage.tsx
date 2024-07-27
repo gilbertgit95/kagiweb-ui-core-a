@@ -14,15 +14,15 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountContactInfoReadOnlyView from './userLimitedTransactionReadOnlyView';
+import AccountContactInfoReadOnlyView from './accountLimitedTransactionReadOnlyView';
 import AccountService from '../account/accountService';
-// import UserLimitedTransactionService from './userLimitedTransactionService';
+// import AccountLimitedTransactionService from './accountLimitedTransactionService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserLimitedTransactionPage = () => {
+const AccountLimitedTransactionPage = () => {
     const { accountId, limitedTransactionId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -34,14 +34,14 @@ const UserLimitedTransactionPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     // const onDelete = async () => {
     //     if (accountId && limitedTransactionId) {
     //         try {
-    //             // await UserLimitedTransactionService.deleteContactInfo(accountId, limitedTransactionId)
-    //             // const userResp = await AccountService.getAccount(accountId)
-    //             // setUser(userResp.data)
+    //             // await AccountLimitedTransactionService.deleteContactInfo(accountId, limitedTransactionId)
+    //             // const accountResp = await AccountService.getAccount(accountId)
+    //             // setAccount(accountResp.data)
     //             setPageState({
     //                 disableEditButton: true,
     //                 disableDeleteButton: true,
@@ -68,8 +68,8 @@ const UserLimitedTransactionPage = () => {
 
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -93,7 +93,7 @@ const UserLimitedTransactionPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Limited Transaction Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Limited Transaction Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -114,14 +114,14 @@ const UserLimitedTransactionPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ user?._id }/limitedTransactions/${ limitedTransactionId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }/limitedTransactions/${ limitedTransactionId }`)}>
                             Edit
                         </Button>
                     </Box>
                 </Grid>
 
                 <AccountContactInfoReadOnlyView
-                    user={user}
+                    account={account}
                     limitedTransactionId={limitedTransactionId} />
 
                 <Grid item xs={12}>
@@ -132,4 +132,4 @@ const UserLimitedTransactionPage = () => {
     )
 }
 
-export default UserLimitedTransactionPage
+export default AccountLimitedTransactionPage

@@ -8,7 +8,7 @@ import DateChanges from '../../components/dates/dateChanges';
 import { useAppSelector} from '../../stores/appStore';
 
 interface IProps {
-    user: IAccount | undefined
+    account: IAccount | undefined
 }
 
 interface IRoleRow {
@@ -22,17 +22,17 @@ interface IRoleRow {
     updatedAt?: Date
 }
 
-const UserRolesReadOnlyView = ({user}:IProps) => {
+const UserRolesReadOnlyView = ({account}:IProps) => {
     const roles = useAppSelector(state => state.appRefs.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
 
     useEffect(() => {
-        if (user && user.rolesRefs) {
+        if (account && account.rolesRefs) {
             const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
                 if (item && item._id) acc[item._id] = item
                 return acc
             }, {})
-            const tarnsformedData:IRoleRow[] = user.rolesRefs.map((item:IRoleRef & {createdAt?: Date, updatedAt?: Date}) => {
+            const tarnsformedData:IRoleRow[] = account.rolesRefs.map((item:IRoleRef & {createdAt?: Date, updatedAt?: Date}) => {
                 const role = rolesMap[item.roleId || '']
                 return {
                     _id: item._id || '',
@@ -49,7 +49,7 @@ const UserRolesReadOnlyView = ({user}:IProps) => {
             setData(tarnsformedData)
         }
             
-    }, [user, roles])
+    }, [account, roles])
 
     const colDef:IColDef[] = [
         {

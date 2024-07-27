@@ -23,12 +23,12 @@ const OwnerWorkspaceUserRefCreatePage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
         try {
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
 
         } catch (err:any) {
             setInfoAndErrors({
@@ -41,8 +41,8 @@ const OwnerWorkspaceUserRefCreatePage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -59,7 +59,7 @@ const OwnerWorkspaceUserRefCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace User Reference Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Workspace User Reference Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -72,7 +72,7 @@ const OwnerWorkspaceUserRefCreatePage = () => {
                 </Grid>
 
                 <UserWorkspaceUserRefCreateForm
-                    user={user}
+                    account={account}
                     workspaceId={workspaceId}
                     createFunc={OwnerService.createWorkspaceAccountRef}
                     created={onCreated} />

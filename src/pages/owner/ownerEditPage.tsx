@@ -13,9 +13,9 @@ const OwnerEditPage = () => {
     const dispatch = useAppDispatch()
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
 
-    const onUpdated = async (user:IAccount|undefined) => {
-        if (user) {
-            dispatch(setAccountData({accountData: user}))
+    const onUpdated = async (account: IAccount|undefined) => {
+        if (account) {
+            dispatch(setAccountData({accountData: account}))
         }
     }
 

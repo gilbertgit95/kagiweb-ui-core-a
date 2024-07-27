@@ -4,9 +4,9 @@ import { IAccount, IWorkspaceAccountRef } from '../../types/account'
 import UserWorkspaceService from '../accountWorkspace/userWorkspaceService'
 
 class AccountWorkspaceAccountRefService {
-    public static getWorkspaceAccountRefById(user:IAccount, workspaceId:string, accountRefId:string):IWorkspaceAccountRef|undefined {
+    public static getWorkspaceAccountRefById(account: IAccount, workspaceId:string, accountRefId:string):IWorkspaceAccountRef|undefined {
 
-        const workspace = UserWorkspaceService.getWorkspaceById(user, workspaceId)
+        const workspace = UserWorkspaceService.getWorkspaceById(account, workspaceId)
         if (workspace && workspace.userRefs) {
             for (const userRef of workspace.userRefs) {
                 if (userRef._id === accountRefId) return userRef

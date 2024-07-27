@@ -21,7 +21,7 @@ import { IRole } from '../../types/role';
 import UserRolesAddForm from './userRolesAddForm';
 
 interface IProps {
-    user:IAccount|undefined
+    account: IAccount|undefined
     // updateFunc: (accountId:string, updateData:{_id: string, isActive?:boolean, roleId?:string}) => Promise<{data:IRoleRef}>,
     activateFunc: (accountId:string, roleRefId:string) => Promise<{data:IRoleRef}>,
     createFunc: (accountId:string, roleId:string) => Promise<{data:IRoleRef}>,
@@ -38,7 +38,7 @@ interface IRoleRow {
     isActive: boolean
 }
 
-const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange}:IProps) => {
+const UserRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, onChange}:IProps) => {
     const roles = useAppSelector(state => state.appRefs?.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
     const [currActive, setCurrActive] = useState<string | undefined>()
@@ -56,13 +56,13 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
     })
 
     const activateAccountRole = async () => {
-        const sel:IRoleRef[] | undefined = user?.rolesRefs?.filter(item => item._id === tableSelection[0])
-        if (user?._id && sel) {
+        const sel:IRoleRef[] | undefined = account?.rolesRefs?.filter(item => item._id === tableSelection[0])
+        if (account?._id && sel) {
             const selRef = sel[0]
-            console.log('to activate: ', user?._id, sel)
+            console.log('to activate: ', account?._id, sel)
 
             try {
-                await activateFunc(user?._id, selRef?._id || '')
+                await activateFunc(account?._id, selRef?._id || '')
 
                 setInfoAndErrors({
                     ...{infoMessages: [`Successfully activated the selected role.`]},
@@ -94,7 +94,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
         // loop to all roles id and post call to api
         for (let roleId of addTableSelection) {
             try {
-                await createFunc(user?._id || '', roleId)
+                await createFunc(account?._id || '', roleId)
                 savedItems++
             } catch (err:any) {
                 error = err?.response?.data?.message || ''
@@ -128,7 +128,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
         // loop to all feature refs, then delete call to api
         for (let roleRef of tableSelection) {
             try {
-                await deleteFunc(user?._id || '', roleRef)
+                await deleteFunc(account?._id || '', roleRef)
                 savedItems++
             } catch (err:any) {
                 error = err?.response?.data?.message || ''
@@ -156,12 +156,12 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
     useEffect(() => {
         const init = async () => {
             try {
-                if (user && user.rolesRefs) {
+                if (account && account.rolesRefs) {
                     const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
                         if (item && item._id) acc[item._id] = item
                         return acc
                     }, {})
-                    const tarnsformedData:IRoleRow[] = user.rolesRefs.map((item) => {
+                    const tarnsformedData:IRoleRow[] = account.rolesRefs.map((item) => {
                         const role = rolesMap[item.roleId || '']
                         return {
                             _id: item._id || '',
@@ -173,7 +173,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
                         }
                     })
                     // console.log(tarnsformedData)
-                    setCurrActive(UserRoleService.getActiveRoleRef(user)?._id)
+                    setCurrActive(UserRoleService.getActiveRoleRef(account)?._id)
                     setData(tarnsformedData)
                 }
 
@@ -186,7 +186,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
         }
         console.log('initiate user roles edit page')
         init()
-    }, [user, roles])
+    }, [account, roles])
 
     const colDef:IColDef[] = [
         {
@@ -264,7 +264,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Are you sure you want to activate selected role for { user?.username }?
+                                Are you sure you want to activate selected role for { account?.username }?
                                 This will deactivate currect active role.
                             </DialogContentText>
                         </DialogContent>
@@ -281,7 +281,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
                         open={dialog.addDialogOpen}
                         onClose={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
                         <DialogTitle>
-                            Add roles to { user?.username } Role
+                            Add roles to { account?.username } Role
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
@@ -289,7 +289,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
                             </DialogContentText>
                             <UserRolesAddForm
                                 onSelect={(selectedData) => setAddTableSelection(selectedData)}
-                                user={user} />
+                                account={account} />
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
@@ -308,7 +308,7 @@ const UserRolesEditForm = ({user, activateFunc, createFunc, deleteFunc, onChange
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Are you sure you want to remove the selected role/s from { user?.username }?
+                                Are you sure you want to remove the selected role/s from { account?.username }?
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

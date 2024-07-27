@@ -22,7 +22,7 @@ import UserWorkspaceReadOnlyView from './userWorkspaceReadOnlyView';
 const UserWorkspacePage = () => {
     const { accountId, workspaceId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [pageState, setPageState] = useState({
         disableEditButton: false,
         disableDeleteButton: false,
@@ -37,8 +37,8 @@ const UserWorkspacePage = () => {
         if (accountId && workspaceId) {
             try {
                 await UserWorkspaceService.deleteWorkspace(accountId, workspaceId)
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
@@ -64,8 +64,8 @@ const UserWorkspacePage = () => {
         const init = async () => {
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
                 } catch (err:any) {
                     console.log(err)
                     setPageState({
@@ -87,7 +87,7 @@ const UserWorkspacePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -142,7 +142,7 @@ const UserWorkspacePage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspaceReadOnlyView user={user} workspaceId={ workspaceId } />
+                <UserWorkspaceReadOnlyView account={account} workspaceId={ workspaceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

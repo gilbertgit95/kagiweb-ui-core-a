@@ -8,7 +8,7 @@ import DateChanges from '../../components/dates/dateChanges';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
-    user: IAccount | undefined
+    account: IAccount | undefined
 }
 
 interface IPasswordRow {
@@ -19,12 +19,12 @@ interface IPasswordRow {
     updatedAt?: Date
 }
 
-const UserPasswordsReadOnlyView = ({user}:IProps) => {
+const UserPasswordsReadOnlyView = ({account}:IProps) => {
     const [data, setData] = useState<IPasswordRow[]>([])
 
     useEffect(() => {
-        if (user && user.passwords) {
-            const transformedData:IPasswordRow[] = user.passwords.map((item:IPassword & {createdAt?: Date, updatedAt?: Date}) => {
+        if (account && account.passwords) {
+            const transformedData:IPasswordRow[] = account.passwords.map((item:IPassword & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     isActive: Boolean(item.isActive),
@@ -37,7 +37,7 @@ const UserPasswordsReadOnlyView = ({user}:IProps) => {
             setData(transformedData.sort((a) => a.isActive? -1:1))
         }
 
-    }, [user])
+    }, [account])
 
     const colDef:IColDef[] = [
         {

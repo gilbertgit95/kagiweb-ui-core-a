@@ -12,7 +12,7 @@ import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
 
 interface IProps {
-    user: IAccount | undefined
+    account: IAccount | undefined
 }
 
 interface IWorkspaceRow {
@@ -26,12 +26,12 @@ interface IWorkspaceRow {
     updatedAt?: Date
 }
 
-const UserWorkspacesReadOnlyView = ({user}:IProps) => {
+const UserWorkspacesReadOnlyView = ({account}:IProps) => {
     const [data, setData] = useState<IWorkspaceRow[]>([])
 
     useEffect(() => {
-        if (user && user.workspaces) {
-            const transformedData:IWorkspaceRow[] = user.workspaces.map((item:IWorkspace & {createdAt?: Date, updatedAt?: Date}) => {
+        if (account && account.workspaces) {
+            const transformedData:IWorkspaceRow[] = account.workspaces.map((item:IWorkspace & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '--',
                     name: item.name,
@@ -47,7 +47,7 @@ const UserWorkspacesReadOnlyView = ({user}:IProps) => {
             setData(transformedData)
         }
 
-    }, [user])
+    }, [account])
 
     const colDef:IColDef[] = [
         {

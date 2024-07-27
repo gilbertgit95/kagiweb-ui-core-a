@@ -19,12 +19,12 @@ const OwnerWorkspaceCreatePage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onCreated = async () => {
         try {
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
 
         } catch (err:any) {
             setInfoAndErrors({
@@ -37,8 +37,8 @@ const OwnerWorkspaceCreatePage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -55,7 +55,7 @@ const OwnerWorkspaceCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Workspace Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -68,7 +68,7 @@ const OwnerWorkspaceCreatePage = () => {
                 </Grid>
 
                 <UserWorkspaceCreateForm
-                    user={user}
+                    account={account}
                     createFunc={OwnerService.createWorkspace}
                     created={onCreated} />
 

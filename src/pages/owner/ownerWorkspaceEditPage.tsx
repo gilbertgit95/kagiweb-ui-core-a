@@ -8,8 +8,6 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import UserWorkspaceEditForm from '../accountWorkspace/userWorkspaceEditForm';
-import AccountService from '../account/accountService';
-// import UserWorkspaceService from './userWorkspaceService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
@@ -23,12 +21,12 @@ const OwnerWorkspaceEditPage = () => {
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
         try {
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
 
         } catch (err:any) {
             setInfoAndErrors({
@@ -41,8 +39,8 @@ const OwnerWorkspaceEditPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -59,7 +57,7 @@ const OwnerWorkspaceEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Workspace Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -72,7 +70,7 @@ const OwnerWorkspaceEditPage = () => {
                 </Grid>
 
                 <UserWorkspaceEditForm
-                    user={user}
+                    account={account}
                     workspaceId={workspaceId}
                     updateFunc={OwnerService.updateWorkspace}
                     updated={onUpdated} />

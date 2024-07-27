@@ -12,7 +12,7 @@ import SimpleLink from '../../components/links/simpleLink';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
-    user: IAccount | undefined
+    account: IAccount | undefined
 }
 
 interface ILimitedTransactionRow {
@@ -29,13 +29,13 @@ interface ILimitedTransactionRow {
     updatedAt?: Date
 }
 
-const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
+const AccountLimitedTransactionsReadOnlyView = ({account}:IProps) => {
     // const navigate = useNavigate()
     const [data, setData] = useState<ILimitedTransactionRow[]>([])
 
     useEffect(() => {
-        if (user && user.limitedTransactions) {
-            const transformedData:ILimitedTransactionRow[] = user.limitedTransactions.map((item:ILimitedTransaction & {createdAt?: Date, updatedAt?: Date}) => {
+        if (account && account.limitedTransactions) {
+            const transformedData:ILimitedTransactionRow[] = account.limitedTransactions.map((item:ILimitedTransaction & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     limit: item.limit,
@@ -50,11 +50,10 @@ const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
                     updatedAt: item.updatedAt
                 }
             })
-            // console.log(transformedData)
             setData(transformedData)
         }
 
-    }, [user])
+    }, [account])
 
     const colDef:IColDef[] = [
         {
@@ -122,4 +121,4 @@ const UserLimitedTransactionsReadOnlyView = ({user}:IProps) => {
     )
 }
 
-export default UserLimitedTransactionsReadOnlyView
+export default AccountLimitedTransactionsReadOnlyView

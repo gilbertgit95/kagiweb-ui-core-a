@@ -34,14 +34,14 @@ const UserWorkspaceUserRefPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (accountId && workspaceId && userRefId) {
             try {
                 await UserWorkspaceUserRefService.deleteWorkspaceAccountRef(accountId, workspaceId, userRefId)
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
@@ -69,8 +69,8 @@ const UserWorkspaceUserRefPage = () => {
 
             if (accountId && workspaceId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -94,7 +94,7 @@ const UserWorkspaceUserRefPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace User reference Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Workspace User reference Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const UserWorkspaceUserRefPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ user?._id }/workspaces/${ workspaceId }/userRefs/${ userRefId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }/workspaces/${ workspaceId }/userRefs/${ userRefId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -150,7 +150,7 @@ const UserWorkspaceUserRefPage = () => {
                 </Grid>
 
                 <UserWorkspaceUserRefReadOnlyView
-                    user={user}
+                    account={account}
                     workspaceId={workspaceId}
                     userRefId={userRefId}
                     getFunc={UserWorkspaceUserRefService.getWorkspaceAccountRef} />

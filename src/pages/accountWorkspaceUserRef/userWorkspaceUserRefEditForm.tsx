@@ -7,7 +7,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     workspaceId?: string,
     userRefId?: string,
     getFunc: (accountId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceAccountRef & {username?:string} | null}>
@@ -24,8 +24,8 @@ interface props {
     updated?: (accountId:string|undefined, workspaceId: string, userRef:IWorkspaceAccountRef|undefined) => void
 }
 
-const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, getFunc, updateFunc, updated}:props) => {
-    const [userRef, setUserRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+const UserWorkspaceUserRefEditForm = ({account, workspaceId, userRefId, getFunc, updateFunc, updated}:props) => {
+    const [userRef, setAccountRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceAccountRef & {username?:string}>({
         accountId: '',
         readAccess: true,
@@ -52,10 +52,10 @@ const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, getFunc, up
         if (!userRef) return
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
                 const reqResp = await updateFunc(
-                    user._id,
+                    account._id,
                     workspaceId || '',
                     userRefId || '',
                     Boolean(updatedUserRef.readAccess),
@@ -68,7 +68,7 @@ const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, getFunc, up
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(user?._id, workspaceId || '', reqResp?.data)
+                if (updated) updated(account?._id, workspaceId || '', reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -82,10 +82,10 @@ const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, getFunc, up
 
     useEffect(() => {
         const init = async () => {
-            if (user && workspaceId && userRefId) {
-                const usrRef = await getFunc(user._id || '', workspaceId, userRefId || '')
+            if (account && workspaceId && userRefId) {
+                const usrRef = await getFunc(account._id || '', workspaceId, userRefId || '')
                 if (usrRef?.data) {
-                    setUserRef(usrRef.data)
+                    setAccountRef(usrRef.data)
                     setUpdatedUserRef(usrRef.data)
                 } else {
                     setInfoAndErrors({
@@ -98,7 +98,7 @@ const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, getFunc, up
 
         init()
 
-    }, [user, workspaceId, userRefId])
+    }, [account, workspaceId, userRefId])
 
     const itemSx = {
         display: 'flex',
@@ -119,7 +119,7 @@ const UserWorkspaceUserRefEditForm = ({user, workspaceId, userRefId, getFunc, up
         )
     })()
 
-    return user? (
+    return account? (
         <>
             {
                 userRef? (

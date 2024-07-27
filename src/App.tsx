@@ -68,9 +68,9 @@ import UserRolesEditPage from './pages/accountRole/userRolesEditPage';
 import UserPasswordsPage from './pages/accountPassword/userPasswordsPage';
 import UserPasswordCreatePage from './pages/accountPassword/userPasswordCreatePage';
 
-import UserLimitedTransactionsPage from './pages/accountLimitedTransaction/userLimitedTransactionsPage';
-import UserLimitedTransactionPage from './pages/accountLimitedTransaction/userLimitedTransactionPage';
-import UserLimitedTransactionEditPage from './pages/accountLimitedTransaction/userLimitedTransactionEditPage';
+import AccountLimitedTransactionsPage from './pages/accountLimitedTransaction/accountLimitedTransactionsPage';
+import AccountLimitedTransactionPage from './pages/accountLimitedTransaction/accountLimitedTransactionPage';
+import AccountLimitedTransactionEditPage from './pages/accountLimitedTransaction/accountLimitedTransactionEditPage';
 
 import AccountClientDevicesPage from './pages/accountClientDevice/accountClientDevicesPage';
 import AccountClientDevicePage from './pages/accountClientDevice/accountClientDevicePage';
@@ -175,9 +175,9 @@ appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/roles', page: UserRol
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/passwords', page: UserPasswordsPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/passwords', page: UserPasswordCreatePage })
 // user limited transactions
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/limitedTransactions', page: UserLimitedTransactionsPage })
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/limitedTransactions/:limitedTransactionId', page: UserLimitedTransactionPage })
-appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/limitedTransactions/:limitedTransactionId', page: UserLimitedTransactionEditPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/limitedTransactions', page: AccountLimitedTransactionsPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/limitedTransactions/:limitedTransactionId', page: AccountLimitedTransactionPage })
+appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/limitedTransactions/:limitedTransactionId', page: AccountLimitedTransactionEditPage })
 // user client devices
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/clientDevices', page: AccountClientDevicesPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/clientDevices', page: AccountClientDeviceCreatePage })

@@ -10,11 +10,11 @@ import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 // import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
-import UserLimitedTransactionsReadOnlyView from '../accountLimitedTransaction/userLimitedTransactionsReadOnlyView';
+import AccountLimitedTransactionsReadOnlyView from '../accountLimitedTransaction/accountLimitedTransactionsReadOnlyView';
 
 const OwnerLimitedTransactionsPage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -23,8 +23,8 @@ const OwnerLimitedTransactionsPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
             } catch (err:any) {
                 console.log(err)
                 setInfoAndErrors({
@@ -41,7 +41,7 @@ const OwnerLimitedTransactionsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Limited Transactions View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Limited Transactions View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -67,7 +67,7 @@ const OwnerLimitedTransactionsPage = () => {
                     </Box>
                 </Grid> */}
 
-                <UserLimitedTransactionsReadOnlyView user={user} />
+                <AccountLimitedTransactionsReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

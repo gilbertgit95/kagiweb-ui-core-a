@@ -14,7 +14,7 @@ import UserWorkspacesReadOnlyView from '../accountWorkspace/userWorkspacesReadOn
 
 const OwnerWorkspacesPage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -23,8 +23,8 @@ const OwnerWorkspacesPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
             } catch (err:any) {
                 console.log(err)
                 setInfoAndErrors({
@@ -40,7 +40,7 @@ const OwnerWorkspacesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspaces View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Workspaces View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -66,7 +66,7 @@ const OwnerWorkspacesPage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspacesReadOnlyView user={user} />
+                <UserWorkspacesReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

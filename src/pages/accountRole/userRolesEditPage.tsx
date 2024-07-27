@@ -14,7 +14,7 @@ import UserRolesEditForm from './userRolesEditForm';
 const UserRolesEditPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -23,8 +23,8 @@ const UserRolesEditPage = () => {
     const reLoadUser = async () => {
         if (accountId) {
             try {
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
             } catch (err:any) {
                 setInfoAndErrors({
                     ...{infoMessages: []},
@@ -38,8 +38,8 @@ const UserRolesEditPage = () => {
         const init = async () => {
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setInfoAndErrors({
@@ -57,7 +57,7 @@ const UserRolesEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Roles Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'User Roles Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -69,7 +69,7 @@ const UserRolesEditPage = () => {
                     </Button>
                 </Grid>
                 <UserRolesEditForm
-                    user={user}
+                    account={account}
                     activateFunc={UserRoleService.activateAccountRole}
                     createFunc={UserRoleService.createAccountRole}
                     deleteFunc={UserRoleService.deleteAccountRole}

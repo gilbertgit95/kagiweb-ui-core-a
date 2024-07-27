@@ -13,7 +13,7 @@ import UserWorkspaceService from './userWorkspaceService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
-    user?: IAccount
+    account?: IAccount
     workspaceId?: string
 }
 
@@ -23,17 +23,17 @@ interface IWorkspaceInfoRow {
 }
 interface IWorkspaceSubModuleData {module: string, moduleRoute: string, contents: number}
 
-const UserWorkspaceReadOnlyView = ({user, workspaceId}:IProps) => {
+const UserWorkspaceReadOnlyView = ({account, workspaceId}:IProps) => {
     const navigate = useNavigate()
     const [workspace, setWorkspace] = useState<IWorkspace & {createdAt?: Date, updatedAt?: Date} | undefined>(undefined)
 
     useEffect(() => {
-        if (user && user.workspaces && workspaceId) {
-            const cd = UserWorkspaceService.getWorkspaceById(user, workspaceId)
+        if (account && account.workspaces && workspaceId) {
+            const cd = UserWorkspaceService.getWorkspaceById(account, workspaceId)
             setWorkspace(cd)
         }
 
-    }, [user, workspaceId])
+    }, [account, workspaceId])
 
     const data:IWorkspaceInfoRow[] = [
         {

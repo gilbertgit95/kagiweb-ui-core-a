@@ -35,14 +35,14 @@ const OwnerWorkspaceUserRefPage = () => {
         disableDeleteButton: false,
         deleteDialogOpen: false
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
         if (workspaceId && userRefId) {
             try {
                 await OwnerService.deleteWorkspaceAccountRef('', workspaceId, userRefId)
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
                     disableDeleteButton: true,
@@ -69,8 +69,8 @@ const OwnerWorkspaceUserRefPage = () => {
 
             if (workspaceId) {
                 try {
-                    const userResp = await OwnerService.getOwner()
-                    setUser(userResp.data)
+                    const accountResp = await OwnerService.getOwner()
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -94,7 +94,7 @@ const OwnerWorkspaceUserRefPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace User reference Readonly View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Owner Workspace User reference Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -150,7 +150,7 @@ const OwnerWorkspaceUserRefPage = () => {
                 </Grid>
 
                 <UserWorkspaceUserRefReadOnlyView
-                    user={user}
+                    account={account}
                     workspaceId={workspaceId}
                     userRefId={userRefId}
                     getFunc={OwnerService.getWorkspaceAccountRef} />

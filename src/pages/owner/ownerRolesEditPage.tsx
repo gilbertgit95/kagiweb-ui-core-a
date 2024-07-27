@@ -13,7 +13,7 @@ import AppUtils from '../../utils/appUtils';
 
 const OwnerRolesEditPage = () => {
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -25,8 +25,8 @@ const OwnerRolesEditPage = () => {
             await AppUtils.loadSigninAccountData()
 
             // reload local owner state in this page
-            const userResp = await OwnerService.getOwner()
-            setUser(userResp.data)
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
         } catch (err:any) {
             setInfoAndErrors({
                 ...{infoMessages: []},
@@ -38,8 +38,8 @@ const OwnerRolesEditPage = () => {
     useEffect(() => {
         const init = async () => {
             try {
-                const userResp = await OwnerService.getOwner()
-                setUser(userResp.data)
+                const accountResp = await OwnerService.getOwner()
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -56,7 +56,7 @@ const OwnerRolesEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Roles Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'My Account Roles Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -68,7 +68,7 @@ const OwnerRolesEditPage = () => {
                     </Button>
                 </Grid>
                 <UserRolesEditForm
-                    user={user}
+                    account={account}
                     activateFunc={OwnerService.activateAccountRole}
                     createFunc={OwnerService.createAccountRole}
                     deleteFunc={OwnerService.deleteAccountRole}

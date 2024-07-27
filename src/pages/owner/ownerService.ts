@@ -19,8 +19,8 @@ class OwnerService {
         return OwnerApi.getOwner()
     }
 
-    public static updateOwner(user:IAccountUpdate):Promise<{data: IAccount}> {
-        return OwnerApi.updateOwner(user)
+    public static updateOwner(account: IAccountUpdate):Promise<{data: IAccount}> {
+        return OwnerApi.updateOwner(account)
     }
 
     public static reqOwnerCompleteInfo():Promise<{data: ISignedInUser}> {
@@ -28,16 +28,16 @@ class OwnerService {
     }
 
     // user info
-    public static updateAccountInfo(accountId:string, userInfo:IAccountInfo):Promise<{data: IAccountInfo}> {
-        return OwnerApi.updateAccountInfo(accountId, userInfo)
+    public static updateAccountInfo(accountId:string, accountInfo: IAccountInfo):Promise<{data: IAccountInfo}> {
+        return OwnerApi.updateAccountInfo(accountId, accountInfo)
     }
 
-    public static createAccountInfo(accountId:string, userInfo:IAccountInfo):Promise<{data: IAccountInfo}> {
-        return OwnerApi.createAccountInfo(accountId, userInfo)
+    public static createAccountInfo(accountId:string, accountInfo: IAccountInfo):Promise<{data: IAccountInfo}> {
+        return OwnerApi.createAccountInfo(accountId, accountInfo)
     }
 
-    public static deleteAccountInfo(accountId:string, userInfoId:string):Promise<{data: IAccountInfo}> {
-        return OwnerApi.deleteAccountInfo(accountId, userInfoId)
+    public static deleteAccountInfo(accountId:string, accountInfoId:string):Promise<{data: IAccountInfo}> {
+        return OwnerApi.deleteAccountInfo(accountId, accountInfoId)
     }
 
     // contact Info

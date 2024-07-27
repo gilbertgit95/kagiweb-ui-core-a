@@ -7,13 +7,13 @@ import UserWorkspaceService from './userWorkspaceService';
 import { IAccount, IWorkspace } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     workspaceId?: string,
     updateFunc: (accountId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
-    updated?: (accountId:string|undefined, userInfo:IWorkspace|undefined) => void
+    updated?: (accountId:string|undefined, accountInfo:IWorkspace|undefined) => void
 }
 
-const UserWorkspaceEditForm = ({user, workspaceId, updateFunc, updated}:props) => {
+const UserWorkspaceEditForm = ({account, workspaceId, updateFunc, updated}:props) => {
     const [workspace, setWorkspace] = useState<IWorkspace & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedWorkspace, setUpdatedWorkspace] = useState<IWorkspace>({
         name: '',
@@ -48,10 +48,10 @@ const UserWorkspaceEditForm = ({user, workspaceId, updateFunc, updated}:props) =
         console.log('save update: ', updateData)
 
         // // send update data to the api
-        if (user?._id && updatedWorkspace) {
+        if (account?._id && updatedWorkspace) {
             try {
                 const reqResp = await updateFunc(
-                    user._id,
+                    account._id,
                     workspaceId || '',
                     updatedWorkspace.name,
                     updatedWorkspace.description || '',
@@ -62,7 +62,7 @@ const UserWorkspaceEditForm = ({user, workspaceId, updateFunc, updated}:props) =
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(user?._id, reqResp?.data)
+                if (updated) updated(account?._id, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -76,8 +76,8 @@ const UserWorkspaceEditForm = ({user, workspaceId, updateFunc, updated}:props) =
 
     useEffect(() => {
         const init = async () => {
-            if (user && user.workspaces && workspaceId) {
-                const contactInf = UserWorkspaceService.getWorkspaceById(user, workspaceId)
+            if (account && account.workspaces && workspaceId) {
+                const contactInf = UserWorkspaceService.getWorkspaceById(account, workspaceId)
                 setWorkspace(contactInf)
                 if (contactInf) {
                     setUpdatedWorkspace(contactInf)
@@ -92,7 +92,7 @@ const UserWorkspaceEditForm = ({user, workspaceId, updateFunc, updated}:props) =
 
         init()
 
-    }, [user, workspaceId])
+    }, [account, workspaceId])
 
     const itemSx = {
         display: 'flex',
@@ -111,7 +111,7 @@ const UserWorkspaceEditForm = ({user, workspaceId, updateFunc, updated}:props) =
         )
     })()
 
-    return user? (
+    return account? (
         <>
             {
                 workspace? (

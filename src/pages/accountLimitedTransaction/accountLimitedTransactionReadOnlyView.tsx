@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment'
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import UserLimitedTransactionService from './userLimitedTransactionService';
+import AccountLimitedTransactionService from './accountLimitedTransactionService';
 import { IAccount, ILimitedTransaction } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     limitedTransactionId?: string
 }
 
-const AccountContactInfoReadOnlyView = ({user, limitedTransactionId}:props) => {
+const AccountLimitedTransactionReadOnlyView = ({account, limitedTransactionId}:props) => {
     const [limitedtransaction, setLimitedTransaction] = useState<ILimitedTransaction & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
-        if (user && user.limitedTransactions && limitedTransactionId) {
-            const lt = UserLimitedTransactionService.getLimitedTransactionById(user, limitedTransactionId)
+        if (account && account.limitedTransactions && limitedTransactionId) {
+            const lt = AccountLimitedTransactionService.getLimitedTransactionById(account, limitedTransactionId)
             setLimitedTransaction(lt)
         }
 
-    }, [user, limitedTransactionId])
+    }, [account, limitedTransactionId])
 
     const colDef:IColDef[] = [
         {
@@ -55,4 +55,4 @@ const AccountContactInfoReadOnlyView = ({user, limitedTransactionId}:props) => {
     ): null
 }
 
-export default AccountContactInfoReadOnlyView
+export default AccountLimitedTransactionReadOnlyView

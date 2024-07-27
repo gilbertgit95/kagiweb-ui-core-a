@@ -11,7 +11,7 @@ interface Props {
     accountId: string | undefined,
     getFunc: (accountId:string) => Promise<{data:IAccount}>,
     updateFunc: (updateData:IAccountUpdate) => Promise<{data:IAccount}>,
-    updated?: (user:IAccount|undefined) => void
+    updated?: (account: IAccount|undefined) => void
 }
 
 export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Props) => {

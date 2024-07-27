@@ -7,28 +7,28 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserLimitedTransactionEditForm from './userLimitedTransactionEditForm';
+import AccountLimitedTransactionEditForm from './accountLimitedTransactionEditForm';
 import AccountService from '../account/accountService';
-import UserLimitedTransactionService from './userLimitedTransactionService';
+import AccountLimitedTransactionService from './accountLimitedTransactionService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserLimitedTransactionEditPage = () => {
+const AccountLimitedTransactionEditPage = () => {
     const { accountId, limitedTransactionId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
 
     const onUpdated = async () => {
         if (accountId) {
             try {
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -45,8 +45,8 @@ const UserLimitedTransactionEditPage = () => {
 
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
 
                 } catch (err:any) {
                     setInfoAndErrors({
@@ -64,7 +64,7 @@ const UserLimitedTransactionEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Limited Transactions Update View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Limited Transactions Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,10 +76,10 @@ const UserLimitedTransactionEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserLimitedTransactionEditForm
-                    user={user}
+                <AccountLimitedTransactionEditForm
+                    account={account}
                     limitedTransactionId={limitedTransactionId}
-                    updateFunc={UserLimitedTransactionService.updateLT}
+                    updateFunc={AccountLimitedTransactionService.updateLT}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>
@@ -90,4 +90,4 @@ const UserLimitedTransactionEditPage = () => {
     )
 }
 
-export default UserLimitedTransactionEditPage
+export default AccountLimitedTransactionEditPage

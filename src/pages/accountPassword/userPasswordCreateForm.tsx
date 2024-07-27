@@ -6,12 +6,12 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { IAccount, IPassword } from '../../types/account';
 
 interface props {
-    user?: IAccount,
+    account?: IAccount,
     createFunc: (accountId:string, passInfo:{currPassword:string, newPassword:string}) => Promise<{data:IPassword}>,
     created?: (accountId:string|undefined, password:IPassword|undefined) => void
 }
 
-const UserPasswordCreateForm = ({user, createFunc, created}:props) => {
+const UserPasswordCreateForm = ({account, createFunc, created}:props) => {
     const [passInfo, setPassInfo] = useState<{currPassword:string, repeatPassword:string, newPassword:string}>({
         currPassword: '',
         repeatPassword: '',
@@ -27,7 +27,7 @@ const UserPasswordCreateForm = ({user, createFunc, created}:props) => {
     }
 
     const onCreate = async () => {
-        if (!user) return
+        if (!account) return
 
         const newData:{currPassword:string, newPassword:string} = {
             currPassword: passInfo.currPassword,
@@ -36,10 +36,10 @@ const UserPasswordCreateForm = ({user, createFunc, created}:props) => {
         console.log('save update: ', newData)
 
         // // send update data to the api
-        if (user?._id) {
+        if (account?._id) {
             try {
-                const reqResp = await createFunc(user._id, newData)
-                if (created) created(user?._id, reqResp?.data)
+                const reqResp = await createFunc(account._id, newData)
+                if (created) created(account?._id, reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}
@@ -68,7 +68,7 @@ const UserPasswordCreateForm = ({user, createFunc, created}:props) => {
         passInfo.newPassword === passInfo.repeatPassword
     )
 
-    return user? (
+    return account? (
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>

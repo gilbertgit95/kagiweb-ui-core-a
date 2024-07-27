@@ -14,7 +14,7 @@ import UserPasswordService from './userPasswordService';
 const UserPasswordCreatePage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
-    const [user, setUser] = useState<IAccount | undefined>()
+    const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -23,8 +23,8 @@ const UserPasswordCreatePage = () => {
     const onCreated = async () => {
         if (accountId) {
             try {
-                const userResp = await AccountService.getAccount(accountId)
-                setUser(userResp.data)
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
 
             } catch (err:any) {
                 setInfoAndErrors({
@@ -39,8 +39,8 @@ const UserPasswordCreatePage = () => {
         const init = async () => {
             if (accountId) {
                 try {
-                    const userResp = await AccountService.getAccount(accountId)
-                    setUser(userResp.data)
+                    const accountResp = await AccountService.getAccount(accountId)
+                    setAccount(accountResp.data)
                 } catch (err:any) {
                     console.log(err)
                     setInfoAndErrors({
@@ -58,7 +58,7 @@ const UserPasswordCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Password Create View'} subtitle={ user?.username } />
+                    <PrimaryHeader title={'Password Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -71,7 +71,7 @@ const UserPasswordCreatePage = () => {
                 </Grid>
 
                 <UserPasswordCreateForm
-                    user={user}
+                    account={account}
                     createFunc={UserPasswordService.createPassword}
                     created={onCreated} />
 
