@@ -58,16 +58,16 @@ class OwnerService {
         return OwnerApi.activateAccountRole(accountId, roleRefId)
     }
 
-    public static updateAccountRole(accountId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
-        return OwnerApi.updateAccountRole(accountId, UserRole)
+    public static updateAccountRole(accountId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
+        return OwnerApi.updateAccountRole(accountId, AccountRole)
     }
 
     public static createAccountRole(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
         return OwnerApi.createAccountRole(accountId, {roleId: roleRefId})
     }
 
-    public static deleteAccountRole(accountId:string, UserRoleId:string):Promise<{data: IRoleRef}> {
-        return OwnerApi.deleteAccountRole(accountId, UserRoleId)
+    public static deleteAccountRole(accountId:string, AccountRoleId:string):Promise<{data: IRoleRef}> {
+        return OwnerApi.deleteAccountRole(accountId, AccountRoleId)
     }
 
     // limited transaction

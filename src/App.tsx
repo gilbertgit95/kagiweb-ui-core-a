@@ -62,8 +62,8 @@ import AccountCreatePage from './pages/account/accountCreatePage';
 import AccountPage from './pages/account/accountPage';
 import AccountEditPage from './pages/account/accountEditPage';
 
-import UserRolesPage from './pages/accountRole/userRolesPage';
-import UserRolesEditPage from './pages/accountRole/userRolesEditPage';
+import AccountRolesPage from './pages/accountRole/accountRolesPage';
+import AccountRolesEditPage from './pages/accountRole/accountRolesEditPage';
 
 import AccountPasswordsPage from './pages/accountPassword/accountPasswordsPage';
 import AccountPasswordCreatePage from './pages/accountPassword/accountPasswordCreatePage';
@@ -169,8 +169,8 @@ appHandler.addPrivateRoute({url: 'accounts/create', page: AccountCreatePage })
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId', page: AccountPage })
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId', page: AccountEditPage })
 // user roles
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/roles', page: UserRolesPage })
-appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/roles', page: UserRolesEditPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/roles', page: AccountRolesPage })
+appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/roles', page: AccountRolesEditPage })
 // user passwords
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/passwords', page: AccountPasswordsPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/passwords', page: AccountPasswordCreatePage })

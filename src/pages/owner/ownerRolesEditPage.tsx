@@ -8,7 +8,7 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
-import UserRolesEditForm from '../accountRole/userRolesEditForm';
+import AccountRolesEditForm from '../accountRole/accountRolesEditForm';
 import AppUtils from '../../utils/appUtils';
 
 const OwnerRolesEditPage = () => {
@@ -67,7 +67,7 @@ const OwnerRolesEditPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <UserRolesEditForm
+                <AccountRolesEditForm
                     account={account}
                     activateFunc={OwnerService.activateAccountRole}
                     createFunc={OwnerService.createAccountRole}

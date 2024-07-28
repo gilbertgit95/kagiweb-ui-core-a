@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Container, Button, Box, Divider } from '@mui/material';
+import { Container, Button, Divider } from '@mui/material';
+
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import EditIcon from '@mui/icons-material/Edit';
-
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import UserRolesReadOnlyView from './userRolesReadOnlyView';
+import AccountRoleService from './accountRoleService';
+import { IAccount } from '../../types/account';
+import AccountRolesEditForm from './accountRolesEditForm';
 
-const UserRolesPage = () => {
+const AccountRolesEditPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
@@ -20,14 +20,28 @@ const UserRolesPage = () => {
         infoMessages: []
     })
 
+    const reLoadUser = async () => {
+        if (accountId) {
+            try {
+                const accountResp = await AccountService.getAccount(accountId)
+                setAccount(accountResp.data)
+            } catch (err:any) {
+                setInfoAndErrors({
+                    ...{infoMessages: []},
+                    ...{errorMessages: [err?.response?.data?.message || '']}
+                })
+            }
+        }
+    }
+
     useEffect(() => {
         const init = async () => {
             if (accountId) {
                 try {
                     const accountResp = await AccountService.getAccount(accountId)
                     setAccount(accountResp.data)
+
                 } catch (err:any) {
-                    console.log(err)
                     setInfoAndErrors({
                         ...{infoMessages: []},
                         ...{errorMessages: [err?.response?.data?.message || '']}
@@ -35,7 +49,7 @@ const UserRolesPage = () => {
                 }
             }
         }
-        console.log('initiate role features page')
+        console.log('initiate user roles edit page')
         init()
     }, [accountId])
 
@@ -43,7 +57,7 @@ const UserRolesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Roles View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'User Roles Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -54,23 +68,12 @@ const UserRolesPage = () => {
                         Back
                     </Button>
                 </Grid>
-                <Grid item xs={6} style={{alignContent: 'right'}}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                        <Button
-                            variant="text"
-                            startIcon={<EditIcon />}
-                            onClick={() => navigate(`/accounts/edit/${ accountId }/roles`)}>
-                            Edit
-                        </Button>
-                    </Box>
-                </Grid>
-
-                <UserRolesReadOnlyView account={account} />
-
+                <AccountRolesEditForm
+                    account={account}
+                    activateFunc={AccountRoleService.activateAccountRole}
+                    createFunc={AccountRoleService.createAccountRole}
+                    deleteFunc={AccountRoleService.deleteAccountRole}
+                    onChange={reLoadUser} />
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
                 </Grid>
@@ -79,4 +82,4 @@ const UserRolesPage = () => {
     )
 }
 
-export default UserRolesPage
+export default AccountRolesEditPage

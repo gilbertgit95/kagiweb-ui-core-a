@@ -22,7 +22,7 @@ interface IRoleRow {
     updatedAt?: Date
 }
 
-const UserRolesReadOnlyView = ({account}:IProps) => {
+const AccountRolesReadOnlyView = ({account}:IProps) => {
     const roles = useAppSelector(state => state.appRefs.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
 
@@ -100,4 +100,4 @@ const UserRolesReadOnlyView = ({account}:IProps) => {
     )
 }
 
-export default UserRolesReadOnlyView
+export default AccountRolesReadOnlyView

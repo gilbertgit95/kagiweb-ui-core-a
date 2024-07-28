@@ -4,7 +4,7 @@ import { IAccount, IRoleRef } from '../../types/account'
 // import { IFeatureRef } from '../../types/role'
 // import { IPagination, IPageQuery } from '../../types/mixTypes'
 
-class UserRoleService {
+class AccountRoleService {
     public static getActiveRoleRef(account: IAccount):IRoleRef|undefined {
         if (account && account.rolesRefs) {
             for (const ref of account.rolesRefs) {
@@ -15,8 +15,8 @@ class UserRoleService {
         return
     }
 
-    // public static getUserRoles(roleId:string|undefined):Promise<{data: IRoleRef[]}> {
-    //     return AccountApi.getUserRoles(roleId)
+    // public static getAccountRoles(roleId:string|undefined):Promise<{data: IRoleRef[]}> {
+    //     return AccountApi.getAccountRoles(roleId)
     // }
 
     // public static getAccountRole(id:string):Promise<{data: IRoleRef}> {
@@ -27,17 +27,17 @@ class UserRoleService {
         return AccountApi.activateAccountRole(accountId, roleRefId)
     }
 
-    public static updateAccountRole(accountId:string, UserRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
-        return AccountApi.updateAccountRole(accountId, UserRole)
+    public static updateAccountRole(accountId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
+        return AccountApi.updateAccountRole(accountId, AccountRole)
     }
 
     public static createAccountRole(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
         return AccountApi.createAccountRole(accountId, {roleId: roleRefId})
     }
 
-    public static deleteAccountRole(accountId:string, UserRoleId:string):Promise<{data: IRoleRef}> {
-        return AccountApi.deleteAccountRole(accountId, UserRoleId)
+    public static deleteAccountRole(accountId:string, AccountRoleId:string):Promise<{data: IRoleRef}> {
+        return AccountApi.deleteAccountRole(accountId, AccountRoleId)
     }
 }
 
-export default UserRoleService
+export default AccountRoleService

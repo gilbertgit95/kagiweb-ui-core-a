@@ -15,10 +15,10 @@ import Check from '../../components/indicators/check';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import { useAppSelector} from '../../stores/appStore';
-import UserRoleService from './userRoleService';
+import AccountRoleService from './accountRoleService';
 import { IAccount, IRoleRef } from '../../types/account';
 import { IRole } from '../../types/role';
-import UserRolesAddForm from './userRolesAddForm';
+import AccountRolesAddForm from './accountRolesAddForm';
 
 interface IProps {
     account: IAccount|undefined
@@ -38,7 +38,7 @@ interface IRoleRow {
     isActive: boolean
 }
 
-const UserRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, onChange}:IProps) => {
+const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, onChange}:IProps) => {
     const roles = useAppSelector(state => state.appRefs?.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
     const [currActive, setCurrActive] = useState<string | undefined>()
@@ -173,7 +173,7 @@ const UserRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, onCha
                         }
                     })
                     // console.log(tarnsformedData)
-                    setCurrActive(UserRoleService.getActiveRoleRef(account)?._id)
+                    setCurrActive(AccountRoleService.getActiveRoleRef(account)?._id)
                     setData(tarnsformedData)
                 }
 
@@ -287,7 +287,7 @@ const UserRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, onCha
                             <DialogContentText>
                                 Please Select roles to add
                             </DialogContentText>
-                            <UserRolesAddForm
+                            <AccountRolesAddForm
                                 onSelect={(selectedData) => setAddTableSelection(selectedData)}
                                 account={account} />
                         </DialogContent>
@@ -336,4 +336,4 @@ const UserRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, onCha
     )
 }
 
-export default UserRolesEditForm
+export default AccountRolesEditForm
