@@ -7,17 +7,17 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserWorkspaceUserRefCreateForm from '../accountWorkspaceUserRef/userWorkspaceUserRefCreateForm';
+import AccountWorkspaceAccountRefEditForm from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefEditForm';
 // import AccountService from '../user/accountService';
-// import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
+// import AccountWorkspaceAccountRefService from './accountWorkspaceAccountRefService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const OwnerWorkspaceUserRefCreatePage = () => {
-    const { workspaceId } = useParams()
+const OwnerWorkspaceAccountRefEditPage = () => {
+    const { workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -25,7 +25,7 @@ const OwnerWorkspaceUserRefCreatePage = () => {
     })
     const [account, setAccount] = useState<IAccount | undefined>()
 
-    const onCreated = async () => {
+    const onUpdated = async () => {
         try {
             const accountResp = await OwnerService.getOwner()
             setAccount(accountResp.data)
@@ -59,7 +59,7 @@ const OwnerWorkspaceUserRefCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace User Reference Create View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Owner Workspace User Reference Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -71,11 +71,13 @@ const OwnerWorkspaceUserRefCreatePage = () => {
                     </Button>
                 </Grid>
 
-                <UserWorkspaceUserRefCreateForm
+                <AccountWorkspaceAccountRefEditForm
                     account={account}
                     workspaceId={workspaceId}
-                    createFunc={OwnerService.createWorkspaceAccountRef}
-                    created={onCreated} />
+                    accountRefId={accountRefId}
+                    getFunc={OwnerService.getWorkspaceAccountRef}
+                    updateFunc={OwnerService.updateWorkspaceAccountRef}
+                    updated={onUpdated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -85,4 +87,4 @@ const OwnerWorkspaceUserRefCreatePage = () => {
     )
 }
 
-export default OwnerWorkspaceUserRefCreatePage
+export default OwnerWorkspaceAccountRefEditPage

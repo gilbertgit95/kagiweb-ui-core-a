@@ -26,7 +26,7 @@ interface IWorkspaceRow {
     updatedAt?: Date
 }
 
-const UserWorkspacesReadOnlyView = ({account}:IProps) => {
+const AccountWorkspacesReadOnlyView = ({account}:IProps) => {
     const [data, setData] = useState<IWorkspaceRow[]>([])
 
     useEffect(() => {
@@ -109,4 +109,4 @@ const UserWorkspacesReadOnlyView = ({account}:IProps) => {
     )
 }
 
-export default UserWorkspacesReadOnlyView
+export default AccountWorkspacesReadOnlyView

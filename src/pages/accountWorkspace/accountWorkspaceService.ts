@@ -2,7 +2,7 @@ import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 // import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import { IAccount, IWorkspace } from '../../types/account'
 
-class UserWorkspaceService {
+class AccountWorkspaceService {
     public static getWorkspaceById(account: IAccount, workspaceId:string):IWorkspace|undefined {
 
         if (account && account.workspaces) {
@@ -27,4 +27,4 @@ class UserWorkspaceService {
     }
 }
 
-export default UserWorkspaceService
+export default AccountWorkspaceService

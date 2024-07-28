@@ -1,12 +1,12 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 // import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import { IAccount, IWorkspaceAccountRef } from '../../types/account'
-import UserWorkspaceService from '../accountWorkspace/userWorkspaceService'
+import AccountWorkspaceService from '../accountWorkspace/accountWorkspaceService'
 
 class AccountWorkspaceAccountRefService {
     public static getWorkspaceAccountRefById(account: IAccount, workspaceId:string, accountRefId:string):IWorkspaceAccountRef|undefined {
 
-        const workspace = UserWorkspaceService.getWorkspaceById(account, workspaceId)
+        const workspace = AccountWorkspaceService.getWorkspaceById(account, workspaceId)
         if (workspace && workspace.userRefs) {
             for (const userRef of workspace.userRefs) {
                 if (userRef._id === accountRefId) return userRef

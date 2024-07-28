@@ -3,18 +3,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-// import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
-import UserWorkspaceUserRefsReadOnlyView from './userWorkspaceUserRefsReadOnlyView';
+import AccountWorkspacesReadOnlyView from './accountWorkspacesReadOnlyView';
 
-const UserWorkspaceUserRefsPage = () => {
-    const { accountId, workspaceId } = useParams()
+const AccountWorkspacesPage = () => {
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -44,7 +42,7 @@ const UserWorkspaceUserRefsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace User references View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'User Workspaces View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -64,16 +62,13 @@ const UserWorkspaceUserRefsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/accounts/create/${ accountId }/workspaces/${ workspaceId }/accountRefs`)}>
+                            onClick={() => navigate(`/accounts/create/${ accountId }/workspaces`)}>
                             Create
                         </Button>
                     </Box>
                 </Grid>
 
-                <UserWorkspaceUserRefsReadOnlyView
-                    account={account}
-                    workspaceId={ workspaceId }
-                    getFunc={UserWorkspaceUserRefService.getWorkspaceAccountRefs} />
+                <AccountWorkspacesReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -83,4 +78,4 @@ const UserWorkspaceUserRefsPage = () => {
     )
 }
 
-export default UserWorkspaceUserRefsPage
+export default AccountWorkspacesPage

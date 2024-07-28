@@ -21,7 +21,7 @@ interface props {
     created?: (accountId:string|undefined, workspaceId:string, userRef:IWorkspaceAccountRef|undefined) => void
 }
 
-const UserWorkspaceUserRefCreateForm = ({account, workspaceId, createFunc, created}:props) => {
+const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc, created}:props) => {
     const [userRef, setNewUserRef] = useState<IWorkspaceAccountRef & {username?: string}>({
         accountId: '',
         username: '',
@@ -181,4 +181,4 @@ const UserWorkspaceUserRefCreateForm = ({account, workspaceId, createFunc, creat
     ): null
 }
 
-export default UserWorkspaceUserRefCreateForm
+export default AccountWorkspaceAccountRefCreateForm

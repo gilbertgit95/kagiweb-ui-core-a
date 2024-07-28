@@ -7,16 +7,17 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserWorkspaceEditForm from './userWorkspaceEditForm';
-import AccountService from '../account/accountService';
-import UserWorkspaceService from './userWorkspaceService';
+import AccountWorkspaceAccountRefCreateForm from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefCreateForm';
+// import AccountService from '../user/accountService';
+// import AccountWorkspaceAccountRefService from './accountWorkspaceAccountRefService';
+import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserWorkspaceEditPage = () => {
-    const { accountId, workspaceId } = useParams()
+const OwnerWorkspaceAccountRefCreatePage = () => {
+    const { workspaceId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -24,10 +25,23 @@ const UserWorkspaceEditPage = () => {
     })
     const [account, setAccount] = useState<IAccount | undefined>()
 
-    const onUpdated = async () => {
-        if (accountId) {
+    const onCreated = async () => {
+        try {
+            const accountResp = await OwnerService.getOwner()
+            setAccount(accountResp.data)
+
+        } catch (err:any) {
+            setInfoAndErrors({
+                ...{infoMessages: []},
+                ...{errorMessages: [err?.response?.data?.message || '']}
+            })
+        }
+    }
+    
+    useEffect(() => {
+        const init = async () => {
             try {
-                const accountResp = await AccountService.getAccount(accountId)
+                const accountResp = await OwnerService.getOwner()
                 setAccount(accountResp.data)
 
             } catch (err:any) {
@@ -37,34 +51,15 @@ const UserWorkspaceEditPage = () => {
                 })
             }
         }
-    }
-    
-    useEffect(() => {
-        const init = async () => {
-            console.log('View: ', accountId)
-
-            if (accountId) {
-                try {
-                    const accountResp = await AccountService.getAccount(accountId)
-                    setAccount(accountResp.data)
-
-                } catch (err:any) {
-                    setInfoAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: [err?.response?.data?.message || '']}
-                    })
-                }
-            }
-        }
 
         init()
-    }, [accountId])
+    }, [])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace Update View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Owner Workspace User Reference Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,11 +71,11 @@ const UserWorkspaceEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserWorkspaceEditForm
+                <AccountWorkspaceAccountRefCreateForm
                     account={account}
                     workspaceId={workspaceId}
-                    updateFunc={UserWorkspaceService.updateWorkspace}
-                    updated={onUpdated} />
+                    createFunc={OwnerService.createWorkspaceAccountRef}
+                    created={onCreated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -90,4 +85,4 @@ const UserWorkspaceEditPage = () => {
     )
 }
 
-export default UserWorkspaceEditPage
+export default OwnerWorkspaceAccountRefCreatePage

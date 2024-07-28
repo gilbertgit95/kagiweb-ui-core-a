@@ -16,9 +16,9 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 // import AccountService from '../user/accountService';
-// import UserWorkspaceService from './userWorkspaceService';
+// import AccountWorkspaceService from './accountWorkspaceService';
 import OwnerService from './ownerService';
-import UserWorkspaceReadOnlyView from '../accountWorkspace/userWorkspaceReadOnlyView';
+import AccountWorkspaceReadOnlyView from '../accountWorkspace/accountWorkspaceReadOnlyView';
 
 const OwnerWorkspacePage = () => {
     const { workspaceId } = useParams()
@@ -141,7 +141,7 @@ const OwnerWorkspacePage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspaceReadOnlyView account={account} workspaceId={ workspaceId } />
+                <AccountWorkspaceReadOnlyView account={account} workspaceId={ workspaceId } />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

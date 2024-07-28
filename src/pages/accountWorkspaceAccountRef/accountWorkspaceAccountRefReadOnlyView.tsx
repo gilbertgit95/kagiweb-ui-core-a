@@ -2,31 +2,31 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment'
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
+import AccountWorkspaceAccountRefService from './accountWorkspaceAccountRefService';
 import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     account?: IAccount,
     workspaceId?: string,
-    userRefId?: string,
-    getFunc: (accountId:string, workspaceId:string, userRefId: string) => Promise<{data: IWorkspaceAccountRef & {username?:string} | null}>
+    accountRefId?: string,
+    getFunc: (accountId:string, workspaceId:string, accountRefId: string) => Promise<{data: IWorkspaceAccountRef & {username?:string} | null}>
 }
 
-const UserWorkspaceUserRefReadOnlyView = ({account, workspaceId, userRefId, getFunc}:props) => {
+const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRefId, getFunc}:props) => {
     const [userRef, setAccountRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         const init = async () => {
             if (account && account.contactInfos && workspaceId) {
-                const usrRef = await getFunc(account._id || '', workspaceId, userRefId || '')
+                const usrRef = await getFunc(account._id || '', workspaceId, accountRefId || '')
                 if (usrRef?.data) setAccountRef(usrRef.data)
             }
         }
 
         init()
 
-    }, [account, workspaceId, userRefId])
+    }, [account, workspaceId, accountRefId])
 
     const colDef:IColDef[] = [
         {
@@ -63,4 +63,4 @@ const UserWorkspaceUserRefReadOnlyView = ({account, workspaceId, userRefId, getF
     ): null
 }
 
-export default UserWorkspaceUserRefReadOnlyView
+export default AccountWorkspaceAccountRefReadOnlyView

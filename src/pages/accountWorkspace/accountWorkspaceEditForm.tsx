@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import UserWorkspaceService from './userWorkspaceService';
+import AccountWorkspaceService from './accountWorkspaceService';
 import { IAccount, IWorkspace } from '../../types/account';
 
 interface props {
@@ -13,7 +13,7 @@ interface props {
     updated?: (accountId:string|undefined, accountInfo:IWorkspace|undefined) => void
 }
 
-const UserWorkspaceEditForm = ({account, workspaceId, updateFunc, updated}:props) => {
+const AccountWorkspaceEditForm = ({account, workspaceId, updateFunc, updated}:props) => {
     const [workspace, setWorkspace] = useState<IWorkspace & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedWorkspace, setUpdatedWorkspace] = useState<IWorkspace>({
         name: '',
@@ -77,7 +77,7 @@ const UserWorkspaceEditForm = ({account, workspaceId, updateFunc, updated}:props
     useEffect(() => {
         const init = async () => {
             if (account && account.workspaces && workspaceId) {
-                const contactInf = UserWorkspaceService.getWorkspaceById(account, workspaceId)
+                const contactInf = AccountWorkspaceService.getWorkspaceById(account, workspaceId)
                 setWorkspace(contactInf)
                 if (contactInf) {
                     setUpdatedWorkspace(contactInf)
@@ -174,4 +174,4 @@ const UserWorkspaceEditForm = ({account, workspaceId, updateFunc, updated}:props
     ): null
 }
 
-export default UserWorkspaceEditForm
+export default AccountWorkspaceEditForm

@@ -14,16 +14,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserWorkspaceUserRefReadOnlyView from './userWorkspaceUserRefReadOnlyView';
-import AccountService from '../account/accountService';
-import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
+import AccountWorkspaceAccountRefReadOnlyView from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefReadOnlyView';
+// import AccountService from '../user/accountService';
+// import AccountWorkspaceAccountRefService from './accountWorkspaceAccountRefService';
+import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserWorkspaceUserRefPage = () => {
-    const { accountId, workspaceId, userRefId } = useParams()
+const OwnerWorkspaceAccountRefPage = () => {
+    const { workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,10 +38,10 @@ const UserWorkspaceUserRefPage = () => {
     const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
-        if (accountId && workspaceId && userRefId) {
+        if (workspaceId && accountRefId) {
             try {
-                await UserWorkspaceUserRefService.deleteWorkspaceAccountRef(accountId, workspaceId, userRefId)
-                const accountResp = await AccountService.getAccount(accountId)
+                await OwnerService.deleteWorkspaceAccountRef('', workspaceId, accountRefId)
+                const accountResp = await OwnerService.getOwner()
                 setAccount(accountResp.data)
                 setPageState({
                     disableEditButton: true,
@@ -65,11 +66,10 @@ const UserWorkspaceUserRefPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', accountId, workspaceId)
 
-            if (accountId && workspaceId) {
+            if (workspaceId) {
                 try {
-                    const accountResp = await AccountService.getAccount(accountId)
+                    const accountResp = await OwnerService.getOwner()
                     setAccount(accountResp.data)
 
                 } catch (err:any) {
@@ -88,13 +88,13 @@ const UserWorkspaceUserRefPage = () => {
         }
 
         init()
-    }, [accountId, workspaceId])
+    }, [workspaceId])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace User reference Readonly View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Owner Workspace User reference Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const UserWorkspaceUserRefPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ account?._id }/workspaces/${ workspaceId }/userRefs/${ userRefId }`)}>
+                            onClick={() => navigate(`/owner/edit/workspaces/${ workspaceId }/accountRefs/${ accountRefId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -149,11 +149,11 @@ const UserWorkspaceUserRefPage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspaceUserRefReadOnlyView
+                <AccountWorkspaceAccountRefReadOnlyView
                     account={account}
                     workspaceId={workspaceId}
-                    userRefId={userRefId}
-                    getFunc={UserWorkspaceUserRefService.getWorkspaceAccountRef} />
+                    accountRefId={accountRefId}
+                    getFunc={OwnerService.getWorkspaceAccountRef} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -163,4 +163,4 @@ const UserWorkspaceUserRefPage = () => {
     )
 }
 
-export default UserWorkspaceUserRefPage
+export default OwnerWorkspaceAccountRefPage

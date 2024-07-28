@@ -92,15 +92,15 @@ import AccountAccountInfoPage from './pages/accountAccountInfo/accountAccountInf
 import AccountAccountInfoEditPage from './pages/accountAccountInfo/accountAccountInfoEditPage';
 import AccountAccountInfoCreatePage from './pages/accountAccountInfo/accountAccountInfoCreatePage';
 
-import UserWorkspacesPage from './pages/accountWorkspace/userWorkspacesPage';
-import UserWorkspacePage from './pages/accountWorkspace/userWorkspacePage';
-import UserWorkspaceCreatePage from './pages/accountWorkspace/userWorkspaceCreatePage';
-import UserWorkspaceEditPage from './pages/accountWorkspace/userWorkspaceEditPage';
+import AccountWorkspacesPage from './pages/accountWorkspace/accountWorkspacesPage';
+import AccountWorkspacePage from './pages/accountWorkspace/accountWorkspacePage';
+import AccountWorkspaceCreatePage from './pages/accountWorkspace/accountWorkspaceCreatePage';
+import AccountWorkspaceEditPage from './pages/accountWorkspace/accountWorkspaceEditPage';
 
-import UserWorkspaceUserRefsPage from './pages/accountWorkspaceUserRef/userWorkspaceUserRefsPage';
-import UserWorkspaceUserRefPage from './pages/accountWorkspaceUserRef/userWorkspaceUserRefPage';
-import UserWorkspaceUserRefCreatePage from './pages/accountWorkspaceUserRef/userWorkspaceUserRefCreatePage';
-import UserWorkspaceUserRefEditPage from './pages/accountWorkspaceUserRef/userWorkspaceUserRefEditPage';
+import AccountWorkspaceAccountRefsPage from './pages/accountWorkspaceAccountRef/accountWorkspaceAccountRefsPage';
+import AccountWorkspaceAccountRefPage from './pages/accountWorkspaceAccountRef/accountWorkspaceAccountRefPage';
+import AccountWorkspaceAccountRefCreatePage from './pages/accountWorkspaceAccountRef/accountWorkspaceAccountRefCreatePage';
+import AccountWorkspaceAccountRefEditPage from './pages/accountWorkspaceAccountRef/accountWorkspaceAccountRefEditPage';
 
 
 import OwnerPage from './pages/owner/ownerPage';
@@ -132,10 +132,10 @@ import OwnerWorkspacesPage from './pages/owner/ownerWorkspacesPage';
 import OwnerWorkspacePage from './pages/owner/ownerWorkspacePage';
 import OwnerWorkspaceCreatePage from './pages/owner/ownerWorkspaceCreatePage';
 import OwnerWorkspaceEditPage from './pages/owner/ownerWorkspaceEditPage';
-import OwnerWorkspaceUserRefsPage from './pages/owner/ownerWorkspaceUserRefsPage';
-import OwnerWorkspaceUserRefPage from './pages/owner/ownerWorkspaceUserRefPage';
-import OwnerWorkspaceUserRefCreatePage from './pages/owner/ownerWorkspaceUserRefCreatePage';
-import OwnerWorkspaceUserRefEditPage from './pages/owner/ownerWorkspaceUserRefEditPage';
+import OwnerWorkspaceAccountRefsPage from './pages/owner/ownerWorkspaceAccountRefsPage';
+import OwnerWorkspaceAccountRefPage from './pages/owner/ownerWorkspaceAccountRefPage';
+import OwnerWorkspaceAccountRefCreatePage from './pages/owner/ownerWorkspaceAccountRefCreatePage';
+import OwnerWorkspaceAccountRefEditPage from './pages/owner/ownerWorkspaceAccountRefEditPage';
 
 // register routes
 //  for public routes
@@ -199,15 +199,15 @@ appHandler.addPrivateRoute({url: 'accounts/view/:accountId/accountInfos/:account
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/accountInfos/:accountInfoId', page: AccountAccountInfoEditPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/accountInfos', page: AccountAccountInfoCreatePage })
 // user workspaces
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces', page: UserWorkspacesPage })
-appHandler.addPrivateRoute({url: 'accounts/create/:accountId/workspaces', page: UserWorkspaceCreatePage })
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId', page: UserWorkspacePage })
-appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/workspaces/:workspaceId', page: UserWorkspaceEditPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces', page: AccountWorkspacesPage })
+appHandler.addPrivateRoute({url: 'accounts/create/:accountId/workspaces', page: AccountWorkspaceCreatePage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId', page: AccountWorkspacePage })
+appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/workspaces/:workspaceId', page: AccountWorkspaceEditPage })
 // user workspace userRefs
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId/accountRefs', page: UserWorkspaceUserRefsPage })
-appHandler.addPrivateRoute({url: 'accounts/create/:accountId/workspaces/:workspaceId/accountRefs', page: UserWorkspaceUserRefCreatePage })
-appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId/accountRefs/:accountRefId', page: UserWorkspaceUserRefPage })
-appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/workspaces/:workspaceId/accountRefs/:accountRefId', page: UserWorkspaceUserRefEditPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId/accountRefs', page: AccountWorkspaceAccountRefsPage })
+appHandler.addPrivateRoute({url: 'accounts/create/:accountId/workspaces/:workspaceId/accountRefs', page: AccountWorkspaceAccountRefCreatePage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId/accountRefs/:accountRefId', page: AccountWorkspaceAccountRefPage })
+appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/workspaces/:workspaceId/accountRefs/:accountRefId', page: AccountWorkspaceAccountRefEditPage })
 
 // owner pages
 appHandler.addPrivateRoute({url: 'owner/view', page: OwnerPage })
@@ -248,10 +248,10 @@ appHandler.addPrivateRoute({url: 'owner/create/workspaces', page: OwnerWorkspace
 appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId', page: OwnerWorkspacePage })
 appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId', page: OwnerWorkspaceEditPage })
 // owner workspace userRefs
-appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs', page: OwnerWorkspaceUserRefsPage })
-appHandler.addPrivateRoute({url: 'owner/create/workspaces/:workspaceId/accountRefs', page: OwnerWorkspaceUserRefCreatePage })
-appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceUserRefPage })
-appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceUserRefEditPage })
+appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs', page: OwnerWorkspaceAccountRefsPage })
+appHandler.addPrivateRoute({url: 'owner/create/workspaces/:workspaceId/accountRefs', page: OwnerWorkspaceAccountRefCreatePage })
+appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceAccountRefPage })
+appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceAccountRefEditPage })
 
 // workspace data
 appHandler.addPrivateRoute({url: 'workspaces/view/:workspaceId', page: WorkspaceHomePage })

@@ -9,7 +9,7 @@ import { IAccount, IWorkspace } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 // import Check from '../../components/indicators/check';
-import UserWorkspaceService from './userWorkspaceService';
+import AccountWorkspaceService from './accountWorkspaceService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IProps {
@@ -23,13 +23,13 @@ interface IWorkspaceInfoRow {
 }
 interface IWorkspaceSubModuleData {module: string, moduleRoute: string, contents: number}
 
-const UserWorkspaceReadOnlyView = ({account, workspaceId}:IProps) => {
+const AccountWorkspaceReadOnlyView = ({account, workspaceId}:IProps) => {
     const navigate = useNavigate()
     const [workspace, setWorkspace] = useState<IWorkspace & {createdAt?: Date, updatedAt?: Date} | undefined>(undefined)
 
     useEffect(() => {
         if (account && account.workspaces && workspaceId) {
-            const cd = UserWorkspaceService.getWorkspaceById(account, workspaceId)
+            const cd = AccountWorkspaceService.getWorkspaceById(account, workspaceId)
             setWorkspace(cd)
         }
 
@@ -124,4 +124,4 @@ const UserWorkspaceReadOnlyView = ({account, workspaceId}:IProps) => {
     )
 }
 
-export default UserWorkspaceReadOnlyView
+export default AccountWorkspaceReadOnlyView

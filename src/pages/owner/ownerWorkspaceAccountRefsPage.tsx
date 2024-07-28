@@ -11,9 +11,9 @@ import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 // import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
-import UserWorkspaceUserRefsReadOnlyView from '../accountWorkspaceUserRef/userWorkspaceUserRefsReadOnlyView';
+import AccountWorkspaceAccountRefsReadOnlyView from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefsReadOnlyView';
 
-const OwnerWorkspaceUserRefsPage = () => {
+const OwnerWorkspaceAccountRefsPage = () => {
     const { workspaceId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
@@ -62,13 +62,13 @@ const OwnerWorkspaceUserRefsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/owner/create/workspaces/${ workspaceId }/userRefs`)}>
+                            onClick={() => navigate(`/owner/create/workspaces/${ workspaceId }/accountRefs`)}>
                             Create
                         </Button>
                     </Box>
                 </Grid>
 
-                <UserWorkspaceUserRefsReadOnlyView account={account} workspaceId={ workspaceId } getFunc={OwnerService.getWorkspaceAccountRefs} />
+                <AccountWorkspaceAccountRefsReadOnlyView account={account} workspaceId={ workspaceId } getFunc={OwnerService.getWorkspaceAccountRefs} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -78,4 +78,4 @@ const OwnerWorkspaceUserRefsPage = () => {
     )
 }
 
-export default OwnerWorkspaceUserRefsPage
+export default OwnerWorkspaceAccountRefsPage

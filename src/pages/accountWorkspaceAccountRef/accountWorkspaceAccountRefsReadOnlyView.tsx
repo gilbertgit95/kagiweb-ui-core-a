@@ -9,8 +9,8 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
-// import UserWorkspaceUserRefService from '../userWorkspaceUserRef/userWorkspaceUserRefService';
-// import UserWorkspaceService from '../userWorkspace/userWorkspaceService';
+// import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
+// import AccountWorkspaceService from '../accountWorkspace/accountWorkspaceService';
 
 interface IProps {
     account: IAccount | undefined,
@@ -18,7 +18,7 @@ interface IProps {
     getFunc: (accountId:string, workspaceId:string) => Promise<{data: (IWorkspaceAccountRef & {username?:string})[]}>
 }
 
-interface IWorkspaceUserRefRow {
+interface IWorkspaceAccountRefRow {
     _id: string,
     accountId: string,
     username: string,
@@ -33,15 +33,15 @@ interface IWorkspaceUserRefRow {
     updatedAt?: Date
 }
 
-const UserWorkspaceUserRefsReadOnlyView = ({account, workspaceId, getFunc}:IProps) => {
+const AccountWorkspaceAccountRefsReadOnlyView = ({account, workspaceId, getFunc}:IProps) => {
     // const navigate = useNavigate()
-    const [data, setData] = useState<IWorkspaceUserRefRow[]>([])
+    const [data, setData] = useState<IWorkspaceAccountRefRow[]>([])
 
     useEffect(() => {
         const init = async () => {
             if (account && account.workspaces && workspaceId) {
                 const userRefs = await getFunc(account._id || '', workspaceId)
-                const transformedData:IWorkspaceUserRefRow[] = userRefs?.data.map((item:IWorkspaceAccountRef & {username?:string, createdAt?: Date, updatedAt?: Date}) => {
+                const transformedData:IWorkspaceAccountRefRow[] = userRefs?.data.map((item:IWorkspaceAccountRef & {username?:string, createdAt?: Date, updatedAt?: Date}) => {
                     return {
                         _id: item._id || '',
                         accountId: item.accountId,
@@ -74,63 +74,63 @@ const UserWorkspaceUserRefsReadOnlyView = ({account, workspaceId, getFunc}:IProp
         {
             header: 'Read',
             field: 'readAccess',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return <Check value={props.readAccess} />
             }
         },
         {
             header: 'Update',
             field: 'updateAccess',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return <Check value={props.updateAccess} />
             }
         },
         {
             header: 'Create',
             field: 'createAccess',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return <Check value={props.createAccess} />
             }
         },
         {
             header: 'Delete',
             field: 'deleteAccess',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return <Check value={props.deleteAccess} />
             }
         },
         {
             header: 'Accepted',
             field: 'accepted',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return <Check value={props.accepted} />
             }
         },
         {
             header: 'Declined',
             field: 'declined',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return <Check value={props.declined} />
             }
         },
         {
             header: 'Changed',
             field: '_id',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return <DateChanges {...props} />
             }
         },
         {
             header: 'Disabled',
             field: 'disabled',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return <Check value={props.disabled} />
             }
         },
         {
             header: '',
             field: '_id',
-            Component: (props:IWorkspaceUserRefRow) => {
+            Component: (props:IWorkspaceAccountRefRow) => {
                 return (
                     <SimpleLink
                         link={`${ props._id }`}
@@ -150,4 +150,4 @@ const UserWorkspaceUserRefsReadOnlyView = ({account, workspaceId, getFunc}:IProp
     )
 }
 
-export default UserWorkspaceUserRefsReadOnlyView
+export default AccountWorkspaceAccountRefsReadOnlyView

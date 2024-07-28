@@ -7,16 +7,16 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserWorkspaceUserRefEditForm from './userWorkspaceUserRefEditForm';
+import AccountWorkspaceCreateForm from './accountWorkspaceCreateForm';
 import AccountService from '../account/accountService';
-import UserWorkspaceUserRefService from './userWorkspaceUserRefService';
+import AccountWorkspaceService from './accountWorkspaceService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const UserWorkspaceUserRefEditPage = () => {
-    const { accountId, workspaceId, userRefId } = useParams()
+const AccountWorkspaceCreatePage = () => {
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -24,7 +24,7 @@ const UserWorkspaceUserRefEditPage = () => {
     })
     const [account, setAccount] = useState<IAccount | undefined>()
 
-    const onUpdated = async () => {
+    const onCreated = async () => {
         if (accountId) {
             try {
                 const accountResp = await AccountService.getAccount(accountId)
@@ -64,7 +64,7 @@ const UserWorkspaceUserRefEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace User Reference Update View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'User Workspace Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -76,13 +76,10 @@ const UserWorkspaceUserRefEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserWorkspaceUserRefEditForm
+                <AccountWorkspaceCreateForm
                     account={account}
-                    workspaceId={workspaceId}
-                    userRefId={userRefId}
-                    getFunc={UserWorkspaceUserRefService.getWorkspaceAccountRef}
-                    updateFunc={UserWorkspaceUserRefService.updateWorkspaceAccountRef}
-                    updated={onUpdated} />
+                    createFunc={AccountWorkspaceService.createWorkspace}
+                    created={onCreated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -92,4 +89,4 @@ const UserWorkspaceUserRefEditPage = () => {
     )
 }
 
-export default UserWorkspaceUserRefEditPage
+export default AccountWorkspaceCreatePage

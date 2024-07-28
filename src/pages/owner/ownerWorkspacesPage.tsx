@@ -10,7 +10,7 @@ import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 // import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
-import UserWorkspacesReadOnlyView from '../accountWorkspace/userWorkspacesReadOnlyView';
+import AccountWorkspacesReadOnlyView from '../accountWorkspace/accountWorkspacesReadOnlyView';
 
 const OwnerWorkspacesPage = () => {
     const navigate = useNavigate()
@@ -66,7 +66,7 @@ const OwnerWorkspacesPage = () => {
                     </Box>
                 </Grid>
 
-                <UserWorkspacesReadOnlyView account={account} />
+                <AccountWorkspacesReadOnlyView account={account} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

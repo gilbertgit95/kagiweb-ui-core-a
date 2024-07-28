@@ -7,7 +7,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import UserWorkspaceEditForm from '../accountWorkspace/userWorkspaceEditForm';
+import AccountWorkspaceEditForm from '../accountWorkspace/accountWorkspaceEditForm';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
@@ -69,7 +69,7 @@ const OwnerWorkspaceEditPage = () => {
                     </Button>
                 </Grid>
 
-                <UserWorkspaceEditForm
+                <AccountWorkspaceEditForm
                     account={account}
                     workspaceId={workspaceId}
                     updateFunc={OwnerService.updateWorkspace}
