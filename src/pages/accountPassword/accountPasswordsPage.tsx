@@ -43,7 +43,7 @@ const AccountPasswordsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Passwords View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Account Passwords View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

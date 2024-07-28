@@ -64,7 +64,7 @@ class AccountApi {
     }
 
 
-    // user info
+    // account info
     public static updateAccountInfo(accountId:string, accountInfo:IAccountInfo) {
         const data:IAccountInfo = {
             '_id': accountInfo._id,
@@ -140,7 +140,7 @@ class AccountApi {
         })
     }
 
-    // user roles
+    // account roles
     public static activateAccountRole(accountId:string, roleRefId:string) {
         return apiHelper.privateReq({
             method: 'PUT',
@@ -281,7 +281,7 @@ class AccountApi {
         })
     }
 
-    // user password
+    // account password
     public static createAccountPassword(accountId:string, passInfo: {currPassword:string, newPassword:string}) {
         const data:{accountId:string, currentPassword:string, newPassword:string} = {
             'accountId': accountId,
@@ -345,7 +345,7 @@ class AccountApi {
         })
     }
 
-    // workspace user references
+    // workspace account references
     public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string) {
         return apiHelper.privateReq({
             method: 'GET',

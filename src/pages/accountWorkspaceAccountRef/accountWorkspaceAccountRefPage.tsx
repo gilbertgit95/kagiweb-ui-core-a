@@ -48,7 +48,7 @@ const AccountWorkspaceAccountRefPage = () => {
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this user reference']},
+                    ...{infoMessages: ['Sucessfully deleted this account reference']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -94,7 +94,7 @@ const AccountWorkspaceAccountRefPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace User reference Readonly View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Account Workspace Account reference Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -134,7 +134,7 @@ const AccountWorkspaceAccountRefPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this user reference?
+                                    Are you sure you want to delete this account reference?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>

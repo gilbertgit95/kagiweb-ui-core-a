@@ -141,7 +141,7 @@ const NavCustomEl = () => {
                                 )
                             })
                         }
-                        {/* default user actions */}
+                        {/* default account actions */}
                         { customLinks?.length? <Typography color="primary" sx={{margin: '10px'}}>Default Actions</Typography>: null }
                         <MenuItem onClick={() => handleLinkClick('/owner/edit/roles')}>
                             <ListItemIcon>

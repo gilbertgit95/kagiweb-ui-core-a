@@ -21,7 +21,7 @@ const OwnerRolesEditPage = () => {
 
     const reLoadUser = async () => {
         try {
-            // reload signedin user state
+            // reload signedin account state
             await AppUtils.loadSigninAccountData()
 
             // reload local owner state in this page
@@ -48,7 +48,7 @@ const OwnerRolesEditPage = () => {
                 })
             }
         }
-        console.log('initiate user roles edit page')
+        console.log('initiate account roles edit page')
         init()
     }, [])
 

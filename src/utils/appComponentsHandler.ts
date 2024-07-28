@@ -120,17 +120,17 @@ class AppComponentsHandler {
             return acc
         }, []))
 
-        // prepare and sync private user drawer
+        // prepare and sync private account drawer
         features.push(...this.userDrawer.privateUserDrawers.reduce<IFeature[]>((acc, item) => {
             acc = [
                 ...acc,
                 ...item.links?.map(item => {
                     return {
-                        description: 'One of the ui private user drawer nav',
-                        name: `PRIVATE USER NAV - ${ item.label }`,
+                        description: 'One of the ui private account drawer nav',
+                        name: `PRIVATE ACCOUNT NAV - ${ item.label }`,
                         tags: [],
                         type: 'ui-main-drawer' as TFeatureType,
-                        value: `PRIVATE USER NAV - ${ item.label }`
+                        value: `PRIVATE ACCOUNT NAV - ${ item.label }`
                     }
                 }) || []
             ]

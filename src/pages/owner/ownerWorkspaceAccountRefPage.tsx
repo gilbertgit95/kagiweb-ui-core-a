@@ -49,7 +49,7 @@ const OwnerWorkspaceAccountRefPage = () => {
                     deleteDialogOpen: false
                 })
                 setInfoAndErrors({
-                    ...{infoMessages: ['Sucessfully deleted this user reference']},
+                    ...{infoMessages: ['Sucessfully deleted this account reference']},
                     ...{errorMessages: []}
                 })
             } catch (err:any) {
@@ -134,7 +134,7 @@ const OwnerWorkspaceAccountRefPage = () => {
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    Are you sure you want to delete this user reference?
+                                    Are you sure you want to delete this account reference?
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>

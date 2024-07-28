@@ -44,7 +44,7 @@ const AccountWorkspaceAccountRefsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Workspace User references View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Account Workspace Account references View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

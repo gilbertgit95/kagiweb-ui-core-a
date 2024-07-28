@@ -184,7 +184,7 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
                 })
             }
         }
-        console.log('initiate user roles edit page')
+        console.log('initiate account roles edit page')
         init()
     }, [account, roles])
 

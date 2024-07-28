@@ -27,7 +27,7 @@ class OwnerService {
         return OwnerApi.getOwnerCompleteInfo()
     }
 
-    // user info
+    // account info
     public static updateAccountInfo(accountId:string, accountInfo: IAccountInfo):Promise<{data: IAccountInfo}> {
         return OwnerApi.updateAccountInfo(accountId, accountInfo)
     }
@@ -130,7 +130,7 @@ class OwnerService {
         return OwnerApi.deleteWorkspace(accountId, clientDeviceId)
     }
 
-    // workspace user refs
+    // workspace account refs
     public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef & {username?:string} | null}> {
         return OwnerApi.getWorkspaceAccountRef(
             accountId,

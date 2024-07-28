@@ -34,7 +34,7 @@ class OwnerApi {
         })
     }
 
-    // user info
+    // account info
     public static updateAccountInfo(accountId:string, accountInfo:IAccountInfo) {
         const data:IAccountInfo = {
             '_id': accountInfo._id,
@@ -307,7 +307,7 @@ class OwnerApi {
         })
     }
 
-    // workspace user references
+    // workspace account references
     public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string) {
         return apiHelper.privateReq({
             method: 'GET',

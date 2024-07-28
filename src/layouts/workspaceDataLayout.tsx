@@ -58,7 +58,7 @@ const WorkspaceDataLayout = (props:Props) => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                    {/* <PrimaryHeader title={'User Roles Update View'} subtitle={ 'test' } />
+                    {/* <PrimaryHeader title={'Account Roles Update View'} subtitle={ 'test' } />
                     <Divider /> */}
                     <DropDownSearch
                         ariaLabel="Search Select Workspace"

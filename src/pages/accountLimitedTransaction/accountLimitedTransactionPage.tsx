@@ -48,7 +48,7 @@ const AccountLimitedTransactionPage = () => {
     //                 deleteDialogOpen: false
     //             })
     //             setInfoAndErrors({
-    //                 ...{infoMessages: ['Sucessfully deleted this user info']},
+    //                 ...{infoMessages: ['Sucessfully deleted this account info']},
     //                 ...{errorMessages: []}
     //             })
     //         } catch (err:any) {

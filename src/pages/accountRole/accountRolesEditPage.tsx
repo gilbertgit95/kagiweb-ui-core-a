@@ -49,7 +49,7 @@ const AccountRolesEditPage = () => {
                 }
             }
         }
-        console.log('initiate user roles edit page')
+        console.log('initiate account roles edit page')
         init()
     }, [accountId])
 
@@ -57,7 +57,7 @@ const AccountRolesEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'User Roles Update View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Account Roles Update View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
