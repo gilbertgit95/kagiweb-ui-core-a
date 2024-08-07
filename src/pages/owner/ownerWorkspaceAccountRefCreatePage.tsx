@@ -59,7 +59,7 @@ const OwnerWorkspaceAccountRefCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace User Reference Create View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Owner Workspace Account Reference Create View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

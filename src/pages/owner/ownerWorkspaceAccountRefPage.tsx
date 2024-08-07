@@ -94,7 +94,7 @@ const OwnerWorkspaceAccountRefPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace User reference Readonly View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Owner Workspace Account Reference Readonly View'} subtitle={ account?.username } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

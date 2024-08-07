@@ -17,6 +17,7 @@ import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
 import CssBaseline from '@mui/material/CssBaseline';
 import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
 import { useAppDispatch, useAppSelector} from './stores/appStore';
+import { setAppRefs } from './stores/appRefsSlice';
 import appUtils from './utils/appUtils';
 
 import '@fontsource/roboto/300.css';
@@ -339,6 +340,15 @@ function App() {
       apiHelper.useToken(authToken)
       // set document title
       document.title = appHandler.appConfig.AppName
+
+      // sytem theme change event
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', (event) => {
+            const sysTheme = event.matches ? 'dark' : 'light'
+            dispatch(setAppRefs({appTheme: sysTheme}))
+            // console.log('changed!', sysTheme)
+        })
 
       try {
         await appUtils.loadSigninAccountData()

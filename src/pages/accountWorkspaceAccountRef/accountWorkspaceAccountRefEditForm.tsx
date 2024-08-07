@@ -90,7 +90,7 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
                 } else {
                     setInfoAndErrors({
                         ...{infoMessages: []},
-                        ...{errorMessages: ['User reference does not exist on this user']}
+                        ...{errorMessages: ['Account Reference does not exist on this user']}
                     })
                 }
             }

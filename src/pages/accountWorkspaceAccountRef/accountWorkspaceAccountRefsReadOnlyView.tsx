@@ -134,7 +134,7 @@ const AccountWorkspaceAccountRefsReadOnlyView = ({account, workspaceId, getFunc}
                 return (
                     <SimpleLink
                         link={`${ props._id }`}
-                        text="View User Ref" />
+                        text="View Account Ref" />
                 )
             }
         }

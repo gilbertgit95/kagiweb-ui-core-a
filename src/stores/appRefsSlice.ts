@@ -8,9 +8,11 @@ import { IRole } from "../types/role";
 import appComponentsHandler from '../utils/appComponentsHandler'
 
 export type TAppTheme = 'light' | 'dark'
+export const appThemes:TAppTheme[] = ['light' , 'dark']
 
+const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches? 'dark': 'light';
 const savedTheme = localStorage.getItem(appComponentsHandler.appConfig.AppThemeKey) || undefined;
-const theme = savedTheme && savedTheme === 'light'? 'light': 'dark';
+const theme = (savedTheme && (new Set<string>(appThemes)).has(savedTheme))? savedTheme: systemTheme;
 
 export interface IAppRefs {
     appTheme: TAppTheme,
@@ -25,7 +27,7 @@ export interface IOptAppRefs {
 }
 
 const initialState:IAppRefs = {
-    appTheme: theme,
+    appTheme: theme as TAppTheme,
     roles: undefined,
     features: undefined
 }
