@@ -347,6 +347,7 @@ function App() {
         .addEventListener('change', (event) => {
             const sysTheme = event.matches ? 'dark' : 'light'
             dispatch(setAppRefs({appTheme: sysTheme}))
+            localStorage.setItem(appHandler.appConfig.AppThemeKey, sysTheme)
             // console.log('changed!', sysTheme)
         })
 
