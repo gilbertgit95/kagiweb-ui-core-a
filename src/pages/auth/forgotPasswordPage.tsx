@@ -33,21 +33,21 @@ const ForgotPassword = () => {
     // const token = useAppSelector(state => state.signedInAccount.token)
     // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
     const [searchParams] = useSearchParams();
-    const usernameUrlQuery = searchParams.get('username') || '';
+    const nameIdUrlQuery = searchParams.get('nameId') || '';
 
-    // console.log('username: ', username)
+    // console.log('nameId: ', nameId)
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
         console.log({
-          username: data.get('username'),
+          nameId: data.get('nameId'),
         })
 
         try {
             const signinOTPResp = await AuthService.forgotPassword(
-                data.get('username')?.toString()
+                data.get('nameId')?.toString()
             )
 
             console.log('signinOTPResp: ', signinOTPResp)
@@ -60,8 +60,8 @@ const ForgotPassword = () => {
             })
 
             await TimeUtils.doNothingFor(5)
-            // window.location.replace('/resetPassword?username=' + data.get('username')?.toString())
-            navigate('/resetPassword?username=' + data.get('username')?.toString())
+            // window.location.replace('/resetPassword?nameId=' + data.get('nameId')?.toString())
+            navigate('/resetPassword?nameId=' + data.get('nameId')?.toString())
         } catch (err:any) {
             setInfoAndErrors({
                 ...infoAndErrors,
@@ -89,11 +89,11 @@ const ForgotPassword = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        defaultValue={usernameUrlQuery}
-                        autoComplete="username"
+                        id="nameId"
+                        label="NameID"
+                        name="nameId"
+                        defaultValue={nameIdUrlQuery}
+                        autoComplete="nameId"
                         autoFocus />
                     <ResponseStatus {...infoAndErrors} />
                     <LoadingButton

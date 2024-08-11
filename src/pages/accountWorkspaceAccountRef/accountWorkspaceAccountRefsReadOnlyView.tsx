@@ -15,13 +15,13 @@ import SimpleLink from '../../components/links/simpleLink';
 interface IProps {
     account: IAccount | undefined,
     workspaceId: string | undefined,
-    getFunc: (accountId:string, workspaceId:string) => Promise<{data: (IWorkspaceAccountRef & {username?:string})[]}>
+    getFunc: (accountId:string, workspaceId:string) => Promise<{data: (IWorkspaceAccountRef & {nameId?:string})[]}>
 }
 
 interface IWorkspaceAccountRefRow {
     _id: string,
     accountId: string,
-    username: string,
+    nameId: string,
     readAccess: boolean,
     createAccess: boolean,
     updateAccess: boolean,
@@ -40,12 +40,12 @@ const AccountWorkspaceAccountRefsReadOnlyView = ({account, workspaceId, getFunc}
     useEffect(() => {
         const init = async () => {
             if (account && account.workspaces && workspaceId) {
-                const userRefs = await getFunc(account._id || '', workspaceId)
-                const transformedData:IWorkspaceAccountRefRow[] = userRefs?.data.map((item:IWorkspaceAccountRef & {username?:string, createdAt?: Date, updatedAt?: Date}) => {
+                const accountRefs = await getFunc(account._id || '', workspaceId)
+                const transformedData:IWorkspaceAccountRefRow[] = accountRefs?.data.map((item:IWorkspaceAccountRef & {nameId?:string, createdAt?: Date, updatedAt?: Date}) => {
                     return {
                         _id: item._id || '',
                         accountId: item.accountId,
-                        username: item.username || '--',
+                        nameId: item.nameId || '--',
                         readAccess: Boolean(item.readAccess),
                         createAccess: Boolean(item.createAccess),
                         updateAccess: Boolean(item.updateAccess),
@@ -68,8 +68,8 @@ const AccountWorkspaceAccountRefsReadOnlyView = ({account, workspaceId, getFunc}
 
     const colDef:IColDef[] = [
         {
-            header: 'Username',
-            field: 'username'
+            header: 'NameID',
+            field: 'nameId'
         },
         {
             header: 'Read',

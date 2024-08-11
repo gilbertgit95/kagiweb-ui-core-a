@@ -11,20 +11,20 @@ interface props {
     createFunc: (
         accountId:string,
         workspaceId:string,
-        username:string,
+        nameId:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
         disabled: boolean
-    ) => Promise<{data:IWorkspaceAccountRef & {username?: string}}>,
-    created?: (accountId:string|undefined, workspaceId:string, userRef:IWorkspaceAccountRef|undefined) => void
+    ) => Promise<{data:IWorkspaceAccountRef & {nameId?: string}}>,
+    created?: (accountId:string|undefined, workspaceId:string, accountRef:IWorkspaceAccountRef|undefined) => void
 }
 
 const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc, created}:props) => {
-    const [userRef, setNewUserRef] = useState<IWorkspaceAccountRef & {username?: string}>({
+    const [accountRef, setNewUserRef] = useState<IWorkspaceAccountRef & {nameId?: string}>({
         accountId: '',
-        username: '',
+        nameId: '',
         readAccess: true,
         updateAccess: false,
         createAccess: false,
@@ -37,25 +37,25 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
     })
 
     const handleTextFieldChange = (field:string, value:string) => {
-        setNewUserRef({...userRef, ...{[field]: value}})
+        setNewUserRef({...accountRef, ...{[field]: value}})
     }
 
     const handleSwitchChange = (field:string, event: React.ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.checked)
-        setNewUserRef({...userRef, ...{[field]: event.target.checked}})
+        setNewUserRef({...accountRef, ...{[field]: event.target.checked}})
     }
 
     const onCreate = async () => {
         if (!account) return
 
-        const newData:IWorkspaceAccountRef & {username?: string} = {
+        const newData:IWorkspaceAccountRef & {nameId?: string} = {
             accountId: '',
-            username: userRef.username,
-            readAccess: userRef.readAccess,
-            updateAccess: userRef.updateAccess,
-            createAccess: userRef.createAccess,
-            deleteAccess: userRef.deleteAccess,
-            disabled: userRef.disabled
+            nameId: accountRef.nameId,
+            readAccess: accountRef.readAccess,
+            updateAccess: accountRef.updateAccess,
+            createAccess: accountRef.createAccess,
+            deleteAccess: accountRef.deleteAccess,
+            disabled: accountRef.disabled
         }
         console.log('save update: ', newData)
 
@@ -65,12 +65,12 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
                 const reqResp = await createFunc(
                     account._id,
                     workspaceId || '',
-                    userRef.username || '',
-                    Boolean(userRef.readAccess),
-                    Boolean(userRef.updateAccess),
-                    Boolean(userRef.createAccess),
-                    Boolean(userRef.deleteAccess),
-                    Boolean(userRef.disabled)
+                    accountRef.nameId || '',
+                    Boolean(accountRef.readAccess),
+                    Boolean(accountRef.updateAccess),
+                    Boolean(accountRef.createAccess),
+                    Boolean(accountRef.deleteAccess),
+                    Boolean(accountRef.disabled)
                 )
                 if (created) created(account?._id, workspaceId || '', reqResp?.data)
                 setInfoAndErrors({
@@ -99,13 +99,13 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Username</Typography>
+                    <Typography variant="subtitle1">NameID</Typography>
                 </Grid>
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={userRef?.username || ''}
-                        onChange={(e) => handleTextFieldChange('username', e.target.value)} />
+                        defaultValue={accountRef?.nameId || ''}
+                        onChange={(e) => handleTextFieldChange('nameId', e.target.value)} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -115,7 +115,7 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('readAccess', e)}
-                        checked={userRef.readAccess} />
+                        checked={accountRef.readAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -125,7 +125,7 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('updateAccess', e)}
-                        checked={userRef.updateAccess} />
+                        checked={accountRef.updateAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -135,7 +135,7 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('createAccess', e)}
-                        checked={userRef.createAccess} />
+                        checked={accountRef.createAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -145,7 +145,7 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('deleteAccess', e)}
-                        checked={userRef.deleteAccess} />
+                        checked={accountRef.deleteAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
@@ -155,7 +155,7 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
                 <Grid item xs={8} md={9}>
                     <Switch
                         onChange={e => handleSwitchChange('disabled', e)}
-                        checked={userRef.disabled} />
+                        checked={accountRef.disabled} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>

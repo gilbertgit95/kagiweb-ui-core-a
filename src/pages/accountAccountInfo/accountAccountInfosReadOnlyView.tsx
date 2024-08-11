@@ -27,8 +27,8 @@ const AccountAccountInfosReadOnlyView = ({account}:IProps) => {
     const [data, setData] = useState<IAccountInfoRow[]>([])
 
     useEffect(() => {
-        if (account && account.userInfos) {
-            const transformedData:IAccountInfoRow[] = account.userInfos.map((item:IAccountInfo & {createdAt?: Date, updatedAt?: Date}) => {
+        if (account && account.accountInfos) {
+            const transformedData:IAccountInfoRow[] = account.accountInfos.map((item:IAccountInfo & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     key: item.key || '--',

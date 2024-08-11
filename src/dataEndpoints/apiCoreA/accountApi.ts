@@ -29,7 +29,7 @@ class AccountApi {
             _id: account._id
         }
 
-        if (account.username !== undefined) data['username'] = account.username
+        if (account.nameId !== undefined) data['nameId'] = account.nameId
         if (account.disabled !== undefined) data['disabled'] = account.disabled
         if (account.verified !== undefined) data['verified'] = account.verified
 
@@ -43,7 +43,7 @@ class AccountApi {
 
     public static createAccount(account:IAccount) {
         const data = {
-            'username': account.username,
+            'nameId': account.nameId,
             'disabled': account.disabled,
             'verified': account.verified
         }
@@ -75,7 +75,7 @@ class AccountApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/userInfos/${ accountInfo._id }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountInfos/${ accountInfo._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -90,7 +90,7 @@ class AccountApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/userInfos`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountInfos`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -99,7 +99,7 @@ class AccountApi {
     public static deleteAccountInfo(accountId:string, accountInfoId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/userInfos/${ accountInfoId }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountInfos/${ accountInfoId }`
         })
     }
 
@@ -390,14 +390,14 @@ class AccountApi {
     public static createWorkspaceAccountRef(
         accountId:string,
         workspaceId:string,
-        username:string,
+        nameId:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
         disabled: boolean) {
         const data = {
-            'username': username,
+            'nameId': nameId,
             'readAccess': readAccess,
             'updateAccess': updateAccess,
             'createAccess': createAccess,

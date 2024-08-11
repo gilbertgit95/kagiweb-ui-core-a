@@ -107,7 +107,7 @@ export interface IWorkspace {
     _id?: string,
     name: string,
     description?: string,
-    userRefs?: IWorkspaceAccountRef[],
+    accountRefs?: IWorkspaceAccountRef[],
     isActive?: boolean,
     disabled?: boolean
 }
@@ -115,9 +115,9 @@ export interface IWorkspace {
 export interface IAccount {
     _id?: string,
     accountType?: TAccountType,
-    username: string,
+    nameId: string,
     rolesRefs: IRoleRef[],
-    userInfos: IAccountInfo[],
+    accountInfos: IAccountInfo[],
 
     passwords: IPassword[],
 
@@ -134,7 +134,7 @@ export interface IAccount {
 
 export interface IAccountUpdate {
     _id?: string,
-    username?: string,
+    nameId?: string,
     disabled?: boolean,
     verified?: boolean
 }

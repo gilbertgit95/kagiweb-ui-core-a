@@ -15,7 +15,7 @@ const AccountAccountInfoReadOnlyView = ({account, accountInfoId}:props) => {
     const [accountInfo, setAccountInfo] = useState<IAccountInfo & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
-        if (account && account.userInfos && accountInfoId) {
+        if (account && account.accountInfos && accountInfoId) {
             const usrInf = AccountAccountInfoService.getAccountInfoById(account, accountInfoId)
             setAccountInfo(usrInf)
         }

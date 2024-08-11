@@ -131,7 +131,7 @@ class OwnerService {
     }
 
     // workspace account refs
-    public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef & {username?:string} | null}> {
+    public static getWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef & {nameId?:string} | null}> {
         return OwnerApi.getWorkspaceAccountRef(
             accountId,
             workspaceId,
@@ -139,7 +139,7 @@ class OwnerService {
         )
     }
 
-    public static getWorkspaceAccountRefs( accountId:string, workspaceId:string):Promise<{data: (IWorkspaceAccountRef & {username?:string})[]}> {
+    public static getWorkspaceAccountRefs( accountId:string, workspaceId:string):Promise<{data: (IWorkspaceAccountRef & {nameId?:string})[]}> {
         return OwnerApi.getWorkspaceAccountRefs(
             accountId,
             workspaceId
@@ -170,7 +170,7 @@ class OwnerService {
     public static createWorkspaceAccountRef(
         accountId:string,
         workspaceId:string,
-        username:string,
+        nameId:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
@@ -179,7 +179,7 @@ class OwnerService {
         return OwnerApi.createWorkspaceAccountRef(
             accountId,
             workspaceId,
-            username,
+            nameId,
             readAccess,
             updateAccess,
             createAccess,

@@ -45,7 +45,7 @@ const WorkspaceDataLayout = (props:Props) => {
             ...externalWorkspaces.map(item => ({
                 key: item._id || '',
                 label: item.name,
-                subLabel: item.ownerUsername,
+                subLabel: item.ownerNameID,
                 Icon: item?.ownerAccountType === 'user'? PersonIcon: ScatterPlotIcon
             }))
         ]

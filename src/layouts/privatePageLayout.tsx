@@ -10,6 +10,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -103,7 +104,7 @@ const NavCustomEl = () => {
                                 <SettingsIcon />
                             </ListItemIcon>
                             <ListItemText>
-                                <Typography variant="subtitle1">{ accountData && accountData.username? accountData.username: '' }</Typography>
+                                <Typography variant="subtitle1">{ accountData && accountData.nameId? accountData.nameId: '' }</Typography>
                                 <Typography variant="caption" color="primary">{ userRole?.name }</Typography>
                             </ListItemText>
                         </MenuItem>
@@ -143,6 +144,12 @@ const NavCustomEl = () => {
                         }
                         {/* default account actions */}
                         { customLinks?.length? <Typography color="primary" sx={{margin: '10px'}}>Default Actions</Typography>: null }
+                        <MenuItem onClick={() => handleLinkClick('/owner/edit/roles')}>
+                            <ListItemIcon>
+                                <NotificationsIcon />
+                            </ListItemIcon>
+                            <ListItemText>Notifications*</ListItemText>
+                        </MenuItem>
                         <MenuItem onClick={() => handleLinkClick('/owner/edit/roles')}>
                             <ListItemIcon>
                                 <AdminPanelSettingsIcon />

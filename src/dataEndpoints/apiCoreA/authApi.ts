@@ -2,9 +2,9 @@ import apiHelper from './apiHelper';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 class AuthApi {
-    public static signin(username:string, password:string) {
+    public static signin(nameId:string, password:string) {
         const data = {
-            'username': username,
+            'nameId': nameId,
             'password': password
         }
 
@@ -16,9 +16,9 @@ class AuthApi {
         })
     }
 
-    public static signinOTP(username:string, otp:string) {
+    public static signinOTP(nameId:string, otp:string) {
         const data = {
-            'username': username,
+            'nameId': nameId,
             'key': otp
         }
         return apiHelper.publicReq({
@@ -29,9 +29,9 @@ class AuthApi {
         })
     }
 
-    public static signup(username:string, password:string, email:string, phone:string) {
+    public static signup(nameId:string, password:string, email:string, phone:string) {
         const data = {
-            'username': username,
+            'nameId': nameId,
             'password': password,
             'email': email,
             'phone': phone
@@ -44,9 +44,9 @@ class AuthApi {
         })
     }
 
-    public static forgotPassword(username:string) {
+    public static forgotPassword(nameId:string) {
         const data = {
-            'username': username
+            'nameId': nameId
         }
         return apiHelper.publicReq({
             method: 'POST',
@@ -56,9 +56,9 @@ class AuthApi {
         })
     }
 
-    public static resetPassword(username:string, resetKey:string, newPassword:string) {
+    public static resetPassword(nameId:string, resetKey:string, newPassword:string) {
         const data = {
-            'username': username,
+            'nameId': nameId,
             'key': resetKey,
             'newPassword': newPassword
         }

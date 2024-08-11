@@ -21,9 +21,9 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
     })
     const [account, setAccount] = useState<IAccount | undefined>()
     const [updatedAccount, setUpdatedAccount] = useState<IAccount>({
-        username: '',
+        nameId: '',
         rolesRefs: [],
-        userInfos: [],
+        accountInfos: [],
         passwords: [],
         contactInfos: [],
         clientDevices: [],
@@ -47,7 +47,7 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
 
         const updateData:IAccountUpdate = {
             _id: updatedAccount._id,
-            username: updatedAccount.username === account.username? undefined: updatedAccount.username,
+            nameId: updatedAccount.nameId === account.nameId? undefined: updatedAccount.nameId,
             disabled: updatedAccount.disabled === account.disabled? undefined: updatedAccount.disabled,
             verified: updatedAccount.verified === account.verified? undefined: updatedAccount.verified
         }
@@ -107,7 +107,7 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
         if (!account) return false
 
         return !(
-            account.username !== updatedAccount.username ||
+            account.nameId !== updatedAccount.nameId ||
             account.disabled !== updatedAccount.disabled ||
             account.verified !== updatedAccount.verified
         )
@@ -120,13 +120,13 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">Username</Typography>
+                                <Typography variant="subtitle1">NameID</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
-                                    defaultValue={updatedAccount.username}
-                                    onChange={(e) => handleTextFieldChange('username', e.target.value)} />
+                                    defaultValue={updatedAccount.nameId}
+                                    onChange={(e) => handleTextFieldChange('nameId', e.target.value)} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>

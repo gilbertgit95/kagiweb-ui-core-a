@@ -37,12 +37,12 @@ const Signin = () => {
         setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
         // console.log({
-        //   username: data.get('username'),
+        //   nameId: data.get('nameId'),
         //   password: data.get('password'),
         // })
         try {
             const signinResp = await AuthService.signin(
-                data.get('username')?.toString(),
+                data.get('nameId')?.toString(),
                 data.get('password')?.toString()
             )
 
@@ -62,8 +62,8 @@ const Signin = () => {
                     errorMessages: []
                 })
                 await TimeUtils.doNothingFor(5)
-                // window.location.replace(`/signinOTP?username=${ signinResp.username }`)
-                navigate(`/signinOTP?username=${ signinResp.username }`)
+                // window.location.replace(`/signinOTP?nameId=${ signinResp.nameId }`)
+                navigate(`/signinOTP?nameId=${ signinResp.nameId }`)
             }
 
         } catch (err:any) {
@@ -93,10 +93,10 @@ const Signin = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        autoComplete="username"
+                        id="nameId"
+                        label="NameID"
+                        name="nameId"
+                        autoComplete="nameId"
                         autoFocus />
                     <TextField
                         margin="normal"

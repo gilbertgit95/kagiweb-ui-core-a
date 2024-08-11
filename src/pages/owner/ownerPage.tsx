@@ -13,7 +13,7 @@ const OwnerPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={ 'My Account' } subtitle={ accountData?.username } />
+                    <PrimaryHeader title={ 'My Account' } subtitle={ accountData?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12} style={{alignContent: 'right'}}>

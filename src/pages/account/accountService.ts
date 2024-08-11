@@ -9,7 +9,7 @@ class AccountService {
     }
 
     public static getAccountInfo(account:IAccount, key:string):IAccountInfo|undefined {
-        for (const info of account?.userInfos || []) {
+        for (const info of account?.accountInfos || []) {
             if (info.key === key) return info
         }
 

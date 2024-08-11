@@ -36,7 +36,7 @@ const Signup = () => {
         setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
         console.log({
-          username: data.get('username'),
+          nameId: data.get('nameId'),
           email: data.get('email'),
           phone: data.get('phone'),
           newPassword: data.get('password'),
@@ -45,7 +45,7 @@ const Signup = () => {
 
         try {
             const signupResp = await AuthService.signup(
-                data.get('username')?.toString(),
+                data.get('nameId')?.toString(),
                 data.get('password')?.toString(),
                 data.get('email')?.toString(),
                 data.get('phone')?.toString()
@@ -84,10 +84,10 @@ const Signup = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        autoComplete="username"
+                        id="nameId"
+                        label="NameID"
+                        name="nameId"
+                        autoComplete="nameId"
                         autoFocus />
                     <TextField
                         margin="normal"

@@ -94,7 +94,7 @@ const AccountClientDeviceTokenPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Token Readonly View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Token Readonly View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

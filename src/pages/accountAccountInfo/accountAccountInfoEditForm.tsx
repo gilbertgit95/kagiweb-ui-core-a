@@ -69,7 +69,7 @@ const AccountAccountInfoEditForm = ({account, accountInfoId, updateFunc, updated
 
     useEffect(() => {
         const init = async () => {
-            if (account && account.userInfos && accountInfoId) {
+            if (account && account.accountInfos && accountInfoId) {
                 const accInf = AccountAccountInfoService.getAccountInfoById(account, accountInfoId)
                 setAccountInfo(accInf)
                 if (accInf) {

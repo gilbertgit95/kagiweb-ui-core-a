@@ -4,8 +4,8 @@ import { IAccount, IAccountInfo } from '../../types/account'
 class AccountAccountInfoService {
     public static getAccountInfoById(account:IAccount, accountInfoId:string):IAccountInfo|undefined {
 
-        if (account && account.userInfos) {
-            for (const info of account.userInfos) {
+        if (account && account.accountInfos) {
+            for (const info of account.accountInfos) {
                 if (info._id === accountInfoId) return info
             }
         }

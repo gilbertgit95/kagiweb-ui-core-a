@@ -33,7 +33,7 @@ const ResetPassword = () => {
     // const token = useAppSelector(state => state.signedInAccount.token)
     // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
     const [searchParams] = useSearchParams();
-    const usernameUrlQuery = searchParams.get('username') || '';
+    const nameIdUrlQuery = searchParams.get('nameId') || '';
     const resetKeyUrlQuery = searchParams.get('resetKey') || '';
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +41,7 @@ const ResetPassword = () => {
         setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
         console.log({
-          username: data.get('username'),
+          nameId: data.get('nameId'),
           resetKey: data.get('resetKey'),
           newPassword: data.get('newPassword'),
           confirmPassword: data.get('confirmPassword')
@@ -49,7 +49,7 @@ const ResetPassword = () => {
 
         try {
             const resetPassResp = await AuthService.resetPassword(
-                data.get('username')?.toString(),
+                data.get('nameId')?.toString(),
                 data.get('resetKey')?.toString(),
                 data.get('newPassword')?.toString()
             )
@@ -92,11 +92,11 @@ const ResetPassword = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        autoComplete="username"
-                        defaultValue={usernameUrlQuery}
+                        id="nameId"
+                        label="NameID"
+                        name="nameId"
+                        autoComplete="nameId"
+                        defaultValue={nameIdUrlQuery}
                         autoFocus />
                     <TextField
                         margin="normal"

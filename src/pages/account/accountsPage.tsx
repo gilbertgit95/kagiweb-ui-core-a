@@ -23,7 +23,7 @@ import appComponentsHandler from '../../utils/appComponentsHandler'
 interface IAccountRow {
     _id: string,
     accountType: string,
-    username: string,
+    nameId: string,
     // name: string,
     email: string,
     phone: string,
@@ -40,8 +40,8 @@ const colDef:IColDef[] = [
         }
     },
     {
-        header: 'Username',
-        field: 'username',
+        header: 'NameID',
+        field: 'nameId',
         Component: undefined // react Component or undefined
     },
     // {
@@ -120,7 +120,7 @@ const Accounts = () => {
                     return {
                         _id: item._id || '',
                         accountType: item.accountType || '--',
-                        username: item.username,
+                        nameId: item.nameId,
                         // name: AccountService.getUserInfo(item, 'Fullname')?.value || '--',
                         email: AccountService.getContactInfo(item, 'email-address')?.value || '--',
                         phone: AccountService.getContactInfo(item, 'mobile-number')?.value || '--',
@@ -171,7 +171,7 @@ const Accounts = () => {
                             _id: item._id || '',
 
                             accountType: item.accountType || '--',
-                            username: item.username,
+                            nameId: item.nameId,
                             // name: AccountService.getUserInfo(item, 'Fullname')?.value || '--',
                             email: AccountService.getContactInfo(item, 'email-address')?.value || '--',
                             phone: AccountService.getContactInfo(item, 'mobile-number')?.value || '--',

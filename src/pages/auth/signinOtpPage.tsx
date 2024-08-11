@@ -33,7 +33,7 @@ const SigninOTP = () => {
     // const token = useAppSelector(state => state.signedInAccount.token)
     // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
     const [searchParams] = useSearchParams();
-    const usernameUrlQuery = searchParams.get('username') || '';
+    const nameIdUrlQuery = searchParams.get('nameId') || '';
     const otpUrlQuery = searchParams.get('otp') || '';
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -41,13 +41,13 @@ const SigninOTP = () => {
         setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
         // console.log({
-        //   username: data.get('username'),
+        //   nameId: data.get('nameId'),
         //   otp: data.get('otp'),
         // })
 
         try {
             const signinOTPResp = await AuthService.signinOTP(
-                data.get('username')?.toString(),
+                data.get('nameId')?.toString(),
                 data.get('otp')?.toString()
             )
 
@@ -87,11 +87,11 @@ const SigninOTP = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="username"
-                        label="Username"
-                        name="username"
-                        autoComplete="username"
-                        defaultValue={usernameUrlQuery}
+                        id="nameId"
+                        label="NameID"
+                        name="nameId"
+                        autoComplete="nameId"
+                        defaultValue={nameIdUrlQuery}
                         autoFocus />
                     <TextField
                         margin="normal"

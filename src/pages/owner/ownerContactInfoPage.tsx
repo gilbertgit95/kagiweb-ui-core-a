@@ -91,7 +91,7 @@ const AccountContactInfoPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Contact Info Readonly View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'My Account Contact Info Readonly View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

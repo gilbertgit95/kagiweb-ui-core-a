@@ -52,7 +52,7 @@ const AccountReadOnlyView = ({account}:props) => {
     ]
 
     const data:{field: string, value: string|undefined}[] = [
-        { field: 'username', value: account?.username },
+        { field: 'nameId', value: account?.nameId },
         { field: 'disabled', value: account?.disabled? 'True': 'False' },
         { field: 'verified', value: account?.verified? 'True': 'False' },
         { field: 'Created', value: account?.createdAt? moment(account?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' },
@@ -63,7 +63,7 @@ const AccountReadOnlyView = ({account}:props) => {
         {
             module: 'Account Information',
             moduleRoute: 'accountInfos',
-            contents: account?.userInfos?.length || 0
+            contents: account?.accountInfos?.length || 0
         },
         {
             module: 'Contact Information',

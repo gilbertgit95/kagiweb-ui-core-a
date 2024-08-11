@@ -16,9 +16,9 @@ export const AccountCreateForm = () => {
         infoMessages: []
     })
     const [account, setAccount] = useState<IAccount>({
-        username: '',
+        nameId: '',
         rolesRefs: [],
-        userInfos: [],
+        accountInfos: [],
         passwords: [],
         contactInfos: [],
         clientDevices: [],
@@ -71,13 +71,13 @@ export const AccountCreateForm = () => {
         <>
             <Grid container item xs={12}>
                 <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Username</Typography>
+                    <Typography variant="subtitle1">NameID</Typography>
                 </Grid>
                 <Grid item xs={8} md={9}>
                     <TextField
                         fullWidth
-                        defaultValue={account.username}
-                        onChange={(e) => handleTextFieldChange('username', e.target.value)} />
+                        defaultValue={account.nameId}
+                        onChange={(e) => handleTextFieldChange('nameId', e.target.value)} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>

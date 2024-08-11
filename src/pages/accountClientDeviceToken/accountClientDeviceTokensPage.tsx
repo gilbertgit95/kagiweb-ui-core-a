@@ -44,7 +44,7 @@ const AccountClientDeviceTokensPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Client Device Tokens View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Account Client Device Tokens View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

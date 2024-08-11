@@ -55,7 +55,7 @@ const OwnerWorkspaceCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace Create View'} subtitle={ account?.username } />
+                    <PrimaryHeader title={'Owner Workspace Create View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

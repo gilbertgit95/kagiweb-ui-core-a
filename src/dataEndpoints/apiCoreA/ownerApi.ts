@@ -15,7 +15,7 @@ class OwnerApi {
             _id: account._id
         }
 
-        if (account.username !== undefined) data['username'] = account.username
+        if (account.nameId !== undefined) data['nameId'] = account.nameId
         if (account.disabled !== undefined) data['disabled'] = account.disabled
         if (account.verified !== undefined) data['verified'] = account.verified
 
@@ -45,7 +45,7 @@ class OwnerApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/userInfos/${ accountInfo._id }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/accountInfos/${ accountInfo._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -60,7 +60,7 @@ class OwnerApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/userInfos`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/accountInfos`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
@@ -69,7 +69,7 @@ class OwnerApi {
     public static deleteAccountInfo(accountId:string, accountInfoId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/userInfos/${ accountInfoId }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/accountInfos/${ accountInfoId }`
         })
     }
 
@@ -352,14 +352,14 @@ class OwnerApi {
     public static createWorkspaceAccountRef(
         accountId:string,
         workspaceId:string,
-        username:string,
+        nameId:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
         deleteAccess: boolean,
         disabled: boolean) {
         const data = {
-            'username': username,
+            'nameId': nameId,
             'readAccess': readAccess,
             'updateAccess': updateAccess,
             'createAccess': createAccess,

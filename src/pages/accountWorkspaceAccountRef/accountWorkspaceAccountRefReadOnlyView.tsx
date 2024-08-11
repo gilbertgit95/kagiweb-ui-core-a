@@ -10,11 +10,11 @@ interface props {
     account?: IAccount,
     workspaceId?: string,
     accountRefId?: string,
-    getFunc: (accountId:string, workspaceId:string, accountRefId: string) => Promise<{data: IWorkspaceAccountRef & {username?:string} | null}>
+    getFunc: (accountId:string, workspaceId:string, accountRefId: string) => Promise<{data: IWorkspaceAccountRef & {nameId?:string} | null}>
 }
 
 const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRefId, getFunc}:props) => {
-    const [userRef, setAccountRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         const init = async () => {
@@ -40,20 +40,20 @@ const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRe
     ]
 
     const data:{field: string, value: string|undefined}[] = [
-        { field: 'User ID', value: userRef?.accountId },
-        { field: 'Username', value: userRef?.username || '--' },
-        { field: 'Read Access', value: userRef?.readAccess? 'True': 'False' },
-        { field: 'Update Access', value: userRef?.updateAccess? 'True': 'False' },
-        { field: 'Create Access', value: userRef?.createAccess? 'True': 'False' },
-        { field: 'Delete Access', value: userRef?.deleteAccess? 'True': 'False' },
-        { field: 'Accepted', value: userRef?.accepted? 'True': 'False' },
-        { field: 'Declined', value: userRef?.declined? 'True': 'False' },
-        { field: 'Disabled', value: userRef?.disabled? 'True': 'False' },
-        { field: 'Created', value: moment(userRef?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) },
-        { field: 'Updated', value: moment(userRef?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) }
+        { field: 'User ID', value: accountRef?.accountId },
+        { field: 'NameID', value: accountRef?.nameId || '--' },
+        { field: 'Read Access', value: accountRef?.readAccess? 'True': 'False' },
+        { field: 'Update Access', value: accountRef?.updateAccess? 'True': 'False' },
+        { field: 'Create Access', value: accountRef?.createAccess? 'True': 'False' },
+        { field: 'Delete Access', value: accountRef?.deleteAccess? 'True': 'False' },
+        { field: 'Accepted', value: accountRef?.accepted? 'True': 'False' },
+        { field: 'Declined', value: accountRef?.declined? 'True': 'False' },
+        { field: 'Disabled', value: accountRef?.disabled? 'True': 'False' },
+        { field: 'Created', value: moment(accountRef?.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) },
+        { field: 'Updated', value: moment(accountRef?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) }
     ]
 
-    return userRef? (
+    return accountRef? (
         <Grid item xs={12}>
             <PrimaryTable
                 maxHeight={700}

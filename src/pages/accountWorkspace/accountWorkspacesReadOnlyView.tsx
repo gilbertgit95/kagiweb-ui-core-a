@@ -19,7 +19,7 @@ interface IWorkspaceRow {
     _id: string,
     name: string,
     description: string,
-    userRefs: number,
+    accountRefs: number,
     isActive: boolean,
     disabled: boolean,
     createdAt?: Date,
@@ -36,7 +36,7 @@ const AccountWorkspacesReadOnlyView = ({account}:IProps) => {
                     _id: item._id || '--',
                     name: item.name,
                     description: item.description || '--',
-                    userRefs: item.userRefs?.length || 0,
+                    accountRefs: item.accountRefs?.length || 0,
                     isActive: Boolean(item.isActive),
                     disabled: Boolean(item.disabled),
                     createdAt: item.createdAt,
@@ -63,7 +63,7 @@ const AccountWorkspacesReadOnlyView = ({account}:IProps) => {
         },
         {
             header: 'Users',
-            field: 'userRefs'
+            field: 'accountRefs'
         },
         {
             header: 'Default Active',
@@ -88,7 +88,7 @@ const AccountWorkspacesReadOnlyView = ({account}:IProps) => {
         },
         {
             header: '',
-            field: 'userRefs',
+            field: 'accountRefs',
             Component: (props:IWorkspaceRow) => {
                 return (
                     <SimpleLink

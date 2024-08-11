@@ -10,7 +10,7 @@ interface props {
     account?: IAccount,
     workspaceId?: string,
     accountRefId?: string,
-    getFunc: (accountId:string, workspaceId:string, accountRefId: string) => Promise<{data: IWorkspaceAccountRef & {username?:string} | null}>
+    getFunc: (accountId:string, workspaceId:string, accountRefId: string) => Promise<{data: IWorkspaceAccountRef & {nameId?:string} | null}>
     updateFunc: (
         accountId:string,
         workspaceId:string,
@@ -21,12 +21,12 @@ interface props {
         deleteAccess:boolean,
         disabled:boolean
     ) => Promise<{data:IWorkspaceAccountRef}>,
-    updated?: (accountId:string|undefined, workspaceId: string, userRef:IWorkspaceAccountRef|undefined) => void
+    updated?: (accountId:string|undefined, workspaceId: string, accountRef:IWorkspaceAccountRef|undefined) => void
 }
 
 const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc, updateFunc, updated}:props) => {
-    const [userRef, setAccountRef] = useState<IWorkspaceAccountRef & {username?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceAccountRef & {username?:string}>({
+    const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceAccountRef & {nameId?:string}>({
         accountId: '',
         readAccess: true,
         updateAccess: false,
@@ -49,7 +49,7 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
     }
 
     const onUpdate = async () => {
-        if (!userRef) return
+        if (!accountRef) return
 
         // // send update data to the api
         if (account?._id) {
@@ -108,31 +108,31 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
     }
 
     const hasChanges = (() => {
-        if (!userRef) return false
+        if (!accountRef) return false
 
         return !(
-            userRef.readAccess !== updatedUserRef.readAccess ||
-            userRef.updateAccess !== updatedUserRef.updateAccess ||
-            userRef.createAccess !== updatedUserRef.createAccess ||
-            userRef.deleteAccess !== updatedUserRef.deleteAccess ||
-            userRef.disabled !== updatedUserRef.disabled
+            accountRef.readAccess !== updatedUserRef.readAccess ||
+            accountRef.updateAccess !== updatedUserRef.updateAccess ||
+            accountRef.createAccess !== updatedUserRef.createAccess ||
+            accountRef.deleteAccess !== updatedUserRef.deleteAccess ||
+            accountRef.disabled !== updatedUserRef.disabled
         )
     })()
 
     return account? (
         <>
             {
-                userRef? (
+                accountRef? (
                     <>
                         <Grid container item xs={12}>
                             <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">Username</Typography>
+                                <Typography variant="subtitle1">NameID</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
                                     disabled
-                                    defaultValue={userRef?.username || ''} />
+                                    defaultValue={accountRef?.nameId || ''} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>
@@ -203,7 +203,7 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
                 <Button
                     startIcon={<EditIcon />}
                     onClick={onUpdate}
-                    disabled={hasChanges || !userRef}>
+                    disabled={hasChanges || !accountRef}>
                     Update
                 </Button>
             </Grid>

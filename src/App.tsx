@@ -7,7 +7,6 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PeopleIcon from '@mui/icons-material/People';
 import NotesIcon from '@mui/icons-material/Notes';
 import TaskIcon from '@mui/icons-material/Task';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import KeyIcon from '@mui/icons-material/Key';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
@@ -204,7 +203,7 @@ appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces', page: Ac
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/workspaces', page: AccountWorkspaceCreatePage })
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId', page: AccountWorkspacePage })
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/workspaces/:workspaceId', page: AccountWorkspaceEditPage })
-// account workspace userRefs
+// account workspace accountRefs
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId/accountRefs', page: AccountWorkspaceAccountRefsPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/workspaces/:workspaceId/accountRefs', page: AccountWorkspaceAccountRefCreatePage })
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId/accountRefs/:accountRefId', page: AccountWorkspaceAccountRefPage })
@@ -248,7 +247,7 @@ appHandler.addPrivateRoute({url: 'owner/view/workspaces', page: OwnerWorkspacesP
 appHandler.addPrivateRoute({url: 'owner/create/workspaces', page: OwnerWorkspaceCreatePage })
 appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId', page: OwnerWorkspacePage })
 appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId', page: OwnerWorkspaceEditPage })
-// owner workspace userRefs
+// owner workspace accountRefs
 appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs', page: OwnerWorkspaceAccountRefsPage })
 appHandler.addPrivateRoute({url: 'owner/create/workspaces/:workspaceId/accountRefs', page: OwnerWorkspaceAccountRefCreatePage })
 appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceAccountRefPage })
@@ -259,21 +258,23 @@ appHandler.addPrivateRoute({url: 'workspaces/view/:workspaceId', page: Workspace
 
 // add items to main drawers
 appHandler.addMainDrawer({
-  label: 'Workspace Data',
-  links:  [
-      { label: 'Workspace Dash*', url: '/workspaces/view/none', Icon: HomeIcon },
-      { label: 'Products*', url: '/', Icon: HomeIcon }
-  ]
-})
-appHandler.addMainDrawer({
   label: 'Account Data',
   links:  [
-      { label: 'Home', url: '/', Icon: HomeIcon },
-      { label: 'Notes*', url: '/notes', Icon: NotesIcon },
-      { label: 'Tasks*', url: '/tasks', Icon: TaskIcon },
-      { label: 'Notifications*', url: '/notifications', Icon: NotificationsIcon }
+      { label: 'Account Dashboard', url: '/', Icon: HomeIcon },
+      { label: 'Account Notes*', url: '/notes', Icon: NotesIcon },
+      { label: 'Account Tasks*', url: '/tasks', Icon: TaskIcon }
   ]
 })
+
+appHandler.addMainDrawer({
+  label: 'Workspace Data',
+  links:  [
+      { label: 'Workspace Dashboard*', url: '/workspaces/view/none', Icon: HomeIcon },
+      { label: 'Workspace Notes*', url: '/notes', Icon: NotesIcon },
+      { label: 'Workspace Tasks*', url: '/tasks', Icon: TaskIcon }
+  ]
+})
+
 appHandler.addMainDrawer({
   label: 'Global Data',
   links:  [
@@ -305,8 +306,7 @@ appHandler.addPublicUserDrawerNav({
 appHandler.addPrivateUserDrawerNav({
   label: 'Custom Actions',
   links: [
-      { label: 'Signin', url: '/signin', Icon: LockOutlinedIcon },
-      { label: 'Signin OTP', url: '/signinOTP', Icon: KeyIcon },
+      { label: 'Test Link', url: '/test-link', Icon: LockOutlinedIcon },
       {
         label: 'Test Action',
         action: () => {

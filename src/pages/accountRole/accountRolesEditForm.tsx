@@ -264,7 +264,7 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Are you sure you want to activate selected role for { account?.username }?
+                                Are you sure you want to activate selected role for { account?.nameId }?
                                 This will deactivate currect active role.
                             </DialogContentText>
                         </DialogContent>
@@ -281,7 +281,7 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
                         open={dialog.addDialogOpen}
                         onClose={() => setDialog({...dialog, ...{addDialogOpen: false}})}>
                         <DialogTitle>
-                            Add roles to { account?.username } Role
+                            Add roles to { account?.nameId } Role
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
@@ -308,7 +308,7 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Are you sure you want to remove the selected role/s from { account?.username }?
+                                Are you sure you want to remove the selected role/s from { account?.nameId }?
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

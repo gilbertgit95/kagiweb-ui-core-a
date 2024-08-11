@@ -7,16 +7,16 @@ class AccountWorkspaceAccountRefService {
     public static getWorkspaceAccountRefById(account: IAccount, workspaceId:string, accountRefId:string):IWorkspaceAccountRef|undefined {
 
         const workspace = AccountWorkspaceService.getWorkspaceById(account, workspaceId)
-        if (workspace && workspace.userRefs) {
-            for (const userRef of workspace.userRefs) {
-                if (userRef._id === accountRefId) return userRef
+        if (workspace && workspace.accountRefs) {
+            for (const accountRef of workspace.accountRefs) {
+                if (accountRef._id === accountRefId) return accountRef
             }
         }
 
         return undefined
     }
 
-    public static getWorkspaceAccountRef( accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef & {username?:string} | null}> {
+    public static getWorkspaceAccountRef( accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef & {nameId?:string} | null}> {
         return AccountApi.getWorkspaceAccountRef(
             accountId,
             workspaceId,
@@ -24,7 +24,7 @@ class AccountWorkspaceAccountRefService {
         )
     }
 
-    public static getWorkspaceAccountRefs( accountId:string, workspaceId:string):Promise<{data: (IWorkspaceAccountRef & {username?:string})[]}> {
+    public static getWorkspaceAccountRefs( accountId:string, workspaceId:string):Promise<{data: (IWorkspaceAccountRef & {nameId?:string})[]}> {
         return AccountApi.getWorkspaceAccountRefs(
             accountId,
             workspaceId
@@ -55,7 +55,7 @@ class AccountWorkspaceAccountRefService {
     public static createWorkspaceAccountRef(
         accountId:string,
         workspaceId:string,
-        username:string,
+        nameId:string,
         readAccess: boolean,
         updateAccess: boolean,
         createAccess: boolean,
@@ -64,7 +64,7 @@ class AccountWorkspaceAccountRefService {
         return AccountApi.createWorkspaceAccountRef(
             accountId,
             workspaceId,
-            username,
+            nameId,
             readAccess,
             updateAccess,
             createAccess,
