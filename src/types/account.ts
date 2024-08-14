@@ -3,11 +3,13 @@ export type TAccountType = 'user' | 'organization'
 export type TContactInfoType = 'email-address' | 'mobile-number' | 'telephone' | 'app-admin'
 export type TLimitedTransactionType = 'signin' | 'otp-signin' | 'forgot-pass'| 'reset-pass' | 'verify-contact'
 export type TAccountInfoType = 'string' | 'number' | 'date' | 'boolean'
+export type TAccountConfigType = 'string' | 'number' | 'date' | 'datetime' | 'boolean'
 
 export const acountTypes:TAccountType[] = ['user', 'organization']
 export const contactInfoTypes = ['email-address', 'mobile-number', 'telephone', 'app-admin']
 export const limitedTransactionTypes = ['signin', 'otp-signin', 'forgot-pass', 'reset-pass', 'verify-contact']
 export const accountInfoTypes = ['string', 'number', 'date', 'boolean']
+export const accountConfigTypes:TAccountConfigType[] = ['string', 'number', 'date', 'datetime', 'boolean']
 
 // create interfaces
 export interface IRoleRef {
@@ -91,6 +93,13 @@ export interface IAccountInfo {
     type: TAccountInfoType
 }
 
+export interface IAccountConfig {
+    _id?: string,
+    key: string,
+    value: string,
+    type: TAccountInfoType
+}
+
 export interface IWorkspaceAccountRef {
     _id?: string,
     accountId: string,
@@ -118,6 +127,7 @@ export interface IAccount {
     nameId: string,
     rolesRefs: IRoleRef[],
     accountInfos: IAccountInfo[],
+    accountConfigs: IAccountConfig[],
 
     passwords: IPassword[],
 

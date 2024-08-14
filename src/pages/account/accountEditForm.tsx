@@ -24,6 +24,7 @@ export  const AccountEditForm = ({ accountId, getFunc, updateFunc, updated }:Pro
         nameId: '',
         rolesRefs: [],
         accountInfos: [],
+accountConfigs: [],
         passwords: [],
         contactInfos: [],
         clientDevices: [],

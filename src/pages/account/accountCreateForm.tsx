@@ -19,6 +19,7 @@ export const AccountCreateForm = () => {
         nameId: '',
         rolesRefs: [],
         accountInfos: [],
+accountConfigs: [],
         passwords: [],
         contactInfos: [],
         clientDevices: [],
