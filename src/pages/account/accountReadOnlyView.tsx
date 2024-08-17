@@ -76,16 +76,6 @@ const AccountReadOnlyView = ({account}:props) => {
             contents: account?.rolesRefs?.length || 0
         },
         {
-            module: 'Limited Transactions',
-            moduleRoute: 'limitedTransactions',
-            contents: account?.limitedTransactions?.length || 0
-        },
-        {
-            module: 'Client Devices',
-            moduleRoute: 'clientDevices',
-            contents: account?.clientDevices?.length || 0
-        },
-        {
             module: 'Workspaces',
             moduleRoute: 'workspaces',
             contents: account?.workspaces?.length || 0
@@ -95,6 +85,21 @@ const AccountReadOnlyView = ({account}:props) => {
             moduleRoute: 'passwords',
             contents: account?.passwords?.length || 0
         },
+        {
+            module: 'Client Devices',
+            moduleRoute: 'clientDevices',
+            contents: account?.clientDevices?.length || 0
+        },
+        {
+            module: 'Limited Transactions',
+            moduleRoute: 'limitedTransactions',
+            contents: account?.limitedTransactions?.length || 0
+        },
+        {
+            module: 'Account Configurations',
+            moduleRoute: 'accountConfigs',
+            contents: account?.accountConfigs?.length || 0
+        }
     ]
 
     return account? (

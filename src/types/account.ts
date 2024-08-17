@@ -97,7 +97,7 @@ export interface IAccountConfig {
     _id?: string,
     key: string,
     value: string,
-    type: TAccountInfoType
+    type: TAccountConfigType
 }
 
 export interface IWorkspaceAccountRef {

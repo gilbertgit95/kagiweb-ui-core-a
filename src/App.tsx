@@ -92,6 +92,10 @@ import AccountAccountInfoPage from './pages/accountAccountInfo/accountAccountInf
 import AccountAccountInfoEditPage from './pages/accountAccountInfo/accountAccountInfoEditPage';
 import AccountAccountInfoCreatePage from './pages/accountAccountInfo/accountAccountInfoCreatePage';
 
+import AccountAccountConfigsPage from './pages/accountAccountConfig/accountAccountConfigsPage';
+import AccountAccountConfigPage from './pages/accountAccountConfig/accountAccountConfigPage';
+import AccountAccountConfigEditPage from './pages/accountAccountConfig/accountAccountConfigEditPage';
+
 import AccountWorkspacesPage from './pages/accountWorkspace/accountWorkspacesPage';
 import AccountWorkspacePage from './pages/accountWorkspace/accountWorkspacePage';
 import AccountWorkspaceCreatePage from './pages/accountWorkspace/accountWorkspaceCreatePage';
@@ -109,6 +113,11 @@ import OwnerAccountInfosPage from './pages/owner/ownerAccountInfosPage';
 import OwnerAccountInfoCreatePage from './pages/owner/ownerAccountInfoCreatePage';
 import OwnerAccountInfoEditPage from './pages/owner/ownerAccountInfoEditPage';
 import OwnerAccountInfoPage from './pages/owner/ownerAccountInfoPage';
+
+import OwnerAccountConfigsPage from './pages/owner/ownerAccountConfigsPage';
+import OwnerAccountConfigEditPage from './pages/owner/ownerAccountConfigEditPage';
+import OwnerAccountConfigPage from './pages/owner/ownerAccountConfigPage';
+
 import OwnerContactInfosPage from './pages/owner/ownerContactInfosPage';
 import OwnerContactInfoCreatePage from './pages/owner/ownerContactInfoCreatePage';
 import OwnerContactInfoPage from './pages/owner/ownerContactInfoPage';
@@ -193,11 +202,15 @@ appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos', page: 
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/contactInfos/:contactInfoId', page: AccountContactInfoPage })
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/contactInfos/:contactInfoId', page: AccountContactInfoEditPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/contactInfos', page: AccountContactInfoCreatePage })
-// account user infos
+// account account infos
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/accountInfos', page: AccountAccountInfosPage })
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/accountInfos/:accountInfoId', page: AccountAccountInfoPage })
 appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/accountInfos/:accountInfoId', page: AccountAccountInfoEditPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/accountInfos', page: AccountAccountInfoCreatePage })
+// account account configs
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/accountConfigs', page: AccountAccountConfigsPage })
+appHandler.addPrivateRoute({url: 'accounts/view/:accountId/accountConfigs/:accountConfigId', page: AccountAccountConfigPage })
+appHandler.addPrivateRoute({url: 'accounts/edit/:accountId/accountConfigs/:accountConfigId', page: AccountAccountConfigEditPage })
 // account workspaces
 appHandler.addPrivateRoute({url: 'accounts/view/:accountId/workspaces', page: AccountWorkspacesPage })
 appHandler.addPrivateRoute({url: 'accounts/create/:accountId/workspaces', page: AccountWorkspaceCreatePage })
@@ -217,6 +230,10 @@ appHandler.addPrivateRoute({url: 'owner/view/accountInfos', page: OwnerAccountIn
 appHandler.addPrivateRoute({url: 'owner/create/accountInfos', page: OwnerAccountInfoCreatePage })
 appHandler.addPrivateRoute({url: 'owner/view/accountInfos/:accountInfoId', page: OwnerAccountInfoPage })
 appHandler.addPrivateRoute({url: 'owner/edit/accountInfos/:accountInfoId', page: OwnerAccountInfoEditPage })
+// owner account config
+appHandler.addPrivateRoute({url: 'owner/view/accountConfigs', page: OwnerAccountConfigsPage })
+appHandler.addPrivateRoute({url: 'owner/view/accountConfigs/:accountConfigId', page: OwnerAccountConfigPage })
+appHandler.addPrivateRoute({url: 'owner/edit/accountConfigs/:accountConfigId', page: OwnerAccountConfigEditPage })
 // owner contact info
 appHandler.addPrivateRoute({url: 'owner/view/contactInfos', page: OwnerContactInfosPage })
 appHandler.addPrivateRoute({url: 'owner/create/contactInfos', page: OwnerContactInfoCreatePage })

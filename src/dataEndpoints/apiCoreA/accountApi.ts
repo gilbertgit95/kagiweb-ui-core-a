@@ -1,6 +1,6 @@
 import apiHelper from "./apiHelper";
 import { IPageQuery } from "../../types/mixTypes";
-import { IAccount, IAccountInfo, IContactInfo, IRoleRef, IAccountUpdate, ILimitedTransaction, IClientDevice, IAccessToken } from "../../types/account";
+import { IAccount, IAccountInfo, IAccountConfig, IContactInfo, IRoleRef, IAccountUpdate, ILimitedTransaction, IClientDevice, IAccessToken } from "../../types/account";
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 class AccountApi {
@@ -100,6 +100,23 @@ class AccountApi {
         return apiHelper.privateReq({
             method: 'DELETE',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountInfos/${ accountInfoId }`
+        })
+    }
+
+    // account config
+    public static updateAccountConfig(accountId:string, accountConfig:IAccountConfig) {
+        const data:IAccountConfig = {
+            '_id': accountConfig._id,
+            'key': accountConfig.key,
+            'value': accountConfig.value,
+            'type': accountConfig.type
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountConfigs/${ accountConfig._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
         })
     }
 

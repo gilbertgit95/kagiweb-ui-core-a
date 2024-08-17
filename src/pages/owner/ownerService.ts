@@ -4,6 +4,7 @@ import {
     IAccount,
     IAccountUpdate,
     IAccountInfo,
+    IAccountConfig,
     IContactInfo,
     IRoleRef,
     ILimitedTransaction,
@@ -38,6 +39,11 @@ class OwnerService {
 
     public static deleteAccountInfo(accountId:string, accountInfoId:string):Promise<{data: IAccountInfo}> {
         return OwnerApi.deleteAccountInfo(accountId, accountInfoId)
+    }
+
+    // account config
+    public static updateAccountConfig(accountId:string, accountConfig: IAccountConfig):Promise<{data: IAccountConfig}> {
+        return OwnerApi.updateAccountConfig(accountId, accountConfig)
     }
 
     // contact Info
