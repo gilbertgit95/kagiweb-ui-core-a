@@ -12,7 +12,7 @@ export interface ISignedInUser {
     features?: IFeature[],
     workspace?: IWorkspace,
     workspaces?: IWorkspace[],
-    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameID: string, ownerAccountType: string})[]
+    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[]
 }
 
 export interface IOptSignedInUser {
@@ -24,7 +24,7 @@ export interface IOptSignedInUser {
     features?: IFeature[]|undefined,
     workspace?: IWorkspace|undefined,
     workspaces?: IWorkspace[]|undefined,
-    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameID: string, ownerAccountType: string})[]|undefined
+    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[]|undefined
 }
 
 const initialState:ISignedInUser = {
