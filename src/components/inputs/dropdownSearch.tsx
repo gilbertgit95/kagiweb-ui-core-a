@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Divider, TextField, Box, Typography, Button } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -17,12 +18,13 @@ interface IOption {
 
 interface IProps {
     // minWidth?: number,
+    anchorEl?: HTMLElement|null,
     selected?: string,
     options: IOption[],
-    ariaLabel: string,
-    ariaControls: string,
     placeholder?: string,
-    onSelect?: (selected:string) => void
+    loading?: boolean,
+    onSelect?: (selected:string) => void,
+    onClose?: () => void
 }
 
 const DropDownSearch = (props: IProps) => {
@@ -38,6 +40,7 @@ const DropDownSearch = (props: IProps) => {
     const handleClose = () => {
         setAnchorEl(null)
         setSearch('')
+        if (props.onClose) props.onClose()
     }
 
     const handleSelect = (selected:string) => {
@@ -63,45 +66,33 @@ const DropDownSearch = (props: IProps) => {
         setFilteredOptions(filteredOpts)
     }, [search, props.options])
 
-    const placeholder =  `${ props.placeholder || 'Select' }*`
+    const placeholder =  `${ props.placeholder || 'Select' } *`
 
     return (
         <>
-            <Button
-                // sx={{minWidth: `${ props.minWidth || 300 }px`}}
-                aria-label={props.ariaLabel}
-                aria-controls={props.ariaControls}
-                aria-haspopup="true"
-                startIcon={<ExpandMoreIcon />}
-                onClick={handleMenu}
-                size="large"
-                color="primary"
-                variant="outlined">
-                { selectedLabel || placeholder }
-            </Button>
+            {
+                props.anchorEl === undefined? (
+                    <LoadingButton
+                        aria-haspopup="true"
+                        startIcon={<ExpandMoreIcon />}
+                        onClick={handleMenu}
+                        size="large"
+                        loading={props.loading}
+                        loadingPosition="start"
+                        style={{color: 'white'}}
+                        variant="text">
+                        { selectedLabel || placeholder }
+                    </LoadingButton>
+                ): null
+            }
             
-            {/* <TextField
-                aria-label={props.ariaLabel}
-                aria-controls={props.ariaControls}
-                aria-haspopup="true"
-                placeholder={props.placeholder || 'Search'}
-                value={selectedLabel || ''}
-                InputProps={{
-                    startAdornment: (
-                    <InputAdornment position="start">
-                        <SearchIcon />
-                    </InputAdornment>
-                    ),
-                }}
-                onClick={handleMenu} /> */}
             <Menu
-                id={props.ariaControls}
                 anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'left'
                 }}
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
+                anchorEl={props.anchorEl === undefined? anchorEl: props.anchorEl}
+                open={Boolean(props.anchorEl === undefined? anchorEl: props.anchorEl)}
                 onClose={handleClose}>
                 <TextField
                     sx={{marginRight: '10px', marginLeft: '10px'}}

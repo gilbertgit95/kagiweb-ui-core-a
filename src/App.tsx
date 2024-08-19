@@ -42,7 +42,7 @@ import ResetPasswordPage from './pages/auth/resetPasswordPage';
 
 // private pages
 import PrivateHomePage from './pages/home/privateHomePage';
-import WorkspaceHomePage from './pages/home/workspacesHomePage';
+// import WorkspaceHomePage from './pages/home/workspacesHomePage';
 
 import FeaturesPage from './pages/feature/featuresPage';
 import FeaturePage from './pages/feature/featurePage';
@@ -271,24 +271,15 @@ appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs
 appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceAccountRefEditPage })
 
 // workspace data
-appHandler.addPrivateRoute({url: 'workspaces/view/:workspaceId', page: WorkspaceHomePage })
+// appHandler.addPrivateRoute({url: 'workspaces/view/:workspaceId', page: WorkspaceHomePage })
 
 // add items to main drawers
 appHandler.addMainDrawer({
   label: 'Account Data',
   links:  [
-      { label: 'Account Dashboard', url: '/', Icon: HomeIcon },
-      { label: 'Account Notes*', url: '/notes', Icon: NotesIcon },
-      { label: 'Account Tasks*', url: '/tasks', Icon: TaskIcon }
-  ]
-})
-
-appHandler.addMainDrawer({
-  label: 'Workspace Data',
-  links:  [
-      { label: 'Workspace Dashboard*', url: '/workspaces/view/none', Icon: HomeIcon },
-      { label: 'Workspace Notes*', url: '/notes', Icon: NotesIcon },
-      { label: 'Workspace Tasks*', url: '/tasks', Icon: TaskIcon }
+      { label: 'Dashboard', url: '/', Icon: HomeIcon },
+      { label: 'Notes', url: '/notes', Icon: NotesIcon },
+      { label: 'Tasks', url: '/tasks', Icon: TaskIcon }
   ]
 })
 

@@ -21,6 +21,8 @@ import { toggleTheme } from '../stores/appRefsSlice';
 
 import AuthService from '../pages/auth/authService';
 import PrimaryNav, { TLinkGroup } from '../components/navs/primaryNav';
+import WorkspaceSelectorComponent from '../pages/accountAccountConfig/workspaceSelectorComponent';
+import RoleSelectorComponent from '../pages/accountAccountConfig/roleSelectorComponent';
 
 import appComponentsHandler from '../utils/appComponentsHandler';
 import DataTransformer from '../utils/dataTransformer';
@@ -34,6 +36,7 @@ const NavCustomEl = () => {
     const userFeatures = useAppSelector(state => state.signedInAccount?.features) || []
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const [roleChangeAnchorEl, setRoleChangeAnchorEl] = React.useState<null | HTMLElement>(null)
 
     const customLinks:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-account-drawer'
@@ -80,10 +83,13 @@ const NavCustomEl = () => {
 
     return (
         <>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                { appComponentsHandler.appConfig.AppName }
-            </Typography>
-            <div>
+            <Box component={'div'} style={{width: '100%'}}>
+                {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    { appComponentsHandler.appConfig.AppName }
+                </Typography> */}
+                <WorkspaceSelectorComponent />
+            </Box>
+            <Box component={'div'}>
                 <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -150,12 +156,15 @@ const NavCustomEl = () => {
                             </ListItemIcon>
                             <ListItemText>Notifications*</ListItemText>
                         </MenuItem>
-                        <MenuItem onClick={() => handleLinkClick('/owner/edit/roles')}>
+                        <MenuItem onClick={(e) => setRoleChangeAnchorEl(e.currentTarget)}>
                             <ListItemIcon>
                                 <AdminPanelSettingsIcon />
                             </ListItemIcon>
                             <ListItemText>Change Role</ListItemText>
                         </MenuItem>
+                        <RoleSelectorComponent
+                            anchorEl={roleChangeAnchorEl}
+                            onClose={() => setRoleChangeAnchorEl(null)} />
                         <MenuItem onClick={() => handleThemeToggle(appTheme)}>
                             <ListItemIcon>
                                 { appTheme === 'dark'? <DarkModeIcon />: <WbSunnyIcon /> }
@@ -170,7 +179,7 @@ const NavCustomEl = () => {
                         </MenuItem>
                     </Box>
                 </Menu>
-            </div>
+            </Box>
         </>
     )
 }
