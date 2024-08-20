@@ -13,6 +13,17 @@ class AccountAccountConfigService {
         return undefined
     }
 
+    public static getAccountConfigByKey(account:IAccount, accountConfigKey:string):IAccountConfig|undefined {
+
+        if (account && account.accountConfigs) {
+            for (const config of account.accountConfigs) {
+                if (config.key === accountConfigKey) return config
+            }
+        }
+
+        return undefined
+    }
+
     public static updateAccountConfig(accountId:string, accountConfig:IAccountConfig):Promise<{data: IAccountConfig}> {
         return AccountApi.updateAccountConfig(accountId, accountConfig)
     }

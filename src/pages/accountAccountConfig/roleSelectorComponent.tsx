@@ -8,7 +8,6 @@ interface Props {
     defaultRole?: IRole,
     assignedRoles: IRole[],
     anchorEl?: HTMLElement|null,
-    children?: React.ReactNode,
     onSelect?: (selected:string) => void,
     onClose?: () => void
 }
@@ -17,7 +16,6 @@ const RoleSelectorComponent = ({
         defaultRole,
         assignedRoles,
         anchorEl,
-        children,
         onSelect,
         onClose
     }:Props) => {
@@ -48,6 +46,7 @@ const RoleSelectorComponent = ({
             options={roles}
             onSelect={(sel) => {
                 setSelectedRole(sel)
+                if (onSelect) onSelect(sel)
             }}
             onClose={() => {
                 if (onClose) onClose()

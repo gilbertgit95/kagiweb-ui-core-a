@@ -16,7 +16,7 @@ const PrivateRoutes = () => {
 
     const privateRoutes = useMemo(() => {
         const filterType = 'ui-route'
-        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item.type === filterType) || [])
+        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item?.type === filterType) || [])
         let routes = _.clone(appComponentsHandler.routes.privateRoutes)
         const filteredRoutes = routes.filter(route => {
             const url = route.url

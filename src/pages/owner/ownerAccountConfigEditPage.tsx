@@ -9,6 +9,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountAccountConfigEditForm from '../accountAccountConfig/accountAccountConfigEditForm';
 import OwnerService from './ownerService';
+import AppUtils from '../../utils/appUtils';
 // import AccountService from '../account/accountService';
 // import AccountAccountConfigService from './accountAccountConfigService';
 import { IAccount } from '../../types/account';
@@ -29,7 +30,7 @@ const OwnerAccountConfigEditPage = () => {
         try {
             const accountResp = await OwnerService.getOwner()
             setAccount(accountResp.data)
-
+            await AppUtils.loadSigninAccountData()
         } catch (err:any) {
             setConfigAndErrors({
                 ...{infoMessages: []},

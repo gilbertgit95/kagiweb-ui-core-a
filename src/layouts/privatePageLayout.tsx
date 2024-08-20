@@ -20,12 +20,15 @@ import { clearAccountData } from '../stores/signedInAccountSlice';
 import { toggleTheme } from '../stores/appRefsSlice';
 
 import AuthService from '../pages/auth/authService';
+import OwnerService from '../pages/owner/ownerService';
+import AccountAccountConfigService from '../pages/accountAccountConfig/accountAccountConfigService';
 import PrimaryNav, { TLinkGroup } from '../components/navs/primaryNav';
 import WorkspaceSelectorComponent from '../pages/accountAccountConfig/workspaceSelectorComponent';
 import RoleSelectorComponent from '../pages/accountAccountConfig/roleSelectorComponent';
 
 import appComponentsHandler from '../utils/appComponentsHandler';
 import DataTransformer from '../utils/dataTransformer';
+import AppUtils from '../utils/appUtils';
 import { IFeature } from '../types/feature';
 
 const NavCustomEl = () => {
@@ -47,7 +50,7 @@ const NavCustomEl = () => {
 
     const customLinks:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-account-drawer'
-        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item.type === filterType) || [])
+        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item?.type === filterType) || [])
         const drawers = appComponentsHandler.userDrawer.privateUserDrawers
         const filteredLinks = drawers.reduce<TLinkGroup[]>((acc, group) => {
             const grp = _.clone(group)
@@ -77,6 +80,36 @@ const NavCustomEl = () => {
         localStorage.setItem(appComponentsHandler.appConfig.AppThemeKey, updatedTheme)
     }
 
+    const handleWorkspaceSelection = async (sel:string) => {
+        if (!accountData) return
+        // get config id using key
+        const config = AccountAccountConfigService.getAccountConfigByKey(accountData, 'default-workspace')
+
+        if (!config) return
+        await OwnerService.updateAccountConfig('', {
+            _id: config._id,
+            key: config.key,
+            value: sel,
+            type: config.type
+        })
+        await AppUtils.loadSigninAccountData()
+    }
+
+    const handleRoleSelection = async (sel:string) => {
+        if (!accountData) return
+        // get config id using key
+        const config = AccountAccountConfigService.getAccountConfigByKey(accountData, 'default-role')
+
+        if (!config) return
+        await OwnerService.updateAccountConfig('', {
+            _id: config._id,
+            key: config.key,
+            value: sel,
+            type: config.type
+        })
+        await AppUtils.loadSigninAccountData()
+    }
+
     const handleSignout = async () => {
         try {
             await AuthService.signout()
@@ -98,7 +131,8 @@ const NavCustomEl = () => {
                     accountData={accountData}
                     defaultWorkspace={defaultWorkspace}
                     ownWorkspaces={ownWorkspaces}
-                    externalWorkspaces={externalWorkspaces} />
+                    externalWorkspaces={externalWorkspaces}
+                    onSelect={handleWorkspaceSelection} />
             </Box>
             <Box component={'div'}>
                 <IconButton
@@ -177,7 +211,8 @@ const NavCustomEl = () => {
                             defaultRole={defaultRole}
                             assignedRoles={assignedRoles}
                             anchorEl={roleChangeAnchorEl}
-                            onClose={() => setRoleChangeAnchorEl(null)} />
+                            onClose={() => setRoleChangeAnchorEl(null)}
+                            onSelect={handleRoleSelection} />
                         <MenuItem onClick={() => handleThemeToggle(appTheme)}>
                             <ListItemIcon>
                                 { appTheme === 'dark'? <DarkModeIcon />: <WbSunnyIcon /> }
@@ -203,7 +238,7 @@ const PrivatePageLayout = () => {
 
     const links:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-main-drawer'
-        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item.type === filterType) || [])
+        const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item?.type === filterType) || [])
         const drawers = appComponentsHandler.mainDrawer
         const filteredLinks = drawers.reduce<TLinkGroup[]>((acc, group) => {
             const grp = _.clone(group)

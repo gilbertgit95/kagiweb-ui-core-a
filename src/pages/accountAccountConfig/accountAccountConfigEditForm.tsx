@@ -172,7 +172,8 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo
                                     (accountConfig.key === 'default-role')? (
                                         <RoleSelectorComponent
                                             defaultRole={completeInfo.role}
-                                            assignedRoles={completeInfo.roles || []} />
+                                            assignedRoles={completeInfo.roles || []}
+                                            onSelect={(sel) => handleTextFieldChange('value', sel)} />
                                     ): null
                                 }
                                 {
@@ -181,7 +182,8 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo
                                             accountData={completeInfo.accountData}
                                             defaultWorkspace={completeInfo.workspace}
                                             ownWorkspaces={completeInfo.workspaces || []}
-                                            externalWorkspaces={completeInfo.externalWorkspaces || []} />
+                                            externalWorkspaces={completeInfo.externalWorkspaces || []}
+                                            onSelect={(sel) => handleTextFieldChange('value', sel)} />
                                     ): null
                                 }
                                 {

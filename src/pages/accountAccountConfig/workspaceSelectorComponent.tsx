@@ -14,7 +14,6 @@ interface Props {
     ownWorkspaces: IWorkspace[],
     externalWorkspaces: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[],
     anchorEl?: HTMLElement|null,
-    children?: React.ReactNode,
     onSelect?: (selected:string) => void,
     onClose?: () => void
 }
@@ -25,7 +24,6 @@ const WorkspaceSelectorComponent = ({
         ownWorkspaces,
         externalWorkspaces,
         anchorEl,
-        children,
         onSelect,
         onClose,
     }:Props) => {
@@ -67,6 +65,7 @@ const WorkspaceSelectorComponent = ({
             options={workspaces}
             onSelect={(sel) => {
                 setSelectedWorkspace(sel)
+                if (onSelect) onSelect(sel)
             }}
             onClose={() => {
                 if (onClose) onClose()
