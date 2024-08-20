@@ -86,12 +86,7 @@ const NavCustomEl = () => {
         const config = AccountAccountConfigService.getAccountConfigByKey(accountData, 'default-workspace')
 
         if (!config) return
-        await OwnerService.updateAccountConfig('', {
-            _id: config._id,
-            key: config.key,
-            value: sel,
-            type: config.type
-        })
+        await OwnerService.updateAccountConfig('', config._id!, sel)
         await AppUtils.loadSigninAccountData()
     }
 
@@ -101,12 +96,7 @@ const NavCustomEl = () => {
         const config = AccountAccountConfigService.getAccountConfigByKey(accountData, 'default-role')
 
         if (!config) return
-        await OwnerService.updateAccountConfig('', {
-            _id: config._id,
-            key: config.key,
-            value: sel,
-            type: config.type
-        })
+        await OwnerService.updateAccountConfig('', config._id!, sel)
         await AppUtils.loadSigninAccountData()
     }
 

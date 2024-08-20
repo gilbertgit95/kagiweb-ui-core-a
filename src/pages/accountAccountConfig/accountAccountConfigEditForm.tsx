@@ -15,7 +15,7 @@ interface props {
     account?: IAccount,
     accountConfigId?: string,
     getCompleteInfo: (accountId:string) => Promise<{data:ISignedInUser}>,
-    updateFunc: (accountId:string, updateData:IAccountConfig) => Promise<{data:IAccountConfig}>,
+    updateFunc: (accountId:string, accountConfigId:string, value:string) => Promise<{data:IAccountConfig}>,
     updated?: (accountId:string|undefined, accountConfig:IAccountConfig|undefined) => void
 }
 
@@ -55,7 +55,7 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo
         // // send update data to the api
         if (account?._id) {
             try {
-                const reqResp = await updateFunc(account._id, updateData)
+                const reqResp = await updateFunc(account._id, updateData._id!, updateData.value)
                 setConfigAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}

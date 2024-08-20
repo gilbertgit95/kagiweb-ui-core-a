@@ -24,8 +24,8 @@ class AccountAccountConfigService {
         return undefined
     }
 
-    public static updateAccountConfig(accountId:string, accountConfig:IAccountConfig):Promise<{data: IAccountConfig}> {
-        return AccountApi.updateAccountConfig(accountId, accountConfig)
+    public static updateAccountConfig(accountId:string, configId:string, value:string):Promise<{data: IAccountConfig}> {
+        return AccountApi.updateAccountConfig(accountId, configId, value)
     }
 }
 

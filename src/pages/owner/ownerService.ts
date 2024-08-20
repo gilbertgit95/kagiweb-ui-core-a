@@ -42,8 +42,8 @@ class OwnerService {
     }
 
     // account config
-    public static updateAccountConfig(accountId:string, accountConfig: IAccountConfig):Promise<{data: IAccountConfig}> {
-        return OwnerApi.updateAccountConfig(accountId, accountConfig)
+    public static updateAccountConfig(accountId:string, configId:string, value:string):Promise<{data: IAccountConfig}> {
+        return OwnerApi.updateAccountConfig(accountId, configId, value)
     }
 
     // contact Info

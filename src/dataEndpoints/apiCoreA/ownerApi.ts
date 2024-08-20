@@ -74,17 +74,14 @@ class OwnerApi {
     }
 
     // account config
-    public static updateAccountConfig(accountId:string, accountConfig:IAccountConfig) {
-        const data:IAccountConfig = {
-            '_id': accountConfig._id,
-            'key': accountConfig.key,
-            'value': accountConfig.value,
-            'type': accountConfig.type
+    public static updateAccountConfig(accountId:string, accountConfigId:string, value:string) {
+        const data:{value:string} = {
+            'value': value
         }
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/accountConfigs/${ accountConfig._id }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/accountConfigs/${ accountConfigId }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
