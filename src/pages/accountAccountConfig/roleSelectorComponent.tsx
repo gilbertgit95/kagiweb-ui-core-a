@@ -8,6 +8,7 @@ interface Props {
     defaultRole?: IRole,
     assignedRoles: IRole[],
     anchorEl?: HTMLElement|null,
+    style?:any,
     onSelect?: (selected:string) => void,
     onClose?: () => void
 }
@@ -16,6 +17,7 @@ const RoleSelectorComponent = ({
         defaultRole,
         assignedRoles,
         anchorEl,
+        style,
         onSelect,
         onClose
     }:Props) => {
@@ -44,6 +46,7 @@ const RoleSelectorComponent = ({
             placeholder='Select Role'
             selected={selectedRole}
             options={roles}
+            style={style}
             onSelect={(sel) => {
                 setSelectedRole(sel)
                 if (onSelect) onSelect(sel)

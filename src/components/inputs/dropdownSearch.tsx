@@ -23,6 +23,7 @@ interface IProps {
     options: IOption[],
     placeholder?: string,
     loading?: boolean,
+    style?: any,
     onSelect?: (selected:string) => void,
     onClose?: () => void
 }
@@ -79,7 +80,8 @@ const DropDownSearch = (props: IProps) => {
                         size="large"
                         loading={props.loading}
                         loadingPosition="start"
-                        style={{color: 'white'}}
+                        style={props.style || {}}
+                        color="secondary"
                         variant="text">
                         { selectedLabel || placeholder }
                     </LoadingButton>

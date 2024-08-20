@@ -118,6 +118,7 @@ const NavCustomEl = () => {
                     { appComponentsHandler.appConfig.AppName }
                 </Typography> */}
                 <WorkspaceSelectorComponent
+                    style={{color: 'white'}}
                     accountData={accountData}
                     defaultWorkspace={defaultWorkspace}
                     ownWorkspaces={ownWorkspaces}

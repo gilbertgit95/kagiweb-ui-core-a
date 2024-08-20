@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import DropDownSearch from '../../components/inputs/dropdownSearch';
 
 import { useAppDispatch, useAppSelector} from '../../stores/appStore';
+import { PropaneSharp } from '@mui/icons-material';
 
 interface Props {
     accountData?: IAccount,
@@ -14,6 +15,7 @@ interface Props {
     ownWorkspaces: IWorkspace[],
     externalWorkspaces: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[],
     anchorEl?: HTMLElement|null,
+    style?:any,
     onSelect?: (selected:string) => void,
     onClose?: () => void
 }
@@ -24,6 +26,7 @@ const WorkspaceSelectorComponent = ({
         ownWorkspaces,
         externalWorkspaces,
         anchorEl,
+        style,
         onSelect,
         onClose,
     }:Props) => {
@@ -63,6 +66,7 @@ const WorkspaceSelectorComponent = ({
             placeholder='Select Workspace'
             selected={selectedWorkspace}
             options={workspaces}
+            style={style}
             onSelect={(sel) => {
                 setSelectedWorkspace(sel)
                 if (onSelect) onSelect(sel)
