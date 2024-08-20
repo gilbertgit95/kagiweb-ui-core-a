@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { IAccount, IWorkspace } from '../../types/account'
+
 import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
 import PersonIcon from '@mui/icons-material/Person';
 import DropDownSearch from '../../components/inputs/dropdownSearch';
@@ -7,18 +9,31 @@ import DropDownSearch from '../../components/inputs/dropdownSearch';
 import { useAppDispatch, useAppSelector} from '../../stores/appStore';
 
 interface Props {
+    accountData?: IAccount,
+    defaultWorkspace?: IWorkspace,
+    ownWorkspaces: IWorkspace[],
+    externalWorkspaces: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[],
     anchorEl?: HTMLElement|null,
     children?: React.ReactNode,
     onSelect?: (selected:string) => void,
     onClose?: () => void
 }
 
-const WorkspaceSelectorComponent = (props:Props) => {
+const WorkspaceSelectorComponent = ({
+        accountData,
+        defaultWorkspace,
+        ownWorkspaces,
+        externalWorkspaces,
+        anchorEl,
+        children,
+        onSelect,
+        onClose,
+    }:Props) => {
 
-    const accountData = useAppSelector(state => state.signedInAccount?.accountData)
-    const defaultWorkspace = useAppSelector(state => state.signedInAccount?.workspace)
-    const ownWorkspaces = useAppSelector(state => state.signedInAccount?.workspaces) || []
-    const externalWorkspaces = useAppSelector(state => state.signedInAccount?.externalWorkspaces) || []
+    // const accountData = useAppSelector(state => state.signedInAccount?.accountData)
+    // const defaultWorkspace = useAppSelector(state => state.signedInAccount?.workspace)
+    // const ownWorkspaces = useAppSelector(state => state.signedInAccount?.workspaces) || []
+    // const externalWorkspaces = useAppSelector(state => state.signedInAccount?.externalWorkspaces) || []
 
     const [workspaces, setWorkspaces] = useState<{key: string, label: string, subLabel?:string, Icon?:React.FC}[]>([])
     const [selectedWorkspace, setSelectedWorkspace] = useState<string | undefined>(undefined)
@@ -46,7 +61,7 @@ const WorkspaceSelectorComponent = (props:Props) => {
 
     return (
         <DropDownSearch
-            anchorEl={props.anchorEl}
+            anchorEl={anchorEl}
             placeholder='Select Workspace'
             selected={selectedWorkspace}
             options={workspaces}
@@ -54,7 +69,7 @@ const WorkspaceSelectorComponent = (props:Props) => {
                 setSelectedWorkspace(sel)
             }}
             onClose={() => {
-                if (props.onClose) props.onClose()
+                if (onClose) onClose()
             }} />
     )
 }

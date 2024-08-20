@@ -79,6 +79,7 @@ const AccountAccountConfigEditPage = () => {
                 <AccountContactConfigEditForm
                     account={account}
                     accountConfigId={accountConfigId}
+                    getCompleteInfo={AccountService.getAccountCompleteInfo}
                     updateFunc={AccountAccountConfigService.updateAccountConfig}
                     updated={onUpdated} />
 

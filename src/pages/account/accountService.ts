@@ -1,4 +1,5 @@
 import AccountApi from "../../dataEndpoints/apiCoreA/accountApi"
+import { ISignedInUser } from "../../stores/signedInAccountSlice"
 // import { ISignedInaccount } from "../../stores/signedInAccountSlice"
 import { IAccount, IAccountInfo, IContactInfo,TContactInfoType, IAccountUpdate } from "../../types/account"
 import { IPagination, IPageQuery } from "../../types/mixTypes"
@@ -14,6 +15,10 @@ class AccountService {
         }
 
         return undefined
+    }
+
+    public static getAccountCompleteInfo(id:string):Promise<{data: ISignedInUser}> {
+        return AccountApi.getAccountCompleteInfo(id)
     }
 
     public static getContactInfo(account:IAccount, type:TContactInfoType):IContactInfo|undefined {

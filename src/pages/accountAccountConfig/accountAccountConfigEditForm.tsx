@@ -5,17 +5,21 @@ import EditIcon from '@mui/icons-material/Edit';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
+import WorkspaceSelectorComponent from './workspaceSelectorComponent';
+import RoleSelectorComponent from './roleSelectorComponent';
 import AccountAccountConfigService from './accountAccountConfigService';
 import { IAccount, IAccountConfig, TAccountConfigType, accountConfigTypes } from '../../types/account';
+import { ISignedInUser } from '../../stores/signedInAccountSlice';
 
 interface props {
     account?: IAccount,
     accountConfigId?: string,
+    getCompleteInfo: (accountId:string) => Promise<{data:ISignedInUser}>,
     updateFunc: (accountId:string, updateData:IAccountConfig) => Promise<{data:IAccountConfig}>,
     updated?: (accountId:string|undefined, accountConfig:IAccountConfig|undefined) => void
 }
 
-const AccountAccountConfigEditForm = ({account, accountConfigId, updateFunc, updated}:props) => {
+const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedAccountConfig, setUpdatedAccountConfig] = useState<IAccountConfig>({
         key: '',
@@ -26,6 +30,7 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, updateFunc, upd
         errorMessages: [],
         infoMessages: []
     })
+    const [completeInfo, setCompleteInfo] = useState<ISignedInUser>({})
 
     const handleTextFieldChange = (field:string, value:string) => {
         setUpdatedAccountConfig({...updatedAccountConfig, ...{[field]: value}})
@@ -87,6 +92,25 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, updateFunc, upd
 
     }, [account, accountConfigId])
 
+    useEffect(() => {
+        const init = async () => {
+            if (account && account._id) {
+                try {
+                const compInfo = await getCompleteInfo(account._id!)
+                setCompleteInfo(compInfo.data)
+                } catch {
+                    setConfigAndErrors({
+                        ...{infoMessages: []},
+                        ...{errorMessages: ['Error while fetching Account complete info']}
+                    })
+                }
+            }
+        }
+
+        init()
+
+    }, [account])
+
     const itemSx = {
         display: 'flex',
         justifyContent: 'flex-end',
@@ -116,6 +140,7 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, updateFunc, upd
                             <Grid item xs={8} md={9}>
                                 <Select
                                     fullWidth
+                                    disabled
                                     value={updatedAccountConfig?.type}
                                     onChange={handleTypeSelectionChange}>
                                     {
@@ -133,6 +158,7 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, updateFunc, upd
                             <Grid item xs={8} md={9}>
                                 <TextField
                                     fullWidth
+                                    disabled
                                     defaultValue={updatedAccountConfig?.key || ''}
                                     onChange={(e) => handleTextFieldChange('key', e.target.value)} />
                             </Grid>
@@ -142,10 +168,34 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, updateFunc, upd
                                 <Typography variant="subtitle1">Value</Typography>
                             </Grid>
                             <Grid item xs={8} md={9}>
-                                <TextField
+                                {
+                                    (accountConfig.key === 'default-role')? (
+                                        <RoleSelectorComponent
+                                            defaultRole={completeInfo.role}
+                                            assignedRoles={completeInfo.roles || []} />
+                                    ): null
+                                }
+                                {
+                                    (accountConfig.key === 'default-workspace')? (
+                                        <WorkspaceSelectorComponent
+                                            accountData={completeInfo.accountData}
+                                            defaultWorkspace={completeInfo.workspace}
+                                            ownWorkspaces={completeInfo.workspaces || []}
+                                            externalWorkspaces={completeInfo.externalWorkspaces || []} />
+                                    ): null
+                                }
+                                {
+                                    (!(new Set(['default-role', 'default-workspace'])).has(accountConfig.key))? (
+                                        <TextField
+                                            fullWidth
+                                            defaultValue={updatedAccountConfig?.value || ''}
+                                            onChange={(e) => handleTextFieldChange('value', e.target.value)} />
+                                    ): null
+                                }
+                                {/* <TextField
                                     fullWidth
                                     defaultValue={updatedAccountConfig?.value || ''}
-                                    onChange={(e) => handleTextFieldChange('value', e.target.value)} />
+                                    onChange={(e) => handleTextFieldChange('value', e.target.value)} /> */}
                             </Grid>
                         </Grid>
                     </>

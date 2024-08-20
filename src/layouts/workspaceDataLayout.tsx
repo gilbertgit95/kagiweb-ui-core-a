@@ -61,8 +61,6 @@ const WorkspaceDataLayout = (props:Props) => {
                     {/* <PrimaryHeader title={'Account Roles Update View'} subtitle={ 'test' } />
                     <Divider /> */}
                     <DropDownSearch
-                        ariaLabel="Search Select Workspace"
-                        ariaControls='select-workspace-menu'
                         placeholder='Select Workspace'
                         selected={selectedWorkspace}
                         options={workspaces}

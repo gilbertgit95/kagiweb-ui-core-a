@@ -75,6 +75,7 @@ const OwnerAccountConfigEditPage = () => {
                 <AccountAccountConfigEditForm
                     account={account}
                     accountConfigId={accountConfigId}
+                    getCompleteInfo={OwnerService.reqOwnerCompleteInfo}
                     updateFunc={OwnerService.updateAccountConfig}
                     updated={onUpdated} />
 

@@ -24,6 +24,13 @@ class AccountApi {
         })
     }
 
+    public static getAccountCompleteInfo(id:string) {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ id }/completeInfo`
+        })
+    }
+
     public static updateAccount(account:IAccountUpdate) {
         const data:IAccountUpdate = {
             _id: account._id

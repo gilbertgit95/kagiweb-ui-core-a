@@ -5,7 +5,7 @@ import { Typography, Divider, Box } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
-import LockIcon from '@mui/icons-material/Lock';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -32,9 +32,16 @@ const NavCustomEl = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const accountData = useAppSelector(state => state.signedInAccount?.accountData)
-    const userRole = useAppSelector(state => state.signedInAccount?.role)
     const userFeatures = useAppSelector(state => state.signedInAccount?.features) || []
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
+
+    const defaultRole = useAppSelector(state => state.signedInAccount?.role)
+    const assignedRoles = useAppSelector(state => state.signedInAccount?.roles) || []
+
+    const defaultWorkspace = useAppSelector(state => state.signedInAccount?.workspace)
+    const ownWorkspaces = useAppSelector(state => state.signedInAccount?.workspaces) || []
+    const externalWorkspaces = useAppSelector(state => state.signedInAccount?.externalWorkspaces) || []
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const [roleChangeAnchorEl, setRoleChangeAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -87,7 +94,11 @@ const NavCustomEl = () => {
                 {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     { appComponentsHandler.appConfig.AppName }
                 </Typography> */}
-                <WorkspaceSelectorComponent />
+                <WorkspaceSelectorComponent
+                    accountData={accountData}
+                    defaultWorkspace={defaultWorkspace}
+                    ownWorkspaces={ownWorkspaces}
+                    externalWorkspaces={externalWorkspaces} />
             </Box>
             <Box component={'div'}>
                 <IconButton
@@ -111,7 +122,7 @@ const NavCustomEl = () => {
                             </ListItemIcon>
                             <ListItemText>
                                 <Typography variant="subtitle1">{ accountData && accountData.nameId? accountData.nameId: '' }</Typography>
-                                <Typography variant="caption" color="primary">{ userRole?.name }</Typography>
+                                <Typography variant="caption" color="primary">{ defaultRole?.name }</Typography>
                             </ListItemText>
                         </MenuItem>
                         <Divider />
@@ -163,6 +174,8 @@ const NavCustomEl = () => {
                             <ListItemText>Change Role</ListItemText>
                         </MenuItem>
                         <RoleSelectorComponent
+                            defaultRole={defaultRole}
+                            assignedRoles={assignedRoles}
                             anchorEl={roleChangeAnchorEl}
                             onClose={() => setRoleChangeAnchorEl(null)} />
                         <MenuItem onClick={() => handleThemeToggle(appTheme)}>
@@ -173,7 +186,7 @@ const NavCustomEl = () => {
                         </MenuItem>
                         <MenuItem onClick={handleSignout}>
                             <ListItemIcon>
-                                <LockIcon />
+                                <PowerSettingsNewIcon />
                             </ListItemIcon>
                             <ListItemText>Signout</ListItemText>
                         </MenuItem>
