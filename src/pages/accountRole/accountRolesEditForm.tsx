@@ -21,9 +21,7 @@ import { IRole } from '../../types/role';
 import AccountRolesAddForm from './accountRolesAddForm';
 
 interface IProps {
-    account: IAccount|undefined
-    // updateFunc: (accountId:string, updateData:{_id: string, isActive?:boolean, roleId?:string}) => Promise<{data:IRoleRef}>,
-    activateFunc: (accountId:string, roleRefId:string) => Promise<{data:IRoleRef}>,
+    account: IAccount|undefined,
     createFunc: (accountId:string, roleId:string) => Promise<{data:IRoleRef}>,
     deleteFunc: (accountId:string, roleRef:string) => Promise<{data:IRoleRef}>,
     onChange: () => void
@@ -34,14 +32,12 @@ interface IRoleRow {
     name: string,
     description: string,
     level: number,
-    absoluteAuthority: boolean,
-    isActive: boolean
+    absoluteAuthority: boolean
 }
 
-const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, onChange}:IProps) => {
+const AccountRolesEditForm = ({account, createFunc, deleteFunc, onChange}:IProps) => {
     const roles = useAppSelector(state => state.appRefs?.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
-    const [currActive, setCurrActive] = useState<string | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
@@ -51,39 +47,8 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
     const [addTableSelection, setAddTableSelection] = useState<string[]>([])
     const [dialog, setDialog] = useState({
         addDialogOpen: false,
-        removeDialogOpen: false,
-        activateDialogOpen: false
+        removeDialogOpen: false
     })
-
-    const activateAccountRole = async () => {
-        const sel:IRoleRef[] | undefined = account?.rolesRefs?.filter(item => item._id === tableSelection[0])
-        if (account?._id && sel) {
-            const selRef = sel[0]
-            console.log('to activate: ', account?._id, sel)
-
-            try {
-                await activateFunc(account?._id, selRef?._id || '')
-
-                setInfoAndErrors({
-                    ...{infoMessages: [`Successfully activated the selected role.`]},
-                    ...{errorMessages: []}
-                })
-            } catch (err:any) {
-                setInfoAndErrors({
-                    ...{infoMessages: []},
-                    ...{errorMessages: [err?.response?.data?.message || '']}
-                })
-            }
-            // close the dialog box
-            setDialog({...dialog, ...{activateDialogOpen: false}})
-            if (onChange) onChange()
-        } else {
-            setInfoAndErrors({
-                ...{infoMessages: []},
-                ...{errorMessages: ['No Item selected']}
-            })
-        }
-    }
 
     const addRoles = async () => {
         // console.log('add this roles: ', addTableSelection)
@@ -169,11 +134,9 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
                             description: role? (role?.description || ''): 'This might have been deleted.',
                             level: role? role.level: -1,
                             absoluteAuthority: Boolean(role?.absoluteAuthority),
-                            isActive: Boolean(item?.isActive)
                         }
                     })
                     // console.log(tarnsformedData)
-                    setCurrActive(AccountRoleService.getActiveRoleRef(account)?._id)
                     setData(tarnsformedData)
                 }
 
@@ -207,17 +170,8 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
             Component: (props:IRoleRow) => {
                 return <Check value={props.absoluteAuthority} />
             }
-        },
-        {
-            header: 'Active',
-            field: 'isActive',
-            Component: (props:IRoleRow) => {
-                return <Check value={props.isActive} />
-            }
         }
     ]
-
-    const currActiveIsInSelected = (new Set(tableSelection)).has(currActive || '')
 
     return (
         <>
@@ -227,16 +181,6 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
                         display: 'flex',
                         justifyContent: 'flex-end',
                     }}>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        disabled={!Boolean(tableSelection.length) || currActiveIsInSelected}
-                        startIcon={<AdjustIcon />}
-                        onClick={() => {
-                            setDialog({...dialog, ...{activateDialogOpen: true}})
-                        }}>
-                        Activate Selected Role
-                    </Button>
                     <Button
                         variant="text"
                         startIcon={<AddIcon />}
@@ -249,34 +193,13 @@ const AccountRolesEditForm = ({account, activateFunc, createFunc, deleteFunc, on
                     <Button
                         color="secondary"
                         variant="text"
-                        disabled={!Boolean(tableSelection.length) || currActiveIsInSelected}
+                        disabled={!Boolean(tableSelection.length) || data.length <= 1}
                         startIcon={<DeleteIcon />}
                         onClick={() => {
                             setDialog({...dialog, ...{removeDialogOpen: true}})
                         }}>
                         remove
                     </Button>
-                    <Dialog
-                        open={dialog.activateDialogOpen}
-                        onClose={() => setDialog({...dialog, ...{activateDialogOpen: false}})}>
-                        <DialogTitle>
-                            Warning
-                        </DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Are you sure you want to activate selected role for { account?.nameId }?
-                                This will deactivate currect active role.
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={() => setDialog({...dialog, ...{activateDialogOpen: false}})}>
-                                no
-                            </Button>
-                            <Button color="secondary" onClick={activateAccountRole} autoFocus>
-                                yes
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
                     <Dialog
                         open={dialog.addDialogOpen}
                         onClose={() => setDialog({...dialog, ...{addDialogOpen: false}})}>

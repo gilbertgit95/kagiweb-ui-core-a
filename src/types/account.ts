@@ -14,8 +14,7 @@ export const accountConfigTypes:TAccountConfigType[] = ['string', 'number', 'dat
 // create interfaces
 export interface IRoleRef {
     _id?: string,
-    roleId: string,
-    isActive?: boolean
+    roleId: string
 }
 
 export interface IPassword {
@@ -117,7 +116,6 @@ export interface IWorkspace {
     name: string,
     description?: string,
     accountRefs?: IWorkspaceAccountRef[],
-    isActive?: boolean,
     disabled?: boolean
 }
 

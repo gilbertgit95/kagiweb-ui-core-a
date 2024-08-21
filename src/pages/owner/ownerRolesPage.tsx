@@ -44,27 +44,13 @@ const OwnerRolesPage = () => {
                     <PrimaryHeader title={'My Account Roles View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Button
                         variant="text"
                         startIcon={<ArrowBackIosNewIcon />}
                         onClick={() => navigate(-1)}>
                         Back
                     </Button>
-                </Grid>
-                <Grid item xs={6} style={{alignContent: 'right'}}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                        <Button
-                            variant="text"
-                            startIcon={<EditIcon />}
-                            onClick={() => navigate(`/owner/edit/roles`)}>
-                            Edit
-                        </Button>
-                    </Box>
                 </Grid>
 
                 <AccountRolesReadOnlyView account={account} />

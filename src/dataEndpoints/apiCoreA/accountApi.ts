@@ -186,8 +186,7 @@ class AccountApi {
 
     public static createAccountRole(accountId:string, accountRole:IRoleRef) {
         const data:IRoleRef = {
-            'roleId': accountRole.roleId,
-            'isActive': accountRole.isActive
+            'roleId': accountRole.roleId
         }
 
         return apiHelper.privateReq({
@@ -327,11 +326,10 @@ class AccountApi {
 
 
     // workspaces
-    public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
+    public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, disabled:boolean) {
         const data = {
             'name': name,
             'description': description,
-            'isActive': isActive,
             'disabled': disabled
         }
 
@@ -343,11 +341,10 @@ class AccountApi {
         })
     }
 
-    public static createWorkspace(accountId:string, name:string, description:string, isActive:boolean, disabled:boolean) {
+    public static createWorkspace(accountId:string, name:string, description:string, disabled:boolean) {
         const data = {
             'name': name,
             'description': description,
-            'isActive': isActive,
             'disabled': disabled
         }
 

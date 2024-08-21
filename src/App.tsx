@@ -123,7 +123,6 @@ import OwnerContactInfoCreatePage from './pages/owner/ownerContactInfoCreatePage
 import OwnerContactInfoPage from './pages/owner/ownerContactInfoPage';
 import OwnerContactInfoEditPage from './pages/owner/ownerContactInfoEditPage';
 import OwnerRolesPage from './pages/owner/ownerRolesPage';
-import OwnerRolesEditPage from './pages/owner/ownerRolesEditPage';
 import OwnerLimitedTransactionsPage from './pages/owner/ownerLimitedTransactionsPage';
 import OwnerLimitedTransactionPage from './pages/owner/ownerLimitedTransactionPage';
 import OwnerLimitedTransactionEditPage from './pages/owner/ownerLimitedTransactionEditPage';
@@ -241,7 +240,6 @@ appHandler.addPrivateRoute({url: 'owner/view/contactInfos/:contactInfoId', page:
 appHandler.addPrivateRoute({url: 'owner/edit/contactInfos/:contactInfoId', page: OwnerContactInfoEditPage })
 // owner roles
 appHandler.addPrivateRoute({url: 'owner/view/roles', page: OwnerRolesPage })
-appHandler.addPrivateRoute({url: 'owner/edit/roles', page: OwnerRolesEditPage })
 // owner limited transaction
 appHandler.addPrivateRoute({url: 'owner/view/limitedTransactions', page: OwnerLimitedTransactionsPage })
 appHandler.addPrivateRoute({url: 'owner/view/limitedTransactions/:limitedTransactionId', page: OwnerLimitedTransactionPage })

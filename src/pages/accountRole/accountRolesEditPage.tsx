@@ -70,7 +70,6 @@ const AccountRolesEditPage = () => {
                 </Grid>
                 <AccountRolesEditForm
                     account={account}
-                    activateFunc={AccountRoleService.activateAccountRole}
                     createFunc={AccountRoleService.createAccountRole}
                     deleteFunc={AccountRoleService.deleteAccountRole}
                     onChange={reLoadUser} />

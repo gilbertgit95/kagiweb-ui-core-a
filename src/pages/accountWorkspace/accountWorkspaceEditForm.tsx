@@ -9,7 +9,7 @@ import { IAccount, IWorkspace } from '../../types/account';
 interface props {
     account?: IAccount,
     workspaceId?: string,
-    updateFunc: (accountId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
+    updateFunc: (accountId:string, workspaceId:string, name:string, description:string, disabled:boolean) => Promise<{data:IWorkspace}>,
     updated?: (accountId:string|undefined, accountInfo:IWorkspace|undefined) => void
 }
 
@@ -18,7 +18,6 @@ const AccountWorkspaceEditForm = ({account, workspaceId, updateFunc, updated}:pr
     const [updatedWorkspace, setUpdatedWorkspace] = useState<IWorkspace>({
         name: '',
         description: '',
-        isActive: false,
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -42,7 +41,6 @@ const AccountWorkspaceEditForm = ({account, workspaceId, updateFunc, updated}:pr
             _id: updatedWorkspace._id,
             name: updatedWorkspace.name,
             description: updatedWorkspace.description,
-            isActive: updatedWorkspace.isActive,
             disabled: updatedWorkspace.disabled
         }
         console.log('save update: ', updateData)
@@ -55,7 +53,6 @@ const AccountWorkspaceEditForm = ({account, workspaceId, updateFunc, updated}:pr
                     workspaceId || '',
                     updatedWorkspace.name,
                     updatedWorkspace.description || '',
-                    Boolean(workspace.isActive),
                     Boolean(updatedWorkspace.disabled)
                 )
                 setInfoAndErrors({

@@ -7,7 +7,7 @@ import { IAccount, IWorkspace } from '../../types/account';
 
 interface props {
     account?: IAccount,
-    createFunc: (accountId:string, name:string, description:string, isActive:boolean, disabled:boolean) => Promise<{data:IWorkspace}>,
+    createFunc: (accountId:string, name:string, description:string, disabled:boolean) => Promise<{data:IWorkspace}>,
     created?: (accountId:string|undefined, accountInfo:IWorkspace|undefined) => void
 }
 
@@ -15,7 +15,6 @@ const AccountWorkspaceCreateForm = ({account, createFunc, created}:props) => {
     const [newWorkspace, setNewWorkspace] = useState<IWorkspace>({
         name: '',
         description: '',
-        isActive: false,
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -43,7 +42,6 @@ const AccountWorkspaceCreateForm = ({account, createFunc, created}:props) => {
                     account._id,
                     newWorkspace.name,
                     newWorkspace.description || '',
-                    Boolean(newWorkspace.isActive),
                     Boolean(newWorkspace.disabled)
                 )
                 if (created) created(account?._id, reqResp?.data)

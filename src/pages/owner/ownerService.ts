@@ -60,10 +60,6 @@ class OwnerService {
     }
 
     // roles
-    public static activateAccountRole(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
-        return OwnerApi.activateAccountRole(accountId, roleRefId)
-    }
-
     public static updateAccountRole(accountId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
         return OwnerApi.updateAccountRole(accountId, AccountRole)
     }
@@ -124,12 +120,12 @@ class OwnerService {
     }
 
     // workspaces
-    public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
-        return OwnerApi.updateWorkspace(accountId, workspaceId, name, description, isActive, disabled)
+    public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, disabled:boolean):Promise<{data: IWorkspace}> {
+        return OwnerApi.updateWorkspace(accountId, workspaceId, name, description, disabled)
     }
 
-    public static createWorkspace(accountId:string, name:string, description:string, isActive:boolean, disabled:boolean):Promise<{data: IWorkspace}> {
-        return OwnerApi.createWorkspace(accountId, name, description, isActive, disabled)
+    public static createWorkspace(accountId:string, name:string, description:string, disabled:boolean):Promise<{data: IWorkspace}> {
+        return OwnerApi.createWorkspace(accountId, name, description, disabled)
     }
 
     public static deleteWorkspace(accountId:string, clientDeviceId:string):Promise<{data: IWorkspace}> {

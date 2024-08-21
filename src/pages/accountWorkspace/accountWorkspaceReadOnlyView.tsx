@@ -45,10 +45,6 @@ const AccountWorkspaceReadOnlyView = ({account, workspaceId}:IProps) => {
             value: workspace?.description || '--'
         },
         {
-            label: 'Default Active',
-            value: Boolean(workspace?.isActive)? 'True': 'False'
-        },
-        {
             label: 'Disabled',
             value: Boolean(workspace?.disabled)? 'True': 'False'
         },

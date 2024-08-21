@@ -17,7 +17,6 @@ interface IRoleRow {
     description: string,
     level: number,
     absoluteAuthority: boolean,
-    isActive: boolean,
     createdAt?: Date,
     updatedAt?: Date
 }
@@ -40,7 +39,6 @@ const AccountRolesReadOnlyView = ({account}:IProps) => {
                     description: role? (role?.description || ''): 'This might have been deleted.',
                     level: role? role.level: -1,
                     absoluteAuthority: role? Boolean(role.absoluteAuthority): false,
-                    isActive: Boolean(item?.isActive),
                     createdAt: item.createdAt,
                     updatedAt: item.updatedAt
                 }
@@ -72,13 +70,6 @@ const AccountRolesReadOnlyView = ({account}:IProps) => {
             field: 'absoluteAuthority',
             Component: (props:IRoleRow) => {
                 return <Check value={props.absoluteAuthority} />
-            }
-        },
-        {
-            header: 'Active',
-            field: 'isActive',
-            Component: (props:IRoleRow) => {
-                return <Check value={props.isActive} />
             }
         },
         {

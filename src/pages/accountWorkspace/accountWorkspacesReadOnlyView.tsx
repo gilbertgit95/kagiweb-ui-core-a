@@ -20,7 +20,6 @@ interface IWorkspaceRow {
     name: string,
     description: string,
     accountRefs: number,
-    isActive: boolean,
     disabled: boolean,
     createdAt?: Date,
     updatedAt?: Date
@@ -37,7 +36,6 @@ const AccountWorkspacesReadOnlyView = ({account}:IProps) => {
                     name: item.name,
                     description: item.description || '--',
                     accountRefs: item.accountRefs?.length || 0,
-                    isActive: Boolean(item.isActive),
                     disabled: Boolean(item.disabled),
                     createdAt: item.createdAt,
                     updatedAt: item.updatedAt
@@ -64,13 +62,6 @@ const AccountWorkspacesReadOnlyView = ({account}:IProps) => {
         {
             header: 'Users',
             field: 'accountRefs'
-        },
-        {
-            header: 'Default Active',
-            field: 'isActive',
-            Component: (props:IWorkspaceRow) => {
-                return <Check value={props.isActive} />
-            }
         },
         {
             header: 'Disabled',
