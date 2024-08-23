@@ -35,6 +35,7 @@ const SigninOTP = () => {
     const [searchParams] = useSearchParams();
     const nameIdUrlQuery = searchParams.get('nameId') || '';
     const otpUrlQuery = searchParams.get('otp') || '';
+    const remember = (searchParams.get('remember') || '') === 'true';
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -51,12 +52,14 @@ const SigninOTP = () => {
                 data.get('otp')?.toString()
             )
 
-            console.log('signinOTPResp: ', signinOTPResp)
-
             // if direct signin or if token was on the response then save the token to loca storage
             // then redirect to home
             if (signinOTPResp.token) {
                 localStorage.setItem(appComponentsHandler.appConfig.TokenKey, 'Bearer ' + signinOTPResp.token)
+                if (remember) {
+                    // save account info to local memory: todo
+                    console.log('signinOTPResp: ', signinOTPResp)
+                }
                 window.location.replace('/')
             }
 

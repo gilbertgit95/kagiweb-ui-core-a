@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 // import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 // import PublishIcon from '@mui/icons-material/Publish';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -28,6 +30,9 @@ const Signin = () => {
         errorMessages: [],
         infoMessages: []
     })
+    const [searchParams] = useSearchParams();
+    const nameIdUrlQuery = searchParams.get('nameId') || '';
+    const remember = (searchParams.get('remember') || '') === 'true';
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInAccount.token)
     // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
@@ -36,22 +41,26 @@ const Signin = () => {
         event.preventDefault()
         setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
+
         // console.log({
         //   nameId: data.get('nameId'),
         //   password: data.get('password'),
         // })
         try {
+            const rememberAccount = data.get('remember')?.toString() === 'on'
             const signinResp = await AuthService.signin(
                 data.get('nameId')?.toString(),
                 data.get('password')?.toString()
             )
 
-            console.log('signinResp: ', signinResp)
-
             // if direct signin or if token was on the response then save the token to loca storage
             // then redirect to home
             if (signinResp.token) {
                 localStorage.setItem(appComponentsHandler.appConfig.TokenKey, 'Bearer ' + signinResp.token)
+                if (remember) {
+                    // save account info to local memory: todo
+                    console.log('signinResp: ', signinResp)
+                }
                 window.location.replace('/')
 
             // if otp signin is enabled then show resp status info for a while
@@ -63,7 +72,7 @@ const Signin = () => {
                 })
                 await TimeUtils.doNothingFor(5)
                 // window.location.replace(`/signinOTP?nameId=${ signinResp.nameId }`)
-                navigate(`/signinOTP?nameId=${ signinResp.nameId }`)
+                navigate(`/signinOTP?nameId=${ signinResp.nameId }&remember=${ rememberAccount }`)
             }
 
         } catch (err:any) {
@@ -97,6 +106,7 @@ const Signin = () => {
                         label="NameID"
                         name="nameId"
                         autoComplete="nameId"
+                        defaultValue={nameIdUrlQuery}
                         autoFocus />
                     <TextField
                         margin="normal"
@@ -107,6 +117,7 @@ const Signin = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password" />
+                    <FormControlLabel control={<Checkbox name="remember" defaultChecked={remember} />} label="Remember Account" />
                     <ResponseStatus {...infoAndErrors} />
                     <LoadingButton
                         type="submit"

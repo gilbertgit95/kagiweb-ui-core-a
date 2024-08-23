@@ -4,7 +4,9 @@ import AuthApi from "../../dataEndpoints/apiCoreA/authApi"
 export interface ISigninResp {
     token?: string,
     nameId?: string,
-    message?: string
+    message?: string,
+    expiration?: Date,
+    createdAt?: Date
 }
 
 class AuthService {

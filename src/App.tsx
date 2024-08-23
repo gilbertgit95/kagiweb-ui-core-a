@@ -12,6 +12,7 @@ import KeyIcon from '@mui/icons-material/Key';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import KeyOffOutlinedIcon from '@mui/icons-material/KeyOffOutlined';
 import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
+import GroupIcon from '@mui/icons-material/Group';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import apiHelper from './dataEndpoints/apiCoreA/apiHelper';
@@ -39,6 +40,7 @@ import SignupPage from './pages/auth/signupPage';
 import SigninOTPPage from './pages/auth/signinOtpPage';
 import ForgotPasswordPage from './pages/auth/forgotPasswordPage';
 import ResetPasswordPage from './pages/auth/resetPasswordPage';
+import SignedAccountsPage from './pages/auth/signedAccountsPage';
 
 // private pages
 import PrivateHomePage from './pages/home/privateHomePage';
@@ -153,6 +155,7 @@ appHandler.addPublicRoute({url: 'signup', page: SignupPage})
 appHandler.addPublicRoute({url: 'signinOTP', page: SigninOTPPage})
 appHandler.addPublicRoute({url: 'forgotPassword', page: ForgotPasswordPage})
 appHandler.addPublicRoute({url: 'resetPassword', page: ResetPasswordPage})
+appHandler.addPublicRoute({url: 'signedAccounts', page: SignedAccountsPage})
 //  for private routes
 appHandler.addPrivateRoute({url: 'index', page: PrivateHomePage })
 
@@ -305,7 +308,8 @@ appHandler.addPublicUserDrawerNav({
       { label: 'Signin OTP', url: '/signinOTP', Icon: KeyIcon },
       { label: 'Signup', url: '/signup', Icon: AccountBoxOutlinedIcon },
       { label: 'Forgot Password', url: '/forgotPassword', Icon: KeyOffOutlinedIcon },
-      { label: 'Reset Password', url: '/resetPassword', Icon: LockResetOutlinedIcon }
+      { label: 'Reset Password', url: '/resetPassword', Icon: LockResetOutlinedIcon },
+      { label: 'Signed Accounts', url: '/signedAccounts', Icon: GroupIcon }
   ]
 })
 // for private
