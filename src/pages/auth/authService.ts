@@ -1,4 +1,6 @@
 import AuthApi from "../../dataEndpoints/apiCoreA/authApi"
+import appComponentsHandler from "../../utils/appComponentsHandler"
+import { ISignedAccount } from "./signedAccountComponent"
 // import { ISignedInUser } from "../../stores/signedInAccountSlice"
 
 export interface ISigninResp {
@@ -10,6 +12,52 @@ export interface ISigninResp {
 }
 
 class AuthService {
+    public static getSignedAccounts():ISignedAccount[] {
+        const strAccts = localStorage.getItem(appComponentsHandler.appConfig.AccountsKey) || '[]'
+        const accts = JSON.parse(strAccts) as ISignedAccount[]
+        return accts
+    }
+
+    public static indexOfSignedAccount(acc:ISignedAccount):number {
+        const accts = AuthService.getSignedAccounts()
+
+        let matchIndex = -1
+        let index = 0
+        for (let accItem of accts) {
+            if (accItem.nameId === acc.nameId) {
+                matchIndex = index
+                break
+            }
+            index++
+        }
+
+        return matchIndex
+    }
+
+    public static saveSignedAccount(acc:ISignedAccount):ISignedAccount[] {
+        let accts = AuthService.getSignedAccounts()
+        const matchIndex = AuthService.indexOfSignedAccount(acc)
+
+        // no match
+        if (matchIndex === -1) {
+            accts.push(acc)
+        // has match
+        } else {
+            accts[matchIndex] = acc
+        }
+
+        localStorage.setItem(appComponentsHandler.appConfig.AccountsKey, JSON.stringify(accts))
+        return accts
+    }
+
+    public static removeSignedAccount(acc:ISignedAccount):ISignedAccount[] {
+        let accts = AuthService.getSignedAccounts()
+        accts = accts.filter(item => item.nameId !== acc.nameId)
+        localStorage.setItem(appComponentsHandler.appConfig.AccountsKey, JSON.stringify(accts))
+        return accts
+    }
+
+
     public static async signin(nameId:string|undefined, password:string|undefined):Promise<ISigninResp> {
         return (await AuthApi.signin(nameId||'', password||'')).data
     }

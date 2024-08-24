@@ -5,6 +5,7 @@ import { Typography, Divider, Box } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
+import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
@@ -106,9 +107,25 @@ const NavCustomEl = () => {
         } catch (err) {
             console.log('Token has not been remove successfully from the database end, but will be cleared from the browser storage.')
         }
-        dispatch(clearAccountData())
+        AuthService.saveSignedAccount({
+            nameId: accountData?.nameId || '',
+            status: 'no-token',
+            method: 'app-auth',
+            dateCreated: undefined,
+            expirationDate: undefined,
+            token: undefined
+        })
         localStorage.removeItem(appComponentsHandler.appConfig.TokenKey)
+        dispatch(clearAccountData())
         window.location.replace('/signin')
+    }
+
+    const handleSwitchAccount = () => {
+        // clear auth key
+        // redirect to signedinAccounts
+        localStorage.removeItem(appComponentsHandler.appConfig.TokenKey)
+        // dispatch(clearAccountData())
+        window.location.replace('/signedAccounts')
     }
 
     return (
@@ -148,6 +165,15 @@ const NavCustomEl = () => {
                             <ListItemText>
                                 <Typography variant="subtitle1">{ accountData && accountData.nameId? accountData.nameId: '' }</Typography>
                                 <Typography variant="caption" color="primary">{ defaultRole?.name }</Typography>
+                            </ListItemText>
+                        </MenuItem>
+                        <Divider />
+                        <MenuItem onClick={handleSwitchAccount}>
+                            <ListItemIcon>
+                                <CompareArrowsOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText>
+                                <Typography variant="caption">Switch Account</Typography>
                             </ListItemText>
                         </MenuItem>
                         <Divider />

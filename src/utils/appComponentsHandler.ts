@@ -14,6 +14,7 @@ export interface IAppConfig {
     ServerAddress:string,
     RootApiEndpoint:string,
     TokenKey:string,
+    AccountsKey: string,
     AppThemeKey:string,
     AppThemeConfig:any,
     
@@ -32,7 +33,7 @@ interface IAppConfigOpt {
     TokenKey?:string,
     AppThemeKey?:string,
     AppThemeConfig?:any,
-    
+    accountsKey?: string,
     defaultDateFormat?:string,
     defaultDateTimeFormat?:string,
     defaultPageSizeList?:number[],
@@ -47,6 +48,8 @@ class AppComponentsHandler {
         ServerAddress: 'http://127.0.0.1:5000',
         RootApiEndpoint: '/api/v1/',
         TokenKey: '_auth_token',
+        AccountsKey: '_signedin_accounts',
+
         AppThemeKey: '_app_theme',
         AppThemeConfig: {},
     

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -10,47 +10,23 @@ import GroupIcon from '@mui/icons-material/Group';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import SignedAccountComponent, { ISignedAccount } from './signedAccountComponent';
-
-const tempAccounts:ISignedAccount[] = [
-    {
-        nameId: 'gilbertgit95',
-        status: 'no-token',
-        method: 'app-auth',
-        dateCreated: new Date(),
-        expirationDate: new Date(),
-        token: ''
-    },
-    {
-        nameId: 'Berting101',
-        status: 'active-token',
-        method: 'app-auth',
-        dateCreated: new Date(),
-        expirationDate: new Date(),
-        token: ''
-    },
-    {
-        nameId: 'aiai94',
-        status: 'expired-token',
-        method: 'app-auth',
-        dateCreated: new Date(),
-        expirationDate: new Date(),
-        token: ''
-    },
-    {
-        nameId: 'testAcc',
-        status: 'no-token',
-        method: 'app-auth',
-        dateCreated: new Date(),
-        expirationDate: new Date(),
-        token: ''
-    }
-]
+import AuthService from './authService';
 
 const SignedAccountsPage = () => {
     const navigate = useNavigate()
-    const [pageState, setPageState] = useState<{isLoading:boolean}>({
-        isLoading: false
-    })
+    const [accounts, setAccounts] = useState<ISignedAccount[]>([])
+
+    const onUpdate = () => {
+        // fetch accs list
+        const list = AuthService.getSignedAccounts()
+        setAccounts(list)
+    }
+
+    useEffect(() => {
+        // fetch accs list
+        const list = AuthService.getSignedAccounts()
+        setAccounts(list)
+    }, [])
 
     return (
         <Container component="main" maxWidth="md">
@@ -66,12 +42,12 @@ const SignedAccountsPage = () => {
                 </Avatar>
                 <Typography component="h1" variant="h5">Signed Accounts</Typography>
                 <Grid container justifyContent="center" spacing={2} style={{marginTop: 10}}>
-                    {tempAccounts.map((acc, index) => (
-                        <SignedAccountComponent accountInfo={acc} key={index} />
+                    {accounts.map((acc, index) => (
+                        <SignedAccountComponent accountInfo={acc} key={index} onUpdate={onUpdate} />
                     ))}
                 </Grid>
                 <Box style={{marginTop: 30}}>
-                    <Button variant="outlined">
+                    <Button variant="outlined" onClick={() => navigate('/signin?remember=true')}>
                         <AddOutlinedIcon /> Add Account
                     </Button>
                 </Box>

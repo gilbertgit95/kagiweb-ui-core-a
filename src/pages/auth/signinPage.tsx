@@ -6,6 +6,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 // import PublishIcon from '@mui/icons-material/Publish';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -59,7 +60,15 @@ const Signin = () => {
                 localStorage.setItem(appComponentsHandler.appConfig.TokenKey, 'Bearer ' + signinResp.token)
                 if (remember) {
                     // save account info to local memory: todo
-                    console.log('signinResp: ', signinResp)
+                    // console.log('signinResp: ', signinResp)
+                    AuthService.saveSignedAccount({
+                        nameId: signinResp.nameId || '',
+                        status: 'active-token',
+                        method: 'app-auth',
+                        dateCreated: signinResp.createdAt,
+                        expirationDate: signinResp.expiration,
+                        token: 'Bearer ' + signinResp.token
+                    })
                 }
                 window.location.replace('/')
 
@@ -129,7 +138,7 @@ const Signin = () => {
                         sx={{ mt: 3, mb: 2 }} >
                         Sign In
                     </LoadingButton>
-                    <Grid container>
+                    {/* <Grid container justifyContent="center">
                         <Grid item xs>
                             <Link href="/forgotPassword" variant="body2">
                                 Forgot password?
@@ -138,6 +147,28 @@ const Signin = () => {
                         <Grid item>
                             <Link href="/signup" variant="body2">
                                 {"Don't have an account? Sign Up"}
+                            </Link>
+                        </Grid>
+                    </Grid>
+                    <Button
+                        fullWidth variant="text" style={{marginTop: 40}}
+                        onClick={() => navigate(`/signedAccounts`)}>
+                        Signedin Accounts
+                    </Button> */}
+                    <Grid container justifyContent="center" alignItems="center" direction="column">
+                        <Grid item xs>
+                            <Link href="/forgotPassword" variant="body2">
+                                Forgot password?
+                            </Link>
+                        </Grid>
+                        <Grid item>
+                            <Link href="/signup" variant="body2">
+                                {"Don't have an account? Sign Up"}
+                            </Link>
+                        </Grid>
+                        <Grid item>
+                            <Link href="/signedAccounts" variant="body2">
+                                {"Signedin Accounts"}
                             </Link>
                         </Grid>
                     </Grid>

@@ -29,18 +29,20 @@ import Container from '@mui/material/Container';
 import TernaryHeader from '../../components/headers/ternaryHeader';
 
 import appComponentsHandler from '../../utils/appComponentsHandler';
+import AuthService from './authService';
 
 export interface ISignedAccount {
     nameId: string,
     status: 'active-token' | 'no-token' | 'expired-token',
     method: 'app-auth' | 'google-auth' | 'microsoft-auth'
-    dateCreated: Date,
-    expirationDate: Date,
-    token: string
+    dateCreated?: Date,
+    expirationDate?: Date,
+    token?: string
 }
 
 interface IProps {
-    accountInfo:ISignedAccount
+    accountInfo:ISignedAccount,
+    onUpdate?: () => void
 }
 
 const centeredStyle:any = {textAlign: 'center', padding: 10}
@@ -54,6 +56,53 @@ const SignedAccountComponent = (props:IProps) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const sofRemove = ():void => {
+        // signout
+        // remove token from account info
+        AuthService.saveSignedAccount({
+            nameId: props.accountInfo?.nameId || '',
+            status: 'no-token',
+            method: 'app-auth',
+            dateCreated: undefined,
+            expirationDate: undefined,
+            token: undefined
+        })
+
+        handleClose()
+        if (props.onUpdate) props.onUpdate()
+    }
+
+    const hardRemove = ():void => {
+        // signout
+        // remove account info
+        AuthService.removeSignedAccount({
+            nameId: props.accountInfo?.nameId || '',
+            status: 'no-token',
+            method: 'app-auth',
+            dateCreated: undefined,
+            expirationDate: undefined,
+            token: undefined
+        })
+
+        handleClose()
+        if (props.onUpdate) props.onUpdate()
+    }
+
+    const useAccount = ():void => {
+        // set acc token to memory
+        // check if the token is usable
+        // if usable redirec to home
+        // if not usable redirect to auth with parameter remember and nameId
+        localStorage.setItem(appComponentsHandler.appConfig.TokenKey, JSON.stringify(props.accountInfo.token))
+        if (props.accountInfo.status === 'active-token') {
+            window.location.replace('/')
+        } else {
+            window.location.replace('/signin?remember=true&nameId=' + props.accountInfo.nameId)
+        }
+
+    }
+
     // const dispatch = useAppDispatch()
     // const token = useAppSelector(state => state.signedInAccount.token)
     // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
@@ -93,19 +142,19 @@ const SignedAccountComponent = (props:IProps) => {
                         onClose={handleClose}
                         transformOrigin={{ horizontal: 'left', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem onClick={sofRemove}>
                             <ListItemIcon>
                                 <DeleteOutlinedIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText>Soft Remove</ListItemText>
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem onClick={hardRemove}>
                             <ListItemIcon>
                                 <DeleteForeverOutlinedIcon fontSize="small" />
                             </ListItemIcon>
                             <ListItemText>Hard Remove</ListItemText>
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem onClick={useAccount}>
                             <ListItemIcon>
                                 <CompareArrowsOutlinedIcon fontSize="small" />
                             </ListItemIcon>

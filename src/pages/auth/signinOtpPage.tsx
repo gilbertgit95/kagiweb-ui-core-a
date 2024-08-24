@@ -58,7 +58,14 @@ const SigninOTP = () => {
                 localStorage.setItem(appComponentsHandler.appConfig.TokenKey, 'Bearer ' + signinOTPResp.token)
                 if (remember) {
                     // save account info to local memory: todo
-                    console.log('signinOTPResp: ', signinOTPResp)
+                    AuthService.saveSignedAccount({
+                        nameId: signinOTPResp.nameId || '',
+                        status: 'active-token',
+                        method: 'app-auth',
+                        dateCreated: signinOTPResp.createdAt,
+                        expirationDate: signinOTPResp.expiration,
+                        token: 'Bearer ' + signinOTPResp.token
+                    })
                 }
                 window.location.replace('/')
             }
