@@ -167,7 +167,7 @@ const NavCustomEl = () => {
                                 <Typography variant="caption" color="primary">{ defaultRole?.name }</Typography>
                             </ListItemText>
                         </MenuItem>
-                        <Divider />
+                        {/* <Divider /> */}
                         <MenuItem onClick={handleSwitchAccount}>
                             <ListItemIcon>
                                 <CompareArrowsOutlinedIcon />

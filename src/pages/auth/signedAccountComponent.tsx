@@ -94,7 +94,7 @@ const SignedAccountComponent = (props:IProps) => {
         // check if the token is usable
         // if usable redirec to home
         // if not usable redirect to auth with parameter remember and nameId
-        localStorage.setItem(appComponentsHandler.appConfig.TokenKey, JSON.stringify(props.accountInfo.token))
+        localStorage.setItem(appComponentsHandler.appConfig.TokenKey, props.accountInfo.token || '')
         if (props.accountInfo.status === 'active-token') {
             window.location.replace('/')
         } else {
@@ -121,7 +121,7 @@ const SignedAccountComponent = (props:IProps) => {
 
     return (
         <Grid item>
-            <Paper>
+            <Paper style={{minWidth: '189px'}}>
                 <Box style={{padding: 5}}>
                     <IconButton
                         aria-label="more"
