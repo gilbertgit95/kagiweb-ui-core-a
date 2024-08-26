@@ -121,6 +121,15 @@ const NavCustomEl = () => {
     }
 
     const handleSwitchAccount = () => {
+        // save account info to memory
+        AuthService.saveSignedAccount({
+            nameId: accountData?.nameId || '',
+            status: 'active-token',
+            method: 'app-auth',
+            dateCreated: undefined,
+            expirationDate: undefined,
+            token: localStorage.getItem(appComponentsHandler.appConfig.TokenKey) || undefined
+        })
         // clear auth key
         // redirect to signedinAccounts
         localStorage.removeItem(appComponentsHandler.appConfig.TokenKey)

@@ -1,4 +1,5 @@
 import AuthApi from "../../dataEndpoints/apiCoreA/authApi"
+import api from "../../dataEndpoints/apiCoreA/apiHelper"
 import appComponentsHandler from "../../utils/appComponentsHandler"
 import { ISignedAccount } from "./signedAccountComponent"
 // import { ISignedInUser } from "../../stores/signedInAccountSlice"
@@ -80,6 +81,16 @@ class AuthService {
 
     public static async signout():Promise<ISigninResp> {
         return (await AuthApi.signout()).data
+    }
+
+    public static async rawSignout(token:string):Promise<ISigninResp> {
+        return (await api.publicReq({
+            method: 'DELETE',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'signout',
+            headers: {
+                'Authorization': token
+            }
+        })).data
     }
 }
 
