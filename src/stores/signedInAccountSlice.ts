@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFeature } from "../types/feature";
 import { IRole } from "../types/role";
-import { IAccount, IWorkspace } from "../types/account";
+import { IAccount, IWorkspace, IAccessToken, IClientDevice } from "../types/account";
 
 export interface ISignedInUser {
     // token?: string,
@@ -12,7 +12,9 @@ export interface ISignedInUser {
     features?: IFeature[],
     workspace?: IWorkspace,
     workspaces?: IWorkspace[],
-    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[]
+    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[],
+    clientDevice?: IClientDevice,
+    accessToken?: IAccessToken
 }
 
 export interface IOptSignedInUser {
@@ -24,7 +26,9 @@ export interface IOptSignedInUser {
     features?: IFeature[]|undefined,
     workspace?: IWorkspace|undefined,
     workspaces?: IWorkspace[]|undefined,
-    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[]|undefined
+    externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[]|undefined,
+    clientDevice?: IClientDevice|undefined,
+    accessToken?: IAccessToken|undefined
 }
 
 const initialState:ISignedInUser = {
@@ -36,7 +40,9 @@ const initialState:ISignedInUser = {
     features: undefined,
     workspace: undefined,
     workspaces: undefined,
-    externalWorkspaces: undefined
+    externalWorkspaces: undefined,
+    clientDevice: undefined,
+    accessToken: undefined
 }
 
 export const SignedInUser = createSlice({
@@ -57,6 +63,8 @@ export const SignedInUser = createSlice({
             if (action.payload.hasOwnProperty('workspace')) state.workspace = action.payload.workspace
             if (action.payload.hasOwnProperty('workspaces')) state.workspaces = action.payload.workspaces
             if (action.payload.hasOwnProperty('externalWorkspaces')) state.externalWorkspaces = action.payload.externalWorkspaces
+            if (action.payload.hasOwnProperty('clientDevice')) state.clientDevice = action.payload.clientDevice
+            if (action.payload.hasOwnProperty('accessToken')) state.accessToken = action.payload.accessToken
         },
         clearAccountData: (state) => {
             // state.token = undefined
@@ -68,6 +76,8 @@ export const SignedInUser = createSlice({
             state.workspace = undefined
             state.workspaces = undefined
             state.externalWorkspaces = undefined
+            state.clientDevice = undefined
+            state.accessToken = undefined
         }
     }
 })
