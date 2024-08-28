@@ -18,7 +18,9 @@ class AppUtils {
             features: undefined,
             workspace: undefined,
             workspaces: undefined,
-            externalWorkspaces: undefined
+            externalWorkspaces: undefined,
+            clientDevice: undefined,
+            accessToken: undefined
         }
   
         try {
@@ -32,6 +34,8 @@ class AppUtils {
             ownerInfo.workspace = ownerReqResp?.data?.workspace
             ownerInfo.workspaces = ownerReqResp?.data?.workspaces
             ownerInfo.externalWorkspaces = ownerReqResp?.data?.externalWorkspaces
+            ownerInfo.clientDevice = ownerReqResp?.data?.clientDevice
+            ownerInfo.accessToken = ownerReqResp?.data?.accessToken
             ownerInfo.isSignedIn = true
 
             // set token and owner to the app storage

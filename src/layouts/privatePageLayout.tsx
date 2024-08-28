@@ -31,11 +31,13 @@ import appComponentsHandler from '../utils/appComponentsHandler';
 import DataTransformer from '../utils/dataTransformer';
 import AppUtils from '../utils/appUtils';
 import { IFeature } from '../types/feature';
+import { IAccessToken } from '../types/account';
 
 const NavCustomEl = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const accountData = useAppSelector(state => state.signedInAccount?.accountData)
+    const accessToken:(IAccessToken & {createdAt?:Date, updatedAt?:Date})|undefined = useAppSelector(state => state.signedInAccount?.accessToken)
     const userFeatures = useAppSelector(state => state.signedInAccount?.features) || []
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
 
@@ -126,8 +128,8 @@ const NavCustomEl = () => {
             nameId: accountData?.nameId || '',
             status: 'active-token',
             method: 'app-auth',
-            dateCreated: undefined,
-            expirationDate: undefined,
+            dateCreated: accessToken?.createdAt,
+            expirationDate: accessToken?.expTime,
             token: localStorage.getItem(appComponentsHandler.appConfig.TokenKey) || undefined
         })
         // clear auth key

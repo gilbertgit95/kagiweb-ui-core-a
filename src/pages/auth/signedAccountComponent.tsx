@@ -156,21 +156,21 @@ const SignedAccountComponent = (props:IProps) => {
                         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}>
                         <MenuItem onClick={sofRemove}>
                             <ListItemIcon>
-                                <DeleteOutlinedIcon fontSize="small" />
+                                <DeleteOutlinedIcon fontSize="small" color="secondary" />
                             </ListItemIcon>
-                            <ListItemText>Soft Remove</ListItemText>
+                            <ListItemText><Typography color="secondary">Soft Remove</Typography></ListItemText>
                         </MenuItem>
                         <MenuItem onClick={hardRemove}>
                             <ListItemIcon>
-                                <DeleteForeverOutlinedIcon fontSize="small" />
+                                <DeleteForeverOutlinedIcon color="secondary" fontSize="small" />
                             </ListItemIcon>
-                            <ListItemText>Hard Remove</ListItemText>
+                            <ListItemText><Typography color="secondary">Hard Remove</Typography></ListItemText>
                         </MenuItem>
                         <MenuItem onClick={useAccount}>
                             <ListItemIcon>
                                 <CompareArrowsOutlinedIcon fontSize="small" />
                             </ListItemIcon>
-                            <ListItemText>Use Account</ListItemText>
+                            <ListItemText><Typography color="primary">Use Account</Typography></ListItemText>
                         </MenuItem>
                     </Menu>
                 </Box>
