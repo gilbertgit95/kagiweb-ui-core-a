@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -16,16 +17,34 @@ const SignedAccountsPage = () => {
     const navigate = useNavigate()
     const [accounts, setAccounts] = useState<ISignedAccount[]>([])
 
+    const mapStatus = (list:ISignedAccount[]):ISignedAccount[] => {
+        return list.map(item => {
+            // check for token
+            if (item.token) {
+                // check for expiration
+                const now = moment()
+                const expDate = moment(item.expirationDate)
+                if (now.isAfter(expDate)) {
+                    item.status = 'expired-token'
+                }
+            } else {
+                item.status = 'no-token'
+            }
+
+            return item
+        })
+    }
+
     const onUpdate = () => {
         // fetch accs list
         const list = AuthService.getSignedAccounts()
-        setAccounts(list)
+        setAccounts(mapStatus(list))
     }
 
     useEffect(() => {
         // fetch accs list
         const list = AuthService.getSignedAccounts()
-        setAccounts(list)
+        setAccounts(mapStatus(list))
     }, [])
 
     return (
