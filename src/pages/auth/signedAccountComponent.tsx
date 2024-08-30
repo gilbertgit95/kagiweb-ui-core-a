@@ -107,9 +107,8 @@ const SignedAccountComponent = (props:IProps) => {
         // check if the token is usable
         // if usable redirec to home
         // if not usable redirect to auth with parameter remember and nameId
-        if (!props.accountInfo.token) return
         try {
-            await AuthService.rawGetAccountCompleteInfo(props.accountInfo.token)
+            await AuthService.rawGetAccountCompleteInfo(props.accountInfo.token || '')
         } catch (err) {
             AuthService.saveSignedAccount({
                 nameId: props.accountInfo?.nameId || '',
