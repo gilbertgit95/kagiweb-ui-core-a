@@ -101,11 +101,28 @@ const SignedAccountComponent = (props:IProps) => {
         if (props.onUpdate) props.onUpdate()
     }
 
-    const useAccount = ():void => {
+    const useAccount = async ():Promise<void> => {
+        // check token if still usable
         // set acc token to memory
         // check if the token is usable
         // if usable redirec to home
         // if not usable redirect to auth with parameter remember and nameId
+        if (!props.accountInfo.token) return
+        try {
+            await AuthService.rawGetAccountCompleteInfo(props.accountInfo.token)
+        } catch (err) {
+            AuthService.saveSignedAccount({
+                nameId: props.accountInfo?.nameId || '',
+                status: 'no-token',
+                method: 'app-auth',
+                dateCreated: undefined,
+                expirationDate: undefined,
+                token: undefined
+            })
+            window.location.replace('/signin?remember=true&nameId=' + props.accountInfo.nameId)
+            return
+        }
+
         localStorage.setItem(appComponentsHandler.appConfig.TokenKey, props.accountInfo.token || '')
         if (props.accountInfo.status === 'active-token') {
             window.location.replace('/')

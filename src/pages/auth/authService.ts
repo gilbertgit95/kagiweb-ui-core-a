@@ -92,6 +92,16 @@ class AuthService {
             }
         })).data
     }
+
+    public static async rawGetAccountCompleteInfo(token:string):Promise<ISignedAccount> {
+        return (await api.publicReq({
+            method: 'GET',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'owner/completeInfo',
+            headers: {
+                'Authorization': token
+            }
+        })).data
+    }
 }
 
 export default AuthService
