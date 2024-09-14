@@ -6,9 +6,6 @@ import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
 import PersonIcon from '@mui/icons-material/Person';
 import DropDownSearch from '../../components/inputs/dropdownSearch';
 
-import { useAppDispatch, useAppSelector} from '../../stores/appStore';
-import { PropaneSharp } from '@mui/icons-material';
-
 interface Props {
     accountData?: IAccount,
     defaultWorkspace?: IWorkspace,

@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import Grid from '@mui/material/Grid';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
-// import { Button } from '@mui/material';
 import { IAccount, IClientDevice } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import SimpleLink from '../../components/links/simpleLink';
-// import Check from '../../components/indicators/check';
 import AccountClientDeviceService from './accountClientDeviceService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import moment from 'moment';
 import Grid from '@mui/material/Grid';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
-// import { Button } from '@mui/material';
 import { IAccount, IClientDevice } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';

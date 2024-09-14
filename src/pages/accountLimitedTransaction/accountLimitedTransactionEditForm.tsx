@@ -41,11 +41,6 @@ const AccountLimitedTransactionEditForm = ({account, limitedTransactionId, updat
         setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{[field]: event.target.checked}})
     }
 
-    // const handleTypeSelectionChange = (event: SelectChangeEvent) => {
-    //     const type = event.target.value as TLimitedTransactionType
-    //     setUpdatedLimitedTransaction({...updatedLimitedTransaction, ...{type}})
-    // }
-
     const onUpdate = async () => {
         if (!limitedTransaction) return
 

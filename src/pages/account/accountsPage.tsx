@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
 import PersonIcon from '@mui/icons-material/Person';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import Check from '../../components/indicators/check';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
@@ -16,8 +15,6 @@ import { useSearchParams } from 'react-router-dom';
 
 import AccountService from './accountService';
 import { IAccount } from '../../types/account';
-// import { IAccount } from "../../types/account";
-// import { IPagination } from "../../types/mixTypes";
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface IAccountRow {

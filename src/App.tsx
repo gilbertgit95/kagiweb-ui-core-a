@@ -271,9 +271,6 @@ appHandler.addPrivateRoute({url: 'owner/create/workspaces/:workspaceId/accountRe
 appHandler.addPrivateRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceAccountRefPage })
 appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceAccountRefEditPage })
 
-// workspace data
-// appHandler.addPrivateRoute({url: 'workspaces/view/:workspaceId', page: WorkspaceHomePage })
-
 // add items to main drawers
 appHandler.addMainDrawer({
   label: 'Account Data',

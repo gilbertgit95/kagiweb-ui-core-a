@@ -1,10 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-// import { useNavigate } from 'react-router-dom';
-// import { Button} from '@mui/material';
 
 import Grid from '@mui/material/Grid';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
 import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';

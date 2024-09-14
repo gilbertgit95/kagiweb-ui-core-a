@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import DropDownSearch from '../../components/inputs/dropdownSearch';
 
-import { useAppSelector } from '../../stores/appStore';
 import { IRole } from '../../types/role';
 
 interface Props {

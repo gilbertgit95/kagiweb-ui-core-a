@@ -1,5 +1,4 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
-// import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import { IAccount, IAccessToken } from '../../types/account'
 import AccountClientDeviceService from '../accountClientDevice/accountClientDeviceService'
 
@@ -19,14 +18,6 @@ class AccountClientDeviceTokenService {
 
         return undefined
     }
-
-    // public static getRoleFeatures(roleId:string|undefined):Promise<{data: IFeatureRef[]}> {
-    //     return featureApi.getRoleFeatures(roleId)
-    // }
-
-    // public static getFeature(id:string):Promise<{data: IFeatureRef}> {
-    //     return featureApi.getFeature(id)
-    // }
 
     public static updateClientDeviceToken(accountId:string, clientDeviceId:string, token:{_id?:string, ipAddress?:string, description?:string, disabled?:boolean}):Promise<{data: IAccessToken}> {
         return AccountApi.updateClientDeviceToken(accountId, clientDeviceId, token)
