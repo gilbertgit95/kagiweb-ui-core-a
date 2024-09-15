@@ -2,7 +2,6 @@ import AuthApi from "../../dataEndpoints/apiCoreA/authApi"
 import api from "../../dataEndpoints/apiCoreA/apiHelper"
 import appComponentsHandler from "../../utils/appComponentsHandler"
 import { ISignedAccount } from "./signedAccountComponent"
-// import { ISignedInUser } from "../../stores/signedInAccountSlice"
 
 export interface ISigninResp {
     token?: string,

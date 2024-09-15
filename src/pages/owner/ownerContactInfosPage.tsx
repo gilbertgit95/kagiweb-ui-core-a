@@ -3,13 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-// import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import AccountService from '../account/accountService';
 import OwnerService from './ownerService';
 import AccountContactInfosReadOnlyView from '../accountContactInfo/accountContactInfosReadOnlyView';
 

@@ -6,10 +6,8 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from '@mui/material/Grid';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import ListIcon from '@mui/icons-material/List';
-// import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import TableViewIcon from '@mui/icons-material/TableView';
 import Stack from '@mui/material/Stack';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import FeaturesListReadOnlyView from './featuresListReadOnlyView';

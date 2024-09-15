@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
-// import moment from 'moment';
-// import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-// import { Button } from '@mui/material';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
 import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
-// import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
-// import AccountWorkspaceService from '../accountWorkspace/accountWorkspaceService';
 
 interface IProps {
     account: IAccount | undefined,

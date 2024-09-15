@@ -15,8 +15,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import AccountService from '../account/accountService';
-// import AccountClientDeviceService from '../accountClientDevice/accountClientDeviceService';
 import AccountClientDeviceReadOnlyView from '../accountClientDevice/accountClientDeviceReadOnlyView';
 import OwnerService from './ownerService';
 

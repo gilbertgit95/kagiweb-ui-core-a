@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
-// import PublishIcon from '@mui/icons-material/Publish';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -17,9 +15,6 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import TimeUtils from '../../utils/timeUtils';
 import AuthService from './authService';
 
-// import { useAppDispatch, useAppSelector} from '../../stores/appStore';
-// import { setAccountData, clearAccountData } from '../../stores/signedInAccountSlice';
-
 const ResetPassword = () => {
     const navigate = useNavigate()
     const [pageState, setPageState] = useState<{isLoading:boolean}>({
@@ -29,9 +24,6 @@ const ResetPassword = () => {
         errorMessages: [],
         infoMessages: []
     })
-    // const dispatch = useAppDispatch()
-    // const token = useAppSelector(state => state.signedInAccount.token)
-    // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
     const [searchParams] = useSearchParams();
     const nameIdUrlQuery = searchParams.get('nameId') || '';
     const resetKeyUrlQuery = searchParams.get('resetKey') || '';

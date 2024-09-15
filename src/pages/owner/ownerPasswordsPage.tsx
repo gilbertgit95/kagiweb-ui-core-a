@@ -8,7 +8,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
 import AccountPasswordsReadOnlyView from '../accountPassword/accountPasswordsReadOnlyView';
 

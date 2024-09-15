@@ -8,7 +8,6 @@ import { Button } from '@mui/material';
 import { IAccount, IWorkspace } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
-// import Check from '../../components/indicators/check';
 import AccountWorkspaceService from './accountWorkspaceService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 

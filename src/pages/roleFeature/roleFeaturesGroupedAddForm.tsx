@@ -8,7 +8,6 @@ import FilterableTable from '../../components/tables/filterableTable';
 import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
 import ShortendDescription from '../../components/texts/shortendDescription';
-// import ListItems from '../../components/lists/listItems';
 import TreeDirectory, { objectGenerator, IDir } from '../../components/navs/treeDirectory';
 
 interface IProp {

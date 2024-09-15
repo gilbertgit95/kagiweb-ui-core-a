@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment'
 import Grid from '@mui/material/Grid';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import AccountWorkspaceAccountRefService from './accountWorkspaceAccountRefService';
 import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 

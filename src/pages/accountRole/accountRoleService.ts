@@ -1,8 +1,5 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
-// import { ISignedInUser } from '../../stores/signedInAccountSlice'
 import { IAccount, IRoleRef } from '../../types/account'
-// import { IFeatureRef } from '../../types/role'
-// import { IPagination, IPageQuery } from '../../types/mixTypes'
 
 class AccountRoleService {
     public static updateAccountRole(accountId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {

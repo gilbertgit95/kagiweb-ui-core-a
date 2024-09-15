@@ -7,7 +7,6 @@ import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import EditIcon from '@mui/icons-material/Edit';
 import ListIcon from '@mui/icons-material/List';
-// import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import TableViewIcon from '@mui/icons-material/TableView';
 import Stack from '@mui/material/Stack';
 
@@ -17,7 +16,6 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import RoleService from '../role/roleService';
 import RoleFeaturesListReadOnlyView from './roleFeaturesListReadOnlyView';
 import RoleFeaturesGroupedReadOnlyView from './roleFeaturesGroupedReadOnlyView';
-// import { IFeature } from '../../types/feature';
 
 const RoleFeaturesPage = () => {
     const { roleId } = useParams()

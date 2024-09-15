@@ -8,7 +8,6 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import { useAppSelector} from '../../stores/appStore';
-// import { IFeature } from '../../types/feature';
 
 interface IProp {
     account: IAccount|undefined,

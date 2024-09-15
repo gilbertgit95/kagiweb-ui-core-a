@@ -8,13 +8,8 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountClientDeviceCreateForm from '../accountClientDevice/accountClientDeviceCreateForm';
-// import AccountService from '../account/accountService';
-// import AccountClientDeviceService from './accountClientDeviceService';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
-// import {
-//   useParams
-// } from 'react-router-dom';
 
 const OwnerClientDeviceTokenCreatePage = () => {
     const navigate = useNavigate()

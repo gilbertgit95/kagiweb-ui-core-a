@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
-// import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
-// import PublishIcon from '@mui/icons-material/Publish';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -15,13 +12,9 @@ import { useSearchParams } from 'react-router-dom';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AuthService from './authService';
-import appComponentsHandler from '../../utils/appComponentsHandler'
-
-// import { useAppDispatch, useAppSelector} from '../../stores/appStore';
-// import { setAccountData, clearAccountData } from '../../stores/signedInAccountSlice';
+import appComponentsHandler from '../../utils/appComponentsHandler';
 
 const SigninOTP = () => {
-    // const navigate = useNavigate()
     const [pageState, setPageState] = useState<{isLoading:boolean}>({
         isLoading: false
     })
@@ -29,9 +22,6 @@ const SigninOTP = () => {
         errorMessages: [],
         infoMessages: []
     })
-    // const dispatch = useAppDispatch()
-    // const token = useAppSelector(state => state.signedInAccount.token)
-    // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
     const [searchParams] = useSearchParams();
     const nameIdUrlQuery = searchParams.get('nameId') || '';
     const otpUrlQuery = searchParams.get('otp') || '';
@@ -41,10 +31,6 @@ const SigninOTP = () => {
         event.preventDefault()
         setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
-        // console.log({
-        //   nameId: data.get('nameId'),
-        //   otp: data.get('otp'),
-        // })
 
         try {
             const signinOTPResp = await AuthService.signinOTP(

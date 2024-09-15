@@ -8,7 +8,6 @@ import AddIcon from '@mui/icons-material/Add';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import AccountService from '../user/accountService';
 import OwnerService from './ownerService';
 import AccountWorkspacesReadOnlyView from '../accountWorkspace/accountWorkspacesReadOnlyView';
 

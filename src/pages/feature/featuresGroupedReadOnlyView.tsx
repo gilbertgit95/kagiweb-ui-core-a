@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 
-// import PrimaryHeader from '../../components/headers/primaryHeader';
-import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import { IColDef } from '../../components/tables/primaryTable';
 import TreeDirectory, { objectGenerator, IDir } from '../../components/navs/treeDirectory';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
-// import ListItems from '../../components/lists/listItems';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import SimpleLink from '../../components/links/simpleLink';
 import FilterableTable from '../../components/tables/filterableTable';

@@ -2,9 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFeature } from "../types/feature";
 import { IRole } from "../types/role";
 
-// import Config from "../config";
-// import { IAccount } from "../types/account";
-// import { IWorkspace } from "../types/workspace";
 import appComponentsHandler from '../utils/appComponentsHandler'
 
 export type TAppTheme = 'light' | 'dark'

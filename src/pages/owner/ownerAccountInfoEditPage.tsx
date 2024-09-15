@@ -9,8 +9,6 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountContactInfoEditForm from '../accountAccountInfo/accountAccountInfoEditForm';
 import OwnerService from './ownerService';
-// import AccountService from '../account/accountService';
-// import AccountAccountInfoService from './accountAccountInfoService';
 import { IAccount } from '../../types/account';
 import {
   useParams

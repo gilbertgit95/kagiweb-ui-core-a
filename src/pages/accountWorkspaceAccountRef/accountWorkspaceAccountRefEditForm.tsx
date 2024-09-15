@@ -3,7 +3,6 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-// import AccountWorkspaceAccountRefService from './accountWorkspaceAccountRefService';
 import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 
 interface props {

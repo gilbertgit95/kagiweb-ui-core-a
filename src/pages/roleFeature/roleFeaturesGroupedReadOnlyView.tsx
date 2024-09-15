@@ -6,7 +6,6 @@ import { IColDef } from '../../components/tables/primaryTable';
 import FilterableTable from '../../components/tables/filterableTable';
 import { useAppSelector} from '../../stores/appStore';
 import ShortendDescription from '../../components/texts/shortendDescription';
-import ListItems from '../../components/lists/listItems';
 import TreeDirectory, { objectGenerator, IDir } from '../../components/navs/treeDirectory';
 import { IFeature } from '../../types/feature';
 

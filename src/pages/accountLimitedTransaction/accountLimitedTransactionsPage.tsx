@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-// import EditIcon from '@mui/icons-material/Edit';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
@@ -54,20 +53,6 @@ const AccountLimitedTransactionsPage = () => {
                         Back
                     </Button>
                 </Grid>
-                {/* <Grid item xs={6} style={{alignContent: 'right'}}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                        <Button
-                            variant="text"
-                            startIcon={<EditIcon />}
-                            onClick={() => navigate(`/accounts/edit/${ accountId }/limitedTransaction`)}>
-                            Edit
-                        </Button>
-                    </Box>
-                </Grid> */}
 
                 <AccountLimitedTransactionsReadOnlyView account={account} />
 

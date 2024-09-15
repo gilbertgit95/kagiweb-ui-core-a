@@ -9,8 +9,6 @@ import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountPasswordCreateForm from '../accountPassword/accountPasswordCreateForm';
 import OwnerService from './ownerService';
-// import AccountService from '../user/accountService';
-// import AccountPasswordService from './accountPasswordService';
 
 const OwnerPasswordCreatePage = () => {
     const navigate = useNavigate()

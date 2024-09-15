@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
-// import PublishIcon from '@mui/icons-material/Publish';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -18,8 +15,6 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 
 import TimeUtils from '../../utils/timeUtils';
 import AuthService from './authService';
-// import { useAppDispatch, useAppSelector} from '../../stores/appStore';
-// import { setAccountData, clearAccountData } from '../../stores/signedInAccountSlice';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 const Signin = () => {
@@ -34,19 +29,12 @@ const Signin = () => {
     const [searchParams] = useSearchParams();
     const nameIdUrlQuery = searchParams.get('nameId') || '';
     const remember = (searchParams.get('remember') || '') === 'true';
-    // const dispatch = useAppDispatch()
-    // const token = useAppSelector(state => state.signedInAccount.token)
-    // const isSignedIn = useAppSelector(state => state.signedInAccount.isSignedIn)
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setPageState({isLoading: true})
         const data = new FormData(event.currentTarget)
 
-        // console.log({
-        //   nameId: data.get('nameId'),
-        //   password: data.get('password'),
-        // })
         try {
             const rememberAccount = data.get('remember')?.toString() === 'on'
             const signinResp = await AuthService.signin(
