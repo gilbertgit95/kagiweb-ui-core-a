@@ -35,13 +35,6 @@ const FilterableTable = ({filterConfig, tableConfig}:IProps) => {
     const [filterOptions, setFilterOptions] = useState<string[]>([])
     const [transformedTableData, setTransformedTableData] = useState<any[]>([])
 
-    // this will be executer if the input table filter config and
-    // input table config changes
-    // this will set the local state for table filter
-    // useEffect(() => {
-    //     setTableFilter({...tablefilter, ...filterConfig})
-    // }, [filterConfig])
-
     useEffect(() => {
         setTableFilter({...tablefilter, ...filterConfig})
         setFilterOptions(filterConfig?.filterOptions || [])
