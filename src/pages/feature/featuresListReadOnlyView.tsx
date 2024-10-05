@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid'
 
 import { IColDef } from '../../components/tables/primaryTable'
 import FilterableTable from '../../components/tables/filterableTable'
-import { ITransformationConfig } from '../../components/tables/tableFilters'
+// import { ITransformationConfig } from '../../components/tables/tableFilters'
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges'
 import ListItems from '../../components/lists/listItems'
 import ShortendDescription from '../../components/texts/shortendDescription'
@@ -70,19 +70,19 @@ const FeaturesListReadOnlyView = () => {
     // const navigate = useNavigate()
     const features:IFeature[] = useAppSelector(state => state.appRefs.features) || []
     const [data, setData] = useState<(IFeatureRow & IChangeDate)[]>([])
-    const [filterConfig, setFilterConfig] = useState<ITransformationConfig>({
-        searchValue: '',
-        searchField: 'field2',
+    // const [filterConfig, setFilterConfig] = useState<ITransformationConfig>({
+    //     searchValue: '',
+    //     searchField: 'field2',
     
-        filterValue: '',
-        filterField: 'field1',
-        filterOptions: ['value 1', 'value2', 'item3', 'item4'],
+    //     filterValue: '',
+    //     filterField: 'field1',
+    //     filterOptions: ['value 1', 'value2', 'item3', 'item4'],
     
-        sortValue: undefined,
-        sortField: 'field1',
+    //     sortValue: undefined,
+    //     sortField: 'field1',
 
-        fieldOptions: ['field1', 'field2', 'field3', 'field4']
-    })
+    //     fieldOptions: ['field1', 'field2', 'field3', 'field4']
+    // })
 
     useEffect(() => {
         const init = async () => {

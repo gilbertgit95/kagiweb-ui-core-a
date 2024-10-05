@@ -1,6 +1,6 @@
 import apiHelper from "./apiHelper";
 import { IPageQuery } from "../../types/mixTypes";
-import { IAccount, IAccountInfo, IAccountConfig, IContactInfo, IRoleRef, IAccountUpdate, ILimitedTransaction, IClientDevice, IAccessToken } from "../../types/account";
+import { IAccount, IAccountInfo, IContactInfo, IRoleRef, IAccountUpdate, ILimitedTransaction, IClientDevice, IAccessToken } from "../../types/account";
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 class AccountApi {

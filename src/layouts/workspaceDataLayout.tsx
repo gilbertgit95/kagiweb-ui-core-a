@@ -4,12 +4,10 @@ import { Container, Grid, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import PersonIcon from '@mui/icons-material/Person';
 import DropDownSearch from '../components/inputs/dropdownSearch';
 
-import { useAppDispatch, useAppSelector} from '../stores/appStore';
-import { IWorkspace } from '../types/account';
+import { useAppSelector} from '../stores/appStore';
 
 interface Props {
     children?: React.ReactNode

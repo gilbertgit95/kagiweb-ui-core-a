@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material'
+import React from 'react';
 import WorkspaceDataLayout from '../../layouts/workspaceDataLayout'
 
 const WorkspaceLandingPage = () => {

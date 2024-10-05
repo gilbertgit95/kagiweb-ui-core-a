@@ -1,4 +1,5 @@
 import { Typography, Grid, Button } from '@mui/material'
+import React from 'react';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 
 const PublicLandingPage = () => {

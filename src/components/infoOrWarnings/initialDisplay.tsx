@@ -1,3 +1,4 @@
+import React from 'react';
 import { CircularProgress, Typography, Grid } from "@mui/material"
 
 const InitialDisplay = () => {

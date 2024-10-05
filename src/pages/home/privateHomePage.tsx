@@ -1,3 +1,4 @@
+import React from 'react';
 import { Typography, Grid } from '@mui/material'
 
 const PrivateLandingPage = () => {

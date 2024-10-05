@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import PrimaryNav, { TLinkGroup, TLink } from '../components/navs/primaryNav';
+import PrimaryNav, { TLinkGroup } from '../components/navs/primaryNav';
 import { Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import PagesIcon from '@mui/icons-material/Pages';

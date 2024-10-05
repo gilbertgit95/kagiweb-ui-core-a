@@ -1,3 +1,4 @@
+import React from 'react';
 import { Typography, Tooltip } from '@mui/material'
 
 interface IProps {

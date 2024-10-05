@@ -1,3 +1,4 @@
+import React from 'react';
 import { Typography, Stack, Divider } from '@mui/material'
 
 interface IProps {

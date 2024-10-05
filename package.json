@@ -1,71 +1,93 @@
 {
-  "name": "@kagiweb-tech/ui-core-a",
-  "version": "1.0.0",
-  "description": "A react webapp library that contains the core functionality of account base application. This app is designed to connect to a @kagiweb/api-core-a base server.",
-  "keywords": [
-    "core webapp ui",
-    "frontend",
-    "react app",
-    "react redux",
-    "typescript react"
-  ],
-  "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource/roboto": "^5.0.8",
-    "@mui/base": "^5.0.0-beta.31",
-    "@mui/icons-material": "^5.15.3",
-    "@mui/lab": "^5.0.0-alpha.160",
-    "@mui/material": "^5.15.3",
-    "@reduxjs/toolkit": "^2.0.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/lodash": "^4.17.5",
-    "@types/node": "^16.18.40",
-    "@types/react": "^18.2.20",
-    "@types/react-dom": "^18.2.7",
-    "axios": "^1.6.3",
-    "lodash": "^4.17.21",
-    "moment": "^2.30.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^9.0.4",
-    "react-router-dom": "^6.21.1",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "ua-parser-js": "^1.0.37",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+    "name": "@kagiweb-tech/ui-core-a",
+    "version": "1.0.0",
+    "description": "A react webapp library that contains the core functionality of account base application. This app is designed to connect to a @kagiweb/api-core-a base server.",
+    "keywords": [
+        "core webapp ui",
+        "frontend",
+        "react app",
+        "react redux",
+        "typescript react"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/plugin-transform-private-property-in-object": "^7.23.4",
-    "@types/react-router-dom": "^5.3.3"
-  }
+    "author": {
+        "name": "Gilbert D. Cuerbo",
+        "email": "gilbert.cuerbo@gmail.com",
+        "url": "https://gilbertgit95.github.io/"
+    },
+    "_homepage": "https://github.com/gilbertgit95/kagiweb-ui-core-a?tab=readme-ov-file",
+    "main": "dist/cjs/App.js",
+    "module": "dist/esm/App.js",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "dev": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+
+        "build:dist": "rm -rf dist/ && npm run build:esm && npm run build:cjs && npm run copy-files",
+        "build:esm": "tsc --project tsconfig-dist.json",
+        "build:cjs": "tsc --project tsconfig-dist.json --module CommonJS --outDir dist/cjs",
+        "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/esm && copyfiles -u 1 src/**/*.html src/**/*.css dist/cjs"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@emotion/react": "^11.11.3",
+        "@emotion/styled": "^11.11.0",
+        "@fontsource/roboto": "^5.0.8",
+        "@mui/base": "^5.0.0-beta.31",
+        "@mui/icons-material": "^5.15.3",
+        "@mui/lab": "^5.0.0-alpha.160",
+        "@mui/material": "^5.15.3",
+        "@testing-library/jest-dom": "^5.17.0",
+        "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^13.5.0",
+        "@types/jest": "^27.5.2",
+        "@types/lodash": "^4.17.5",
+        "axios": "^1.6.3",
+        "lodash": "^4.17.21",
+        "moment": "^2.30.1",
+        "react-router-dom": "^6.21.1",
+        "react-scripts": "5.0.1",
+        "ua-parser-js": "^1.0.37",
+        "web-vitals": "^2.1.4"
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+        "@babel/plugin-transform-private-property-in-object": "^7.23.4",
+        "@reduxjs/toolkit": "^2.0.1",
+        "@types/node": "^16.18.40",
+        "@types/react": "^18.2.20",
+        "@types/react-dom": "^18.2.7",
+        "copyfiles": "^2.4.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-redux": "^9.0.4",
+        "rimraf": "^6.0.1",
+        "typescript": "^4.9.5"
+    },
+    "peerDependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-redux": "^9.0.4"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+      "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    }
 }

@@ -1,5 +1,5 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
-import { IAccount, IRoleRef } from '../../types/account'
+import { IRoleRef } from '../../types/account'
 
 class AccountRoleService {
     public static updateAccountRole(accountId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {

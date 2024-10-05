@@ -1,5 +1,5 @@
 import apiHelper from './apiHelper';
-import { IAccountUpdate, IAccountInfo, IAccountConfig, IContactInfo, IRoleRef, ILimitedTransaction, IClientDevice, IAccessToken } from '../../types/account';
+import { IAccountUpdate, IAccountInfo, IContactInfo, IRoleRef, ILimitedTransaction, IClientDevice, IAccessToken } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 class OwnerApi {

@@ -1,4 +1,4 @@
-import React, {useMemo, useEffect} from 'react';
+import React, {useMemo} from 'react';
 import _ from 'lodash';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Typography, Divider, Box } from '@mui/material';
