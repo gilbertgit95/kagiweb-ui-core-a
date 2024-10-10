@@ -57,7 +57,7 @@ class AccountApi {
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `users`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
