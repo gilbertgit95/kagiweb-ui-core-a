@@ -3,9 +3,34 @@
 This app is still on its early stage of development
 
 ## Overview
-A react webapp library that contains the core functionalities of account base application. This app is designed to connect to a @kagiweb/api-core-a base server.
+A react webapp library that contains the core functionalities of account base application. This app is designed to connect to a @kagiweb/
+api-core-a base server.
 
-## Contents
+## Quick Setup
+### Project creation
+A cli is available for creating and administering kagiweb-tech projects. To create a ui app using @kagiweb-tech/ui-core-a execute the snippet below on your terminal.
+```
+> npm i -g @kagiweb-tech/cli
+> kwtech
+```
+1. select `App Creator`
+2. select `Create - UI Core A (Ts)`
+3. enter the project name
+
+This will create a new project folder in the current directory containing the initial codebase. To execute the project, first get inside the project folder and install the packages by executing  `npm i` on the terminal.
+
+### Execution
+This is up to you on how you start the application. Just make sure you have imported and use the library in the right way. However if you use `@kagiweb-tech/cli` to setup your project, you can start the development by excuting `npm run dev` and `npm start` to run the build version.
+
+### Initial Account
+(If the DB has been seeded using @kagiwe-tech/cli).A single account is created during seeding. This account has a `Master` Role and it has absolute access to all endpoints. The default credential for this account is shown below.
+```
+nameId: master
+password: Master101!
+```
+
+
+## Basic Configuration
 The root package contains a ready to use core web application, redux store and an app handler (for customization).
 To use the app using the default configuration, just follow the code below.
 
@@ -24,6 +49,52 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+root.render(
+  <Provider store={appStore}>
+    <App />
+  </Provider>
+);
+```
+
+The `<App>` component contains, app subsystems, webpages and components such as `signin`, `singout`, `otp signin`, `user management`, `owner settings` and more.
+You dont need to create the core functionality of an account base system because the app is already configured for this.
+
+- `<App>` - contains the base app, pages, components, routes and services.
+- `appStore` - use by the main app for data storage.
+- `appHandler` - to customise the application, add pages, add routes and navigations.
+
+<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/public-pages-e1.png" width="500" />
+
+<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/private-pages-e1.png" width="500" />
+
+<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/private-pages-e2.png" width="500" />
+
+
+## Customization of Info, Defaults and Theme
+The package contains `apphandler.setAppConfig` object, and this is use to customise the app. The list below are the things you can set in order to customise the application:
+
+- `app info` - information such as app name, server endpoints, default paginations and more.
+- `app theme` - color of the app, base on material UI
+
+> **Note**
+Theme configuration is base on MUI 5, see https://v5.mui.com/material-ui/customization/theming/. You can also generate your custom theme using this web app https://zenoo.github.io/mui-theme-creator/.
+
+Please see below of how to customise the app.
+
+```tsx
+...
+
+import App, {
+  appStore,
+  appHandler
+} from '@kagiweb-tech/ui-core-a';
+
+// create root component
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+// configure app theme
 const customTheme = {
   palette: {
     primary: {
@@ -41,6 +112,7 @@ const customTheme = {
   }
 }
 
+// configure app info
 const customConfig = {
   AppName: 'Kagiweb tech',
   AppDescription: '',
@@ -57,7 +129,9 @@ const customConfig = {
   defaultPage: 1
 }
 
+// set the custom configuration
 appHandler.setAppConfig(customConfig)
+
 root.render(
   <Provider store={appStore}>
     <App />
@@ -65,38 +139,29 @@ root.render(
 );
 ```
 
-The `<App>` component contains, app subsystems, webpages and components such as `signin`, `singout`, `otp signin`, `user management`, `owner settings` and more.
-You dont need to create the core functionality of an account base system because the app is already configured for this.
+## Setting up navigations
+There are 3 ways you can set navigation for this app
 
-- `<App>` - contains the base app, pages, components, routes and services.
-- `appStore` - a redux store that is use by the main app to work.
-- `appHandler` - to customise the application, add pages, add routes and navigations.
+### Public Navs
 
-<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/public-pages-e1.png" width="500" />
+### Private Navs
 
-<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/private-pages-e1.png" width="500" />
-
-<img src="https://raw.githubusercontent.com/gilbertgit95/kagiweb-ui-core-a/master/docs/images/private-pages-e2.png" width="500" />
+### Main Navs
 
 
-## Customization
-The package contains `apphandler` object, and this is use to customise the app. The list below are the things you can set in order to customise the application:
 
-- `app info` - information such as app name, server endpoints, default paginations and more.
-- `app theme` - color of the app, base on material UI
-- `public navigations` - links on the popup when you are signed out
-- `public pages` - pages and routes when you are signed out
-- `private main navigations` - the drawer links when you are signed in
-- `private user navigations` - the popup links in the top right corner when you are signed in
-- `private pages` - pages and routes when you are signed in
+## Setting up pages
+### Public Pages
 
-## Setting App Information
+### Private Pages
 
-## Setting App Theme
 
-## Setting public and private navigations
 
-## Setting public and private pages
+## Models
 
-## Architecture
+### Features
+
+### Roles
+
+### Account
 inprogress...
