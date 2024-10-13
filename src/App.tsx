@@ -292,12 +292,13 @@ appHandler.addMainDrawer({
 
 // add items to account drawers
 // for public
-appHandler.addPublicUserDrawerNav({
-  label: 'Info Pages',
-  links: [
-      { label: 'Home', url: '/', Icon: HomeIcon },
-  ]
-})
+// appHandler.addPublicUserDrawerNav({
+//   label: 'Info Pages',
+//   links: [
+//       { label: 'Home', url: '/', Icon: HomeIcon }
+//   ]
+// })
+
 appHandler.addPublicUserDrawerNav({
   label: 'Auth Pages',
   links: [

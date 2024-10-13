@@ -51,10 +51,14 @@ const PrimaryNav = (props:Props) => {
         setAnchorEl(null)
     }
     const handleItemClick = async (item:TLink) => {
-        if (item.action) await item.action()
+        if (item.action) {
+            await item.action()
+        }
         // if (item.url) window.location.replace(item.url)
-        if (item.url) navigate(item.url)
-        handleClose()
+        if (item.url) {
+            navigate(item.url)
+            handleClose()
+        }
     }
 
     return (
