@@ -1,6 +1,6 @@
 import React from 'react'
 import { IFeature, TFeatureType } from '../types/feature'
-import { TLinkGroup } from '../components/navs/primaryNav'
+import { TLinkGroup, TLink } from '../components/navs/primaryNav'
 import FeatureService from '../pages/feature/featureService'
 
 export interface IAppRoute {
@@ -64,32 +64,61 @@ class AppComponentsHandler {
         privateRoutes: [],
         publicRoutes: []
     }
-    public mainDrawer:TLinkGroup[] = []
-    public userDrawer:{privateUserDrawers:TLinkGroup[], publicUserDrawers:TLinkGroup[]} = {
-        privateUserDrawers:[],
-        publicUserDrawers:[]
+
+    public navigations:{
+        privateNavs:{ mainNavs: TLinkGroup[], sideNavs: TLinkGroup[]},
+        publicNavs:{ mainNavs: TLinkGroup[], sideNavs: TLinkGroup[]},
+    } = {
+        privateNavs:{ mainNavs: [], sideNavs: []},
+        publicNavs:{ mainNavs: [], sideNavs: []},
     }
 
     public setAppConfig(conf:IAppConfigOpt) {
         this.appConfig = {...this.appConfig, ...conf}
     }
 
-    public addPrivateRoute(route:IAppRoute):void {
-        this.routes.privateRoutes.push(route)
-    }
-    public addPublicRoute(route:IAppRoute):void {
-        this.routes.publicRoutes.push(route)
+    public addRoute(route:IAppRoute, groupType: 'privateRoutes' | 'publicRoutes'):void {
+        this.routes[groupType].push(route)
     }
 
-    public addMainDrawer(nav:TLinkGroup):void {
-        this.mainDrawer.push(nav)
+    public updateRoute(url:string, page:React.FC, groupType: 'privateRoutes' | 'publicRoutes'):void {
+        for (let route of this.routes[groupType]) {
+            if (route.url === url) {
+                route.page = page
+            }
+        }
     }
 
-    public addPrivateUserDrawerNav(nav:TLinkGroup):void {
-        this.userDrawer.privateUserDrawers.push(nav)
+    public addMainNav(nav:TLinkGroup|TLink, groupType: 'privateNavs' | 'publicNavs'):void {
+        this.navigations[groupType].mainNavs.push(nav)
     }
-    public addPublicUserDrawerNav(nav:TLinkGroup):void {
-        this.userDrawer.publicUserDrawers.push(nav)
+
+    public updateMainNav(groupLabel:string, linkUrl:string, newValue:TLink, groupType: 'privateNavs' | 'publicNavs'):void {
+        for (let groupNav of this.navigations[groupType].mainNavs) {
+            if (groupNav.label === groupLabel) {
+                for (let link of (groupNav.links || [])) {
+                    if (link.url === linkUrl) {
+                        link = newValue
+                    }
+                }
+            }
+        }
+    }
+
+    public addSideNav(nav:TLinkGroup, groupType: 'privateNavs' | 'publicNavs'):void {
+        this.navigations[groupType].sideNavs.push(nav)
+    }
+
+    public updateSideNav(groupLabel:string, linkUrl:string, newValue:TLink, groupType: 'privateNavs' | 'publicNavs'):void {
+        for (let groupNav of this.navigations[groupType].sideNavs) {
+            if (groupNav.label === groupLabel) {
+                for (let link of (groupNav.links || [])) {
+                    if (link.url === linkUrl) {
+                        link = newValue
+                    }
+                }
+            }
+        }
     }
 
     public async syncToFeatures():Promise<void> {
@@ -107,7 +136,7 @@ class AppComponentsHandler {
         }))
 
         // prepare and sync main drawer
-        features.push(...this.mainDrawer.reduce<IFeature[]>((acc, item) => {
+        features.push(...this.navigations.privateNavs.mainNavs.reduce<IFeature[]>((acc, item) => {
             acc = [
                 ...acc,
                 ...item.links?.map(item => {
@@ -124,7 +153,7 @@ class AppComponentsHandler {
         }, []))
 
         // prepare and sync private account drawer
-        features.push(...this.userDrawer.privateUserDrawers.reduce<IFeature[]>((acc, item) => {
+        features.push(...this.navigations.privateNavs.sideNavs.reduce<IFeature[]>((acc, item) => {
             acc = [
                 ...acc,
                 ...item.links?.map(item => {

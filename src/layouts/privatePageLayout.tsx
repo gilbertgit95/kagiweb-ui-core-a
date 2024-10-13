@@ -54,7 +54,7 @@ const NavCustomEl = () => {
     const customLinks:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-account-drawer'
         const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item?.type === filterType) || [])
-        const drawers = appComponentsHandler.userDrawer.privateUserDrawers
+        const drawers = appComponentsHandler.navigations.privateNavs.sideNavs
         const filteredLinks = drawers.reduce<TLinkGroup[]>((acc, group) => {
             const grp = _.clone(group)
             grp.links = group.links?.filter(item => featuresMap[item.label])
@@ -267,7 +267,7 @@ const PrivatePageLayout = () => {
     const links:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-main-drawer'
         const featuresMap:{[key:string]:IFeature} = DataTransformer.generateFeaturesDictionary(userFeatures?.filter(item => item?.type === filterType) || [])
-        const drawers = appComponentsHandler.mainDrawer
+        const drawers = appComponentsHandler.navigations.privateNavs.mainNavs
         const filteredLinks = drawers.reduce<TLinkGroup[]>((acc, group) => {
             const grp = _.clone(group)
             grp.links = group.links?.filter(item => featuresMap[item.label])
