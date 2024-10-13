@@ -275,9 +275,9 @@ appHandler.addPrivateRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs
 appHandler.addMainDrawer({
   label: 'Account Data',
   links:  [
-      { label: 'Dashboard', url: '/', Icon: HomeIcon },
-      { label: 'Notes', url: '/notes', Icon: NotesIcon },
-      { label: 'Tasks', url: '/tasks', Icon: TaskIcon }
+      { label: 'Dashboard', url: '/', Icon: HomeIcon }
+      // { label: 'Notes', url: '/notes', Icon: NotesIcon },
+      // { label: 'Tasks', url: '/tasks', Icon: TaskIcon }
   ]
 })
 
@@ -310,19 +310,19 @@ appHandler.addPublicUserDrawerNav({
   ]
 })
 // for private
-appHandler.addPrivateUserDrawerNav({
-  label: 'Custom Actions',
-  links: [
-      { label: 'Test Link', url: '/test-link', Icon: LockOutlinedIcon },
-      {
-        label: 'Test Action',
-        action: () => {
-          console.log('do some actions!!')
-        },
-        Icon: AccountBoxOutlinedIcon
-      },
-  ]
-})
+// appHandler.addPrivateUserDrawerNav({
+//   label: 'Custom Actions',
+//   links: [
+//       { label: 'Test Link', url: '/test-link', Icon: LockOutlinedIcon },
+//       {
+//         label: 'Test Action',
+//         action: () => {
+//           console.log('do some actions!!')
+//         },
+//         Icon: AccountBoxOutlinedIcon
+//       },
+//   ]
+// })
 
 function App() {
   const apptheme = useAppSelector(state => state?.appRefs.appTheme)
