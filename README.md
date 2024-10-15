@@ -329,6 +329,23 @@ root.render(
 );
 ```
 
+## App Store
+A redux app data storage. You can access current signin user data here or even the global data if you have access to it.
+
+Signedin Account:
+- `Account Data` - 
+- `Active Account Role` - 
+- `Account Roles` - 
+- `Active Account Workspace` - 
+- `Account Workspaces` - 
+- `Account External Workspaces` - 
+- `Client Device` - 
+- `Access Token` - 
+
+App References:
+- `Theme` - 
+- `roles` - 
+- `features` - 
 
 
 ## Models
