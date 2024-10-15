@@ -46,6 +46,9 @@ class AuthService {
             accts[matchIndex] = acc
         }
 
+        // filterout emty nameID
+        accts = accts.filter(item => item.nameId)
+
         localStorage.setItem(appComponentsHandler.appConfig.AccountsKey, JSON.stringify(accts))
         return accts
     }

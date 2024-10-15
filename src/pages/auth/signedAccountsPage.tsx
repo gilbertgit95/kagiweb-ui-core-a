@@ -61,7 +61,7 @@ const SignedAccountsPage = () => {
                 <Typography component="h1" variant="h5">Signed Accounts</Typography>
                 <Grid container justifyContent="center" spacing={2} style={{marginTop: 10}}>
                     {accounts.map((acc, index) => (
-                        <SignedAccountComponent accountInfo={acc} key={index} onUpdate={onUpdate} />
+                        acc.nameId? <SignedAccountComponent accountInfo={acc} key={index} onUpdate={onUpdate} />: null
                     ))}
                 </Grid>
                 <Box style={{marginTop: 30}}>
