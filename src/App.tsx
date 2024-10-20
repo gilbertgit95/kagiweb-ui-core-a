@@ -387,6 +387,8 @@ function App() {
 }
 
 export {
+  useAppDispatch,
+  useAppSelector,
   appStore,
   appHandler
 }
