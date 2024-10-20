@@ -1,6 +1,6 @@
 {
     "name": "@kagiweb-tech/ui-core-a",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "description": "A react webapp library that contains the core functionality of account base application. This app is designed to connect to a @kagiweb/api-core-a base server.",
     "keywords": [
         "core webapp ui",
@@ -22,12 +22,13 @@
         "src"
     ],
     "exports": {
-        "./stores/appStore": "./dist/esm/stores/appStore"
+        ".": "./dist/cjs/App.js",
+        "./stores/appStore": "./dist/cjs/stores/appStore.js"
     },
     "typesVersions": {
         "*": {
             "stores/appStore": [
-                "dist/esm/stores/appStore.d.ts"
+                "dist/cjs/stores/appStore.d.ts"
             ]
         }
     },
