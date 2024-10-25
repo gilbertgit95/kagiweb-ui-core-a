@@ -17,6 +17,7 @@ import { IRole } from '../../types/role';
 interface IRoleRow {
     _id: string,
     name: string,
+    scope: string,
     description: string,
     level: string,
     features: string
@@ -34,6 +35,11 @@ const colDef:IColDef[] = [
         Component: (props:IRoleRow) => {
             return <ShortendDescription maxWidth={300} value={props.description} />
         }
+    },
+    {
+        header: 'Scope',
+        field: 'scope',
+        Component: undefined // react Component or undefined
     },
     {
         header: 'Level',
@@ -78,6 +84,7 @@ const RolesPage = () => {
                         return {
                             _id: item._id || '',
                             name: item.name || '--',
+                            scope: item.scope || '--',
                             description: item.description || '--',
                             level: String(item.level) || '--',
                             features: item.absoluteAuthority? 'Everything':  String(item.featuresRefs?.length),

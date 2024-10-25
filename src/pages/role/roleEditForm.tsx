@@ -3,8 +3,10 @@ import { Button, Typography, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IRole } from '../../types/role';
+import { IRole, TRoleScope, roleScopes } from '../../types/role';
 import AppUtils from '../../utils/appUtils';
 
 interface Props {
@@ -22,6 +24,7 @@ export  const RoleEditForm = ({roleId, getFunc, updateFunc}:Props) => {
     const [role, setRole] = useState<IRole | undefined>()
     const [updatedRole, setUpdatedRole] = useState<IRole>({
         name: '',
+        scope: roleScopes[0],
         description: '',
         level: 0,
         reqLimitPerSec: 120
@@ -36,6 +39,7 @@ export  const RoleEditForm = ({roleId, getFunc, updateFunc}:Props) => {
             ...role,
             ...{
                 name: updatedRole.name,
+                scope: updatedRole.scope,
                 description: updatedRole.description,
                 level: updatedRole.level,
                 reqLimitPerSec: updatedRole.reqLimitPerSec
@@ -121,6 +125,23 @@ export  const RoleEditForm = ({roleId, getFunc, updateFunc}:Props) => {
                                     fullWidth
                                     defaultValue={updatedRole.name}
                                     onChange={(e) => handleTextFieldChange('name', e.target.value)} />
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Scope</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Select
+                                    disabled
+                                    fullWidth
+                                    value={role.scope}>
+                                    {
+                                        roleScopes.map((item, index) => (
+                                            <MenuItem key={index} value={item}>{ item }</MenuItem>
+                                        ))
+                                    }
+                                </Select>
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>

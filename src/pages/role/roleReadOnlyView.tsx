@@ -52,6 +52,7 @@ const RoleReadOnlyView = ({role}:Props) => {
 
     const data:{field: string, value: string|undefined}[] = [
         { field: 'Name', value: role?.name },
+        { field: 'Scope', value: role?.scope },
         { field: 'Description', value: role?.description },
         { field: 'Level', value: String(role?.level) },
         { field: 'Absolute Authority', value: role?.absoluteAuthority? 'True': 'False' },
