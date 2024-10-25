@@ -14,6 +14,7 @@ interface IFeatureRow {
     _id: string,
     name: string,
     value: string,
+    scope: string,
     type: string,
     tags: string[]
 }
@@ -32,6 +33,11 @@ const colDef:IColDef[] = [
         Component: (props:IFeatureRow & IChangeDate) => {
             return <ShortendDescription value={props.value} />
         }
+    },
+    {
+        header: 'Scope',
+        field: 'scope',
+        Component: undefined // react Component or undefined
     },
     {
         header: 'Type',
@@ -79,6 +85,7 @@ const FeaturesGroupedReadOnlyView = () => {
                             _id: item._id || '',
                             name: item.name || '--',
                             value: item.value || '--',
+                            scope: item.scope || '--',
                             type: item.type || '--',
                             tags: item.tags || [],
                             createdAt: item.createdAt,
@@ -119,7 +126,7 @@ const FeaturesGroupedReadOnlyView = () => {
                         filterOptions: [],
                         sortValue: undefined,
                         sortField: 'name',
-                        fieldOptions: ['name', 'value', 'type']
+                        fieldOptions: ['name', 'value', 'scope', 'type']
                     }}
                     tableConfig={{
                         // maxHeight: 700,

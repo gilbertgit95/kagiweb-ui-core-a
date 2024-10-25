@@ -7,7 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IFeature, TFeatureType, featureTypes } from '../../types/feature';
+import { IFeature, TFeatureType, TFeatureScope, featureTypes, featureScopes } from '../../types/feature';
 import AppUtils from '../../utils/appUtils';
 
 interface Props {
@@ -27,6 +27,7 @@ export  const FeatureEditForm = ({featureId, getFunc, updateFunc}:Props) => {
         name: '',
         value: '',
         description: '',
+        scope: featureScopes[0],
         type: featureTypes[0],
         tags: [],
         stringTags: '',
@@ -49,6 +50,7 @@ export  const FeatureEditForm = ({featureId, getFunc, updateFunc}:Props) => {
                 description: updatedFeature.description,
                 value: updatedFeature.value,
                 type: updatedFeature.type,
+                scope: updatedFeature.scope,
                 tags: updatedFeature.stringTags.split(', ')
             }
         }
@@ -121,6 +123,7 @@ export  const FeatureEditForm = ({featureId, getFunc, updateFunc}:Props) => {
             feature.description !== updatedFeature.description ||
             feature.value !== updatedFeature.value ||
             feature.type !== updatedFeature.type ||
+            feature.scope !== updatedFeature.scope ||
             feature.tags?.join(', ') !== updatedFeature.stringTags
         )
     })()
@@ -152,6 +155,23 @@ export  const FeatureEditForm = ({featureId, getFunc, updateFunc}:Props) => {
                                     maxRows={4}
                                     defaultValue={updatedFeature.description}
                                     onChange={(e) => handleTextFieldChange('description', e.target.value)}/>
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12}>
+                            <Grid item xs={4} md={3} sx={itemSx}>
+                                <Typography variant="subtitle1">Scope</Typography>
+                            </Grid>
+                            <Grid item xs={8} md={9}>
+                                <Select
+                                    disabled
+                                    fullWidth
+                                    value={updatedFeature.scope}>
+                                    {
+                                        featureScopes.map((item, index) => (
+                                            <MenuItem key={index} value={item}>{ item }</MenuItem>
+                                        ))
+                                    }
+                                </Select>
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>

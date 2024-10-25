@@ -6,7 +6,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import FeatureService from './featureService';
-import { IFeature, TFeatureType, featureTypes } from '../../types/feature';
+import { IFeature, TFeatureType, TFeatureScope, featureTypes, featureScopes } from '../../types/feature';
 import AppUtils from '../../utils/appUtils';
 
 export const FeatureCreateForm = () => {
@@ -23,12 +23,18 @@ export const FeatureCreateForm = () => {
         description: '',
         type: featureTypes[0],
         tags: [],
+        scope: featureScopes[0],
         stringTags: '',
     })
 
     const handleTypeSelectionChange = (event: SelectChangeEvent) => {
         const type = event.target.value as TFeatureType
         setFeature({...feature, ...{type}})
+    }
+
+    const handleScopeSelectionChange = (event: SelectChangeEvent) => {
+        const scope = event.target.value as TFeatureScope
+        setFeature({...feature, ...{scope}})
     }
 
     const handleTextFieldChange = (field:string, value:string) => {
@@ -43,6 +49,7 @@ export const FeatureCreateForm = () => {
                 description: feature.description,
                 value: feature.value,
                 type: feature.type,
+                scope: feature.scope,
                 tags: feature.stringTags.split(', ')
             }
         }
@@ -106,6 +113,23 @@ export const FeatureCreateForm = () => {
                         maxRows={4}
                         defaultValue={feature.description}
                         onChange={(e) => handleTextFieldChange('description', e.target.value)}/>
+                </Grid>
+            </Grid>
+            <Grid container item xs={12}>
+                <Grid item xs={4} md={3} sx={itemSx}>
+                    <Typography variant="subtitle1">Scope</Typography>
+                </Grid>
+                <Grid item xs={8} md={9}>
+                    <Select
+                        fullWidth
+                        value={feature.scope}
+                        onChange={handleScopeSelectionChange}>
+                        {
+                            featureScopes.map((item, index) => (
+                                <MenuItem key={index} value={item}>{ item }</MenuItem>
+                            ))
+                        }
+                    </Select>
                 </Grid>
             </Grid>
             <Grid container item xs={12}>

@@ -50,6 +50,7 @@ class RoleApi {
     public static createRole(role:IRole) {
         const data = {
             'name': role.name,
+            'scope': role.scope,
             'description': role.description,
             'level': role.level,
             'reqLimitPerSec': role.reqLimitPerSec

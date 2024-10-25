@@ -52,6 +52,7 @@ class FeatureApi {
     public static createFeature(feature:IFeature) {
         const data = {
             'name': feature.name,
+            'scope': feature.scope,
             'description': feature.description,
             'value': feature.value,
             'type': feature.type,

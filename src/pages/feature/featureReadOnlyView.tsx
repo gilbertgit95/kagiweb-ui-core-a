@@ -27,6 +27,7 @@ const FeatureReadOnlyView = ({feature}: Props) => {
     const data:{field: string, value: string|undefined}[] = [
         { field: 'name', value: feature?.name },
         { field: 'description', value: feature?.description },
+        { field: 'scope', value: feature?.scope },
         { field: 'type', value: feature?.type },
         { field: 'value', value: feature?.value },
         { field: 'tags', value: feature?.tags?.join(', ') },
