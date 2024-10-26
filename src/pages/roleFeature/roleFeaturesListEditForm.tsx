@@ -41,6 +41,7 @@ interface IProps {
 interface IFeatureRow {
     _id: string,
     name: string,
+    scope: string,
     value: string,
     type: string,
     tags: string[]
@@ -237,6 +238,7 @@ const RoleFeaturesListEditForm = ({role, onChange, view, onChangeView}:IProps) =
                     roles
                         .filter(item => !item.absoluteAuthority)
                         .filter(item => item._id !== role._id)
+                        .filter(item => item.scope === role.scope)
                 )
 
                 try {
@@ -251,6 +253,7 @@ const RoleFeaturesListEditForm = ({role, onChange, view, onChangeView}:IProps) =
                             return {
                                 _id: item._id || '',
                                 name: feature?.name || '--',
+                                scope: feature?.scope || '--',
                                 value: feature?.value || '--',
                                 type: feature?.type  || '--',
                                 tags: feature?.tags || []

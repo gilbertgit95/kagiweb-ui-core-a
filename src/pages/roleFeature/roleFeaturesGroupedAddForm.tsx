@@ -18,6 +18,7 @@ interface IProp {
 interface IFeatureRow {
     _id: string,
     name: string,
+    scope: string,
     value: string,
     type: string,
     tags: string[]
@@ -46,10 +47,12 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
             const roleFeatures:Set<string> = new Set(role.featuresRefs.map(item => item.featureId))
             const tarnsformedData:IFeatureRow[] = features
                 .filter(item => !roleFeatures.has(item._id || ''))
+                .filter(item => item.scope === role.scope)
                 .map((item) => {
                     return {
                         _id: item._id || '',
                         name: item.name || '--',
+                        scope: item.scope || '--',
                         value: item.value || '--',
                         type: item.type || '--',
                         tags: item.tags || []
@@ -66,12 +69,14 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
 
     useEffect(() => {
         const filterTags = (tagSelection.length > 1? tagSelection.slice(1): []).join('')
-        const filteredList = data.filter(item => {
-            const itemTags = item.tags? item.tags.join(''): ''
-            return itemTags.indexOf(filterTags) === 0
-        })
+        const filteredList = data
+            .filter(item => item.scope === role?.scope)
+            .filter(item => {
+                const itemTags = item.tags? item.tags.join(''): ''
+                return itemTags.indexOf(filterTags) === 0
+            })
         setFilteredData(filteredList)
-    }, [data, tagSelection])
+    }, [role, data, tagSelection])
 
     const colDef:IColDef[] = [
         {

@@ -18,6 +18,7 @@ interface IProp {
 interface IFeatureRow {
     _id: string,
     name: string,
+    scope: string,
     value: string,
     type: string,
     tags: string[]
@@ -43,10 +44,12 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
             const roleFeatures:Set<string> = new Set(role.featuresRefs.map(item => item.featureId))
             const tarnsformedData:IFeatureRow[] = features
                 .filter(item => !roleFeatures.has(item._id || ''))
+                .filter(item => item.scope === role.scope)
                 .map((item) => {
                     return {
                         _id: item._id || '',
                         name: item.name || '--',
+                        scope: item.scope || '--',
                         value: item.value || '--',
                         type: item.type || '--',
                         tags: item.tags || []
