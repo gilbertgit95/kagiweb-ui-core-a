@@ -41,10 +41,6 @@ const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRe
     const data:{field: string, value: string|undefined}[] = [
         { field: 'User ID', value: accountRef?.accountId },
         { field: 'NameID', value: accountRef?.nameId || '--' },
-        { field: 'Read Access', value: accountRef?.readAccess? 'True': 'False' },
-        { field: 'Update Access', value: accountRef?.updateAccess? 'True': 'False' },
-        { field: 'Create Access', value: accountRef?.createAccess? 'True': 'False' },
-        { field: 'Delete Access', value: accountRef?.deleteAccess? 'True': 'False' },
         { field: 'Accepted', value: accountRef?.accepted? 'True': 'False' },
         { field: 'Declined', value: accountRef?.declined? 'True': 'False' },
         { field: 'Disabled', value: accountRef?.disabled? 'True': 'False' },

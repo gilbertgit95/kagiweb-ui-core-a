@@ -152,19 +152,11 @@ class OwnerService {
         accountId:string,
         workspaceId:string,
         accountRefId:string,
-        readAccess: boolean,
-        updateAccess: boolean,
-        createAccess: boolean,
-        deleteAccess: boolean,
         disabled: boolean):Promise<{data: IWorkspaceAccountRef}> {
         return OwnerApi.updateWorkspaceAccountRef(
             accountId,
             workspaceId,
             accountRefId,
-            readAccess,
-            updateAccess,
-            createAccess,
-            deleteAccess,
             disabled
         )
     }
@@ -173,19 +165,11 @@ class OwnerService {
         accountId:string,
         workspaceId:string,
         nameId:string,
-        readAccess: boolean,
-        updateAccess: boolean,
-        createAccess: boolean,
-        deleteAccess: boolean,
         disabled: boolean):Promise<{data: IWorkspaceAccountRef}> {
         return OwnerApi.createWorkspaceAccountRef(
             accountId,
             workspaceId,
             nameId,
-            readAccess,
-            updateAccess,
-            createAccess,
-            deleteAccess,
             disabled
         )
     }

@@ -14,10 +14,6 @@ interface props {
         accountId:string,
         workspaceId:string,
         accountRefId:string,
-        readAccess:boolean,
-        updateAccess:boolean,
-        createAccess:boolean,
-        deleteAccess:boolean,
         disabled:boolean
     ) => Promise<{data:IWorkspaceAccountRef}>,
     updated?: (accountId:string|undefined, workspaceId: string, accountRef:IWorkspaceAccountRef|undefined) => void
@@ -27,10 +23,6 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
     const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceAccountRef & {nameId?:string}>({
         accountId: '',
-        readAccess: true,
-        updateAccess: false,
-        createAccess: false,
-        deleteAccess: false,
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -57,10 +49,6 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
                     account._id,
                     workspaceId || '',
                     accountRefId || '',
-                    Boolean(updatedUserRef.readAccess),
-                    Boolean(updatedUserRef.updateAccess),
-                    Boolean(updatedUserRef.createAccess),
-                    Boolean(updatedUserRef.deleteAccess),
                     Boolean(updatedUserRef.disabled)
                 )
                 setInfoAndErrors({
@@ -110,10 +98,6 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
         if (!accountRef) return false
 
         return !(
-            accountRef.readAccess !== updatedUserRef.readAccess ||
-            accountRef.updateAccess !== updatedUserRef.updateAccess ||
-            accountRef.createAccess !== updatedUserRef.createAccess ||
-            accountRef.deleteAccess !== updatedUserRef.deleteAccess ||
             accountRef.disabled !== updatedUserRef.disabled
         )
     })()
@@ -132,46 +116,6 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
                                     fullWidth
                                     disabled
                                     defaultValue={accountRef?.nameId || ''} />
-                            </Grid>
-                        </Grid>
-                        <Grid container item xs={12}>
-                            <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">Read Access</Typography>
-                            </Grid>
-                            <Grid item xs={8} md={9}>
-                                <Switch
-                                    onChange={e => handleSwitchChange('readAccess', e)}
-                                    checked={updatedUserRef.readAccess} />
-                            </Grid>
-                        </Grid>
-                        <Grid container item xs={12}>
-                            <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">Update Access</Typography>
-                            </Grid>
-                            <Grid item xs={8} md={9}>
-                                <Switch
-                                    onChange={e => handleSwitchChange('updateAccess', e)}
-                                    checked={updatedUserRef.updateAccess} />
-                            </Grid>
-                        </Grid>
-                        <Grid container item xs={12}>
-                            <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">Create Access</Typography>
-                            </Grid>
-                            <Grid item xs={8} md={9}>
-                                <Switch
-                                    onChange={e => handleSwitchChange('createAccess', e)}
-                                    checked={updatedUserRef.createAccess} />
-                            </Grid>
-                        </Grid>
-                        <Grid container item xs={12}>
-                            <Grid item xs={4} md={3} sx={itemSx}>
-                                <Typography variant="subtitle1">Delete Access</Typography>
-                            </Grid>
-                            <Grid item xs={8} md={9}>
-                                <Switch
-                                    onChange={e => handleSwitchChange('deleteAccess', e)}
-                                    checked={updatedUserRef.deleteAccess} />
                             </Grid>
                         </Grid>
                         <Grid container item xs={12}>

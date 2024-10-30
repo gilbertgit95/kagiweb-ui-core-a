@@ -384,16 +384,8 @@ class AccountApi {
         accountId:string,
         workspaceId:string,
         accountRefId:string,
-        readAccess: boolean,
-        updateAccess: boolean,
-        createAccess: boolean,
-        deleteAccess: boolean,
         disabled: boolean) {
         const data = {
-            'readAccess': readAccess,
-            'updateAccess': updateAccess,
-            'createAccess': createAccess,
-            'deleteAccess': deleteAccess,
             'disabled': disabled
         }
 
@@ -409,17 +401,9 @@ class AccountApi {
         accountId:string,
         workspaceId:string,
         nameId:string,
-        readAccess: boolean,
-        updateAccess: boolean,
-        createAccess: boolean,
-        deleteAccess: boolean,
         disabled: boolean) {
         const data = {
             'nameId': nameId,
-            'readAccess': readAccess,
-            'updateAccess': updateAccess,
-            'createAccess': createAccess,
-            'deleteAccess': deleteAccess,
             'disabled': disabled
         }
 

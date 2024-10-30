@@ -16,10 +16,6 @@ interface IWorkspaceAccountRefRow {
     _id: string,
     accountId: string,
     nameId: string,
-    readAccess: boolean,
-    createAccess: boolean,
-    updateAccess: boolean,
-    deleteAccess: boolean,
     accepted: boolean,
     declined: boolean,
     disabled: boolean,
@@ -40,10 +36,6 @@ const AccountWorkspaceAccountRefsReadOnlyView = ({account, workspaceId, getFunc}
                         _id: item._id || '',
                         accountId: item.accountId,
                         nameId: item.nameId || '--',
-                        readAccess: Boolean(item.readAccess),
-                        createAccess: Boolean(item.createAccess),
-                        updateAccess: Boolean(item.updateAccess),
-                        deleteAccess: Boolean(item.deleteAccess),
                         accepted: Boolean(item.accepted),
                         declined: Boolean(item.declined),
                         disabled: Boolean(item.disabled),
@@ -64,34 +56,6 @@ const AccountWorkspaceAccountRefsReadOnlyView = ({account, workspaceId, getFunc}
         {
             header: 'NameID',
             field: 'nameId'
-        },
-        {
-            header: 'Read',
-            field: 'readAccess',
-            Component: (props:IWorkspaceAccountRefRow) => {
-                return <Check value={props.readAccess} />
-            }
-        },
-        {
-            header: 'Update',
-            field: 'updateAccess',
-            Component: (props:IWorkspaceAccountRefRow) => {
-                return <Check value={props.updateAccess} />
-            }
-        },
-        {
-            header: 'Create',
-            field: 'createAccess',
-            Component: (props:IWorkspaceAccountRefRow) => {
-                return <Check value={props.createAccess} />
-            }
-        },
-        {
-            header: 'Delete',
-            field: 'deleteAccess',
-            Component: (props:IWorkspaceAccountRefRow) => {
-                return <Check value={props.deleteAccess} />
-            }
         },
         {
             header: 'Accepted',

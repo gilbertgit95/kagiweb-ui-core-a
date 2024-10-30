@@ -102,10 +102,8 @@ export interface IAccountConfig {
 export interface IWorkspaceAccountRef {
     _id?: string,
     accountId: string,
-    readAccess?: boolean,
-    updateAccess?: boolean,
-    createAccess?: boolean,
-    deleteAccess?: boolean,
+    rolesRefs?: IRoleRef[],
+    accountConfigs?: IAccountConfig[],
     accepted?: boolean,
     declined?: boolean,
     disabled?: boolean

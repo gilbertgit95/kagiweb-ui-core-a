@@ -12,10 +12,6 @@ interface props {
         accountId:string,
         workspaceId:string,
         nameId:string,
-        readAccess: boolean,
-        updateAccess: boolean,
-        createAccess: boolean,
-        deleteAccess: boolean,
         disabled: boolean
     ) => Promise<{data:IWorkspaceAccountRef & {nameId?: string}}>,
     created?: (accountId:string|undefined, workspaceId:string, accountRef:IWorkspaceAccountRef|undefined) => void
@@ -25,10 +21,6 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
     const [accountRef, setNewUserRef] = useState<IWorkspaceAccountRef & {nameId?: string}>({
         accountId: '',
         nameId: '',
-        readAccess: true,
-        updateAccess: false,
-        createAccess: false,
-        deleteAccess: false,
         disabled: false
     })
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -51,10 +43,6 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
         const newData:IWorkspaceAccountRef & {nameId?: string} = {
             accountId: '',
             nameId: accountRef.nameId,
-            readAccess: accountRef.readAccess,
-            updateAccess: accountRef.updateAccess,
-            createAccess: accountRef.createAccess,
-            deleteAccess: accountRef.deleteAccess,
             disabled: accountRef.disabled
         }
         console.log('save update: ', newData)
@@ -66,10 +54,6 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
                     account._id,
                     workspaceId || '',
                     accountRef.nameId || '',
-                    Boolean(accountRef.readAccess),
-                    Boolean(accountRef.updateAccess),
-                    Boolean(accountRef.createAccess),
-                    Boolean(accountRef.deleteAccess),
                     Boolean(accountRef.disabled)
                 )
                 if (created) created(account?._id, workspaceId || '', reqResp?.data)
@@ -106,46 +90,6 @@ const AccountWorkspaceAccountRefCreateForm = ({account, workspaceId, createFunc,
                         fullWidth
                         defaultValue={accountRef?.nameId || ''}
                         onChange={(e) => handleTextFieldChange('nameId', e.target.value)} />
-                </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Read Access</Typography>
-                </Grid>
-                <Grid item xs={8} md={9}>
-                    <Switch
-                        onChange={e => handleSwitchChange('readAccess', e)}
-                        checked={accountRef.readAccess} />
-                </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Update Access</Typography>
-                </Grid>
-                <Grid item xs={8} md={9}>
-                    <Switch
-                        onChange={e => handleSwitchChange('updateAccess', e)}
-                        checked={accountRef.updateAccess} />
-                </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Create Access</Typography>
-                </Grid>
-                <Grid item xs={8} md={9}>
-                    <Switch
-                        onChange={e => handleSwitchChange('createAccess', e)}
-                        checked={accountRef.createAccess} />
-                </Grid>
-            </Grid>
-            <Grid container item xs={12}>
-                <Grid item xs={4} md={3} sx={itemSx}>
-                    <Typography variant="subtitle1">Delete Access</Typography>
-                </Grid>
-                <Grid item xs={8} md={9}>
-                    <Switch
-                        onChange={e => handleSwitchChange('deleteAccess', e)}
-                        checked={accountRef.deleteAccess} />
                 </Grid>
             </Grid>
             <Grid container item xs={12}>
