@@ -16,7 +16,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { useAppSelector} from '../../stores/appStore';
 import { IAccount, IRoleRef } from '../../types/account';
 import { IRole } from '../../types/role';
-import AccountRolesAddForm from './accountRolesAddForm';
+import AccountRolesAddForm from './accountWorkspaceAccountRefRolesAddForm';
 
 interface IProps {
     account: IAccount|undefined,
