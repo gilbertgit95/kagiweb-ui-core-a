@@ -5,9 +5,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import WorkspaceSelectorComponent from './workspaceSelectorComponent';
 import RoleSelectorComponent from './roleSelectorComponent';
-import AccountAccountConfigService from './accountAccountConfigService';
+import AccountAccountConfigService from './accountWorkspaceAccountRefAccountConfigService';
 import { IAccount, IAccountConfig, TAccountConfigType, accountConfigTypes } from '../../types/account';
 import { ISignedInUser } from '../../stores/signedInAccountSlice';
 
@@ -173,16 +172,6 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo
                                         <RoleSelectorComponent
                                             defaultRole={completeInfo.role}
                                             assignedRoles={completeInfo.roles || []}
-                                            onSelect={(sel) => handleTextFieldChange('value', sel)} />
-                                    ): null
-                                }
-                                {
-                                    (accountConfig.key === 'default-workspace')? (
-                                        <WorkspaceSelectorComponent
-                                            accountData={completeInfo.accountData}
-                                            defaultWorkspace={completeInfo.workspace}
-                                            ownWorkspaces={completeInfo.workspaces || []}
-                                            externalWorkspaces={completeInfo.externalWorkspaces || []}
                                             onSelect={(sel) => handleTextFieldChange('value', sel)} />
                                     ): null
                                 }

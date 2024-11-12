@@ -7,9 +7,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountContactConfigEditForm from './accountAccountConfigEditForm';
+import AccountContactConfigEditForm from './accountWorkspaceAccountRefAccountConfigEditForm';
 import AccountService from '../account/accountService';
-import AccountAccountConfigService from './accountAccountConfigService';
+import AccountAccountConfigService from './accountWorkspaceAccountRefAccountConfigService';
 import { IAccount } from '../../types/account';
 import {
   useParams
