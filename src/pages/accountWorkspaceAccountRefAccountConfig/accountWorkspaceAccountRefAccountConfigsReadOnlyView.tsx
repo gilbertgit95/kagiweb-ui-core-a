@@ -18,7 +18,7 @@ interface IAccountConfigRow {
     updatedAt?: Date
 }
 
-const AccountAccountConfigsReadOnlyView = ({account}:IProps) => {
+const AccountWorkspaceAccountRefAccountConfigsReadOnlyView = ({account}:IProps) => {
     // const navigate = useNavigate()
     const [data, setData] = useState<IAccountConfigRow[]>([])
 
@@ -83,4 +83,4 @@ const AccountAccountConfigsReadOnlyView = ({account}:IProps) => {
     )
 }
 
-export default AccountAccountConfigsReadOnlyView
+export default AccountWorkspaceAccountRefAccountConfigsReadOnlyView

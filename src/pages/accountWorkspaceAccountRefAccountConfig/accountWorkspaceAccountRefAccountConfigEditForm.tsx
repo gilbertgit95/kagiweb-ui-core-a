@@ -18,7 +18,7 @@ interface props {
     updated?: (accountId:string|undefined, accountConfig:IAccountConfig|undefined) => void
 }
 
-const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
+const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedAccountConfig, setUpdatedAccountConfig] = useState<IAccountConfig>({
         key: '',
@@ -215,4 +215,4 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo
     ): null
 }
 
-export default AccountAccountConfigEditForm
+export default AccountWorkspaceAccountRefAccountConfigEditForm

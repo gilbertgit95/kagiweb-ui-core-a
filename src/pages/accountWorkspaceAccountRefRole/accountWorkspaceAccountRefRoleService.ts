@@ -1,7 +1,7 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 import { IRoleRef } from '../../types/account'
 
-class AccountRoleService {
+class AccountWorkspaceAccountRefRoleService {
     public static updateAccountRole(accountId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
         return AccountApi.updateAccountRole(accountId, AccountRole)
     }
@@ -15,4 +15,4 @@ class AccountRoleService {
     }
 }
 
-export default AccountRoleService
+export default AccountWorkspaceAccountRefRoleService

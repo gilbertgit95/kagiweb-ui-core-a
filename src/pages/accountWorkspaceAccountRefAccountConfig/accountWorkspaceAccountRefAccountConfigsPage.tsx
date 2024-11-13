@@ -10,7 +10,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import AccountService from '../account/accountService';
 import AccountAccountConfigsReadOnlyView from './accountWorkspaceAccountRefAccountConfigsReadOnlyView';
 
-const AccountAccountConfigsPage = () => {
+const AccountWorkspaceAccountRefAccountConfigsPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
@@ -64,4 +64,4 @@ const AccountAccountConfigsPage = () => {
     )
 }
 
-export default AccountAccountConfigsPage
+export default AccountWorkspaceAccountRefAccountConfigsPage

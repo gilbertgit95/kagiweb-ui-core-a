@@ -33,7 +33,7 @@ interface IRoleRow {
     absoluteAuthority: boolean
 }
 
-const AccountRolesEditForm = ({account, createFunc, deleteFunc, onChange}:IProps) => {
+const AccountWorkspaceAccountRefRolesEditForm = ({account, createFunc, deleteFunc, onChange}:IProps) => {
     const roles = useAppSelector(state => state.appRefs?.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -257,4 +257,4 @@ const AccountRolesEditForm = ({account, createFunc, deleteFunc, onChange}:IProps
     )
 }
 
-export default AccountRolesEditForm
+export default AccountWorkspaceAccountRefRolesEditForm

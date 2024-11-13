@@ -1,7 +1,7 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 import { IAccount, IAccountConfig } from '../../types/account'
 
-class AccountAccountConfigService {
+class AccountWorkspaceAccountRefAccountConfigService {
     public static getAccountConfigById(account:IAccount, accountConfigId:string):IAccountConfig|undefined {
 
         if (account && account.accountConfigs) {
@@ -29,4 +29,4 @@ class AccountAccountConfigService {
     }
 }
 
-export default AccountAccountConfigService
+export default AccountWorkspaceAccountRefAccountConfigService

@@ -22,7 +22,7 @@ interface IRoleRow {
     absoluteAuthority: boolean
 }
 
-const AccountRolesAddForm = ({account, onSelect}:IProp) => {
+const AccountWorkspaceAccountRefRolesAddForm = ({account, onSelect}:IProp) => {
     const roles:IRole[] = useAppSelector(state => state.appRefs.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
 
@@ -85,4 +85,4 @@ const AccountRolesAddForm = ({account, onSelect}:IProp) => {
     )
 }
 
-export default AccountRolesAddForm
+export default AccountWorkspaceAccountRefRolesAddForm

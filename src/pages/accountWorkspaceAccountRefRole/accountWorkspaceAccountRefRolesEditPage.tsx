@@ -11,7 +11,7 @@ import AccountRoleService from './accountWorkspaceAccountRefRoleService';
 import { IAccount } from '../../types/account';
 import AccountRolesEditForm from './accountWorkspaceAccountRefRolesEditForm';
 
-const AccountRolesEditPage = () => {
+const AccountWorkspaceAccountRefRolesEditPage = () => {
     const { accountId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
@@ -81,4 +81,4 @@ const AccountRolesEditPage = () => {
     )
 }
 
-export default AccountRolesEditPage
+export default AccountWorkspaceAccountRefRolesEditPage

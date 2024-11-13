@@ -11,7 +11,7 @@ interface props {
     accountConfigId?: string
 }
 
-const AccountAccountConfigReadOnlyView = ({account, accountConfigId}:props) => {
+const AccountWorkspaceAccountRefAccountConfigReadOnlyView = ({account, accountConfigId}:props) => {
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
@@ -50,4 +50,4 @@ const AccountAccountConfigReadOnlyView = ({account, accountConfigId}:props) => {
     ): null
 }
 
-export default AccountAccountConfigReadOnlyView
+export default AccountWorkspaceAccountRefAccountConfigReadOnlyView
