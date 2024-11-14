@@ -125,13 +125,13 @@ class OwnerApi {
     }
 
     // roles
-    public static activateAccountRole(accountId:string, roleRefId:string) {
-        return apiHelper.privateReq({
-            method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/roles/${ roleRefId }/activate`,
-            headers: { 'content-type': 'application/x-www-form-urlencoded' }
-        })
-    }
+    // public static activateAccountRole(accountId:string, roleRefId:string) {
+    //     return apiHelper.privateReq({
+    //         method: 'PUT',
+    //         url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/roles/${ roleRefId }/activate`,
+    //         headers: { 'content-type': 'application/x-www-form-urlencoded' }
+    //     })
+    // }
 
     public static updateAccountRole(accountId:string, accountRole:{_id: string, isActive?:boolean, roleId?:string}) {
         const data = {
