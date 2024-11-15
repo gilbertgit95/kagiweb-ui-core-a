@@ -437,7 +437,7 @@ class AccountApi {
     }
 
     // account workspace account ref roles
-    public static updateAccountWorkspaceAccountRefRole(accountId:string, accountRole:{_id: string, isActive?:boolean, roleId?:string}) {
+    public static updateAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, accountRole:{_id: string, isActive?:boolean, roleId?:string}) {
         const data = {
             'roleId': accountRole.roleId,
             'isActive': accountRole.isActive
@@ -445,29 +445,29 @@ class AccountApi {
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/roles/${ accountRole._id }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/roles/${ accountRole._id }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
     }
 
-    public static createAccountWorkspaceAccountRefRole(accountId:string, accountRole:IRoleRef) {
+    public static createAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, accountRole:IRoleRef) {
         const data:IRoleRef = {
             'roleId': accountRole.roleId
         }
 
         return apiHelper.privateReq({
             method: 'POST',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/roles`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/roles`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })
     }
 
-    public static deleteAccountWorkspaceAccountRefRole(accountId:string, roleRefId:string) {
+    public static deleteAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, roleRefId:string) {
         return apiHelper.privateReq({
             method: 'DELETE',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/roles/${ roleRefId }`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/roles/${ roleRefId }`
         })
     }
 }

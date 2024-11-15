@@ -376,6 +376,55 @@ class OwnerApi {
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs/${ accountRefId }`
         })
     }
+
+        // account workspace account ref account config
+    public static updateAccountWorkspaceAccountRefAccountConfig(accountId:string, accountConfigId:string, value:string) {
+        const data:{value:string} = {
+            'value': value
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/accountConfigs/${ accountConfigId }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    // account workspace account ref roles
+    public static updateAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, accountRole:{_id: string, isActive?:boolean, roleId?:string}) {
+        const data = {
+            'roleId': accountRole.roleId,
+            'isActive': accountRole.isActive
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/roles/${ accountRole._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, accountRole:IRoleRef) {
+        const data:IRoleRef = {
+            'roleId': accountRole.roleId
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/roles`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, roleRefId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/roles/${ roleRefId }`
+        })
+    }
 }
 
 export default OwnerApi
