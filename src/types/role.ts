@@ -1,5 +1,5 @@
-export type TRoleScope = 'account' | 'workspace'
-export const roleScopes:TRoleScope[] = ['account', 'workspace']
+export type TRoleScope = 'app' | 'account' | 'workspace'
+export const roleScopes:TRoleScope[] = ['app', 'account', 'workspace']
 
 export interface IFeatureRef {
     _id?: string,
