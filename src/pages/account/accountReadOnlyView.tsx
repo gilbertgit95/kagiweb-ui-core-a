@@ -93,7 +93,7 @@ const AccountReadOnlyView = ({account}:props) => {
             contents: account?.limitedTransactions?.length || 0
         },
         {
-            module: 'Account Configurations',
+            module: 'Configurations',
             moduleRoute: 'accountConfigs',
             contents: account?.accountConfigs?.length || 0
         }

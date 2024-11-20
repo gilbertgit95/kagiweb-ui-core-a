@@ -30,7 +30,7 @@ const AccountRolesAddForm = ({account, onSelect}:IProp) => {
         if (account?.rolesRefs) {
             const userRoles:Set<string> = new Set(account?.rolesRefs.map(item => item.roleId))
             const tarnsformedData:IRoleRow[] = roles
-                .filter(item => !userRoles.has(item._id || ''))
+                .filter(item => !userRoles.has(item._id || '') && item.scope === 'app')
                 .map((item) => {
                     return {
                         _id: item._id || '',

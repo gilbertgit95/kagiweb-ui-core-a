@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment'
 import Grid from '@mui/material/Grid';
+import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
+import SecondaryHeader from '../../components/headers/secondaryHeader';
+import SimpleLink from '../../components/links/simpleLink';
 import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
@@ -11,6 +14,9 @@ interface props {
     accountRefId?: string,
     getFunc: (accountId:string, workspaceId:string, accountRefId: string) => Promise<{data: IWorkspaceAccountRef & {nameId?:string} | null}>
 }
+
+interface IModuleData {module: string, moduleRoute: string, contents: number}
+
 
 const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRefId, getFunc}:props) => {
     const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
@@ -38,6 +44,28 @@ const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRe
         }
     ]
 
+    const modulesColDef:IColDef[] = [
+        {
+            header: 'Module',
+            field: 'module'
+        },
+        {
+            header: 'Contents',
+            field: 'contents'
+        },
+        {
+            header: 'View',
+            field: 'moduleRoute',
+            Component: (rowProps) => {
+                return (
+                    <SimpleLink
+                        text={`View ${ rowProps.module }`}
+                        link={rowProps.moduleRoute} />
+                )
+            }
+        }
+    ]
+
     const data:{field: string, value: string|undefined}[] = [
         { field: 'User ID', value: accountRef?.accountId },
         { field: 'NameID', value: accountRef?.nameId || '--' },
@@ -48,13 +76,39 @@ const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRe
         { field: 'Updated', value: moment(accountRef?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat) }
     ]
 
+    const modulesData:IModuleData[] = [
+        {
+            module: 'Roles',
+            moduleRoute: 'roles',
+            contents: account?.accountInfos?.length || 0
+        },
+        {
+            module: 'Configurations',
+            moduleRoute: 'accountConfigs',
+            contents: account?.accountConfigs?.length || 0
+        }
+    ]
+
+
     return accountRef? (
-        <Grid item xs={12}>
-            <PrimaryTable
-                maxHeight={700}
-                columnDefs={colDef}
-                data={data} />
-        </Grid>
+        <>
+            <Grid item xs={12}>
+                <PrimaryTable
+                    maxHeight={700}
+                    columnDefs={colDef}
+                    data={data} />
+            </Grid>
+            <Grid item xs={12}>
+                <SecondaryHeader Icon={SnippetFolderIcon} title={'Sub Modules'} />
+                {/* <Divider /> */}
+            </Grid>
+            <Grid item xs={12}>
+                <PrimaryTable
+                    maxHeight={700}
+                    columnDefs={modulesColDef}
+                    data={modulesData} />
+            </Grid>
+        </>
     ): null
 }
 

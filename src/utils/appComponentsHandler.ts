@@ -1,5 +1,5 @@
 import React from 'react'
-import { IFeature, TFeatureType } from '../types/feature'
+import { IFeature, TFeatureType, TFeatureScope } from '../types/feature'
 import { TLinkGroup, TLink } from '../components/navs/primaryNav'
 import FeatureService from '../pages/feature/featureService'
 
@@ -129,6 +129,7 @@ class AppComponentsHandler {
             return {
                 description: 'One of the ui private route',
                 name: `PRIVATE ROUTE - ${ item.url }`,
+                scope: 'app' as TFeatureScope,
                 tags: [],
                 type: 'ui-route' as TFeatureType,
                 value: `PRIVATE ROUTE - ${ item.url }`
