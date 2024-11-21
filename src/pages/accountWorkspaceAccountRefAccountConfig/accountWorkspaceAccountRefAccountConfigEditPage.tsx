@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const AccountWorkspaceAccountRefAccountConfigEditPage = () => {
-    const { accountId, accountConfigId } = useParams()
+    const { accountId, workspaceId, accountRefId, accountConfigId } = useParams()
     const navigate = useNavigate()
     const [configAndErrors, setConfigAndErrors] = useState<TResponseStatus>({
         errorMessages: [],

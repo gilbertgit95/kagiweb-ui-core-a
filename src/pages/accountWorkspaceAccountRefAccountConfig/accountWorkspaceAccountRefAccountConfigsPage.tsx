@@ -11,7 +11,7 @@ import AccountService from '../account/accountService';
 import AccountAccountConfigsReadOnlyView from './accountWorkspaceAccountRefAccountConfigsReadOnlyView';
 
 const AccountWorkspaceAccountRefAccountConfigsPage = () => {
-    const { accountId } = useParams()
+    const { accountId, workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
     const [configAndErrors, setConfigAndErrors] = useState<TResponseStatus>({

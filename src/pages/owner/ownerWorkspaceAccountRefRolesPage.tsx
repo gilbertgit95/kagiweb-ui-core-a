@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -12,6 +12,7 @@ import AccountRolesReadOnlyView from '../accountRole/accountRolesReadOnlyView';
 
 const OwnerRolesPage = () => {
     const navigate = useNavigate()
+    const { workspaceId, accountRefId, roleId } = useParams()
     const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],

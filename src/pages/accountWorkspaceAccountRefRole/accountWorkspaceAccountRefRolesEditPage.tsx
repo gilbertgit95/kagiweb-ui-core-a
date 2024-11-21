@@ -12,7 +12,7 @@ import { IAccount } from '../../types/account';
 import AccountRolesEditForm from './accountWorkspaceAccountRefRolesEditForm';
 
 const AccountWorkspaceAccountRefRolesEditPage = () => {
-    const { accountId } = useParams()
+    const { accountId, workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
