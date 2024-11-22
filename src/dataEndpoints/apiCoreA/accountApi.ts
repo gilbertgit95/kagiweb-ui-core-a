@@ -423,14 +423,14 @@ class AccountApi {
     }
 
     // account workspace account ref account config
-    public static updateAccountWorkspaceAccountRefAccountConfig(accountId:string, accountConfigId:string, value:string) {
+    public static updateAccountWorkspaceAccountRefAccountConfig(accountId:string, workspaceId:string, accountRefId:string, accountConfigId:string, value:string) {
         const data:{value:string} = {
             'value': value
         }
 
         return apiHelper.privateReq({
             method: 'PUT',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountConfigs/${ accountConfigId }`,
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/accountConfigs/${ accountConfigId }`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             data
         })

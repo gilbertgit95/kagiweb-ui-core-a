@@ -2,16 +2,16 @@ import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 import { IRoleRef } from '../../types/account'
 
 class AccountWorkspaceAccountRefRoleService {
-    public static updateAccountRole(accountId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
-        return AccountApi.updateAccountRole(accountId, AccountRole)
+    public static updateAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: IRoleRef}> {
+        return AccountApi.updateAccountWorkspaceAccountRefRole(accountId, workspaceId, accountRefId, AccountRole)
     }
 
-    public static createAccountRole(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
-        return AccountApi.createAccountRole(accountId, {roleId: roleRefId})
+    public static createAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, roleRefId:string):Promise<{data: IRoleRef}> {
+        return AccountApi.createAccountWorkspaceAccountRefRole(accountId, workspaceId, accountRefId, {roleId: roleRefId})
     }
 
-    public static deleteAccountRole(accountId:string, AccountRoleId:string):Promise<{data: IRoleRef}> {
-        return AccountApi.deleteAccountRole(accountId, AccountRoleId)
+    public static deleteAccountWorkspaceAccountRefRole(accountId:string, workspaceId:string, accountRefId:string, AccountRoleId:string):Promise<{data: IRoleRef}> {
+        return AccountApi.deleteAccountWorkspaceAccountRefRole(accountId, workspaceId, accountRefId, AccountRoleId)
     }
 }
 
