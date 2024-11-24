@@ -20,8 +20,10 @@ import AccountRolesAddForm from './accountWorkspaceAccountRefRolesAddForm';
 
 interface IProps {
     account: IAccount|undefined,
-    createFunc: (accountId:string, roleId:string) => Promise<{data:IRoleRef}>,
-    deleteFunc: (accountId:string, roleRef:string) => Promise<{data:IRoleRef}>,
+    workspaceId: string,
+    accountRefId: string,
+    createFunc: (accountId:string, workspaceId:string, accountRefId:string, roleId:string) => Promise<{data:IRoleRef}>,
+    deleteFunc: (accountId:string, workspaceId:string, accountRefId:string, roleRef:string) => Promise<{data:IRoleRef}>,
     onChange: () => void
 }
 
@@ -33,7 +35,7 @@ interface IRoleRow {
     absoluteAuthority: boolean
 }
 
-const AccountWorkspaceAccountRefRolesEditForm = ({account, createFunc, deleteFunc, onChange}:IProps) => {
+const AccountWorkspaceAccountRefRolesEditForm = ({account, workspaceId, accountRefId, createFunc, deleteFunc, onChange}:IProps) => {
     const roles = useAppSelector(state => state.appRefs?.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -57,7 +59,7 @@ const AccountWorkspaceAccountRefRolesEditForm = ({account, createFunc, deleteFun
         // loop to all roles id and post call to api
         for (let roleId of addTableSelection) {
             try {
-                await createFunc(account?._id || '', roleId)
+                await createFunc(account?._id || '', workspaceId, accountRefId, roleId)
                 savedItems++
             } catch (err:any) {
                 error = err?.response?.data?.message || ''
@@ -91,7 +93,7 @@ const AccountWorkspaceAccountRefRolesEditForm = ({account, createFunc, deleteFun
         // loop to all feature refs, then delete call to api
         for (let roleRef of tableSelection) {
             try {
-                await deleteFunc(account?._id || '', roleRef)
+                await deleteFunc(account?._id || '', workspaceId, accountRefId, roleRef)
                 savedItems++
             } catch (err:any) {
                 error = err?.response?.data?.message || ''
@@ -210,7 +212,9 @@ const AccountWorkspaceAccountRefRolesEditForm = ({account, createFunc, deleteFun
                             </DialogContentText>
                             <AccountRolesAddForm
                                 onSelect={(selectedData) => setAddTableSelection(selectedData)}
-                                account={account} />
+                                account={account}
+                                workspaceId={workspaceId}
+                                accountRefId={accountRefId} />
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={() => setDialog({...dialog, ...{addDialogOpen: false}})}>

@@ -11,6 +11,8 @@ import { useAppSelector} from '../../stores/appStore';
 
 interface IProp {
     account: IAccount|undefined,
+    workspaceId: string,
+    accountRefId: string,
     onSelect?: (selected:string[]) => void,
 }
 

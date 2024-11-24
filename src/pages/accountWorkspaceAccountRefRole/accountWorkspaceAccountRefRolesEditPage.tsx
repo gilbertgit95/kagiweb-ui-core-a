@@ -70,8 +70,10 @@ const AccountWorkspaceAccountRefRolesEditPage = () => {
                 </Grid>
                 <AccountRolesEditForm
                     account={account}
-                    createFunc={AccountRoleService.createAccountRole}
-                    deleteFunc={AccountRoleService.deleteAccountRole}
+                    workspaceId={workspaceId || ''}
+                    accountRefId={accountRefId || ''}
+                    createFunc={AccountRoleService.createAccountWorkspaceAccountRefRole}
+                    deleteFunc={AccountRoleService.deleteAccountWorkspaceAccountRefRole}
                     onChange={reLoadUser} />
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

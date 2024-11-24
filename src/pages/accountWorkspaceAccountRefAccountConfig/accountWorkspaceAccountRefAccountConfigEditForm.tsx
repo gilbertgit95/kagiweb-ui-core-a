@@ -12,13 +12,15 @@ import { ISignedInUser } from '../../stores/signedInAccountSlice';
 
 interface props {
     account?: IAccount,
+    workspaceId: string,
+    accountRefId: string,
     accountConfigId?: string,
     getCompleteInfo: (accountId:string) => Promise<{data:ISignedInUser}>,
-    updateFunc: (accountId:string, accountConfigId:string, value:string) => Promise<{data:IAccountConfig}>,
-    updated?: (accountId:string|undefined, accountConfig:IAccountConfig|undefined) => void
+    updateFunc: (accountId:string, workspaceId:string, accountRefId:string, accountConfigId:string, value:string) => Promise<{data:IAccountConfig}>,
+    updated?: (accountId:string|undefined, workspaceId:string, accountRefId:string, accountConfig:IAccountConfig|undefined) => void
 }
 
-const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
+const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, accountRefId, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedAccountConfig, setUpdatedAccountConfig] = useState<IAccountConfig>({
         key: '',
@@ -54,12 +56,12 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, accountConfig
         // // send update data to the api
         if (account?._id) {
             try {
-                const reqResp = await updateFunc(account._id, updateData._id!, updateData.value)
+                const reqResp = await updateFunc(account._id, workspaceId, accountRefId, updateData._id!, updateData.value)
                 setConfigAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(account?._id, reqResp?.data)
+                if (updated) updated(account?._id, workspaceId, accountRefId, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -74,7 +76,7 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, accountConfig
     useEffect(() => {
         const init = async () => {
             if (account && account.accountConfigs && accountConfigId) {
-                const accInf = AccountAccountConfigService.getAccountConfigById(account, accountConfigId)
+                const accInf = AccountAccountConfigService.getAccountWorkspaceAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
                 setAccountConfig(accInf)
                 if (accInf) {
                     setUpdatedAccountConfig(accInf)

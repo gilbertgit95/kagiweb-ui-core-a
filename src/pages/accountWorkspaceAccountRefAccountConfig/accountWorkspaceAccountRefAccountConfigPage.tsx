@@ -89,6 +89,8 @@ const AccountWorkspaceAccountRefAccountConfigPage = () => {
 
                 <AccountAccountConfigReadOnlyView
                     account={account}
+                    workspaceId={workspaceId || ''}
+                    accountRefId={accountRefId || ''}
                     accountConfigId={accountConfigId} />
 
                 <Grid item xs={12}>

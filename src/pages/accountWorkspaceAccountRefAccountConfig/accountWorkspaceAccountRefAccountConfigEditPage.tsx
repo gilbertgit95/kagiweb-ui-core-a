@@ -78,9 +78,11 @@ const AccountWorkspaceAccountRefAccountConfigEditPage = () => {
 
                 <AccountContactConfigEditForm
                     account={account}
+                    workspaceId={workspaceId || ''}
+                    accountRefId={accountRefId || ''}
                     accountConfigId={accountConfigId}
                     getCompleteInfo={AccountService.getAccountCompleteInfo}
-                    updateFunc={AccountAccountConfigService.updateAccountConfig}
+                    updateFunc={AccountAccountConfigService.updateAccountWorkspaceAccountRefAccountConfig}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

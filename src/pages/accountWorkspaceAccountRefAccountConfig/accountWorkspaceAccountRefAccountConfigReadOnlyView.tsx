@@ -8,15 +8,17 @@ import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     account?: IAccount,
+    workspaceId: string,
+    accountRefId: string,
     accountConfigId?: string
 }
 
-const AccountWorkspaceAccountRefAccountConfigReadOnlyView = ({account, accountConfigId}:props) => {
+const AccountWorkspaceAccountRefAccountConfigReadOnlyView = ({account, workspaceId, accountRefId, accountConfigId}:props) => {
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         if (account && account.accountConfigs && accountConfigId) {
-            const usrInf = AccountAccountConfigService.getAccountConfigById(account, accountConfigId)
+            const usrInf = AccountAccountConfigService.getAccountWorkspaceAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
             setAccountConfig(usrInf)
         }
 
