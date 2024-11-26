@@ -3,12 +3,15 @@ import Grid from '@mui/material/Grid';
 import { IRole } from '../../types/role';
 import { IAccount, IRoleRef } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
-import Check from '../../components/indicators/check';
+// import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
+import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
 import { useAppSelector} from '../../stores/appStore';
 
 interface IProps {
     account: IAccount | undefined
+    workspaceId: string,
+    accountRefId: string
 }
 
 interface IRoleRow {
@@ -16,29 +19,28 @@ interface IRoleRow {
     name: string,
     description: string,
     level: number,
-    absoluteAuthority: boolean,
     createdAt?: Date,
     updatedAt?: Date
 }
 
-const AccountWorkspaceAccountRefRolesReadOnlyView = ({account}:IProps) => {
+const AccountWorkspaceAccountRefRolesReadOnlyView = ({account, workspaceId, accountRefId}:IProps) => {
     const roles = useAppSelector(state => state.appRefs.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
 
     useEffect(() => {
-        if (account && account.rolesRefs) {
+        const accountRoleRefs = account? AccountWorkspaceAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+        if (accountRoleRefs && accountRoleRefs.rolesRefs) {
             const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
                 if (item && item._id) acc[item._id] = item
                 return acc
             }, {})
-            const tarnsformedData:IRoleRow[] = account.rolesRefs.map((item:IRoleRef & {createdAt?: Date, updatedAt?: Date}) => {
+            const tarnsformedData:IRoleRow[] = accountRoleRefs.rolesRefs.map((item:IRoleRef & {createdAt?: Date, updatedAt?: Date}) => {
                 const role = rolesMap[item.roleId || '']
                 return {
                     _id: item._id || '',
                     name: role? role.name: '(None Existing Role)',
                     description: role? (role?.description || ''): 'This might have been deleted.',
                     level: role? role.level: -1,
-                    absoluteAuthority: role? Boolean(role.absoluteAuthority): false,
                     createdAt: item.createdAt,
                     updatedAt: item.updatedAt
                 }
@@ -47,7 +49,7 @@ const AccountWorkspaceAccountRefRolesReadOnlyView = ({account}:IProps) => {
             setData(tarnsformedData)
         }
             
-    }, [account, roles])
+    }, [account, workspaceId, accountRefId, roles])
 
     const colDef:IColDef[] = [
         {
@@ -64,13 +66,6 @@ const AccountWorkspaceAccountRefRolesReadOnlyView = ({account}:IProps) => {
             header: 'Level',
             field: 'level',
             Component: undefined
-        },
-        {
-            header: 'Absolute Authority',
-            field: 'absoluteAuthority',
-            Component: (props:IRoleRow) => {
-                return <Check value={props.absoluteAuthority} />
-            }
         },
         {
             header: 'Changed',

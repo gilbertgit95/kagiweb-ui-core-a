@@ -23,7 +23,7 @@ const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRe
 
     useEffect(() => {
         const init = async () => {
-            if (account && account.contactInfos && workspaceId) {
+            if (account && workspaceId && accountRefId) {
                 const usrRef = await getFunc(account._id || '', workspaceId, accountRefId || '')
                 if (usrRef?.data) setAccountRef(usrRef.data)
             }

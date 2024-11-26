@@ -63,13 +63,13 @@ const AccountWorkspaceAccountRefRolesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/accounts/edit/${ accountId }/roles`)}>
+                            onClick={() => navigate(`/accounts/edit/${ accountId }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/roles`)}>
                             Edit
                         </Button>
                     </Box>
                 </Grid>
 
-                <AccountRolesReadOnlyView account={account} />
+                <AccountRolesReadOnlyView account={account} workspaceId={workspaceId || ''} accountRefId={accountRefId || ''} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
