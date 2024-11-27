@@ -16,6 +16,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { useAppSelector} from '../../stores/appStore';
 import { IAccount, IRoleRef } from '../../types/account';
 import { IRole } from '../../types/role';
+import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
 import AccountRolesAddForm from './accountWorkspaceAccountRefRolesAddForm';
 
 interface IProps {
@@ -31,8 +32,7 @@ interface IRoleRow {
     _id: string,
     name: string,
     description: string,
-    level: number,
-    absoluteAuthority: boolean
+    level: number
 }
 
 const AccountWorkspaceAccountRefRolesEditForm = ({account, workspaceId, accountRefId, createFunc, deleteFunc, onChange}:IProps) => {
@@ -121,12 +121,14 @@ const AccountWorkspaceAccountRefRolesEditForm = ({account, workspaceId, accountR
     useEffect(() => {
         const init = async () => {
             try {
-                if (account && account.rolesRefs) {
+                const accountRoleRefs = account? AccountWorkspaceAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+
+                if (accountRoleRefs && accountRoleRefs.rolesRefs) {
                     const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
                         if (item && item._id) acc[item._id] = item
                         return acc
                     }, {})
-                    const tarnsformedData:IRoleRow[] = account.rolesRefs.map((item) => {
+                    const tarnsformedData:IRoleRow[] = accountRoleRefs.rolesRefs.map((item) => {
                         const role = rolesMap[item.roleId || '']
                         return {
                             _id: item._id || '',
@@ -149,7 +151,7 @@ const AccountWorkspaceAccountRefRolesEditForm = ({account, workspaceId, accountR
         }
         console.log('initiate account roles edit page')
         init()
-    }, [account, roles])
+    }, [account, workspaceId, accountRefId, roles])
 
     const colDef:IColDef[] = [
         {
@@ -163,13 +165,6 @@ const AccountWorkspaceAccountRefRolesEditForm = ({account, workspaceId, accountR
         {
             header: 'Level',
             field: 'level',
-        },
-        {
-            header: 'Absolute Authority',
-            field: 'absoluteAuthority',
-            Component: (props:IRoleRow) => {
-                return <Check value={props.absoluteAuthority} />
-            }
         }
     ]
 
