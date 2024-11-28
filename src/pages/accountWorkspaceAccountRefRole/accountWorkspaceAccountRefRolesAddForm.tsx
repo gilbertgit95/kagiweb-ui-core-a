@@ -20,8 +20,7 @@ interface IRoleRow {
     _id: string,
     name: string,
     description: string,
-    level: number,
-    absoluteAuthority: boolean
+    level: number
 }
 
 const AccountWorkspaceAccountRefRolesAddForm = ({account, onSelect}:IProp) => {
@@ -38,8 +37,7 @@ const AccountWorkspaceAccountRefRolesAddForm = ({account, onSelect}:IProp) => {
                         _id: item._id || '',
                         name: item? item.name: '(None Existing Role)',
                         description: item? (item?.description || ''): 'This might have been deleted.',
-                        level: item? item.level: -1,
-                        absoluteAuthority: Boolean(item?.absoluteAuthority)
+                        level: item? item.level: -1
                     }
                 })
             setData(tarnsformedData)
@@ -61,13 +59,6 @@ const AccountWorkspaceAccountRefRolesAddForm = ({account, onSelect}:IProp) => {
         {
             header: 'Level',
             field: 'level',
-        },
-        {
-            header: 'Absolute Authority',
-            field: 'absoluteAuthority',
-            Component: (props:IRoleRow) => {
-                return <Check value={props.absoluteAuthority} />
-            }
         }
     ]
 

@@ -19,7 +19,7 @@ interface IModuleData {module: string, moduleRoute: string, contents: number}
 
 
 const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRefId, getFunc}:props) => {
-    const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?: string, createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         const init = async () => {
@@ -80,12 +80,12 @@ const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRe
         {
             module: 'Roles',
             moduleRoute: 'roles',
-            contents: account?.accountInfos?.length || 0
+            contents: accountRef?.rolesRefs?.length || 0
         },
         {
             module: 'Configurations',
             moduleRoute: 'accountConfigs',
-            contents: account?.accountConfigs?.length || 0
+            contents: accountRef?.accountConfigs?.length || 0
         }
     ]
 

@@ -392,7 +392,7 @@ function App() {
 
         // !! should be disabled sync features enable only when synching
         // !! temporary enabled
-        await appHandler.syncToFeatures() // !!! please disable this line, only use this in developement
+        // await appHandler.syncToFeatures() // !!! please disable this line, only use this in developement
 
       } catch (err) {
         console.log('Not authorized to fetch app data references')
