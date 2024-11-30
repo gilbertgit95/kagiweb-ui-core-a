@@ -4,9 +4,12 @@ import { IAccount, IAccountConfig } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import DateChanges from '../../components/dates/dateChanges';
 import SimpleLink from '../../components/links/simpleLink';
+import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
 
 interface IProps {
-    account: IAccount | undefined
+    account: IAccount | undefined,
+    workspaceId: string,
+    accountRefId: string
 }
 
 interface IAccountConfigRow {
@@ -18,13 +21,14 @@ interface IAccountConfigRow {
     updatedAt?: Date
 }
 
-const AccountWorkspaceAccountRefAccountConfigsReadOnlyView = ({account}:IProps) => {
+const AccountWorkspaceAccountRefAccountConfigsReadOnlyView = ({account, workspaceId, accountRefId}:IProps) => {
     // const navigate = useNavigate()
     const [data, setData] = useState<IAccountConfigRow[]>([])
 
     useEffect(() => {
-        if (account && account.accountConfigs) {
-            const transformedData:IAccountConfigRow[] = account.accountConfigs.map((item:IAccountConfig & {createdAt?: Date, updatedAt?: Date}) => {
+        const accountRoleRefs = account? AccountWorkspaceAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+        if (accountRoleRefs && accountRoleRefs.accountConfigs) {
+            const transformedData:IAccountConfigRow[] = accountRoleRefs.accountConfigs.map((item:IAccountConfig & {createdAt?: Date, updatedAt?: Date}) => {
                 return {
                     _id: item._id || '',
                     key: item.key || '--',
@@ -38,7 +42,7 @@ const AccountWorkspaceAccountRefAccountConfigsReadOnlyView = ({account}:IProps) 
             setData(transformedData)
         }
 
-    }, [account])
+    }, [account, workspaceId, accountRefId])
 
     const colDef:IColDef[] = [
         {

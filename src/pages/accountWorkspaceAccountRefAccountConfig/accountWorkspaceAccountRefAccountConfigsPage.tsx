@@ -54,7 +54,10 @@ const AccountWorkspaceAccountRefAccountConfigsPage = () => {
                     </Button>
                 </Grid>
 
-                <AccountAccountConfigsReadOnlyView account={account} />
+                <AccountAccountConfigsReadOnlyView
+                    account={account}
+                    workspaceId={workspaceId || ''}
+                    accountRefId={accountRefId || ''} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...configAndErrors} />

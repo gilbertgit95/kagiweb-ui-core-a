@@ -81,7 +81,7 @@ const AccountWorkspaceAccountRefAccountConfigPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ account?._id }/accountConfigs/${ accountConfigId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/accountConfigs/${ accountConfigId }`)}>
                             Edit
                         </Button>
                     </Box>
