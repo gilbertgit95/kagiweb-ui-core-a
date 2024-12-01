@@ -7,8 +7,11 @@ import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import RoleSelectorComponent from './roleSelectorComponent';
 import AccountAccountConfigService from './accountWorkspaceAccountRefAccountConfigService';
+import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
 import { IAccount, IAccountConfig, TAccountConfigType, accountConfigTypes } from '../../types/account';
+import { IRole } from '../../types/role';
 import { ISignedInUser } from '../../stores/signedInAccountSlice';
+import { useAppSelector} from '../../stores/appStore';
 
 interface props {
     account?: IAccount,
@@ -21,7 +24,10 @@ interface props {
 }
 
 const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, accountRefId, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
+    const roles = useAppSelector(state => state.appRefs.roles) || []
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [accRoles, setAccRoles] = useState<IRole[]>([])
+    const [accRole, setAccRole] = useState<IRole | undefined>()
     const [updatedAccountConfig, setUpdatedAccountConfig] = useState<IAccountConfig>({
         key: '',
         value: '',
@@ -31,7 +37,7 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
         errorMessages: [],
         infoMessages: []
     })
-    const [completeInfo, setCompleteInfo] = useState<ISignedInUser>({})
+    // const [completeInfo, setCompleteInfo] = useState<ISignedInUser>({})
 
     const handleTextFieldChange = (field:string, value:string) => {
         setUpdatedAccountConfig({...updatedAccountConfig, ...{[field]: value}})
@@ -75,11 +81,28 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
 
     useEffect(() => {
         const init = async () => {
-            if (account && account.accountConfigs && accountConfigId) {
-                const accInf = AccountAccountConfigService.getAccountWorkspaceAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
-                setAccountConfig(accInf)
-                if (accInf) {
-                    setUpdatedAccountConfig(accInf)
+            if (account && accountConfigId) {
+                const appRolesMap = roles? roles.reduce<{[key:string]:IRole}>((acc, item) => {
+                    if (item._id) acc[item._id] = item
+                    return acc
+                }, {}) :{}
+
+                // get account ref
+                const accountRef = account? AccountWorkspaceAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+                const accRefRoles = accountRef?.rolesRefs?.map(item => appRolesMap[item.roleId || '']) || []
+
+                // get account aconfig
+                const accConfig = AccountAccountConfigService.getAccountWorkspaceAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
+                const accRefConf = accRefRoles?.filter(item => appRolesMap[accConfig?.value || ''])
+
+                console.log(accRefRoles, accRefConf?.length? accRefConf[0]: undefined)
+
+                setAccRole(accRefConf?.length? accRefConf[0]: undefined)
+                setAccRoles(accRefRoles)
+                setAccountConfig(accConfig)
+
+                if (accConfig) {
+                    setUpdatedAccountConfig(accConfig)
                 } else {
                     setConfigAndErrors({
                         ...{infoMessages: []},
@@ -91,26 +114,26 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
 
         init()
 
-    }, [account, accountConfigId])
+    }, [account, workspaceId, accountRefId, accountConfigId])
 
-    useEffect(() => {
-        const init = async () => {
-            if (account && account._id) {
-                try {
-                const compInfo = await getCompleteInfo(account._id!)
-                setCompleteInfo(compInfo.data)
-                } catch {
-                    setConfigAndErrors({
-                        ...{infoMessages: []},
-                        ...{errorMessages: ['Error while fetching Account complete info']}
-                    })
-                }
-            }
-        }
+    // useEffect(() => {
+    //     const init = async () => {
+    //         if (account && account._id) {
+    //             try {
+    //             const compInfo = await getCompleteInfo(account._id!)
+    //             setCompleteInfo(compInfo.data)
+    //             } catch {
+    //                 setConfigAndErrors({
+    //                     ...{infoMessages: []},
+    //                     ...{errorMessages: ['Error while fetching Account complete info']}
+    //                 })
+    //             }
+    //         }
+    //     }
 
-        init()
+    //     init()
 
-    }, [account])
+    // }, [account])
 
     const itemSx = {
         display: 'flex',
@@ -172,17 +195,9 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
                                 {
                                     (accountConfig.key === 'default-role')? (
                                         <RoleSelectorComponent
-                                            defaultRole={completeInfo.role}
-                                            assignedRoles={completeInfo.roles || []}
+                                            defaultRole={accRole}
+                                            assignedRoles={accRoles || []}
                                             onSelect={(sel) => handleTextFieldChange('value', sel)} />
-                                    ): null
-                                }
-                                {
-                                    (!(new Set(['default-role', 'default-workspace'])).has(accountConfig.key))? (
-                                        <TextField
-                                            fullWidth
-                                            defaultValue={updatedAccountConfig?.value || ''}
-                                            onChange={(e) => handleTextFieldChange('value', e.target.value)} />
                                     ): null
                                 }
                                 {/* <TextField
