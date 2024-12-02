@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import RoleSelectorComponent from './roleSelectorComponent';
+import RoleSelectorComponent from '../accountAccountConfig/roleSelectorComponent';
 import AccountAccountConfigService from './accountWorkspaceAccountRefAccountConfigService';
 import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
 import { IAccount, IAccountConfig, TAccountConfigType, accountConfigTypes } from '../../types/account';
@@ -81,7 +81,7 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
 
     useEffect(() => {
         const init = async () => {
-            if (account && accountConfigId) {
+            if (roles && account && accountConfigId) {
                 const appRolesMap = roles? roles.reduce<{[key:string]:IRole}>((acc, item) => {
                     if (item._id) acc[item._id] = item
                     return acc
@@ -89,7 +89,7 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
 
                 // get account ref
                 const accountRef = account? AccountWorkspaceAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
-                const accRefRoles = accountRef?.rolesRefs?.map(item => appRolesMap[item.roleId || '']) || []
+                const accRefRoles = accountRef?.rolesRefs?.map(item => appRolesMap[item.roleId || '']).filter(item => item) || []
 
                 // get account aconfig
                 const accConfig = AccountAccountConfigService.getAccountWorkspaceAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
@@ -114,7 +114,7 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
 
         init()
 
-    }, [account, workspaceId, accountRefId, accountConfigId])
+    }, [roles, account, workspaceId, accountRefId, accountConfigId])
 
     // useEffect(() => {
     //     const init = async () => {
