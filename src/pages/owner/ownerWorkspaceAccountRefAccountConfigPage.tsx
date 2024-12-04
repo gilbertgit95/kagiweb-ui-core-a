@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountAccountConfigReadOnlyView from '../accountAccountConfig/accountAccountConfigReadOnlyView';
+import AccountAccountConfigReadOnlyView from '../accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigReadOnlyView';
 import OwnerService from './ownerService';
 import { IAccount } from '../../types/account';
 import {
@@ -60,7 +60,7 @@ const OwnerAccountConfigPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Config Readonly View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'My Account Workspace Account Ref Config Readonly View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -89,6 +89,8 @@ const OwnerAccountConfigPage = () => {
 
                 <AccountAccountConfigReadOnlyView
                     account={account}
+                    workspaceId={workspaceId || ''}
+                    accountRefId={accountRefId || ''}
                     accountConfigId={accountConfigId} />
 
                 <Grid item xs={12}>

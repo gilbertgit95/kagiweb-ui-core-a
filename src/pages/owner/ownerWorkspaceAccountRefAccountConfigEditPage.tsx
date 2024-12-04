@@ -7,7 +7,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountAccountConfigEditForm from '../accountAccountConfig/accountAccountConfigEditForm';
+import AccountAccountConfigEditForm from '../accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigEditForm';
 import OwnerService from './ownerService';
 import AppUtils from '../../utils/appUtils';
 import { IAccount } from '../../types/account';
@@ -59,7 +59,7 @@ const OwnerAccountConfigEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Config Update View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'My Account Workspace Account Ref Config Update View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -73,6 +73,8 @@ const OwnerAccountConfigEditPage = () => {
 
                 <AccountAccountConfigEditForm
                     account={account}
+                    workspaceId={workspaceId || ''}
+                    accountRefId={accountRefId || ''}
                     accountConfigId={accountConfigId}
                     getCompleteInfo={OwnerService.reqOwnerCompleteInfo}
                     updateFunc={OwnerService.updateAccountConfig}

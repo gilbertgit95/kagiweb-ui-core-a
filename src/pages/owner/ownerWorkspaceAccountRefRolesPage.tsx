@@ -8,7 +8,7 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import OwnerService from './ownerService';
-import AccountRolesReadOnlyView from '../accountRole/accountRolesReadOnlyView';
+import AccountRolesReadOnlyView from '../accountWorkspaceAccountRefRole/accountWorkspaceAccountRefRolesReadOnlyView';
 
 const OwnerRolesPage = () => {
     const navigate = useNavigate()
@@ -40,7 +40,7 @@ const OwnerRolesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Roles View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'My Account Workspace Account Ref Roles View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -52,7 +52,7 @@ const OwnerRolesPage = () => {
                     </Button>
                 </Grid>
 
-                <AccountRolesReadOnlyView account={account} />
+                <AccountRolesReadOnlyView account={account} workspaceId={workspaceId || ''} accountRefId={accountRefId || ''} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
