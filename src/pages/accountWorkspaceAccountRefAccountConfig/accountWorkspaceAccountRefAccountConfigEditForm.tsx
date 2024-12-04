@@ -93,7 +93,7 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
 
                 // get account aconfig
                 const accConfig = AccountAccountConfigService.getAccountWorkspaceAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
-                const accRefConf = accRefRoles?.filter(item => appRolesMap[accConfig?.value || ''])
+                const accRefConf = accRefRoles?.filter(item => accConfig?.value === item._id)
 
                 console.log(accRefRoles, accRefConf?.length? accRefConf[0]: undefined)
 
