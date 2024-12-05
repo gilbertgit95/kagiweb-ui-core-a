@@ -40,7 +40,7 @@ const OwnerClientDevicesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Client Devices View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Owner Client Devices View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

@@ -40,7 +40,7 @@ const AccountContactInfosPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Contact Infos View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Owner Contact Infos View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

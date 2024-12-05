@@ -40,7 +40,7 @@ const OwnerRolesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Workspace Account Ref Roles View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Owner Workspace Account Ref Roles View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

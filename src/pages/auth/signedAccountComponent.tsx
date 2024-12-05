@@ -49,12 +49,13 @@ const SignedAccountComponent = (props:IProps) => {
     };
 
     const sofRemove = async ():Promise<void> => {
-        if (!props.accountInfo.token) return
-        // signout
-        try {
-            await AuthService.rawSignout(props.accountInfo.token)
-        } catch (err) {
-            console.log('Error while trying to signout account')
+        if (!props.accountInfo?.token) {
+            // signout
+            try {
+                await AuthService.rawSignout(props.accountInfo!.token!)
+            } catch (err) {
+                console.log('Error while trying to signout account')
+            }
         }
         // remove token from account info
         AuthService.saveSignedAccount({
@@ -71,12 +72,13 @@ const SignedAccountComponent = (props:IProps) => {
     }
 
     const hardRemove = async ():Promise<void> => {
-        if (!props.accountInfo.token) return
-        // signout
-        try {
-            await AuthService.rawSignout(props.accountInfo.token)
-        } catch (err) {
-            console.log('Error while trying to signout account')
+        if (!props.accountInfo?.token) {
+            // signout
+            try {
+                await AuthService.rawSignout(props.accountInfo!.token!)
+            } catch (err) {
+                console.log('Error while trying to signout account')
+            }
         }
         // remove account info
         AuthService.removeSignedAccount({

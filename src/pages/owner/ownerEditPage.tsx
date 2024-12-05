@@ -24,7 +24,7 @@ const OwnerEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Edit My Account'} />
+                    <PrimaryHeader title={'Edit Owner'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

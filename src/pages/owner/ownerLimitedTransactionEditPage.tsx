@@ -58,7 +58,7 @@ const OwnerLimitedTransactionEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Limited Transactions Update View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Owner Limited Transactions Update View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>

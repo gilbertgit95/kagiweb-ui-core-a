@@ -39,7 +39,7 @@ const OwnerAccountConfigsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'My Account Configs View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Owner Configs View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
