@@ -59,7 +59,7 @@ const AccountWorkspaceReadOnlyView = ({account, workspaceId}:IProps) => {
 
     const modulesData:IWorkspaceSubModuleData[] = [
         {
-            module: 'Account',
+            module: 'Account Refs',
             moduleRoute: 'accountRefs',
             contents: workspace?.accountRefs?.length || 0
         }
