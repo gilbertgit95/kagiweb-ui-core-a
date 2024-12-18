@@ -99,6 +99,16 @@ export interface IAccountConfig {
     type: TAccountConfigType
 }
 
+export interface IAccountAccountRef {
+    _id?: string,
+    accountId: string,
+    rolesRefs?: IRoleRef[],
+    accountConfigs?: IAccountConfig[],
+    declined?: boolean,
+    accepted?: boolean,
+    disabled?: boolean
+}
+
 export interface IWorkspaceAccountRef {
     _id?: string,
     accountId: string,
@@ -125,6 +135,7 @@ export interface IAccount {
     accountInfos: IAccountInfo[],
     accountConfigs: IAccountConfig[],
 
+    accountRefs?: IAccountAccountRef[],
     passwords: IPassword[],
 
     contactInfos: IContactInfo[],
