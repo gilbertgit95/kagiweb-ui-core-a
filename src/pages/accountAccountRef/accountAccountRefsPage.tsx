@@ -10,7 +10,7 @@ import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
 import AccountWorkspaceAccountRefService from './accountAccountRefService';
-import AccountWorkspaceAccountRefsReadOnlyView from './accountWorkspaceAccountRefsReadOnlyView';
+import AccountWorkspaceAccountRefsReadOnlyView from './accountAccountRefsReadOnlyView';
 
 const AccountWorkspaceAccountRefsPage = () => {
     const { accountId, workspaceId } = useParams()

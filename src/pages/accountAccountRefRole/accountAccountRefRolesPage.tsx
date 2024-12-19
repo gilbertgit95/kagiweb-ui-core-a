@@ -9,7 +9,7 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import AccountRolesReadOnlyView from './accountWorkspaceAccountRefRolesReadOnlyView';
+import AccountRolesReadOnlyView from './accountAccountRefRolesReadOnlyView';
 
 const AccountWorkspaceAccountRefRolesPage = () => {
     const { accountId, workspaceId, accountRefId } = useParams()

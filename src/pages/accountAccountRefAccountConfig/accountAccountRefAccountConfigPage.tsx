@@ -8,7 +8,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountAccountConfigReadOnlyView from './accountWorkspaceAccountRefAccountConfigReadOnlyView';
+import AccountAccountConfigReadOnlyView from './accountAccountRefAccountConfigReadOnlyView';
 import AccountService from '../account/accountService';
 import { IAccount } from '../../types/account';
 import {

@@ -17,7 +17,7 @@ import { useAppSelector} from '../../stores/appStore';
 import { IAccount, IRoleRef } from '../../types/account';
 import { IRole } from '../../types/role';
 import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
-import AccountRolesAddForm from './accountWorkspaceAccountRefRolesAddForm';
+import AccountRolesAddForm from './accountAccountRefRolesAddForm';
 
 interface IProps {
     account: IAccount|undefined,

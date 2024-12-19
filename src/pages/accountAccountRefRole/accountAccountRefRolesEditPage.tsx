@@ -7,9 +7,9 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import AccountRoleService from './accountWorkspaceAccountRefRoleService';
+import AccountRoleService from './accountAccountRefRoleService';
 import { IAccount } from '../../types/account';
-import AccountRolesEditForm from './accountWorkspaceAccountRefRolesEditForm';
+import AccountRolesEditForm from './accountAccountRefRolesEditForm';
 
 const AccountWorkspaceAccountRefRolesEditPage = () => {
     const { accountId, workspaceId, accountRefId } = useParams()
