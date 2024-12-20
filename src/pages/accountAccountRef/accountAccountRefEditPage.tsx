@@ -7,15 +7,15 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountWorkspaceAccountRefEditForm from './accountAccountRefEditForm';
+import AccountAccountRefEditForm from './accountAccountRefEditForm';
 import AccountService from '../account/accountService';
-import AccountWorkspaceAccountRefService from './accountAccountRefService';
+import AccountAccountRefService from './accountAccountRefService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const AccountWorkspaceAccountRefEditPage = () => {
+const AccountAccountRefEditPage = () => {
     const { accountId, workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -76,12 +76,12 @@ const AccountWorkspaceAccountRefEditPage = () => {
                     </Button>
                 </Grid>
 
-                <AccountWorkspaceAccountRefEditForm
+                <AccountAccountRefEditForm
                     account={account}
                     workspaceId={workspaceId}
                     accountRefId={accountRefId}
-                    getFunc={AccountWorkspaceAccountRefService.getWorkspaceAccountRef}
-                    updateFunc={AccountWorkspaceAccountRefService.updateWorkspaceAccountRef}
+                    getFunc={AccountAccountRefService.getWorkspaceAccountRef}
+                    updateFunc={AccountAccountRefService.updateWorkspaceAccountRef}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>
@@ -92,4 +92,4 @@ const AccountWorkspaceAccountRefEditPage = () => {
     )
 }
 
-export default AccountWorkspaceAccountRefEditPage
+export default AccountAccountRefEditPage

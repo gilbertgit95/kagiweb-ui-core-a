@@ -9,10 +9,10 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import { IAccount } from '../../types/account';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import AccountService from '../account/accountService';
-import AccountWorkspaceAccountRefService from './accountAccountRefService';
-import AccountWorkspaceAccountRefsReadOnlyView from './accountAccountRefsReadOnlyView';
+import AccountAccountRefService from './accountAccountRefService';
+import AccountAccountRefsReadOnlyView from './accountAccountRefsReadOnlyView';
 
-const AccountWorkspaceAccountRefsPage = () => {
+const AccountAccountRefsPage = () => {
     const { accountId, workspaceId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
@@ -69,10 +69,10 @@ const AccountWorkspaceAccountRefsPage = () => {
                     </Box>
                 </Grid>
 
-                <AccountWorkspaceAccountRefsReadOnlyView
+                <AccountAccountRefsReadOnlyView
                     account={account}
                     workspaceId={ workspaceId }
-                    getFunc={AccountWorkspaceAccountRefService.getWorkspaceAccountRefs} />
+                    getFunc={AccountAccountRefService.getWorkspaceAccountRefs} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -82,4 +82,4 @@ const AccountWorkspaceAccountRefsPage = () => {
     )
 }
 
-export default AccountWorkspaceAccountRefsPage
+export default AccountAccountRefsPage

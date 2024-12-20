@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import RoleSelectorComponent from '../accountAccountConfig/roleSelectorComponent';
 import AccountAccountConfigService from './accountAccountRefAccountConfigService';
-import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
+import AccountAccountRefService from '../AccountAccountRef/AccountAccountRefService';
 import { IAccount, IAccountConfig, TAccountConfigType, accountConfigTypes } from '../../types/account';
 import { IRole } from '../../types/role';
 import { ISignedInUser } from '../../stores/signedInAccountSlice';
@@ -23,7 +23,7 @@ interface props {
     updated?: (accountId:string|undefined, workspaceId:string, accountRefId:string, accountConfig:IAccountConfig|undefined) => void
 }
 
-const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, accountRefId, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
+const AccountAccountRefAccountConfigEditForm = ({account, workspaceId, accountRefId, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
     const roles = useAppSelector(state => state.appRefs.roles) || []
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [accRoles, setAccRoles] = useState<IRole[]>([])
@@ -88,11 +88,11 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
                 }, {}) :{}
 
                 // get account ref
-                const accountRef = account? AccountWorkspaceAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+                const accountRef = account? AccountAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
                 const accRefRoles = accountRef?.rolesRefs?.map(item => appRolesMap[item.roleId || '']).filter(item => item) || []
 
                 // get account aconfig
-                const accConfig = AccountAccountConfigService.getAccountWorkspaceAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
+                const accConfig = AccountAccountConfigService.getAccountAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
                 const accRefConf = accRefRoles?.filter(item => accConfig?.value === item._id)
 
                 console.log(accRefRoles, accRefConf?.length? accRefConf[0]: undefined)
@@ -232,4 +232,4 @@ const AccountWorkspaceAccountRefAccountConfigEditForm = ({account, workspaceId, 
     ): null
 }
 
-export default AccountWorkspaceAccountRefAccountConfigEditForm
+export default AccountAccountRefAccountConfigEditForm

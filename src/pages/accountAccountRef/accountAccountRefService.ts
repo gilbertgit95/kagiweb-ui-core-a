@@ -1,11 +1,11 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 import { IAccount, IWorkspaceAccountRef } from '../../types/account'
-import AccountWorkspaceService from '../accountWorkspace/accountWorkspaceService'
+import AccountService from '../Account/AccountService'
 
-class AccountWorkspaceAccountRefService {
+class AccountAccountRefService {
     public static getWorkspaceAccountRefById(account: IAccount, workspaceId:string, accountRefId:string):IWorkspaceAccountRef|undefined {
 
-        const workspace = AccountWorkspaceService.getWorkspaceById(account, workspaceId)
+        const workspace = AccountService.getWorkspaceById(account, workspaceId)
         if (workspace && workspace.accountRefs) {
             for (const accountRef of workspace.accountRefs) {
                 if (accountRef._id === accountRefId) return accountRef
@@ -61,4 +61,4 @@ class AccountWorkspaceAccountRefService {
     }
 }
 
-export default AccountWorkspaceAccountRefService
+export default AccountAccountRefService

@@ -18,7 +18,7 @@ interface props {
 interface IModuleData {module: string, moduleRoute: string, contents: number}
 
 
-const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRefId, getFunc}:props) => {
+const AccountAccountRefReadOnlyView = ({account, workspaceId, accountRefId, getFunc}:props) => {
     const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?: string, createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
@@ -112,4 +112,4 @@ const AccountWorkspaceAccountRefReadOnlyView = ({account, workspaceId, accountRe
     ): null
 }
 
-export default AccountWorkspaceAccountRefReadOnlyView
+export default AccountAccountRefReadOnlyView

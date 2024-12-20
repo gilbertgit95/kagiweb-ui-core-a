@@ -15,7 +15,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-const AccountWorkspaceAccountRefAccountConfigPage = () => {
+const AccountAccountRefAccountConfigPage = () => {
     const { accountId, workspaceId, accountRefId, accountConfigId } = useParams()
     const navigate = useNavigate()
     const [configAndErrors, setConfigAndErrors] = useState<TResponseStatus>({
@@ -101,4 +101,4 @@ const AccountWorkspaceAccountRefAccountConfigPage = () => {
     )
 }
 
-export default AccountWorkspaceAccountRefAccountConfigPage
+export default AccountAccountRefAccountConfigPage

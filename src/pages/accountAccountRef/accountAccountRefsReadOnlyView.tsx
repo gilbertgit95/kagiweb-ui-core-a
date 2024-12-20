@@ -23,7 +23,7 @@ interface IWorkspaceAccountRefRow {
     updatedAt?: Date
 }
 
-const AccountWorkspaceAccountRefsReadOnlyView = ({account, workspaceId, getFunc}:IProps) => {
+const AccountAccountRefsReadOnlyView = ({account, workspaceId, getFunc}:IProps) => {
     // const navigate = useNavigate()
     const [data, setData] = useState<IWorkspaceAccountRefRow[]>([])
 
@@ -108,4 +108,4 @@ const AccountWorkspaceAccountRefsReadOnlyView = ({account, workspaceId, getFunc}
     )
 }
 
-export default AccountWorkspaceAccountRefsReadOnlyView
+export default AccountAccountRefsReadOnlyView

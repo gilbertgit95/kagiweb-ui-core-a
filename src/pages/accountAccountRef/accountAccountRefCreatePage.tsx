@@ -7,15 +7,15 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountWorkspaceAccountRefCreateForm from './accountAccountRefCreateForm';
+import AccountAccountRefCreateForm from './accountAccountRefCreateForm';
 import AccountService from '../account/accountService';
-import AccountWorkspaceAccountRefService from './accountAccountRefService';
+import AccountAccountRefService from './accountAccountRefService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const AccountWorkspaceAccountRefCreatePage = () => {
+const AccountAccountRefCreatePage = () => {
     const { accountId, workspaceId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -76,10 +76,10 @@ const AccountWorkspaceAccountRefCreatePage = () => {
                     </Button>
                 </Grid>
 
-                <AccountWorkspaceAccountRefCreateForm
+                <AccountAccountRefCreateForm
                     account={account}
                     workspaceId={workspaceId}
-                    createFunc={AccountWorkspaceAccountRefService.createWorkspaceAccountRef}
+                    createFunc={AccountAccountRefService.createWorkspaceAccountRef}
                     created={onCreated} />
 
                 <Grid item xs={12}>
@@ -90,4 +90,4 @@ const AccountWorkspaceAccountRefCreatePage = () => {
     )
 }
 
-export default AccountWorkspaceAccountRefCreatePage
+export default AccountAccountRefCreatePage

@@ -11,7 +11,7 @@ import AccountRoleService from './accountAccountRefRoleService';
 import { IAccount } from '../../types/account';
 import AccountRolesEditForm from './accountAccountRefRolesEditForm';
 
-const AccountWorkspaceAccountRefRolesEditPage = () => {
+const AccountAccountRefRolesEditPage = () => {
     const { accountId, workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
@@ -72,8 +72,8 @@ const AccountWorkspaceAccountRefRolesEditPage = () => {
                     account={account}
                     workspaceId={workspaceId || ''}
                     accountRefId={accountRefId || ''}
-                    createFunc={AccountRoleService.createAccountWorkspaceAccountRefRole}
-                    deleteFunc={AccountRoleService.deleteAccountWorkspaceAccountRefRole}
+                    createFunc={AccountRoleService.createAccountAccountRefRole}
+                    deleteFunc={AccountRoleService.deleteAccountAccountRefRole}
                     onChange={reLoadUser} />
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -83,4 +83,4 @@ const AccountWorkspaceAccountRefRolesEditPage = () => {
     )
 }
 
-export default AccountWorkspaceAccountRefRolesEditPage
+export default AccountAccountRefRolesEditPage

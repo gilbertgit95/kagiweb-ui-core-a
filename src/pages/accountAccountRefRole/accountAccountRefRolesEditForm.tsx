@@ -16,7 +16,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { useAppSelector} from '../../stores/appStore';
 import { IAccount, IRoleRef } from '../../types/account';
 import { IRole } from '../../types/role';
-import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
+import AccountAccountRefService from '../AccountAccountRef/AccountAccountRefService';
 import AccountRolesAddForm from './accountAccountRefRolesAddForm';
 
 interface IProps {
@@ -35,7 +35,7 @@ interface IRoleRow {
     level: number
 }
 
-const AccountWorkspaceAccountRefRolesEditForm = ({account, workspaceId, accountRefId, createFunc, deleteFunc, onChange}:IProps) => {
+const AccountAccountRefRolesEditForm = ({account, workspaceId, accountRefId, createFunc, deleteFunc, onChange}:IProps) => {
     const roles = useAppSelector(state => state.appRefs?.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -121,7 +121,7 @@ const AccountWorkspaceAccountRefRolesEditForm = ({account, workspaceId, accountR
     useEffect(() => {
         const init = async () => {
             try {
-                const accountRoleRefs = account? AccountWorkspaceAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+                const accountRoleRefs = account? AccountAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
 
                 if (accountRoleRefs && accountRoleRefs.rolesRefs) {
                     const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
@@ -256,4 +256,4 @@ const AccountWorkspaceAccountRefRolesEditForm = ({account, workspaceId, accountR
     )
 }
 
-export default AccountWorkspaceAccountRefRolesEditForm
+export default AccountAccountRefRolesEditForm

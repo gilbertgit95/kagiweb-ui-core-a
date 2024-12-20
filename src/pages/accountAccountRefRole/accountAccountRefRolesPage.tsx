@@ -11,7 +11,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import AccountService from '../account/accountService';
 import AccountRolesReadOnlyView from './accountAccountRefRolesReadOnlyView';
 
-const AccountWorkspaceAccountRefRolesPage = () => {
+const AccountAccountRefRolesPage = () => {
     const { accountId, workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
@@ -79,4 +79,4 @@ const AccountWorkspaceAccountRefRolesPage = () => {
     )
 }
 
-export default AccountWorkspaceAccountRefRolesPage
+export default AccountAccountRefRolesPage

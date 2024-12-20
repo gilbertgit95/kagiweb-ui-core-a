@@ -19,7 +19,7 @@ interface props {
     updated?: (accountId:string|undefined, workspaceId: string, accountRef:IWorkspaceAccountRef|undefined) => void
 }
 
-const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc, updateFunc, updated}:props) => {
+const AccountAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc, updateFunc, updated}:props) => {
     const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceAccountRef & {nameId?:string}>({
         accountId: '',
@@ -154,4 +154,4 @@ const AccountWorkspaceAccountRefEditForm = ({account, workspaceId, accountRefId,
     ): null
 }
 
-export default AccountWorkspaceAccountRefEditForm
+export default AccountAccountRefEditForm

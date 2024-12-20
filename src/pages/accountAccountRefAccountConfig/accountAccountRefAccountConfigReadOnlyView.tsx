@@ -13,12 +13,12 @@ interface props {
     accountConfigId?: string
 }
 
-const AccountWorkspaceAccountRefAccountConfigReadOnlyView = ({account, workspaceId, accountRefId, accountConfigId}:props) => {
+const AccountAccountRefAccountConfigReadOnlyView = ({account, workspaceId, accountRefId, accountConfigId}:props) => {
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         if (account && account.accountConfigs && accountConfigId) {
-            const usrInf = AccountAccountConfigService.getAccountWorkspaceAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
+            const usrInf = AccountAccountConfigService.getAccountAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
             setAccountConfig(usrInf)
         }
 
@@ -52,4 +52,4 @@ const AccountWorkspaceAccountRefAccountConfigReadOnlyView = ({account, workspace
     ): null
 }
 
-export default AccountWorkspaceAccountRefAccountConfigReadOnlyView
+export default AccountAccountRefAccountConfigReadOnlyView

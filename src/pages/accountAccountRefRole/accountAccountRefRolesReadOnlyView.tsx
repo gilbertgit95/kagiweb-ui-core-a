@@ -5,7 +5,7 @@ import { IAccount, IRoleRef } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 // import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
-import AccountWorkspaceAccountRefService from '../accountWorkspaceAccountRef/accountWorkspaceAccountRefService';
+import AccountAccountRefService from '../AccountAccountRef/AccountAccountRefService';
 import { useAppSelector} from '../../stores/appStore';
 
 interface IProps {
@@ -23,12 +23,12 @@ interface IRoleRow {
     updatedAt?: Date
 }
 
-const AccountWorkspaceAccountRefRolesReadOnlyView = ({account, workspaceId, accountRefId}:IProps) => {
+const AccountAccountRefRolesReadOnlyView = ({account, workspaceId, accountRefId}:IProps) => {
     const roles = useAppSelector(state => state.appRefs.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
 
     useEffect(() => {
-        const accountRoleRefs = account? AccountWorkspaceAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+        const accountRoleRefs = account? AccountAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
         if (accountRoleRefs && accountRoleRefs.rolesRefs) {
             const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
                 if (item && item._id) acc[item._id] = item
@@ -86,4 +86,4 @@ const AccountWorkspaceAccountRefRolesReadOnlyView = ({account, workspaceId, acco
     )
 }
 
-export default AccountWorkspaceAccountRefRolesReadOnlyView
+export default AccountAccountRefRolesReadOnlyView

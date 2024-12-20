@@ -15,7 +15,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-const AccountWorkspaceAccountRefAccountConfigEditPage = () => {
+const AccountAccountRefAccountConfigEditPage = () => {
     const { accountId, workspaceId, accountRefId, accountConfigId } = useParams()
     const navigate = useNavigate()
     const [configAndErrors, setConfigAndErrors] = useState<TResponseStatus>({
@@ -82,7 +82,7 @@ const AccountWorkspaceAccountRefAccountConfigEditPage = () => {
                     accountRefId={accountRefId || ''}
                     accountConfigId={accountConfigId}
                     getCompleteInfo={AccountService.getAccountCompleteInfo}
-                    updateFunc={AccountAccountConfigService.updateAccountWorkspaceAccountRefAccountConfig}
+                    updateFunc={AccountAccountConfigService.updateAccountAccountRefAccountConfig}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>
@@ -93,4 +93,4 @@ const AccountWorkspaceAccountRefAccountConfigEditPage = () => {
     )
 }
 
-export default AccountWorkspaceAccountRefAccountConfigEditPage
+export default AccountAccountRefAccountConfigEditPage

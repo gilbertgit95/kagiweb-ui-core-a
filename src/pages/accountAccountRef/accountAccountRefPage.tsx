@@ -14,15 +14,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountWorkspaceAccountRefReadOnlyView from './accountAccountRefReadOnlyView';
+import AccountAccountRefReadOnlyView from './accountAccountRefReadOnlyView';
 import AccountService from '../account/accountService';
-import AccountWorkspaceAccountRefService from './accountAccountRefService';
+import AccountAccountRefService from './accountAccountRefService';
 import { IAccount } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
 
-const AccountWorkspaceAccountRefPage = () => {
+const AccountAccountRefPage = () => {
     const { accountId, workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -39,7 +39,7 @@ const AccountWorkspaceAccountRefPage = () => {
     const onDelete = async () => {
         if (accountId && workspaceId && accountRefId) {
             try {
-                await AccountWorkspaceAccountRefService.deleteWorkspaceAccountRef(accountId, workspaceId, accountRefId)
+                await AccountAccountRefService.deleteWorkspaceAccountRef(accountId, workspaceId, accountRefId)
                 const accountResp = await AccountService.getAccount(accountId)
                 setAccount(accountResp.data)
                 setPageState({
@@ -149,11 +149,11 @@ const AccountWorkspaceAccountRefPage = () => {
                     </Box>
                 </Grid>
 
-                <AccountWorkspaceAccountRefReadOnlyView
+                <AccountAccountRefReadOnlyView
                     account={account}
                     workspaceId={workspaceId}
                     accountRefId={accountRefId}
-                    getFunc={AccountWorkspaceAccountRefService.getWorkspaceAccountRef} />
+                    getFunc={AccountAccountRefService.getWorkspaceAccountRef} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -163,4 +163,4 @@ const AccountWorkspaceAccountRefPage = () => {
     )
 }
 
-export default AccountWorkspaceAccountRefPage
+export default AccountAccountRefPage
