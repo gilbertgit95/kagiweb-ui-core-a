@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const AccountAccountRefPage = () => {
-    const { accountId, workspaceId, accountRefId } = useParams()
+    const { accountId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -37,9 +37,9 @@ const AccountAccountRefPage = () => {
     const [account, setAccount] = useState<IAccount | undefined>()
 
     const onDelete = async () => {
-        if (accountId && workspaceId && accountRefId) {
+        if (accountId && accountRefId) {
             try {
-                await AccountAccountRefService.deleteWorkspaceAccountRef(accountId, workspaceId, accountRefId)
+                await AccountAccountRefService.deleteWorkspaceAccountRef(accountId, accountRefId)
                 const accountResp = await AccountService.getAccount(accountId)
                 setAccount(accountResp.data)
                 setPageState({
@@ -65,9 +65,9 @@ const AccountAccountRefPage = () => {
     
     useEffect(() => {
         const init = async () => {
-            console.log('View: ', accountId, workspaceId)
+            console.log('View: ', accountId)
 
-            if (accountId && workspaceId) {
+            if (accountId) {
                 try {
                     const accountResp = await AccountService.getAccount(accountId)
                     setAccount(accountResp.data)
@@ -88,13 +88,13 @@ const AccountAccountRefPage = () => {
         }
 
         init()
-    }, [accountId, workspaceId])
+    }, [accountId])
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account reference Readonly View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account reference Readonly View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -115,7 +115,7 @@ const AccountAccountRefPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ account?._id }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }/accountRefs/${ accountRefId }`)}>
                             Edit
                         </Button>
                         <Button
@@ -151,7 +151,6 @@ const AccountAccountRefPage = () => {
 
                 <AccountAccountRefReadOnlyView
                     account={account}
-                    workspaceId={workspaceId}
                     accountRefId={accountRefId}
                     getFunc={AccountAccountRefService.getWorkspaceAccountRef} />
 

@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const AccountAccountRefCreatePage = () => {
-    const { accountId, workspaceId } = useParams()
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -78,7 +78,6 @@ const AccountAccountRefCreatePage = () => {
 
                 <AccountAccountRefCreateForm
                     account={account}
-                    workspaceId={workspaceId}
                     createFunc={AccountAccountRefService.createWorkspaceAccountRef}
                     created={onCreated} />
 

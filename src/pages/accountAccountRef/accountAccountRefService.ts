@@ -1,13 +1,12 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
-import { IAccount, IWorkspaceAccountRef } from '../../types/account'
+import { IAccount, IAccountAccountRef } from '../../types/account'
 import AccountService from '../Account/AccountService'
 
 class AccountAccountRefService {
-    public static getWorkspaceAccountRefById(account: IAccount, workspaceId:string, accountRefId:string):IWorkspaceAccountRef|undefined {
+    public static getAccountAccountRefById(account: IAccount, accountRefId:string):IAccountAccountRef|undefined {
 
-        const workspace = AccountService.getWorkspaceById(account, workspaceId)
-        if (workspace && workspace.accountRefs) {
-            for (const accountRef of workspace.accountRefs) {
+        if (account && account.accountRefs) {
+            for (const accountRef of account.accountRefs) {
                 if (accountRef._id === accountRefId) return accountRef
             }
         }
@@ -15,49 +14,43 @@ class AccountAccountRefService {
         return undefined
     }
 
-    public static getWorkspaceAccountRef( accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef & {nameId?:string} | null}> {
-        return AccountApi.getWorkspaceAccountRef(
+    public static getAccountAccountRef( accountId:string, accountRefId:string):Promise<{data: IAccountAccountRef & {nameId?:string} | null}> {
+        return AccountApi.getAccountAccountRef(
             accountId,
-            workspaceId,
             accountRefId
         )
     }
 
-    public static getWorkspaceAccountRefs( accountId:string, workspaceId:string):Promise<{data: (IWorkspaceAccountRef & {nameId?:string})[]}> {
-        return AccountApi.getWorkspaceAccountRefs(
-            accountId,
-            workspaceId
+    public static getAccountAccountRefs( accountId:string):Promise<{data: (IAccountAccountRef & {nameId?:string})[]}> {
+        return AccountApi.getAccountAccountRefs(
+            accountId
         )
     }
 
-    public static updateWorkspaceAccountRef(
+    public static updateAccountAccountRef(
         accountId:string,
-        workspaceId:string,
         accountRefId:string,
-        disabled: boolean):Promise<{data: IWorkspaceAccountRef}> {
-        return AccountApi.updateWorkspaceAccountRef(
+        disabled: boolean):Promise<{data: IAccountAccountRef}> {
+        return AccountApi.updateAccountAccountRef(
             accountId,
-            workspaceId,
             accountRefId,
             disabled
         )
     }
 
-    public static createWorkspaceAccountRef(
+    public static createAccountAccountRef(
         accountId:string,
-        workspaceId:string,
         nameId:string,
-        disabled: boolean):Promise<{data: IWorkspaceAccountRef}> {
-        return AccountApi.createWorkspaceAccountRef(
+        disabled: boolean):Promise<{data: IAccountAccountRef}> {
+        return AccountApi.createAccountAccountRef(
             accountId,
-            workspaceId,
             nameId,
             disabled
         )
     }
 
-    public static deleteWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef}> {
-        return AccountApi.deleteWorkspaceAccountRef(accountId, workspaceId, accountRefId)
+    public static deleteAccountAccountRef(accountId:string, accountRefId:string):Promise<{data: IAccountAccountRef}> {
+        return AccountApi.deleteAccountAccountRef(accountId, accountRefId)
     }
 }
 

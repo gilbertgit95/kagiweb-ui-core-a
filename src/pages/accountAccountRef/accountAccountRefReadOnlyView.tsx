@@ -5,33 +5,32 @@ import SnippetFolderIcon from '@mui/icons-material/SnippetFolder';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SecondaryHeader from '../../components/headers/secondaryHeader';
 import SimpleLink from '../../components/links/simpleLink';
-import { IAccount, IWorkspaceAccountRef } from '../../types/account';
+import { IAccount, IAccountAccountRef } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 interface props {
     account?: IAccount,
-    workspaceId?: string,
     accountRefId?: string,
-    getFunc: (accountId:string, workspaceId:string, accountRefId: string) => Promise<{data: IWorkspaceAccountRef & {nameId?:string} | null}>
+    getFunc: (accountId:string, accountRefId: string) => Promise<{data: IAccountAccountRef & {nameId?:string} | null}>
 }
 
 interface IModuleData {module: string, moduleRoute: string, contents: number}
 
 
-const AccountAccountRefReadOnlyView = ({account, workspaceId, accountRefId, getFunc}:props) => {
-    const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?: string, createdAt?:Date, updatedAt?:Date} | undefined>()
+const AccountAccountRefReadOnlyView = ({account, accountRefId, getFunc}:props) => {
+    const [accountRef, setAccountRef] = useState<IAccountAccountRef & {nameId?: string, createdAt?:Date, updatedAt?:Date} | undefined>()
 
     useEffect(() => {
         const init = async () => {
-            if (account && workspaceId && accountRefId) {
-                const usrRef = await getFunc(account._id || '', workspaceId, accountRefId || '')
+            if (account && accountRefId) {
+                const usrRef = await getFunc(account._id || '', accountRefId || '')
                 if (usrRef?.data) setAccountRef(usrRef.data)
             }
         }
 
         init()
 
-    }, [account, workspaceId, accountRefId])
+    }, [account, accountRefId])
 
     const colDef:IColDef[] = [
         {

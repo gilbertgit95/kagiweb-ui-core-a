@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { IAccount, IWorkspaceAccountRef } from '../../types/account';
+import { IAccount, IAccountAccountRef } from '../../types/account';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import Check from '../../components/indicators/check';
 import DateChanges from '../../components/dates/dateChanges';
@@ -8,11 +8,10 @@ import SimpleLink from '../../components/links/simpleLink';
 
 interface IProps {
     account: IAccount | undefined,
-    workspaceId: string | undefined,
-    getFunc: (accountId:string, workspaceId:string) => Promise<{data: (IWorkspaceAccountRef & {nameId?:string})[]}>
+    getFunc: (accountId:String) => Promise<{data: (IAccountAccountRef & {nameId?:string})[]}>
 }
 
-interface IWorkspaceAccountRefRow {
+interface IAccountAccountRefRow {
     _id: string,
     accountId: string,
     nameId: string,
@@ -23,15 +22,15 @@ interface IWorkspaceAccountRefRow {
     updatedAt?: Date
 }
 
-const AccountAccountRefsReadOnlyView = ({account, workspaceId, getFunc}:IProps) => {
+const AccountAccountRefsReadOnlyView = ({account, getFunc}:IProps) => {
     // const navigate = useNavigate()
-    const [data, setData] = useState<IWorkspaceAccountRefRow[]>([])
+    const [data, setData] = useState<IAccountAccountRefRow[]>([])
 
     useEffect(() => {
         const init = async () => {
-            if (account && account.workspaces && workspaceId) {
-                const accountRefs = await getFunc(account._id || '', workspaceId)
-                const transformedData:IWorkspaceAccountRefRow[] = accountRefs?.data.map((item:IWorkspaceAccountRef & {nameId?:string, createdAt?: Date, updatedAt?: Date}) => {
+            if (account && account.accountRefs) {
+                const accountRefs = account.accountRefs
+                const transformedData:IAccountAccountRefRow[] = accountRefs?.map((item:IAccountAccountRef & {nameId?:string, createdAt?: Date, updatedAt?: Date}) => {
                     return {
                         _id: item._id || '',
                         accountId: item.accountId,
@@ -50,7 +49,7 @@ const AccountAccountRefsReadOnlyView = ({account, workspaceId, getFunc}:IProps) 
 
         init()
 
-    }, [account, workspaceId, getFunc])
+    }, [account, getFunc])
 
     const colDef:IColDef[] = [
         {
@@ -60,35 +59,35 @@ const AccountAccountRefsReadOnlyView = ({account, workspaceId, getFunc}:IProps) 
         {
             header: 'Accepted',
             field: 'accepted',
-            Component: (props:IWorkspaceAccountRefRow) => {
+            Component: (props:IAccountAccountRefRow) => {
                 return <Check value={props.accepted} />
             }
         },
         {
             header: 'Declined',
             field: 'declined',
-            Component: (props:IWorkspaceAccountRefRow) => {
+            Component: (props:IAccountAccountRefRow) => {
                 return <Check value={props.declined} />
             }
         },
         {
             header: 'Changed',
             field: '_id',
-            Component: (props:IWorkspaceAccountRefRow) => {
+            Component: (props:IAccountAccountRefRow) => {
                 return <DateChanges {...props} />
             }
         },
         {
             header: 'Disabled',
             field: 'disabled',
-            Component: (props:IWorkspaceAccountRefRow) => {
+            Component: (props:IAccountAccountRefRow) => {
                 return <Check value={props.disabled} />
             }
         },
         {
             header: '',
             field: '_id',
-            Component: (props:IWorkspaceAccountRefRow) => {
+            Component: (props:IAccountAccountRefRow) => {
                 return (
                     <SimpleLink
                         link={`${ props._id }`}

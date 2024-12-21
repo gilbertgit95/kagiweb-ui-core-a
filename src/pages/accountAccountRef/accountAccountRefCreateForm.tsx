@@ -3,22 +3,21 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IAccount, IWorkspaceAccountRef } from '../../types/account';
+import { IAccount, IAccountAccountRef } from '../../types/account';
 
 interface props {
     account?: IAccount,
     workspaceId?:string,
     createFunc: (
         accountId:string,
-        workspaceId:string,
         nameId:string,
         disabled: boolean
-    ) => Promise<{data:IWorkspaceAccountRef & {nameId?: string}}>,
-    created?: (accountId:string|undefined, workspaceId:string, accountRef:IWorkspaceAccountRef|undefined) => void
+    ) => Promise<{data:IAccountAccountRef & {nameId?: string}}>,
+    created?: (accountId:string|undefined, accountRef:IAccountAccountRef|undefined) => void
 }
 
-const AccountAccountRefCreateForm = ({account, workspaceId, createFunc, created}:props) => {
-    const [accountRef, setNewUserRef] = useState<IWorkspaceAccountRef & {nameId?: string}>({
+const AccountAccountRefCreateForm = ({account, createFunc, created}:props) => {
+    const [accountRef, setNewUserRef] = useState<IAccountAccountRef & {nameId?: string}>({
         accountId: '',
         nameId: '',
         disabled: false
@@ -40,7 +39,7 @@ const AccountAccountRefCreateForm = ({account, workspaceId, createFunc, created}
     const onCreate = async () => {
         if (!account) return
 
-        const newData:IWorkspaceAccountRef & {nameId?: string} = {
+        const newData:IAccountAccountRef & {nameId?: string} = {
             accountId: '',
             nameId: accountRef.nameId,
             disabled: accountRef.disabled
@@ -52,11 +51,10 @@ const AccountAccountRefCreateForm = ({account, workspaceId, createFunc, created}
             try {
                 const reqResp = await createFunc(
                     account._id,
-                    workspaceId || '',
                     accountRef.nameId || '',
                     Boolean(accountRef.disabled)
                 )
-                if (created) created(account?._id, workspaceId || '', reqResp?.data)
+                if (created) created(account?._id, reqResp?.data)
                 setInfoAndErrors({
                     ...{infoMessages: ['Successfull Created']},
                     ...{errorMessages: []}

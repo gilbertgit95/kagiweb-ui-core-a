@@ -3,25 +3,24 @@ import Grid from '@mui/material/Grid';
 import { Button, Typography, TextField, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IAccount, IWorkspaceAccountRef } from '../../types/account';
+import { IAccount, IAccountAccountRef } from '../../types/account';
 
 interface props {
     account?: IAccount,
     workspaceId?: string,
     accountRefId?: string,
-    getFunc: (accountId:string, workspaceId:string, accountRefId: string) => Promise<{data: IWorkspaceAccountRef & {nameId?:string} | null}>
+    getFunc: (accountId:string, accountRefId: string) => Promise<{data: IAccountAccountRef & {nameId?:string} | null}>
     updateFunc: (
         accountId:string,
-        workspaceId:string,
         accountRefId:string,
         disabled:boolean
-    ) => Promise<{data:IWorkspaceAccountRef}>,
-    updated?: (accountId:string|undefined, workspaceId: string, accountRef:IWorkspaceAccountRef|undefined) => void
+    ) => Promise<{data:IAccountAccountRef}>,
+    updated?: (accountId:string|undefined, accountRef:IAccountAccountRef|undefined) => void
 }
 
 const AccountAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc, updateFunc, updated}:props) => {
-    const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
-    const [updatedUserRef, setUpdatedUserRef] = useState<IWorkspaceAccountRef & {nameId?:string}>({
+    const [accountRef, setAccountRef] = useState<IAccountAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
+    const [updatedUserRef, setUpdatedUserRef] = useState<IAccountAccountRef & {nameId?:string}>({
         accountId: '',
         disabled: false
     })
@@ -47,7 +46,6 @@ const AccountAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc,
             try {
                 const reqResp = await updateFunc(
                     account._id,
-                    workspaceId || '',
                     accountRefId || '',
                     Boolean(updatedUserRef.disabled)
                 )
@@ -69,8 +67,8 @@ const AccountAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc,
 
     useEffect(() => {
         const init = async () => {
-            if (account && workspaceId && accountRefId) {
-                const usrRef = await getFunc(account._id || '', workspaceId, accountRefId || '')
+            if (account && accountRefId) {
+                const usrRef = await getFunc(account._id || '', accountRefId || '')
                 if (usrRef?.data) {
                     setAccountRef(usrRef.data)
                     setUpdatedUserRef(usrRef.data)
@@ -85,7 +83,7 @@ const AccountAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc,
 
         init()
 
-    }, [account, workspaceId, accountRefId])
+    }, [account, accountRefId])
 
     const itemSx = {
         display: 'flex',

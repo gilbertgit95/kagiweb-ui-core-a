@@ -13,7 +13,7 @@ import AccountAccountRefService from './accountAccountRefService';
 import AccountAccountRefsReadOnlyView from './accountAccountRefsReadOnlyView';
 
 const AccountAccountRefsPage = () => {
-    const { accountId, workspaceId } = useParams()
+    const { accountId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -43,7 +43,7 @@ const AccountAccountRefsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account references View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account references View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -63,7 +63,7 @@ const AccountAccountRefsPage = () => {
                         <Button
                             variant="text"
                             startIcon={<AddIcon />}
-                            onClick={() => navigate(`/accounts/create/${ accountId }/workspaces/${ workspaceId }/accountRefs`)}>
+                            onClick={() => navigate(`/accounts/create/${ accountId }/accountRefs`)}>
                             Create
                         </Button>
                     </Box>
@@ -71,7 +71,6 @@ const AccountAccountRefsPage = () => {
 
                 <AccountAccountRefsReadOnlyView
                     account={account}
-                    workspaceId={ workspaceId }
                     getFunc={AccountAccountRefService.getWorkspaceAccountRefs} />
 
                 <Grid item xs={12}>

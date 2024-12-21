@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const AccountAccountRefEditPage = () => {
-    const { accountId, workspaceId, accountRefId } = useParams()
+    const { accountId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -64,7 +64,7 @@ const AccountAccountRefEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account Reference Update View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account Reference Update View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -78,7 +78,6 @@ const AccountAccountRefEditPage = () => {
 
                 <AccountAccountRefEditForm
                     account={account}
-                    workspaceId={workspaceId}
                     accountRefId={accountRefId}
                     getFunc={AccountAccountRefService.getWorkspaceAccountRef}
                     updateFunc={AccountAccountRefService.updateWorkspaceAccountRef}
