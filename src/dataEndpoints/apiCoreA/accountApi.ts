@@ -324,6 +324,112 @@ class AccountApi {
         })
     }
 
+    // account account references
+    public static getAccountAccountRef(accountId:string, accountRefId:string) {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs/${accountRefId  }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }
+        })
+    }
+
+    public static getAccountAccountRefs(accountId:string) {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' }
+        })
+    }
+
+    public static updateAccountAccountRef(
+        accountId:string,
+        accountRefId:string,
+        disabled: boolean) {
+        const data = {
+            'disabled': disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs/${ accountRefId }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createAccountAccountRef(
+        accountId:string,
+        nameId:string,
+        disabled: boolean) {
+        const data = {
+            'nameId': nameId,
+            'disabled': disabled
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteAccountAccountRef(accountId:string, accountRefId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs/${ accountRefId }`
+        })
+    }
+
+    // account account ref account config
+    public static updateAccountAccountRefAccountConfig(accountId:string, accountRefId:string, accountConfigId:string, value:string) {
+        const data:{value:string} = {
+            'value': value
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs/${ accountRefId }/accountConfigs/${ accountConfigId }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    // account account ref roles
+    public static updateAccountAccountRefRole(accountId:string, accountRefId:string, accountRole:{_id: string, isActive?:boolean, roleId?:string}) {
+        const data = {
+            'roleId': accountRole.roleId,
+            'isActive': accountRole.isActive
+        }
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs/${ accountRefId }/roles/${ accountRole._id }`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static createAccountAccountRefRole(accountId:string, accountRefId:string, accountRole:IRoleRef) {
+        const data:IRoleRef = {
+            'roleId': accountRole.roleId
+        }
+
+        return apiHelper.privateReq({
+            method: 'POST',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs/${ accountRefId }/roles`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            data
+        })
+    }
+
+    public static deleteAccountAccountRefRole(accountId:string, accountRefId:string, roleRefId:string) {
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ accountId }/accountRefs/${ accountRefId }/roles/${ roleRefId }`
+        })
+    }
+
 
     // workspaces
     public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, disabled:boolean) {
