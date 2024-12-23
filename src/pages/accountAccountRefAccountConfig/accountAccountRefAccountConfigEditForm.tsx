@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import RoleSelectorComponent from '../accountAccountConfig/roleSelectorComponent';
 import AccountAccountConfigService from './accountAccountRefAccountConfigService';
-import AccountAccountRefService from '../AccountAccountRef/AccountAccountRefService';
+import AccountAccountRefService from '../accountAccountRef/accountAccountRefService';
 import { IAccount, IAccountConfig, TAccountConfigType, accountConfigTypes } from '../../types/account';
 import { IRole } from '../../types/role';
 import { ISignedInUser } from '../../stores/signedInAccountSlice';
@@ -15,15 +15,14 @@ import { useAppSelector} from '../../stores/appStore';
 
 interface props {
     account?: IAccount,
-    workspaceId: string,
     accountRefId: string,
     accountConfigId?: string,
     getCompleteInfo: (accountId:string) => Promise<{data:ISignedInUser}>,
-    updateFunc: (accountId:string, workspaceId:string, accountRefId:string, accountConfigId:string, value:string) => Promise<{data:IAccountConfig}>,
-    updated?: (accountId:string|undefined, workspaceId:string, accountRefId:string, accountConfig:IAccountConfig|undefined) => void
+    updateFunc: (accountId:string, accountRefId:string, accountConfigId:string, value:string) => Promise<{data:IAccountConfig}>,
+    updated?: (accountId:string|undefined, accountRefId:string, accountConfig:IAccountConfig|undefined) => void
 }
 
-const AccountAccountRefAccountConfigEditForm = ({account, workspaceId, accountRefId, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
+const AccountAccountRefAccountConfigEditForm = ({account, accountRefId, accountConfigId, getCompleteInfo, updateFunc, updated}:props) => {
     const roles = useAppSelector(state => state.appRefs.roles) || []
     const [accountConfig, setAccountConfig] = useState<IAccountConfig & {createdAt?:Date, updatedAt?:Date} | undefined>()
     const [accRoles, setAccRoles] = useState<IRole[]>([])
@@ -62,12 +61,12 @@ const AccountAccountRefAccountConfigEditForm = ({account, workspaceId, accountRe
         // // send update data to the api
         if (account?._id) {
             try {
-                const reqResp = await updateFunc(account._id, workspaceId, accountRefId, updateData._id!, updateData.value)
+                const reqResp = await updateFunc(account._id, accountRefId, updateData._id!, updateData.value)
                 setConfigAndErrors({
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(account?._id, workspaceId, accountRefId, reqResp?.data)
+                if (updated) updated(account?._id, accountRefId, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI
@@ -88,11 +87,11 @@ const AccountAccountRefAccountConfigEditForm = ({account, workspaceId, accountRe
                 }, {}) :{}
 
                 // get account ref
-                const accountRef = account? AccountAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+                const accountRef = account? AccountAccountRefService.getAccountAccountRefById(account, accountRefId): null
                 const accRefRoles = accountRef?.rolesRefs?.map(item => appRolesMap[item.roleId || '']).filter(item => item) || []
 
                 // get account aconfig
-                const accConfig = AccountAccountConfigService.getAccountAccountRefAccountConfigById(account, workspaceId, accountRefId, accountConfigId)
+                const accConfig = AccountAccountConfigService.getAccountAccountRefAccountConfigById(account, accountRefId, accountConfigId)
                 const accRefConf = accRefRoles?.filter(item => accConfig?.value === item._id)
 
                 console.log(accRefRoles, accRefConf?.length? accRefConf[0]: undefined)
@@ -114,7 +113,7 @@ const AccountAccountRefAccountConfigEditForm = ({account, workspaceId, accountRe
 
         init()
 
-    }, [roles, account, workspaceId, accountRefId, accountConfigId])
+    }, [roles, account, accountRefId, accountConfigId])
 
     // useEffect(() => {
     //     const init = async () => {

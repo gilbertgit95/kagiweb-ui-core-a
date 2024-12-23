@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const AccountAccountRefAccountConfigPage = () => {
-    const { accountId, workspaceId, accountRefId, accountConfigId } = useParams()
+    const { accountId, accountRefId, accountConfigId } = useParams()
     const navigate = useNavigate()
     const [configAndErrors, setConfigAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -60,7 +60,7 @@ const AccountAccountRefAccountConfigPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account Ref Config Readonly View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account Ref Config Readonly View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -81,7 +81,7 @@ const AccountAccountRefAccountConfigPage = () => {
                             variant="text"
                             startIcon={<EditIcon />}
                             disabled={ pageState.disableEditButton }
-                            onClick={() => navigate(`/accounts/edit/${ account?._id }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/accountConfigs/${ accountConfigId }`)}>
+                            onClick={() => navigate(`/accounts/edit/${ account?._id }/accountRefs/${ accountRefId }/accountConfigs/${ accountConfigId }`)}>
                             Edit
                         </Button>
                     </Box>
@@ -89,7 +89,6 @@ const AccountAccountRefAccountConfigPage = () => {
 
                 <AccountAccountConfigReadOnlyView
                     account={account}
-                    workspaceId={workspaceId || ''}
                     accountRefId={accountRefId || ''}
                     accountConfigId={accountConfigId} />
 

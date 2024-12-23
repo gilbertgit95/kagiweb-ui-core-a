@@ -11,7 +11,6 @@ import { useAppSelector} from '../../stores/appStore';
 
 interface IProp {
     account: IAccount|undefined,
-    workspaceId: string,
     accountRefId: string,
     onSelect?: (selected:string[]) => void,
 }
@@ -29,7 +28,7 @@ const AccountAccountRefRolesAddForm = ({account, onSelect}:IProp) => {
 
     useEffect(() => {
         if (account?.rolesRefs) {
-            const appRolesScope = new Set(['workspace'])
+            const appRolesScope = new Set(['account'])
             const userRoles:Set<string> = new Set(account?.rolesRefs.map(item => item.roleId))
             const tarnsformedData:IRoleRow[] = roles
                 .filter(item => !userRoles.has(item._id || '') && appRolesScope.has(item.scope || ''))

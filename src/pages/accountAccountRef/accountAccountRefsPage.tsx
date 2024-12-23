@@ -71,7 +71,7 @@ const AccountAccountRefsPage = () => {
 
                 <AccountAccountRefsReadOnlyView
                     account={account}
-                    getFunc={AccountAccountRefService.getWorkspaceAccountRefs} />
+                    getFunc={AccountAccountRefService.getAccountAccountRefs} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />

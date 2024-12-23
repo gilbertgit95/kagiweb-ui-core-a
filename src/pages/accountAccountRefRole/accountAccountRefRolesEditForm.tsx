@@ -16,15 +16,14 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import { useAppSelector} from '../../stores/appStore';
 import { IAccount, IRoleRef } from '../../types/account';
 import { IRole } from '../../types/role';
-import AccountAccountRefService from '../AccountAccountRef/AccountAccountRefService';
+import AccountAccountRefService from '../accountAccountRef/accountAccountRefService';
 import AccountRolesAddForm from './accountAccountRefRolesAddForm';
 
 interface IProps {
-    account: IAccount|undefined,
-    workspaceId: string,
+    account?: IAccount,
     accountRefId: string,
-    createFunc: (accountId:string, workspaceId:string, accountRefId:string, roleId:string) => Promise<{data:IRoleRef}>,
-    deleteFunc: (accountId:string, workspaceId:string, accountRefId:string, roleRef:string) => Promise<{data:IRoleRef}>,
+    createFunc: (accountId:string, accountRefId:string, roleId:string) => Promise<{data:IRoleRef}>,
+    deleteFunc: (accountId:string, accountRefId:string, roleRef:string) => Promise<{data:IRoleRef}>,
     onChange: () => void
 }
 
@@ -35,7 +34,7 @@ interface IRoleRow {
     level: number
 }
 
-const AccountAccountRefRolesEditForm = ({account, workspaceId, accountRefId, createFunc, deleteFunc, onChange}:IProps) => {
+const AccountAccountRefRolesEditForm = ({account, accountRefId, createFunc, deleteFunc, onChange}:IProps) => {
     const roles = useAppSelector(state => state.appRefs?.roles) || []
     const [data, setData] = useState<IRoleRow[]>([])
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
@@ -59,7 +58,7 @@ const AccountAccountRefRolesEditForm = ({account, workspaceId, accountRefId, cre
         // loop to all roles id and post call to api
         for (let roleId of addTableSelection) {
             try {
-                await createFunc(account?._id || '', workspaceId, accountRefId, roleId)
+                await createFunc(account?._id || '', accountRefId, roleId)
                 savedItems++
             } catch (err:any) {
                 error = err?.response?.data?.message || ''
@@ -93,7 +92,7 @@ const AccountAccountRefRolesEditForm = ({account, workspaceId, accountRefId, cre
         // loop to all feature refs, then delete call to api
         for (let roleRef of tableSelection) {
             try {
-                await deleteFunc(account?._id || '', workspaceId, accountRefId, roleRef)
+                await deleteFunc(account?._id || '', accountRefId, roleRef)
                 savedItems++
             } catch (err:any) {
                 error = err?.response?.data?.message || ''
@@ -121,7 +120,7 @@ const AccountAccountRefRolesEditForm = ({account, workspaceId, accountRefId, cre
     useEffect(() => {
         const init = async () => {
             try {
-                const accountRoleRefs = account? AccountAccountRefService.getWorkspaceAccountRefById(account, workspaceId, accountRefId): null
+                const accountRoleRefs = account? AccountAccountRefService.getAccountAccountRefById(account, accountRefId): null
 
                 if (accountRoleRefs && accountRoleRefs.rolesRefs) {
                     const rolesMap:{[key: string]:IRole} = roles.reduce((acc:{[key:string]:IRole}, item:IRole) => {
@@ -151,7 +150,7 @@ const AccountAccountRefRolesEditForm = ({account, workspaceId, accountRefId, cre
         }
         console.log('initiate account roles edit page')
         init()
-    }, [account, workspaceId, accountRefId, roles])
+    }, [account, accountRefId, roles])
 
     const colDef:IColDef[] = [
         {
@@ -208,7 +207,6 @@ const AccountAccountRefRolesEditForm = ({account, workspaceId, accountRefId, cre
                             <AccountRolesAddForm
                                 onSelect={(selectedData) => setAddTableSelection(selectedData)}
                                 account={account}
-                                workspaceId={workspaceId}
                                 accountRefId={accountRefId} />
                         </DialogContent>
                         <DialogActions>

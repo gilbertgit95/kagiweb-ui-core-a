@@ -57,7 +57,7 @@ const AccountAccountRefRolesEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account Ref Roles Update View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account Ref Roles Update View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>

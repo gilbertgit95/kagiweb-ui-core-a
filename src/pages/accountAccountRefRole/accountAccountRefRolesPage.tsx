@@ -43,7 +43,7 @@ const AccountAccountRefRolesPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account Ref Roles View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account Ref Roles View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={6}>
@@ -63,7 +63,7 @@ const AccountAccountRefRolesPage = () => {
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
-                            onClick={() => navigate(`/accounts/edit/${ accountId }/workspaces/${ workspaceId }/accountRefs/${ accountRefId }/roles`)}>
+                            onClick={() => navigate(`/accounts/edit/${ accountId }/accountRefs/${ accountRefId }/roles`)}>
                             Edit
                         </Button>
                     </Box>

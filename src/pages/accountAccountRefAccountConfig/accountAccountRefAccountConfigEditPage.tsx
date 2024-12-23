@@ -64,7 +64,7 @@ const AccountAccountRefAccountConfigEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account Ref Config Update View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account Ref Config Update View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -78,7 +78,6 @@ const AccountAccountRefAccountConfigEditPage = () => {
 
                 <AccountContactConfigEditForm
                     account={account}
-                    workspaceId={workspaceId || ''}
                     accountRefId={accountRefId || ''}
                     accountConfigId={accountConfigId}
                     getCompleteInfo={AccountService.getAccountCompleteInfo}

@@ -11,7 +11,7 @@ import AccountService from '../account/accountService';
 import AccountAccountConfigsReadOnlyView from './accountAccountRefAccountConfigsReadOnlyView';
 
 const AccountAccountRefAccountConfigsPage = () => {
-    const { accountId, workspaceId, accountRefId } = useParams()
+    const { accountId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [account, setAccount] = useState<IAccount | undefined>()
     const [configAndErrors, setConfigAndErrors] = useState<TResponseStatus>({
@@ -42,7 +42,7 @@ const AccountAccountRefAccountConfigsPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account Ref Configs View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account Ref Configs View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -56,7 +56,6 @@ const AccountAccountRefAccountConfigsPage = () => {
 
                 <AccountAccountConfigsReadOnlyView
                     account={account}
-                    workspaceId={workspaceId || ''}
                     accountRefId={accountRefId || ''} />
 
                 <Grid item xs={12}>
