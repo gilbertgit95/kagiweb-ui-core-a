@@ -7,7 +7,6 @@ import { IAccount, IAccountAccountRef } from '../../types/account';
 
 interface props {
     account?: IAccount,
-    workspaceId?:string,
     createFunc: (
         accountId:string,
         nameId:string,

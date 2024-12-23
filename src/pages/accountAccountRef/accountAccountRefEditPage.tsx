@@ -79,8 +79,8 @@ const AccountAccountRefEditPage = () => {
                 <AccountAccountRefEditForm
                     account={account}
                     accountRefId={accountRefId}
-                    getFunc={AccountAccountRefService.getWorkspaceAccountRef}
-                    updateFunc={AccountAccountRefService.updateWorkspaceAccountRef}
+                    getFunc={AccountAccountRefService.getAccountAccountRef}
+                    updateFunc={AccountAccountRefService.updateAccountAccountRef}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

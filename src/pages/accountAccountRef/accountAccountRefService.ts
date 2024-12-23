@@ -1,6 +1,5 @@
 import AccountApi from '../../dataEndpoints/apiCoreA/accountApi'
 import { IAccount, IAccountAccountRef } from '../../types/account'
-import AccountService from '../Account/AccountService'
 
 class AccountAccountRefService {
     public static getAccountAccountRefById(account: IAccount, accountRefId:string):IAccountAccountRef|undefined {

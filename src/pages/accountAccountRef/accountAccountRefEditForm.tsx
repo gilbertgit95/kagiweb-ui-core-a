@@ -7,7 +7,6 @@ import { IAccount, IAccountAccountRef } from '../../types/account';
 
 interface props {
     account?: IAccount,
-    workspaceId?: string,
     accountRefId?: string,
     getFunc: (accountId:string, accountRefId: string) => Promise<{data: IAccountAccountRef & {nameId?:string} | null}>
     updateFunc: (
@@ -18,7 +17,7 @@ interface props {
     updated?: (accountId:string|undefined, accountRef:IAccountAccountRef|undefined) => void
 }
 
-const AccountAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc, updateFunc, updated}:props) => {
+const AccountAccountRefEditForm = ({account, accountRefId, getFunc, updateFunc, updated}:props) => {
     const [accountRef, setAccountRef] = useState<IAccountAccountRef & {nameId?:string, createdAt?:Date, updatedAt?:Date} | undefined>()
     const [updatedUserRef, setUpdatedUserRef] = useState<IAccountAccountRef & {nameId?:string}>({
         accountId: '',
@@ -53,7 +52,7 @@ const AccountAccountRefEditForm = ({account, workspaceId, accountRefId, getFunc,
                     ...{infoMessages: ['Successfull Update']},
                     ...{errorMessages: []}
                 })
-                if (updated) updated(account?._id, workspaceId || '', reqResp?.data)
+                if (updated) updated(account?._id, reqResp?.data)
             } catch (err:any) {
                 // error while updating
                 // log to the UI

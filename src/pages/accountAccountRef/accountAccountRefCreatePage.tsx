@@ -64,7 +64,7 @@ const AccountAccountRefCreatePage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Workspace Account Reference Create View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Account Account Reference Create View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -78,7 +78,7 @@ const AccountAccountRefCreatePage = () => {
 
                 <AccountAccountRefCreateForm
                     account={account}
-                    createFunc={AccountAccountRefService.createWorkspaceAccountRef}
+                    createFunc={AccountAccountRefService.createAccountAccountRef}
                     created={onCreated} />
 
                 <Grid item xs={12}>

@@ -8,7 +8,7 @@ import SimpleLink from '../../components/links/simpleLink';
 
 interface IProps {
     account: IAccount | undefined,
-    getFunc: (accountId:String) => Promise<{data: (IAccountAccountRef & {nameId?:string})[]}>
+    getFunc: (accountId:string) => Promise<{data: (IAccountAccountRef & {nameId?:string})[]}>
 }
 
 interface IAccountAccountRefRow {

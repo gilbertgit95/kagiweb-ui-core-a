@@ -39,7 +39,7 @@ const AccountAccountRefPage = () => {
     const onDelete = async () => {
         if (accountId && accountRefId) {
             try {
-                await AccountAccountRefService.deleteWorkspaceAccountRef(accountId, accountRefId)
+                await AccountAccountRefService.deleteAccountAccountRef(accountId, accountRefId)
                 const accountResp = await AccountService.getAccount(accountId)
                 setAccount(accountResp.data)
                 setPageState({
@@ -152,7 +152,7 @@ const AccountAccountRefPage = () => {
                 <AccountAccountRefReadOnlyView
                     account={account}
                     accountRefId={accountRefId}
-                    getFunc={AccountAccountRefService.getWorkspaceAccountRef} />
+                    getFunc={AccountAccountRefService.getAccountAccountRef} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
