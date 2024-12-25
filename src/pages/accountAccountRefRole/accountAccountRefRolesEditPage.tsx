@@ -70,7 +70,6 @@ const AccountAccountRefRolesEditPage = () => {
                 </Grid>
                 <AccountRolesEditForm
                     account={account}
-                    workspaceId={workspaceId || ''}
                     accountRefId={accountRefId || ''}
                     createFunc={AccountRoleService.createAccountAccountRefRole}
                     deleteFunc={AccountRoleService.deleteAccountAccountRefRole}

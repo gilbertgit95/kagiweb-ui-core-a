@@ -69,7 +69,7 @@ const AccountAccountRefRolesPage = () => {
                     </Box>
                 </Grid>
 
-                <AccountRolesReadOnlyView account={account} workspaceId={workspaceId || ''} accountRefId={accountRefId || ''} />
+                <AccountRolesReadOnlyView account={account} accountRefId={accountRefId || ''} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
