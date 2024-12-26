@@ -11,6 +11,7 @@ import {
     IPassword,
     IClientDevice,
     IAccessToken,
+    IAccountAccountRef,
     IWorkspace,
     IWorkspaceAccountRef
 } from '../../types/account';
@@ -119,6 +120,50 @@ class OwnerService {
         return OwnerApi.deleteClientDeviceToken(accountId, clientDeviceId, clientDeviceTokenId)
     }
 
+    // account refs
+    public static getAccountRef(accountId:string, accountRefId:string):Promise<{data: IAccountAccountRef & {nameId?:string} | null}> {
+        return OwnerApi.getAccountRef(
+            accountId,
+            accountRefId
+        )
+    }
+
+    public static getAccountRefs( accountId:string):Promise<{data: (IAccountAccountRef & {nameId?:string})[]}> {
+        return OwnerApi.getAccountRefs(
+            accountId
+        )
+    }
+
+    public static updateAccountRef(
+        accountId:string,
+        accountRefId:string,
+        disabled: boolean):Promise<{data: IAccountAccountRef}> {
+        return OwnerApi.updateAccountRef(
+            accountId,
+            accountRefId,
+            disabled
+        )
+    }
+
+    public static createAccountRef(
+        accountId:string,
+        nameId:string,
+        disabled: boolean):Promise<{data: IAccountAccountRef}> {
+        return OwnerApi.createAccountRef(
+            accountId,
+            nameId,
+            disabled
+        )
+    }
+
+    public static deleteAccountRef(accountId:string, accountRefId:string):Promise<{data: IAccountAccountRef}> {
+        return OwnerApi.deleteAccountRef(accountId, accountRefId)
+    }
+
+    public static updateAccountRefConfig(accountId:string, accountRefId:string, accountConfigId:string, value:string):Promise<{data: IAccountConfig}> {
+        return OwnerApi.updateAccountAccountRefAccountConfig(accountId, accountRefId, accountConfigId, value)
+    }
+
     // workspaces
     public static updateWorkspace(accountId:string, workspaceId:string, name:string, description:string, disabled:boolean):Promise<{data: IWorkspace}> {
         return OwnerApi.updateWorkspace(accountId, workspaceId, name, description, disabled)
@@ -176,6 +221,10 @@ class OwnerService {
 
     public static deleteWorkspaceAccountRef(accountId:string, workspaceId:string, accountRefId:string):Promise<{data: IWorkspaceAccountRef}> {
         return OwnerApi.deleteWorkspaceAccountRef(accountId, workspaceId, accountRefId)
+    }
+
+    public static updateWorkspaceAccountRefAccountConfig(accountId:string, workspaceId:string, accountRefId:string, accountConfigId:string, value:string):Promise<{data: IAccountConfig}> {
+        return OwnerApi.updateWorkspaceAccountRefAccountConfig(accountId, workspaceId, accountRefId, accountConfigId, value)
     }
 }
 

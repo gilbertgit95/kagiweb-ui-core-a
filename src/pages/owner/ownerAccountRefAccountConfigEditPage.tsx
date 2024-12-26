@@ -7,7 +7,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountAccountConfigEditForm from '../accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigEditForm';
+import AccountAccountConfigEditForm from '../accountAccountRefAccountConfig/accountAccountRefAccountConfigEditForm';
 import OwnerService from './ownerService';
 import AppUtils from '../../utils/appUtils';
 import { IAccount } from '../../types/account';
@@ -16,7 +16,7 @@ import {
 } from 'react-router-dom';
 
 const OwnerAccountConfigEditPage = () => {
-    const { workspaceId, accountRefId, accountConfigId } = useParams()
+    const { accountRefId, accountConfigId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setConfigAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -59,7 +59,7 @@ const OwnerAccountConfigEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace Account Ref Config Update View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Owner Account Ref Config Update View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -73,11 +73,10 @@ const OwnerAccountConfigEditPage = () => {
 
                 <AccountAccountConfigEditForm
                     account={account}
-                    workspaceId={workspaceId || ''}
                     accountRefId={accountRefId || ''}
                     accountConfigId={accountConfigId}
                     getCompleteInfo={OwnerService.reqOwnerCompleteInfo}
-                    updateFunc={OwnerService.updateWorkspaceAccountRefAccountConfig}
+                    updateFunc={OwnerService.updateAccountRefConfig}
                     updated={onUpdated} />
 
                 <Grid item xs={12}>

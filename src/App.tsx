@@ -98,6 +98,18 @@ import AccountAccountConfigsPage from './pages/accountAccountConfig/accountAccou
 import AccountAccountConfigPage from './pages/accountAccountConfig/accountAccountConfigPage';
 import AccountAccountConfigEditPage from './pages/accountAccountConfig/accountAccountConfigEditPage';
 
+import AccountAccountRefsPage from './pages/accountAccountRef/accountAccountRefsPage';
+import AccountAccountRefPage from './pages/accountAccountRef/accountAccountRefPage';
+import AccountAccountRefCreatePage from './pages/accountAccountRef/accountAccountRefCreatePage';
+import AccountAccountRefEditPage from './pages/accountAccountRef/accountAccountRefEditPage';
+
+import AccountAccountRefRolesPage from './pages/accountAccountRefRole/accountAccountRefRolesPage';
+import AccountAccountRefRolesEditPage from './pages/accountAccountRefRole/accountAccountRefRolesEditPage';
+
+import AccountAccountRefAccountConfigsPage from './pages/accountAccountRefAccountConfig/accountAccountRefAccountConfigsPage';
+import AccountAccountRefAccountConfigPage from './pages/accountAccountRefAccountConfig/accountAccountRefAccountConfigPage';
+import AccountAccountRefAccountConfigEditPage from './pages/accountAccountRefAccountConfig/accountAccountRefAccountConfigEditPage';
+
 import AccountWorkspacesPage from './pages/accountWorkspace/accountWorkspacesPage';
 import AccountWorkspacePage from './pages/accountWorkspace/accountWorkspacePage';
 import AccountWorkspaceCreatePage from './pages/accountWorkspace/accountWorkspaceCreatePage';
@@ -145,6 +157,14 @@ import OwnerClientDeviceTokensPage from './pages/owner/ownerClientDeviceTokensPa
 import OwnerClientDeviceTokenPage from './pages/owner/ownerClientDeviceTokenPage';
 import OwnerClientDeviceTokenCreatePage from './pages/owner/ownerClientDeviceTokenCreatePage';
 import OwnerClientDeviceTokenEditPage from './pages/owner/ownerClientDeviceTokenEditPage';
+import OwnerAccountRefsPage from './pages/owner/ownerAccountRefsPage';
+import OwnerAccountRefPage from './pages/owner/ownerAccountRefPage';
+import OwnerAccountRefCreatePage from './pages/owner/ownerAccountRefCreatePage';
+import OwnerAccountRefEditPage from './pages/owner/ownerAccountRefEditPage';
+import OwnerAccountRefRolesPage from './pages/owner/ownerAccountRefRolesPage';
+import OwnerAccountRefAccountConfigsPage from './pages/owner/ownerAccountRefAccountConfigsPage';
+import OwnerAccountRefAccountConfigPage from './pages/owner/ownerAccountRefAccountConfigPage';
+import OwnerAccountRefAccountConfigEditPage from './pages/owner/ownerAccountRefAccountConfigEditPage';
 import OwnerWorkspacesPage from './pages/owner/ownerWorkspacesPage';
 import OwnerWorkspacePage from './pages/owner/ownerWorkspacePage';
 import OwnerWorkspaceCreatePage from './pages/owner/ownerWorkspaceCreatePage';
@@ -224,6 +244,19 @@ appHandler.addRoute({url: 'accounts/create/:accountId/accountInfos', page: Accou
 appHandler.addRoute({url: 'accounts/view/:accountId/accountConfigs', page: AccountAccountConfigsPage }, 'privateRoutes')
 appHandler.addRoute({url: 'accounts/view/:accountId/accountConfigs/:accountConfigId', page: AccountAccountConfigPage }, 'privateRoutes')
 appHandler.addRoute({url: 'accounts/edit/:accountId/accountConfigs/:accountConfigId', page: AccountAccountConfigEditPage }, 'privateRoutes')
+// account account accountRefs
+appHandler.addRoute({url: 'accounts/view/:accountId/accountRefs', page: AccountAccountRefsPage }, 'privateRoutes')
+appHandler.addRoute({url: 'accounts/create/:accountId/accountRefs', page: AccountAccountRefCreatePage }, 'privateRoutes')
+appHandler.addRoute({url: 'accounts/view/:accountId/accountRefs/:accountRefId', page: AccountAccountRefPage }, 'privateRoutes')
+appHandler.addRoute({url: 'accounts/edit/:accountId/accountRefs/:accountRefId', page: AccountAccountRefEditPage }, 'privateRoutes')
+// account account accountRefs account configs
+appHandler.addRoute({url: 'accounts/view/:accountId/accountRefs/:accountRefId/accountConfigs', page: AccountAccountRefAccountConfigsPage }, 'privateRoutes')
+appHandler.addRoute({url: 'accounts/view/:accountId/accountRefs/:accountRefId/accountConfigs/:accountConfigId', page: AccountAccountRefAccountConfigPage }, 'privateRoutes')
+appHandler.addRoute({url: 'accounts/edit/:accountId/accountRefs/:accountRefId/accountConfigs/:accountConfigId', page: AccountAccountRefAccountConfigEditPage }, 'privateRoutes')
+// account account accountRefs roles
+appHandler.addRoute({url: 'accounts/view/:accountId/accountRefs/:accountRefId/roles', page: AccountAccountRefRolesPage }, 'privateRoutes')
+appHandler.addRoute({url: 'accounts/edit/:accountId/accountRefs/:accountRefId/roles', page: AccountAccountRefRolesEditPage }, 'privateRoutes')
+
 // account workspaces
 appHandler.addRoute({url: 'accounts/view/:accountId/workspaces', page: AccountWorkspacesPage }, 'privateRoutes')
 appHandler.addRoute({url: 'accounts/create/:accountId/workspaces', page: AccountWorkspaceCreatePage }, 'privateRoutes')
@@ -278,6 +311,17 @@ appHandler.addRoute({url: 'owner/view/clientDevices/:clientDeviceId/clientDevice
 appHandler.addRoute({url: 'owner/create/clientDevices/:clientDeviceId/clientDeviceTokens', page: OwnerClientDeviceTokenCreatePage }, 'privateRoutes')
 appHandler.addRoute({url: 'owner/view/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: OwnerClientDeviceTokenPage }, 'privateRoutes')
 appHandler.addRoute({url: 'owner/edit/clientDevices/:clientDeviceId/clientDeviceTokens/:clientDeviceTokenId', page: OwnerClientDeviceTokenEditPage }, 'privateRoutes')
+// owner account refs
+appHandler.addRoute({url: 'owner/view/accountRefs', page: OwnerAccountRefsPage }, 'privateRoutes')
+appHandler.addRoute({url: 'owner/create/accountRefs', page: OwnerAccountRefCreatePage }, 'privateRoutes')
+appHandler.addRoute({url: 'owner/view/accountRefs/:accountRefId', page: OwnerAccountRefPage }, 'privateRoutes')
+appHandler.addRoute({url: 'owner/edit/accountRefs/:accountRefId', page: OwnerAccountRefEditPage }, 'privateRoutes')
+// owner account refs account config
+appHandler.addRoute({url: 'owner/view/accountRefs/:accountRefId/accountConfigs', page: OwnerAccountRefAccountConfigsPage }, 'privateRoutes')
+appHandler.addRoute({url: 'owner/view/accountRefs/:accountRefId/accountConfigs/:accountConfigId', page: OwnerAccountRefAccountConfigPage }, 'privateRoutes')
+appHandler.addRoute({url: 'owner/edit/accountRefs/:accountRefId/accountConfigs/:accountConfigId', page: OwnerAccountRefAccountConfigEditPage }, 'privateRoutes')
+// owner account refs roles
+appHandler.addRoute({url: 'owner/view/accountRefs/:accountRefId/roles', page: OwnerAccountRefRolesPage }, 'privateRoutes')
 // owner workspaces
 appHandler.addRoute({url: 'owner/view/workspaces', page: OwnerWorkspacesPage }, 'privateRoutes')
 appHandler.addRoute({url: 'owner/create/workspaces', page: OwnerWorkspaceCreatePage }, 'privateRoutes')
@@ -288,11 +332,11 @@ appHandler.addRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs', page
 appHandler.addRoute({url: 'owner/create/workspaces/:workspaceId/accountRefs', page: OwnerWorkspaceAccountRefCreatePage }, 'privateRoutes')
 appHandler.addRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceAccountRefPage }, 'privateRoutes')
 appHandler.addRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs/:accountRefId', page: OwnerWorkspaceAccountRefEditPage }, 'privateRoutes')
-// owner account config
+// owner wprospace account config
 appHandler.addRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId/accountConfigs', page: OwnerWorkspaceAccountRefAccountConfigsPage }, 'privateRoutes')
 appHandler.addRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId/accountConfigs/:accountConfigId', page: OwnerWorkspaceAccountRefAccountConfigPage }, 'privateRoutes')
 appHandler.addRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs/:accountRefId/accountConfigs/:accountConfigId', page: OwnerWorkspaceAccountRefAccountConfigEditPage }, 'privateRoutes')
-// owner roles
+// owner workspace account roles
 appHandler.addRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId/roles', page: OwnerWorkspaceAccountRefRolesPage }, 'privateRoutes')
 
 

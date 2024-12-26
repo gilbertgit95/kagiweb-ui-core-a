@@ -7,30 +7,25 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountAccountConfigEditForm from '../accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigEditForm';
+import AccountAccountRefCreateForm from '../accountAccountRef/accountAccountRefCreateForm';
 import OwnerService from './ownerService';
-import AppUtils from '../../utils/appUtils';
 import { IAccount } from '../../types/account';
-import {
-  useParams
-} from 'react-router-dom';
 
-const OwnerAccountConfigEditPage = () => {
-    const { workspaceId, accountRefId, accountConfigId } = useParams()
+const OwnerWorkspaceAccountRefCreatePage = () => {
     const navigate = useNavigate()
-    const [infoAndErrors, setConfigAndErrors] = useState<TResponseStatus>({
+    const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
         infoMessages: []
     })
     const [account, setAccount] = useState<IAccount | undefined>()
 
-    const onUpdated = async () => {
+    const onCreated = async () => {
         try {
             const accountResp = await OwnerService.getOwner()
             setAccount(accountResp.data)
-            await AppUtils.loadSigninAccountData()
+
         } catch (err:any) {
-            setConfigAndErrors({
+            setInfoAndErrors({
                 ...{infoMessages: []},
                 ...{errorMessages: [err?.response?.data?.message || '']}
             })
@@ -39,13 +34,12 @@ const OwnerAccountConfigEditPage = () => {
     
     useEffect(() => {
         const init = async () => {
-
             try {
                 const accountResp = await OwnerService.getOwner()
                 setAccount(accountResp.data)
 
             } catch (err:any) {
-                setConfigAndErrors({
+                setInfoAndErrors({
                     ...{infoMessages: []},
                     ...{errorMessages: [err?.response?.data?.message || '']}
                 })
@@ -59,7 +53,7 @@ const OwnerAccountConfigEditPage = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace Account Ref Config Update View'} subtitle={ account?.nameId } />
+                    <PrimaryHeader title={'Owner Account Reference Create View'} subtitle={ account?.nameId } />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -71,14 +65,10 @@ const OwnerAccountConfigEditPage = () => {
                     </Button>
                 </Grid>
 
-                <AccountAccountConfigEditForm
+                <AccountAccountRefCreateForm
                     account={account}
-                    workspaceId={workspaceId || ''}
-                    accountRefId={accountRefId || ''}
-                    accountConfigId={accountConfigId}
-                    getCompleteInfo={OwnerService.reqOwnerCompleteInfo}
-                    updateFunc={OwnerService.updateWorkspaceAccountRefAccountConfig}
-                    updated={onUpdated} />
+                    createFunc={OwnerService.createAccountRef}
+                    created={onCreated} />
 
                 <Grid item xs={12}>
                     <ResponseStatus {...infoAndErrors} />
@@ -88,4 +78,4 @@ const OwnerAccountConfigEditPage = () => {
     )
 }
 
-export default OwnerAccountConfigEditPage
+export default OwnerWorkspaceAccountRefCreatePage
