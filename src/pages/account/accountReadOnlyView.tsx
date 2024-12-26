@@ -73,6 +73,11 @@ const AccountReadOnlyView = ({account}:props) => {
             contents: account?.rolesRefs?.length || 0
         },
         {
+            module: 'Account Reference',
+            moduleRoute: 'accountRefs',
+            contents: account?.accountRefs?.length || 0
+        },
+        {
             module: 'Workspaces',
             moduleRoute: 'workspaces',
             contents: account?.workspaces?.length || 0
