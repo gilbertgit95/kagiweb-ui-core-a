@@ -29,8 +29,8 @@ const AccountAccountRefsReadOnlyView = ({account, getFunc}:IProps) => {
     useEffect(() => {
         const init = async () => {
             if (account && account.accountRefs) {
-                const accountRefs = account.accountRefs
-                const transformedData:IAccountAccountRefRow[] = accountRefs?.map((item:IAccountAccountRef & {nameId?:string, createdAt?: Date, updatedAt?: Date}) => {
+                const accountRefs = await getFunc(account._id || '')
+                const transformedData:IAccountAccountRefRow[] = accountRefs?.data.map((item:IAccountAccountRef & {nameId?:string, createdAt?: Date, updatedAt?: Date}) => {
                     return {
                         _id: item._id || '',
                         accountId: item.accountId,
