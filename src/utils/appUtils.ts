@@ -13,8 +13,12 @@ class AppUtils {
         let ownerInfo:ISignedInUser = {
             accountData: undefined,
             isSignedIn: false,
-            role: undefined,
-            roles: undefined,
+            appRole: undefined,
+            appRoles: undefined,
+            accountRole: undefined,
+            accountRoles: undefined,
+            workspaceRole: undefined,
+            workspaceRoles: undefined,
             features: undefined,
             workspace: undefined,
             workspaces: undefined,
@@ -28,8 +32,8 @@ class AppUtils {
     
             // set app stores data
             ownerInfo.accountData = ownerReqResp?.data?.accountData
-            ownerInfo.role = ownerReqResp?.data?.role
-            ownerInfo.roles = ownerReqResp?.data?.roles
+            ownerInfo.appRole = ownerReqResp?.data?.appRole
+            ownerInfo.appRoles = ownerReqResp?.data?.appRoles
             ownerInfo.features = ownerReqResp?.data?.features
             ownerInfo.workspace = ownerReqResp?.data?.workspace
             ownerInfo.workspaces = ownerReqResp?.data?.workspaces

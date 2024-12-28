@@ -171,8 +171,8 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo
                                 {
                                     (accountConfig.key === 'default-role')? (
                                         <RoleSelectorComponent
-                                            defaultRole={completeInfo.role}
-                                            assignedRoles={completeInfo.roles || []}
+                                            defaultRole={completeInfo.appRole}
+                                            assignedRoles={completeInfo.appRoles || []}
                                             onSelect={(sel) => handleTextFieldChange('value', sel)} />
                                     ): null
                                 }

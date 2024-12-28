@@ -25,8 +25,12 @@ export interface IOptSignedInUser {
     // token?: string|undefined,
     accountData?: IAccount|undefined,
     isSignedIn?: boolean|undefined,
-    role?: IRole|undefined,
-    roles?: IRole[]|undefined,
+    appRole?: IRole,
+    appRoles?: IRole[],
+    accountRole?: IRole,
+    accountRoles?: IRole[],
+    workspaceRole?: IRole,
+    workspaceRoles?: IRole[],
     features?: IFeature[]|undefined,
     workspace?: IWorkspace|undefined,
     workspaces?: IWorkspace[]|undefined,
@@ -39,8 +43,12 @@ const initialState:ISignedInUser = {
     // token: undefined,
     accountData: undefined,
     isSignedIn: undefined,
-    role: undefined,
-    roles: undefined,
+    appRole: undefined,
+    appRoles: undefined,
+    accountRole: undefined,
+    accountRoles: undefined,
+    workspaceRole: undefined,
+    workspaceRoles: undefined,
     features: undefined,
     workspace: undefined,
     workspaces: undefined,
@@ -61,8 +69,12 @@ export const SignedInUser = createSlice({
             // if (action.payload.hasOwnProperty('token')) state.token = action.payload.token
             if (action.payload.hasOwnProperty('accountData')) state.accountData = action.payload.accountData
             if (action.payload.hasOwnProperty('isSignedIn')) state.isSignedIn = action.payload.isSignedIn
-            if (action.payload.hasOwnProperty('role')) state.role = action.payload.role
-            if (action.payload.hasOwnProperty('roles')) state.roles = action.payload.roles
+            if (action.payload.hasOwnProperty('appRole')) state.appRole = action.payload.appRole
+            if (action.payload.hasOwnProperty('appRoles')) state.appRoles = action.payload.appRoles
+            if (action.payload.hasOwnProperty('accountRole')) state.accountRole = action.payload.accountRole
+            if (action.payload.hasOwnProperty('accountRoles')) state.accountRoles = action.payload.accountRoles
+            if (action.payload.hasOwnProperty('workspaceRole')) state.workspaceRole = action.payload.workspaceRole
+            if (action.payload.hasOwnProperty('workspaceRoles')) state.workspaceRoles = action.payload.workspaceRoles
             if (action.payload.hasOwnProperty('features')) state.features = action.payload.features
             if (action.payload.hasOwnProperty('workspace')) state.workspace = action.payload.workspace
             if (action.payload.hasOwnProperty('workspaces')) state.workspaces = action.payload.workspaces
@@ -74,8 +86,12 @@ export const SignedInUser = createSlice({
             // state.token = undefined
             state.accountData = undefined
             state.isSignedIn = false
-            state.role = undefined
-            state.roles = undefined
+            state.appRole = undefined
+            state.appRoles = undefined
+            state.accountRole = undefined
+            state.accountRoles = undefined
+            state.workspaceRole = undefined
+            state.workspaceRoles = undefined
             state.features = undefined
             state.workspace = undefined
             state.workspaces = undefined

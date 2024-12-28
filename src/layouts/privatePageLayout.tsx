@@ -41,8 +41,8 @@ const NavCustomEl = () => {
     const userFeatures = useAppSelector(state => state.signedInAccount?.features) || []
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
 
-    const defaultRole = useAppSelector(state => state.signedInAccount?.role)
-    const assignedRoles = useAppSelector(state => state.signedInAccount?.roles) || []
+    const defaultRole = useAppSelector(state => state.signedInAccount?.appRole)
+    const assignedRoles = useAppSelector(state => state.signedInAccount?.appRoles) || []
 
     const defaultWorkspace = useAppSelector(state => state.signedInAccount?.workspace)
     const ownWorkspaces = useAppSelector(state => state.signedInAccount?.workspaces) || []
