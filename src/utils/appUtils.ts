@@ -62,6 +62,14 @@ class AppUtils {
             features: featuresResp?.data?.items || []
         }))
     }
+
+    static async loadAccountRole() {
+        
+    }
+
+    static async loadWorkspaceRole() {
+
+    }
 }
 
 export default AppUtils
