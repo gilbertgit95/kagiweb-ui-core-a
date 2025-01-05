@@ -1,4 +1,5 @@
 import React from 'react'
+import { IRole } from '../types/role'
 import { IFeature, TFeatureType, TFeatureScope } from '../types/feature'
 import { TLinkGroup, TLink } from '../components/navs/primaryNav'
 import FeatureService from '../pages/feature/featureService'
@@ -119,6 +120,16 @@ class AppComponentsHandler {
                 }
             }
         }
+    }
+
+    public async mergedRolesFeatures(appRole:IRole, accountRole:IRole, workspaceRole:IRole):Promise<IFeature[]> {
+        // get all features
+
+        // merge all feature ref of the roles
+
+        // then mnap the feature refs to actual fettures data
+        
+        return []
     }
 
     public async syncToFeatures():Promise<void> {
