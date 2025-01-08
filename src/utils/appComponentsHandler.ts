@@ -122,14 +122,24 @@ class AppComponentsHandler {
         }
     }
 
-    public async mergedRolesFeatures(appRole:IRole, accountRole:IRole, workspaceRole:IRole):Promise<IFeature[]> {
-        // get all features
+    public async mergedRolesFeatures(featuresMap:{[key:string]:IFeature}, appRole?:IRole, accountRole?:IRole, workspaceRole?:IRole):Promise<IFeature[]> {
+        let result:IFeature[] = []
 
         // merge all feature ref of the roles
+        let featureRefs:Set<string> = new Set([
+            ...(appRole?.featuresRefs?.map(item => item.featureId) || []),
+            ...(accountRole?.featuresRefs?.map(item => item.featureId) || []),
+            ...(workspaceRole?.featuresRefs?.map(item => item.featureId) || [])
+        ])
 
         // then mnap the feature refs to actual fettures data
+        if (featureRefs) {
+            result = Array.from(featureRefs)
+                .map(item => featuresMap[item])
+                .filter(item => Boolean(item))
+        }
         
-        return []
+        return result
     }
 
     public async syncToFeatures():Promise<void> {
