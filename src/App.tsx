@@ -5,6 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PeopleIcon from '@mui/icons-material/People';
+import ComputerIcon from '@mui/icons-material/Computer';
 // import NotesIcon from '@mui/icons-material/Notes';
 // import TaskIcon from '@mui/icons-material/Task';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -45,6 +46,7 @@ import SignedAccountsPage from './pages/auth/signedAccountsPage';
 // private pages
 import PrivateHomePage from './pages/home/privateHomePage';
 // import WorkspaceHomePage from './pages/home/workspacesHomePage';
+import SystemPage from './pages/system/systemPage'
 
 import FeaturesPage from './pages/feature/featuresPage';
 import FeaturePage from './pages/feature/featurePage';
@@ -187,8 +189,13 @@ appHandler.addRoute({url: 'signinOTP', page: SigninOTPPage}, 'publicRoutes')
 appHandler.addRoute({url: 'forgotPassword', page: ForgotPasswordPage}, 'publicRoutes')
 appHandler.addRoute({url: 'resetPassword', page: ResetPasswordPage}, 'publicRoutes')
 appHandler.addRoute({url: 'signedAccounts', page: SignedAccountsPage}, 'publicRoutes')
+
+
 //  for private routes
 appHandler.addRoute({url: 'index', page: PrivateHomePage }, 'privateRoutes')
+
+// system
+appHandler.addRoute({url: 'system', page: SystemPage }, 'privateRoutes')
 
 // feature pages
 appHandler.addRoute({url: 'features', page: FeaturesPage }, 'privateRoutes')
@@ -355,7 +362,8 @@ appHandler.addMainNav({
   links:  [
       { label: 'Features', url: '/features', Icon: FeaturedPlayListIcon },
       { label: 'Roles', url: '/roles', Icon: AdminPanelSettingsIcon },
-      { label: 'Accounts', url: '/accounts', Icon: PeopleIcon }
+      { label: 'Accounts', url: '/accounts', Icon: PeopleIcon },
+      { label: 'System', url: '/system', Icon: ComputerIcon }
   ]
 }, 'privateNavs')
 
