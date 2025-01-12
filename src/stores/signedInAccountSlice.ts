@@ -13,6 +13,7 @@ export interface ISignedInUser {
     accountRoles?: IRole[],
     workspaceRole?: IRole,
     workspaceRoles?: IRole[],
+    mergedFeatures?: IFeature[],
     features?: IFeature[],
     workspace?: IWorkspace,
     workspaces?: IWorkspace[],
@@ -31,6 +32,7 @@ export interface IOptSignedInUser {
     accountRoles?: IRole[],
     workspaceRole?: IRole,
     workspaceRoles?: IRole[],
+    mergedFeatures?: IFeature[],
     features?: IFeature[]|undefined,
     workspace?: IWorkspace|undefined,
     workspaces?: IWorkspace[]|undefined,
@@ -49,6 +51,7 @@ const initialState:ISignedInUser = {
     accountRoles: undefined,
     workspaceRole: undefined,
     workspaceRoles: undefined,
+    mergedFeatures: undefined,
     features: undefined,
     workspace: undefined,
     workspaces: undefined,
@@ -75,6 +78,7 @@ export const SignedInUser = createSlice({
             if (action.payload.hasOwnProperty('accountRoles')) state.accountRoles = action.payload.accountRoles
             if (action.payload.hasOwnProperty('workspaceRole')) state.workspaceRole = action.payload.workspaceRole
             if (action.payload.hasOwnProperty('workspaceRoles')) state.workspaceRoles = action.payload.workspaceRoles
+            if (action.payload.hasOwnProperty('mergedFeatures')) state.mergedFeatures = action.payload.mergedFeatures
             if (action.payload.hasOwnProperty('features')) state.features = action.payload.features
             if (action.payload.hasOwnProperty('workspace')) state.workspace = action.payload.workspace
             if (action.payload.hasOwnProperty('workspaces')) state.workspaces = action.payload.workspaces
@@ -92,6 +96,7 @@ export const SignedInUser = createSlice({
             state.accountRoles = undefined
             state.workspaceRole = undefined
             state.workspaceRoles = undefined
+            state.mergedFeatures = undefined
             state.features = undefined
             state.workspace = undefined
             state.workspaces = undefined
