@@ -1,6 +1,9 @@
-export class SystemService {
-    public static async getSystemInfo():Promise<any> {
-        const sysInfo:any = null
-        return sysInfo
+import SystemApi, { ISystemInfo } from "../../dataEndpoints/apiCoreA/systemApi"
+
+class SystemService {
+    public static getSystemInfo():Promise<{data: ISystemInfo}> {
+        return SystemApi.getSystemInfo()
     }
 }
+
+export default SystemService
