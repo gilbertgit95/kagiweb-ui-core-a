@@ -145,9 +145,8 @@ class AppComponentsHandler {
     public async syncToFeatures():Promise<void> {
         const features:IFeature[] = []
 
-        // prepare and sync private routes
         features.push(...this.routes.privateRoutes.map(item => {
-            return {
+            const obj:IFeature = {
                 description: 'One of the ui private route',
                 name: `PRIVATE ROUTE - ${ item.url }`,
                 scope: 'app' as TFeatureScope,
@@ -155,6 +154,35 @@ class AppComponentsHandler {
                 type: 'ui-route' as TFeatureType,
                 value: `PRIVATE ROUTE - ${ item.url }`
             }
+
+            // prepare and sync private routes
+            // breakdown path
+            const specialWords = new Set<string>(['view', 'edit', 'create'])
+            const subPaths = item.url
+                .split('/')
+                .filter(path => path.indexOf(':') < 0)
+                .filter(path => !specialWords.has(path))
+                .filter(sub => Boolean(sub))
+
+            // assign tags
+            obj.tags = subPaths
+
+            // assign scope
+            const hasAccount = subPaths.indexOf('accounts') > -1
+            const hasWorkspace = subPaths.indexOf('workspaces') > -1
+            // check for accounts and workspace: assign workspace
+            if (hasAccount && hasWorkspace) {
+                obj.scope = 'workspace'
+            // else if check for accounts: assign account
+            } else if (hasAccount) {
+                obj.scope = 'account'
+            // else: asign app
+            } else {
+                obj.scope = 'app'
+            }
+            // console.log(subPaths)
+
+            return obj
         }))
 
         // prepare and sync main drawer
@@ -191,11 +219,27 @@ class AppComponentsHandler {
             return acc
         }, []))
 
+        //  get all existing features
+        // then generate a map of this features
+        const allFeatures = await FeatureService.getAllFeatures()
+        const allFeaturesMap = allFeatures.data.items.reduce<{[key:string]:IFeature}>((acc, item) => {
+            acc[item.value] = item
+            return acc
+        }, {})
+
         // sync all features
         for (const feat of features) {
             try {
-                console.log('saving... ', `${ feat.type }: `, feat.value)
-                await FeatureService.createFeature(feat)
+                const existingFeat:IFeature|undefined = allFeaturesMap[feat.value]
+                
+                if (existingFeat) {
+                    console.log('update: ', `${ feat.type }: `, feat.value)
+                    await FeatureService.updateFeature({...existingFeat, ...feat})
+
+                } else {
+                    console.log('create: ', `${ feat.type }: `, feat.value)
+                    await FeatureService.createFeature(feat)
+                }
             } catch(err) {
                 console.log(err)
             }
