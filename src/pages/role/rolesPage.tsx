@@ -80,21 +80,26 @@ const RolesPage = () => {
         const init = async () => {
             try {
                 if (roles) {
-                    const tarnsformedData:(IRoleRow & IChangeDate)[] = roles.map((item:IRole & IChangeDate) => {
-                        return {
-                            _id: item._id || '',
-                            name: item.name || '--',
-                            scope: item.scope || '--',
-                            description: item.description || '--',
-                            level: String(item.level) || '--',
-                            features: item.absoluteAuthority? 'Everything':  String(item.featuresRefs?.length),
-                            createdAt: item.createdAt,
-                            updatedAt: item.updatedAt
-                        }
+                    const sortedRoles = [...roles].sort((a, b) => {
+                        return a.level - b.level
                     })
+                    const tarnsformedData:(IRoleRow & IChangeDate)[] = sortedRoles
+                        .map((item:IRole & IChangeDate) => {
+                            return {
+                                _id: item._id || '',
+                                name: item.name || '--',
+                                scope: item.scope || '--',
+                                description: item.description || '--',
+                                level: String(item.level) || '--',
+                                features: item.absoluteAuthority? 'Everything':  String(item.featuresRefs?.length),
+                                createdAt: item.createdAt,
+                                updatedAt: item.updatedAt
+                            }
+                        })
                     setData(tarnsformedData)
                 }
             } catch (err) {
+                console.log(err)
             }
         }
         init()

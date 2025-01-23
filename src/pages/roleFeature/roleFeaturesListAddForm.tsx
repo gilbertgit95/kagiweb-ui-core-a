@@ -9,6 +9,7 @@ import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import ListItems from '../../components/lists/listItems';
+import { scopeAccess } from '../../utils/appConstants';
 
 interface IProp {
     role:IRole|undefined,
@@ -41,10 +42,12 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
 
     useEffect(() => {
         if (role?.featuresRefs) {
+
             const roleFeatures:Set<string> = new Set(role.featuresRefs.map(item => item.featureId))
             const tarnsformedData:IFeatureRow[] = features
                 .filter(item => !roleFeatures.has(item._id || ''))
-                .filter(item => item.scope === role.scope)
+                // .filter(item => item.scope === role.scope)
+                .filter(item => scopeAccess[role.scope || '']?.has(item.scope || ''))
                 .map((item) => {
                     return {
                         _id: item._id || '',

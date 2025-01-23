@@ -9,6 +9,7 @@ import { useAppSelector} from '../../stores/appStore';
 import { IFeature } from '../../types/feature';
 import ShortendDescription from '../../components/texts/shortendDescription';
 import TreeDirectory, { objectGenerator, IDir } from '../../components/navs/treeDirectory';
+import { scopeAccess } from '../../utils/appConstants';
 
 interface IProp {
     role:IRole|undefined,
@@ -47,7 +48,8 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
             const roleFeatures:Set<string> = new Set(role.featuresRefs.map(item => item.featureId))
             const tarnsformedData:IFeatureRow[] = features
                 .filter(item => !roleFeatures.has(item._id || ''))
-                .filter(item => item.scope === role.scope)
+                // .filter(item => item.scope === role.scope)
+                .filter(item => scopeAccess[role.scope || '']?.has(item.scope || ''))
                 .map((item) => {
                     return {
                         _id: item._id || '',
@@ -70,7 +72,8 @@ const RoleFeaturesAddForm = ({role, onSelect}:IProp) => {
     useEffect(() => {
         const filterTags = (tagSelection.length > 1? tagSelection.slice(1): []).join('')
         const filteredList = data
-            .filter(item => item.scope === role?.scope)
+            // .filter(item => item.scope === role?.scope)
+            .filter(item => scopeAccess[role?.scope || '']?.has(item.scope || ''))
             .filter(item => {
                 const itemTags = item.tags? item.tags.join(''): ''
                 return itemTags.indexOf(filterTags) === 0
