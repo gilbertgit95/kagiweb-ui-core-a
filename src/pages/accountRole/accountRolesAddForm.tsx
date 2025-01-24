@@ -28,10 +28,9 @@ const AccountRolesAddForm = ({account, onSelect}:IProp) => {
 
     useEffect(() => {
         if (account?.rolesRefs) {
-            const appRolesScope = new Set(['app', 'account', 'workspace'])
             const userRoles:Set<string> = new Set(account?.rolesRefs.map(item => item.roleId))
             const tarnsformedData:IRoleRow[] = roles
-                .filter(item => !userRoles.has(item._id || '') && appRolesScope.has(item.scope || ''))
+                .filter(item => !userRoles.has(item._id || '') && item.scope === 'app')
                 .map((item) => {
                     return {
                         _id: item._id || '',
