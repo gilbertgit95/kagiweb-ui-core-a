@@ -1,6 +1,6 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useEffect} from 'react';
 import _ from 'lodash';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Typography, Divider, Box } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -262,6 +262,7 @@ const NavCustomEl = () => {
 
 
 const PrivatePageLayout = () => {
+    const location = useLocation();
     const userFeatures:IFeature[] = useAppSelector(state => state.signedInAccount?.features) || []
 
     const links:TLinkGroup[] = useMemo(() => {
@@ -279,6 +280,17 @@ const PrivatePageLayout = () => {
         // console.log('use memo was triggered', filteredLinks, userFeatures.length)
         return filteredLinks
     }, [userFeatures])
+
+    useEffect(() => {
+        console.log('private page layout!!!, location has change', location)
+        // check if under accounts path
+        // check if account id exist
+        // set accountRole to you accountRef role
+
+        // check if under workspace path
+        // check if workspace id exists
+        // set workspaceRole to you accountRef worskpace role
+    }, [location])
 
     return (
         <>
