@@ -15,16 +15,18 @@ class AppUtils {
             isSignedIn: false,
             appRole: undefined,
             appRoles: undefined,
-            accountRole: undefined,
-            accountRoles: undefined,
-            workspaceRole: undefined,
-            workspaceRoles: undefined,
-            features: undefined,
+            appFeatures: undefined,
             workspace: undefined,
             workspaces: undefined,
             externalWorkspaces: undefined,
             clientDevice: undefined,
-            accessToken: undefined
+            accessToken: undefined,
+
+            visitedAccount: undefined,
+            visitedAccountRole: undefined,
+            visitedAccountRoles: undefined,
+            visitedAccountWorkspaceRole: undefined,
+            visitedAccountWorkspaceRoles: undefined,
         }
   
         try {
@@ -34,7 +36,7 @@ class AppUtils {
             ownerInfo.accountData = ownerReqResp?.data?.accountData
             ownerInfo.appRole = ownerReqResp?.data?.appRole
             ownerInfo.appRoles = ownerReqResp?.data?.appRoles
-            ownerInfo.features = ownerReqResp?.data?.features
+            ownerInfo.appFeatures = ownerReqResp?.data?.appFeatures
             ownerInfo.workspace = ownerReqResp?.data?.workspace
             ownerInfo.workspaces = ownerReqResp?.data?.workspaces
             ownerInfo.externalWorkspaces = ownerReqResp?.data?.externalWorkspaces

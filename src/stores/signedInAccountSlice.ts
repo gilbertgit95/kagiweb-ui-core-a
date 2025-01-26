@@ -9,17 +9,21 @@ export interface ISignedInUser {
     isSignedIn?: boolean,
     appRole?: IRole,
     appRoles?: IRole[],
-    accountRole?: IRole,
-    accountRoles?: IRole[],
-    workspaceRole?: IRole,
-    workspaceRoles?: IRole[],
-    mergedFeatures?: IFeature[],
-    features?: IFeature[],
     workspace?: IWorkspace,
     workspaces?: IWorkspace[],
     externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[],
     clientDevice?: IClientDevice,
-    accessToken?: IAccessToken
+    accessToken?: IAccessToken,
+
+    visitedAccount?: IAccount,
+    visitedAccountRole?: IRole,
+    visitedAccountRoles?: IRole[],
+    visitedAccountWorkspace?: IWorkspace,
+    visitedAccountWorkspaceRole?: IRole,
+    visitedAccountWorkspaceRoles?: IRole[],
+
+    mergedFeatures?: IFeature[],
+    appFeatures?: IFeature[]
 }
 
 export interface IOptSignedInUser {
@@ -28,17 +32,21 @@ export interface IOptSignedInUser {
     isSignedIn?: boolean|undefined,
     appRole?: IRole,
     appRoles?: IRole[],
-    accountRole?: IRole,
-    accountRoles?: IRole[],
-    workspaceRole?: IRole,
-    workspaceRoles?: IRole[],
-    mergedFeatures?: IFeature[],
-    features?: IFeature[]|undefined,
     workspace?: IWorkspace|undefined,
     workspaces?: IWorkspace[]|undefined,
     externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[]|undefined,
     clientDevice?: IClientDevice|undefined,
     accessToken?: IAccessToken|undefined
+
+    mergedFeatures?: IFeature[],
+    appFeatures?: IFeature[]|undefined,
+
+    visitedAccount?: IAccount,
+    visitedAccountRole?: IRole,
+    visitedAccountRoles?: IRole[],
+    visitedAccountWorkspace?: IWorkspace,
+    visitedAccountWorkspaceRole?: IRole,
+    visitedAccountWorkspaceRoles?: IRole[],
 }
 
 const initialState:ISignedInUser = {
@@ -47,17 +55,21 @@ const initialState:ISignedInUser = {
     isSignedIn: undefined,
     appRole: undefined,
     appRoles: undefined,
-    accountRole: undefined,
-    accountRoles: undefined,
-    workspaceRole: undefined,
-    workspaceRoles: undefined,
-    mergedFeatures: undefined,
-    features: undefined,
     workspace: undefined,
     workspaces: undefined,
     externalWorkspaces: undefined,
     clientDevice: undefined,
-    accessToken: undefined
+    accessToken: undefined,
+
+    mergedFeatures: undefined,
+    appFeatures: undefined,
+
+    visitedAccount: undefined,
+    visitedAccountRole: undefined,
+    visitedAccountRoles: undefined,
+    visitedAccountWorkspace: undefined,
+    visitedAccountWorkspaceRole: undefined,
+    visitedAccountWorkspaceRoles: undefined
 }
 
 export const SignedInUser = createSlice({
@@ -74,17 +86,21 @@ export const SignedInUser = createSlice({
             if (action.payload.hasOwnProperty('isSignedIn')) state.isSignedIn = action.payload.isSignedIn
             if (action.payload.hasOwnProperty('appRole')) state.appRole = action.payload.appRole
             if (action.payload.hasOwnProperty('appRoles')) state.appRoles = action.payload.appRoles
-            if (action.payload.hasOwnProperty('accountRole')) state.accountRole = action.payload.accountRole
-            if (action.payload.hasOwnProperty('accountRoles')) state.accountRoles = action.payload.accountRoles
-            if (action.payload.hasOwnProperty('workspaceRole')) state.workspaceRole = action.payload.workspaceRole
-            if (action.payload.hasOwnProperty('workspaceRoles')) state.workspaceRoles = action.payload.workspaceRoles
-            if (action.payload.hasOwnProperty('mergedFeatures')) state.mergedFeatures = action.payload.mergedFeatures
-            if (action.payload.hasOwnProperty('features')) state.features = action.payload.features
             if (action.payload.hasOwnProperty('workspace')) state.workspace = action.payload.workspace
             if (action.payload.hasOwnProperty('workspaces')) state.workspaces = action.payload.workspaces
             if (action.payload.hasOwnProperty('externalWorkspaces')) state.externalWorkspaces = action.payload.externalWorkspaces
             if (action.payload.hasOwnProperty('clientDevice')) state.clientDevice = action.payload.clientDevice
             if (action.payload.hasOwnProperty('accessToken')) state.accessToken = action.payload.accessToken
+
+            if (action.payload.hasOwnProperty('mergedFeatures')) state.mergedFeatures = action.payload.mergedFeatures
+            if (action.payload.hasOwnProperty('appFeatures')) state.appFeatures = action.payload.appFeatures
+
+            if (action.payload.hasOwnProperty('visitedAccount')) state.visitedAccount = action.payload.visitedAccount
+            if (action.payload.hasOwnProperty('visitedAccountRole')) state.visitedAccountRole = action.payload.visitedAccountRole
+            if (action.payload.hasOwnProperty('visitedAccountRoles')) state.visitedAccountRoles = action.payload.visitedAccountRoles
+            if (action.payload.hasOwnProperty('visitedAccountWorkspace')) state.visitedAccountWorkspace = action.payload.visitedAccountWorkspace
+            if (action.payload.hasOwnProperty('visitedAccountWorkspaceRole')) state.visitedAccountWorkspaceRole = action.payload.visitedAccountWorkspaceRole
+            if (action.payload.hasOwnProperty('visitedAccountWorkspaceRoles')) state.visitedAccountWorkspaceRoles = action.payload.visitedAccountWorkspaceRoles
         },
         clearAccountData: (state) => {
             // state.token = undefined
@@ -92,17 +108,21 @@ export const SignedInUser = createSlice({
             state.isSignedIn = false
             state.appRole = undefined
             state.appRoles = undefined
-            state.accountRole = undefined
-            state.accountRoles = undefined
-            state.workspaceRole = undefined
-            state.workspaceRoles = undefined
-            state.mergedFeatures = undefined
-            state.features = undefined
             state.workspace = undefined
             state.workspaces = undefined
             state.externalWorkspaces = undefined
             state.clientDevice = undefined
             state.accessToken = undefined
+
+            state.mergedFeatures = undefined
+            state.appFeatures = undefined
+
+            state.visitedAccount = undefined
+            state.visitedAccountRole = undefined
+            state.visitedAccountRoles = undefined
+            state.visitedAccountWorkspace = undefined
+            state.visitedAccountWorkspaceRole = undefined
+            state.visitedAccountWorkspaceRoles = undefined
         }
     }
 })

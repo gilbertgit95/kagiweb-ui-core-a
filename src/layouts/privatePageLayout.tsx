@@ -38,7 +38,7 @@ const NavCustomEl = () => {
     const dispatch = useAppDispatch()
     const accountData = useAppSelector(state => state.signedInAccount?.accountData)
     const accessToken:(IAccessToken & {createdAt?:Date, updatedAt?:Date})|undefined = useAppSelector(state => state.signedInAccount?.accessToken)
-    const userFeatures = useAppSelector(state => state.signedInAccount?.features) || []
+    const userFeatures = useAppSelector(state => state.signedInAccount?.appFeatures) || []
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
 
     const defaultRole = useAppSelector(state => state.signedInAccount?.appRole)
@@ -263,7 +263,7 @@ const NavCustomEl = () => {
 
 const PrivatePageLayout = () => {
     const location = useLocation();
-    const userFeatures:IFeature[] = useAppSelector(state => state.signedInAccount?.features) || []
+    const userFeatures:IFeature[] = useAppSelector(state => state.signedInAccount?.appFeatures) || []
 
     const links:TLinkGroup[] = useMemo(() => {
         const filterType = 'ui-main-drawer'
