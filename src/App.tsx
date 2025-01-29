@@ -352,8 +352,6 @@ appHandler.addMainNav({
   label: 'Account Data',
   links:  [
       { label: 'Dashboard', url: '/', Icon: HomeIcon }
-      // { label: 'Notes', url: '/notes', Icon: NotesIcon },
-      // { label: 'Tasks', url: '/tasks', Icon: TaskIcon }
   ]
 }, 'privateNavs')
 
@@ -372,9 +370,7 @@ appHandler.addMainNav({
 appHandler.addMainNav({
   label: 'Default Public Main Nav',
   links:  [
-      { label: 'Dashboard', url: '/' },
-      // { label: 'Contact Us', url: '/contactUs' },
-      // { label: 'About Us', url: '/aboutUs' }
+      { label: 'Dashboard', url: '/' }
   ]
 }, 'publicNavs')
 
@@ -389,20 +385,6 @@ appHandler.addSideNav({
       { label: 'Signed Accounts', url: '/signedAccounts', Icon: GroupIcon }
   ]
 }, 'publicNavs')
-// for private
-// appHandler.addPrivateSideNav({
-//   label: 'Custom Actions',
-//   links: [
-//       { label: 'Test Link', url: '/test-link', Icon: LockOutlinedIcon },
-//       {
-//         label: 'Test Action',
-//         action: () => {
-//           console.log('do some actions!!')
-//         },
-//         Icon: AccountBoxOutlinedIcon
-//       },
-//   ]
-// })
 
 function App() {
   const apptheme = useAppSelector(state => state?.appRefs.appTheme)
