@@ -10,7 +10,24 @@ class AppUtils {
         // const state = store.getState()
         // console.log('global state: ', state)
 
-        let ownerInfo:ISignedInUser = {}
+        let ownerInfo:ISignedInUser = {
+            accountData: undefined,
+            isSignedIn: false,
+            appRole: undefined,
+            appRoles: undefined,
+            appFeatures: undefined,
+            workspace: undefined,
+            workspaces: undefined,
+            externalWorkspaces: undefined,
+            clientDevice: undefined,
+            accessToken: undefined,
+
+            visitedAccount: undefined,
+            visitedAccountRole: undefined,
+            visitedAccountRoles: undefined,
+            visitedAccountWorkspaceRole: undefined,
+            visitedAccountWorkspaceRoles: undefined,
+        }
   
         try {
             const ownerReqResp = await OwnerService.reqOwnerCompleteInfo()
