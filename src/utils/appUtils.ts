@@ -65,13 +65,13 @@ class AppUtils {
         }))
     }
 
-    static async loadAccountRole(rootAccountId:string, accounRef:string) {
+    static async loadAccountRole(accountId:string) {
         // get account ref role/roles of the root account
         // get the mapped features of the active role
         // set this data to the global store
     }
 
-    static async loadWorkspaceRole(rootAccountId:string, workspaceId:string, accountRef:string) {
+    static async loadWorkspaceRole(accountId:string, workspaceId:string) {
         // get account ref role/roles of the root account workspace
         // get the mapped features of the active role
         // set this data to the global store
