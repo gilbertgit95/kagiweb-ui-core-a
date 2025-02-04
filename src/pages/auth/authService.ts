@@ -98,7 +98,7 @@ class AuthService {
     public static async rawGetAccountCompleteInfo(token:string):Promise<ISignedAccount> {
         return (await api.publicReq({
             method: 'GET',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'owner/completeInfo',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'owner/accessInfo',
             headers: {
                 'Authorization': token
             }

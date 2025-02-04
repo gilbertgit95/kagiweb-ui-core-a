@@ -27,7 +27,7 @@ class AccountApi {
     public static getAccountCompleteInfo(id:string) {
         return apiHelper.privateReq({
             method: 'GET',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ id }/completeInfo`
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${ id }/accessInfo`
         })
     }
 

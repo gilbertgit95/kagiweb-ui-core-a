@@ -30,7 +30,21 @@ class OwnerApi {
     public static getOwnerCompleteInfo() {
         return apiHelper.privateReq({
             method: 'GET',
-            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'owner/completeInfo'
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + 'owner/accessInfo'
+        })
+    }
+
+    public static getOwnerAccountAccessInfo(accountId:string) {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/accessInfo/rootAccount/${ accountId }`
+        })
+    }
+
+    public static getOwnerWorkspaceAccessInfo(accountId:string, workspaceId:string) {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/accessInfo/rootAccount/${ accountId }/rootWorkspace/${ workspaceId }`
         })
     }
 
