@@ -6,6 +6,28 @@ import RoleService from '../pages/role/roleService'
 import FeatureService from '../pages/feature/featureService'
 
 class AppUtils {
+    public static parseAccountAndWorspaceId(path?:string):{workspaceId?:string, accountId?:string} {
+        let result:{workspaceId?:string, accountId?:string} = {
+            accountId: undefined,
+            workspaceId: undefined
+        }
+
+        if (path) {
+            const accountSubRoute = path.split('/accounts/')[1]
+            const workspaceSubRoute = path.split('/workspaces/')[1]
+
+            const accountId = accountSubRoute?.split('/')[1]
+            const workspaceId = workspaceSubRoute?.split('/')[0]
+
+            result = {
+                accountId,
+                workspaceId
+            }
+        }
+
+        return result
+    }
+
     static async loadSigninAccountData() {
         // const state = store.getState()
         // console.log('global state: ', state)
@@ -66,15 +88,19 @@ class AppUtils {
     }
 
     static async loadAccountRole(accountId:string) {
-        // get account ref role/roles of the root account
-        // get the mapped features of the active role
-        // set this data to the global store
+        try {
+            await OwnerService.reqAccountAccessInfo(accountId)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     static async loadWorkspaceRole(accountId:string, workspaceId:string) {
-        // get account ref role/roles of the root account workspace
-        // get the mapped features of the active role
-        // set this data to the global store
+        try {
+            await OwnerService.reqAccountWorkspaceInfo(accountId, workspaceId)
+        } catch (err) {
+            console.log(err)
+        }
     }
 }
 

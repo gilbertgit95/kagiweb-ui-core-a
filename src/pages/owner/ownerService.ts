@@ -15,6 +15,8 @@ import {
     IWorkspace,
     IWorkspaceAccountRef
 } from '../../types/account';
+import { IRole } from '../../types/role';
+import { IFeature } from '../../types/feature';
 
 class OwnerService {
     public static getOwner():Promise<{data: IAccount}> {
@@ -27,6 +29,16 @@ class OwnerService {
 
     public static reqOwnerCompleteInfo():Promise<{data: ISignedInUser}> {
         return OwnerApi.getOwnerCompleteInfo()
+    }
+
+    // get account access info
+    public static reqAccountAccessInfo(accountId:string):Promise<{data: IRole & {accountFeatures: IFeature[]}}> {
+        return OwnerApi.getOwnerAccountAccessInfo(accountId)
+    }
+
+    // get account workspace info
+    public static reqAccountWorkspaceInfo(accountId:string, workspaceId:string):Promise<{data: IWorkspace[]}> {
+        return OwnerApi.getOwnerWorkspaceAccessInfo(accountId, workspaceId)
     }
 
     // account info

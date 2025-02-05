@@ -284,17 +284,13 @@ const PrivatePageLayout = () => {
     useEffect(() => {
         const loadData = async () => {
             console.log('private page layout!!!, location has change', location)
-            // check if under accounts path
-            // check if account id exist
-            // set accountRole to you accountRef role
-            const accountId:string|null = null
+
+            const {accountId, workspaceId} = AppUtils.parseAccountAndWorspaceId(location.pathname)
             if (accountId) await AppUtils.loadAccountRole(accountId)
 
-            // check if under workspace path
-            // check if workspace id exists
-            // set workspaceRole to you accountRef worskpace role
-            const workspaceId:string|null = null
             if (accountId && workspaceId) await AppUtils.loadWorkspaceRole(accountId, workspaceId)
+
+            console.log('accessInfo: ', accountId, workspaceId)
         }
 
         loadData()
