@@ -1,5 +1,5 @@
 import OwnerApi from '../../dataEndpoints/apiCoreA/ownerApi'
-import { ISignedInUser } from '../../stores/signedInAccountSlice'
+import { IAccessInfo } from '../../stores/signedInAccountSlice'
 import {
     IAccount,
     IAccountUpdate,
@@ -27,17 +27,17 @@ class OwnerService {
         return OwnerApi.updateOwner(account)
     }
 
-    public static reqOwnerCompleteInfo():Promise<{data: ISignedInUser}> {
+    public static reqOwnerCompleteInfo():Promise<{data: IAccessInfo}> {
         return OwnerApi.getOwnerCompleteInfo()
     }
 
     // get account access info
-    public static reqAccountAccessInfo(accountId:string):Promise<{data: IRole & {accountFeatures: IFeature[]}}> {
+    public static reqAccountAccessInfo(accountId:string):Promise<{data: IAccessInfo}> {
         return OwnerApi.getOwnerAccountAccessInfo(accountId)
     }
 
-    // get account workspace info
-    public static reqAccountWorkspaceInfo(accountId:string, workspaceId:string):Promise<{data: IWorkspace[]}> {
+    // get account workspace access info
+    public static reqAccountWorkspaceAccessInfo(accountId:string, workspaceId:string):Promise<{data: IAccessInfo}> {
         return OwnerApi.getOwnerWorkspaceAccessInfo(accountId, workspaceId)
     }
 

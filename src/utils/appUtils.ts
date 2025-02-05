@@ -1,5 +1,5 @@
 import store from '../stores/appStore'
-import { setAccountData, ISignedInUser } from '../stores/signedInAccountSlice'
+import { setAccountData, IAccessInfo } from '../stores/signedInAccountSlice'
 import { setAppRefs } from '../stores/appRefsSlice';
 import OwnerService from '../pages/owner/ownerService'
 import RoleService from '../pages/role/roleService'
@@ -32,7 +32,7 @@ class AppUtils {
         // const state = store.getState()
         // console.log('global state: ', state)
 
-        let ownerInfo:ISignedInUser = {
+        let ownerInfo:IAccessInfo = {
             accountData: undefined,
             isSignedIn: false,
             appRole: undefined,
@@ -46,9 +46,13 @@ class AppUtils {
 
             visitedAccount: undefined,
             visitedAccountRole: undefined,
-            visitedAccountRoles: undefined,
+            visitedAccountFeatures: undefined,
+            // visitedAccountRoles: undefined,
+
+            visitedAccountWorkspace: undefined,
             visitedAccountWorkspaceRole: undefined,
-            visitedAccountWorkspaceRoles: undefined,
+            visitedAccountWorkspaceFeatures: undefined,
+            // visitedAccountWorkspaceRoles: undefined,
         }
   
         try {
@@ -87,19 +91,51 @@ class AppUtils {
         }))
     }
 
-    static async loadAccountRole(accountId:string) {
+    static async loadAccountAccessInfo(accountId:string, reset=false) {
+
+        if (reset) {
+            store.dispatch(setAccountData({
+                visitedAccount: undefined,
+                visitedAccountRole: undefined,
+                visitedAccountFeatures: undefined
+            }))
+            return
+        }
+
         try {
-            await OwnerService.reqAccountAccessInfo(accountId)
+            const accessInfo = await OwnerService.reqAccountAccessInfo(accountId)
+            store.dispatch(setAccountData({...accessInfo.data}))
         } catch (err) {
             console.log(err)
+            store.dispatch(setAccountData({
+                visitedAccount: undefined,
+                visitedAccountRole: undefined,
+                visitedAccountFeatures: undefined
+            }))
         }
     }
 
-    static async loadWorkspaceRole(accountId:string, workspaceId:string) {
+    static async loadAccountWorkspaceAccessInfo(accountId:string, workspaceId:string, reset=false) {
+
+        if (reset) {
+            store.dispatch(setAccountData({
+                visitedAccountWorkspace: undefined,
+                visitedAccountWorkspaceRole: undefined,
+                visitedAccountWorkspaceFeatures: undefined
+            }))
+            return
+        }
+
         try {
-            await OwnerService.reqAccountWorkspaceInfo(accountId, workspaceId)
+            const accessInfo = await OwnerService.reqAccountWorkspaceAccessInfo(accountId, workspaceId)
+            store.dispatch(setAccountData({...accessInfo.data}))
         } catch (err) {
             console.log(err)
+            store.dispatch(setAccountData({
+                visitedAccount: undefined,
+                visitedAccountRole: undefined,
+                visitedAccountFeatures: undefined
+            }))
         }
     }
 }

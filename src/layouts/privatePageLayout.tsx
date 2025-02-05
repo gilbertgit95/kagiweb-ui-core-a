@@ -286,9 +286,17 @@ const PrivatePageLayout = () => {
             console.log('private page layout!!!, location has change', location)
 
             const {accountId, workspaceId} = AppUtils.parseAccountAndWorspaceId(location.pathname)
-            if (accountId) await AppUtils.loadAccountRole(accountId)
+            if (accountId) {
+                await AppUtils.loadAccountAccessInfo(accountId)
+            } else {
+                await AppUtils.loadAccountAccessInfo(accountId || '', true)
+            }
 
-            if (accountId && workspaceId) await AppUtils.loadWorkspaceRole(accountId, workspaceId)
+            if (accountId && workspaceId) {
+                await AppUtils.loadAccountWorkspaceAccessInfo(accountId, workspaceId)
+            } else {
+                await AppUtils.loadAccountWorkspaceAccessInfo(accountId || '', workspaceId || '', true)
+            }
 
             console.log('accessInfo: ', accountId, workspaceId)
         }

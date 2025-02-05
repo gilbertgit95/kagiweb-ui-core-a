@@ -3,7 +3,7 @@ import { IFeature } from "../types/feature";
 import { IRole } from "../types/role";
 import { IAccount, IWorkspace, IAccessToken, IClientDevice } from "../types/account";
 
-export interface ISignedInUser {
+export interface IAccessInfo {
     // token?: string,
     accountData?: IAccount,
     isSignedIn?: boolean,
@@ -19,18 +19,18 @@ export interface ISignedInUser {
 
     visitedAccount?: IAccount,
     visitedAccountRole?: IRole,
-    visitedAccountRoles?: IRole[],
+    // visitedAccountRoles?: IRole[],
     visitedAccountFeatures?: IFeature[],
 
     visitedAccountWorkspace?: IWorkspace,
     visitedAccountWorkspaceRole?: IRole,
-    visitedAccountWorkspaceRoles?: IRole[],
+    // visitedAccountWorkspaceRoles?: IRole[],
     visitedAccountWorkspaceFeatures?: IFeature[],
 
     mergedFeatures?: IFeature[]
 }
 
-export interface IOptSignedInUser {
+export interface IOptAccessInfo {
     // token?: string|undefined,
     accountData?: IAccount|undefined,
     isSignedIn?: boolean|undefined,
@@ -46,18 +46,18 @@ export interface IOptSignedInUser {
 
     visitedAccount?: IAccount,
     visitedAccountRole?: IRole,
-    visitedAccountRoles?: IRole[],
+    // visitedAccountRoles?: IRole[],
     visitedAccountFeatures?: IFeature[],
 
     visitedAccountWorkspace?: IWorkspace,
     visitedAccountWorkspaceRole?: IRole,
-    visitedAccountWorkspaceRoles?: IRole[],
+    // visitedAccountWorkspaceRoles?: IRole[],
     visitedAccountWorkspaceFeatures?: IFeature[],
 
     mergedFeatures?: IFeature[]
 }
 
-const initialState:ISignedInUser = {
+const initialState:IAccessInfo = {
     // token: undefined,
     accountData: undefined,
     isSignedIn: undefined,
@@ -73,25 +73,25 @@ const initialState:ISignedInUser = {
 
     visitedAccount: undefined,
     visitedAccountRole: undefined,
-    visitedAccountRoles: undefined,
+    // visitedAccountRoles: undefined,
     visitedAccountFeatures: undefined,
 
     visitedAccountWorkspace: undefined,
     visitedAccountWorkspaceRole: undefined,
-    visitedAccountWorkspaceRoles: undefined,
+    // visitedAccountWorkspaceRoles: undefined,
     visitedAccountWorkspaceFeatures: undefined,
 
     mergedFeatures: undefined
 }
 
-export const SignedInUser = createSlice({
+export const AccessInfo = createSlice({
     name: 'signedInAccount',
     initialState,
 
     reducers: {
         setAccountData: (
             state,
-            action: PayloadAction<IOptSignedInUser>
+            action: PayloadAction<IOptAccessInfo>
         ) => {
             // if (action.payload.hasOwnProperty('token')) state.token = action.payload.token
             if (action.payload.hasOwnProperty('accountData')) state.accountData = action.payload.accountData
@@ -108,12 +108,12 @@ export const SignedInUser = createSlice({
 
             if (action.payload.hasOwnProperty('visitedAccount')) state.visitedAccount = action.payload.visitedAccount
             if (action.payload.hasOwnProperty('visitedAccountRole')) state.visitedAccountRole = action.payload.visitedAccountRole
-            if (action.payload.hasOwnProperty('visitedAccountRoles')) state.visitedAccountRoles = action.payload.visitedAccountRoles
+            // if (action.payload.hasOwnProperty('visitedAccountRoles')) state.visitedAccountRoles = action.payload.visitedAccountRoles
             if (action.payload.hasOwnProperty('visitedAccountFeatures')) state.visitedAccountFeatures = action.payload.visitedAccountFeatures
     
             if (action.payload.hasOwnProperty('visitedAccountWorkspace')) state.visitedAccountWorkspace = action.payload.visitedAccountWorkspace
             if (action.payload.hasOwnProperty('visitedAccountWorkspaceRole')) state.visitedAccountWorkspaceRole = action.payload.visitedAccountWorkspaceRole
-            if (action.payload.hasOwnProperty('visitedAccountWorkspaceRoles')) state.visitedAccountWorkspaceRoles = action.payload.visitedAccountWorkspaceRoles
+            // if (action.payload.hasOwnProperty('visitedAccountWorkspaceRoles')) state.visitedAccountWorkspaceRoles = action.payload.visitedAccountWorkspaceRoles
             if (action.payload.hasOwnProperty('visitedAccountWorkspaceFeatures')) state.visitedAccountWorkspaceFeatures = action.payload.visitedAccountWorkspaceFeatures
 
             if (action.payload.hasOwnProperty('mergedFeatures')) state.mergedFeatures = action.payload.mergedFeatures
@@ -135,16 +135,16 @@ export const SignedInUser = createSlice({
 
             state.visitedAccount = undefined
             state.visitedAccountRole = undefined
-            state.visitedAccountRoles = undefined
+            // state.visitedAccountRoles = undefined
             state.visitedAccountFeatures = undefined
 
             state.visitedAccountWorkspace = undefined
             state.visitedAccountWorkspaceRole = undefined
-            state.visitedAccountWorkspaceRoles = undefined
+            // state.visitedAccountWorkspaceRoles = undefined
             state.visitedAccountWorkspaceFeatures = undefined
         }
     }
 })
 
-export const { setAccountData, clearAccountData } = SignedInUser.actions
-export default SignedInUser.reducer
+export const { setAccountData, clearAccountData } = AccessInfo.actions
+export default AccessInfo.reducer

@@ -9,12 +9,12 @@ import WorkspaceSelectorComponent from './workspaceSelectorComponent';
 import RoleSelectorComponent from './roleSelectorComponent';
 import AccountAccountConfigService from './accountAccountConfigService';
 import { IAccount, IAccountConfig, TAccountConfigType, accountConfigTypes } from '../../types/account';
-import { ISignedInUser } from '../../stores/signedInAccountSlice';
+import { IAccessInfo } from '../../stores/signedInAccountSlice';
 
 interface props {
     account?: IAccount,
     accountConfigId?: string,
-    getCompleteInfo: (accountId:string) => Promise<{data:ISignedInUser}>,
+    getCompleteInfo: (accountId:string) => Promise<{data:IAccessInfo}>,
     updateFunc: (accountId:string, accountConfigId:string, value:string) => Promise<{data:IAccountConfig}>,
     updated?: (accountId:string|undefined, accountConfig:IAccountConfig|undefined) => void
 }
@@ -30,7 +30,7 @@ const AccountAccountConfigEditForm = ({account, accountConfigId, getCompleteInfo
         errorMessages: [],
         infoMessages: []
     })
-    const [completeInfo, setCompleteInfo] = useState<ISignedInUser>({})
+    const [completeInfo, setCompleteInfo] = useState<IAccessInfo>({})
 
     const handleTextFieldChange = (field:string, value:string) => {
         setUpdatedAccountConfig({...updatedAccountConfig, ...{[field]: value}})
