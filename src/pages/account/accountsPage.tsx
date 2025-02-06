@@ -16,6 +16,8 @@ import { useSearchParams } from 'react-router-dom';
 import AccountService from './accountService';
 import { IAccount } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
+import { useAppSelector} from '../../stores/appStore';
+import { link } from 'fs';
 
 interface IAccountRow {
     _id: string,
@@ -25,7 +27,8 @@ interface IAccountRow {
     email: string,
     phone: string,
     verified: boolean,
-    disabled: boolean
+    disabled: boolean,
+    isOwner: boolean
 }
 
 const colDef:IColDef[] = [
@@ -81,10 +84,18 @@ const colDef:IColDef[] = [
         header: '',
         field: '',
         Component: (props:IAccountRow) => {
+            let link = `/accounts/view/${ props._id }`
+            let text = props.accountType === 'user'? 'view user': 'view organization'
+
+            if (props.isOwner) {
+                link = '/owner/view'
+                text = 'your self'
+
+            }
             return (
                 <SimpleLink
-                    link={`/accounts/view/${ props._id }`}
-                    text={ props.accountType === 'user'? 'view user': 'view organization' } />
+                    link={link}
+                    text={text} />
             )
         }
     }
@@ -93,6 +104,7 @@ const colDef:IColDef[] = [
 const Accounts = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
+    const accountData = useAppSelector(state => state.signedInAccount.accountData)
     const pageQuery = parseInt(searchParams.get('page') || '') || appComponentsHandler.appConfig.defaultPage;
     const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || appComponentsHandler.appConfig.defaultPageSize;
 
@@ -123,6 +135,7 @@ const Accounts = () => {
                         phone: AccountService.getContactInfo(item, 'mobile-number')?.value || '--',
                         verified: Boolean(item.verified),
                         disabled: Boolean(item.disabled),
+                        isOwner: item._id === accountData?._id,
                         createdAt: item.createdAt,
                         updatedAt: item.updatedAt
                     }
@@ -174,6 +187,7 @@ const Accounts = () => {
                             phone: AccountService.getContactInfo(item, 'mobile-number')?.value || '--',
                             verified: Boolean(item.verified),
                             disabled: Boolean(item.disabled),
+                            isOwner: item._id === accountData?._id,
                             createdAt: item.createdAt,
                             updatedAt: item.updatedAt
                         }

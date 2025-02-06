@@ -4,8 +4,26 @@ import { setAppRefs } from '../stores/appRefsSlice';
 import OwnerService from '../pages/owner/ownerService'
 import RoleService from '../pages/role/roleService'
 import FeatureService from '../pages/feature/featureService'
+import { IFeature } from '../types/feature';
 
 class AppUtils {
+    public static getUniqueMappedFeatures(appFeatures?:IFeature[], accountFeatures?:IFeature[], accountWorkspaceFeatures?:IFeature[]):IFeature[] {
+        let result:IFeature[] = []
+        const featureIdSet = new Set<string|undefined>([])
+        const features = [...appFeatures || [], ...accountFeatures || [], ...accountWorkspaceFeatures || []]
+
+        if (features) {
+            result = features
+                .filter(item => Boolean(item))
+                .filter(item => {
+                    if (featureIdSet.has(item._id)) return false
+                    featureIdSet.add(item._id)
+                    return true
+                })
+        }
+
+        return result
+    }
     public static parseAccountAndWorspaceId(path?:string):{workspaceId?:string, accountId?:string} {
         let result:{workspaceId?:string, accountId?:string} = {
             accountId: undefined,
@@ -53,6 +71,7 @@ class AppUtils {
             visitedAccountWorkspaceRole: undefined,
             visitedAccountWorkspaceFeatures: undefined,
             // visitedAccountWorkspaceRoles: undefined,
+            mergedFeatures: undefined
         }
   
         try {
@@ -69,6 +88,7 @@ class AppUtils {
             ownerInfo.clientDevice = ownerReqResp?.data?.clientDevice
             ownerInfo.accessToken = ownerReqResp?.data?.accessToken
             ownerInfo.isSignedIn = true
+            ownerInfo.mergedFeatures = ownerReqResp?.data?.appFeatures || []
 
             // set token and owner to the app storage
             store.dispatch(setAccountData(ownerInfo))
@@ -92,49 +112,97 @@ class AppUtils {
     }
 
     static async loadAccountAccessInfo(accountId:string, reset=false) {
+        const signedInAccount = store.getState().signedInAccount
 
         if (reset) {
             store.dispatch(setAccountData({
                 visitedAccount: undefined,
                 visitedAccountRole: undefined,
-                visitedAccountFeatures: undefined
+                visitedAccountFeatures: undefined,
+                mergedFeatures: AppUtils.getUniqueMappedFeatures(
+                    signedInAccount.appFeatures,
+                    undefined,
+                    undefined
+                )
             }))
             return
         }
 
+        const visitedAccount = signedInAccount.visitedAccount
+        if (visitedAccount?._id === accountId) return
+
         try {
             const accessInfo = await OwnerService.reqAccountAccessInfo(accountId)
-            store.dispatch(setAccountData({...accessInfo.data}))
+            store.dispatch(setAccountData({
+                ...accessInfo.data,
+                ...{
+                    mergedFeatures: AppUtils.getUniqueMappedFeatures(
+                        signedInAccount.appFeatures,
+                        accessInfo.data.visitedAccountFeatures,
+                        undefined
+                    )
+                }
+            }))
+
         } catch (err) {
             console.log(err)
             store.dispatch(setAccountData({
                 visitedAccount: undefined,
                 visitedAccountRole: undefined,
-                visitedAccountFeatures: undefined
+                visitedAccountFeatures: undefined,
+                mergedFeatures: AppUtils.getUniqueMappedFeatures(
+                    signedInAccount.appFeatures,
+                    undefined,
+                    undefined
+                )
             }))
         }
     }
 
     static async loadAccountWorkspaceAccessInfo(accountId:string, workspaceId:string, reset=false) {
+        const signedInAccount = store.getState().signedInAccount
 
         if (reset) {
             store.dispatch(setAccountData({
                 visitedAccountWorkspace: undefined,
                 visitedAccountWorkspaceRole: undefined,
-                visitedAccountWorkspaceFeatures: undefined
+                visitedAccountWorkspaceFeatures: undefined,
+                mergedFeatures: AppUtils.getUniqueMappedFeatures(
+                    signedInAccount.appFeatures,
+                    signedInAccount.visitedAccountFeatures,
+                    undefined
+                )
             }))
             return
         }
 
+        const visitedAccount = signedInAccount.visitedAccount
+        const visitedAccountWorkspace = signedInAccount.visitedAccountWorkspace
+        if (visitedAccount?._id === accountId && visitedAccountWorkspace?._id === workspaceId) return
+
         try {
             const accessInfo = await OwnerService.reqAccountWorkspaceAccessInfo(accountId, workspaceId)
-            store.dispatch(setAccountData({...accessInfo.data}))
+            store.dispatch(setAccountData({
+                ...accessInfo.data,
+                ...{
+                    mergedFeatures: AppUtils.getUniqueMappedFeatures(
+                        signedInAccount.appFeatures,
+                        signedInAccount.visitedAccountFeatures,
+                        accessInfo.data.visitedAccountWorkspaceFeatures
+                    )
+                }
+            }))
         } catch (err) {
             console.log(err)
             store.dispatch(setAccountData({
                 visitedAccount: undefined,
                 visitedAccountRole: undefined,
-                visitedAccountFeatures: undefined
+                visitedAccountFeatures: undefined,
+                mergedFeatures: AppUtils.getUniqueMappedFeatures(
+                    signedInAccount.appFeatures,
+                    signedInAccount.visitedAccountFeatures,
+                    undefined
+                )
             }))
         }
     }

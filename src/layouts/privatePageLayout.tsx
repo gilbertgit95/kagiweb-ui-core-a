@@ -283,7 +283,7 @@ const PrivatePageLayout = () => {
 
     useEffect(() => {
         const loadData = async () => {
-            console.log('private page layout!!!, location has change', location)
+            // console.log('private page layout!!!, location has change', location)
 
             const {accountId, workspaceId} = AppUtils.parseAccountAndWorspaceId(location.pathname)
             if (accountId) {
@@ -298,7 +298,7 @@ const PrivatePageLayout = () => {
                 await AppUtils.loadAccountWorkspaceAccessInfo(accountId || '', workspaceId || '', true)
             }
 
-            console.log('accessInfo: ', accountId, workspaceId)
+            // console.log('accessInfo: ', accountId, workspaceId)
         }
 
         loadData()
