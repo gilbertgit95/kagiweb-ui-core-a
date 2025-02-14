@@ -13,7 +13,7 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
-import AccountService from './accountService';
+import AccountService from './notificationService';
 import { IAccount } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 import { useAppSelector} from '../../stores/appStore';

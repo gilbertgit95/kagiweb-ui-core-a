@@ -7,7 +7,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountEditForm from './accountEditForm';
-import AccountService from './accountService';
+import AccountService from './notificationService';
 import {
   useParams
 } from 'react-router-dom';

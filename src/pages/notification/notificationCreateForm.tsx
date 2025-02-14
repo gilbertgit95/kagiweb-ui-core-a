@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import AccountService from './accountService';
+import AccountService from './notificationService';
 import { IAccount } from '../../types/account';
 
 export const AccountCreateForm = () => {
