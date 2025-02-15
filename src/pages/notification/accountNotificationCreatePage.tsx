@@ -5,7 +5,7 @@ import { Container, Button, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountCreateForm from './accountCreateForm';
+import AccountCreateForm from './notificationCreateForm';
 
 export const AccountCreatePage = () => {
     const navigate = useNavigate()

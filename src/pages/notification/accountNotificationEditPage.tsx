@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import AccountEditForm from './accountEditForm';
+import AccountEditForm from './notificationEditForm';
 import AccountService from './notificationService';
 import {
   useParams
