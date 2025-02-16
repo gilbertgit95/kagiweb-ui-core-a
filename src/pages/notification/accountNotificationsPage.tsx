@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -13,97 +13,55 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import { useSearchParams } from 'react-router-dom';
 
-import AccountService from './notificationService';
-import { IAccount } from '../../types/account';
+import NotificationService from './notificationService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 import { useAppSelector} from '../../stores/appStore';
 import { link } from 'fs';
+import { INotification } from '../../types/notification';
 
-interface IAccountRow {
+interface INotificationRow {
     _id: string,
-    accountType: string,
-    nameId: string,
-    // name: string,
-    email: string,
-    phone: string,
-    verified: boolean,
-    disabled: boolean,
-    isOwner: boolean
+    type: string,
+    title: string,
+    message: string,
+    link: string,
+    seen: boolean,
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const colDef:IColDef[] = [
     {
-        header: 'Account Type',
-        field: 'accountType',
-        Component: (props:IAccountRow) => {
-            return props.accountType === 'user'? <PersonIcon />: <ScatterPlotIcon />
-        }
-    },
-    {
-        header: 'NameID',
-        field: 'nameId',
-        Component: undefined // react Component or undefined
-    },
-    // {
-    //     header: 'Name',
-    //     field: 'name',
-    //     Component: undefined // react Component or undefined
-    // },
-    {
-        header: 'Email',
-        field: 'email',
-        Component: undefined // react Component or undefined
-    },
-    {
-        header: 'Phone',
-        field: 'phone',
-        Component: undefined // react Component or undefined
-    },
-    {
-        header: 'Verified',
-        field: 'verified',
-        Component: (props:IAccountRow) => {
-            return <Check value={props.verified} />
-        }
-    },
-    {
-        header: 'Disabled',
-        field: 'disabled',
-        Component: (props:IAccountRow) => {
-            return <Check value={props.disabled} />
+        header: 'Seen',
+        field: 'seen',
+        Component: (props:INotificationRow) => {
+            return <Check value={props.seen} />
         }
     },
     {
         header: 'Changed',
         field: '',
-        Component: (props:IAccountRow & IChangeDate) => {
+        Component: (props:INotificationRow & IChangeDate) => {
             return <DateChanges {...props} />
         }
     },
     {
         header: '',
         field: '',
-        Component: (props:IAccountRow) => {
-            let link = `/accounts/view/${ props._id }`
-            let text = props.accountType === 'user'? 'view user': 'view organization'
-
-            if (props.isOwner) {
-                link = '/owner/view'
-                text = 'your self'
-
-            }
-            return (
+        Component: (props:INotificationRow) => {
+            return props.link? (
                 <SimpleLink
-                    link={link}
-                    text={text} />
-            )
+                    link={props.link}
+                    text={'link'} />
+            ): null
         }
     }
 ]
 
-const Accounts = () => {
+const Notifications = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
+    const { accountId } = useParams()
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
     const pageQuery = parseInt(searchParams.get('page') || '') || appComponentsHandler.appConfig.defaultPage;
     const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || appComponentsHandler.appConfig.defaultPageSize;
@@ -114,28 +72,26 @@ const Accounts = () => {
         totalItems: 0,
         pageSizeList: appComponentsHandler.appConfig.defaultPageSizeList
     })
-    const [data, setData] = useState<IAccountRow[]>([])
+    const [data, setData] = useState<INotificationRow[]>([])
 
     const search = async (page:number, pageSize:number) => {
         // console.log('pagination: ', pagination)
         window.history.replaceState(null, '', `?page=${ page + 1 }&pageSize=${ pageSize }`)
         try {
-            const resp = await AccountService.getAccounts({
+            if (!accountId) return
+            const resp = await NotificationService.getAccountNotifications(accountId,{
                 page: page + 1,
                 pageSize: pageSize
             })
             if (resp.data && resp.data.items) {
-                const tarnsformedData:(IAccountRow & IChangeDate)[] = resp.data.items.map((item:IAccount & IChangeDate) => {
+                const tarnsformedData:(INotificationRow & IChangeDate)[] = resp.data.items.map((item:INotification & IChangeDate) => {
                     return {
                         _id: item._id || '',
-                        accountType: item.accountType || '--',
-                        nameId: item.nameId,
-                        // name: AccountService.getUserInfo(item, 'Fullname')?.value || '--',
-                        email: AccountService.getContactInfo(item, 'email-address')?.value || '--',
-                        phone: AccountService.getContactInfo(item, 'mobile-number')?.value || '--',
-                        verified: Boolean(item.verified),
-                        disabled: Boolean(item.disabled),
-                        isOwner: item._id === accountData?._id,
+                        type: item.type || '--',
+                        title: item.title || '--',
+                        message:  item.message || '--',
+                        link:  item.link || '--',
+                        seen: Boolean(item.seen),
                         createdAt: item.createdAt,
                         updatedAt: item.updatedAt
                     }
@@ -171,23 +127,20 @@ const Accounts = () => {
         const init = async () => {
             window.history.replaceState(null, '', `?page=${ pageQuery }&pageSize=${ pageSizeQuery }`)
             try {
-                const resp = await AccountService.getAccounts({
+                if (!accountId) return
+                const resp = await NotificationService.getAccountNotifications(accountId, {
                     page: pageQuery,
                     pageSize: pageSizeQuery
                 })
                 if (resp.data && resp.data.items) {
-                    const tarnsformedData:(IAccountRow & IChangeDate)[] = resp.data.items.map((item:IAccount & IChangeDate) => {
+                    const tarnsformedData:(INotificationRow & IChangeDate)[] = resp.data.items.map((item:INotification & IChangeDate) => {
                         return {
                             _id: item._id || '',
-
-                            accountType: item.accountType || '--',
-                            nameId: item.nameId,
-                            // name: AccountService.getUserInfo(item, 'Fullname')?.value || '--',
-                            email: AccountService.getContactInfo(item, 'email-address')?.value || '--',
-                            phone: AccountService.getContactInfo(item, 'mobile-number')?.value || '--',
-                            verified: Boolean(item.verified),
-                            disabled: Boolean(item.disabled),
-                            isOwner: item._id === accountData?._id,
+                            type: item.type || '--',
+                            title: item.title || '--',
+                            message:  item.message || '--',
+                            link:  item.link || '--',
+                            seen: Boolean(item.seen),
                             createdAt: item.createdAt,
                             updatedAt: item.updatedAt
                         }
@@ -204,7 +157,7 @@ const Accounts = () => {
             } catch (err) {
             }
         }
-        console.log('initiate accounts page')
+        console.log('initiate notifications page')
         init()
     }, [pageQuery, pageSizeQuery])
 
@@ -213,7 +166,7 @@ const Accounts = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account List View'} />
+                    <PrimaryHeader title={'Account Notifications View'} />
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
@@ -225,7 +178,7 @@ const Accounts = () => {
                         <Button
                             variant="text"
                             startIcon={<PersonAddIcon />}
-                            onClick={() => navigate('/accounts/create')}>
+                            onClick={() => navigate('/accounts/notifications')}>
                             Create Account
                         </Button>
                     </Box>
@@ -244,4 +197,4 @@ const Accounts = () => {
     )
 }
 
-export default Accounts
+export default Notifications
