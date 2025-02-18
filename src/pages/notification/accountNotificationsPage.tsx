@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import ScatterPlotIcon from '@mui/icons-material/ScatterPlot';
-import PersonIcon from '@mui/icons-material/Person';
 
 import Check from '../../components/indicators/check';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
@@ -16,7 +13,6 @@ import { useSearchParams } from 'react-router-dom';
 import NotificationService from './notificationService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 import { useAppSelector} from '../../stores/appStore';
-import { link } from 'fs';
 import { INotification } from '../../types/notification';
 
 interface INotificationRow {
@@ -31,6 +27,22 @@ interface INotificationRow {
 }
 
 const colDef:IColDef[] = [
+    {
+        header: 'Type',
+        field: 'type'
+    },
+    {
+        header: 'Title',
+        field: 'title'
+    },
+    {
+        header: 'Message',
+        field: 'message'
+    },
+    {
+        header: 'Link',
+        field: 'link'
+    },
     {
         header: 'Seen',
         field: 'seen',
@@ -168,20 +180,6 @@ const Notifications = () => {
                 <Grid item xs={12}>
                     <PrimaryHeader title={'Account Notifications View'} />
                     <Divider />
-                </Grid>
-                <Grid item xs={12}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                        }}>
-                        <Button
-                            variant="text"
-                            startIcon={<PersonAddIcon />}
-                            onClick={() => navigate('/accounts/notifications')}>
-                            Create Account
-                        </Button>
-                    </Box>
                 </Grid>
                 <Grid item xs={12}>
                     <PrimaryTable

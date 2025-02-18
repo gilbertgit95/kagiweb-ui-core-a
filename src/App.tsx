@@ -129,6 +129,8 @@ import AccountWorkspaceAccountRefAccountConfigsPage from './pages/accountWorkspa
 import AccountWorkspaceAccountRefAccountConfigPage from './pages/accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigPage';
 import AccountWorkspaceAccountRefAccountConfigEditPage from './pages/accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigEditPage';
 
+import AccountNotifications from './pages/notification/accountNotificationsPage';
+
 
 import OwnerPage from './pages/owner/ownerPage';
 import OwnerEditPage from './pages/owner/ownerEditPage';
@@ -281,6 +283,7 @@ appHandler.addRoute({url: 'accounts/edit/:accountId/workspaces/:workspaceId/acco
 // account workspace accountRefs roles
 appHandler.addRoute({url: 'accounts/view/:accountId/workspaces/:workspaceId/accountRefs/:accountRefId/roles', page: AccountWorkspaceAccountRefRolesPage }, 'privateRoutes')
 appHandler.addRoute({url: 'accounts/edit/:accountId/workspaces/:workspaceId/accountRefs/:accountRefId/roles', page: AccountWorkspaceAccountRefRolesEditPage }, 'privateRoutes')
+appHandler.addRoute({url: 'accounts/view/:accountId/notifications', page: AccountNotifications }, 'privateRoutes')
 
 // owner pages
 appHandler.addRoute({url: 'owner/view', page: OwnerPage }, 'privateRoutes')
