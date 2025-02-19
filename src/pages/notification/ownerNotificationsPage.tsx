@@ -20,7 +20,7 @@ const Notifications = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Account Notifications View'} />
+                    <PrimaryHeader title={'Owner Notifications View'} />
                     <Divider />
                 </Grid>
                 <NotificationsView
