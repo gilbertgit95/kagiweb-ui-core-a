@@ -5,14 +5,14 @@ import Grid from '@mui/material/Grid';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { useSearchParams } from 'react-router-dom';
-
+import { useAppSelector} from '../../stores/appStore';
 import NotificationsView from './notificationsView';
 import NotificationService from './notificationService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 const Notifications = () => {
     const [searchParams] = useSearchParams();
-    const { accountId } = useParams()
+    const accountData = useAppSelector(state => state.signedInAccount.accountData)
     const pageQuery = parseInt(searchParams.get('page') || '') || appComponentsHandler.appConfig.defaultPage;
     const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || appComponentsHandler.appConfig.defaultPageSize;
 
@@ -24,9 +24,9 @@ const Notifications = () => {
                     <Divider />
                 </Grid>
                 <NotificationsView
-                    getFunc={NotificationService.getAccountNotifications}
-                    updateFunc={NotificationService.updateAccountNotification}
-                    accountId={accountId || ''}
+                    getFunc={NotificationService.getOwnerNotifications}
+                    updateFunc={NotificationService.updateOwnerNotification}
+                    accountId={accountData?._id || ''}
                     pageQuery={pageQuery}
                     pageSizeQuery={pageSizeQuery} />
             </Grid>

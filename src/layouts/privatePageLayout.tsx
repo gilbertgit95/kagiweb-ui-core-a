@@ -223,11 +223,11 @@ const NavCustomEl = () => {
                         }
                         {/* default account actions */}
                         { customLinks?.length? <Typography color="primary" sx={{margin: '10px'}}>Default Actions</Typography>: null }
-                        <MenuItem onClick={() => handleLinkClick('/owner/notifications')}>
+                        <MenuItem onClick={() => handleLinkClick('/owner/view/notifications')}>
                             <ListItemIcon>
                                 <NotificationsIcon />
                             </ListItemIcon>
-                            <ListItemText>Notifications*</ListItemText>
+                            <ListItemText>Notifications</ListItemText>
                         </MenuItem>
                         <MenuItem onClick={(e) => setRoleChangeAnchorEl(e.currentTarget)}>
                             <ListItemIcon>

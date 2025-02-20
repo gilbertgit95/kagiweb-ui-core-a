@@ -3,6 +3,7 @@ import { INotification } from "../../types/notification"
 import { IPagination, IPageQuery } from "../../types/mixTypes"
 
 class NotificationsService {
+    // account services
     public static getAccountNotifications(accountId:string, query:IPageQuery):Promise<{data: IPagination<INotification>}> {
         return NotificationApi.getAccountNotifications(accountId, query)
     }
@@ -21,6 +22,27 @@ class NotificationsService {
 
     public static deleteAccountNotification(accountId:string, id:string):Promise<{data: INotification}> {
         return NotificationApi.deleteAccountNotification(accountId, id)
+    }
+
+    // owner services
+    public static getOwnerNotifications(accountId:string, query:IPageQuery):Promise<{data: IPagination<INotification>}> {
+        return NotificationApi.getOwnerNotifications(accountId, query)
+    }
+
+    public static getOwnerNotification(accountId:string, id:string):Promise<{data: INotification}> {
+        return NotificationApi.getOwnerNotification(accountId, id)
+    }
+
+    public static updateOwnerNotification(accountId:string, ntifId:string, notification:INotification):Promise<{data: INotification}> {
+        return NotificationApi.updateOwnerNotification(accountId, ntifId, notification)
+    }
+
+    public static createOwnerNotification(accountId:string, notification:INotification):Promise<{data: INotification}> {
+        return NotificationApi.createOwnerNotification(accountId, notification)
+    }
+
+    public static deleteOwnerNotification(accountId:string, id:string):Promise<{data: INotification}> {
+        return NotificationApi.deleteOwnerNotification(accountId, id)
     }
 }
 

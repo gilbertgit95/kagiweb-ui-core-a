@@ -130,7 +130,7 @@ import AccountWorkspaceAccountRefAccountConfigPage from './pages/accountWorkspac
 import AccountWorkspaceAccountRefAccountConfigEditPage from './pages/accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigEditPage';
 
 import AccountNotifications from './pages/notification/accountNotificationsPage';
-
+import OwnerNotifications from './pages/notification/ownerNotificationsPage';
 
 import OwnerPage from './pages/owner/ownerPage';
 import OwnerEditPage from './pages/owner/ownerEditPage';
@@ -348,6 +348,8 @@ appHandler.addRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accou
 appHandler.addRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs/:accountRefId/accountConfigs/:accountConfigId', page: OwnerWorkspaceAccountRefAccountConfigEditPage }, 'privateRoutes')
 // owner workspace account roles
 appHandler.addRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId/roles', page: OwnerWorkspaceAccountRefRolesPage }, 'privateRoutes')
+// notification
+appHandler.addRoute({url: 'owner/view/notifications', page: OwnerNotifications }, 'privateRoutes')
 
 
 // add items to main drawers
