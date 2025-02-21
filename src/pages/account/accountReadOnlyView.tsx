@@ -8,12 +8,15 @@ import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 import SimpleLink from '../../components/links/simpleLink';
 import { IAccount } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
+import { useAppSelector} from '../../stores/appStore';
 
-interface IModuleData {module: string, moduleRoute: string, contents: number}
+interface IModuleData {module: string, moduleRoute: string, isOwner?: boolean}
+interface ISubModuleData {module: string, moduleRoute: string, contents: number}
 interface props { account?: IAccount & {createdAt?:Date, updatedAt?:Date} }
 
 const AccountReadOnlyView = ({account}:props) => {
     // const navigate = useNavigate()
+    const accountData = useAppSelector(state => state.signedInAccount.accountData)
 
     const colDef:IColDef[] = [
         {
@@ -26,7 +29,7 @@ const AccountReadOnlyView = ({account}:props) => {
         }
     ]
 
-    const modulesColDef:IColDef[] = [
+    const subModulesColDef:IColDef[] = [
         {
             header: 'Module',
             field: 'module'
@@ -48,6 +51,30 @@ const AccountReadOnlyView = ({account}:props) => {
         }
     ]
 
+    const modulesColDef:IColDef[] = [
+        {
+            header: 'Module',
+            field: 'module'
+        },
+        {
+            header: 'View',
+            field: 'moduleRoute',
+            Component: (rowProps) => {
+                let link = rowProps.moduleRoute
+
+                if (rowProps.isOwner) {
+                    link = '/owner/view/notifications'
+                }
+
+                return (
+                    <SimpleLink
+                        text={`View ${ rowProps.module }`}
+                        link={link} />
+                )
+            }
+        }
+    ]
+
     const data:{field: string, value: string|undefined}[] = [
         { field: 'nameId', value: account?.nameId },
         { field: 'disabled', value: account?.disabled? 'True': 'False' },
@@ -56,7 +83,7 @@ const AccountReadOnlyView = ({account}:props) => {
         { field: 'Updated', value: account?.updatedAt? moment(account?.updatedAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '--' }
     ]
 
-    const modulesData:IModuleData[] = [
+    const subModulesData:ISubModuleData[] = [
         {
             module: 'Account Information',
             moduleRoute: 'accountInfos',
@@ -104,6 +131,14 @@ const AccountReadOnlyView = ({account}:props) => {
         }
     ]
 
+    const modulesData:IModuleData[] = [
+        {
+            module: 'Account Notifications',
+            moduleRoute: 'notifications',
+            isOwner: accountData?._id === account?._id
+        }
+    ]
+
     return account? (
         <>
             <Grid item xs={12}>
@@ -113,6 +148,16 @@ const AccountReadOnlyView = ({account}:props) => {
             </Grid>
             <Grid item xs={12}>
                 <SecondaryHeader Icon={SnippetFolderIcon} title={'Sub Modules'} />
+                {/* <Divider /> */}
+            </Grid>
+            <Grid item xs={12}>
+                <PrimaryTable
+                    maxHeight={700}
+                    columnDefs={subModulesColDef}
+                    data={subModulesData} />
+            </Grid>
+            <Grid item xs={12}>
+                <SecondaryHeader Icon={SnippetFolderIcon} title={'Modules'} />
                 {/* <Divider /> */}
             </Grid>
             <Grid item xs={12}>
