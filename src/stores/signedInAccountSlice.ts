@@ -12,6 +12,7 @@ export interface IAccessInfo {
     externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[],
     clientDevice?: IClientDevice,
     accessToken?: IAccessToken,
+    activeNotifications?: number,
 
     appRole?: IRole,
     appRoles?: IRole[],
@@ -38,7 +39,8 @@ export interface IOptAccessInfo {
     workspaces?: IWorkspace[]|undefined,
     externalWorkspaces?: (IWorkspace & {ownerId:string, ownerNameId: string, ownerAccountType: string})[]|undefined,
     clientDevice?: IClientDevice|undefined,
-    accessToken?: IAccessToken|undefined
+    accessToken?: IAccessToken|undefined,
+    activeNotifications?: number,
 
     appRole?: IRole,
     appRoles?: IRole[],
@@ -66,6 +68,7 @@ const initialState:IAccessInfo = {
     externalWorkspaces: undefined,
     clientDevice: undefined,
     accessToken: undefined,
+    activeNotifications: undefined,
 
     appRole: undefined,
     appRoles: undefined,
@@ -101,6 +104,7 @@ export const AccessInfo = createSlice({
             if (action.payload.hasOwnProperty('externalWorkspaces')) state.externalWorkspaces = action.payload.externalWorkspaces
             if (action.payload.hasOwnProperty('clientDevice')) state.clientDevice = action.payload.clientDevice
             if (action.payload.hasOwnProperty('accessToken')) state.accessToken = action.payload.accessToken
+            if (action.payload.hasOwnProperty('activeNotifications')) state.activeNotifications = action.payload.activeNotifications
 
             if (action.payload.hasOwnProperty('appRole')) state.appRole = action.payload.appRole
             if (action.payload.hasOwnProperty('appRoles')) state.appRoles = action.payload.appRoles
@@ -129,6 +133,7 @@ export const AccessInfo = createSlice({
             state.externalWorkspaces = undefined
             state.clientDevice = undefined
             state.accessToken = undefined
+            state.activeNotifications = undefined
 
             state.mergedFeatures = undefined
             state.appFeatures = undefined

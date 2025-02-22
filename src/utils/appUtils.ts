@@ -61,6 +61,7 @@ class AppUtils {
             externalWorkspaces: undefined,
             clientDevice: undefined,
             accessToken: undefined,
+            activeNotifications: undefined,
 
             visitedAccount: undefined,
             visitedAccountRole: undefined,
@@ -97,6 +98,12 @@ class AppUtils {
             store.dispatch(setAccountData(ownerInfo))
             throw(err)
         }
+    }
+
+    static async loadActiveNotifications(accountId:string) {
+        store.dispatch(setAccountData({
+            activeNotifications: 3
+        }))
     }
 
     static async loadAppRefsData() {
