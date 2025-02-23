@@ -428,7 +428,7 @@ function App() {
       try {
         await appUtils.loadSigninAccountData()
         await appUtils.loadAppRefsData()
-
+        await appUtils.loadActiveNotifications()
         // !! should be disabled sync features enable only when synching
         // !! temporary enabled
         // await appHandler.syncToFeatures() // !!! please disable this line, only use this in developement

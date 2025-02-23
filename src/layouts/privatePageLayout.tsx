@@ -5,6 +5,7 @@ import { Typography, Divider, Box } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
 import CompareArrowsOutlinedIcon from '@mui/icons-material/CompareArrowsOutlined';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -39,6 +40,7 @@ const NavCustomEl = () => {
     const accountData = useAppSelector(state => state.signedInAccount?.accountData)
     const accessToken:(IAccessToken & {createdAt?:Date, updatedAt?:Date})|undefined = useAppSelector(state => state.signedInAccount?.accessToken)
     const userFeatures = useAppSelector(state => state.signedInAccount?.appFeatures) || []
+    const activeNotifications = useAppSelector(state => state.signedInAccount?.activeNotifications) || 0
     const appTheme = useAppSelector(state => state.appRefs.appTheme)
 
     const defaultRole = useAppSelector(state => state.signedInAccount?.appRole)
@@ -161,7 +163,9 @@ const NavCustomEl = () => {
                     aria-haspopup="true"
                     onClick={handleMenu}
                     color="inherit">
-                    <AccountCircle />
+                    <Badge badgeContent={activeNotifications} color="secondary" variant="dot" >
+                        <AccountCircle />
+                    </Badge>
                 </IconButton>
                 <Menu
                     id="menu-appbar"
@@ -225,7 +229,9 @@ const NavCustomEl = () => {
                         { customLinks?.length? <Typography color="primary" sx={{margin: '10px'}}>Default Actions</Typography>: null }
                         <MenuItem onClick={() => handleLinkClick('/owner/view/notifications')}>
                             <ListItemIcon>
-                                <NotificationsIcon />
+                                <Badge badgeContent={activeNotifications} color="secondary">
+                                    <NotificationsIcon />
+                                </Badge>
                             </ListItemIcon>
                             <ListItemText>Notifications</ListItemText>
                         </MenuItem>

@@ -4,6 +4,7 @@ import { setAppRefs } from '../stores/appRefsSlice';
 import OwnerService from '../pages/owner/ownerService'
 import RoleService from '../pages/role/roleService'
 import FeatureService from '../pages/feature/featureService'
+import NotificationsService from '../pages/notification/notificationService';
 import { IFeature } from '../types/feature';
 
 class AppUtils {
@@ -100,7 +101,18 @@ class AppUtils {
         }
     }
 
-    static async loadActiveNotifications(accountId:string) {
+    static async loadActiveNotifications() {
+        // fetch owner not seen notifications
+        
+        // test create notif
+        // await NotificationsService.createOwnerNotification('', {
+        //     title: 'Test II',
+        //     message: 'hello',
+        //     type: 'warning',
+        //     link: 'https://google.com',
+        //     seen: false
+        // })
+
         store.dispatch(setAccountData({
             activeNotifications: 3
         }))
