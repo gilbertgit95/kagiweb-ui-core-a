@@ -25,6 +25,10 @@ class NotificationsService {
     }
 
     // owner services
+    public static getOwnerActiveNotifications():Promise<{data: {activeNotifications: number}}> {
+        return NotificationApi.getOwnerActiveNotifications()
+    }
+
     public static getOwnerNotifications(accountId:string, query:IPageQuery):Promise<{data: IPagination<INotification>}> {
         return NotificationApi.getOwnerNotifications(accountId, query)
     }

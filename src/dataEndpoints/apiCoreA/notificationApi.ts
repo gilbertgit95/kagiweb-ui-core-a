@@ -70,6 +70,13 @@ class NotificationApi {
     }
 
     // for owner apis
+    public static getOwnerActiveNotifications() {
+        return apiHelper.privateReq({
+            method: 'GET',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/activeNotifications`
+        })
+    }
+
     public static getOwnerNotifications(accountId:string, query:IPageQuery = {}) {
         const page =  query.hasOwnProperty('page')? 'page=' + query.page: null
         const pageSize = query.hasOwnProperty('pageSize')? 'pageSize=' + query.pageSize: null

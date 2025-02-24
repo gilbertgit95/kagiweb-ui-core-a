@@ -102,19 +102,10 @@ class AppUtils {
     }
 
     static async loadActiveNotifications() {
-        // fetch owner not seen notifications
-        
-        // test create notif
-        // await NotificationsService.createOwnerNotification('', {
-        //     title: 'Test II',
-        //     message: 'hello',
-        //     type: 'warning',
-        //     link: 'https://google.com',
-        //     seen: false
-        // })
+        const activeNotifs = await NotificationsService.getOwnerActiveNotifications()
 
         store.dispatch(setAccountData({
-            activeNotifications: 3
+            activeNotifications: activeNotifs.data?.activeNotifications || 0
         }))
     }
 
