@@ -21,7 +21,7 @@ class AppUtils {
                     featureIdSet.add(item._id)
                     return true
                 })
-        }
+        } 
 
         return result
     }
@@ -62,16 +62,16 @@ class AppUtils {
             externalWorkspaces: undefined,
             clientDevice: undefined,
             accessToken: undefined,
-            activeNotifications: undefined,
+            // activeNotifications: undefined,
 
-            visitedAccount: undefined,
-            visitedAccountRole: undefined,
-            visitedAccountFeatures: undefined,
+            // visitedAccount: undefined,
+            // visitedAccountRole: undefined,
+            // visitedAccountFeatures: undefined,
             // visitedAccountRoles: undefined,
 
-            visitedAccountWorkspace: undefined,
-            visitedAccountWorkspaceRole: undefined,
-            visitedAccountWorkspaceFeatures: undefined,
+            // visitedAccountWorkspace: undefined,
+            // visitedAccountWorkspaceRole: undefined,
+            // visitedAccountWorkspaceFeatures: undefined,
             // visitedAccountWorkspaceRoles: undefined,
             mergedFeatures: undefined
         }

@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 
 import Check from '../../components/indicators/check';
 import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
+import Notification from './notification';
 import SimpleLink from '../../components/links/simpleLink';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 
@@ -32,43 +33,11 @@ interface INotificationRow {
 
 const colDef:IColDef[] = [
     {
-        header: 'Type',
-        field: 'type'
-    },
-    {
-        header: 'Title',
-        field: 'title'
-    },
-    {
-        header: 'Message',
-        field: 'message'
-    },
-    {
-        header: 'Link',
-        field: 'link'
-    },
-    {
-        header: 'Seen',
-        field: 'seen',
-        Component: (props:INotificationRow) => {
-            return <Check value={props.seen} />
-        }
-    },
-    {
-        header: 'Changed',
-        field: '',
-        Component: (props:INotificationRow & IChangeDate) => {
-            return <DateChanges {...props} />
-        }
-    },
-    {
-        header: '',
+        header: 'Notifications',
         field: '',
         Component: (props:INotificationRow) => {
             return props.link? (
-                <SimpleLink
-                    link={props.link}
-                    text={'link'} />
+                <Notification {...props} />
             ): null
         }
     }
@@ -175,6 +144,7 @@ const NotificationsView = ({accountId, pageQuery, pageSizeQuery, getFunc, update
     return (
         <Grid item xs={12}>
             <PrimaryTable
+                noHeader
                 maxHeight={650}
                 pagination={pagination}
                 columnDefs={colDef}
