@@ -10,6 +10,8 @@ import NotificationsView from './notificationsView';
 import NotificationService from './notificationService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
+import AppUtils from '../../utils/appUtils';
+
 const Notifications = () => {
     const [searchParams] = useSearchParams();
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
@@ -28,7 +30,10 @@ const Notifications = () => {
                     updateFunc={NotificationService.updateOwnerNotification}
                     accountId={accountData?._id || ''}
                     pageQuery={pageQuery}
-                    pageSizeQuery={pageSizeQuery} />
+                    pageSizeQuery={pageSizeQuery}
+                    onReload={async () => {
+                        await AppUtils.loadActiveNotifications()
+                    }} />
             </Grid>
         </Container>
     )

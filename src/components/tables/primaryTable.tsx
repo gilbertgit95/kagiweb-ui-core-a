@@ -52,6 +52,7 @@ interface IPagination {
 export interface IPrimaryTableProps {
   noHeader?: boolean,
   maxHeight?: number,
+  minimalStyle?: boolean,
 
   columnDefs: IColDef[],
   data?: any[],
@@ -82,15 +83,37 @@ interface ITablePaginationActionsProps {
   ) => void;
 }
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}))
+interface IStyledTableRowProps {
+  minimalStyle?: boolean
+}
+
+const StyledTableRow = styled(TableRow, {
+  shouldForwardProp: (prop) => prop !== "primary"
+})<IStyledTableRowProps>(({ theme, minimalStyle }) => {
+
+  if (minimalStyle) {
+    return {
+      'tr, td, th': {
+        border: 0,
+        padding: 0,
+        paddingLeft: 10,
+        paddingRight: 10,
+        margin: 0,
+        backgroundColor: 'transparent'
+      }
+    }
+  } else {
+    return {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+      },
+      // hide last border
+      '&:last-child td, &:last-child th': {
+        border: 0,
+      }
+    }
+  }
+})
 
 function TablePaginationActions(props: ITablePaginationActionsProps) {
   const theme = useTheme()
@@ -267,7 +290,7 @@ function PrimaryTable(props:IPrimaryTableProps) {
           <TableBody>
             {
               data.map((row, rowIndex) => (
-                <StyledTableRow key={rowIndex}>
+                <StyledTableRow minimalStyle={props.minimalStyle} key={rowIndex}>
                     {
                       props.enableSelection? (
                         <TableCell>
@@ -310,7 +333,7 @@ function PrimaryTable(props:IPrimaryTableProps) {
 
             {
               noEmptyCells? (
-                <StyledTableRow style={{ height: 69 * noEmptyCells }}>
+                <StyledTableRow minimalStyle={props.minimalStyle} style={{ height: 69 * noEmptyCells }}>
                   <TableCell colSpan={props.columnDefs.length}></TableCell>
                 </StyledTableRow>
               ): null
