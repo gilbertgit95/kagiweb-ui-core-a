@@ -63,7 +63,7 @@ const Notification = (props:INotificationRow) => {
                     <Tooltip title={ props.seen? 'Seen':'Not Seen' }>
                        <Checkbox
                         color="primary"
-                        defaultChecked={props.seen}
+                        checked={props.seen}
                         icon={<VisibilityOffIcon />}
                         checkedIcon={<VisibilityIcon />}
                         onChange={() => {
