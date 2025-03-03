@@ -6,13 +6,13 @@ import Grid from '@mui/material/Grid';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { useSearchParams } from 'react-router-dom';
 import { useAppSelector} from '../../stores/appStore';
-import NotificationsView from './notificationsView';
-import NotificationService from './notificationService';
+// import NotificationsView from './notificationsView';
+// import NotificationService from './notificationService';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 import AppUtils from '../../utils/appUtils';
 
-const Notifications = () => {
+const OwnerAccountWorkspaceInvitation = () => {
     const [searchParams] = useSearchParams();
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
     const pageQuery = parseInt(searchParams.get('page') || '') || appComponentsHandler.appConfig.defaultPage;
@@ -22,10 +22,10 @@ const Notifications = () => {
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Notifications View'} />
+                    <PrimaryHeader title={'Owner Workspace Invitation'} />
                     <Divider />
                 </Grid>
-                <NotificationsView
+                {/* <NotificationsView
                     getFunc={NotificationService.getOwnerNotifications}
                     updateFunc={NotificationService.updateOwnerNotification}
                     accountId={accountData?._id || ''}
@@ -33,10 +33,10 @@ const Notifications = () => {
                     pageSizeQuery={pageSizeQuery}
                     onReload={async () => {
                         await AppUtils.loadActiveNotifications()
-                    }} />
+                    }} /> */}
             </Grid>
         </Container>
     )
 }
 
-export default Notifications
+export default OwnerAccountWorkspaceInvitation
