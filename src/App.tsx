@@ -129,9 +129,6 @@ import AccountWorkspaceAccountRefAccountConfigsPage from './pages/accountWorkspa
 import AccountWorkspaceAccountRefAccountConfigPage from './pages/accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigPage';
 import AccountWorkspaceAccountRefAccountConfigEditPage from './pages/accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigEditPage';
 
-import AccountNotifications from './pages/notification/accountNotificationsPage';
-import OwnerNotifications from './pages/notification/ownerNotificationsPage';
-
 import OwnerPage from './pages/owner/ownerPage';
 import OwnerEditPage from './pages/owner/ownerEditPage';
 import OwnerAccountInfosPage from './pages/owner/ownerAccountInfosPage';
@@ -181,6 +178,12 @@ import OwnerWorkspaceAccountRefRolesPage from './pages/owner/ownerWorkspaceAccou
 import OwnerWorkspaceAccountRefAccountConfigsPage from './pages/owner/ownerWorkspaceAccountRefAccountConfigsPage';
 import OwnerWorkspaceAccountRefAccountConfigPage from './pages/owner/ownerWorkspaceAccountRefAccountConfigPage';
 import OwnerWorkspaceAccountRefAccountConfigEditPage from './pages/owner/ownerWorkspaceAccountRefAccountConfigEditPage';
+
+import AccountNotifications from './pages/notification/accountNotificationsPage';
+import OwnerNotifications from './pages/notification/ownerNotificationsPage';
+
+import OwnerAccountAction from './pages/actions/ownerAccountActionPage';
+import OwnerAccountWorkspaceAction from './pages/actions/ownerAccountWorkspaceActionPage';
 
 // register routes
 //  for public routes
@@ -350,6 +353,9 @@ appHandler.addRoute({url: 'owner/edit/workspaces/:workspaceId/accountRefs/:accou
 appHandler.addRoute({url: 'owner/view/workspaces/:workspaceId/accountRefs/:accountRefId/roles', page: OwnerWorkspaceAccountRefRolesPage }, 'privateRoutes')
 // notification
 appHandler.addRoute({url: 'owner/view/notifications', page: OwnerNotifications }, 'privateRoutes')
+// actions
+appHandler.addRoute({url: 'owner/view/actions/:actionType/module/:moduleType/:moduleId/ref/:refId', page: OwnerAccountAction }, 'privateRoutes')
+appHandler.addRoute({url: 'owner/view/actions/:actionType/module/:moduleType/:moduleId/subModule/:subModuleType/:subModuleId/ref/:refId', page: OwnerAccountWorkspaceAction }, 'privateRoutes')
 
 
 // add items to main drawers

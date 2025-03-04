@@ -1,10 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Divider } from '@mui/material';
+import { Container, Divider, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { useSearchParams } from 'react-router-dom';
 import { useAppSelector} from '../../stores/appStore';
 // import NotificationsView from './notificationsView';
 // import NotificationService from './notificationService';
@@ -12,19 +11,18 @@ import appComponentsHandler from '../../utils/appComponentsHandler'
 
 import AppUtils from '../../utils/appUtils';
 
-const OwnerAccountWorkspaceInvitation = () => {
-    const [searchParams] = useSearchParams();
+const OwnerAccountWorkspaceAction = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
-    const pageQuery = parseInt(searchParams.get('page') || '') || appComponentsHandler.appConfig.defaultPage;
-    const pageSizeQuery = parseInt(searchParams.get('pageSize') || '') || appComponentsHandler.appConfig.defaultPageSize;
+    const { actionType, moduleType, moduleId, subModuleType, subModuleId, refId } = useParams()
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Workspace Invitation'} />
+                    <PrimaryHeader title={'Owner Workspace Action'} />
                     <Divider />
                 </Grid>
+                <Typography>{ actionType + ' - ' + moduleType + ' - ' + moduleId + ' - ' + subModuleType + ' - ' + subModuleId + ' - ' + refId }</Typography>
                 {/* <NotificationsView
                     getFunc={NotificationService.getOwnerNotifications}
                     updateFunc={NotificationService.updateOwnerNotification}
@@ -39,4 +37,4 @@ const OwnerAccountWorkspaceInvitation = () => {
     )
 }
 
-export default OwnerAccountWorkspaceInvitation
+export default OwnerAccountWorkspaceAction
