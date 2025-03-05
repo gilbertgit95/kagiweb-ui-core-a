@@ -11,9 +11,9 @@ import appComponentsHandler from '../../utils/appComponentsHandler'
 
 import AppUtils from '../../utils/appUtils';
 
-const OwnerAccountAction = () => {
+const OwnerAccountActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
-    const { actionType, moduleType, moduleId, refId } = useParams()
+    const { actionType, moduleType, moduleId, reftype, refId } = useParams()
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -22,7 +22,7 @@ const OwnerAccountAction = () => {
                     <PrimaryHeader title={'Owner Account Action'} />
                     <Divider />
                 </Grid>
-                <Typography>{ actionType + ' - ' + moduleType + ' - ' + moduleId + ' - ' + refId }</Typography>
+                <Typography>{ actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + reftype + ' | ' + refId }</Typography>
                 {/* <NotificationsView
                     getFunc={NotificationService.getOwnerNotifications}
                     updateFunc={NotificationService.updateOwnerNotification}
@@ -37,4 +37,4 @@ const OwnerAccountAction = () => {
     )
 }
 
-export default OwnerAccountAction
+export default OwnerAccountActionPage

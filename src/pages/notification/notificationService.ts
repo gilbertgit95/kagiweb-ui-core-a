@@ -1,9 +1,14 @@
 import NotificationApi from "../../dataEndpoints/apiCoreA/notificationApi"
+import QuickCheckApi from "../../dataEndpoints/apiCoreA/quickCheckApi"
 import { INotification } from "../../types/notification"
 import { IPagination, IPageQuery } from "../../types/mixTypes"
 
 class NotificationsService {
     // account services
+    public static getAccountActiveNotifications(accountId:string):Promise<{data: {activeNotifications: number}}> {
+        return QuickCheckApi.getAccountActiveNotifications(accountId)
+    }
+
     public static getAccountNotifications(accountId:string, query:IPageQuery):Promise<{data: IPagination<INotification>}> {
         return NotificationApi.getAccountNotifications(accountId, query)
     }
@@ -26,7 +31,7 @@ class NotificationsService {
 
     // owner services
     public static getOwnerActiveNotifications():Promise<{data: {activeNotifications: number}}> {
-        return NotificationApi.getOwnerActiveNotifications()
+        return QuickCheckApi.getOwnerActiveNotifications()
     }
 
     public static getOwnerNotifications(accountId:string, query:IPageQuery):Promise<{data: IPagination<INotification>}> {

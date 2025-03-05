@@ -11,18 +11,18 @@ import appComponentsHandler from '../../utils/appComponentsHandler'
 
 import AppUtils from '../../utils/appUtils';
 
-const OwnerAccountWorkspaceActionPage = () => {
+const AccountAccountWorkspaceActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
-    const { actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
+    const { accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
 
     return (
         <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <PrimaryHeader title={'Owner Account Workspace Action'} />
+                    <PrimaryHeader title={'Account Account Workspace Action'} />
                     <Divider />
                 </Grid>
-                <Typography>{ actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + subModuleType + ' | ' + subModuleId + ' | ' + refType + ' | ' + refId }</Typography>
+                <Typography>{ accountId + ' | ' +  actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + subModuleType + ' | ' + subModuleId + ' | ' + refType + ' | ' + refId }</Typography>
                 {/* <NotificationsView
                     getFunc={NotificationService.getOwnerNotifications}
                     updateFunc={NotificationService.updateOwnerNotification}
@@ -37,4 +37,4 @@ const OwnerAccountWorkspaceActionPage = () => {
     )
 }
 
-export default OwnerAccountWorkspaceActionPage
+export default AccountAccountWorkspaceActionPage
