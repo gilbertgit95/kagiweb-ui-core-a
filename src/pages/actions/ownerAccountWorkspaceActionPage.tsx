@@ -1,37 +1,37 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Divider, Typography } from '@mui/material';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Divider, Typography, Button } from '@mui/material';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Grid from '@mui/material/Grid';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { useAppSelector} from '../../stores/appStore';
-// import NotificationsView from './notificationsView';
-// import NotificationService from './notificationService';
-import appComponentsHandler from '../../utils/appComponentsHandler'
-
-import AppUtils from '../../utils/appUtils';
+import InvitationView from './invitationView';
 
 const OwnerAccountWorkspaceActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
+    const navigate = useNavigate()
     const { actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
 
     return (
-        <Container style={{paddingTop: 20}}>
+        <Container maxWidth="md" style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <PrimaryHeader title={'Owner Account Workspace Action'} />
                     <Divider />
                 </Grid>
-                <Typography>{ actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + subModuleType + ' | ' + subModuleId + ' | ' + refType + ' | ' + refId }</Typography>
-                {/* <NotificationsView
-                    getFunc={NotificationService.getOwnerNotifications}
-                    updateFunc={NotificationService.updateOwnerNotification}
-                    accountId={accountData?._id || ''}
-                    pageQuery={pageQuery}
-                    pageSizeQuery={pageSizeQuery}
-                    onReload={async () => {
-                        await AppUtils.loadActiveNotifications()
-                    }} /> */}
+                <Grid item xs={12}>
+                    <Button
+                        variant="text"
+                        startIcon={<ArrowBackIosNewIcon />}
+                        onClick={() => navigate(-1)}>
+                        Back
+                    </Button>
+                </Grid>
+                {/* <Typography>{ actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + subModuleType + ' | ' + subModuleId + ' | ' + refType + ' | ' + refId }</Typography> */}
+                <Grid item xs={12}>
+                    <InvitationView />
+                </Grid>
             </Grid>
         </Container>
     )

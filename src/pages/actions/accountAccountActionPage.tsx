@@ -5,11 +5,7 @@ import Grid from '@mui/material/Grid';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { useAppSelector} from '../../stores/appStore';
-// import NotificationsView from './notificationsView';
-// import NotificationService from './notificationService';
-import appComponentsHandler from '../../utils/appComponentsHandler'
-
-import AppUtils from '../../utils/appUtils';
+import InvitationView from './invitationView';
 
 const AccountAccountActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
@@ -22,16 +18,10 @@ const AccountAccountActionPage = () => {
                     <PrimaryHeader title={'Account Account Action'} />
                     <Divider />
                 </Grid>
-                <Typography>{ accountId + ' | ' + actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + reftype + ' | ' + refId }</Typography>
-                {/* <NotificationsView
-                    getFunc={NotificationService.getOwnerNotifications}
-                    updateFunc={NotificationService.updateOwnerNotification}
-                    accountId={accountData?._id || ''}
-                    pageQuery={pageQuery}
-                    pageSizeQuery={pageSizeQuery}
-                    onReload={async () => {
-                        await AppUtils.loadActiveNotifications()
-                    }} /> */}
+                {/* <Typography>{ accountId + ' | ' + actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + reftype + ' | ' + refId }</Typography> */}
+                <Grid item xs={12}>
+                    <InvitationView />
+                </Grid>
             </Grid>
         </Container>
     )
