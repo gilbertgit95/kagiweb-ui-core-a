@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -14,8 +14,24 @@ const fontStyle = {
     display: 'inline'
 }
 
+interface IProps {
+    module?: string,
+    subModule?: string,
+    ref?: string,
+    accept?: () => Promise<{} | null>,
+    decline?: () => Promise<{} | null>,
+}
 
-export default function InvitationView() {
+
+export default function InvitationView(props: IProps) {
+
+    useEffect(() => {
+        console.log('InvitationView mounted')
+        return () => {
+            console.log('InvitationView unmounted')
+        }
+    }, [])
+
   return (
     <Card sx={{ minWidth: 300, padding: '20px' }}>
         <CardContent>
