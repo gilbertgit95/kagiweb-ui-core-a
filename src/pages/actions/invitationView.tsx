@@ -16,8 +16,12 @@ const fontStyle = {
 
 interface IProps {
     module?: string,
+    moduleId?: string,
     subModule?: string,
+    subModuleId?: string,
     ref?: string,
+    refId?: string,
+    fetchData?: (accountId:string, toAccountId:string, module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string) => Promise<any>,
     accept?: () => Promise<{} | null>,
     decline?: () => Promise<{} | null>,
 }
@@ -55,8 +59,8 @@ export default function InvitationView(props: IProps) {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small">Accept</Button>
-            <Button size="small">Decline</Button>
+            <Button size="small" onClick={props.accept}>Accept</Button>
+            <Button size="small" onClick={props.decline}>Decline</Button>
         </CardActions>
     </Card>
   );
