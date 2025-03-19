@@ -15,15 +15,17 @@ const fontStyle = {
 }
 
 interface IProps {
+    accountId: string,
+    toAccountId: string,
     module?: string,
     moduleId?: string,
     subModule?: string,
     subModuleId?: string,
     ref?: string,
     refId?: string,
-    fetchData?: (accountId:string, toAccountId:string, module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string) => Promise<any>,
-    accept?: () => Promise<{} | null>,
-    decline?: () => Promise<{} | null>,
+    fetchData?: (accountId:string|undefined, toAccountId:string|undefined, module:string|undefined, moduleId:string|undefined, subModule:string|undefined, subModuleId:string|undefined, ref:string|undefined, refId:string|undefined) => Promise<any>,
+    onAccept?: (accountId:string|undefined, toAccountId:string|undefined, module:string|undefined, moduleId:string|undefined, subModule:string|undefined, subModuleId:string|undefined, ref:string|undefined, refId:string|undefined) => Promise<{} | null>,
+    onDecline?: (accountId:string|undefined, toAccountId:string|undefined, module:string|undefined, moduleId:string|undefined, subModule:string|undefined, subModuleId:string|undefined, ref:string|undefined, refId:string|undefined) => Promise<{} | null>,
 }
 
 
@@ -59,8 +61,8 @@ export default function InvitationView(props: IProps) {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={props.accept}>Accept</Button>
-            <Button size="small" onClick={props.decline}>Decline</Button>
+            <Button size="small" onClick={() => {if (props.onAccept) props.onAccept(props.accountId, props.toAccountId, props.module, props.moduleId, props.subModule, props.subModuleId, props.ref, props.refId)}}>Accept</Button>
+            <Button size="small" onClick={() => {if (props.onDecline) props.onDecline(props.accountId, props.toAccountId, props.module, props.moduleId, props.subModule, props.subModuleId, props.ref, props.refId)}}>Decline</Button>
         </CardActions>
     </Card>
   );
