@@ -17,7 +17,7 @@ interface INotificationRow {
     type: string,
     title: string,
     message: string,
-    link: string,
+    links: {url:string, label:string}[],
     seen: boolean,
     createdAt?: Date,
     updatedAt?: Date,
@@ -51,14 +51,25 @@ const Notification = (props:INotificationRow) => {
                         <AccessTimeIcon color="primary" />
                         <Typography color="primary" variant='caption'>{ created }</Typography>
                     </Stack>
-                    <Button
-                        endIcon={<LaunchIcon />}
-                        variant='outlined'
-                        size="small"
-                        color="primary"
-                        onClick={() => {
-                            if (props.onViewLink) props.onViewLink(props.link)
-                        }}>View Link</Button>
+                    {
+                        props.links?.map((link, index) => {
+                            return (
+                                <Button
+                                    key={index}
+                                    size="small"
+                                    color="primary"
+                                    variant="text"
+                                    onClick={() => {
+                                        if (props.onViewLink) props.onViewLink(link.url)
+                                    }} endIcon={<LaunchIcon />}>
+                                    { link.label }
+                                </Button>
+                            )
+                        })
+                    }
+                    {/* <Grid item xs={12} sm={6} md={4} lg={3}>
+                        <Typography variant='caption'>Created: { created }</Typography>
+                    }
                     {/* <FormControlLabel color="primary" control={<Switch defaultChecked={props.seen} />} label="Seen" /> */}
                     <Tooltip title={ props.seen? 'Seen':'Not Seen' }>
                        <Checkbox

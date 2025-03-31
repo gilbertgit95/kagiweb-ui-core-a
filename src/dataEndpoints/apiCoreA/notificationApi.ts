@@ -25,7 +25,7 @@ class NotificationApi {
             'type': notif.type,
             'title': notif.title,
             'message': notif.message,
-            'link': notif.link,
+            'links': notif.links,
             'seen': notif.seen
         }
 
@@ -50,7 +50,7 @@ class NotificationApi {
             'type': notif.type,
             'title': notif.title,
             'message': notif.message,
-            'link': notif.link,
+            'links': notif.links,
             'seen': notif.seen
         }
 
@@ -95,7 +95,7 @@ class NotificationApi {
             'type': notif.type,
             'title': notif.title,
             'message': notif.message,
-            'link': notif.link,
+            'links': notif.links,
             'seen': notif.seen
         }
 
@@ -119,7 +119,7 @@ class NotificationApi {
             'type': notif.type,
             'title': notif.title,
             'message': notif.message,
-            'link': notif.link,
+            'links': notif.links,
             'seen': notif.seen
         }
 

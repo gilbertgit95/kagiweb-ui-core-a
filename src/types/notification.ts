@@ -9,6 +9,6 @@ export interface INotification {
     title?: string,
     message?: string,
     type?: TNotificationType,
-    link?: string
+    links?: {url:string, label:string}[],
     seen?: boolean
 }

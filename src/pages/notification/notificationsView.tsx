@@ -23,7 +23,7 @@ interface INotificationRow {
     type: string,
     title: string,
     message: string,
-    link: string,
+    links: {url:string, label:string}[],
     seen: boolean,
     createdAt?: Date,
     updatedAt?: Date,
@@ -36,7 +36,7 @@ const colDef:IColDef[] = [
         header: 'Notifications',
         field: '',
         Component: (props:INotificationRow) => {
-            return props.link? (
+            return props.links? (
                 <Notification {...props} />
             ): null
         }
@@ -69,7 +69,7 @@ const NotificationsView = ({accountId, pageQuery, pageSizeQuery, getFunc, update
                         type: item.type || '--',
                         title: item.title || '--',
                         message:  item.message || '--',
-                        link:  item.link || '--',
+                        links:  item.links || [],
                         seen: Boolean(item.seen),
                         createdAt: item.createdAt,
                         updatedAt: item.updatedAt,
@@ -150,7 +150,7 @@ const NotificationsView = ({accountId, pageQuery, pageSizeQuery, getFunc, update
                             type: item.type || '--',
                             title: item.title || '--',
                             message:  item.message || '--',
-                            link:  item.link || '--',
+                            links:  item.links || [],
                             seen: Boolean(item.seen),
                             createdAt: item.createdAt,
                             updatedAt: item.updatedAt,
