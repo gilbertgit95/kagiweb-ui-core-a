@@ -9,9 +9,10 @@ import { useAppSelector} from '../../stores/appStore';
 import InvitationView from './invitationView';
 
 const OwnerAccountWorkspaceActionPage = () => {
-    const accountData = useAppSelector(state => state.signedInAccount.accountData)
     const navigate = useNavigate()
     const { actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
+    const accountData = useAppSelector(state => state.signedInAccount.accountData)
+    const accountId = accountData?._id
 
     return (
         <Container maxWidth="md" style={{paddingTop: 20}}>
@@ -30,7 +31,7 @@ const OwnerAccountWorkspaceActionPage = () => {
                 </Grid>
                 {/* <Typography>{ actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + subModuleType + ' | ' + subModuleId + ' | ' + refType + ' | ' + refId }</Typography> */}
                 <Grid item xs={12}>
-                    <InvitationView accountId='' toAccountId='' {...{actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}} />
+                    <InvitationView {...{accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}} />
                 </Grid>
             </Grid>
         </Container>

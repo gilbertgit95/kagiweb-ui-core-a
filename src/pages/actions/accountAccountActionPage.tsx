@@ -20,7 +20,7 @@ const AccountAccountActionPage = () => {
                 </Grid>
                 {/* <Typography>{ accountId + ' | ' + actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + reftype + ' | ' + refId }</Typography> */}
                 <Grid item xs={12}>
-                    <InvitationView accountId='' toAccountId='' {...{actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}}  />
+                    <InvitationView {...{accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}}  />
                 </Grid>
             </Grid>
         </Container>

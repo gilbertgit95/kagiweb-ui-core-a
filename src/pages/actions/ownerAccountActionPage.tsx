@@ -10,6 +10,7 @@ import InvitationView from './invitationView';
 const OwnerAccountActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
     const { actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
+    const accountId = accountData?._id
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -20,7 +21,7 @@ const OwnerAccountActionPage = () => {
                 </Grid>
                 {/* <Typography>{ actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + reftype + ' | ' + refId }</Typography> */}
                 <Grid item xs={12}>
-                    <InvitationView accountId='' toAccountId='' {...{actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}}  />
+                    <InvitationView {...{accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}}  />
                 </Grid>
             </Grid>
         </Container>
