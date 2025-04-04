@@ -12,7 +12,7 @@ class NotificationApi {
         })
     }
 
-    public static getOwnerActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string) {
+    public static getOwnerActionInfo(actionType:string, moduleType:string, moduleId:string, refType:string, refId:string) {
 
         return apiHelper.privateReq({
             method: 'GET',
@@ -28,7 +28,7 @@ class NotificationApi {
         })
     }
 
-    public static getOwnerWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string) {
+    public static getOwnerWorkspaceActionInfo(actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string) {
 
         return apiHelper.privateReq({
             method: 'GET',

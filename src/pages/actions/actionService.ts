@@ -2,20 +2,20 @@ import ActionApi from '../../dataEndpoints/apiCoreA/actionApi'
 import { IRoleRef } from '../../types/account'
 
 class ActionService {
-    public static getAccountActionInfo(accountId:string, AccountRole:{_id: string, isActive?:boolean, roleId?:string}):Promise<{data: any}> {
-        return ActionApi.getAccountActionInfo(accountId, AccountRole)
+    public static getAccountActionInfo(accountId:string, actionType:string, module:string, moduleId:string, ref:string, refId:string):Promise<{data: any}> {
+        return ActionApi.getAccountActionInfo(accountId, actionType, module, moduleId, ref, refId)
     }
 
-    public static getOwnerActionInfo(accountId:string, roleRefId:string):Promise<{data: IRoleRef}> {
-        return ActionApi.getOwnerActionInfo(accountId, {roleId: roleRefId})
+    public static getOwnerActionInfo(accountId:string, actionType:string, module:string, moduleId:string, ref:string, refId:string):Promise<{data: any}> {
+        return ActionApi.getOwnerActionInfo(actionType, module, moduleId, ref, refId)
     }
 
-    public static getAccountWorkspaceActionInfo(accountId:string, AccountRoleId:string):Promise<{data: IRoleRef}> {
-        return ActionApi.getAccountWorkspaceActionInfo(accountId, AccountRoleId)
+    public static getAccountWorkspaceActionInfo(accountId:string,  actionType:string,  module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string):Promise<{data: any}> {
+        return ActionApi.getAccountWorkspaceActionInfo(accountId, actionType, module, moduleId, subModule, subModuleId, ref, refId)
     }
 
-    public static getOwnerWorkspaceActionInfo(accountId:string, AccountRoleId:string):Promise<{data: IRoleRef}> {
-        return ActionApi.getOwnerWorkspaceActionInfo(accountId, AccountRoleId)
+    public static getOwnerWorkspaceActionInfo(accountId:string,  actionType:string, module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string):Promise<{data: any}> {
+        return ActionApi.getOwnerWorkspaceActionInfo(actionType, module, moduleId, subModule, subModuleId, ref, refId)
     }
 }
 

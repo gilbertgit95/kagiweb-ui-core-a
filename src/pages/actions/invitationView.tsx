@@ -16,15 +16,16 @@ const fontStyle = {
 
 interface IProps {
     accountId?: string,
+    actionType?:string,
     module?: string,
     moduleId?: string,
     subModule?: string,
     subModuleId?: string,
     ref?: string,
     refId?: string,
-    fetchData?: (accountId:string|undefined, module:string|undefined, moduleId:string|undefined, subModule:string|undefined, subModuleId:string|undefined, ref:string|undefined, refId:string|undefined) => Promise<any>,
-    onAccept?: (accountId:string|undefined, module:string|undefined, moduleId:string|undefined, subModule:string|undefined, subModuleId:string|undefined, ref:string|undefined, refId:string|undefined) => Promise<any>,
-    onDecline?: (accountId:string|undefined, module:string|undefined, moduleId:string|undefined, subModule:string|undefined, subModuleId:string|undefined, ref:string|undefined, refId:string|undefined) => Promise<any>,
+    fetchData?: (accountId:string, actionType:string,  module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string) => Promise<any>,
+    onAccept?: (accountId:string, actionType:string,  module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string) => Promise<any>,
+    onDecline?: (accountId:string, actionType:string,  module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string) => Promise<any>,
 }
 
 
@@ -60,8 +61,8 @@ export default function InvitationView(props: IProps) {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={() => {if (props.onAccept) props.onAccept(props.accountId, props.module, props.moduleId, props.subModule, props.subModuleId, props.ref, props.refId)}}>Accept</Button>
-            <Button size="small" onClick={() => {if (props.onDecline) props.onDecline(props.accountId, props.module, props.moduleId, props.subModule, props.subModuleId, props.ref, props.refId)}}>Decline</Button>
+            <Button size="small" onClick={() => {if (props.onAccept) props.onAccept(props.accountId || '', props.actionType || '', props.module || '', props.moduleId || '', props.subModule || '', props.subModuleId || '', props.ref || '', props.refId || '')}}>Accept</Button>
+            <Button size="small" onClick={() => {if (props.onDecline) props.onDecline(props.accountId || '', props.actionType || '', props.module || '', props.moduleId || '', props.subModule || '', props.subModuleId || '', props.ref || '', props.refId || '')}}>Decline</Button>
         </CardActions>
     </Card>
   );
