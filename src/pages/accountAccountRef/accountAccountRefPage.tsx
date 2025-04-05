@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
+import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -17,7 +18,7 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountAccountRefReadOnlyView from './accountAccountRefReadOnlyView';
 import AccountService from '../account/accountService';
 import AccountAccountRefService from './accountAccountRefService';
-import { IAccount } from '../../types/account';
+import { IAccount, IAccountAccountRef } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -35,6 +36,7 @@ const AccountAccountRefPage = () => {
         deleteDialogOpen: false
     })
     const [account, setAccount] = useState<IAccount | undefined>()
+    const [accountRef, setAccountRef] = useState<IAccountAccountRef | undefined>()
 
     const onDelete = async () => {
         if (accountId && accountRefId) {
@@ -70,7 +72,12 @@ const AccountAccountRefPage = () => {
             if (accountId) {
                 try {
                     const accountResp = await AccountService.getAccount(accountId)
+                    const accountRefResp = await AccountAccountRefService.getAccountAccountRef(accountId, accountRefId || '')
+
                     setAccount(accountResp.data)
+                    setAccountRef(accountRefResp.data || undefined)
+
+                    console.log('Account ref: ', accountRefResp.data)
 
                 } catch (err:any) {
                     setPageState({
@@ -111,6 +118,13 @@ const AccountAccountRefPage = () => {
                             display: 'flex',
                             justifyContent: 'flex-end',
                         }}>
+                        <Button
+                            variant="text"
+                            startIcon={<LocalPostOfficeIcon />}
+                            disabled={ !accountRef }
+                            onClick={() => navigate(`/accounts/view/${ accountRef?.accountId }/actions/invitation/module/accounts/${ accountId }/ref/accountRefs/${ accountRefId }`)}>
+                            View Invitation
+                        </Button>
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}

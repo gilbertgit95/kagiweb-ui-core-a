@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
+import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -17,7 +18,7 @@ import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountWorkspaceAccountRefReadOnlyView from './accountWorkspaceAccountRefReadOnlyView';
 import AccountService from '../account/accountService';
 import AccountWorkspaceAccountRefService from './accountWorkspaceAccountRefService';
-import { IAccount } from '../../types/account';
+import { IAccount, IWorkspaceAccountRef } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -35,6 +36,7 @@ const AccountWorkspaceAccountRefPage = () => {
         deleteDialogOpen: false
     })
     const [account, setAccount] = useState<IAccount | undefined>()
+    const [accountRef, setAccountRef] = useState<IWorkspaceAccountRef | undefined>()
 
     const onDelete = async () => {
         if (accountId && workspaceId && accountRefId) {
@@ -70,7 +72,10 @@ const AccountWorkspaceAccountRefPage = () => {
             if (accountId && workspaceId) {
                 try {
                     const accountResp = await AccountService.getAccount(accountId)
+                    const accountRefResp = await AccountWorkspaceAccountRefService.getWorkspaceAccountRef(accountId, workspaceId, accountRefId || '')
+                    
                     setAccount(accountResp.data)
+                    setAccountRef(accountRefResp.data || undefined)
 
                 } catch (err:any) {
                     setPageState({
@@ -111,6 +116,13 @@ const AccountWorkspaceAccountRefPage = () => {
                             display: 'flex',
                             justifyContent: 'flex-end',
                         }}>
+                        <Button
+                            variant="text"
+                            startIcon={<LocalPostOfficeIcon />}
+                            disabled={ !accountRef }
+                            onClick={() => navigate(`/accounts/view/${ accountRef?.accountId }/actions/invitation/module/accounts/${ accountId }/subModule/workspace/${ workspaceId }/ref/accountRefs/${ accountRefId }`)}>
+                            View Invitation
+                        </Button>
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}
