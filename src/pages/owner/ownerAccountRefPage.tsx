@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Button, Box, Divider } from '@mui/material';
+import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,7 +17,7 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import AccountAccountRefReadOnlyView from '../accountAccountRef/accountAccountRefReadOnlyView';
 import OwnerService from './ownerService';
-import { IAccount } from '../../types/account';
+import { IAccount, IAccountAccountRef } from '../../types/account';
 import {
   useParams
 } from 'react-router-dom';
@@ -34,6 +35,7 @@ const OwnerAccountRefPage = () => {
         deleteDialogOpen: false
     })
     const [account, setAccount] = useState<IAccount | undefined>()
+    const [accountRef, setAccountRef] = useState<IAccountAccountRef | undefined>()
 
     const onDelete = async () => {
         if (accountRefId) {
@@ -67,7 +69,10 @@ const OwnerAccountRefPage = () => {
 
             try {
                 const accountResp = await OwnerService.getOwner()
+                const accountRefResp = await OwnerService.getAccountRef('', accountRefId || '')
+
                 setAccount(accountResp.data)
+                setAccountRef(accountRefResp.data || undefined)
 
             } catch (err:any) {
                 setPageState({
@@ -107,6 +112,13 @@ const OwnerAccountRefPage = () => {
                             display: 'flex',
                             justifyContent: 'flex-end',
                         }}>
+                        <Button
+                            variant="text"
+                            startIcon={<LocalPostOfficeIcon />}
+                            disabled={ !accountRef }
+                            onClick={() => navigate(`/owner/view/actions/invitation/module/accounts/${ accountRef?.accountId }/ref/accountRefs/${ accountRefId }`)}>
+                            View Invitation
+                        </Button>
                         <Button
                             variant="text"
                             startIcon={<EditIcon />}

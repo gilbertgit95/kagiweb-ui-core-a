@@ -77,7 +77,7 @@ const AccountAccountRefPage = () => {
                     setAccount(accountResp.data)
                     setAccountRef(accountRefResp.data || undefined)
 
-                    console.log('Account ref: ', accountRefResp.data)
+                    // console.log('Account ref: ', accountRefResp.data)
 
                 } catch (err:any) {
                     setPageState({
