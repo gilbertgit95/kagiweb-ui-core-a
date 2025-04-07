@@ -15,7 +15,7 @@ const OwnerAccountWorkspaceActionPage = () => {
     const accountId = accountData?._id
 
     return (
-        <Container maxWidth="md" style={{paddingTop: 20}}>
+        <Container style={{paddingTop: 20}}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <PrimaryHeader title={'Owner Account Workspace Action'} />

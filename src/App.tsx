@@ -360,8 +360,8 @@ appHandler.addRoute({url: 'owner/view/notifications', page: OwnerNotificationsPa
 // actions
 appHandler.addRoute({url: 'accounts/view/:accountId/actions/:actionType/module/:moduleType/:moduleId/ref/:refType/:refId', page: AccountAccountActionPage }, 'privateRoutes')
 appHandler.addRoute({url: 'accounts/view/:accountId/actions/:actionType/module/:moduleType/:moduleId/subModule/:subModuleType/:subModuleId/ref/:refType/:refId', page: AccountAccountWorkspaceActionPage }, 'privateRoutes')
-appHandler.addRoute({url: 'owner/view/actions/:actionType/module/:moduleType/:moduleId/ref/:refType/:refId', page: OwnerAccountActionPage }, 'privateRoutes')
-appHandler.addRoute({url: 'owner/view/actions/:actionType/module/:moduleType/:moduleId/subModule/:subModuleType/:subModuleId/ref/:refType/:refId', page: OwnerAccountWorkspaceActionPage }, 'privateRoutes')
+appHandler.addRoute({url: 'owner/view/:accountId/actions/:actionType/module/:moduleType/:moduleId/ref/:refType/:refId', page: OwnerAccountActionPage }, 'privateRoutes')
+appHandler.addRoute({url: 'owner/view/:accountId/actions/:actionType/module/:moduleType/:moduleId/subModule/:subModuleType/:subModuleId/ref/:refType/:refId', page: OwnerAccountWorkspaceActionPage }, 'privateRoutes')
 
 
 // add items to main drawers
