@@ -120,7 +120,7 @@ const AccountWorkspaceAccountRefPage = () => {
                             variant="text"
                             startIcon={<LocalPostOfficeIcon />}
                             disabled={ !accountRef }
-                            onClick={() => navigate(`/accounts/view/${ accountRef?.accountId }/actions/invitation/module/account/${ accountId }/subModule/workspace/${ workspaceId }/ref/accountRefs/${ accountRefId }`)}>
+                            onClick={() => navigate(`/accounts/view/${ accountRef?.accountId }/actions/invitation/module/account/${ accountId }/subModule/workspace/${ workspaceId }/ref/accountRef/${ accountRefId }`)}>
                             View Invitation
                         </Button>
                         <Button

@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const OwnerAccountRefPage = () => {
-    const { accountId, accountRefId } = useParams()
+    const { accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -116,7 +116,7 @@ const OwnerAccountRefPage = () => {
                             variant="text"
                             startIcon={<LocalPostOfficeIcon />}
                             disabled={ !accountRef }
-                            onClick={() => navigate(`/owner/view/${ accountId }/actions/invitation/module/account/${ account?._id }/ref/accountRefs/${ accountRefId }`)}>
+                            onClick={() => navigate(`/owner/view/${ accountRef?.accountId }/actions/invitation/module/account/${ account?._id }/ref/accountRef/${ accountRefId }`)}>
                             View Invitation
                         </Button>
                         <Button

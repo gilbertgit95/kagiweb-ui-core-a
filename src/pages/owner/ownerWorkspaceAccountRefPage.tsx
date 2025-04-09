@@ -118,7 +118,7 @@ const OwnerWorkspaceAccountRefPage = () => {
                             variant="text"
                             startIcon={<LocalPostOfficeIcon />}
                             disabled={ !accountRef }
-                            onClick={() => navigate(`/owner/view/${ accountRef?.accountId }/actions/invitation/module/account/${ account?._id }/subModule/workspace/${ workspaceId }/ref/accountRefs/${ accountRefId }`)}>
+                            onClick={() => navigate(`/owner/view/${ accountRef?.accountId }/actions/invitation/module/account/${ account?._id }/subModule/workspace/${ workspaceId }/ref/accountRef/${ accountRefId }`)}>
                             View Invitation
                         </Button>
                         <Button

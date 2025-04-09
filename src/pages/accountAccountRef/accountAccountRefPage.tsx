@@ -122,7 +122,7 @@ const AccountAccountRefPage = () => {
                             variant="text"
                             startIcon={<LocalPostOfficeIcon />}
                             disabled={ !accountRef }
-                            onClick={() => navigate(`/accounts/view/${ accountRef?.accountId }/actions/invitation/module/account/${ accountId }/ref/accountRefs/${ accountRefId }`)}>
+                            onClick={() => navigate(`/accounts/view/${ accountRef?.accountId }/actions/invitation/module/account/${ accountId }/ref/accountRef/${ accountRefId }`)}>
                             View Invitation
                         </Button>
                         <Button

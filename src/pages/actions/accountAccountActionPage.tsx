@@ -6,10 +6,11 @@ import Grid from '@mui/material/Grid';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { useAppSelector} from '../../stores/appStore';
 import InvitationView from './invitationView';
+import ActionService from './actionService';
 
 const AccountAccountActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
-    const { accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
+    const { accountId, actionType, moduleType, moduleId, refType, refId } = useParams()
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -18,9 +19,20 @@ const AccountAccountActionPage = () => {
                     <PrimaryHeader title={'Account Account Action'} />
                     <Divider />
                 </Grid>
-                {/* <Typography>{ accountId + ' | ' + actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + reftype + ' | ' + refId }</Typography> */}
                 <Grid item xs={12}>
-                    <InvitationView {...{accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}}  />
+                    <InvitationView
+                        fetchData={async () => {
+                            return ActionService.getAccountActionInfo(
+                                accountId || '',
+                                actionType || '',
+                                moduleType || '',
+                                moduleId || '',
+                                refType || '',
+                                refId || ''
+                            )
+                        }}
+                        onAccept={async () => undefined}
+                        onDecline={async () => undefined} />
                 </Grid>
             </Grid>
         </Container>

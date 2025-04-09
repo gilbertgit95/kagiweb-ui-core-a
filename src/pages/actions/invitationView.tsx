@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -7,6 +8,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import Stack from '@mui/material/Stack';
+import { Skeleton } from '@mui/material';
+import { IAccountActionInfo } from '../../types/action';
+import appComponentsHandler from '../../utils/appComponentsHandler'
 
 const fontStyle = {
     fontWeight: '700',
@@ -15,55 +19,82 @@ const fontStyle = {
 }
 
 interface IProps {
-    accountId?: string,
-    actionType?:string,
-    module?: string,
-    moduleId?: string,
-    subModule?: string,
-    subModuleId?: string,
-    ref?: string,
-    refId?: string,
-    fetchData?: (accountId:string, actionType:string,  module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string) => Promise<any>,
-    onAccept?: (accountId:string, actionType:string,  module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string) => Promise<any>,
-    onDecline?: (accountId:string, actionType:string,  module:string, moduleId:string, subModule:string, subModuleId:string, ref:string, refId:string) => Promise<any>,
+    fetchData?: () => Promise<any>,
+    onAccept?: () => Promise<any>,
+    onDecline?: () => Promise<any>,
 }
 
-
 export default function InvitationView(props: IProps) {
+    const [data, setData] = useState<IAccountActionInfo|undefined>()
 
     useEffect(() => {
-        console.log('InvitationView mounted')
-        return () => {
-            console.log('InvitationView unmounted')
+        const init = async () => {
+            if (props.fetchData) {
+                const response = await props.fetchData()
+                // console.log(response.data)
+                setData(response.data)
+            }
         }
+
+        init()
     }, [])
 
-  return (
-    <Card sx={{ minWidth: 300, padding: '20px' }}>
-        <CardContent>
-            <Stack direction="row" spacing={2}>
-                <LocalPostOfficeIcon sx={{ color: 'text.secondary' }} />
-                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>Invitation for</Typography>
-            </Stack>
-            <Typography color="primary" variant="h5">Workspace Level Access</Typography>
-            <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>
-                Created on 16th September, 2021
-            </Typography>
+    let title = ''
+    if (data?.actionType === 'invitation') title =  'Invitation for'
 
-            <Typography variant="body1" style={{marginBottom: '10px', marginTop: '20px'}}>
-                Hello, you are invited to join the workspace
-                <Typography variant="body1" sx={fontStyle}> Test Workspace </Typography>
-                with a role 
-                <Typography variant="body1" sx={fontStyle}> Workspace Admin </Typography>
-                under account
-                <Typography variant="body1" sx={fontStyle}> Gilbert</Typography>
-                . Please accept or decline the invitation.
-            </Typography>
-        </CardContent>
-        <CardActions>
-            <Button size="small" onClick={() => {if (props.onAccept) props.onAccept(props.accountId || '', props.actionType || '', props.module || '', props.moduleId || '', props.subModule || '', props.subModuleId || '', props.ref || '', props.refId || '')}}>Accept</Button>
-            <Button size="small" onClick={() => {if (props.onDecline) props.onDecline(props.accountId || '', props.actionType || '', props.module || '', props.moduleId || '', props.subModule || '', props.subModuleId || '', props.ref || '', props.refId || '')}}>Decline</Button>
-        </CardActions>
-    </Card>
-  );
+    return (
+        <Card sx={{ minWidth: 300, padding: '20px' }}>
+            {
+                data? (
+                    <>
+                        <CardContent>
+                            <Stack direction="row" spacing={2}>
+                                <LocalPostOfficeIcon sx={{ color: 'text.secondary' }} />
+                                <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>{ title }</Typography>
+                            </Stack>
+                            <Typography color="primary" variant="h5">{data.workspace? 'Workspace': 'Account'} Level Access</Typography>
+                            <Typography sx={{ color: 'text.secondary', mb: 1.5 }}>
+                                Created on { data.ref.createdAt? moment(data.ref.createdAt).format(appComponentsHandler.appConfig.defaultDateTimeFormat): '' }
+                            </Typography>
+
+                            {
+                                data.workspace? (
+                                    // message workspace access invitation 
+                                    <Typography variant="body1" style={{marginBottom: '10px', marginTop: '20px'}}>
+                                        Hello, you are invited to join the workspace
+                                        <b style={fontStyle}> Test Workspace </b>
+                                        under account
+                                        <b style={fontStyle}> { data.toAccount.nameId } </b>
+                                        with a role 
+                                        <b style={fontStyle}> { data.refRole.name } </b>
+                                        . Please accept the invitation.
+                                    </Typography>
+                                ): (
+                                    // message account access invitation
+                                    <Typography variant="body1" style={{marginBottom: '10px', marginTop: '20px'}}>
+                                        Hello, you are invited to join the account
+                                        <b style={fontStyle}> { data.toAccount.nameId } </b>
+                                        with a role 
+                                        <b style={fontStyle}> { data.refRole.name } </b>
+                                        . Please accept the invitation.
+                                    </Typography>
+                                )
+                            }
+
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small" onClick={() => {if (props.onAccept) props.onAccept()}}>Accept</Button>
+                            <Button size="small" onClick={() => {if (props.onDecline) props.onDecline()}}>Decline</Button>
+                        </CardActions>
+                    </>
+                ): (
+                    <>
+                        <Skeleton variant="rectangular" height={200} sx={{ marginBottom: '20px' }} />
+                        <Skeleton variant="text" height={40} sx={{ marginBottom: '20px' }} />
+                        
+                    </>
+                )
+            }
+        </Card>
+    );
 }

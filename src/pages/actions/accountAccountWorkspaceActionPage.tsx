@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { useAppSelector} from '../../stores/appStore';
 import InvitationView from './invitationView';
+import ActionService from './actionService';
 
 const AccountAccountWorkspaceActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
@@ -18,9 +19,22 @@ const AccountAccountWorkspaceActionPage = () => {
                     <PrimaryHeader title={'Account Account Workspace Action'} />
                     <Divider />
                 </Grid>
-                {/* <Typography>{ accountId + ' | ' +  actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + subModuleType + ' | ' + subModuleId + ' | ' + refType + ' | ' + refId }</Typography> */}
                 <Grid item xs={12}>
-                    <InvitationView {...{accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}}  />
+                    <InvitationView
+                        fetchData={async () => {
+                            return ActionService.getAccountWorkspaceActionInfo(
+                                accountId || '',
+                                actionType || '',
+                                moduleType || '',
+                                moduleId || '',
+                                subModuleType || '',
+                                subModuleId || '',
+                                refType || '',
+                                refId || ''
+                            )
+                        }}
+                        onAccept={async () => undefined}
+                        onDecline={async () => undefined} />
                 </Grid>
             </Grid>
         </Container>

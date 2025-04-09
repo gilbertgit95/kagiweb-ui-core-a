@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import PrimaryHeader from '../../components/headers/primaryHeader';
 import { useAppSelector} from '../../stores/appStore';
 import InvitationView from './invitationView';
+import ActionService from './actionService';
 
 const OwnerAccountActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
@@ -21,7 +22,19 @@ const OwnerAccountActionPage = () => {
                 </Grid>
                 {/* <Typography>{ actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + reftype + ' | ' + refId }</Typography> */}
                 <Grid item xs={12}>
-                    <InvitationView {...{accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId}}  />
+                    <InvitationView
+                        fetchData={async () => {
+                            return ActionService.getOwnerActionInfo(
+                                accountId || '',
+                                actionType || '',
+                                moduleType || '',
+                                moduleId || '',
+                                refType || '',
+                                refId || ''
+                            )
+                        }}
+                        onAccept={async () => undefined}
+                        onDecline={async () => undefined} />
                 </Grid>
             </Grid>
         </Container>
