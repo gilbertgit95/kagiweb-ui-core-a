@@ -61,7 +61,7 @@ export default function InvitationView(props: IProps) {
                                 data.workspace? (
                                     // message workspace access invitation 
                                     <Typography variant="body1" style={{marginBottom: '10px', marginTop: '20px'}}>
-                                        Hello, you are invited to join the workspace
+                                        Hello <b>{ data.fromAccount.nameId }</b>, you are invited to join the workspace
                                         <b style={fontStyle}> Test Workspace </b>
                                         under account
                                         <b style={fontStyle}> { data.toAccount.nameId } </b>
@@ -72,7 +72,7 @@ export default function InvitationView(props: IProps) {
                                 ): (
                                     // message account access invitation
                                     <Typography variant="body1" style={{marginBottom: '10px', marginTop: '20px'}}>
-                                        Hello, you are invited to join the account
+                                        Hello <b>{ data.fromAccount.nameId }</b>, you are invited to join the account
                                         <b style={fontStyle}> { data.toAccount.nameId } </b>
                                         with a role 
                                         <b style={fontStyle}> { data.refRole.name } </b>

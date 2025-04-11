@@ -68,8 +68,11 @@ const OwnerAccountRefPage = () => {
         const init = async () => {
 
             try {
+                // console.log('owner account ref: ')
                 const accountResp = await OwnerService.getOwner()
                 const accountRefResp = await OwnerService.getAccountRef('', accountRefId || '')
+
+                // console.log('accountRefResp: ', accountRefResp)
 
                 setAccount(accountResp.data)
                 setAccountRef(accountRefResp.data || undefined)

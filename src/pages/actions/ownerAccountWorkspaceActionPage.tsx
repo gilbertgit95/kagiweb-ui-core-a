@@ -11,9 +11,9 @@ import ActionService from './actionService';
 
 const OwnerAccountWorkspaceActionPage = () => {
     const navigate = useNavigate()
-    const { actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
+    const { accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
-    const accountId = accountData?._id
+    // const accountId = accountData?._id
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -38,8 +38,8 @@ const OwnerAccountWorkspaceActionPage = () => {
                                 actionType || '',
                                 moduleType || '',
                                 moduleId || '',
-                                subModuleId || '',
                                 subModuleType || '',
+                                subModuleId || '',
                                 refType || '',
                                 refId || ''
                             )

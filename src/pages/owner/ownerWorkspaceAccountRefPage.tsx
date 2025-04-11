@@ -23,7 +23,7 @@ import {
 } from 'react-router-dom';
 
 const OwnerWorkspaceAccountRefPage = () => {
-    const { workspaceId, accountRefId } = useParams()
+    const { accountId, workspaceId, accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],

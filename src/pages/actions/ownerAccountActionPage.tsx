@@ -1,6 +1,8 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Divider, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Grid from '@mui/material/Grid';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
@@ -10,8 +12,20 @@ import ActionService from './actionService';
 
 const OwnerAccountActionPage = () => {
     const accountData = useAppSelector(state => state.signedInAccount.accountData)
-    const { actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
-    const accountId = accountData?._id
+    const { accountId, actionType, moduleType, moduleId, subModuleType, subModuleId, refType, refId } = useParams()
+    const navigate = useNavigate()
+    // const accountId = accountData?._id
+
+    // console.log(`
+    //     accountId: ${accountId},
+    //     actionType: ${actionType}, 
+    //     moduleType: ${moduleType},
+    //     moduleId: ${moduleId}, 
+    //     subModuleType: ${subModuleType},
+    //     subModuleId: ${subModuleId},
+    //     refType: ${refType},
+    //     refId: ${refId}
+    // `)
 
     return (
         <Container style={{paddingTop: 20}}>
@@ -20,7 +34,14 @@ const OwnerAccountActionPage = () => {
                     <PrimaryHeader title={'Owner Account Action'} />
                     <Divider />
                 </Grid>
-                {/* <Typography>{ actionType + ' | ' + moduleType + ' | ' + moduleId + ' | ' + reftype + ' | ' + refId }</Typography> */}
+               <Grid item xs={12}>
+                    <Button
+                        variant="text"
+                        startIcon={<ArrowBackIosNewIcon />}
+                        onClick={() => navigate(-1)}>
+                        Back
+                    </Button>
+                </Grid>
                 <Grid item xs={12}>
                     <InvitationView
                         fetchData={async () => {
