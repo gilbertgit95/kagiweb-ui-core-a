@@ -3,7 +3,7 @@ import { IPageQuery } from '../../types/mixTypes';
 import { INotification } from '../../types/notification';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
-class NotificationApi {
+class ActionApi {
     public static getAccountActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string) {
 
         return apiHelper.privateReq({
@@ -20,18 +20,25 @@ class NotificationApi {
         })
     }
 
-    public static getAccountWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string) {
+    public static updateAccountActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string, data:{disabled?:boolean, accepted?:string, declined?:string}) {
 
-        // console.log(`
-        //     accountId: ${accountId},
-        //     actionType: ${actionType},
-        //     moduleType: ${moduleType},
-        //     moduleId: ${moduleId},
-        //     subModuleType: ${subModuleType},
-        //     subModuleId: ${subModuleId},
-        //     refType: ${refType},
-        //     refId: ${refId}
-        // `)
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/ref/${refType}/${refId}`,
+            data
+        })
+    }
+
+    public static updateOwnerActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string, data:{disabled?:boolean, accepted?:string, declined?:string}) {
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/ref/${refType}/${refId}`,
+            data
+        })
+    }
+
+    public static getAccountWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string) {
 
         return apiHelper.privateReq({
             method: 'GET',
@@ -46,6 +53,24 @@ class NotificationApi {
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/subModule/${subModuleType}/${subModuleId}/ref/${refType}/${refId}`
         })
     }
+
+    public static updateAccountWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string, data:{disabled?:boolean, accepted?:string, declined?:string}) {
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/subModule/${subModuleType}/${subModuleId}/ref/${refType}/${refId}`,
+            data
+        })
+    }
+
+    public static updateOwnerWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string, data:{disabled?:boolean, accepted?:string, declined?:string}) {
+
+        return apiHelper.privateReq({
+            method: 'PUT',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/subModule/${subModuleType}/${subModuleId}/ref/${refType}/${refId}`,
+            data
+        })
+    }
 }
 
-export default NotificationApi
+export default ActionApi

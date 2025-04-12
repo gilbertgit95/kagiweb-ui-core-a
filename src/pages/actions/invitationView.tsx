@@ -83,8 +83,18 @@ export default function InvitationView(props: IProps) {
 
                         </CardContent>
                         <CardActions>
-                            <Button size="small" onClick={() => {if (props.onAccept) props.onAccept()}}>Accept</Button>
-                            <Button size="small" onClick={() => {if (props.onDecline) props.onDecline()}}>Decline</Button>
+                            <Button
+                                size="small"
+                                disabled={data?.ref?.accepted || data?.ref?.declined || data?.ref?.disabled}
+                                onClick={async () => {
+                                    if (props.onAccept) await props.onAccept()
+                                }}>{ data?.ref?.accepted? 'Accepted': 'Accept' }</Button>
+                            <Button
+                                size="small"
+                                disabled={data?.ref?.accepted || data?.ref?.declined || data?.ref?.disabled}
+                                onClick={async () => {
+                                    if (props.onDecline) await props.onDecline()
+                                }}>{ data?.ref?.declined? 'Declined': 'Decline' }</Button>
                         </CardActions>
                     </>
                 ): (
