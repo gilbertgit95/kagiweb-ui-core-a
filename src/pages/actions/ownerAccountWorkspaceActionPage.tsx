@@ -44,8 +44,32 @@ const OwnerAccountWorkspaceActionPage = () => {
                                 refId || ''
                             )
                         }}
-                        onAccept={async () => undefined}
-                        onDecline={async () => undefined} />
+                        onAccept={async () => {
+                            return ActionService.acceptOrDeclineOwnerWorkspaceActionInfo(
+                                accountId || '',
+                                actionType || '',
+                                moduleType || '',
+                                moduleId || '',
+                                subModuleType || '',
+                                subModuleId || '',
+                                refType || '',
+                                refId || '',
+                                true
+                            )
+                        }}
+                        onDecline={async () => {
+                            return ActionService.acceptOrDeclineOwnerWorkspaceActionInfo(
+                                accountId || '',
+                                actionType || '',
+                                moduleType || '',
+                                moduleId || '',
+                                subModuleType || '',
+                                subModuleId || '',
+                                refType || '',
+                                refId || '',
+                                false
+                            )
+                        }} />
                 </Grid>
             </Grid>
         </Container>

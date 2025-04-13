@@ -42,8 +42,28 @@ const AccountAccountActionPage = () => {
                                 refId || ''
                             )
                         }}
-                        onAccept={async () => undefined}
-                        onDecline={async () => undefined} />
+                        onAccept={async () => {
+                            return ActionService.acceptOrDeclineAccountActionInfo(
+                                accountId || '',
+                                actionType || '',
+                                moduleType || '',
+                                moduleId || '',
+                                refType || '',
+                                refId || '',
+                                true
+                            )
+                        }}
+                        onDecline={async () => {
+                            return ActionService.acceptOrDeclineAccountActionInfo(
+                                accountId || '',
+                                actionType || '',
+                                moduleType || '',
+                                moduleId || '',
+                                refType || '',
+                                refId || '',
+                                false
+                            )
+                        }} />
                 </Grid>
             </Grid>
         </Container>

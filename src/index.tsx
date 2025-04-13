@@ -41,7 +41,7 @@ const customConfig = {
   AppThemeConfig: customTheme,
 
   defaultDateFormat: 'YYYY-MM-DD',
-  defaultDateTimeFormat: 'ddd MMM DD YYYY, hh:mm:ss A',
+  defaultDateTimeFormat: 'MMM DD YYYY, h:mm A',
   defaultPageSizeList: [5, 10, 25, 100],
   defaultPageSize: 10,
   defaultPage: 1

@@ -20,21 +20,39 @@ class ActionApi {
         })
     }
 
-    public static updateAccountActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string, data:{disabled?:boolean, accepted?:string, declined?:string}) {
+    public static acceptAccountActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string) {
 
         return apiHelper.privateReq({
             method: 'PUT',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/ref/${refType}/${refId}`,
-            data
+            data: {}
         })
     }
 
-    public static updateOwnerActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string, data:{disabled?:boolean, accepted?:string, declined?:string}) {
+    public static declineAccountActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string) {
+
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/ref/${refType}/${refId}`,
+            data: {}
+        })
+    }
+
+    public static acceptOwnerActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string) {
 
         return apiHelper.privateReq({
             method: 'PUT',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/ref/${refType}/${refId}`,
-            data
+            data: {}
+        })
+    }
+
+    public static declineOwnerActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, refType:string, refId:string) {
+
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/ref/${refType}/${refId}`,
+            data: {}
         })
     }
 
@@ -54,21 +72,39 @@ class ActionApi {
         })
     }
 
-    public static updateAccountWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string, data:{disabled?:boolean, accepted?:string, declined?:string}) {
+    public static acceptAccountWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string) {
 
         return apiHelper.privateReq({
             method: 'PUT',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/subModule/${subModuleType}/${subModuleId}/ref/${refType}/${refId}`,
-            data
+            data: {}
         })
     }
 
-    public static updateOwnerWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string, data:{disabled?:boolean, accepted?:string, declined?:string}) {
+    public static declineAccountWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string) {
+
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `accounts/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/subModule/${subModuleType}/${subModuleId}/ref/${refType}/${refId}`,
+            data: {}
+        })
+    }
+
+    public static acceptOwnerWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string) {
 
         return apiHelper.privateReq({
             method: 'PUT',
             url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/subModule/${subModuleType}/${subModuleId}/ref/${refType}/${refId}`,
-            data
+            data: {}
+        })
+    }
+
+    public static declineOwnerWorkspaceActionInfo(accountId:string, actionType:string, moduleType:string, moduleId:string, subModuleType:string, subModuleId:string, refType:string, refId:string) {
+
+        return apiHelper.privateReq({
+            method: 'DELETE',
+            url: appComponentsHandler.appConfig.ServerAddress + appComponentsHandler.appConfig.RootApiEndpoint + `owner/${accountId}/actions/${actionType}/module/${moduleType}/${moduleId}/subModule/${subModuleType}/${subModuleId}/ref/${refType}/${refId}`,
+            data: {}
         })
     }
 }

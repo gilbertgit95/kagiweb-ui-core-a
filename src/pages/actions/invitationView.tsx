@@ -62,7 +62,7 @@ export default function InvitationView(props: IProps) {
                                     // message workspace access invitation 
                                     <Typography variant="body1" style={{marginBottom: '10px', marginTop: '20px'}}>
                                         Hello <b>{ data.fromAccount.nameId }</b>, you are invited to join the workspace
-                                        <b style={fontStyle}> Test Workspace </b>
+                                        <b style={fontStyle}> { data.workspace.name } </b>
                                         under account
                                         <b style={fontStyle}> { data.toAccount.nameId } </b>
                                         with a role 
@@ -87,13 +87,21 @@ export default function InvitationView(props: IProps) {
                                 size="small"
                                 disabled={data?.ref?.accepted || data?.ref?.declined || data?.ref?.disabled}
                                 onClick={async () => {
-                                    if (props.onAccept) await props.onAccept()
+                                    if (props.onAccept && props.fetchData) {
+                                        await props.onAccept()
+                                        const response = await props.fetchData()
+                                        setData(response.data)
+                                    }
                                 }}>{ data?.ref?.accepted? 'Accepted': 'Accept' }</Button>
                             <Button
                                 size="small"
                                 disabled={data?.ref?.accepted || data?.ref?.declined || data?.ref?.disabled}
                                 onClick={async () => {
-                                    if (props.onDecline) await props.onDecline()
+                                    if (props.onDecline && props.fetchData) {
+                                        await props.onDecline()
+                                        const response = await props.fetchData()
+                                        setData(response.data)
+                                    }
                                 }}>{ data?.ref?.declined? 'Declined': 'Decline' }</Button>
                         </CardActions>
                     </>
@@ -101,7 +109,6 @@ export default function InvitationView(props: IProps) {
                     <>
                         <Skeleton variant="rectangular" height={200} sx={{ marginBottom: '20px' }} />
                         <Skeleton variant="text" height={40} sx={{ marginBottom: '20px' }} />
-                        
                     </>
                 )
             }
