@@ -1,5 +1,5 @@
 import ActionApi from '../../dataEndpoints/apiCoreA/actionApi'
-import { IRoleRef } from '../../types/account'
+// import { IRoleRef } from '../../types/account'
 
 class ActionService {
     public static getAccountActionInfo(accountId:string, actionType:string, module:string, moduleId:string, ref:string, refId:string):Promise<{data: any}> {

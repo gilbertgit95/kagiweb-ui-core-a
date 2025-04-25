@@ -1,6 +1,6 @@
 import apiHelper from './apiHelper';
-import { IPageQuery } from '../../types/mixTypes';
-import { INotification } from '../../types/notification';
+// import { IPageQuery } from '../../types/mixTypes';
+// import { INotification } from '../../types/notification';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 
 class ActionApi {

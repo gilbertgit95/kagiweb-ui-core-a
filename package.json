@@ -26,8 +26,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-
-        "build:dist": "rm -rf dist/ && npm run build:esm && npm run build:cjs && npm run copy-files",
+        "build:dist": "rm -rf dist/ && pnpm run build:esm && pnpm run build:cjs && pnpm run copy-files",
         "build:esm": "tsc --project tsconfig-dist.json",
         "build:cjs": "tsc --project tsconfig-dist.json --module CommonJS --outDir dist/cjs",
         "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/esm && copyfiles -u 1 src/**/*.html src/**/*.css dist/cjs"
@@ -44,7 +43,6 @@
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
-        "@types/jest": "^27.5.2",
         "@types/lodash": "^4.17.5",
         "axios": "^1.6.3",
         "lodash": "^4.17.21",
@@ -58,6 +56,7 @@
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@babel/plugin-transform-private-property-in-object": "^7.23.4",
         "@reduxjs/toolkit": "^2.0.1",
+        "@types/jest": "^27.5.2",
         "@types/node": "^16.18.40",
         "@types/react": "^18.2.20",
         "@types/react-dom": "^18.2.7",
@@ -85,7 +84,7 @@
             "last 1 safari version"
         ]
     },
-      "eslintConfig": {
+    "eslintConfig": {
         "extends": [
             "react-app",
             "react-app/jest"

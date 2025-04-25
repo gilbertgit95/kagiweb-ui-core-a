@@ -7,7 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import EditIcon from '@mui/icons-material/Edit';
 
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IFeature, TFeatureType, TFeatureScope, featureTypes, featureScopes } from '../../types/feature';
+import { IFeature, TFeatureType, featureTypes, featureScopes } from '../../types/feature';
 import AppUtils from '../../utils/appUtils';
 
 interface Props {

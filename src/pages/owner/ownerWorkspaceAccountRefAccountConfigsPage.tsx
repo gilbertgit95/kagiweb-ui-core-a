@@ -10,9 +10,9 @@ import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings
 import OwnerService from './ownerService';
 import AccountAccountConfigsReadOnlyView from '../accountWorkspaceAccountRefAccountConfig/accountWorkspaceAccountRefAccountConfigsReadOnlyView';
 
-const OwnerAccountConfigsPage = () => {
+const OwnerWorkspaceAccountRefAccountConfigsPage = () => {
     const navigate = useNavigate()
-    const { workspaceId, accountRefId, accountConfigId } = useParams()
+    const { workspaceId, accountRefId } = useParams()
     const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setConfigAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -65,4 +65,4 @@ const OwnerAccountConfigsPage = () => {
     )
 }
 
-export default OwnerAccountConfigsPage
+export default OwnerWorkspaceAccountRefAccountConfigsPage

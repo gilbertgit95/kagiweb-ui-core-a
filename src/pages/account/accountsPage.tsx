@@ -17,7 +17,7 @@ import AccountService from './accountService';
 import { IAccount } from '../../types/account';
 import appComponentsHandler from '../../utils/appComponentsHandler'
 import { useAppSelector} from '../../stores/appStore';
-import { link } from 'fs';
+// import { link } from 'fs';
 
 interface IAccountRow {
     _id: string,

@@ -15,8 +15,8 @@ import {
     IWorkspace,
     IWorkspaceAccountRef
 } from '../../types/account';
-import { IRole } from '../../types/role';
-import { IFeature } from '../../types/feature';
+// import { IRole } from '../../types/role';
+// import { IFeature } from '../../types/feature';
 
 class OwnerService {
     public static getOwner():Promise<{data: IAccount}> {

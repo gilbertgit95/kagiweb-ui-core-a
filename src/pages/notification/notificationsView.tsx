@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 
-import DateChanges, {IChangeDate} from '../../components/dates/dateChanges';
+import {IChangeDate} from '../../components/dates/dateChanges';
 import Notification from './notification';
 import PrimaryTable, { IColDef } from '../../components/tables/primaryTable';
 
@@ -155,9 +155,9 @@ const NotificationsView = ({accountId, pageQuery, pageSizeQuery, getFunc, update
                             createdAt: item.createdAt,
                             updatedAt: item.updatedAt,
                             onSeen: async (val) => {
-                                const data = {
-                                    seen: val
-                                }
+                                // const data = {
+                                //     seen: val
+                                // }
 
                                 await updateFunc(
                                     accountId,

@@ -12,7 +12,7 @@ import AccountRolesReadOnlyView from '../accountWorkspaceAccountRefRole/accountW
 
 const OwnerRolesPage = () => {
     const navigate = useNavigate()
-    const { workspaceId, accountRefId, roleId } = useParams()
+    const { workspaceId, accountRefId } = useParams()
     const [account, setAccount] = useState<IAccount | undefined>()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],

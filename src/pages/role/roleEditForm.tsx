@@ -4,9 +4,9 @@ import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import ResponseStatus, { TResponseStatus } from '../../components/infoOrWarnings/responseStatus';
-import { IRole, TRoleScope, roleScopes } from '../../types/role';
+import { IRole, roleScopes } from '../../types/role';
 import AppUtils from '../../utils/appUtils';
 
 interface Props {

@@ -14,8 +14,8 @@ import {
   useParams
 } from 'react-router-dom';
 
-const OwnerWorkspaceAccountRefEditPage = () => {
-    const { workspaceId, accountRefId } = useParams()
+const OwnerAccountRefEditPage = () => {
+    const { accountRefId } = useParams()
     const navigate = useNavigate()
     const [infoAndErrors, setInfoAndErrors] = useState<TResponseStatus>({
         errorMessages: [],
@@ -84,4 +84,4 @@ const OwnerWorkspaceAccountRefEditPage = () => {
     )
 }
 
-export default OwnerWorkspaceAccountRefEditPage
+export default OwnerAccountRefEditPage

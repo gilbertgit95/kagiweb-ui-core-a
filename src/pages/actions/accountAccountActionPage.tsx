@@ -1,17 +1,17 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Divider, Typography } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import PrimaryHeader from '../../components/headers/primaryHeader';
-import { useAppSelector} from '../../stores/appStore';
+// import { useAppSelector} from '../../stores/appStore';
 import InvitationView from './invitationView';
 import ActionService from './actionService';
 
 const AccountAccountActionPage = () => {
-    const accountData = useAppSelector(state => state.signedInAccount.accountData)
+    // const accountData = useAppSelector(state => state.signedInAccount.accountData)
     const { accountId, actionType, moduleType, moduleId, refType, refId } = useParams()
     const navigate = useNavigate()
 
